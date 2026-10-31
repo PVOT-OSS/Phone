@@ -33,36 +33,17 @@ class IncomingCallTest {
         val since = System.currentTimeMillis()
         FakeCarrier.ring(context, FakeCallSpec(number = NUMBER))
 
-        val caller = deviceRule.device.wait(Until.findObject(By.textContains(NUMBER_TAIL)), TIMEOUT_MILLIS)
+        val caller = deviceRule.device.wait(Until.findObject(By.textContains(NUMBER_TAIL)), CallTests.TIMEOUT_MILLIS)
         assertNotNull("incoming call screen did not show the caller", caller)
 
-        val call = waitFor { FakeCarrier.connections.firstOrNull() }
+        val call = CallTests.waitFor { FakeCarrier.connections.firstOrNull() }
         call.hangUpFromFarEnd()
 
-        assertEquals(CallLog.Calls.MISSED_TYPE, waitFor { latestCallType(since) })
-    }
-
-    private fun latestCallType(since: Long): Int? = context.contentResolver.query(
-        CallLog.Calls.CONTENT_URI,
-        arrayOf(CallLog.Calls.TYPE),
-        "${CallLog.Calls.DATE} >= ? AND ${CallLog.Calls.NUMBER} = ?",
-        arrayOf(since.toString(), NUMBER),
-        "${CallLog.Calls.DATE} DESC",
-    )?.use { if (it.moveToFirst()) it.getInt(0) else null }
-
-    private fun <T : Any> waitFor(block: () -> T?): T {
-        val deadline = System.currentTimeMillis() + TIMEOUT_MILLIS
-        while (System.currentTimeMillis() < deadline) {
-            block()?.let { return it }
-            Thread.sleep(POLL_MILLIS)
-        }
-        return checkNotNull(block()) { "timed out" }
+        assertEquals(CallLog.Calls.MISSED_TYPE, CallTests.waitFor { CallTests.latestCall(context, NUMBER, since) }.type)
     }
 
     private companion object {
         const val NUMBER = "+15550100001"
         const val NUMBER_TAIL = "0001"
-        const val TIMEOUT_MILLIS = 10_000L
-        const val POLL_MILLIS = 200L
     }
 }
