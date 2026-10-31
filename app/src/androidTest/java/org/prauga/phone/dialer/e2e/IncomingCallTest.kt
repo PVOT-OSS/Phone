@@ -36,8 +36,7 @@ class IncomingCallTest {
         val caller = deviceRule.device.wait(Until.findObject(By.textContains(NUMBER_TAIL)), CallTests.TIMEOUT_MILLIS)
         assertNotNull("incoming call screen did not show the caller", caller)
 
-        val call = CallTests.waitFor { FakeCarrier.connections.firstOrNull() }
-        call.hangUpFromFarEnd()
+        CallTests.waitForRinging().hangUpFromFarEnd()
 
         assertEquals(CallLog.Calls.MISSED_TYPE, CallTests.waitFor { CallTests.latestCall(context, NUMBER, since) }.type)
     }
