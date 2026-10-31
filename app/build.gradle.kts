@@ -8,6 +8,10 @@ plugins {
     alias(libs.plugins.protobuf)
 }
 
+val versionMajor = 1
+val versionMinor = 0
+val versionPatch = 0
+
 android {
     namespace = "org.prauga.phone.dialer"
     compileSdk { version = release(37) }
@@ -16,8 +20,8 @@ android {
         applicationId = "org.prauga.phone"
         minSdk = 34
         targetSdk = 37
-        versionCode = 2900000
-        versionName = "23.0"
+        versionCode = versionMajor * 10000 + versionMinor * 100 + versionPatch
+        versionName = "$versionMajor.$versionMinor.$versionPatch"
     }
 
     buildTypes {
