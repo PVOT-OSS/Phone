@@ -1,24 +1,19 @@
 syntax = "proto2";
 
-option java_package = "com.android.dialer.historyitemactions";
+option java_package = "com.android.dialer.calldetails";
 option java_multiple_files = true;
 
 
-package com.android.dialer.historyitemactions;
+import "com/android/dialer/phonenumberproto/dialer_phone_number.proto";
+import "com/android/dialer/glidephotomanager/photo_info.proto";
 
-import "java/com/android/dialer/glidephotomanager/photo_info.proto";
-import "java/com/android/dialer/phonenumberproto/dialer_phone_number.proto";
+package com.android.dialer.calldetails;
 
-// Contains information necessary to construct the header for a history item's
-// bottom sheet.
-//
-// A history item is one that is displayed in the call log or the voicemail
-// fragment.
-//
+// Contains information for the header in CallDetailsActivity
 // Next ID: 5
-message HistoryItemBottomSheetHeaderInfo {
-  // The phone number associated with the item.
-  optional com.android.dialer.DialerPhoneNumber number = 1;
+message CallDetailsHeaderInfo {
+  // The number of all call detail entries.
+  optional com.android.dialer.DialerPhoneNumber dialer_phone_number = 1;
 
   // Information used to load the contact photo.
   optional com.android.dialer.glidephotomanager.PhotoInfo photo_info = 2;
