@@ -43,6 +43,10 @@ android {
         }
     }
 
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
+
     dependenciesInfo {
         includeInApk = false
         includeInBundle = false
