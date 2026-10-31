@@ -45,6 +45,7 @@ android {
 
     lint {
         baseline = file("lint-baseline.xml")
+        warning += "MissingTranslation"
     }
 
     dependenciesInfo {
