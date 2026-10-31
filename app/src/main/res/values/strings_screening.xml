@@ -7,7 +7,7 @@
   <!-- Settings entry and screen title for choosing what happens to calls from unknown callers [CHAR LIMIT=40] -->
   <string name="screening_settings_title">Unknown callers</string>
   <!-- Note under the unknown caller settings about calls that are never screened -->
-  <string name="screening_settings_footer">Calls from your contacts, numbers you called in the last 7 days and emergency callbacks always ring.</string>
+  <string name="screening_settings_footer">Calls from your contacts, numbers you called in the last 7 days, emergency callbacks and calls that arrive while you are on another call always ring.</string>
 
   <!-- Unknown caller category: callers who hide their number [CHAR LIMIT=40] -->
   <string name="screening_category_private_or_hidden">Private and hidden numbers</string>
