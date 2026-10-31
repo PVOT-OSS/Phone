@@ -19,10 +19,12 @@ package com.android.voicemail.impl.sync;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.InetAddresses;
+import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
+import android.net.RouteInfo;
 import android.os.ConditionVariable;
 import android.os.Handler;
 import android.os.Looper;
@@ -36,6 +38,9 @@ import com.android.voicemail.impl.OmtpEvents;
 import com.android.voicemail.impl.OmtpVvmCarrierConfigHelper;
 import com.android.voicemail.impl.VoicemailStatus;
 import com.android.voicemail.impl.VvmLog;
+
+import java.net.Inet4Address;
+import java.net.InetAddress;
 
 /**
  * Base class for network request call backs for visual voicemail syncing with the Imap server. This
@@ -134,11 +139,30 @@ public abstract class VvmNetworkRequestCallback extends ConnectivityManager.Netw
   @CallSuper
   public void onLinkPropertiesChanged(Network network, LinkProperties lp) {
     boolean hasIPv4 = (lp != null) &&
-            (lp.isReachable(InetAddresses.parseNumericAddress("8.8.8.8")));
+            (isReachable(lp, InetAddresses.parseNumericAddress("8.8.8.8")));
     if(hasIPv4) {
         mWaitV4Cv.open();
     }
   }
+  private static boolean isReachable(LinkProperties lp, InetAddress ip) {
+    boolean hasIpv4Address = false;
+    for (LinkAddress address : lp.getLinkAddresses()) {
+      if (address.getAddress() instanceof Inet4Address) {
+        hasIpv4Address = true;
+        break;
+      }
+    }
+    if (!hasIpv4Address) {
+      return false;
+    }
+    for (RouteInfo route : lp.getRoutes()) {
+      if (route.matches(ip)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public void waitForIpv4() {
     VvmLog.w(TAG, "Waiting for IPV4 address...");
     mWaitV4Cv.block(DEFAULT_IPV4_WAIT_DELAY_MS);
