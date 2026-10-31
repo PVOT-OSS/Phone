@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="applicationLabel">Simu</string>
+  <string name="app_name">Simu</string>
   <string name="callHistoryIconLabel">Rekodi ya simu zilizopigwa</string>
   <string name="action_copy_number_text">Nakili nambari</string>
   <string name="action_edit_number_before_call">Badilisha nambari kabla ya kupiga simu</string>

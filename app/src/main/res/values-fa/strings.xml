@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="applicationLabel">تلفن</string>
+  <string name="app_name">تلفن</string>
   <string name="callHistoryIconLabel">سابقه تماس</string>
   <string name="action_copy_number_text">کپی کردن شماره</string>
   <string name="action_edit_number_before_call">ویرایش شماره قبل از تماس</string>

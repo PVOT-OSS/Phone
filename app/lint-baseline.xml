@@ -5573,8 +5573,8 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;applicationLabel&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;applicationLabel&quot; tools:ignore=&quot;UnusedResources&quot;>Phone&lt;/string>"
+        message="&quot;app_name&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;app_name&quot; tools:ignore=&quot;UnusedResources&quot;>Phone&lt;/string>"
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"

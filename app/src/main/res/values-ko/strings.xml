@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="applicationLabel">전화</string>
+  <string name="app_name">전화</string>
   <string name="callHistoryIconLabel">통화 기록</string>
   <string name="action_copy_number_text">전화번호 복사</string>
   <string name="action_edit_number_before_call">통화하기 전에 번호 수정</string>

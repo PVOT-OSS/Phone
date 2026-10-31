@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="applicationLabel">ફોન</string>
+  <string name="app_name">ફોન</string>
   <string name="callHistoryIconLabel">કૉલ ઇતિહાસ</string>
   <string name="action_copy_number_text">નંબર કૉપિ કરો</string>
   <string name="action_edit_number_before_call">કૉલ કરતાં પહેલાં નંબર સંપાદિત કરો</string>

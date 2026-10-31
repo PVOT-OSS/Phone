@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="applicationLabel">电话</string>
+  <string name="app_name">电话</string>
   <string name="callHistoryIconLabel">通话记录</string>
   <string name="action_copy_number_text">复制号码</string>
   <string name="action_edit_number_before_call">拨打之前修改号码</string>

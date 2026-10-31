@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="applicationLabel">Điện thoại</string>
+  <string name="app_name">Điện thoại</string>
   <string name="callHistoryIconLabel">Nhật ký cuộc gọi</string>
   <string name="action_copy_number_text">Sao chép số</string>
   <string name="action_edit_number_before_call">Chỉnh sửa số trước khi gọi</string>

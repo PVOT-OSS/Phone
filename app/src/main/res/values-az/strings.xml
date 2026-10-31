@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="applicationLabel">Telefon</string>
+  <string name="app_name">Telefon</string>
   <string name="callHistoryIconLabel">Zəng tarixçəsi</string>
   <string name="action_copy_number_text">Nömrəni kopyalayın</string>
   <string name="action_edit_number_before_call">Zəng etmədən öncə nömrəyə düzəliş edin</string>

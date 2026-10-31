@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="applicationLabel">Հեռախոս</string>
+  <string name="app_name">Հեռախոս</string>
   <string name="callHistoryIconLabel">Զանգերի պատմություն</string>
   <string name="action_copy_number_text">Պատճենել համարը</string>
   <string name="action_edit_number_before_call">Փոփոխել համարը զանգելուց առաջ</string>
