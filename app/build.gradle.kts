@@ -4,8 +4,8 @@
  */
 
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.compose)
+    id("pvot.android.application")
+    id("pvot.android.compose")
     alias(libs.plugins.protobuf)
 }
 
@@ -15,9 +15,6 @@ val versionPatch = 0
 
 android {
     namespace = "org.prauga.phone.dialer"
-    compileSdk {
-        version = release(37) { minorApiLevel = 1 }
-    }
 
     defaultConfig {
         applicationId = "org.prauga.phone"
@@ -38,12 +35,6 @@ android {
     buildFeatures {
         aidl = true
         buildConfig = true
-        compose = true
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
     }
 
     packaging {
