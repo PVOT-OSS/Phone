@@ -100,6 +100,8 @@ dependencies {
     implementation(libs.volley)
     compileOnly(libs.auto.value.annotations)
 
+    testImplementation(libs.junit)
+
     annotationProcessor(libs.auto.value)
     annotationProcessor(libs.dagger.compiler)
     annotationProcessor(libs.glide.compiler)
