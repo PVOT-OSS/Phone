@@ -44,7 +44,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
-import com.android.common.io.MoreCloseables;
 import com.android.dialer.R;
 import com.android.dialer.app.calllog.CallLogAdapter;
 import com.android.dialer.app.calllog.CallLogFragment;
@@ -58,6 +57,7 @@ import com.android.dialer.common.concurrent.DialerExecutorComponent;
 import com.android.dialer.constants.Constants;
 import com.android.dialer.phonenumbercache.CallLogQuery;
 import com.android.dialer.telecom.TelecomUtil;
+import com.android.dialer.util.DialerUtils;
 import com.android.dialer.util.PermissionsUtil;
 
 import com.google.common.io.ByteStreams;
@@ -418,7 +418,7 @@ public class VoicemailPlaybackPresenter
         return cursor.getInt(cursor.getColumnIndex(VoicemailContract.Voicemails.HAS_CONTENT)) == 1;
       }
     } finally {
-      MoreCloseables.closeQuietly(cursor);
+      DialerUtils.closeQuietly(cursor);
     }
     return false;
   }

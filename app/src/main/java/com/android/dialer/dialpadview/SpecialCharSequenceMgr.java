@@ -48,7 +48,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import com.android.common.io.MoreCloseables;
 import com.android.contacts.common.database.NoNullCursorAsyncQueryHandler;
 import com.android.contacts.common.util.ContactDisplayUtils;
 import com.android.contacts.common.widget.SelectPhoneAccountDialogFragment;
@@ -61,6 +60,7 @@ import com.android.dialer.compat.telephony.TelephonyManagerCompat;
 import com.android.dialer.oem.MotorolaUtils;
 import com.android.dialer.oem.TranssionUtils;
 import com.android.dialer.telecom.TelecomUtil;
+import com.android.dialer.util.DialerUtils;
 import com.android.dialer.util.PermissionsUtil;
 
 import java.util.List;
@@ -555,7 +555,7 @@ public class SpecialCharSequenceMgr {
           Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
         }
       } finally {
-        MoreCloseables.closeQuietly(c);
+        DialerUtils.closeQuietly(c);
       }
     }
 
