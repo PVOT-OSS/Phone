@@ -34,7 +34,7 @@
       android:background="?android:attr/colorBackgroundFloating"
       style="@style/Dialer.TextAppearance.Header2"/>
 
-  <com.android.dialer.widget.MaxHeightScrollView
+  <org.prauga.phone.dialer.widget.MaxHeightScrollView
       android:id="@+id/disambig_scrollview"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-  </com.android.dialer.widget.MaxHeightScrollView>
+  </org.prauga.phone.dialer.widget.MaxHeightScrollView>
 
   <FrameLayout
       android:id="@+id/remember_this_choice_container"

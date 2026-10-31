@@ -20,7 +20,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.android.dialer.app.settings.DefaultRingtonePreference
+    <org.prauga.phone.dialer.app.settings.DefaultRingtonePreference
         android:dialogTitle="@string/ringtone_title"
         android:key="@string/ringtone_preference_key"
         android:persistent="false"

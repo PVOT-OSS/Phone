@@ -58,7 +58,7 @@
     android:orientation="vertical"
     android:visibility="invisible"
     tools:visibility="visible">
-    <com.android.incallui.video.impl.CheckableImageButton
+    <org.prauga.phone.incallui.video.impl.CheckableImageButton
       android:id="@+id/videocall_speaker_button"
       style="@style/Incall.Button.VideoCall"
       android:layout_marginBottom="@dimen/videocall_button_spacing"
@@ -67,7 +67,7 @@
       app:contentDescriptionChecked="@string/incall_content_description_speaker"
       app:contentDescriptionUnchecked="@string/incall_content_description_earpiece"
       />
-    <com.android.incallui.video.impl.CheckableImageButton
+    <org.prauga.phone.incallui.video.impl.CheckableImageButton
       android:id="@+id/videocall_mute_button"
       style="@style/Incall.Button.VideoCall"
       android:layout_marginBottom="@dimen/videocall_button_spacing"
@@ -75,7 +75,7 @@
       app:contentDescriptionChecked="@string/incall_content_description_muted"
       app:contentDescriptionUnchecked="@string/incall_content_description_unmuted"
       />
-    <com.android.incallui.video.impl.CheckableImageButton
+    <org.prauga.phone.incallui.video.impl.CheckableImageButton
       android:id="@+id/videocall_mute_video"
       style="@style/Incall.Button.VideoCall"
       android:layout_marginBottom="@dimen/videocall_button_spacing"

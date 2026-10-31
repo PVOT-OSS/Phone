@@ -23,7 +23,7 @@
   android:orientation="vertical"
   android:visibility="visible">
 
-  <com.android.dialer.app.voicemail.VoicemailPlaybackLayout
+  <org.prauga.phone.dialer.app.voicemail.VoicemailPlaybackLayout
     android:id="@+id/voicemail_playback_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

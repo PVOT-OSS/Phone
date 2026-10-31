@@ -15,7 +15,7 @@
 -->
 
 <view xmlns:android="http://schemas.android.com/apk/res/android"
-  class="com.android.contacts.common.widget.ActivityTouchLinearLayout"
+  class="org.prauga.phone.contacts.common.widget.ActivityTouchLinearLayout"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:paddingStart="30dip"

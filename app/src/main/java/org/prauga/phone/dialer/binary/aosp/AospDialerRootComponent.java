@@ -1,0 +1,63 @@
+/*
+ * Copyright (C) 2017 The Android Open Source Project
+ * Copyright (C) 2023 The LineageOS Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
+
+package org.prauga.phone.dialer.binary.aosp;
+
+import org.prauga.phone.dialer.activecalls.ActiveCallsModule;
+import org.prauga.phone.dialer.binary.basecomponent.BaseDialerRootComponent;
+import org.prauga.phone.dialer.calllog.CallLogModule;
+import org.prauga.phone.dialer.common.concurrent.DialerExecutorModule;
+import org.prauga.phone.dialer.contacts.ContactsModule;
+import org.prauga.phone.dialer.glidephotomanager.GlidePhotoManagerModule;
+import org.prauga.phone.dialer.inject.ContextModule;
+import org.prauga.phone.dialer.phonelookup.PhoneLookupModule;
+import org.prauga.phone.dialer.phonenumbergeoutil.impl.PhoneNumberGeoUtilModule;
+import org.prauga.phone.dialer.precall.impl.PreCallModule;
+import org.prauga.phone.dialer.preferredsim.PreferredSimModule;
+import org.prauga.phone.dialer.preferredsim.suggestion.stub.StubSimSuggestionModule;
+import org.prauga.phone.dialer.promotion.impl.PromotionModule;
+import org.prauga.phone.dialer.simulator.impl.SimulatorModule;
+import org.prauga.phone.dialer.storage.StorageModule;
+import org.prauga.phone.dialer.theme.base.impl.AospThemeModule;
+import org.prauga.phone.voicemail.impl.VoicemailModule;
+
+import dagger.Component;
+
+import javax.inject.Singleton;
+
+/** Root component for the AOSP Dialer application. */
+@Singleton
+@Component(
+    modules = {
+      ActiveCallsModule.class,
+      CallLogModule.class,
+      ContactsModule.class,
+      ContextModule.class,
+      DialerExecutorModule.class,
+      GlidePhotoManagerModule.class,
+      PhoneLookupModule.class,
+      PhoneNumberGeoUtilModule.class,
+      PreCallModule.class,
+      PreferredSimModule.class,
+      PromotionModule.class,
+      SimulatorModule.class,
+      StorageModule.class,
+      StubSimSuggestionModule.class,
+      AospThemeModule.class,
+      VoicemailModule.class,
+    })
+public interface AospDialerRootComponent extends BaseDialerRootComponent {}

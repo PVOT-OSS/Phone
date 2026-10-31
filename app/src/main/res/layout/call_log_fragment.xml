@@ -67,7 +67,7 @@
     android:paddingEnd="@dimen/call_log_horizontal_margin"
     android:clipToPadding="false"/>
 
-  <com.android.dialer.widget.EmptyContentView
+  <org.prauga.phone.dialer.widget.EmptyContentView
     android:id="@+id/empty_list_view"
     android:layout_width="match_parent"
     android:layout_height="0dp"

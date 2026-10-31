@@ -14,7 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License
   -->
-<com.android.dialer.main.impl.bottomnav.BottomNavItem
+<org.prauga.phone.dialer.main.impl.bottomnav.BottomNavItem
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -80,4 +80,4 @@
       android:textSize="12sp"
       style="@style/Dialer.TextAppearance.OVERLINE"
       android:textColor="?android:attr/textColorPrimary"/>
-</com.android.dialer.main.impl.bottomnav.BottomNavItem>
+</org.prauga.phone.dialer.main.impl.bottomnav.BottomNavItem>

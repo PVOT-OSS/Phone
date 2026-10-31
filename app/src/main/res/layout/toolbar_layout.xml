@@ -15,7 +15,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<com.android.dialer.main.impl.toolbar.MainToolbar
+<org.prauga.phone.dialer.main.impl.toolbar.MainToolbar
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -25,7 +25,7 @@
   <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent">
-    <com.android.dialer.main.impl.toolbar.SearchBarView
+    <org.prauga.phone.dialer.main.impl.toolbar.SearchBarView
         android:id="@+id/search_view_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -88,13 +88,13 @@
       </RelativeLayout>
 
       <include layout="@layout/expanded_search_bar"/>
-    </com.android.dialer.main.impl.toolbar.SearchBarView>
+    </org.prauga.phone.dialer.main.impl.toolbar.SearchBarView>
 
     <!-- Sets android:importantForAccessibility="no" to avoid being announced when navigating with
          talkback enabled. It will still be announced when user drag or drop contact onto it.
          This is required since drag and drop event is only sent to views are visible when drag
          starts. -->
-    <com.android.dialer.app.list.RemoveView
+    <org.prauga.phone.dialer.app.list.RemoveView
         android:id="@+id/remove_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -131,6 +131,6 @@
             android:textColor="?colorTextOnUnthemedDarkBackground"
             android:textSize="16sp"/>
       </LinearLayout>
-    </com.android.dialer.app.list.RemoveView>
+    </org.prauga.phone.dialer.app.list.RemoveView>
   </FrameLayout>
-</com.android.dialer.main.impl.toolbar.MainToolbar>
+</org.prauga.phone.dialer.main.impl.toolbar.MainToolbar>

@@ -29,7 +29,7 @@
       android:background="@android:color/transparent"
       android:paddingBottom="@dimen/floating_action_button_list_bottom_padding"/>
 
-  <com.android.dialer.widget.EmptyContentView
+  <org.prauga.phone.dialer.widget.EmptyContentView
       android:id="@+id/speed_dial_empty_content_view"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

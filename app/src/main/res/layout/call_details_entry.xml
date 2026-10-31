@@ -23,7 +23,7 @@
     android:paddingTop="@dimen/call_entry_padding"
     android:paddingBottom="@dimen/call_entry_bottom_padding">
 
-  <com.android.dialer.calllogutils.CallTypeIconsView
+  <org.prauga.phone.dialer.calllogutils.CallTypeIconsView
       android:id="@+id/call_direction"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

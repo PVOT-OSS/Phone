@@ -53,7 +53,7 @@
 
       <!-- We have to keep deprecated singleLine to allow long text being truncated with ellipses.
                  a bug -->
-      <com.android.incallui.autoresizetext.AutoResizeTextView
+      <org.prauga.phone.incallui.autoresizetext.AutoResizeTextView
           android:id="@id/contactgrid_contact_name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
           android:layout_height="wrap_content"/>
     </LinearLayout>
 
-    <com.android.dialer.widget.LockableViewPager
+    <org.prauga.phone.dialer.widget.LockableViewPager
         android:id="@+id/incall_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -92,7 +92,7 @@
         android:layout_below="@+id/incall_contact_grid"
         android:layout_centerHorizontal="true"/>
 
-    <com.android.incallui.incall.impl.InCallPaginator
+    <org.prauga.phone.incallui.incall.impl.InCallPaginator
         android:id="@+id/incall_paginator"
         android:layout_width="@dimen/paginator_width"
         android:layout_height="@dimen/paginator_height"

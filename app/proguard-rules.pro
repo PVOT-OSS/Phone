@@ -77,15 +77,15 @@
 # From java/com/android/dialer/proguard/proguard.flags
 # Keep the annotation, classes, methods, and fields marked as UsedByReflection
 # TODO(b/373579455): Evaluate if <init> needs to be kept.
--keep class com.android.dialer.proguard.UsedByReflection {
+-keep class org.prauga.phone.dialer.proguard.UsedByReflection {
     void <init>();
 }
 # TODO(b/373579455): Evaluate if <init> needs to be kept.
--keep @com.android.dialer.proguard.UsedByReflection class * {
+-keep @org.prauga.phone.dialer.proguard.UsedByReflection class * {
     void <init>();
 }
 -keepclassmembers class * {
-    @com.android.dialer.proguard.UsedByReflection *;
+    @org.prauga.phone.dialer.proguard.UsedByReflection *;
 }
 -keep class com.google.android.material.floatingactionbutton.FloatingActionButton$* { *; }
 # From java/com/android/dialer/proguard/proguard_release.flags
@@ -120,19 +120,19 @@
 }
 
 # From java/com/android/dialer/common/proguard.flags
--assumenosideeffects class com.android.dialer.common.LogUtil {
+-assumenosideeffects class org.prauga.phone.dialer.common.LogUtil {
     public static void v(...);
     public static void d(...);
 }
 
 # From java/com/android/incallui/answer/impl/proguard.flags
-# Used in com.android.dialer.answer.impl.SmsBottomSheetFragment
+# Used in org.prauga.phone.dialer.answer.impl.SmsBottomSheetFragment
 -keep class com.google.android.material.bottomsheet.BottomSheetBehavior {
     public <init>(android.content.Context, android.util.AttributeSet);
     public <init>();
 }
 # From java/com/android/voicemail/impl/proguard.flags
--assumenosideeffects class com.android.voicemail.impl.VvmLog {
+-assumenosideeffects class org.prauga.phone.voicemail.impl.VvmLog {
     public static void v(...);
     public static void d(...);
 }

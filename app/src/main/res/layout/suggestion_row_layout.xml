@@ -23,7 +23,7 @@
     android:minHeight="72dp"
     android:background="?android:attr/selectableItemBackground">
 
-  <com.android.dialer.widget.ContactPhotoView
+  <org.prauga.phone.dialer.widget.ContactPhotoView
       android:id="@+id/avatar"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

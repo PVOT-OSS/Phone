@@ -9,11 +9,11 @@ plugins {
 }
 
 android {
-    namespace = "com.android.dialer"
+    namespace = "org.prauga.phone.dialer"
     compileSdk { version = release(37) }
 
     defaultConfig {
-        applicationId = "com.android.dialer"
+        applicationId = "org.prauga.phone"
         minSdk = 34
         targetSdk = 37
         versionCode = 2900000

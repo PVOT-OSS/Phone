@@ -17,7 +17,7 @@
 -->
 
 <!-- A layout representing key "1" in the dialpad -->
-<com.android.dialer.dialpadview.DialpadKeyButton
+<org.prauga.phone.dialer.dialpadview.DialpadKeyButton
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/one"
@@ -34,7 +34,7 @@
         android:layout_width="@dimen/dialpad_key_number_width"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dialpad_key_margin_right">
-      <com.android.dialer.dialpadview.DialpadTextView
+      <org.prauga.phone.dialer.dialpadview.DialpadTextView
           android:id="@+id/dialpad_key_number"
           style="@style/DialpadKeyNumberStyle"/>
     </FrameLayout>
@@ -59,4 +59,4 @@
         android:layout_height="match_parent"/>
   </LinearLayout>
 
-</com.android.dialer.dialpadview.DialpadKeyButton>
+</org.prauga.phone.dialer.dialpadview.DialpadKeyButton>

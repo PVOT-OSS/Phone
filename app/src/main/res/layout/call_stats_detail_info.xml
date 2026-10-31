@@ -67,7 +67,7 @@
         android:text="@string/call_stats_title_of_total"
         style="@style/Dialer.TextAppearance.Primary" />
 
-      <com.android.dialer.widget.LinearColorBar
+      <org.prauga.phone.dialer.widget.LinearColorBar
         android:id="@+id/duration_total_percent_bar"
         android:layout_width="match_parent"
         android:layout_below="@id/total_duration_total"
@@ -90,7 +90,7 @@
         android:text="@string/call_stats_title_for_number"
         style="@style/Dialer.TextAppearance.Primary" />
 
-      <com.android.dialer.widget.LinearColorBar
+      <org.prauga.phone.dialer.widget.LinearColorBar
         android:id="@+id/duration_number_percent_bar"
         android:layout_width="match_parent"
         android:layout_below="@id/total_duration_number"
@@ -156,7 +156,7 @@
         android:text="@string/call_stats_title_of_total"
         style="@style/Dialer.TextAppearance.Primary" />
 
-      <com.android.dialer.widget.LinearColorBar
+      <org.prauga.phone.dialer.widget.LinearColorBar
         android:id="@+id/count_total_percent_bar"
         android:layout_width="match_parent"
         android:layout_below="@id/total_count_total"
@@ -179,7 +179,7 @@
         android:text="@string/call_stats_title_for_number"
         style="@style/Dialer.TextAppearance.Primary" />
 
-      <com.android.dialer.widget.LinearColorBar
+      <org.prauga.phone.dialer.widget.LinearColorBar
         android:id="@+id/count_number_percent_bar"
         android:layout_width="match_parent"
         android:layout_below="@id/total_count_number"

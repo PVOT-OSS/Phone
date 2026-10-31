@@ -31,7 +31,7 @@
         android:textColor="?android:attr/textColorPrimary"
         style="@style/Dialer.TextAppearance.Header2"/>
 
-    <com.android.dialer.widget.BidiTextView
+    <org.prauga.phone.dialer.widget.BidiTextView
         android:id="@+id/subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

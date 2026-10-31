@@ -21,7 +21,7 @@
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground"
     android:orientation="vertical">
-  <com.android.contacts.common.list.ViewPagerTabs
+  <org.prauga.phone.contacts.common.list.ViewPagerTabs
       android:id="@+id/viewpager_header"
       style="@style/DialtactsActionBarTabTextStyle"
       android:layout_width="match_parent"

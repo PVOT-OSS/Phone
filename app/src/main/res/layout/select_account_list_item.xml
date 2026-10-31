@@ -15,7 +15,7 @@
 -->
 
 <!-- Layout of a single item in the InCallUI Account Chooser Dialog. -->
-<com.android.contacts.common.widget.ActivityTouchLinearLayout
+<org.prauga.phone.contacts.common.widget.ActivityTouchLinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -66,4 +66,4 @@
         android:visibility="gone"/>
   </LinearLayout>
 
-</com.android.contacts.common.widget.ActivityTouchLinearLayout>
+</org.prauga.phone.contacts.common.widget.ActivityTouchLinearLayout>

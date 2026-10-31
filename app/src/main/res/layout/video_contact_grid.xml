@@ -30,7 +30,7 @@
 
   <!-- We have to keep deprecated singleLine to allow long text being truncated with ellipses.
        a bug -->
-  <com.android.incallui.autoresizetext.AutoResizeTextView
+  <org.prauga.phone.incallui.autoresizetext.AutoResizeTextView
     android:id="@id/contactgrid_contact_name"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

@@ -13,7 +13,7 @@
     android:layout_gravity="center"
     android:columnCount="3"
     android:orientation="horizontal">
-    <com.android.incallui.incall.impl.CheckableLabeledButton
+    <org.prauga.phone.incallui.incall.impl.CheckableLabeledButton
       android:id="@+id/incall_first_button"
       android:layout_width="0dp"
       android:layout_columnWeight="1"
@@ -23,7 +23,7 @@
       tools:background="#FFFF0000"
       tools:layout_height="@dimen/tools_button_height"
       tools:layout_width="@dimen/incall_labeled_button_size"/>
-    <com.android.incallui.incall.impl.CheckableLabeledButton
+    <org.prauga.phone.incallui.incall.impl.CheckableLabeledButton
       android:id="@+id/incall_second_button"
       android:layout_width="0dp"
       android:layout_columnWeight="1"
@@ -33,7 +33,7 @@
       tools:background="#FFFF0000"
       tools:layout_height="@dimen/tools_button_height"
       tools:layout_width="@dimen/incall_labeled_button_size"/>
-    <com.android.incallui.incall.impl.CheckableLabeledButton
+    <org.prauga.phone.incallui.incall.impl.CheckableLabeledButton
       android:id="@+id/incall_third_button"
       android:layout_width="0dp"
       android:layout_columnWeight="1"
@@ -43,7 +43,7 @@
       tools:background="#FFFF0000"
       tools:layout_height="@dimen/tools_button_height"
       tools:layout_width="@dimen/incall_labeled_button_size"/>
-    <com.android.incallui.incall.impl.CheckableLabeledButton
+    <org.prauga.phone.incallui.incall.impl.CheckableLabeledButton
       android:id="@+id/incall_fourth_button"
       android:layout_marginTop="@dimen/incall_button_vertical_padding"
       android:layout_width="0dp"
@@ -53,7 +53,7 @@
       tools:background="#FFFF0000"
       tools:layout_height="@dimen/tools_button_height"
       tools:layout_width="@dimen/incall_labeled_button_size"/>
-    <com.android.incallui.incall.impl.CheckableLabeledButton
+    <org.prauga.phone.incallui.incall.impl.CheckableLabeledButton
       android:id="@+id/incall_fifth_button"
       android:layout_width="0dp"
       android:layout_columnWeight="1"
@@ -63,7 +63,7 @@
       tools:background="#FFFF0000"
       tools:layout_height="@dimen/tools_button_height"
       tools:layout_width="@dimen/incall_labeled_button_size"/>
-    <com.android.incallui.incall.impl.CheckableLabeledButton
+    <org.prauga.phone.incallui.incall.impl.CheckableLabeledButton
       android:id="@+id/incall_sixth_button"
       android:layout_width="0dp"
       android:layout_columnWeight="1"

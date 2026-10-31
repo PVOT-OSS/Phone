@@ -82,10 +82,10 @@
 
     <!-- Used for sending PendingIntents to dynamically registered receivers -->
     <permission
-        android:name="com.android.dialer.permission.DIALER_ORIGIN"
+        android:name="org.prauga.phone.dialer.permission.DIALER_ORIGIN"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.android.dialer.permission.DIALER_ORIGIN" />
+    <uses-permission android:name="org.prauga.phone.dialer.permission.DIALER_ORIGIN" />
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -109,7 +109,7 @@
     <uses-permission android:name="android.permission.BROADCAST_CLOSE_SYSTEM_DIALOGS" />
 
     <application
-        android:name="com.android.dialer.binary.aosp.AospDialerApplication"
+        android:name="org.prauga.phone.dialer.binary.aosp.AospDialerApplication"
         android:appCategory="social"
         android:extractNativeLibs="false"
         android:hardwareAccelerated="true"
@@ -133,33 +133,33 @@
         </activity>
 
         <service
-            android:name="com.android.dialer.callrecord.impl.CallRecorderService"
-            android:process="com.android.incallui" />
+            android:name="org.prauga.phone.dialer.callrecord.impl.CallRecorderService"
+            android:process="org.prauga.phone.incallui" />
 
         <activity
-            android:name="com.android.contacts.common.dialog.CallSubjectDialog"
+            android:name="org.prauga.phone.contacts.common.dialog.CallSubjectDialog"
             android:exported="true"
             android:theme="@style/Theme.CallSubjectDialogTheme"
             android:windowSoftInputMode="stateVisible|adjustResize" />
 
         <!-- Broadcast receiver that passively listens to location updates -->
-        <receiver android:name="com.android.dialer.location.CountryDetector$LocationChangedReceiver" />
+        <receiver android:name="org.prauga.phone.dialer.location.CountryDetector$LocationChangedReceiver" />
 
         <activity
-            android:name="com.android.dialer.app.calllog.CallLogActivity"
+            android:name="org.prauga.phone.dialer.app.calllog.CallLogActivity"
             android:label="@string/call_log_activity_title"
             android:theme="@style/DialtactsTheme" />
 
         <activity
-            android:name="com.android.dialer.app.AccountSelectionActivity"
+            android:name="org.prauga.phone.dialer.app.AccountSelectionActivity"
             android:exported="false"
             android:theme="@style/TransparentTheme" />
 
         <activity
-            android:name="com.android.dialer.app.settings.DialerSettingsActivity"
+            android:name="org.prauga.phone.dialer.app.settings.DialerSettingsActivity"
             android:exported="true"
             android:label="@string/dialer_settings_label"
-            android:parentActivityName="com.android.dialer.main.impl.MainActivity"
+            android:parentActivityName="org.prauga.phone.dialer.main.impl.MainActivity"
             android:theme="@style/SettingsStyle">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -169,7 +169,7 @@
         </activity>
 
         <receiver
-            android:name="com.android.dialer.app.calllog.CallLogReceiver"
+            android:name="org.prauga.phone.dialer.app.calllog.CallLogReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.NEW_VOICEMAIL" />
@@ -189,20 +189,20 @@
         </receiver>
 
         <activity
-            android:name="com.android.dialer.app.calllog.CallLogNotificationsActivity"
+            android:name="org.prauga.phone.dialer.app.calllog.CallLogNotificationsActivity"
             android:theme="@style/Theme.AppCompat.Translucent" />
 
         <service
-            android:name="com.android.dialer.app.calllog.CallLogNotificationsService"
+            android:name="org.prauga.phone.dialer.app.calllog.CallLogNotificationsService"
             android:directBootAware="true"
             android:exported="false" />
 
         <service
-            android:name="com.android.dialer.app.calllog.VoicemailNotificationJobService"
+            android:name="org.prauga.phone.dialer.app.calllog.VoicemailNotificationJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <receiver
-            android:name="com.android.dialer.app.calllog.MissedCallNotificationReceiver"
+            android:name="org.prauga.phone.dialer.app.calllog.MissedCallNotificationReceiver"
             android:directBootAware="true"
             android:exported="true">
             <intent-filter>
@@ -211,20 +211,20 @@
         </receiver>
         <!-- Handles voicemail notifications from telephony. Requires O -->
         <receiver
-            android:name="com.android.dialer.app.voicemail.LegacyVoicemailNotificationReceiver"
+            android:name="org.prauga.phone.dialer.app.voicemail.LegacyVoicemailNotificationReceiver"
             android:directBootAware="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.telephony.action.SHOW_VOICEMAIL_NOTIFICATION" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.android.voicemail.VoicemailClient.ACTION_SHOW_LEGACY_VOICEMAIL" />
+                <action android:name="org.prauga.phone.voicemail.VoicemailClient.ACTION_SHOW_LEGACY_VOICEMAIL" />
             </intent-filter>
         </receiver>
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.android.dialer.files"
+            android:authorities="org.prauga.phone.dialer.files"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -243,42 +243,42 @@
             android:value="true" />
 
         <activity
-            android:name="com.android.dialer.assisteddialing.ui.AssistedDialingSettingActivity"
+            android:name="org.prauga.phone.dialer.assisteddialing.ui.AssistedDialingSettingActivity"
             android:exported="true"
             android:label="@string/assisted_dialing_setting_title"
-            android:parentActivityName="com.android.dialer.app.settings.DialerSettingsActivity"
+            android:parentActivityName="org.prauga.phone.dialer.app.settings.DialerSettingsActivity"
             android:theme="@style/SettingsStyle">
             <intent-filter>
-                <action android:name="com.android.dialer.app.settings.SHOW_ASSISTED_DIALING_SETTINGS" />
+                <action android:name="org.prauga.phone.dialer.app.settings.SHOW_ASSISTED_DIALING_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
         <!-- Provide this since upgrade path seems to be messy; Only a stub class exists there -->
         <provider
-            android:name="com.android.dialer.blocking.FilteredNumberProvider"
-            android:authorities="com.android.dialer.blocking.filterednumberprovider"
+            android:name="org.prauga.phone.dialer.blocking.FilteredNumberProvider"
+            android:authorities="org.prauga.phone.dialer.blocking.filterednumberprovider"
             android:exported="false"
             android:multiprocess="false" />
 
         <activity
-            android:name="com.android.dialer.calldetails.OldCallDetailsActivity"
+            android:name="org.prauga.phone.dialer.calldetails.OldCallDetailsActivity"
             android:exported="false"
             android:label="@string/call_details" />
 
         <activity
-            android:name="com.android.dialer.calldetails.CallDetailsActivity"
+            android:name="org.prauga.phone.dialer.calldetails.CallDetailsActivity"
             android:exported="false"
             android:label="@string/call_details" />
 
         <provider
-            android:name="com.android.dialer.calllog.database.AnnotatedCallLogContentProvider"
-            android:authorities="com.android.dialer.annotatedcalllog"
+            android:name="org.prauga.phone.dialer.calllog.database.AnnotatedCallLogContentProvider"
+            android:authorities="org.prauga.phone.dialer.annotatedcalllog"
             android:exported="false"
             android:multiprocess="false" />
 
         <activity
-            android:name="com.android.dialer.helplines.HelplineActivity"
+            android:name="org.prauga.phone.dialer.helplines.HelplineActivity"
             android:autoRemoveFromRecents="true"
             android:excludeFromRecents="true"
             android:exported="true"
@@ -293,11 +293,11 @@
 
         <!-- Service to update a contact -->
         <service
-            android:name="com.android.dialer.interactions.ContactUpdateService"
+            android:name="org.prauga.phone.dialer.interactions.ContactUpdateService"
             android:exported="false" />
 
         <receiver
-            android:name="com.android.dialer.interactions.UndemoteOutgoingCallReceiver"
+            android:name="org.prauga.phone.dialer.interactions.UndemoteOutgoingCallReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
@@ -305,8 +305,8 @@
         </receiver>
 
         <provider
-            android:name="com.android.dialer.lookup.LookupProvider"
-            android:authorities="com.android.dialer.lookup"
+            android:name="org.prauga.phone.dialer.lookup.LookupProvider"
+            android:authorities="org.prauga.phone.dialer.lookup"
             android:exported="false"
             android:multiprocess="false" />
 
@@ -314,7 +314,7 @@
         <!-- The entrance point for Phone UI.
              stateAlwaysHidden is set to suppress keyboard show up on dialpad screen. -->
         <activity
-            android:name="com.android.dialer.main.impl.MainActivity"
+            android:name="org.prauga.phone.dialer.main.impl.MainActivity"
             android:clearTaskOnLaunch="true"
             android:directBootAware="true"
             android:exported="true"
@@ -325,7 +325,7 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing">
 
             <intent-filter>
-                <action android:name="com.android.dialer.main.impl.MAIN" />
+                <action android:name="org.prauga.phone.dialer.main.impl.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
@@ -403,68 +403,68 @@
         </activity>
 
         <activity
-            android:name="com.android.dialer.main.impl.DefaultDialerActivity"
+            android:name="org.prauga.phone.dialer.main.impl.DefaultDialerActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:theme="@style/MainActivityTheme" />
 
         <provider
-            android:name="com.android.dialer.phonelookup.database.PhoneLookupHistoryContentProvider"
-            android:authorities="com.android.dialer.phonelookuphistory"
+            android:name="org.prauga.phone.dialer.phonelookup.database.PhoneLookupHistoryContentProvider"
+            android:authorities="org.prauga.phone.dialer.phonelookuphistory"
             android:exported="false"
             android:multiprocess="false" />
 
         <activity
-            android:name="com.android.dialer.postcall.PostCallActivity"
+            android:name="org.prauga.phone.dialer.postcall.PostCallActivity"
             android:exported="false"
             android:theme="@style/Dialer.ThemeBase.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name="com.android.dialer.precall.externalreceiver.LaunchPreCallActivity"
+            android:name="org.prauga.phone.dialer.precall.externalreceiver.LaunchPreCallActivity"
             android:excludeFromRecents="true"
             android:exported="true"
             android:noHistory="true"
             android:permission="android.permission.CALL_PHONE"
             android:theme="@style/Theme.PreCall.DialogHolder">
             <intent-filter>
-                <action android:name="com.android.dialer.LAUNCH_PRE_CALL" />
+                <action android:name="org.prauga.phone.dialer.LAUNCH_PRE_CALL" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="tel" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.android.dialer.LAUNCH_PRE_CALL" />
+                <action android:name="org.prauga.phone.dialer.LAUNCH_PRE_CALL" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="voicemail" />
             </intent-filter>
         </activity>
 
         <activity
-            android:name="com.android.dialer.precall.impl.PreCallActivity"
+            android:name="org.prauga.phone.dialer.precall.impl.PreCallActivity"
             android:excludeFromRecents="true"
             android:exported="false"
             android:noHistory="true"
             android:theme="@style/Theme.PreCall.DialogHolder"></activity>
 
         <provider
-            android:name="com.android.dialer.preferredsim.impl.PreferredSimFallbackProvider"
-            android:authorities="com.android.dialer.preferredsimfallback"
+            android:name="org.prauga.phone.dialer.preferredsim.impl.PreferredSimFallbackProvider"
+            android:authorities="org.prauga.phone.dialer.preferredsimfallback"
             android:exported="true"
             android:multiprocess="false"
             android:readPermission="android.permission.READ_CONTACTS"
             android:writePermission="android.permission.WRITE_CONTACTS" />
 
         <meta-data
-            android:name="com.android.dialer.SUPPORTS_PREFERRED_SIM"
+            android:name="org.prauga.phone.dialer.SUPPORTS_PREFERRED_SIM"
             android:value="true" />
         <meta-data
-            android:name="com.android.dialer.PREFERRED_SIM_FALLBACK_AUTHORITY"
-            android:value="com.android.dialer.preferredsimfallback" />
+            android:name="org.prauga.phone.dialer.PREFERRED_SIM_FALLBACK_AUTHORITY"
+            android:value="org.prauga.phone.dialer.preferredsimfallback" />
 
-        <activity android:name="com.android.dialer.rtt.RttTranscriptActivity" />
+        <activity android:name="org.prauga.phone.dialer.rtt.RttTranscriptActivity" />
 
         <service
-            android:name="com.android.dialer.shortcuts.PeriodicJobService"
+            android:name="org.prauga.phone.dialer.shortcuts.PeriodicJobService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
@@ -478,7 +478,7 @@
            so that apps other than the dialer cannot attempt to make phone calls using it.
            -->
         <activity
-            android:name="com.android.dialer.shortcuts.CallContactActivity"
+            android:name="org.prauga.phone.dialer.shortcuts.CallContactActivity"
             android:excludeFromRecents="true"
             android:exported="false"
             android:label=""
@@ -487,11 +487,11 @@
             android:theme="@style/CallContactsTheme" />
 
         <service
-            android:name="com.android.dialer.simulator.service.SimulatorService"
+            android:name="org.prauga.phone.dialer.simulator.service.SimulatorService"
             android:exported="false" />
 
         <service
-            android:name="com.android.dialer.simulator.impl.SimulatorConnectionService"
+            android:name="org.prauga.phone.dialer.simulator.impl.SimulatorConnectionService"
             android:exported="true"
             android:permission="android.permission.BIND_CONNECTION_SERVICE">
             <intent-filter>
@@ -507,30 +507,30 @@
             android:value="true" />
 
         <activity
-            android:name="com.android.dialer.voicemail.settings.VoicemailChangePinActivity"
+            android:name="org.prauga.phone.dialer.voicemail.settings.VoicemailChangePinActivity"
             android:exported="false"
             android:label="@string/voicemail_change_pin_preference_title"
-            android:parentActivityName="com.android.dialer.app.settings.DialerSettingsActivity"
+            android:parentActivityName="org.prauga.phone.dialer.app.settings.DialerSettingsActivity"
             android:theme="@style/SettingsStyle"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
-            android:name="com.android.dialer.voicemail.settings.RecordVoicemailGreetingActivity"
+            android:name="org.prauga.phone.dialer.voicemail.settings.RecordVoicemailGreetingActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/voicemail_change_greeting_preference_title"
-            android:parentActivityName="com.android.dialer.app.settings.DialerSettingsActivity"
+            android:parentActivityName="org.prauga.phone.dialer.app.settings.DialerSettingsActivity"
             android:theme="@style/SettingsStyle" />
         <activity
-            android:name="com.android.dialer.voicemail.settings.CurrentVoicemailGreetingActivity"
+            android:name="org.prauga.phone.dialer.voicemail.settings.CurrentVoicemailGreetingActivity"
             android:exported="true"
             android:label="@string/voicemail_change_greeting_preference_title"
-            android:parentActivityName="com.android.dialer.app.settings.DialerSettingsActivity">
+            android:parentActivityName="org.prauga.phone.dialer.app.settings.DialerSettingsActivity">
             <!-- TODO(a bug): delete android:exported="true" closer to submitting  -->
         </activity>
 
         <!-- Go variants need hardware acceleration for IMS video calls even though it is disabled at
     the application level -->
         <activity
-            android:name="com.android.incallui.InCallActivity"
+            android:name="org.prauga.phone.incallui.InCallActivity"
             android:directBootAware="true"
             android:excludeFromRecents="true"
             android:exported="false"
@@ -539,12 +539,12 @@
             android:launchMode="singleInstance"
             android:resizeableActivity="true"
             android:screenOrientation="nosensor"
-            android:taskAffinity="com.android.incallui"
+            android:taskAffinity="org.prauga.phone.incallui"
             android:theme="@style/Theme.InCallScreen"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name="com.android.incallui.ManageConferenceActivity"
+            android:name="org.prauga.phone.incallui.ManageConferenceActivity"
             android:directBootAware="true"
             android:excludeFromRecents="true"
             android:exported="false"
@@ -552,11 +552,11 @@
             android:launchMode="singleTask"
             android:noHistory="true"
             android:resizeableActivity="true"
-            android:taskAffinity="com.android.incallui"
+            android:taskAffinity="org.prauga.phone.incallui"
             android:theme="@style/Theme.InCallScreen.ManageConference" />
 
         <service
-            android:name="com.android.incallui.InCallServiceImpl"
+            android:name="org.prauga.phone.incallui.InCallServiceImpl"
             android:directBootAware="true"
             android:exported="true"
             android:foregroundServiceType="phoneCall|microphone"
@@ -577,14 +577,14 @@
         </service>
 
         <activity
-            android:name="com.android.incallui.AudioRouteSelectorActivity"
+            android:name="org.prauga.phone.incallui.AudioRouteSelectorActivity"
             android:excludeFromRecents="true"
             android:exported="false"
             android:noHistory="true"
             android:theme="@style/Theme.Incall.DialogHolder" />
 
         <activity
-            android:name="com.android.incallui.PostCharDialogActivity"
+            android:name="org.prauga.phone.incallui.PostCharDialogActivity"
             android:excludeFromRecents="true"
             android:exported="false"
             android:noHistory="true"
@@ -592,20 +592,20 @@
 
         <!-- BroadcastReceiver for receiving Intents from Notification mechanism. -->
         <receiver
-            android:name="com.android.incallui.NotificationBroadcastReceiver"
+            android:name="org.prauga.phone.incallui.NotificationBroadcastReceiver"
             android:directBootAware="true"
             android:exported="false" />
 
         <!-- Identical to .InCallActivity except orientation is locked to portrait -->
         <activity
-            android:name="com.android.incallui.callpending.CallPendingActivity"
+            android:name="org.prauga.phone.incallui.callpending.CallPendingActivity"
             android:directBootAware="true"
             android:excludeFromRecents="true"
             android:exported="false"
             android:label="@string/phoneAppLabel"
             android:resizeableActivity="true"
             android:screenOrientation="portrait"
-            android:taskAffinity="com.android.incallui"
+            android:taskAffinity="org.prauga.phone.incallui"
             android:theme="@style/Theme.InCallScreen"
             tools:ignore="LockedOrientationActivity" />
 
@@ -616,7 +616,7 @@
            excludeFromRecents="true"   -> Don't show in "recent apps" screen
         -->
         <activity
-            android:name="com.android.incallui.spam.SpamNotificationActivity"
+            android:name="org.prauga.phone.incallui.spam.SpamNotificationActivity"
             android:excludeFromRecents="true"
             android:exported="false"
             android:noHistory="true"
@@ -624,14 +624,14 @@
             android:theme="@style/AfterCallNotificationTheme" />
 
         <activity
-            android:name="com.android.incallui.telecomeventui.InternationalCallOnWifiDialogActivity"
+            android:name="org.prauga.phone.incallui.telecomeventui.InternationalCallOnWifiDialogActivity"
             android:excludeFromRecents="true"
             android:exported="true"
             android:noHistory="true"
             android:theme="@style/Theme.Incall.DialogHolder" />
 
         <receiver
-            android:name="com.android.voicemail.VoicemailSecretCodeReceiver"
+            android:name="org.prauga.phone.voicemail.VoicemailSecretCodeReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SECRET_CODE" />
@@ -640,7 +640,7 @@
         </receiver>
 
         <receiver
-            android:name="com.android.voicemail.VoicemailPowerCycleReceiver"
+            android:name="org.prauga.phone.voicemail.VoicemailPowerCycleReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -649,7 +649,7 @@
         </receiver>
 
         <receiver
-            android:name="com.android.voicemail.impl.sms.OmtpMessageReceiver"
+            android:name="org.prauga.phone.voicemail.impl.sms.OmtpMessageReceiver"
             android:directBootAware="true"
             android:exported="false">
             <intent-filter>
@@ -658,7 +658,7 @@
         </receiver>
 
         <receiver
-            android:name="com.android.voicemail.impl.sms.AdvvmSmsReceiver"
+            android:name="org.prauga.phone.voicemail.impl.sms.AdvvmSmsReceiver"
             android:exported="true"
             android:directBootAware="true">
             <intent-filter>
@@ -668,15 +668,15 @@
         </receiver>
 
         <receiver
-            android:name="com.android.voicemail.impl.VoicemailClientReceiver"
+            android:name="org.prauga.phone.voicemail.impl.VoicemailClientReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.android.voicemail.VoicemailClient.ACTION_UPLOAD" />
+                <action android:name="org.prauga.phone.voicemail.VoicemailClient.ACTION_UPLOAD" />
             </intent-filter>
         </receiver>
 
         <receiver
-            android:name="com.android.voicemail.impl.fetch.FetchVoicemailReceiver"
+            android:name="org.prauga.phone.voicemail.impl.fetch.FetchVoicemailReceiver"
             android:exported="true"
             android:permission="com.android.voicemail.permission.READ_VOICEMAIL">
             <intent-filter>
@@ -688,7 +688,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.android.voicemail.impl.sync.OmtpVvmSyncReceiver"
+            android:name="org.prauga.phone.voicemail.impl.sync.OmtpVvmSyncReceiver"
             android:exported="true"
             android:permission="com.android.voicemail.permission.READ_VOICEMAIL">
             <intent-filter>
@@ -696,7 +696,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.android.voicemail.impl.sync.VoicemailProviderChangeReceiver"
+            android:name="org.prauga.phone.voicemail.impl.sync.VoicemailProviderChangeReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.PROVIDER_CHANGED" />
@@ -708,25 +708,25 @@
         </receiver>
 
         <receiver
-            android:name="com.android.voicemail.impl.scheduling.TaskReceiver"
+            android:name="org.prauga.phone.voicemail.impl.scheduling.TaskReceiver"
             android:exported="false" />
 
         <service
-            android:name="com.android.voicemail.impl.scheduling.TaskSchedulerJobService"
+            android:name="org.prauga.phone.voicemail.impl.scheduling.TaskSchedulerJobService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <service
-            android:name="com.android.voicemail.impl.StatusCheckJobService"
+            android:name="org.prauga.phone.voicemail.impl.StatusCheckJobService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <service
-            android:name="com.android.voicemail.impl.DeviceProvisionedJobService"
+            android:name="org.prauga.phone.voicemail.impl.DeviceProvisionedJobService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name="com.android.voicemail.impl.OmtpService"
+            android:name="org.prauga.phone.voicemail.impl.OmtpService"
             android:directBootAware="true"
             android:exported="true"
             android:permission="android.permission.BIND_VISUAL_VOICEMAIL_SERVICE">
@@ -736,7 +736,7 @@
         </service>
 
         <receiver
-            android:name="com.android.voicemail.impl.PackageReplacedReceiver"
+            android:name="org.prauga.phone.voicemail.impl.PackageReplacedReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
@@ -744,7 +744,7 @@
         </receiver>
 
         <receiver
-            android:name="com.android.voicemail.impl.CarrierVvmPackageInstalledReceiver"
+            android:name="org.prauga.phone.voicemail.impl.CarrierVvmPackageInstalledReceiver"
             android:exported="true"
             android:permission="android.permission.BIND_VISUAL_VOICEMAIL_SERVICE">
             <intent-filter>
@@ -754,7 +754,7 @@
         </receiver>
 
         <activity
-            android:name="com.android.voicemail.impl.configui.VoicemailSecretCodeActivity"
+            android:name="org.prauga.phone.voicemail.impl.configui.VoicemailSecretCodeActivity"
             android:exported="false" />
     </application>
 

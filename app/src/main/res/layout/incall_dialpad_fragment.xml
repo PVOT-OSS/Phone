@@ -16,7 +16,7 @@
 
 <view xmlns:android="http://schemas.android.com/apk/res/android"
   android:id="@+id/dtmf_twelve_key_dialer_view"
-  class="com.android.incallui.DialpadFragment$DialpadSlidingLinearLayout"
+  class="org.prauga.phone.incallui.DialpadFragment$DialpadSlidingLinearLayout"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:clipToPadding="false"

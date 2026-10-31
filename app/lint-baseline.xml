@@ -18,7 +18,7 @@
         errorLine1="  public void draw(Canvas canvas) {"
         errorLine2="              ~~~~">
         <location
-            file="src/main/java/com/android/dialer/dialpadview/DialpadTextView.java"
+            file="src/main/java/org/prauga/phone/dialer/dialpadview/DialpadTextView.java"
             line="47"
             column="15"/>
     </issue>
@@ -29,7 +29,7 @@
         errorLine1="  protected void onNewIntent(Intent intent) {"
         errorLine2="                 ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/InCallActivity.java"
+            file="src/main/java/org/prauga/phone/incallui/InCallActivity.java"
             line="591"
             column="18"/>
     </issue>
@@ -40,7 +40,7 @@
         errorLine1="  public void onBackPressed() {"
         errorLine2="              ~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/ManageConferenceActivity.java"
+            file="src/main/java/org/prauga/phone/incallui/ManageConferenceActivity.java"
             line="75"
             column="15"/>
     </issue>
@@ -51,7 +51,7 @@
         errorLine1="              LayoutInflater.from(builder.getContext())"
         errorLine2="              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/contacts/common/widget/SelectPhoneAccountDialogFragment.java"
+            file="src/main/java/org/prauga/phone/contacts/common/widget/SelectPhoneAccountDialogFragment.java"
             line="142"
             column="15"/>
     </issue>
@@ -62,7 +62,7 @@
         errorLine1="  * @param isResponseAuth is the response the one the server is returning us. response-auth has"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/voicemail/impl/mail/store/imap/DigestMd5Utils.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/mail/store/imap/DigestMd5Utils.java"
             line="149"
             column="5"/>
     </issue>
@@ -84,7 +84,7 @@
         errorLine1="    letterToTileRatio = res.getFraction(R.dimen.letter_to_tile_ratio, 1, 1);"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/lettertile/LetterTileDrawable.java"
+            file="src/main/java/org/prauga/phone/dialer/lettertile/LetterTileDrawable.java"
             line="127"
             column="41"/>
     </issue>
@@ -95,7 +95,7 @@
         errorLine1="    request"
         errorLine2="    ^">
         <location
-            file="src/main/java/com/android/dialer/glidephotomanager/impl/GlidePhotoManagerImpl.java"
+            file="src/main/java/org/prauga/phone/dialer/glidephotomanager/impl/GlidePhotoManagerImpl.java"
             line="117"
             column="5"/>
     </issue>
@@ -106,7 +106,7 @@
         errorLine1="      request.circleCrop();"
         errorLine2="      ~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/glidephotomanager/impl/GlidePhotoManagerImpl.java"
+            file="src/main/java/org/prauga/phone/dialer/glidephotomanager/impl/GlidePhotoManagerImpl.java"
             line="122"
             column="7"/>
     </issue>
@@ -117,7 +117,7 @@
         errorLine1="      Assert.createAssertionFailException(&quot;&quot;);"
         errorLine2="      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/incall/impl/InCallFragment.java"
+            file="src/main/java/org/prauga/phone/incallui/incall/impl/InCallFragment.java"
             line="288"
             column="7"/>
     </issue>
@@ -128,7 +128,7 @@
         errorLine1="    Assert.createAssertionFailException(&quot;&quot;);"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/incall/impl/InCallFragment.java"
+            file="src/main/java/org/prauga/phone/incallui/incall/impl/InCallFragment.java"
             line="559"
             column="5"/>
     </issue>
@@ -139,7 +139,7 @@
         errorLine1="    TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Dialpad);"
         errorLine2="                                                         ~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/dialpadview/DialpadView.java"
+            file="src/main/java/org/prauga/phone/dialer/dialpadview/DialpadView.java"
             line="109"
             column="58"/>
     </issue>
@@ -150,7 +150,7 @@
         errorLine1="    TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ResizingText);"
         errorLine2="                                                         ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/widget/ResizingTextEditText.java"
+            file="src/main/java/org/prauga/phone/dialer/widget/ResizingTextEditText.java"
             line="38"
             column="58"/>
     </issue>
@@ -161,7 +161,7 @@
         errorLine1="      mPercentView.setText(String.format(&quot;%.1f%%&quot;, percent));"
         errorLine2="                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/callstats/CallStatsListItemViewHolder.java"
+            file="src/main/java/org/prauga/phone/dialer/callstats/CallStatsListItemViewHolder.java"
             line="179"
             column="28"/>
     </issue>
@@ -172,7 +172,7 @@
         errorLine1="    return String.format(&quot;FixedLengthInputStream(in=%s, length=%d)&quot;, in.toString(), length);"
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/voicemail/impl/mail/FixedLengthInputStream.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/mail/FixedLengthInputStream.java"
             line="77"
             column="12"/>
     </issue>
@@ -183,7 +183,7 @@
         errorLine1="        String bodyPartMimeType = bodyPart.getMimeType().toLowerCase();"
         errorLine2="                                                         ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/voicemail/impl/imap/ImapHelper.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/imap/ImapHelper.java"
             line="579"
             column="58"/>
     </issue>
@@ -194,7 +194,7 @@
         errorLine1="        String bodyPartMimeType = bodyPart.getMimeType().toLowerCase();"
         errorLine2="                                                         ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/voicemail/impl/imap/ImapHelper.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/imap/ImapHelper.java"
             line="629"
             column="58"/>
     </issue>
@@ -205,7 +205,7 @@
         errorLine1="    return String.format(&quot;{%d byte literal(memory)}&quot;, data.length);"
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/voicemail/impl/mail/store/imap/ImapMemoryLiteral.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/mail/store/imap/ImapMemoryLiteral.java"
             line="68"
             column="12"/>
     </issue>
@@ -216,7 +216,7 @@
         errorLine1="    return String.format(&quot;{%d byte literal(file)}&quot;, size);"
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/voicemail/impl/mail/store/imap/ImapTempFileLiteral.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/mail/store/imap/ImapTempFileLiteral.java"
             line="116"
             column="12"/>
     </issue>
@@ -227,7 +227,7 @@
         errorLine1="      String countryIso = tm.getSimCountryIso().toUpperCase();"
         errorLine2="                                                ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/InCallPresenter.java"
+            file="src/main/java/org/prauga/phone/incallui/InCallPresenter.java"
             line="512"
             column="49"/>
     </issue>
@@ -238,7 +238,7 @@
         errorLine1="                        .getCountry().toLowerCase();"
         errorLine2="                                      ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/helplines/LoadHelplinesTask.java"
+            file="src/main/java/org/prauga/phone/dialer/helplines/LoadHelplinesTask.java"
             line="69"
             column="39"/>
     </issue>
@@ -249,7 +249,7 @@
         errorLine1="    String countryIso = tm.getSimCountryIso().toUpperCase();"
         errorLine2="                                              ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/lookup/LookupCache.java"
+            file="src/main/java/org/prauga/phone/dialer/lookup/LookupCache.java"
             line="277"
             column="47"/>
     </issue>
@@ -260,7 +260,7 @@
         errorLine1="    String countryIso = tm.getSimCountryIso().toUpperCase();"
         errorLine2="                                              ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/lookup/LookupCacheService.java"
+            file="src/main/java/org/prauga/phone/dialer/lookup/LookupCacheService.java"
             line="76"
             column="47"/>
     </issue>
@@ -271,7 +271,7 @@
         errorLine1="    return sb.toString().toUpperCase();"
         errorLine2="                         ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/voicemail/impl/mail/internet/MimeMultipart.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/mail/internet/MimeMultipart.java"
             line="66"
             column="26"/>
     </issue>
@@ -282,7 +282,7 @@
         errorLine1="    String lowerCaseName = name.toLowerCase();"
         errorLine2="                                ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/voicemail/impl/mail/internet/MimeUtility.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/mail/internet/MimeUtility.java"
             line="194"
             column="33"/>
     </issue>
@@ -293,7 +293,7 @@
         errorLine1="      if (part.trim().toLowerCase().startsWith(lowerCaseName)) {"
         errorLine2="                      ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/voicemail/impl/mail/internet/MimeUtility.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/mail/internet/MimeUtility.java"
             line="196"
             column="23"/>
     </issue>
@@ -304,7 +304,7 @@
         errorLine1="    String mimeType = part.getMimeType().toLowerCase();"
         errorLine2="                                         ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/voicemail/impl/mail/internet/MimeUtility.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/mail/internet/MimeUtility.java"
             line="361"
             column="42"/>
     </issue>
@@ -315,7 +315,7 @@
         errorLine1="        TAG, String.format(&quot;Sending sms &apos;%s&apos; to %s:%d&quot;, text, destinationNumber, applicationPort));"
         errorLine2="             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/voicemail/impl/sms/OmtpMessageSender.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/sms/OmtpMessageSender.java"
             line="83"
             column="14"/>
     </issue>
@@ -326,7 +326,7 @@
         errorLine1="          String.format("
         errorLine2="          ^">
         <location
-            file="src/main/java/com/android/voicemail/impl/sync/OmtpVvmSyncService.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/sync/OmtpVvmSyncService.java"
             line="190"
             column="11"/>
     </issue>
@@ -337,7 +337,7 @@
         errorLine1="    return String.format("
         errorLine2="           ^">
         <location
-            file="src/main/java/com/android/voicemail/impl/mail/PeekableInputStream.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/mail/PeekableInputStream.java"
             line="77"
             column="12"/>
     </issue>
@@ -348,7 +348,7 @@
         errorLine1="    countryIso = countryIso.toUpperCase();"
         errorLine2="                            ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/phonenumberutil/PhoneNumberHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/phonenumberutil/PhoneNumberHelper.java"
             line="211"
             column="29"/>
     </issue>
@@ -359,7 +359,7 @@
         errorLine1="    name = name.toLowerCase();"
         errorLine2="                ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/searchfragment/common/QueryBoldingUtil.java"
+            file="src/main/java/org/prauga/phone/dialer/searchfragment/common/QueryBoldingUtil.java"
             line="104"
             column="17"/>
     </issue>
@@ -370,7 +370,7 @@
         errorLine1="    String[] names = name.toLowerCase().split(&quot;\\s&quot;);"
         errorLine2="                          ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/searchfragment/common/QueryFilteringUtil.java"
+            file="src/main/java/org/prauga/phone/dialer/searchfragment/common/QueryFilteringUtil.java"
             line="84"
             column="27"/>
     </issue>
@@ -381,7 +381,7 @@
         errorLine1="    return Pattern.compile(&quot;(^|\\s)&quot; + Pattern.quote(query.toLowerCase()))"
         errorLine2="                                                           ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/searchfragment/common/QueryFilteringUtil.java"
+            file="src/main/java/org/prauga/phone/dialer/searchfragment/common/QueryFilteringUtil.java"
             line="152"
             column="60"/>
     </issue>
@@ -392,7 +392,7 @@
         errorLine1="        .matcher(name.toLowerCase())"
         errorLine2="                      ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/searchfragment/common/QueryFilteringUtil.java"
+            file="src/main/java/org/prauga/phone/dialer/searchfragment/common/QueryFilteringUtil.java"
             line="153"
             column="23"/>
     </issue>
@@ -403,7 +403,7 @@
         errorLine1="    for (char c : s.toLowerCase().toCharArray()) {"
         errorLine2="                    ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/searchfragment/common/QueryFilteringUtil.java"
+            file="src/main/java/org/prauga/phone/dialer/searchfragment/common/QueryFilteringUtil.java"
             line="182"
             column="21"/>
     </issue>
@@ -414,8 +414,8 @@
         errorLine1="        String name = stringName.toLowerCase();"
         errorLine2="                                 ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/helplines/utils/ResourceUtils.java"
-            line="30"
+            file="src/main/java/org/prauga/phone/dialer/helplines/utils/ResourceUtils.java"
+            line="32"
             column="34"/>
     </issue>
 
@@ -425,7 +425,7 @@
         errorLine1="    String countryIso = telephonyManager.getSimCountryIso().toUpperCase();"
         errorLine2="                                                            ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/lookup/ReverseLookupService.java"
+            file="src/main/java/org/prauga/phone/dialer/lookup/ReverseLookupService.java"
             line="65"
             column="61"/>
     </issue>
@@ -436,7 +436,7 @@
         errorLine1="      return info.get().getCountryIso().toUpperCase();"
         errorLine2="                                        ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/contacts/common/widget/SelectPhoneAccountDialogFragment.java"
+            file="src/main/java/org/prauga/phone/contacts/common/widget/SelectPhoneAccountDialogFragment.java"
             line="298"
             column="41"/>
     </issue>
@@ -447,7 +447,7 @@
         errorLine1="    String callerId = String.format(&quot;+%d&quot;, callCount);"
         errorLine2="                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/simulator/impl/SimulatorMissedCallCreator.java"
+            file="src/main/java/org/prauga/phone/dialer/simulator/impl/SimulatorMissedCallCreator.java"
             line="78"
             column="23"/>
     </issue>
@@ -458,7 +458,7 @@
         errorLine1="    return nanpCountries.contains(country.toUpperCase());"
         errorLine2="                                          ~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/smartdial/util/SmartDialPrefix.java"
+            file="src/main/java/org/prauga/phone/dialer/smartdial/util/SmartDialPrefix.java"
             line="536"
             column="43"/>
     </issue>
@@ -469,7 +469,7 @@
         errorLine1="    return String.format(&quot;%02d:%02d&quot;, minutes, seconds);"
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/voicemail/VoicemailPlaybackLayout.java"
+            file="src/main/java/org/prauga/phone/dialer/app/voicemail/VoicemailPlaybackLayout.java"
             line="358"
             column="12"/>
     </issue>
@@ -480,7 +480,7 @@
         errorLine1="            String.format("
         errorLine2="            ^">
         <location
-            file="src/main/java/com/android/voicemail/impl/sync/VoicemailsQueryHelper.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/sync/VoicemailsQueryHelper.java"
             line="279"
             column="13"/>
     </issue>
@@ -491,7 +491,7 @@
         errorLine1="      append(String.format(&quot;%tm-%td %tH:%tM:%tS.%tL - %s&quot;, c, c, c, c, c, c, msg));"
         errorLine2="             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/voicemail/impl/VvmLog.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/VvmLog.java"
             line="118"
             column="14"/>
     </issue>
@@ -1088,7 +1088,7 @@
         errorLine1="        return cursor.getString(cursor.getColumnIndex(Contacts.LOOKUP_KEY));"
         errorLine2="                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/shortcuts/ShortcutUsageReporter.java"
+            file="src/main/java/org/prauga/phone/dialer/shortcuts/ShortcutUsageReporter.java"
             line="127"
             column="33"/>
     </issue>
@@ -1099,7 +1099,7 @@
         errorLine1="        int duration = cursor.getInt(cursor.getColumnIndex(VoicemailContract.Voicemails.DURATION));"
         errorLine2="                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/voicemail/VoicemailPlaybackPresenter.java"
+            file="src/main/java/org/prauga/phone/dialer/app/voicemail/VoicemailPlaybackPresenter.java"
             line="415"
             column="38"/>
     </issue>
@@ -1110,7 +1110,7 @@
         errorLine1="        return cursor.getInt(cursor.getColumnIndex(VoicemailContract.Voicemails.HAS_CONTENT)) == 1;"
         errorLine2="                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/voicemail/VoicemailPlaybackPresenter.java"
+            file="src/main/java/org/prauga/phone/dialer/app/voicemail/VoicemailPlaybackPresenter.java"
             line="418"
             column="30"/>
     </issue>
@@ -1121,7 +1121,7 @@
         errorLine1="          String number = contentInfo.getString(contentInfo.getColumnIndex(Voicemails.NUMBER));"
         errorLine2="                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/voicemail/VoicemailPlaybackPresenter.java"
+            file="src/main/java/org/prauga/phone/dialer/app/voicemail/VoicemailPlaybackPresenter.java"
             line="855"
             column="49"/>
     </issue>
@@ -1132,7 +1132,7 @@
         errorLine1="          long date = contentInfo.getLong(contentInfo.getColumnIndex(Voicemails.DATE));"
         errorLine2="                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/voicemail/VoicemailPlaybackPresenter.java"
+            file="src/main/java/org/prauga/phone/dialer/app/voicemail/VoicemailPlaybackPresenter.java"
             line="856"
             column="43"/>
     </issue>
@@ -1143,7 +1143,7 @@
         errorLine1="          String mimeType = contentInfo.getString(contentInfo.getColumnIndex(Voicemails.MIME_TYPE));"
         errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/voicemail/VoicemailPlaybackPresenter.java"
+            file="src/main/java/org/prauga/phone/dialer/app/voicemail/VoicemailPlaybackPresenter.java"
             line="857"
             column="51"/>
     </issue>
@@ -1154,7 +1154,7 @@
         errorLine1="              contentInfo.getString(contentInfo.getColumnIndex(Voicemails.TRANSCRIPTION));"
         errorLine2="                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/voicemail/VoicemailPlaybackPresenter.java"
+            file="src/main/java/org/prauga/phone/dialer/app/voicemail/VoicemailPlaybackPresenter.java"
             line="859"
             column="37"/>
     </issue>
@@ -1165,7 +1165,7 @@
         errorLine1="      SimpleDateFormat format = new SimpleDateFormat(pattern);"
         errorLine2="                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/calldetails/CallDetailsEntryViewHolder.java"
+            file="src/main/java/org/prauga/phone/dialer/calldetails/CallDetailsEntryViewHolder.java"
             line="175"
             column="33"/>
     </issue>
@@ -1176,7 +1176,7 @@
         errorLine1="  private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(&quot;yyMMdd_HHmmssSSS&quot;);"
         errorLine2="                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/callrecord/impl/CallRecorderService.java"
+            file="src/main/java/org/prauga/phone/dialer/callrecord/impl/CallRecorderService.java"
             line="50"
             column="48"/>
     </issue>
@@ -1187,7 +1187,7 @@
         errorLine1="    if (call.getState() != DialerCallState.INCOMING) {"
         errorLine2="    ^">
         <location
-            file="src/main/java/com/android/incallui/call/CallList.java"
+            file="src/main/java/org/prauga/phone/incallui/call/CallList.java"
             line="141"
             column="5"/>
     </issue>
@@ -1198,7 +1198,7 @@
         errorLine1="            .sendSmsFromMissedCall("
         errorLine2="             ^">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogNotificationsActivity.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogNotificationsActivity.java"
             line="64"
             column="14"/>
     </issue>
@@ -1209,7 +1209,7 @@
         errorLine1="        cancelAllMissedCalls(this);"
         errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogNotificationsService.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogNotificationsService.java"
             line="167"
             column="9"/>
     </issue>
@@ -1220,7 +1220,7 @@
         errorLine1="        ContactsAsyncHelper.startObtainPhotoAsync("
         errorLine2="                            ^">
         <location
-            file="src/main/java/com/android/incallui/ContactInfoCache.java"
+            file="src/main/java/org/prauga/phone/incallui/ContactInfoCache.java"
             line="495"
             column="29"/>
     </issue>
@@ -1231,7 +1231,7 @@
         errorLine1="    if (shouldShowEmergencyCallWarning(getContext())) {"
         errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/dialpadview/DialpadFragment.java"
+            file="src/main/java/org/prauga/phone/dialer/dialpadview/DialpadFragment.java"
             line="468"
             column="9"/>
     </issue>
@@ -1242,7 +1242,7 @@
         errorLine1="    contactInfoCache.findInfo("
         errorLine2="    ^">
         <location
-            file="src/main/java/com/android/incallui/ExternalCallNotifier.java"
+            file="src/main/java/org/prauga/phone/incallui/ExternalCallNotifier.java"
             line="161"
             column="5"/>
     </issue>
@@ -1253,7 +1253,7 @@
         errorLine1="        PreCall.getIntent("
         errorLine2="                ^">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/MissedCallNotifier.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/MissedCallNotifier.java"
             line="402"
             column="17"/>
     </issue>
@@ -1264,7 +1264,7 @@
         errorLine1="  public void onReceive(Context context, Intent intent) {"
         errorLine2="                                                        ^">
         <location
-            file="src/main/java/com/android/voicemail/impl/sms/OmtpMessageReceiver.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/sms/OmtpMessageReceiver.java"
             line="52"
             column="57"/>
     </issue>
@@ -1275,7 +1275,7 @@
         errorLine1="    if (!VisualVoicemailSettingsUtil.isEnabled(this.context, phone)) {"
         errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/voicemail/impl/sms/OmtpMessageReceiver.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/sms/OmtpMessageReceiver.java"
             line="84"
             column="9"/>
     </issue>
@@ -1286,7 +1286,7 @@
         errorLine1="    if (!isServiceEnabled(phoneAccountHandle)) {"
         errorLine2="         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/voicemail/impl/OmtpService.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/OmtpService.java"
             line="64"
             column="10"/>
     </issue>
@@ -1297,7 +1297,7 @@
         errorLine1="    if (!isServiceEnabled(sms.getPhoneAccountHandle())) {"
         errorLine2="         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/voicemail/impl/OmtpService.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/OmtpService.java"
             line="88"
             column="10"/>
     </issue>
@@ -1308,7 +1308,7 @@
         errorLine1="      showNotification(call);"
         errorLine2="      ~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/StatusBarNotifier.java"
+            file="src/main/java/org/prauga/phone/incallui/StatusBarNotifier.java"
             line="232"
             column="7"/>
     </issue>
@@ -1319,7 +1319,7 @@
         errorLine1="    contactInfoCache.findInfo(call, isIncoming, this);"
         errorLine2="                                                ~~~~">
         <location
-            file="src/main/java/com/android/incallui/StatusBarNotifier.java"
+            file="src/main/java/org/prauga/phone/incallui/StatusBarNotifier.java"
             line="251"
             column="49"/>
     </issue>
@@ -1330,7 +1330,7 @@
         errorLine1="    switch (notificationType) {"
         errorLine2="    ^">
         <location
-            file="src/main/java/com/android/incallui/StatusBarNotifier.java"
+            file="src/main/java/org/prauga/phone/incallui/StatusBarNotifier.java"
             line="335"
             column="5"/>
     </issue>
@@ -1341,7 +1341,7 @@
         errorLine1="    OmtpVvmCarrierConfigHelper helper = new OmtpVvmCarrierConfigHelper(context, phoneAccountHandle);"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/voicemail/impl/sms/StatusSmsFetcher.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/sms/StatusSmsFetcher.java"
             line="145"
             column="41"/>
     </issue>
@@ -1352,7 +1352,7 @@
         errorLine1="    if (isEnabled) {"
         errorLine2="    ^">
         <location
-            file="src/main/java/com/android/voicemail/impl/settings/VisualVoicemailSettingsUtil.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/settings/VisualVoicemailSettingsUtil.java"
             line="47"
             column="5"/>
     </issue>
@@ -1363,7 +1363,7 @@
         errorLine1="          .setMutuallyExclusiveButton(NO_MUTUALLY_EXCLUSIVE_BUTTON_SET);"
         errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/incall/impl/MappedButtonConfig.java"
+            file="src/main/java/org/prauga/phone/incallui/incall/impl/MappedButtonConfig.java"
             line="190"
             column="39"/>
     </issue>
@@ -1396,7 +1396,7 @@
         errorLine1="        (TextView) getLayoutInflater().inflate(R.layout.audioroute_item, null, false);"
         errorLine2="                                                                         ~~~~">
         <location
-            file="src/main/java/com/android/incallui/audioroute/AudioRouteSelectorDialogFragment.java"
+            file="src/main/java/org/prauga/phone/incallui/audioroute/AudioRouteSelectorDialogFragment.java"
             line="161"
             column="74"/>
     </issue>
@@ -1407,7 +1407,7 @@
         errorLine1="        convertView = inflater.inflate(R.layout.dialpad_chooser_list_item, null);"
         errorLine2="                                                                           ~~~~">
         <location
-            file="src/main/java/com/android/dialer/dialpadview/DialpadFragment.java"
+            file="src/main/java/org/prauga/phone/dialer/dialpadview/DialpadFragment.java"
             line="1818"
             column="76"/>
     </issue>
@@ -1418,7 +1418,7 @@
         errorLine1="    View view = inflater.inflate(R.layout.double_date_picker_dialog, null);"
         errorLine2="                                                                     ~~~~">
         <location
-            file="src/main/java/com/android/dialer/callstats/DoubleDatePickerDialog.java"
+            file="src/main/java/org/prauga/phone/dialer/callstats/DoubleDatePickerDialog.java"
             line="148"
             column="70"/>
     </issue>
@@ -1429,7 +1429,7 @@
         errorLine1="    setContentView(LayoutInflater.from(context).inflate(R.layout.sheet_layout, null));"
         errorLine2="                                                                               ~~~~">
         <location
-            file="src/main/java/com/android/dialer/historyitemactions/HistoryItemActionBottomSheet.java"
+            file="src/main/java/org/prauga/phone/dialer/historyitemactions/HistoryItemActionBottomSheet.java"
             line="104"
             column="80"/>
     </issue>
@@ -1440,7 +1440,7 @@
         errorLine1="      TextView textView = (TextView) inflater.inflate(R.layout.selectable_text_view, null);"
         errorLine2="                                                                                     ~~~~">
         <location
-            file="src/main/java/com/android/dialer/widget/MessageFragment.java"
+            file="src/main/java/org/prauga/phone/dialer/widget/MessageFragment.java"
             line="102"
             column="86"/>
     </issue>
@@ -1451,7 +1451,7 @@
         errorLine1="      View layout = LayoutInflater.from(getContext()).inflate(R.layout.unread_count_tab, null);"
         errorLine2="                                                                                         ~~~~">
         <location
-            file="src/main/java/com/android/contacts/common/list/ViewPagerTabs.java"
+            file="src/main/java/org/prauga/phone/contacts/common/list/ViewPagerTabs.java"
             line="146"
             column="90"/>
     </issue>
@@ -1484,7 +1484,7 @@
         errorLine1="    recyclerView.setHasFixedSize(true);"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogFragment.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogFragment.java"
             line="299"
             column="5"/>
     </issue>
@@ -1495,7 +1495,7 @@
         errorLine1="    mRecyclerView.setHasFixedSize(true);"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/callstats/CallStatsFragment.java"
+            file="src/main/java/org/prauga/phone/dialer/callstats/CallStatsFragment.java"
             line="122"
             column="5"/>
     </issue>
@@ -1638,7 +1638,7 @@
         errorLine1="    final List&lt;ResolveInfo> intentServices = pm.queryIntentServices(intent,"
         errorLine2="                                                ~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/contacts/common/model/account/ExternalAccountType.java"
+            file="src/main/java/org/prauga/phone/contacts/common/model/account/ExternalAccountType.java"
             line="196"
             column="49"/>
     </issue>
@@ -1737,7 +1737,7 @@
         errorLine1="    return R.style.Theme_Design_Light_BottomSheetDialog;"
         errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/answer/impl/SmsBottomSheetFragment.java"
+            file="src/main/java/org/prauga/phone/incallui/answer/impl/SmsBottomSheetFragment.java"
             line="129"
             column="20"/>
     </issue>
@@ -1781,7 +1781,7 @@
         errorLine1="    final int resId = res.getIdentifier(name, null, packageName);"
         errorLine2="                          ~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/contacts/common/model/account/ExternalAccountType.java"
+            file="src/main/java/org/prauga/phone/contacts/common/model/account/ExternalAccountType.java"
             line="254"
             column="27"/>
     </issue>
@@ -1789,11 +1789,11 @@
     <issue
         id="DiscouragedApi"
         message="Use of this function is discouraged because resource reflection makes it harder to perform build optimizations and compile-time verification of code. It is much more efficient to retrieve resources by identifier (e.g. `R.foo.bar`) than by name (e.g. `getIdentifier(&quot;bar&quot;, &quot;foo&quot;, null)`)."
-        errorLine1="        final int resId = res.getIdentifier(resourceName, &quot;string&quot;, &quot;com.android.dialer&quot;);"
+        errorLine1="        final int resId = res.getIdentifier(resourceName, &quot;string&quot;, BuildConfig.APPLICATION_ID);"
         errorLine2="                              ~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/helplines/utils/ResourceUtils.java"
-            line="46"
+            file="src/main/java/org/prauga/phone/dialer/helplines/utils/ResourceUtils.java"
+            line="48"
             column="31"/>
     </issue>
 
@@ -1803,7 +1803,7 @@
         errorLine1="            executorService.scheduleAtFixedRate("
         errorLine2="            ^">
         <location
-            file="src/main/java/com/android/dialer/app/voicemail/VoicemailPlaybackLayout.java"
+            file="src/main/java/org/prauga/phone/dialer/app/voicemail/VoicemailPlaybackLayout.java"
             line="405"
             column="13"/>
     </issue>
@@ -1814,7 +1814,7 @@
         errorLine1="    Trace.beginSection(&quot;AnswerProximitySensor.shouldUse&quot;);"
         errorLine2="          ~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/answerproximitysensor/AnswerProximitySensor.java"
+            file="src/main/java/org/prauga/phone/incallui/answerproximitysensor/AnswerProximitySensor.java"
             line="44"
             column="11"/>
     </issue>
@@ -1825,7 +1825,7 @@
         errorLine1="    Trace.beginSection(&quot;CallList.onUpdateCall&quot;);"
         errorLine2="          ~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/call/CallList.java"
+            file="src/main/java/org/prauga/phone/incallui/call/CallList.java"
             line="467"
             column="11"/>
     </issue>
@@ -1836,7 +1836,7 @@
         errorLine1="    Trace.beginSection(&quot;ContactInfoCache.updateCallerInfoInCacheOnAnyThread&quot;);"
         errorLine2="          ~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/ContactInfoCache.java"
+            file="src/main/java/org/prauga/phone/incallui/ContactInfoCache.java"
             line="441"
             column="11"/>
     </issue>
@@ -1847,7 +1847,7 @@
         errorLine1="    Trace.beginSection(TAG + &quot; onCreate&quot;);"
         errorLine2="          ~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/dialpadview/DialpadFragment.java"
+            file="src/main/java/org/prauga/phone/dialer/dialpadview/DialpadFragment.java"
             line="354"
             column="11"/>
     </issue>
@@ -1858,7 +1858,7 @@
         errorLine1="    Trace.beginSection(TAG + &quot; onStart&quot;);"
         errorLine2="          ~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/dialpadview/DialpadFragment.java"
+            file="src/main/java/org/prauga/phone/dialer/dialpadview/DialpadFragment.java"
             line="711"
             column="11"/>
     </issue>
@@ -1869,7 +1869,7 @@
         errorLine1="    Trace.beginSection(&quot;InCallActivity.onCreate&quot;);"
         errorLine2="          ~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/InCallActivity.java"
+            file="src/main/java/org/prauga/phone/incallui/InCallActivity.java"
             line="179"
             column="11"/>
     </issue>
@@ -1880,7 +1880,7 @@
         errorLine1="    Trace.beginSection(&quot;InCallActivity.onStart&quot;);"
         errorLine2="          ~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/InCallActivity.java"
+            file="src/main/java/org/prauga/phone/incallui/InCallActivity.java"
             line="421"
             column="11"/>
     </issue>
@@ -1891,7 +1891,7 @@
         errorLine1="    Trace.beginSection(&quot;InCallPresenter.setUp&quot;);"
         errorLine2="          ~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/InCallPresenter.java"
+            file="src/main/java/org/prauga/phone/incallui/InCallPresenter.java"
             line="292"
             column="11"/>
     </issue>
@@ -1902,7 +1902,7 @@
         errorLine1="    Trace.beginSection(&quot;InCallPresenter.onCallAdded&quot;);"
         errorLine2="          ~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/InCallPresenter.java"
+            file="src/main/java/org/prauga/phone/incallui/InCallPresenter.java"
             line="498"
             column="11"/>
     </issue>
@@ -1913,7 +1913,7 @@
         errorLine1="    Trace.beginSection(&quot;StatusBarNotifier.getLargeIconToDisplay&quot;);"
         errorLine2="          ~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/StatusBarNotifier.java"
+            file="src/main/java/org/prauga/phone/incallui/StatusBarNotifier.java"
             line="570"
             column="11"/>
     </issue>
@@ -1946,7 +1946,7 @@
         errorLine1="        getResources().getDrawable(R.drawable.incall_button_background, context.getTheme()));"
         errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/incall/impl/CheckableLabeledButton.java"
+            file="src/main/java/org/prauga/phone/incallui/incall/impl/CheckableLabeledButton.java"
             line="107"
             column="9"/>
     </issue>
@@ -1957,7 +1957,7 @@
         errorLine1="          (RippleDrawable) getContext().getDrawable(R.drawable.btn_dialpad_key);"
         errorLine2="                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/dialpadview/DialpadView.java"
+            file="src/main/java/org/prauga/phone/dialer/dialpadview/DialpadView.java"
             line="198"
             column="28"/>
     </issue>
@@ -1968,7 +1968,7 @@
         errorLine1="    defaultPersonAvatar = res.getDrawable(R.drawable.quantum_ic_person_vd_theme_24, null);"
         errorLine2="                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/lettertile/LetterTileDrawable.java"
+            file="src/main/java/org/prauga/phone/dialer/lettertile/LetterTileDrawable.java"
             line="128"
             column="27"/>
     </issue>
@@ -1979,7 +1979,7 @@
         errorLine1="    defaultBusinessAvatar = res.getDrawable(R.drawable.quantum_ic_business_vd_theme_24, null);"
         errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/lettertile/LetterTileDrawable.java"
+            file="src/main/java/org/prauga/phone/dialer/lettertile/LetterTileDrawable.java"
             line="129"
             column="29"/>
     </issue>
@@ -1990,7 +1990,7 @@
         errorLine1="    defaultVoicemailAvatar = res.getDrawable(R.drawable.quantum_ic_voicemail_vd_theme_24, null);"
         errorLine2="                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/lettertile/LetterTileDrawable.java"
+            file="src/main/java/org/prauga/phone/dialer/lettertile/LetterTileDrawable.java"
             line="130"
             column="30"/>
     </issue>
@@ -2001,7 +2001,7 @@
         errorLine1="    defaultSpamAvatar = res.getDrawable(R.drawable.quantum_ic_report_vd_theme_24, null);"
         errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/lettertile/LetterTileDrawable.java"
+            file="src/main/java/org/prauga/phone/dialer/lettertile/LetterTileDrawable.java"
             line="131"
             column="25"/>
     </issue>
@@ -2012,7 +2012,7 @@
         errorLine1="    defaultConferenceAvatar = res.getDrawable(R.drawable.quantum_ic_group_vd_theme_24, null);"
         errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/lettertile/LetterTileDrawable.java"
+            file="src/main/java/org/prauga/phone/dialer/lettertile/LetterTileDrawable.java"
             line="132"
             column="31"/>
     </issue>
@@ -2023,7 +2023,7 @@
         errorLine1="            context.getDrawable(R.drawable.quantum_ic_videocam_vd_white_24));"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/searchfragment/cp2/SearchContactViewHolder.java"
+            file="src/main/java/org/prauga/phone/dialer/searchfragment/cp2/SearchContactViewHolder.java"
             line="168"
             column="13"/>
     </issue>
@@ -2034,7 +2034,7 @@
         errorLine1="      icon = context.getDrawable(R.drawable.quantum_ic_network_wifi_vd_theme_24);"
         errorLine2="             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/contactgrid/TopRow.java"
+            file="src/main/java/org/prauga/phone/incallui/contactgrid/TopRow.java"
             line="78"
             column="14"/>
     </issue>
@@ -2045,7 +2045,7 @@
         errorLine1="        getResources().getDrawable(R.drawable.ic_voicemail_seek_handle, context.getTheme());"
         errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/voicemail/VoicemailPlaybackLayout.java"
+            file="src/main/java/org/prauga/phone/dialer/app/voicemail/VoicemailPlaybackLayout.java"
             line="224"
             column="9"/>
     </issue>
@@ -2056,7 +2056,7 @@
         errorLine1="        getResources()"
         errorLine2="        ^">
         <location
-            file="src/main/java/com/android/dialer/app/voicemail/VoicemailPlaybackLayout.java"
+            file="src/main/java/org/prauga/phone/dialer/app/voicemail/VoicemailPlaybackLayout.java"
             line="226"
             column="9"/>
     </issue>
@@ -2111,7 +2111,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2127,7 +2127,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2143,7 +2143,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2159,7 +2159,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2175,7 +2175,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2191,7 +2191,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2207,7 +2207,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2223,7 +2223,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2239,7 +2239,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2255,7 +2255,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2271,7 +2271,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2287,7 +2287,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2303,7 +2303,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2319,7 +2319,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2335,7 +2335,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2351,7 +2351,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2367,7 +2367,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2383,7 +2383,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2399,7 +2399,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2415,7 +2415,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2431,7 +2431,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2447,7 +2447,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2463,7 +2463,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2479,7 +2479,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2495,7 +2495,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2511,7 +2511,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2527,7 +2527,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2543,7 +2543,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2559,7 +2559,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2575,7 +2575,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2591,7 +2591,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2607,7 +2607,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2623,7 +2623,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2639,7 +2639,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2655,7 +2655,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2671,7 +2671,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2687,7 +2687,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2703,7 +2703,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2719,7 +2719,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2735,7 +2735,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2751,7 +2751,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2767,7 +2767,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2783,7 +2783,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2799,7 +2799,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2815,7 +2815,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2831,7 +2831,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2847,7 +2847,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2863,7 +2863,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2879,7 +2879,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2895,7 +2895,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2911,7 +2911,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2927,7 +2927,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2943,7 +2943,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2959,7 +2959,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2975,7 +2975,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -2991,7 +2991,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -3007,7 +3007,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -3023,7 +3023,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -3039,7 +3039,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -3055,7 +3055,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -3071,7 +3071,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -3087,7 +3087,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -3103,7 +3103,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -3119,7 +3119,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -3135,7 +3135,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -3151,7 +3151,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -3167,7 +3167,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -3183,7 +3183,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -3199,7 +3199,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -3215,7 +3215,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -3231,7 +3231,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -3247,7 +3247,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -3263,7 +3263,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -3279,7 +3279,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -3295,7 +3295,7 @@
         errorLine1="          resources.getString(R.string.description_num_calls, details.callTypes.length));"
         errorLine2="                                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogListItemHelper.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogListItemHelper.java"
             line="193"
             column="63"/>
         <location
@@ -16027,7 +16027,7 @@
         errorLine1="            accountId = telephonyManager.getSimSerialNumber();"
         errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/voicemail/impl/fetch/FetchVoicemailReceiver.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/fetch/FetchVoicemailReceiver.java"
             line="112"
             column="25"/>
     </issue>
@@ -16038,7 +16038,7 @@
         errorLine1="            this.helper"
         errorLine2="            ^">
         <location
-            file="src/main/java/com/android/voicemail/impl/protocol/Vvm3Subscriber.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/protocol/Vvm3Subscriber.java"
             line="174"
             column="13"/>
     </issue>
@@ -16049,7 +16049,7 @@
         errorLine1="  public void onReceive(Context context, Intent intent) {"
         errorLine2="              ~~~~~~~~~">
         <location
-            file="src/main/java/com/android/voicemail/impl/sms/AdvvmSmsReceiver.java"
+            file="src/main/java/org/prauga/phone/voicemail/impl/sms/AdvvmSmsReceiver.java"
             line="36"
             column="15"/>
     </issue>
@@ -16060,7 +16060,7 @@
         errorLine1="        proximityWakeLock.acquire();"
         errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/ProximitySensor.java"
+            file="src/main/java/org/prauga/phone/incallui/ProximitySensor.java"
             line="175"
             column="9"/>
     </issue>
@@ -16071,7 +16071,7 @@
         errorLine1="    wakeLock.acquire();"
         errorLine2="    ~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/answerproximitysensor/SystemProximityWakeLock.java"
+            file="src/main/java/org/prauga/phone/incallui/answerproximitysensor/SystemProximityWakeLock.java"
             line="51"
             column="5"/>
     </issue>
@@ -16082,7 +16082,7 @@
         errorLine1="      proximityWakeLock.acquire();"
         errorLine2="      ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/voicemail/VoicemailPlaybackPresenter.java"
+            file="src/main/java/org/prauga/phone/dialer/app/voicemail/VoicemailPlaybackPresenter.java"
             line="749"
             column="7"/>
     </issue>
@@ -16093,7 +16093,7 @@
         errorLine1="                  uri -> adapter.notifyDataSetChanged(),"
         errorLine2="                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/BlockReportSpamListener.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/BlockReportSpamListener.java"
             line="70"
             column="26"/>
     </issue>
@@ -16104,7 +16104,7 @@
         errorLine1="                  uri -> adapter.notifyDataSetChanged(),"
         errorLine2="                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/BlockReportSpamListener.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/BlockReportSpamListener.java"
             line="93"
             column="26"/>
     </issue>
@@ -16115,7 +16115,7 @@
         errorLine1="                  adapter.notifyDataSetChanged();"
         errorLine2="                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/BlockReportSpamListener.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/BlockReportSpamListener.java"
             line="115"
             column="19"/>
     </issue>
@@ -16126,7 +16126,7 @@
         errorLine1="              adapter.notifyDataSetChanged();"
         errorLine2="              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/BlockReportSpamListener.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/BlockReportSpamListener.java"
             line="133"
             column="15"/>
     </issue>
@@ -16137,7 +16137,7 @@
         errorLine1="    notifyDataSetChanged();"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/calldetails/CallDetailsAdapterCommon.java"
+            file="src/main/java/org/prauga/phone/dialer/calldetails/CallDetailsAdapterCommon.java"
             line="164"
             column="5"/>
     </issue>
@@ -16148,7 +16148,7 @@
         errorLine1="          notifyDataSetChanged();"
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogAdapter.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogAdapter.java"
             line="190"
             column="11"/>
     </issue>
@@ -16159,7 +16159,7 @@
         errorLine1="    notifyDataSetChanged();"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogAdapter.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogAdapter.java"
             line="555"
             column="5"/>
     </issue>
@@ -16170,7 +16170,7 @@
         errorLine1="    notifyDataSetChanged();"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogAdapter.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogAdapter.java"
             line="1265"
             column="5"/>
     </issue>
@@ -16181,7 +16181,7 @@
         errorLine1="    notifyDataSetChanged();"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogAdapter.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogAdapter.java"
             line="1273"
             column="5"/>
     </issue>
@@ -16192,7 +16192,7 @@
         errorLine1="            adapter.notifyDataSetChanged();"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogFragment.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogFragment.java"
             line="121"
             column="13"/>
     </issue>
@@ -16203,7 +16203,7 @@
         errorLine1="      adapter.notifyDataSetChanged();"
         errorLine2="      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogFragment.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogFragment.java"
             line="556"
             column="7"/>
     </issue>
@@ -16214,7 +16214,7 @@
         errorLine1="    getAdapter().notifyDataSetChanged();"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/CallLogFragment.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/CallLogFragment.java"
             line="633"
             column="5"/>
     </issue>
@@ -16225,7 +16225,7 @@
         errorLine1="    notifyDataSetChanged();"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/callstats/CallStatsAdapter.java"
+            file="src/main/java/org/prauga/phone/dialer/callstats/CallStatsAdapter.java"
             line="174"
             column="5"/>
     </issue>
@@ -16236,7 +16236,7 @@
         errorLine1="    notifyDataSetChanged();"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/contactsfragment/ContactsAdapter.java"
+            file="src/main/java/org/prauga/phone/dialer/contactsfragment/ContactsAdapter.java"
             line="89"
             column="5"/>
     </issue>
@@ -16247,7 +16247,7 @@
         errorLine1="          notifyDataSetChanged();"
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/GroupingListAdapter.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/GroupingListAdapter.java"
             line="54"
             column="11"/>
     </issue>
@@ -16258,7 +16258,7 @@
         errorLine1="      notifyDataSetChanged();"
         errorLine2="      ~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/calllog/GroupingListAdapter.java"
+            file="src/main/java/org/prauga/phone/dialer/app/calllog/GroupingListAdapter.java"
             line="100"
             column="7"/>
     </issue>
@@ -16269,7 +16269,7 @@
         errorLine1="  private final Runnable capabilitiesUpdatedRunnable = () -> adapter.notifyDataSetChanged();"
         errorLine2="                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/searchfragment/list/NewSearchFragment.java"
+            file="src/main/java/org/prauga/phone/dialer/searchfragment/list/NewSearchFragment.java"
             line="129"
             column="62"/>
     </issue>
@@ -16280,7 +16280,7 @@
         errorLine1="    notifyDataSetChanged();"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/rtt/impl/RttChatAdapter.java"
+            file="src/main/java/org/prauga/phone/incallui/rtt/impl/RttChatAdapter.java"
             line="178"
             column="5"/>
     </issue>
@@ -16291,7 +16291,7 @@
         errorLine1="    notifyDataSetChanged();"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/rtt/impl/RttChatAdapter.java"
+            file="src/main/java/org/prauga/phone/incallui/rtt/impl/RttChatAdapter.java"
             line="260"
             column="5"/>
     </issue>
@@ -16302,7 +16302,7 @@
         errorLine1="    notifyDataSetChanged();"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/rtt/RttTranscriptAdapter.java"
+            file="src/main/java/org/prauga/phone/dialer/rtt/RttTranscriptAdapter.java"
             line="96"
             column="5"/>
     </issue>
@@ -16313,7 +16313,7 @@
         errorLine1="      notifyDataSetChanged();"
         errorLine2="      ~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/searchfragment/list/SearchAdapter.java"
+            file="src/main/java/org/prauga/phone/dialer/searchfragment/list/SearchAdapter.java"
             line="132"
             column="7"/>
     </issue>
@@ -16324,7 +16324,7 @@
         errorLine1="      notifyDataSetChanged();"
         errorLine2="      ~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/searchfragment/list/SearchAdapter.java"
+            file="src/main/java/org/prauga/phone/dialer/searchfragment/list/SearchAdapter.java"
             line="149"
             column="7"/>
     </issue>
@@ -16335,7 +16335,7 @@
         errorLine1="      notifyDataSetChanged();"
         errorLine2="      ~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/searchfragment/list/SearchAdapter.java"
+            file="src/main/java/org/prauga/phone/dialer/searchfragment/list/SearchAdapter.java"
             line="156"
             column="7"/>
     </issue>
@@ -16346,7 +16346,7 @@
         errorLine1="      notifyDataSetChanged();"
         errorLine2="      ~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/searchfragment/list/SearchAdapter.java"
+            file="src/main/java/org/prauga/phone/dialer/searchfragment/list/SearchAdapter.java"
             line="162"
             column="7"/>
     </issue>
@@ -16357,7 +16357,7 @@
         errorLine1="      notifyDataSetChanged();"
         errorLine2="      ~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/searchfragment/list/SearchAdapter.java"
+            file="src/main/java/org/prauga/phone/dialer/searchfragment/list/SearchAdapter.java"
             line="193"
             column="7"/>
     </issue>
@@ -16368,7 +16368,7 @@
         errorLine1="    adapter.notifyDataSetChanged();"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/speeddial/SpeedDialFragment.java"
+            file="src/main/java/org/prauga/phone/dialer/speeddial/SpeedDialFragment.java"
             line="275"
             column="5"/>
     </issue>
@@ -16379,7 +16379,7 @@
         errorLine1="  private static CallRecorder instance = null;"
         errorLine2="          ~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/call/CallRecorder.java"
+            file="src/main/java/org/prauga/phone/incallui/call/CallRecorder.java"
             line="64"
             column="11"/>
     </issue>
@@ -16390,7 +16390,7 @@
         errorLine1="  private static ContactInfoCache cache = null;"
         errorLine2="          ~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/ContactInfoCache.java"
+            file="src/main/java/org/prauga/phone/incallui/ContactInfoCache.java"
             line="85"
             column="11"/>
     </issue>
@@ -16401,7 +16401,7 @@
         errorLine1="  private static InCallPresenter inCallPresenter;"
         errorLine2="          ~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/InCallPresenter.java"
+            file="src/main/java/org/prauga/phone/incallui/InCallPresenter.java"
             line="92"
             column="11"/>
     </issue>
@@ -16412,7 +16412,7 @@
         errorLine1="  private final Context context;"
         errorLine2="  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/smartdial/SmartDialCursorLoader.java"
+            file="src/main/java/org/prauga/phone/dialer/smartdial/SmartDialCursorLoader.java"
             line="44"
             column="3"/>
     </issue>
@@ -16423,7 +16423,7 @@
         errorLine1="  private static TelecomAdapter instance;"
         errorLine2="          ~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/call/TelecomAdapter.java"
+            file="src/main/java/org/prauga/phone/incallui/call/TelecomAdapter.java"
             line="41"
             column="11"/>
     </issue>
@@ -16434,7 +16434,7 @@
         errorLine1="  private static VoicemailPlaybackPresenter instance;"
         errorLine2="          ~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/app/voicemail/VoicemailPlaybackPresenter.java"
+            file="src/main/java/org/prauga/phone/dialer/app/voicemail/VoicemailPlaybackPresenter.java"
             line="118"
             column="11"/>
     </issue>
@@ -20678,7 +20678,7 @@
         errorLine1="  public boolean onTouchEvent(MotionEvent event) {"
         errorLine2="                 ~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/incallui/answer/impl/AffordanceHolderLayout.java"
+            file="src/main/java/org/prauga/phone/incallui/answer/impl/AffordanceHolderLayout.java"
             line="172"
             column="18"/>
     </issue>
@@ -20689,7 +20689,7 @@
         errorLine1="            (v, event) -> {"
         errorLine2="            ^">
         <location
-            file="src/main/java/com/android/dialer/dialpadview/DialpadFragment.java"
+            file="src/main/java/org/prauga/phone/dialer/dialpadview/DialpadFragment.java"
             line="430"
             column="13"/>
     </issue>
@@ -20700,7 +20700,7 @@
         errorLine1="  public boolean onTouchEvent(MotionEvent event) {"
         errorLine2="                 ~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/dialpadview/DigitsEditText.java"
+            file="src/main/java/org/prauga/phone/dialer/dialpadview/DigitsEditText.java"
             line="49"
             column="18"/>
     </issue>
@@ -20711,7 +20711,7 @@
         errorLine1="  public boolean onTouchEvent(@NonNull MotionEvent event) {"
         errorLine2="                 ~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/contactsfragment/FastScroller.java"
+            file="src/main/java/org/prauga/phone/dialer/contactsfragment/FastScroller.java"
             line="66"
             column="18"/>
     </issue>
@@ -20722,7 +20722,7 @@
         errorLine1="    pager.setOnTouchListener("
         errorLine2="    ^">
         <location
-            file="src/main/java/com/android/incallui/incall/impl/InCallFragment.java"
+            file="src/main/java/org/prauga/phone/incallui/incall/impl/InCallFragment.java"
             line="193"
             column="5"/>
     </issue>
@@ -20733,7 +20733,7 @@
         errorLine1="        (v, event) -> {"
         errorLine2="        ^">
         <location
-            file="src/main/java/com/android/incallui/incall/impl/InCallFragment.java"
+            file="src/main/java/org/prauga/phone/incallui/incall/impl/InCallFragment.java"
             line="194"
             column="9"/>
     </issue>
@@ -20744,7 +20744,7 @@
         errorLine1="  public boolean onTouchEvent(MotionEvent motionEvent) {"
         errorLine2="                 ~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/widget/LockableViewPager.java"
+            file="src/main/java/org/prauga/phone/dialer/widget/LockableViewPager.java"
             line="49"
             column="18"/>
     </issue>
@@ -20755,7 +20755,7 @@
         errorLine1="    optionsMenuButton.setOnTouchListener(overflowMenu.getDragToOpenListener());"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/main/impl/toolbar/MainToolbar.java"
+            file="src/main/java/org/prauga/phone/dialer/main/impl/toolbar/MainToolbar.java"
             line="64"
             column="5"/>
     </issue>
@@ -20766,7 +20766,7 @@
         errorLine1="    recyclerView.setOnTouchListener(this);"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/searchfragment/list/NewSearchFragment.java"
+            file="src/main/java/org/prauga/phone/dialer/searchfragment/list/NewSearchFragment.java"
             line="169"
             column="5"/>
     </issue>
@@ -21492,7 +21492,7 @@
         errorLine1="      mCallerNumber.setText(callLocationOrType + &quot; &quot; + mData.displayNumber);"
         errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/callstats/CallStatsDetailActivity.java"
+            file="src/main/java/org/prauga/phone/dialer/callstats/CallStatsDetailActivity.java"
             line="209"
             column="29"/>
     </issue>
@@ -21503,7 +21503,7 @@
         errorLine1="      remainingChar.setText(Integer.toString(charLimit));"
         errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/widget/MessageFragment.java"
+            file="src/main/java/org/prauga/phone/dialer/widget/MessageFragment.java"
             line="96"
             column="29"/>
     </issue>
@@ -21514,7 +21514,7 @@
         errorLine1="      remainingChar.setText(Integer.toString(charLimit - s.length()));"
         errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/dialer/widget/MessageFragment.java"
+            file="src/main/java/org/prauga/phone/dialer/widget/MessageFragment.java"
             line="136"
             column="29"/>
     </issue>
@@ -21525,7 +21525,7 @@
         errorLine1="        textView.setText(Integer.toString(mUnreadCounts[position]));"
         errorLine2="                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/java/com/android/contacts/common/list/ViewPagerTabs.java"
+            file="src/main/java/org/prauga/phone/contacts/common/list/ViewPagerTabs.java"
             line="152"
             column="26"/>
     </issue>
@@ -21701,7 +21701,7 @@
         errorLine1="              overflowMenu.showAtLocation(v, Gravity.TOP | Gravity.RIGHT, 0, 0);"
         errorLine2="                                                                   ~~~~~">
         <location
-            file="src/main/java/com/android/incallui/rtt/impl/RttChatFragment.java"
+            file="src/main/java/org/prauga/phone/incallui/rtt/impl/RttChatFragment.java"
             line="249"
             column="68"/>
     </issue>
@@ -21712,7 +21712,7 @@
         errorLine1="            () -> overflowMenu.showAtLocation(getView(), Gravity.TOP | Gravity.RIGHT, 0, 0));"
         errorLine2="                                                                               ~~~~~">
         <location
-            file="src/main/java/com/android/incallui/rtt/impl/RttChatFragment.java"
+            file="src/main/java/org/prauga/phone/incallui/rtt/impl/RttChatFragment.java"
             line="580"
             column="80"/>
     </issue>
@@ -21723,7 +21723,7 @@
         errorLine1="    audioSelectMenu.showAtLocation(getView(), Gravity.TOP | Gravity.RIGHT, 0, 0);"
         errorLine2="                                                                    ~~~~~">
         <location
-            file="src/main/java/com/android/incallui/rtt/impl/RttChatFragment.java"
+            file="src/main/java/org/prauga/phone/incallui/rtt/impl/RttChatFragment.java"
             line="581"
             column="69"/>
     </issue>
