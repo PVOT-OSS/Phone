@@ -22,6 +22,7 @@ class ScreeningPolicyTest {
         hasCallLogHistory = true,
         hasRecentOutgoingCall = false,
         isMarkedDoNotScreen = false,
+        hasActiveCall = false,
     )
 
     private val declineAll: (CallerCategory) -> CategoryAction = { CategoryAction.DECLINE }
@@ -120,6 +121,7 @@ class ScreeningPolicyTest {
             stranger.copy(isContact = true) to ScreeningReason.Contact,
             stranger.copy(hasRecentOutgoingCall = true) to ScreeningReason.RecentOutgoing,
             stranger.copy(isMarkedDoNotScreen = true) to ScreeningReason.DoNotScreen,
+            stranger.copy(hasActiveCall = true) to ScreeningReason.AnotherActiveCall,
         )
         for ((facts, reason) in cases) {
             assertEquals(ScreeningDecision(CategoryAction.RING, reason), ScreeningPolicy.decide(facts, declineAll))

@@ -11,6 +11,7 @@ import android.telecom.TelecomManager
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import org.prauga.phone.dialer.common.LogUtil
+import org.prauga.phone.incallui.call.CallList
 
 /**
  * Screens incoming calls before they ring, following the user's choice for each
@@ -29,8 +30,11 @@ class PhoneCallScreeningService : CallScreeningService() {
             return
         }
         val provider = IncomingCallFactsProvider(applicationContext)
+        val hasActiveCall = CallList.getInstance().activeCall != null
         executor.execute {
-            val decision = runCatching { ScreeningPolicy.decide(provider.factsFor(callDetails), settings::actionFor) }
+            val decision = runCatching {
+                ScreeningPolicy.decide(provider.factsFor(callDetails, hasActiveCall), settings::actionFor)
+            }
                 .getOrElse {
                     LogUtil.e(TAG, "screening failed, letting the call ring", it)
                     ScreeningDecision(CategoryAction.RING, ScreeningReason.None)

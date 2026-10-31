@@ -22,6 +22,9 @@ sealed interface ScreeningReason {
     /** The user asked never to screen this number. */
     data object DoNotScreen : ScreeningReason
 
+    /** The user is in another call, so this one arrives as a waiting call. */
+    data object AnotherActiveCall : ScreeningReason
+
     /** The caller falls into [category]. */
     data class Category(val category: CallerCategory) : ScreeningReason
 

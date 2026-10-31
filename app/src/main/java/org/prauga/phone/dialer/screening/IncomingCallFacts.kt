@@ -18,6 +18,7 @@ package org.prauga.phone.dialer.screening
  * @param hasCallLogHistory Whether the call log has any call with this number
  * @param hasRecentOutgoingCall Whether the user called this number recently
  * @param isMarkedDoNotScreen Whether the user asked never to screen this number
+ * @param hasActiveCall Whether the user is already in an active call
  */
 data class IncomingCallFacts(
     val number: String?,
@@ -29,4 +30,5 @@ data class IncomingCallFacts(
     val hasCallLogHistory: Boolean,
     val hasRecentOutgoingCall: Boolean,
     val isMarkedDoNotScreen: Boolean,
+    val hasActiveCall: Boolean,
 )

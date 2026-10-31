@@ -13,7 +13,8 @@ object ScreeningPolicy {
 
     /**
      * Calls that must always ring come first: emergency numbers, callbacks after an emergency
-     * call, contacts, numbers the user called recently and numbers marked never to screen. Other
+     * call, contacts, numbers the user called recently, numbers marked never to screen and calls
+     * that arrive while the user is in another call. Other
      * calls take the strictest action the user chose among the categories they fall into.
      */
     fun decide(facts: IncomingCallFacts, actionFor: (CallerCategory) -> CategoryAction): ScreeningDecision {
@@ -45,6 +46,7 @@ object ScreeningPolicy {
         facts.isContact -> ScreeningReason.Contact
         facts.hasRecentOutgoingCall -> ScreeningReason.RecentOutgoing
         facts.isMarkedDoNotScreen -> ScreeningReason.DoNotScreen
+        facts.hasActiveCall -> ScreeningReason.AnotherActiveCall
         else -> null
     }
 }

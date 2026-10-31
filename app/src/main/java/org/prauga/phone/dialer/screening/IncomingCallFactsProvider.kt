@@ -27,7 +27,7 @@ class IncomingCallFactsProvider(
 
     private val telephony = context.getSystemService(TelephonyManager::class.java)
 
-    fun factsFor(details: Call.Details): IncomingCallFacts {
+    fun factsFor(details: Call.Details, hasActiveCall: Boolean): IncomingCallFacts {
         val number = details.handle?.schemeSpecificPart?.takeIf { it.isNotEmpty() }
         return IncomingCallFacts(
             number = number,
@@ -39,6 +39,7 @@ class IncomingCallFactsProvider(
             hasCallLogHistory = number != null && latestCallDate(number, outgoingOnly = false) != null,
             hasRecentOutgoingCall = number != null && isRecent(latestCallDate(number, outgoingOnly = true), RECENT_OUTGOING_MILLIS),
             isMarkedDoNotScreen = false,
+            hasActiveCall = hasActiveCall,
         )
     }
 
