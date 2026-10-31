@@ -45,6 +45,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.media.AudioAttributes;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Trace;
 import android.telecom.Call.Details;
 import android.telecom.CallAudioState;
@@ -353,7 +354,10 @@ public class StatusBarNotifier
       case NOTIFICATION_IN_CALL:
         publicBuilder.setColorized(true);
         builder.setChannelId(NotificationChannelId.ONGOING_CALL);
-        builder.setRequestPromotedOngoing(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA
+            && Build.VERSION.SDK_INT_FULL >= Build.VERSION_CODES_FULL.BAKLAVA_1) {
+          builder.setRequestPromotedOngoing(true);
+        }
         break;
       default:
         break;
