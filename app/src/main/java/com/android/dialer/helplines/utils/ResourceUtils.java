@@ -19,6 +19,8 @@ package com.android.dialer.helplines.utils;
 import android.content.res.Resources;
 import android.util.Log;
 
+import com.android.dialer.BuildConfig;
+
 public class ResourceUtils {
 
     private static final String TAG = ResourceUtils.class.getSimpleName();
@@ -43,7 +45,7 @@ public class ResourceUtils {
     public static String getStringForResourceName(final Resources res,
                                                   final String resourceName,
                                                   final String defaultValue) {
-        final int resId = res.getIdentifier(resourceName, "string", "com.android.dialer");
+        final int resId = res.getIdentifier(resourceName, "string", BuildConfig.APPLICATION_ID);
         if (resId <= 0) {
             if (DEBUG) Log.d(TAG, "No resource found for " + resourceName);
             return defaultValue;

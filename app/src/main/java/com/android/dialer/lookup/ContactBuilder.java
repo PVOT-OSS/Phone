@@ -30,6 +30,7 @@ import android.provider.ContactsContract.DisplayNameSources;
 import android.util.Log;
 
 import com.android.contacts.common.util.Constants;
+import com.android.dialer.BuildConfig;
 import com.android.dialer.R;
 import com.android.dialer.phonenumbercache.ContactInfo;
 
@@ -47,7 +48,7 @@ public class ContactBuilder {
   /** Default photo for businesses if no other image is found */
   public static final String PHOTO_URI_BUSINESS = new Uri.Builder()
       .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
-      .authority("com.android.dialer")
+      .authority(BuildConfig.APPLICATION_ID)
       .appendPath(String.valueOf(R.drawable.ic_places_picture_180_holo_light))
       .build()
       .toString();
