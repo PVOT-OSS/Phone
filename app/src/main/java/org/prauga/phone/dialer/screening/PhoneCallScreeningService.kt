@@ -7,6 +7,7 @@ package org.prauga.phone.dialer.screening
 
 import android.telecom.Call
 import android.telecom.CallScreeningService
+import android.telecom.TelecomManager
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import org.prauga.phone.dialer.common.LogUtil
@@ -23,7 +24,7 @@ class PhoneCallScreeningService : CallScreeningService() {
     override fun onScreenCall(callDetails: Call.Details) {
         if (callDetails.callDirection != Call.Details.DIRECTION_INCOMING) return
         val settings = ScreeningSettings.from(this)
-        if (CallerCategory.entries.all { settings.actionFor(it) == CategoryAction.RING }) {
+        if (!isDefaultDialer() || CallerCategory.entries.all { settings.actionFor(it) == CategoryAction.RING }) {
             respondToCall(callDetails, responseFor(CategoryAction.RING))
             return
         }
@@ -38,6 +39,9 @@ class PhoneCallScreeningService : CallScreeningService() {
             respondToCall(callDetails, responseFor(decision.action))
         }
     }
+
+    private fun isDefaultDialer(): Boolean =
+        getSystemService(TelecomManager::class.java).defaultDialerPackage == packageName
 
     override fun onDestroy() {
         executor.shutdown()
