@@ -19,7 +19,8 @@
   <string name="tab_title_call_history">Recents</string>
   <!-- Tab text to show users their voicemails  [CHAR LIMIT=10] -->
   <string name="tab_title_voicemail">Voicemail</string>
-
-  <!-- Notification badge indicating that there are more than 9 notifications for the user [CHAR LIMIT=3] -->
-  <string name="bottom_nav_count_9_plus">9+</string>
+  <!-- Tab text for the item that opens the keypad to dial a number [CHAR LIMIT=10] -->
+  <string name="tab_title_keypad">Keypad</string>
+  <!-- Content description of the button next to the tabs that opens search -->
+  <string name="description_search_button">Search</string>
 </resources>

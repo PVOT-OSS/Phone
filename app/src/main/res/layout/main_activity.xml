@@ -62,10 +62,8 @@
         layout="@layout/promotion_bottom_sheet"/>
   </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-  <!-- BottomNavBar -->
-  <include
+  <org.prauga.phone.dialer.main.impl.bottomnav.BottomNavBar
       android:id="@+id/bottom_nav_bar"
-      layout="@layout/bottom_nav_bar_layout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"/>

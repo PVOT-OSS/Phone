@@ -212,14 +212,7 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
     FloatingActionButton fab = activity.findViewById(R.id.fab);
-    fab.setOnClickListener(
-        v -> {
-          searchController.showDialpad(true);
-          if (callLogAdapterOnActionModeStateChangedListener.isEnabled) {
-            LogUtil.i("OldMainActivityPeer.onFabClicked", "closing multiselect");
-            callLogAdapterOnActionModeStateChangedListener.actionMode.finish();
-          }
-        });
+    fab.setOnClickListener(v -> showDialpadForUser());
 
     MainToolbar toolbar = activity.findViewById(R.id.toolbar);
     toolbar.maybeShowSimulator(activity);
@@ -247,6 +240,18 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
     bottomNav.addOnTabSelectedListener(callLogFragmentListener);
 
     searchController = getNewMainSearchController(bottomNav, fab, toolbar, snackbarContainer);
+    bottomNav.setOnActionListener(
+        new BottomNavBar.OnBottomNavActionListener() {
+          @Override
+          public void onKeypadClicked() {
+            showDialpadForUser();
+          }
+
+          @Override
+          public void onSearchClicked() {
+            searchController.onSearchBarClicked();
+          }
+        });
     toolbar.setSearchBarListener(searchController);
 
     onDialpadQueryChangedListener = getNewOnDialpadQueryChangedListener(searchController);
@@ -415,6 +420,14 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
       bottomNav.setVisibility(View.GONE);
     } else {
       bottomNav.setVisibility(View.VISIBLE);
+    }
+  }
+
+  private void showDialpadForUser() {
+    searchController.showDialpad(true);
+    if (callLogAdapterOnActionModeStateChangedListener.isEnabled) {
+      LogUtil.i("OldMainActivityPeer.showDialpadForUser", "closing multiselect");
+      callLogAdapterOnActionModeStateChangedListener.actionMode.finish();
     }
   }
 
