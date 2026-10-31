@@ -103,6 +103,11 @@ dependencies {
 
     testImplementation(libs.junit)
 
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.uiautomator)
+
     annotationProcessor(libs.auto.value)
     annotationProcessor(libs.dagger.compiler)
     annotationProcessor(libs.glide.compiler)
