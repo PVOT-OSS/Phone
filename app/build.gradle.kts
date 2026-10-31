@@ -5,6 +5,7 @@
 
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.protobuf)
 }
 
@@ -14,7 +15,9 @@ val versionPatch = 0
 
 android {
     namespace = "org.prauga.phone.dialer"
-    compileSdk { version = release(37) }
+    compileSdk {
+        version = release(37) { minorApiLevel = 1 }
+    }
 
     defaultConfig {
         applicationId = "org.prauga.phone"
@@ -35,6 +38,7 @@ android {
     buildFeatures {
         aidl = true
         buildConfig = true
+        compose = true
     }
 
     compileOptions {
@@ -101,6 +105,7 @@ dependencies {
     implementation(libs.libphonenumber.geocoder)
     implementation(libs.material)
     implementation(libs.protobuf.javalite)
+    implementation(libs.pvot.design.system)
     implementation(libs.volley)
     compileOnly(libs.auto.value.annotations)
 

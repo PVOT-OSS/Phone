@@ -27,6 +27,8 @@ dependencyResolutionManagement {
     }
 }
 
+includeBuild("PvotLib")
+
 rootProject.name = "Phone"
 include(":app")
 include(":annotations")

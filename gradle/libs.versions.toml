@@ -5,6 +5,7 @@ autoService = "1.1.1"
 autoValue = "1.11.1"
 dagger = "2.60.1"
 glide = "4.16.0"
+kotlin = "2.4.21"
 libphonenumber = "9.0.42"
 protobuf = "4.36.2"
 protobufPlugin = "0.10.0"
@@ -43,9 +44,11 @@ libphonenumber = { module = "com.googlecode.libphonenumber:libphonenumber", vers
 libphonenumber-geocoder = "com.googlecode.libphonenumber:geocoder:3.42"
 material = "com.google.android.material:material:1.14.0"
 protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }
+pvot-design-system = { group = "com.prauga.pvot", name = "design-system" }
 protoc = { module = "com.google.protobuf:protoc", version.ref = "protobuf" }
 volley = "com.android.volley:volley:1.2.1"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
