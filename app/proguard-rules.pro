@@ -73,3 +73,76 @@
     public <init>(android.content.Context, android.util.AttributeSet);
     public <init>();
 }
+
+# From java/com/android/dialer/proguard/proguard.flags
+# Keep the annotation, classes, methods, and fields marked as UsedByReflection
+# TODO(b/373579455): Evaluate if <init> needs to be kept.
+-keep class com.android.dialer.proguard.UsedByReflection {
+    void <init>();
+}
+# TODO(b/373579455): Evaluate if <init> needs to be kept.
+-keep @com.android.dialer.proguard.UsedByReflection class * {
+    void <init>();
+}
+-keepclassmembers class * {
+    @com.android.dialer.proguard.UsedByReflection *;
+}
+-keep class com.google.android.material.floatingactionbutton.FloatingActionButton$* { *; }
+# From java/com/android/dialer/proguard/proguard_release.flags
+
+# Used for building release binaries. Obfuscates, optimizes, and shrinks.
+
+# By default, proguard leaves all classes in their original package, which
+# needlessly repeats com.google.android.apps.etc.
+-repackageclasses ''
+
+# Allows proguard to make private and protected methods and fields public as
+# part of optimization. This lets proguard inline trivial getter/setter methods.
+-allowaccessmodification
+
+# The source file attribute must be present in order to print stack traces, but
+# we rename it in order to avoid leaking the pre-obfuscation class name.
+-renamesourcefileattribute PG
+
+# This allows proguard to strip isLoggable() blocks containing only debug log
+# code from release builds.
+-assumenosideeffects class android.util.Log {
+  static *** i(...);
+  static *** d(...);
+  static *** v(...);
+  static *** isLoggable(...);
+}
+
+# This allows proguard to strip Trace code from release builds.
+-assumenosideeffects class android.os.Trace {
+  static *** beginSection(...);
+  static *** endSection(...);
+}
+
+# From java/com/android/dialer/common/proguard.flags
+-assumenosideeffects class com.android.dialer.common.LogUtil {
+    public static void v(...);
+    public static void d(...);
+}
+
+# From java/com/android/incallui/answer/impl/proguard.flags
+# Used in com.android.dialer.answer.impl.SmsBottomSheetFragment
+-keep class com.google.android.material.bottomsheet.BottomSheetBehavior {
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>();
+}
+# From java/com/android/voicemail/impl/proguard.flags
+-assumenosideeffects class com.android.voicemail.impl.VvmLog {
+    public static void v(...);
+    public static void d(...);
+}
+
+# From proguard.flags
+# These are referenced by com.google.common.util.concurrent and
+# com.google.errorprone.annotations but don't exist on Android.
+-dontwarn java.lang.ClassValue
+-dontwarn javax.lang.model.element.Modifier
+
+-keep public class * extends android.app.Fragment {
+  public <init>();
+}
