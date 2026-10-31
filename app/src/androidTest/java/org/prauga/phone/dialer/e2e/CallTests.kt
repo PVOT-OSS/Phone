@@ -51,12 +51,32 @@ object CallTests {
     /** A number no call log row uses yet, in the reserved 555-01xx range. */
     fun freshNumber(): String = "+1555" + (1_000_000..9_999_999).random()
 
-    /** Adds a finished incoming call from [number] to the call log, as if it happened earlier. */
-    fun addPastIncomingCall(context: Context, number: String) {
+    /** Adds a finished incoming call from [number] to the call log, as if it happened a month ago. */
+    fun addPastIncomingCall(context: Context, number: String) =
+        addPastCall(context, number, CallLog.Calls.INCOMING_TYPE, MONTH_MILLIS)
+
+    /** Adds a finished outgoing call to [number] to the call log, as if it happened yesterday. */
+    fun addRecentOutgoingCall(context: Context, number: String) =
+        addPastCall(context, number, CallLog.Calls.OUTGOING_TYPE, DAY_MILLIS)
+
+    /** Answers the call ringing in the app's call UI, as the user would. */
+    fun answerRingingCall() {
+        waitFor { if (hasIncomingCall()) true else null }
+        InstrumentationRegistry.getInstrumentation().runOnMainSync { CallList.getInstance().incomingCall?.answer() }
+        waitFor { if (hasActiveCall()) true else null }
+    }
+
+    private fun hasActiveCall(): Boolean {
+        var active = false
+        InstrumentationRegistry.getInstrumentation().runOnMainSync { active = CallList.getInstance().activeCall != null }
+        return active
+    }
+
+    private fun addPastCall(context: Context, number: String, type: Int, ageMillis: Long) {
         val values = ContentValues().apply {
             put(CallLog.Calls.NUMBER, number)
-            put(CallLog.Calls.TYPE, CallLog.Calls.INCOMING_TYPE)
-            put(CallLog.Calls.DATE, System.currentTimeMillis() - PAST_CALL_AGE_MILLIS)
+            put(CallLog.Calls.TYPE, type)
+            put(CallLog.Calls.DATE, System.currentTimeMillis() - ageMillis)
             put(CallLog.Calls.DURATION, 30)
         }
         checkNotNull(context.contentResolver.insert(CallLog.Calls.CONTENT_URI, values)) { "could not add call log row" }
@@ -77,5 +97,6 @@ object CallTests {
         "${CallLog.Calls.DATE} DESC",
     )?.use { if (it.moveToFirst()) CallLogRow(it.getInt(0), it.getInt(1), it.getLong(2)) else null }
 
-    private const val PAST_CALL_AGE_MILLIS = 30L * 24 * 60 * 60 * 1000
+    private const val DAY_MILLIS = 24L * 60 * 60 * 1000
+    private const val MONTH_MILLIS = 30 * DAY_MILLIS
 }
