@@ -1,0 +1,51 @@
+[versions]
+agp = "9.5.0"
+autoCommon = "1.2.2"
+autoService = "1.1.1"
+autoValue = "1.11.1"
+dagger = "2.60.1"
+glide = "4.16.0"
+libphonenumber = "9.0.42"
+protobuf = "4.36.2"
+protobufPlugin = "0.10.0"
+
+[libraries]
+androidx-annotation = "androidx.annotation:annotation:1.11.0"
+androidx-appcompat = "androidx.appcompat:appcompat:1.8.0"
+androidx-cardview = "androidx.cardview:cardview:1.0.0"
+androidx-collection = "androidx.collection:collection:1.7.0"
+androidx-coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:1.3.0"
+androidx-dynamicanimation = "androidx.dynamicanimation:dynamicanimation:1.1.0"
+androidx-exifinterface = "androidx.exifinterface:exifinterface:1.4.2"
+androidx-fragment = "androidx.fragment:fragment:1.9.1"
+androidx-localbroadcastmanager = "androidx.localbroadcastmanager:localbroadcastmanager:1.1.0"
+androidx-preference = "androidx.preference:preference:1.2.1"
+androidx-recyclerview = "androidx.recyclerview:recyclerview:1.4.0"
+apache-mime4j-core = "org.apache.james:apache-mime4j-core:0.8.9"
+apache-mime4j-dom = "org.apache.james:apache-mime4j-dom:0.8.9"
+auto-common = { module = "com.google.auto:auto-common", version.ref = "autoCommon" }
+auto-service = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }
+auto-service-annotations = { module = "com.google.auto.service:auto-service-annotations", version.ref = "autoService" }
+auto-value = { module = "com.google.auto.value:auto-value", version.ref = "autoValue" }
+auto-value-annotations = { module = "com.google.auto.value:auto-value-annotations", version.ref = "autoValue" }
+commons-io = "commons-io:commons-io:2.13.0"
+dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
+dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+error-prone-annotations = "com.google.errorprone:error_prone_annotations:2.51.0"
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
+guava = "com.google.guava:guava:33.7.2-android"
+guava-jre = "com.google.guava:guava:33.7.2-jre"
+javapoet = "com.squareup:javapoet:1.13.0"
+javax-inject = "javax.inject:javax.inject:1"
+jsr305 = "com.google.code.findbugs:jsr305:3.0.2"
+libphonenumber = { module = "com.googlecode.libphonenumber:libphonenumber", version.ref = "libphonenumber" }
+libphonenumber-geocoder = "com.googlecode.libphonenumber:geocoder:3.42"
+material = "com.google.android.material:material:1.14.0"
+protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }
+protoc = { module = "com.google.protobuf:protoc", version.ref = "protobuf" }
+volley = "com.android.volley:volley:1.2.1"
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
