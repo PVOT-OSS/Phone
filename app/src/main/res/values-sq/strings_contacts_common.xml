@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Dërgo mesazh te numri i biperit</string>
   <string name="sms_assistant">Dërgo mesazh te %s</string>
   <string name="sms_mms">Dërgo mesazh te numri i MMS-së</string>
-  <string name="clearFrequentsConfirmation_title">Të pastrohen kontaktet e shpeshta?</string>
-  <string name="clearFrequentsConfirmation">Do ta pastrosh listën e kontakteve të shpeshta në aplikacionet \"Kontaktet\" dhe \"Telefoni\" dhe do t\'i detyrosh aplikacionet e mail-it të mësojnë preferencat e tua të adresimit nga e para.</string>
-  <string name="clearFrequentsProgress_title">Po pastron kontaktet e shpeshta…</string>
   <string name="directory_search_label">Direktoria</string>
   <string name="directory_search_label_work">Direktoria e punës</string>
   <string name="missing_name">(Pa emër)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Formati i emrit</string>
   <string name="display_options_view_given_name_first">Emri në fillim</string>
   <string name="display_options_view_family_name_first">Mbiemri në fillim</string>
-  <string name="menu_clear_frequents">Pastro kontaktet e shpeshta</string>
   <string name="action_menu_back_from_search">ndalo kërkimin</string>
   <string name="description_clear_search">Pastro kërkimin</string>
   <string name="select_account_dialog_title">Llogaria</string>

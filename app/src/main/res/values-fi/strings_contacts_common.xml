@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Lähetä tekstiviesti hakulaitteeseen (työ)</string>
   <string name="sms_assistant">Lähetä tekstiviesti: %s</string>
   <string name="sms_mms">Lähetä tekstiviesti MMS-numeroon</string>
-  <string name="clearFrequentsConfirmation_title">Tyhjennetäänkö usein käytetyt?</string>
-  <string name="clearFrequentsConfirmation">Toiminto tyhjentää Yhteystiedot- ja Puhelin-sovellusten usein käytettyjen kontaktien luettelon. Lisäksi sähköpostisovellukset pakotetaan opettelemaan osoiteasetuksesi uudestaan.</string>
-  <string name="clearFrequentsProgress_title">Tyhjennetään usein käytetyt...</string>
   <string name="directory_search_label">Osoitekirja</string>
   <string name="directory_search_label_work">Työhakemisto</string>
   <string name="missing_name">(Ei nimeä)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Nimen muoto</string>
   <string name="display_options_view_given_name_first">Etunimi ensin</string>
   <string name="display_options_view_family_name_first">Sukunimi ensin</string>
-  <string name="menu_clear_frequents">Tyhjennä usein käytetyt</string>
   <string name="action_menu_back_from_search">lopeta hakeminen</string>
   <string name="description_clear_search">Tyhjennä haku</string>
   <string name="select_account_dialog_title">Tili</string>

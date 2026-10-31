@@ -42,9 +42,6 @@
   <string name="sms_work_pager">SMS gönder (iş çağrı cihazı)</string>
   <string name="sms_assistant">SMS gönder (%s)</string>
   <string name="sms_mms">SMS gönder (MMS)</string>
-  <string name="clearFrequentsConfirmation_title">Sık iletişim kurulanlar silinsin mi?</string>
-  <string name="clearFrequentsConfirmation">Kişiler ve Telefon uygulamalarındaki sık iletişim kurulanlar listesini temizleyecek ve e-posta uygulamalarını adres tercihlerinizi en baştan öğrenmeye zorlayacaksınız.</string>
-  <string name="clearFrequentsProgress_title">Sık iletişim kurulanlar siliniyor…</string>
   <string name="directory_search_label">Dizin</string>
   <string name="directory_search_label_work">İş dizini</string>
   <string name="missing_name">(Adsız)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Ad biçimi</string>
   <string name="display_options_view_given_name_first">Önce ad</string>
   <string name="display_options_view_family_name_first">Önce soyadı</string>
-  <string name="menu_clear_frequents">Sık iletişim kurulanları sil</string>
   <string name="action_menu_back_from_search">aramayı durdur</string>
   <string name="description_clear_search">Aramayı temizle</string>
   <string name="select_account_dialog_title">Hesap</string>

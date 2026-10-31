@@ -42,9 +42,6 @@
   <string name="sms_work_pager">ສົ່ງຂໍ້ຄວາມຫາເບີ pager ບ່ອນເຮັດວຽກ</string>
   <string name="sms_assistant">ສົ່ງຂໍ້ຄວາມຫາ %s</string>
   <string name="sms_mms">ສົ່ງຂໍ້ຄວາມຫາເບີ MMS</string>
-  <string name="clearFrequentsConfirmation_title">ລຶບລາຍຊື່ທີ່ຕິດຕໍ່ເລື້ອຍໆອອກ?</string>
-  <string name="clearFrequentsConfirmation">ທ່ານຈະລຶບຂໍ້ມູນລາຍຊື່ທີ່ຕິດຕໍ່ຫາເລື້ອຍໆຢູ່ໃນແອັບຯລາຍ​ຊື່ ແລະໂທ​ລະ​ສັບ ພ້ອມທັງບັງຄັບໃຫ້ແອັບຯອີເມວເລີ່ມຮຽນຮູ້ຄ່າກຳນົດທີ່ຢູ່ຂອງທ່ານໃໝ່ຕັ້ງແຕ່ຕົ້ນ.</string>
-  <string name="clearFrequentsProgress_title">ກຳລັງລຶບລ້າງລາຍຊື່ທີ່ຕິດຕໍ່ຫາເລື້ອຍໆ...</string>
   <string name="directory_search_label">ໄດເຣັກທໍຣີ</string>
   <string name="directory_search_label_work">ໄດເຣັກທໍຣີບ່ອນເຮັດວຽກ</string>
   <string name="missing_name">(ບໍ່ມີຊື່)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">​ຮູບ​ແບບ​ຊື່</string>
   <string name="display_options_view_given_name_first">​ຊື່​ກ່ອນ</string>
   <string name="display_options_view_family_name_first">​ນາມ​ສະ​ກຸນ​ກ່ອນ</string>
-  <string name="menu_clear_frequents">ລຶບລາຍຊື່ຄົນທີ່ຕິດຕໍ່ຫາເລື້ອຍໆ</string>
   <string name="action_menu_back_from_search">ຢຸດ​ການ​ຊອກ​ຫາ</string>
   <string name="description_clear_search">ລຶບ​ການ​ຊອກ​ຫາ</string>
   <string name="select_account_dialog_title">ບັນຊີ</string>

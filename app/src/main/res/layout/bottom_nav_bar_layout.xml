@@ -23,13 +23,6 @@
     android:elevation="8dp">
 
   <include
-      android:id="@+id/speed_dial_tab"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_weight="1"
-      layout="@layout/bottom_nav_item"/>
-
-  <include
       android:id="@+id/call_log_tab"
       android:layout_width="0dp"
       android:layout_height="wrap_content"

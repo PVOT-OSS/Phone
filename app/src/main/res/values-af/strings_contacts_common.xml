@@ -42,9 +42,6 @@
   <string name="sms_work_pager">SMS werkroeper</string>
   <string name="sms_assistant">SMS %s</string>
   <string name="sms_mms">SMS MMS</string>
-  <string name="clearFrequentsConfirmation_title">Vee gereeld-gekontaktes uit?</string>
-  <string name="clearFrequentsConfirmation">Jy gaan die gereeld gekontak-lys in die Kontakte- en Foon-program uitvee en e-posprogramme dwing om jou adresvoorkeure van nuuts af te leer.</string>
-  <string name="clearFrequentsProgress_title">Vee tans gereeld-gekontaktes uit...</string>
   <string name="directory_search_label">Gids</string>
   <string name="directory_search_label_work">Werkgids</string>
   <string name="missing_name">(Geen naam nie)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Naamformaat</string>
   <string name="display_options_view_given_name_first">Voornaam eerste</string>
   <string name="display_options_view_family_name_first">Van eerste</string>
-  <string name="menu_clear_frequents">Vee dikwels-gebruiktes uit</string>
   <string name="action_menu_back_from_search">hou op soek</string>
   <string name="description_clear_search">Vee soektog uit</string>
   <string name="select_account_dialog_title">Rekening</string>

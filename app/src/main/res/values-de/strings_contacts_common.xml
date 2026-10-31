@@ -42,9 +42,6 @@
   <string name="sms_work_pager">SMS an Pager (geschäftlich) senden</string>
   <string name="sms_assistant">SMS an %s senden</string>
   <string name="sms_mms">SMS an MMS senden</string>
-  <string name="clearFrequentsConfirmation_title">Liste \"Häufig kontaktiert\" löschen?</string>
-  <string name="clearFrequentsConfirmation">Du löschst die Liste \"Häufig kontaktiert\" in den Apps \"Kontakte\" und \"Telefon\" und bewirkst so ein Zurücksetzen deiner Adresseinstellungen für E-Mail-Apps.</string>
-  <string name="clearFrequentsProgress_title">\"Häufig kontaktiert\" wird gelöscht…</string>
   <string name="directory_search_label">Verzeichnis</string>
   <string name="directory_search_label_work">Verzeichnis geschäftlicher Kontakte</string>
   <string name="missing_name">(Kein Name)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Namensformat</string>
   <string name="display_options_view_given_name_first">Vorname zuerst</string>
   <string name="display_options_view_family_name_first">Nachname zuerst</string>
-  <string name="menu_clear_frequents">\"Häufig kontaktiert\" löschen</string>
   <string name="action_menu_back_from_search">Suche beenden</string>
   <string name="description_clear_search">Suche zurücksetzen</string>
   <string name="select_account_dialog_title">Konto</string>

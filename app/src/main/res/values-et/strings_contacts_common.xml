@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Saada sõnum tööpiiparinumbrile</string>
   <string name="sms_assistant">Saada sõnum numbrile %s</string>
   <string name="sms_mms">Saada sõnum MMS-i numbrile</string>
-  <string name="clearFrequentsConfirmation_title">Kas kustutada sagedased kontaktid?</string>
-  <string name="clearFrequentsConfirmation">Kustutate rakendustes Kontaktid ja Telefon sagedaste kontaktide loendi, mistõttu meilirakendused peavad teie adresseerimiseelistused uuesti omandama.</string>
-  <string name="clearFrequentsProgress_title">Saged. kontaktide kustutamine ...</string>
   <string name="directory_search_label">Kataloog</string>
   <string name="directory_search_label_work">Töökontaktide kataloog</string>
   <string name="missing_name">(Nimi puudub)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Nimevorming</string>
   <string name="display_options_view_given_name_first">Eesnimi enne</string>
   <string name="display_options_view_family_name_first">Perekonnanimi enne</string>
-  <string name="menu_clear_frequents">Sagedaste kustutamine</string>
   <string name="action_menu_back_from_search">otsimise peatamine</string>
   <string name="description_clear_search">Otsingu kustutamine</string>
   <string name="select_account_dialog_title">Konto</string>

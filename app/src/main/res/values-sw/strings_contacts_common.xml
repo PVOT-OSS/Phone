@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Itumie peja ya kazini ya kazini ujumbe</string>
   <string name="sms_assistant">Tuma ujumbe wa maandishi kwa %s</string>
   <string name="sms_mms">Tumia MMS ujmbe wa maandishi</string>
-  <string name="clearFrequentsConfirmation_title">Futa unaowasiliana nao mara kwa mara?</string>
-  <string name="clearFrequentsConfirmation">Utafuta orodha ya unaowasiliana nao mara kwa mara katika programu za Anwani na Simu, na ulazimishe programu za barua pepe zitambue mapendeleo yako ya anwani kutoka mwanzo.</string>
-  <string name="clearFrequentsProgress_title">Inafuta unaowasiliana nao mara kwa mara...</string>
   <string name="directory_search_label">Saraka</string>
   <string name="directory_search_label_work">Anwani za kazi</string>
   <string name="missing_name">(Hakuna jina)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Mpangilio wa majina</string>
   <string name="display_options_view_given_name_first">Anza kwa jina la kwanza</string>
   <string name="display_options_view_family_name_first">Anza kwa jina la mwisho</string>
-  <string name="menu_clear_frequents">Futa za mara kwa mara</string>
   <string name="action_menu_back_from_search">acha kutafuta</string>
   <string name="description_clear_search">Futa utafutaji</string>
   <string name="select_account_dialog_title">Akaunti</string>

@@ -42,9 +42,6 @@
   <string name="sms_work_pager">SMS: рабочий пейджер</string>
   <string name="sms_assistant">SMS: %s</string>
   <string name="sms_mms">SMS: номер MMS</string>
-  <string name="clearFrequentsConfirmation_title">Очистить список популярных контактов?</string>
-  <string name="clearFrequentsConfirmation">Список популярных контактов в приложениях \"Контакты\" и \"Телефон\" будет очищен, а приложения электронной почты начнут запоминать адреса заново.</string>
-  <string name="clearFrequentsProgress_title">Подождите…</string>
   <string name="directory_search_label">Каталог</string>
   <string name="directory_search_label_work">Каталог контактов из рабочего профиля</string>
   <string name="missing_name">Имя не указано</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Формат имени</string>
   <string name="display_options_view_given_name_first">Сначала имя</string>
   <string name="display_options_view_family_name_first">Сначала фамилия</string>
-  <string name="menu_clear_frequents">Очистить популярные</string>
   <string name="action_menu_back_from_search">прекратить поиск</string>
   <string name="description_clear_search">Очистить условия поиска</string>
   <string name="select_account_dialog_title">Аккаунт</string>

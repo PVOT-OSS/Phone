@@ -42,9 +42,6 @@
   <string name="sms_work_pager">पाठ काम पेजर</string>
   <string name="sms_assistant">पाठ %s</string>
   <string name="sms_mms">पाठ MMS</string>
-  <string name="clearFrequentsConfirmation_title">प्रायः सम्पर्क भएकालाई हटाउने?</string>
-  <string name="clearFrequentsConfirmation">तपाईंले सम्पर्कहरू र फोन अनुप्रयोगहरूमा बारम्बार सम्पर्क गरेको सूची खाली गर्नुहुनेछ र स्क्रयाचबाट तपाईंको ठेगाना प्राथमिकताहरू सिक्नको लागि इमेल अनुप्रयोगहरूलाई दबाब दिनुहुनेछ।</string>
-  <string name="clearFrequentsProgress_title">बारम्बार सम्पर्क गरिएकाहरूलाई मेटाउँदै ...</string>
   <string name="directory_search_label">निर्देशिका</string>
   <string name="directory_search_label_work">कार्यको निर्देशिका</string>
   <string name="missing_name">(नाम छैन)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">नामको ढाँचा</string>
   <string name="display_options_view_given_name_first">नाम पहिले</string>
   <string name="display_options_view_family_name_first">थर पहिले</string>
-  <string name="menu_clear_frequents">बारम्बारताहरू हटाउनुहोस्</string>
   <string name="action_menu_back_from_search">खोजी गर्न  रोक्नुहोस्</string>
   <string name="description_clear_search">खोजी सफा गर्नुहोस्</string>
   <string name="select_account_dialog_title">खाता</string>

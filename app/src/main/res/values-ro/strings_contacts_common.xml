@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Trimiteți un mesaj text către un număr de pager de serviciu</string>
   <string name="sms_assistant">Trimiteți un mesaj text către %s</string>
   <string name="sms_mms">Trimiteți un mesaj text către un număr MMS</string>
-  <string name="clearFrequentsConfirmation_title">Ștergeți pers. frecvent contactate?</string>
-  <string name="clearFrequentsConfirmation">Veți șterge lista persoanelor contactate frecvent din aplicațiile Agendă și Telefon și veți forța aplicațiile de e-mail să vă învețe preferințele pentru adrese de la zero.</string>
-  <string name="clearFrequentsProgress_title">Se șterg pers. frecvent contactate…</string>
   <string name="directory_search_label">Director</string>
   <string name="directory_search_label_work">Directorul de serviciu</string>
   <string name="missing_name">(Fără nume)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Format pentru nume</string>
   <string name="display_options_view_given_name_first">Întâi prenumele</string>
   <string name="display_options_view_family_name_first">Întâi numele</string>
-  <string name="menu_clear_frequents">Ștergeți contacte frecvente</string>
   <string name="action_menu_back_from_search">nu mai căutați</string>
   <string name="description_clear_search">Ștergeți căutarea</string>
   <string name="select_account_dialog_title">Cont</string>

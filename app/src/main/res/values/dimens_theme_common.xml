@@ -34,9 +34,6 @@
   <item name="alpha_enabled" format="float" type="dimen">1.0</item>
   <item name="alpha_hiden" format="float" type="dimen">0.54</item>
 
-  <!-- Minimum a11y height and width required for all touch targets. -->
-  <dimen name="dialer_touch_target_min_size">48dp</dimen>
-
   <!-- Padding to be applied to the bottom of lists to make space for the floating action
      button -->
   <dimen name="floating_action_button_list_bottom_padding">88dp</dimen>

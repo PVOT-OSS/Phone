@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Sūtīt īsziņu uz darba peidžeri</string>
   <string name="sms_assistant">Sūtīt īsziņu: %s</string>
   <string name="sms_mms">Sūtīt multiziņu</string>
-  <string name="clearFrequentsConfirmation_title">Vai dzēst bieži lietotos kontaktus?</string>
-  <string name="clearFrequentsConfirmation">Tiks dzēsts bieži lietoto kontaktpersonu saraksts lietotnēs Kontaktpersonas un Tālrunis, un e-pasta lietotnēs no jauna tiks sākta adrešu preferenču saglabāšana.</string>
-  <string name="clearFrequentsProgress_title">Bieži lietoto kontaktu dzēšana...</string>
   <string name="directory_search_label">Katalogs</string>
   <string name="directory_search_label_work">Darba katalogs</string>
   <string name="missing_name">(Nav vārda)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Vārda formāts</string>
   <string name="display_options_view_given_name_first">Vispirms rādīt vārdu</string>
   <string name="display_options_view_family_name_first">Vispirms rādīt uzvārdu</string>
-  <string name="menu_clear_frequents">Dzēst bieži lietotos kontaktus</string>
   <string name="action_menu_back_from_search">pārtraukt meklēšanu</string>
   <string name="description_clear_search">Notīrīt meklēšanas lauku</string>
   <string name="select_account_dialog_title">Konts</string>

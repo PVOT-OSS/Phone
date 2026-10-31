@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Enviar SMS al localizador del trabajo</string>
   <string name="sms_assistant">Enviar SMS a %s</string>
   <string name="sms_mms">Enviar MMS</string>
-  <string name="clearFrequentsConfirmation_title">¿Borrar contactos frecuentes?</string>
-  <string name="clearFrequentsConfirmation">Borrarás la lista de personas con las que te pones en contacto frecuentemente de las aplicaciones Contactos y Teléfono. Además, tus aplicaciones de correo deberán establecer tus preferencias nuevamente.</string>
-  <string name="clearFrequentsProgress_title">Borrando contactos frecuentes…</string>
   <string name="directory_search_label">Directorio</string>
   <string name="directory_search_label_work">Directorio del trabajo</string>
   <string name="missing_name">(Sin nombre)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Formato del nombre</string>
   <string name="display_options_view_given_name_first">Nombre primero</string>
   <string name="display_options_view_family_name_first">Apellido primero</string>
-  <string name="menu_clear_frequents">Borrar contactos frecuentes</string>
   <string name="action_menu_back_from_search">detener la búsqueda</string>
   <string name="description_clear_search">Borrar la búsqueda</string>
   <string name="select_account_dialog_title">Cuenta</string>

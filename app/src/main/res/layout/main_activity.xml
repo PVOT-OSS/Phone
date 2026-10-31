@@ -34,7 +34,7 @@
       android:layout_below="@+id/toolbar"
       android:layout_above="@+id/bottom_nav_bar">
 
-    <!-- Holds SpeedDial, Call Log, Contacts, Voicemail and Search fragments -->
+    <!-- Holds Call Log, Contacts, Voicemail and Search fragments -->
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"

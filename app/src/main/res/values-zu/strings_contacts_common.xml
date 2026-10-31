@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Bhalela isicingo sasemsebenzini</string>
   <string name="sms_assistant">Bhalela ku-%s</string>
   <string name="sms_mms">Bhala i-MMS</string>
-  <string name="clearFrequentsConfirmation_title">Sula oxhumana nabo njalo?</string>
-  <string name="clearFrequentsConfirmation">Uzosula uhlu loxhumana nabo kakhulu kuzinhelo zokusebenza zokuxhumana noma zefoni, futhi uphoqelele izinhlelo zokusebenza ze-imeyili ukufunda izintandokazi zakho zekheli kusuka ekuqaleni.</string>
-  <string name="clearFrequentsProgress_title">Isula oxhumana nabo njalo…</string>
   <string name="directory_search_label">Uhla lwemibhalo</string>
   <string name="directory_search_label_work">Uhla lwemibhalo lomsebenzi</string>
   <string name="missing_name">(Alikho igama)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Ifomethi yegama</string>
   <string name="display_options_view_given_name_first">Igama lokuqala kuqala</string>
   <string name="display_options_view_family_name_first">Isibongo kuqala</string>
-  <string name="menu_clear_frequents">Sula oxhumana nabo njalo</string>
   <string name="action_menu_back_from_search">misa ukusesha</string>
   <string name="description_clear_search">Sula usesho</string>
   <string name="select_account_dialog_title">I-Akhawunti</string>

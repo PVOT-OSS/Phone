@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Напiсаць тэкставае паведамленне на працоўны пэйджар</string>
   <string name="sms_assistant">Напiсаць тэкставае паведамленне %s</string>
   <string name="sms_mms">Тэкставае паведамленне MMS</string>
-  <string name="clearFrequentsConfirmation_title">Выдалiць частыя кантакты?</string>
-  <string name="clearFrequentsConfirmation">Вы выдалiце найчасцей ужываныя кантакты ў праграмах Кантакты i Тэлефон i прымусiце праграмы па працы з электроннай поштай вывучыць вашы налады адрасацыi з нуля.</string>
-  <string name="clearFrequentsProgress_title">Выдаленне частых кантактаў...</string>
   <string name="directory_search_label">Дырэкторыя</string>
   <string name="directory_search_label_work">Працоўны каталог</string>
   <string name="missing_name">(Без назвы)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Фармат імя</string>
   <string name="display_options_view_given_name_first">Спачатку імя</string>
   <string name="display_options_view_family_name_first">Спачатку прозвішча</string>
-  <string name="menu_clear_frequents">Выдалiць частыя кантакты</string>
   <string name="action_menu_back_from_search">спыніць пошук</string>
   <string name="description_clear_search">Ачысціць пошук</string>
   <string name="select_account_dialog_title">Уліковы запіс</string>

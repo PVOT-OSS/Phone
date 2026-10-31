@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Send sms til personsøger på arbejdet</string>
   <string name="sms_assistant">Send sms til %s</string>
   <string name="sms_mms">Send sms til mms</string>
-  <string name="clearFrequentsConfirmation_title">Vil du rydde de ofte kontaktede?</string>
-  <string name="clearFrequentsConfirmation">Hvis du gør dette, rydder du listen over personer, som du ofte kontakter, i appene Kontaktpersoner og Opkald. Du vil samtidig tvinge e-mailapps til at lære dine adressepræferencer fra bunden.</string>
-  <string name="clearFrequentsProgress_title">Ofte kontaktede personer ryddes…</string>
   <string name="directory_search_label">Indeks</string>
   <string name="directory_search_label_work">Indeks for arbejde</string>
   <string name="missing_name">(Intet navn)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Navneformat</string>
   <string name="display_options_view_given_name_first">Fornavn først</string>
   <string name="display_options_view_family_name_first">Efternavn først</string>
-  <string name="menu_clear_frequents">Ryd hyppige</string>
   <string name="action_menu_back_from_search">stop søgning</string>
   <string name="description_clear_search">Ryd søgning</string>
   <string name="select_account_dialog_title">Konto</string>

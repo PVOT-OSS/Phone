@@ -42,9 +42,6 @@
   <string name="sms_work_pager">ポケベル（勤務先）にSMS</string>
   <string name="sms_assistant">%sにSMS</string>
   <string name="sms_mms">MMSにSMS</string>
-  <string name="clearFrequentsConfirmation_title">よく使う連絡先を消去しますか？</string>
-  <string name="clearFrequentsConfirmation">連絡帳アプリや電話アプリのよく使う連絡先リストを消去し、メールアプリがアドレス設定を初めから保存していくようにします。</string>
-  <string name="clearFrequentsProgress_title">よく使う連絡先を消去しています…</string>
   <string name="directory_search_label">ディレクトリ</string>
   <string name="directory_search_label_work">仕事用の連絡先リスト</string>
   <string name="missing_name">（名前なし）</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">名前の形式</string>
   <string name="display_options_view_given_name_first">名が先</string>
   <string name="display_options_view_family_name_first">姓が先</string>
-  <string name="menu_clear_frequents">よく使う連絡先のクリア</string>
   <string name="action_menu_back_from_search">検索を停止</string>
   <string name="description_clear_search">検索をクリア</string>
   <string name="select_account_dialog_title">アカウント</string>

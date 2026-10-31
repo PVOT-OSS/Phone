@@ -173,10 +173,6 @@ public final class MainToolbar extends Toolbar implements PopupMenu.OnMenuItemCl
     searchBar.setHint(hint);
   }
 
-  public void showClearFrequents(boolean show) {
-    overflowMenu.showClearFrequents(show);
-  }
-
   public void maybeShowSimulator(AppCompatActivity appCompatActivity) {
     overflowMenu.maybeShowSimulator(appCompatActivity);
   }

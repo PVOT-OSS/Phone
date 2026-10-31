@@ -1683,7 +1683,7 @@
         errorLine2="                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="$HOME/apps/Phone/gradle/libs.versions.toml"
-            line="24"
+            line="25"
             column="22"/>
     </issue>
 
@@ -1694,7 +1694,7 @@
         errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="$HOME/apps/Phone/gradle/libs.versions.toml"
-            line="25"
+            line="26"
             column="21"/>
     </issue>
 
@@ -1705,7 +1705,7 @@
         errorLine2="             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="$HOME/apps/Phone/gradle/libs.versions.toml"
-            line="31"
+            line="32"
             column="14"/>
     </issue>
 
@@ -1716,7 +1716,7 @@
         errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="$HOME/apps/Phone/gradle/libs.versions.toml"
-            line="37"
+            line="38"
             column="9"/>
     </issue>
 
@@ -1727,7 +1727,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="$HOME/apps/Phone/gradle/libs.versions.toml"
-            line="38"
+            line="39"
             column="13"/>
     </issue>
 
@@ -4093,7 +4093,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-ca/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -4104,7 +4104,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-es-rUS/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -4115,7 +4115,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-es/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -4126,7 +4126,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-fr-rCA/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -4137,7 +4137,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-fr/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -4148,7 +4148,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-it/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -4159,7 +4159,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-pt-rBR/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -4170,7 +4170,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-pt-rPT/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -4181,7 +4181,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-pt/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -5575,7 +5575,7 @@
         id="MissingTranslation"
         message="&quot;app_name&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
         errorLine1="  &lt;string name=&quot;app_name&quot; tools:ignore=&quot;UnusedResources&quot;>Phone&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~">
+        errorLine2="          ~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
             line="23"
@@ -7916,45 +7916,12 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;clearFrequentsConfirmation_title&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;clearFrequentsConfirmation_title&quot;>Clear frequently contacted?&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_contacts_resources.xml"
-            line="114"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;clearFrequentsConfirmation&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="    &lt;string name=&quot;clearFrequentsConfirmation&quot;>You\&apos;ll clear the frequently contacted list in the"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_contacts_resources.xml"
-            line="117"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;clearFrequentsProgress_title&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Clearing frequently contacted\u2026&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_contacts_resources.xml"
-            line="123"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
         message="&quot;directory_search_label&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
         errorLine1="  &lt;string name=&quot;directory_search_label&quot;>Directory&lt;/string>"
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="126"
+            line="114"
             column="11"/>
     </issue>
 
@@ -7965,7 +7932,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="129"
+            line="117"
             column="11"/>
     </issue>
 
@@ -7976,7 +7943,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="132"
+            line="120"
             column="11"/>
     </issue>
 
@@ -7987,7 +7954,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="137"
+            line="125"
             column="11"/>
     </issue>
 
@@ -7998,7 +7965,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="142"
+            line="130"
             column="11"/>
     </issue>
 
@@ -8009,7 +7976,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="146"
+            line="134"
             column="11"/>
     </issue>
 
@@ -8020,7 +7987,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="150"
+            line="138"
             column="11"/>
     </issue>
 
@@ -8031,7 +7998,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="153"
+            line="141"
             column="11"/>
     </issue>
 
@@ -8042,7 +8009,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="155"
+            line="143"
             column="11"/>
     </issue>
 
@@ -8053,7 +8020,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="157"
+            line="145"
             column="11"/>
     </issue>
 
@@ -8064,7 +8031,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="159"
+            line="147"
             column="11"/>
     </issue>
 
@@ -8075,7 +8042,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="161"
+            line="149"
             column="11"/>
     </issue>
 
@@ -8086,7 +8053,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="163"
+            line="151"
             column="11"/>
     </issue>
 
@@ -8097,7 +8064,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="166"
+            line="154"
             column="11"/>
     </issue>
 
@@ -8108,7 +8075,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="169"
+            line="157"
             column="11"/>
     </issue>
 
@@ -8119,7 +8086,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="171"
+            line="159"
             column="11"/>
     </issue>
 
@@ -8130,7 +8097,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="173"
+            line="161"
             column="11"/>
     </issue>
 
@@ -8141,7 +8108,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="177"
+            line="165"
             column="11"/>
     </issue>
 
@@ -8152,7 +8119,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="181"
+            line="169"
             column="11"/>
     </issue>
 
@@ -8163,7 +8130,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="185"
+            line="173"
             column="11"/>
     </issue>
 
@@ -8174,7 +8141,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="189"
+            line="177"
             column="11"/>
     </issue>
 
@@ -8185,7 +8152,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="193"
+            line="181"
             column="11"/>
     </issue>
 
@@ -8196,7 +8163,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="196"
+            line="184"
             column="11"/>
     </issue>
 
@@ -8207,7 +8174,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="200"
+            line="188"
             column="11"/>
     </issue>
 
@@ -8218,7 +8185,7 @@
         errorLine2="          ~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="204"
+            line="192"
             column="11"/>
     </issue>
 
@@ -8229,7 +8196,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="207"
+            line="195"
             column="11"/>
     </issue>
 
@@ -8240,7 +8207,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="210"
+            line="198"
             column="11"/>
     </issue>
 
@@ -8251,7 +8218,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="213"
+            line="201"
             column="11"/>
     </issue>
 
@@ -8262,7 +8229,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="217"
+            line="205"
             column="11"/>
     </issue>
 
@@ -8273,7 +8240,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="220"
+            line="208"
             column="11"/>
     </issue>
 
@@ -8284,7 +8251,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="224"
+            line="212"
             column="11"/>
     </issue>
 
@@ -8295,7 +8262,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="227"
+            line="215"
             column="11"/>
     </issue>
 
@@ -8306,7 +8273,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="230"
+            line="218"
             column="11"/>
     </issue>
 
@@ -8317,7 +8284,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="232"
+            line="220"
             column="11"/>
     </issue>
 
@@ -8328,7 +8295,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="234"
+            line="222"
             column="11"/>
     </issue>
 
@@ -8339,7 +8306,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="236"
+            line="224"
             column="11"/>
     </issue>
 
@@ -8350,7 +8317,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="238"
+            line="226"
             column="11"/>
     </issue>
 
@@ -8361,7 +8328,7 @@
         errorLine2="          ~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="241"
+            line="229"
             column="11"/>
     </issue>
 
@@ -8372,7 +8339,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="244"
+            line="232"
             column="11"/>
     </issue>
 
@@ -8383,7 +8350,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="246"
+            line="234"
             column="11"/>
     </issue>
 
@@ -8394,7 +8361,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="248"
+            line="236"
             column="11"/>
     </issue>
 
@@ -8405,7 +8372,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="250"
+            line="238"
             column="11"/>
     </issue>
 
@@ -8416,7 +8383,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="252"
+            line="240"
             column="11"/>
     </issue>
 
@@ -8427,7 +8394,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="255"
+            line="243"
             column="11"/>
     </issue>
 
@@ -8438,7 +8405,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="257"
+            line="245"
             column="11"/>
     </issue>
 
@@ -8449,7 +8416,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="259"
+            line="247"
             column="11"/>
     </issue>
 
@@ -8460,7 +8427,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="261"
+            line="249"
             column="11"/>
     </issue>
 
@@ -8471,7 +8438,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="264"
+            line="252"
             column="11"/>
     </issue>
 
@@ -8482,7 +8449,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="266"
+            line="254"
             column="11"/>
     </issue>
 
@@ -8493,7 +8460,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="268"
+            line="256"
             column="11"/>
     </issue>
 
@@ -8504,7 +8471,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="270"
+            line="258"
             column="11"/>
     </issue>
 
@@ -8515,7 +8482,7 @@
         errorLine2="          ~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="272"
+            line="260"
             column="11"/>
     </issue>
 
@@ -8526,7 +8493,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="274"
+            line="262"
             column="11"/>
     </issue>
 
@@ -8537,7 +8504,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="276"
+            line="264"
             column="11"/>
     </issue>
 
@@ -8548,7 +8515,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="278"
+            line="266"
             column="11"/>
     </issue>
 
@@ -8559,7 +8526,7 @@
         errorLine2="          ~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="281"
+            line="269"
             column="11"/>
     </issue>
 
@@ -8570,7 +8537,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="284"
+            line="272"
             column="11"/>
     </issue>
 
@@ -8581,7 +8548,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="287"
+            line="275"
             column="11"/>
     </issue>
 
@@ -8592,7 +8559,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="290"
+            line="278"
             column="11"/>
     </issue>
 
@@ -8603,7 +8570,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="293"
+            line="281"
             column="11"/>
     </issue>
 
@@ -8614,7 +8581,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="296"
+            line="284"
             column="11"/>
     </issue>
 
@@ -8625,18 +8592,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="299"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;menu_clear_frequents&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;menu_clear_frequents&quot;>Clear frequents&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_contacts_resources.xml"
-            line="302"
+            line="287"
             column="11"/>
     </issue>
 
@@ -8647,7 +8603,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="305"
+            line="290"
             column="11"/>
     </issue>
 
@@ -8658,7 +8614,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="308"
+            line="293"
             column="11"/>
     </issue>
 
@@ -8669,7 +8625,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="313"
+            line="298"
             column="11"/>
     </issue>
 
@@ -8680,7 +8636,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="316"
+            line="301"
             column="11"/>
     </issue>
 
@@ -8691,7 +8647,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="319"
+            line="304"
             column="11"/>
     </issue>
 
@@ -8702,7 +8658,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="323"
+            line="308"
             column="11"/>
     </issue>
 
@@ -8713,7 +8669,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="327"
+            line="312"
             column="11"/>
     </issue>
 
@@ -8724,7 +8680,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="330"
+            line="315"
             column="11"/>
     </issue>
 
@@ -8735,7 +8691,7 @@
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="337"
+            line="322"
             column="12"/>
     </issue>
 
@@ -8746,7 +8702,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="351"
+            line="336"
             column="11"/>
     </issue>
 
@@ -11161,23 +11117,12 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;tab_title_speed_dial&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;tab_title_speed_dial&quot;>Favorites&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_main_impl_bottomnav.xml"
-            line="21"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
         message="&quot;tab_title_voicemail&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
         errorLine1="  &lt;string name=&quot;tab_title_voicemail&quot;>Voicemail&lt;/string>"
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_main_impl_bottomnav.xml"
-            line="23"
+            line="21"
             column="11"/>
     </issue>
 
@@ -11188,7 +11133,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_main_impl_bottomnav.xml"
-            line="26"
+            line="24"
             column="11"/>
     </issue>
 
@@ -11651,204 +11596,6 @@
         <location
             file="src/main/res/values/strings_spannable.xml"
             line="21"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;favorites_header&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;favorites_header&quot;>Favorites&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_speeddial.xml"
-            line="19"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;suggestions_header&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;suggestions_header&quot;>Frequents&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_speeddial.xml"
-            line="23"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;speed_dial_add_button_text&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;speed_dial_add_button_text&quot;>Add&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_speeddial.xml"
-            line="26"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;speed_dial_remember_this_choice&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;speed_dial_remember_this_choice&quot;>Remember this choice&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_speeddial.xml"
-            line="30"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;speed_dial_disambig_dialog_title&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;speed_dial_disambig_dialog_title&quot;>Choose call type&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_speeddial.xml"
-            line="34"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;disambig_option_video_call&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;disambig_option_video_call&quot;>Video call&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_speeddial.xml"
-            line="37"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;disambig_option_voice_call&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;disambig_option_voice_call&quot;>Call&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_speeddial.xml"
-            line="40"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;contact_menu_voice_call&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;contact_menu_voice_call&quot;>Voice Call&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_speeddial.xml"
-            line="43"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;contact_menu_video_call&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;contact_menu_video_call&quot;>Video Call&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_speeddial.xml"
-            line="46"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;contact_menu_message&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;contact_menu_message&quot;>Message&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_speeddial.xml"
-            line="49"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;contact_menu_remove&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;contact_menu_remove&quot;>Remove&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_speeddial.xml"
-            line="52"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;contact_menu_contact_info&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;contact_menu_contact_info&quot;>Contact info&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_speeddial.xml"
-            line="55"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;suggested_contact_bottom_sheet_add_favorite_option&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;suggested_contact_bottom_sheet_add_favorite_option&quot;>Add favorite&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_speeddial.xml"
-            line="58"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;speed_dial_contacts_permission_description&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;speed_dial_contacts_permission_description&quot;>To enable speed dial, turn on the Contacts permission.&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_speeddial.xml"
-            line="61"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;speed_dial_turn_on_contacts_permission&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;speed_dial_turn_on_contacts_permission&quot;>Turn on&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_speeddial.xml"
-            line="64"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;speed_dial_no_contacts_description&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;speed_dial_no_contacts_description&quot;>You haven\&apos;t added any favorites yet&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_speeddial.xml"
-            line="67"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;speed_dial_no_contacts_action_text&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;speed_dial_no_contacts_action_text&quot;>Add favorite&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_speeddial.xml"
-            line="70"
-            column="11"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;speed_dial_remove_favorites&quot; is not translated in &quot;tt&quot; (Tatar), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="  &lt;string name=&quot;speed_dial_remove_favorites&quot;>Remove from favorites&lt;/string>"
-        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings_speeddial.xml"
-            line="73"
             column="11"/>
     </issue>
 
@@ -15885,7 +15632,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-in/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -15896,7 +15643,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-iw/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -15907,7 +15654,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-ja/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -15918,7 +15665,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-km/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -15929,7 +15676,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-ko/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -15940,7 +15687,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-lo/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -15951,7 +15698,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-ms/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -15962,7 +15709,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-my/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -15973,7 +15720,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-th/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -15984,7 +15731,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-vi/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -15995,7 +15742,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-zh-rCN/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -16006,7 +15753,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-zh-rHK/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -16017,7 +15764,7 @@
         errorLine2="  ^">
         <location
             file="src/main/res/values-zh-rTW/strings_contacts_common.xml"
-            line="121"
+            line="117"
             column="3"/>
     </issue>
 
@@ -16360,17 +16107,6 @@
             file="src/main/java/org/prauga/phone/dialer/searchfragment/list/SearchAdapter.java"
             line="193"
             column="7"/>
-    </issue>
-
-    <issue
-        id="NotifyDataSetChanged"
-        message="It will always be more efficient to use more specific change events if you can. Rely on `notifyDataSetChanged` as a last resort."
-        errorLine1="    adapter.notifyDataSetChanged();"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/org/prauga/phone/dialer/speeddial/SpeedDialFragment.java"
-            line="275"
-            column="5"/>
     </issue>
 
     <issue
@@ -16738,34 +16474,12 @@
 
     <issue
         id="Overdraw"
-        message="Possible overdraw: Root element paints background `?android:attr/selectableItemBackground` with a theme that also paints a background (inferred theme is `@android:style/Theme.Holo`)"
-        errorLine1="    android:background=&quot;?android:attr/selectableItemBackground&quot;>"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/disambig_option_layout.xml"
-            line="31"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="Overdraw"
         message="Possible overdraw: Root element paints background `#12000000` with a theme that also paints a background (inferred theme is `@android:style/Theme.Holo`)"
         errorLine1="    android:background=&quot;#12000000&quot;/>"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/layout/divider_layout.xml"
             line="23"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="Overdraw"
-        message="Possible overdraw: Root element paints background `?android:attr/colorPrimary` with a theme that also paints a background (inferred theme is `@android:style/Theme.Holo`)"
-        errorLine1="    android:background=&quot;?android:attr/colorPrimary&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/favorite_remove_view_layout.xml"
-            line="29"
             column="5"/>
     </issue>
 
@@ -16888,17 +16602,6 @@
             file="src/main/res/layout/selectable_text_view.xml"
             line="24"
             column="3"/>
-    </issue>
-
-    <issue
-        id="Overdraw"
-        message="Possible overdraw: Root element paints background `?android:attr/selectableItemBackground` with a theme that also paints a background (inferred theme is `@android:style/Theme.Holo`)"
-        errorLine1="    android:background=&quot;?android:attr/selectableItemBackground&quot;>"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/suggestion_row_layout.xml"
-            line="24"
-            column="5"/>
     </issue>
 
     <issue
@@ -17619,7 +17322,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="264"
+            line="252"
             column="11"/>
     </issue>
 
@@ -17630,7 +17333,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="266"
+            line="254"
             column="11"/>
     </issue>
 
@@ -17641,7 +17344,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="268"
+            line="256"
             column="11"/>
     </issue>
 
@@ -17652,7 +17355,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="270"
+            line="258"
             column="11"/>
     </issue>
 
@@ -17663,7 +17366,7 @@
         errorLine2="          ~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="272"
+            line="260"
             column="11"/>
     </issue>
 
@@ -17674,7 +17377,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="274"
+            line="262"
             column="11"/>
     </issue>
 
@@ -17685,7 +17388,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="276"
+            line="264"
             column="11"/>
     </issue>
 
@@ -17696,7 +17399,7 @@
         errorLine2="          ~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="278"
+            line="266"
             column="11"/>
     </issue>
 
@@ -18539,319 +18242,11 @@
     <issue
         id="TypographyEllipsis"
         message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Vee tans gereeld-gekontaktes uit...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-af/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Tez-tez ünsiyyət qurulanlar silinir...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-az/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Brisanje često kontaktiranih...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-b+sr+Latn/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Выдаленне частых кантактаў...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-be/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>S\&apos;estan esborrant contactes freq...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-ca/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Mazání často kontaktovaných osob...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-cs/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Saged. kontaktide kustutamine ...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-et/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Tyhjennetään usein käytetyt...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-fi/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Borrando contactados frecuencia...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-gl/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Brisanje često kontaktiranih...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-hr/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Gyakran keresettek törlése...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-hu/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Հաճախակի հաղորդակցումների մաքրում...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-hy/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Menghapus yang sering dihubungi...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-in/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>សម្អាត​ទំនាក់ទំនង​ញឹកញាប់...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-km/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>ກຳລັງລຶບລ້າງລາຍຊື່ທີ່ຕິດຕໍ່ຫາເລື້ອຍໆ...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-lo/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Bieži lietoto kontaktu dzēšana...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-lv/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Чистење често контактирани...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-mk/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>वारंवार सपर्क साधलेले साफ करत आहे...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-mr/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Memadam bersih senarai kerap dihubungi...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-ms/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Fjerner ofte kontaktede personer ...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-nb/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>बारम्बार सम्पर्क गरिएकाहरूलाई मेटाउँदै ...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-ne/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Regelmatige contacten wissen...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-nl/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Fjerner ofte kontaktede personer ...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-no/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>A limpar contactos frequentes...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-pt-rPT/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Mazanie často kontaktov. osôb...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-sk/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Brisanje seznama pogost. stikov ...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-sl/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Брисање често контактираних...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-sr/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
-        errorLine1="  &lt;string name=&quot;clearFrequentsProgress_title&quot;>Inafuta unaowasiliana nao mara kwa mara...&lt;/string>"
-        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values-sw/strings_contacts_common.xml"
-            line="47"
-            column="47"/>
-    </issue>
-
-    <issue
-        id="TypographyEllipsis"
-        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
         errorLine1="  &lt;string name=&quot;call_subject_hint&quot;>ከጥሪ ጋር ለመላክ የማስታወሻ ጽሑፍ ይተይቡ ...&lt;/string>"
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-am/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -18862,7 +18257,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-ar/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -18873,7 +18268,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-az/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -18884,7 +18279,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-b+sr+Latn/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -18895,7 +18290,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-bg/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -18906,7 +18301,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-bn/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -18917,7 +18312,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-bs/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -18928,7 +18323,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-ca/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -18939,7 +18334,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-da/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -18950,7 +18345,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-de/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -18961,7 +18356,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-en-rAU/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -18972,7 +18367,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-en-rGB/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -18983,7 +18378,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-en-rIN/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -18994,7 +18389,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-es/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19005,7 +18400,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-et/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19016,7 +18411,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-fr-rCA/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19027,7 +18422,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-fr/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19038,7 +18433,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-gu/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19049,7 +18444,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-hi/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19060,7 +18455,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-hr/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19071,7 +18466,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-hy/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19082,7 +18477,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-in/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19093,7 +18488,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-is/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19104,7 +18499,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-it/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19115,7 +18510,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-iw/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19126,7 +18521,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-ja/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19137,7 +18532,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-ka/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19148,7 +18543,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-kk/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19159,7 +18554,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-km/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19170,7 +18565,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-kn/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19181,7 +18576,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-ko/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19192,7 +18587,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-lo/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19203,7 +18598,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-lt/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19214,7 +18609,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-lv/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19225,7 +18620,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-mk/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19236,7 +18631,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-ml/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19247,7 +18642,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-mn/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19258,7 +18653,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-mr/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19269,7 +18664,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-my/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19280,7 +18675,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-nl/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19291,7 +18686,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-pa/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19302,7 +18697,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-pl/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19313,7 +18708,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-pt-rBR/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19324,7 +18719,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-pt-rPT/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19335,7 +18730,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-pt/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19346,7 +18741,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-ro/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19357,7 +18752,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-si/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19368,7 +18763,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-sk/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19379,7 +18774,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-sl/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19390,7 +18785,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-sq/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19401,7 +18796,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-sr/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19412,7 +18807,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-sw/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19423,7 +18818,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-ta/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19434,7 +18829,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-te/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19445,7 +18840,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-th/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19456,7 +18851,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-tl/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19467,7 +18862,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-tr/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19478,7 +18873,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-uz/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19489,7 +18884,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-vi/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19500,7 +18895,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-zh-rTW/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19511,7 +18906,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values-zu/strings_contacts_common.xml"
-            line="116"
+            line="112"
             column="36"/>
     </issue>
 
@@ -19522,7 +18917,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings_contacts_resources.xml"
-            line="316"
+            line="301"
             column="36"/>
     </issue>
 
@@ -21052,17 +20447,6 @@
         errorLine1="  &lt;ImageView"
         errorLine2="   ~~~~~~~~~">
         <location
-            file="src/main/res/layout/disambig_option_layout.xml"
-            line="55"
-            column="4"/>
-    </issue>
-
-    <issue
-        id="ContentDescription"
-        message="Missing `contentDescription` attribute on image"
-        errorLine1="  &lt;ImageView"
-        errorLine2="   ~~~~~~~~~">
-        <location
             file="src/main/res/layout-land/empty_content_view.xml"
             line="18"
             column="4"/>
@@ -21087,39 +20471,6 @@
         <location
             file="src/main/res/layout/empty_content_view_dialpad_search.xml"
             line="18"
-            column="4"/>
-    </issue>
-
-    <issue
-        id="ContentDescription"
-        message="Missing `contentDescription` attribute on image"
-        errorLine1="      &lt;ImageView"
-        errorLine2="       ~~~~~~~~~">
-        <location
-            file="src/main/res/layout/favorite_item_layout.xml"
-            line="48"
-            column="8"/>
-    </issue>
-
-    <issue
-        id="ContentDescription"
-        message="Missing `contentDescription` attribute on image"
-        errorLine1="      &lt;ImageView"
-        errorLine2="       ~~~~~~~~~">
-        <location
-            file="src/main/res/layout/favorite_item_layout.xml"
-            line="53"
-            column="8"/>
-    </issue>
-
-    <issue
-        id="ContentDescription"
-        message="Missing `contentDescription` attribute on image"
-        errorLine1="  &lt;ImageView"
-        errorLine2="   ~~~~~~~~~">
-        <location
-            file="src/main/res/layout/favorite_remove_view_layout.xml"
-            line="36"
             column="4"/>
     </issue>
 
@@ -21539,28 +20890,6 @@
             file="src/main/res/layout/dialog_call_subject.xml"
             line="138"
             column="10"/>
-    </issue>
-
-    <issue
-        id="RelativeOverlap"
-        message="`@id/speed_dial_label` can overlap `@id/disambig_option_image` if @id/speed_dial_label grows due to localized text expansion"
-        errorLine1="  &lt;TextView"
-        errorLine2="   ~~~~~~~~">
-        <location
-            file="src/main/res/layout/disambig_option_layout.xml"
-            line="34"
-            column="4"/>
-    </issue>
-
-    <issue
-        id="RelativeOverlap"
-        message="`@id/speed_dial_add_button` can overlap `@id/speed_dial_header_text` if @id/speed_dial_header_text, @string/speed_dial_add_button_text grow due to localized text expansion"
-        errorLine1="  &lt;Button"
-        errorLine2="   ~~~~~~">
-        <location
-            file="src/main/res/layout/speed_dial_header_layout.xml"
-            line="32"
-            column="4"/>
     </issue>
 
     <issue

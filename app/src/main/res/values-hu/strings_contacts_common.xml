@@ -42,9 +42,6 @@
   <string name="sms_work_pager">SMS küldése munkahelyi csipogóra</string>
   <string name="sms_assistant">SMS küldése ide: %s</string>
   <string name="sms_mms">SMS küldése MMS-ben szereplő számra</string>
-  <string name="clearFrequentsConfirmation_title">Törli a gyakran keresetteket?</string>
-  <string name="clearFrequentsConfirmation">Törölni fogja a gyakran keresett személyek listáját a Névjegyek és a Telefon alkalmazásban, és arra kényszeríti az e-mail alkalmazásokat, hogy elölről kezdjék az Ön címzési szokásainak megtanulását.</string>
-  <string name="clearFrequentsProgress_title">Gyakran keresettek törlése...</string>
   <string name="directory_search_label">Címtár</string>
   <string name="directory_search_label_work">Munkahelyi névjegyek címtára</string>
   <string name="missing_name">(Nincs név)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Névformátum</string>
   <string name="display_options_view_given_name_first">Utónév elöl</string>
   <string name="display_options_view_family_name_first">Vezetéknév elöl</string>
-  <string name="menu_clear_frequents">Gyakran keresettek törlése</string>
   <string name="action_menu_back_from_search">keresés leállítása</string>
   <string name="description_clear_search">Keresés törlése</string>
   <string name="select_account_dialog_title">Fiók</string>

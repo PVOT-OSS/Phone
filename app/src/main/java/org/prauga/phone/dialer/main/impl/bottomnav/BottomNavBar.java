@@ -42,14 +42,12 @@ public final class BottomNavBar extends LinearLayout {
   @Retention(RetentionPolicy.SOURCE)
   @IntDef({
     TabIndex.NONE,
-    TabIndex.SPEED_DIAL,
     TabIndex.CALL_LOG,
     TabIndex.CONTACTS,
     TabIndex.VOICEMAIL,
   })
   public @interface TabIndex {
     int NONE = -1;
-    int SPEED_DIAL = 0;
     int CALL_LOG = 1;
     int CONTACTS = 2;
     int VOICEMAIL = 3;
@@ -57,7 +55,6 @@ public final class BottomNavBar extends LinearLayout {
 
   private final List<OnBottomNavTabSelectedListener> listeners = new ArrayList<>();
 
-  private BottomNavItem speedDial;
   private BottomNavItem callLog;
   private BottomNavItem contacts;
   private BottomNavItem voicemail;
@@ -70,13 +67,10 @@ public final class BottomNavBar extends LinearLayout {
   @Override
   protected void onFinishInflate() {
     super.onFinishInflate();
-    speedDial = findViewById(R.id.speed_dial_tab);
     callLog = findViewById(R.id.call_log_tab);
     contacts = findViewById(R.id.contacts_tab);
     voicemail = findViewById(R.id.voicemail_tab);
 
-    speedDial.setup(R.string.tab_title_speed_dial, R.drawable.quantum_ic_star_outline_vd_theme_24,
-            R.drawable.quantum_ic_star_vd_theme_24);
     callLog.setup(R.string.tab_title_call_history, R.drawable.quantum_ic_access_time_vd_theme_24,
             R.drawable.quantum_ic_clock_filled_vd_theme_24);
     contacts.setup(R.string.tab_all_contacts, R.drawable.quantum_ic_people_outline_vd_theme_24,
@@ -84,14 +78,12 @@ public final class BottomNavBar extends LinearLayout {
     voicemail.setup(R.string.tab_title_voicemail, R.drawable.quantum_ic_voicemail_vd_theme_24,
             R.drawable.quantum_ic_voicemail_vd_theme_24);
 
-    speedDial.setOnClickListener(v -> selectTab(TabIndex.SPEED_DIAL));
     callLog.setOnClickListener(v -> selectTab(TabIndex.CALL_LOG));
     contacts.setOnClickListener(v -> selectTab(TabIndex.CONTACTS));
     voicemail.setOnClickListener(v -> selectTab(TabIndex.VOICEMAIL));
   }
 
   private void setSelected(View view) {
-    speedDial.setSelected(view == speedDial);
     callLog.setSelected(view == callLog);
     contacts.setSelected(view == contacts);
     voicemail.setSelected(view == voicemail);
@@ -103,10 +95,7 @@ public final class BottomNavBar extends LinearLayout {
    * @param tab {@link TabIndex}
    */
   public void selectTab(@TabIndex int tab) {
-    if (tab == TabIndex.SPEED_DIAL) {
-      selectedTab = TabIndex.SPEED_DIAL;
-      setSelected(speedDial);
-    } else if (tab == TabIndex.CALL_LOG) {
+    if (tab == TabIndex.CALL_LOG) {
       selectedTab = TabIndex.CALL_LOG;
       setSelected(callLog);
     } else if (tab == TabIndex.CONTACTS) {
@@ -126,7 +115,7 @@ public final class BottomNavBar extends LinearLayout {
    * Displays or hides the voicemail tab.
    *
    * <p>In the event that the voicemail tab was earlier visible but is now no longer visible, we
-   * move to the speed dial tab.
+   * move to the call log tab.
    *
    * @param showTab whether to hide or show the voicemail
    */
@@ -139,15 +128,13 @@ public final class BottomNavBar extends LinearLayout {
     if (voicemailpreviousVisibility != voicemailcurrentVisibility
         && voicemailpreviousVisibility == View.VISIBLE
         && getSelectedTab() == TabIndex.VOICEMAIL) {
-      LogUtil.i("OldMainActivityPeer.showVoicemail", "hid VM tab and moved to speed dial tab");
-      selectTab(TabIndex.SPEED_DIAL);
+      LogUtil.i("OldMainActivityPeer.showVoicemail", "hid VM tab and moved to call log tab");
+      selectTab(TabIndex.CALL_LOG);
     }
   }
 
   public void setNotificationCount(@TabIndex int tab, int count) {
-    if (tab == TabIndex.SPEED_DIAL) {
-      speedDial.setNotificationCount(count);
-    } else if (tab == TabIndex.CALL_LOG) {
+    if (tab == TabIndex.CALL_LOG) {
       callLog.setNotificationCount(count);
     } else if (tab == TabIndex.CONTACTS) {
       contacts.setNotificationCount(count);
@@ -165,9 +152,6 @@ public final class BottomNavBar extends LinearLayout {
   private void updateListeners(@TabIndex int tabIndex) {
     for (OnBottomNavTabSelectedListener listener : listeners) {
       switch (tabIndex) {
-        case TabIndex.SPEED_DIAL:
-          listener.onSpeedDialSelected();
-          break;
         case TabIndex.CALL_LOG:
           listener.onCallLogSelected();
           break;
@@ -190,9 +174,6 @@ public final class BottomNavBar extends LinearLayout {
 
   /** Listener for bottom nav tab's on click events. */
   public interface OnBottomNavTabSelectedListener {
-
-    /** Speed dial tab was clicked. */
-    void onSpeedDialSelected();
 
     /** Call Log tab was clicked. */
     void onCallLogSelected();

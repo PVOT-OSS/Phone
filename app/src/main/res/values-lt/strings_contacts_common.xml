@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Siųsti teksto pranešimą darbo pranešimų gaviklio numeriu</string>
   <string name="sms_assistant">Siųsti teksto pranešimą %s</string>
   <string name="sms_mms">Siųsti MMS telefono numeriu</string>
-  <string name="clearFrequentsConfirmation_title">Išvalyti dažniausius kontaktus?</string>
-  <string name="clearFrequentsConfirmation">Išvalysite dažniausių kontaktų sąrašą Kontaktų ir Telefono programose, o el. pašto programoms reikės iš naujo gauti adresavimo nuostatas.</string>
-  <string name="clearFrequentsProgress_title">Valomi dažniausi kontaktai…</string>
   <string name="directory_search_label">Katalogas</string>
   <string name="directory_search_label_work">Darbo katalogas</string>
   <string name="missing_name">(Nėra pavadinimo)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Vardo formatas</string>
   <string name="display_options_view_given_name_first">Pirmiausia vardas</string>
   <string name="display_options_view_family_name_first">Pirmiausia pavardė</string>
-  <string name="menu_clear_frequents">Valyti dažniausiai naudojamus</string>
   <string name="action_menu_back_from_search">sustabdyti paiešką</string>
   <string name="description_clear_search">Išvalyti paiešką</string>
   <string name="select_account_dialog_title">Paskyra</string>

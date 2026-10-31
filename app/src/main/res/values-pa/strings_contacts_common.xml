@@ -42,9 +42,6 @@
   <string name="sms_work_pager">ਦਫ਼ਤਰ ਦੇ ਪੇਜ਼ਰ ਤੇ ਟੈਕਸਟ ਕਰੋ</string>
   <string name="sms_assistant">%s ਨੂੰ ਟੈਕਸਟ ਕਰੋ</string>
   <string name="sms_mms">MMS ਤੇ ਟੈਕਸਟ ਕਰੋ</string>
-  <string name="clearFrequentsConfirmation_title">ਕੀ ਅਕਸਰ ਸੰਪਰਕ ਕੀਤੇ ਜਾਣ ਵਾਲੇ ਹਟਾਉਣੇ ਹਨ?</string>
-  <string name="clearFrequentsConfirmation">ਤੁਸੀਂ ਵਾਰੀ-ਵਾਰੀ ਸੰਪਰਕ ਅਤੇ ਫੋਨ ਐਪਸ ਵਿੱਚ ਸੰਪਰਕ ਕੀਤੀ ਸੂਚੀ ਹਟਾਓਗੇ ਅਤੇ ਈਮੇਲ ਐਪਸ ਤੇ ਸਕ੍ਰੈਚ ਨਾਲ ਤੁਹਾਡੀਆਂ ਪਤਾ ਲਗਾਉਣ ਦੀਆਂ ਤਰਜੀਹਾਂ ਜਾਣਨ ਲਈ ਜ਼ੋਰ ਪਾਓਗੇ।</string>
-  <string name="clearFrequentsProgress_title">ਅਕਸਰ ਸੰਪਰਕ ਕੀਤੇ ਜਾਣ ਵਾਲੇ ਹਟਾ ਰਿਹਾ ਹੈ…</string>
   <string name="directory_search_label">ਡਾਇਰੈਕਟਰੀ</string>
   <string name="directory_search_label_work">ਕੰਮ ਡਾਇਰੈਕਟਰੀ</string>
   <string name="missing_name">(ਕੋਈ ਨਾਮ ਨਹੀਂ)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">ਨਾਮ ਦੀ ਵੰਨਗੀ</string>
   <string name="display_options_view_given_name_first">ਪਹਿਲਾਂ ਪਹਿਲਾ ਨਾਮ</string>
   <string name="display_options_view_family_name_first">ਪਹਿਲਾਂ ਆਖਰੀ ਨਾਮ</string>
-  <string name="menu_clear_frequents">ਫ੍ਰੀਕਵੈਂਟਸ ਹਟਾਓ</string>
   <string name="action_menu_back_from_search">ਖੋਜ ਕਰਨਾ ਬੰਦ ਕਰੋ</string>
   <string name="description_clear_search">ਖੋਜ ਹਟਾਓ</string>
   <string name="select_account_dialog_title">ਖਾਤਾ</string>

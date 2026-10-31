@@ -42,9 +42,6 @@
   <string name="sms_work_pager">कार्यालय के पेजर पर लेख संदेश भेजें</string>
   <string name="sms_assistant">%s पर लेख संदेश भेजें</string>
   <string name="sms_mms">MMS पर लेख संदेश भेजें</string>
-  <string name="clearFrequentsConfirmation_title">अक्‍सर किए जाने वाले संपर्क साफ करें?</string>
-  <string name="clearFrequentsConfirmation">आपको संपर्क और फ़ोन ऐप्स से अक्सर संपर्क किए जाने वाली सूची साफ़ करनी होगी, और अपने ईमेल ऐप्स को आपकी पता प्राथमिकताओं को प्रारंभ से जानने के लिए बाध्य करना होगा.</string>
-  <string name="clearFrequentsProgress_title">अक्सर किए जाने वाले संपर्क साफ कर रहा है…</string>
   <string name="directory_search_label">निर्देशिका</string>
   <string name="directory_search_label_work">कार्य निर्देशिका</string>
   <string name="missing_name">(कोई नाम नहीं)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">नाम प्रारूप</string>
   <string name="display_options_view_given_name_first">नाम पहले</string>
   <string name="display_options_view_family_name_first">उपनाम पहले</string>
-  <string name="menu_clear_frequents">अक्सर किए जाने वाले साफ़ करें</string>
   <string name="action_menu_back_from_search">खोजना बंद करें</string>
   <string name="description_clear_search">खोज साफ़ करें</string>
   <string name="select_account_dialog_title">खाता</string>

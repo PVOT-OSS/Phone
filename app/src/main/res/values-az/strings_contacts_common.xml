@@ -42,9 +42,6 @@
   <string name="sms_work_pager">İş peyceri nömrəsinə mesaj</string>
   <string name="sms_assistant">Mətn %s</string>
   <string name="sms_mms">MMS nömrəsinə mesaj</string>
-  <string name="clearFrequentsConfirmation_title">Tez-tez ünsiyyət qurulanlar silinsin?</string>
-  <string name="clearFrequentsConfirmation">Əlaqələr və Telefon proqramlarında tez-tez əlaqə saxlanılanların siyahısını siləcəksiniz və fraqmentdən ünvanlama seçimlərinizi öyrənmək üçün e-poçt proqramlarını məcbur edəcəksiniz.</string>
-  <string name="clearFrequentsProgress_title">Tez-tez ünsiyyət qurulanlar silinir...</string>
   <string name="directory_search_label">Kataloq</string>
   <string name="directory_search_label_work">İş kataloqu</string>
   <string name="missing_name">(ad yoxdur)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Ad formatı</string>
   <string name="display_options_view_given_name_first">Ad ilk yazılsın</string>
   <string name="display_options_view_family_name_first">Soyad ilk yazılsın</string>
-  <string name="menu_clear_frequents">Müntəzəmləri təmizləyin</string>
   <string name="action_menu_back_from_search">axtarışı dayandırın</string>
   <string name="description_clear_search">Axtarışı təmizləyin</string>
   <string name="select_account_dialog_title">Hesab</string>

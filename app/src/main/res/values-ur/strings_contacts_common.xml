@@ -42,9 +42,6 @@
   <string name="sms_work_pager">دفتر کے پیجر پر متن بھیجیں</string>
   <string name="sms_assistant">%s پر متن بھیجیں</string>
   <string name="sms_mms">‏MMS نمبر پر متن بھیجیں</string>
-  <string name="clearFrequentsConfirmation_title">اکثر رابطہ کردہ کو صاف کریں؟</string>
-  <string name="clearFrequentsConfirmation">آپ رابطے اور فون ایپس میں اکثر رابطہ کردہ فہرست کو صاف کر دیں گے اور ای میل ایپس کو از سر نو اپنے پتے کی ترجیحات جاننے پر مجبور کریں گے۔</string>
-  <string name="clearFrequentsProgress_title">اکثر رابطہ کردہ کو صاف کر رہا ہے…</string>
   <string name="directory_search_label">ڈائریکٹری</string>
   <string name="directory_search_label_work">دفتری ڈائرکٹری</string>
   <string name="missing_name">(کوئی نام نہیں)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">نام کا فارمیٹ</string>
   <string name="display_options_view_given_name_first">پہلا نام پہلے</string>
   <string name="display_options_view_family_name_first">آخری نام پہلے</string>
-  <string name="menu_clear_frequents">اکثر و بیشتر کو صاف کریں</string>
   <string name="action_menu_back_from_search">تلاش کرنا بند کریں</string>
   <string name="description_clear_search">تلاش صاف کریں</string>
   <string name="select_account_dialog_title">اکاؤنٹ</string>

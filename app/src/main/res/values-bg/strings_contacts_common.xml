@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Изпращане на SMS на служебен пейджър</string>
   <string name="sms_assistant">Изпращане на SMS на %s</string>
   <string name="sms_mms">Изпращане на SMS на MMS</string>
-  <string name="clearFrequentsConfirmation_title">Да се изчистят ли често търсените?</string>
-  <string name="clearFrequentsConfirmation">Ще изчистите списъка с често търсените в приложенията Контакти и Телефон и ще принудите приложенията за имейл да научат предпочитанията ви за адресите, започвайки отначало.</string>
-  <string name="clearFrequentsProgress_title">Често търсените се изчистват…</string>
   <string name="directory_search_label">Директория</string>
   <string name="directory_search_label_work">Служебен указател</string>
   <string name="missing_name">(Няма име)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Формат на името</string>
   <string name="display_options_view_given_name_first">Първо собственото име</string>
   <string name="display_options_view_family_name_first">Първо фамилното име</string>
-  <string name="menu_clear_frequents">Изчистване на често търсените</string>
   <string name="action_menu_back_from_search">спиране на търсенето</string>
   <string name="description_clear_search">Изчистване на търсенето</string>
   <string name="select_account_dialog_title">Профил</string>

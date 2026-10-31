@@ -31,7 +31,6 @@ import org.prauga.phone.dialer.preferredsim.PreferredSimComponent;
 import org.prauga.phone.dialer.preferredsim.suggestion.SimSuggestionComponent;
 import org.prauga.phone.dialer.promotion.PromotionComponent;
 import org.prauga.phone.dialer.simulator.SimulatorComponent;
-import org.prauga.phone.dialer.speeddial.loader.UiItemLoaderComponent;
 import org.prauga.phone.dialer.storage.StorageComponent;
 import org.prauga.phone.dialer.theme.base.ThemeComponent;
 import org.prauga.phone.voicemail.VoicemailComponent;
@@ -54,7 +53,6 @@ public interface BaseDialerRootComponent
         PreCallComponent.HasComponent,
         PreferredSimComponent.HasComponent,
         PromotionComponent.HasComponent,
-        UiItemLoaderComponent.HasComponent,
         SimSuggestionComponent.HasComponent,
         SimulatorComponent.HasComponent,
         StorageComponent.HasComponent,

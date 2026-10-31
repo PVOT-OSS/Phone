@@ -42,9 +42,6 @@
   <string name="sms_work_pager">कार्य पेजरवर मजकूर पाठवा</string>
   <string name="sms_assistant">%s मजकूर पाठवा</string>
   <string name="sms_mms">MMS वर मजकूर पाठवा</string>
-  <string name="clearFrequentsConfirmation_title">वारंवार सपर्क साधलेले साफ करायचे?</string>
-  <string name="clearFrequentsConfirmation">आपण संपर्क आणि फोन अ‍ॅप्‍स मधील वारंवार संपर्क साधलेली सूची साफ कराल आणि ईमेल अ‍ॅप्‍सना सुरवातीपासून तुमची पत्ता प्राधान्‍ये जाणून घेण्‍याची सक्ती कराल.</string>
-  <string name="clearFrequentsProgress_title">वारंवार सपर्क साधलेले साफ करत आहे...</string>
   <string name="directory_search_label">निर्देशिका</string>
   <string name="directory_search_label_work">कार्य निर्देशिका</string>
   <string name="missing_name">(नाव नाही)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">नाव स्वरूपन</string>
   <string name="display_options_view_given_name_first">नाव प्रथम</string>
   <string name="display_options_view_family_name_first">आडनाव प्रथम</string>
-  <string name="menu_clear_frequents">वारंवारता साफ करा</string>
   <string name="action_menu_back_from_search">शोध थांबवा</string>
   <string name="description_clear_search">शोध साफ करा</string>
   <string name="select_account_dialog_title">खाते</string>

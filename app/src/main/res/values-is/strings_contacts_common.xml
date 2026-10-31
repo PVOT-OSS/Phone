@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Senda textaskilaboð í vinnusímboða</string>
   <string name="sms_assistant">Senda textaskilaboð til %s</string>
   <string name="sms_mms">Senda textaskilaboð í MMS-númer</string>
-  <string name="clearFrequentsConfirmation_title">Hreinsa mest notaða tengiliði?</string>
-  <string name="clearFrequentsConfirmation">Þetta hreinsar tengiliðina sem þú hefur mest samskipti við úr forritunum Tengiliðir og Sími og þvingar tölvupóstforrit til að læra upp á nýtt hvernig þú notar netföng.</string>
-  <string name="clearFrequentsProgress_title">Hreinsar mest notaða tengiliði…</string>
   <string name="directory_search_label">Skrá</string>
   <string name="directory_search_label_work">Vinnuskrá</string>
   <string name="missing_name">(Nafn vantar)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Nafnasnið</string>
   <string name="display_options_view_given_name_first">Fornafn fyrst</string>
   <string name="display_options_view_family_name_first">Eftirnafn fyrst</string>
-  <string name="menu_clear_frequents">Hreinsa algenga tengiliði</string>
   <string name="action_menu_back_from_search">hætta leit</string>
   <string name="description_clear_search">Hreinsa leit</string>
   <string name="select_account_dialog_title">Reikningur</string>

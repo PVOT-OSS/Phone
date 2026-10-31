@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Text work pager</string>
   <string name="sms_assistant">Text %s</string>
   <string name="sms_mms">Text MMS</string>
-  <string name="clearFrequentsConfirmation_title">Clear frequently contacted?</string>
-  <string name="clearFrequentsConfirmation">You\'ll clear the frequently contacted list in the Contacts and Phone apps, and force email apps to learn your addressing preferences from scratch.</string>
-  <string name="clearFrequentsProgress_title">Clearing frequently contacted…</string>
   <string name="directory_search_label">Directory</string>
   <string name="directory_search_label_work">Work directory</string>
   <string name="missing_name">(No name)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Name format</string>
   <string name="display_options_view_given_name_first">First name first</string>
   <string name="display_options_view_family_name_first">Surname first</string>
-  <string name="menu_clear_frequents">Clear frequents</string>
   <string name="action_menu_back_from_search">stop searching</string>
   <string name="description_clear_search">Clear search</string>
   <string name="select_account_dialog_title">Account</string>

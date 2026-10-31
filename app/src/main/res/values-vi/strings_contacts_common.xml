@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Nhắn tin tới số máy nhắn tin cơ quan</string>
   <string name="sms_assistant">Nhắn tin tới %s</string>
   <string name="sms_mms">Nhắn tin tới số điện thoại MMS</string>
-  <string name="clearFrequentsConfirmation_title">Xóa danh sách liên hệ thường xuyên?</string>
-  <string name="clearFrequentsConfirmation">Bạn sẽ xóa danh sách liên hệ thường xuyên trong ứng dụng Danh bạ và điện thoại cũng như buộc các ứng dụng email phải tìm hiểu các tùy chọn gửi của bạn lại từ đầu.</string>
-  <string name="clearFrequentsProgress_title">Đang xóa DS liên hệ thường xuyên…</string>
   <string name="directory_search_label">Thư mục</string>
   <string name="directory_search_label_work">Thư mục công việc</string>
   <string name="missing_name">(Không có tên)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Định dạng tên</string>
   <string name="display_options_view_given_name_first">Tên trước</string>
   <string name="display_options_view_family_name_first">Họ trước</string>
-  <string name="menu_clear_frequents">Xóa DS liên hệ thường xuyên</string>
   <string name="action_menu_back_from_search">ngừng tìm kiếm</string>
   <string name="description_clear_search">Xóa tìm kiếm</string>
   <string name="select_account_dialog_title">Tài khoản</string>

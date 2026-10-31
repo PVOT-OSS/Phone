@@ -42,9 +42,6 @@
   <string name="sms_work_pager">કાર્યાલયના પેજર પર ટેક્સ્ટ કરો</string>
   <string name="sms_assistant">%s ને ટેક્સ્ટ કરો</string>
   <string name="sms_mms">MMS પર ટેક્સ્ટ કરો</string>
-  <string name="clearFrequentsConfirmation_title">વારંવાર સંપર્ક કરેલા સાફ કરીએ?</string>
-  <string name="clearFrequentsConfirmation">તમે સંપર્કો અને ફોન એપ્લિકેશન્સમાં વારંવાર સંપર્ક કરેલ સૂચિને સાફ કરશો અને ઇમેઇલ એપ્લિકેશન્સને તમારી સંબોધન પસંદગીઓને શરૂઆતથી જાણવા માટે ફરજ પાડશો.</string>
-  <string name="clearFrequentsProgress_title">વારંવાર સંપર્ક કરેલા સાફ કરે છે…</string>
   <string name="directory_search_label">નિર્દેશિકા</string>
   <string name="directory_search_label_work">કાર્ય નિર્દેશિકા</string>
   <string name="missing_name">(નામ નથી)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">નામ ફોર્મેટ</string>
   <string name="display_options_view_given_name_first">પ્રથમ નામ પહેલા</string>
   <string name="display_options_view_family_name_first">છેલ્લું નામ પહેલા</string>
-  <string name="menu_clear_frequents">વારંવારના સાફ કરો</string>
   <string name="action_menu_back_from_search">શોધવાનું રોકો</string>
   <string name="description_clear_search">શોધ સાફ કરો</string>
   <string name="select_account_dialog_title">એકાઉન્ટ</string>

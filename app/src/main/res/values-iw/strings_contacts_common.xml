@@ -42,9 +42,6 @@
   <string name="sms_work_pager">שלח הודעת טקסט לזימונית של עבודה</string>
   <string name="sms_assistant">שלח הודעת טקסט אל %s</string>
   <string name="sms_mms">‏שלח הודעת טקסט ל-MMS</string>
-  <string name="clearFrequentsConfirmation_title">האם למחוק אנשי קשר קבועים?</string>
-  <string name="clearFrequentsConfirmation">הפעולה הזו תמחק מהאפליקציות \'אנשים\' ו\'טלפון\' את רשימת אנשי הקשר שאיתם אתה יוצר קשר בתדירות גבוהה, ויהיה עליך ללמד מחדש את אפליקציות האימייל את הכתובות המועדפות עליך.</string>
-  <string name="clearFrequentsProgress_title">מוחק אנשי קשר קבועים…</string>
   <string name="directory_search_label">ספריה</string>
   <string name="directory_search_label_work">ספריית עבודה</string>
   <string name="missing_name">(ללא שם)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">פורמט השם</string>
   <string name="display_options_view_given_name_first">שם פרטי יופיע ראשון</string>
   <string name="display_options_view_family_name_first">שם משפחה יופיע ראשון</string>
-  <string name="menu_clear_frequents">מחק אנשי קשר קבועים</string>
   <string name="action_menu_back_from_search">הפסק לחפש</string>
   <string name="description_clear_search">נקה חיפוש</string>
   <string name="select_account_dialog_title">חשבון</string>

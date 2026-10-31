@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Ажлын пейжэр рүү зурвас илгээх</string>
   <string name="sms_assistant">%s руу зурвас бичих</string>
   <string name="sms_mms">MMS руу зурвас илгээх</string>
-  <string name="clearFrequentsConfirmation_title">Байнга холбоо барьдаг харилцагчдын жагсаалтыг устгах уу?</string>
-  <string name="clearFrequentsConfirmation">Та холбоо барих хэсэг болон утасны програмд байгаа тогтмол холбоо баридаг хаягуудыг устгах ба имэйл програмуудыг таны холбоо барих хаягуудыг эрэмбэлэх үйлдлийг идэвхжүүлэх болно.</string>
-  <string name="clearFrequentsProgress_title">Байнга холбоо барьдаг харилцагчдын жагсаалтыг устгаж байна…</string>
   <string name="directory_search_label">Директор</string>
   <string name="directory_search_label_work">Ажлын лавлагаа</string>
   <string name="missing_name">(нэр байхгүй)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Нэрийн формат</string>
   <string name="display_options_view_given_name_first">Нэрийг эхэнд нь</string>
   <string name="display_options_view_family_name_first">Овгийг эхэнд нь</string>
-  <string name="menu_clear_frequents">Байнга харилцсаныг арилгах</string>
   <string name="action_menu_back_from_search">хайлтыг зогсоох</string>
   <string name="description_clear_search">Хайлтыг цэвэрлэх</string>
   <string name="select_account_dialog_title">Бүртгэл</string>

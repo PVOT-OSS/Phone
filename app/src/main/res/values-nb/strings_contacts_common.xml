@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Send tekstmelding til personsøkernummer (arbeid)</string>
   <string name="sms_assistant">Send tekstmelding til %s</string>
   <string name="sms_mms">Send tekstmelding til multimediemeldingnummer</string>
-  <string name="clearFrequentsConfirmation_title">Vil du fjerne ofte kontaktede personer?</string>
-  <string name="clearFrequentsConfirmation">Du fjerner listen over ofte kontaktede personer i Kontakter- og Telefon-appene, og tvinger e-postappene til å lære seg adresseinnstillingene dine på nytt.</string>
-  <string name="clearFrequentsProgress_title">Fjerner ofte kontaktede personer ...</string>
   <string name="directory_search_label">Katalog</string>
   <string name="directory_search_label_work">Jobbkatalog</string>
   <string name="missing_name">(Uten navn)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Navneformat</string>
   <string name="display_options_view_given_name_first">Fornavnet først</string>
   <string name="display_options_view_family_name_first">Etternavnet først</string>
-  <string name="menu_clear_frequents">Fjern ofte kontaktede personer</string>
   <string name="action_menu_back_from_search">avslutt søket</string>
   <string name="description_clear_search">Slett søk</string>
   <string name="select_account_dialog_title">Konto</string>

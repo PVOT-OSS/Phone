@@ -42,9 +42,6 @@
   <string name="sms_work_pager">ለሥራ ምልክት ማድረጊያ ጽሑፍ ይላኩ</string>
   <string name="sms_assistant">ለ%s ጽሑፍ ይላኩ</string>
   <string name="sms_mms">ለኤም ኤም ኤስ ጽሑፍ ይላኩ</string>
-  <string name="clearFrequentsConfirmation_title">በተደጋጋሚ የተገኙ ይጽዱ?</string>
-  <string name="clearFrequentsConfirmation">በእውቂያዎች እና በስልክ መተግበሪያዎች ውስጥ በተደጋጋሚ ያገኟቸውን ዝርዝር አጽድተው የኢሜይል መተግበሪያዎች ምርጫዎችዎን ከባዶ ተነስተው እንዲያውቁ ያስገድዱዋቸዋል።</string>
-  <string name="clearFrequentsProgress_title">በተደጋጋሚ የተገኙትን በማጽዳት ላይ…</string>
   <string name="directory_search_label">ማውጫ</string>
   <string name="directory_search_label_work">የሥራ ስልክ ማውጫ</string>
   <string name="missing_name">(ስም የለም)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">የስም ቅርጸት</string>
   <string name="display_options_view_given_name_first">የመጀመሪያ ስም መጀመሪያ</string>
   <string name="display_options_view_family_name_first">የመጨረሻ ስም መጀመሪያ</string>
-  <string name="menu_clear_frequents">ተደጋጋሚዎችን አጽዳ</string>
   <string name="action_menu_back_from_search">መፈለግ አቁም</string>
   <string name="description_clear_search">ፍለጋን አጽዳ</string>
   <string name="select_account_dialog_title">መለያ</string>

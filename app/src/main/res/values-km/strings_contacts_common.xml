@@ -42,9 +42,6 @@
   <string name="sms_work_pager">អត្ថបទ​ភេ​យ័រ​កន្លែង​ធ្វើការ</string>
   <string name="sms_assistant">អត្ថបទ %s</string>
   <string name="sms_mms">អត្ថបទ MMS</string>
-  <string name="clearFrequentsConfirmation_title">សម្អាត​ទំនាក់ទំនង​ញឹកញាប់?</string>
-  <string name="clearFrequentsConfirmation">អ្នកនឹងជម្រះបញ្ជីដែលអ្នកទាក់ទងជាញឹកញាប់នៅក្នុងកម្មវិធីទូរស័ព្ទ និងទំនាក់ទំនង ហើយបង្ខំឲ្យកម្មវិធីអ៊ីមែលស្វែងយល់ពីចំណូលចិត្តទំនាក់ទំនងរបស់អ្នកតាំងពីដំបូង។</string>
-  <string name="clearFrequentsProgress_title">សម្អាត​ទំនាក់ទំនង​ញឹកញាប់...</string>
   <string name="directory_search_label">ថត</string>
   <string name="directory_search_label_work">ថតកន្លែងការងារ</string>
   <string name="missing_name">(គ្មាន​ឈ្មោះ)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">ទម្រង់ឈ្មោះ</string>
   <string name="display_options_view_given_name_first">នាម​ខ្លួន​មុន</string>
   <string name="display_options_view_family_name_first">នាមត្រកូល​មុន</string>
-  <string name="menu_clear_frequents">សម្អាត​ញឹកញាប់</string>
   <string name="action_menu_back_from_search">បញ្ឈប់​ការ​ស្វែងរក</string>
   <string name="description_clear_search">សម្អាត​ការ​ស្វែងរក</string>
   <string name="select_account_dialog_title">គណនី</string>

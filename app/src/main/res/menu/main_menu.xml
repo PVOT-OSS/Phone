@@ -23,11 +23,6 @@
       android:title="@string/action_menu_call_history_description"
       app:showAsAction="collapseActionView"/>
 
-  <item
-      android:id="@+id/clear_frequents"
-      android:title="@string/menu_clear_frequents"
-      app:showAsAction="collapseActionView"
-      android:visible="false"/>
 
   <item
     android:id="@+id/menu_helplines"

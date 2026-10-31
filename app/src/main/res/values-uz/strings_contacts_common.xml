@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Ish peyjeriga sms jo‘natish</string>
   <string name="sms_assistant">%s telefoniga qo‘ng‘iroq qilish</string>
   <string name="sms_mms">MMS telefonga sms jo‘natish</string>
-  <string name="clearFrequentsConfirmation_title">Bu ro‘yxat tozalansinmi?</string>
-  <string name="clearFrequentsConfirmation">Kontaktlar va Telefon ilovalaridagi tez-tez aloqa qilingan kontaktlar ro‘yxati tozalanadi hamda e-pochta ilovalari manzillarni eslab qolishni qaytadan boshlaydi.</string>
-  <string name="clearFrequentsProgress_title">Ko‘p gaplashilganlar tozalanmoqda…</string>
   <string name="directory_search_label">Direktoriya</string>
   <string name="directory_search_label_work">Ishchi katalogi</string>
   <string name="missing_name">(Ismi yo‘q)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Ism formati</string>
   <string name="display_options_view_given_name_first">Avval ismi</string>
   <string name="display_options_view_family_name_first">Avval familiyasi</string>
-  <string name="menu_clear_frequents">Faol kontaktlarni tozalash</string>
   <string name="action_menu_back_from_search">qidiruvni to‘xtatish</string>
   <string name="description_clear_search">Izlashni tozalash</string>
   <string name="select_account_dialog_title">Hisob</string>

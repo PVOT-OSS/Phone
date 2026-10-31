@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Bidali testu-mezua laneko bilagailura</string>
   <string name="sms_assistant">Bidali testu-mezua honi: %s</string>
   <string name="sms_mms">Bidali testu-mezua MMS zenbakira</string>
-  <string name="clearFrequentsConfirmation_title">Sarri erabilitako kontaktuak garbitu?</string>
-  <string name="clearFrequentsConfirmation">Kontaktuak eta Telefonoa aplikazioetako sarri erabilitako kontaktuen zerrenda garbituko duzu; beraz, posta elektronikoaren aplikazioek helbideen hobespenak hutsetik ikasi beharko dituzte.</string>
-  <string name="clearFrequentsProgress_title">Sarri erabilitako kontaktuak garbitzen…</string>
   <string name="directory_search_label">Direktorioa</string>
   <string name="directory_search_label_work">Laneko kontaktuak</string>
   <string name="missing_name">(Izenik ez)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Izenaren formatua</string>
   <string name="display_options_view_given_name_first">Izena lehenengo</string>
   <string name="display_options_view_family_name_first">Abizena lehenengo</string>
-  <string name="menu_clear_frequents">Garbitu sarri erabilitakoak</string>
   <string name="action_menu_back_from_search">gelditu bilaketa</string>
   <string name="description_clear_search">Garbitu bilaketa</string>
   <string name="select_account_dialog_title">Kontua</string>

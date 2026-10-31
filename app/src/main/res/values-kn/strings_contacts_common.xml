@@ -42,9 +42,6 @@
   <string name="sms_work_pager">ಕೆಲಸದ ಪೇಜರ್‌‌ಗೆ ಸಂದೇಶ ಮಾಡಿ</string>
   <string name="sms_assistant">%s ಗೆ ಸಂದೇಶ ಮಾಡಿ</string>
   <string name="sms_mms">MMS ಸಂದೇಶ ಮಾಡಿ</string>
-  <string name="clearFrequentsConfirmation_title">ಪದೇ ಪದೇ ಸಂಪರ್ಕಿಸಿರುವುದನ್ನು ತೆರುವುಗೊಳಿಸುವುದೇ?</string>
-  <string name="clearFrequentsConfirmation">ಸಂಪರ್ಕಗಳು ಮತ್ತು ಫೋನ್‌ ಅಪ್ಲಿಕೇಶನ್‌ಗಳಲ್ಲಿ ಪದೇ ಪದೇ ಸಂಪರ್ಕಪಡಿಸಿರುವ ಪಟ್ಟಿಯನ್ನು ನೀವು ತೆರುವುಗೊಳಿಸುತ್ತೀರಿ ಮತ್ತು ಮೊದಲಿನಿಂದ ನಿಮ್ಮ ವಿಳಾಸ ಪ್ರಾಶಸ್ತ್ಯಗಳನ್ನು ತಿಳಿಯಲು ಇಮೇಲ್‌ ಅಪ್ಲಿಕೇಶನ್‌ಗಳನ್ನು ಒತ್ತಾಯಿಸಿ.</string>
-  <string name="clearFrequentsProgress_title">ಪದೇ ಪದೇ ಸಂಪರ್ಕಿಸಿರುವುದನ್ನು ತೆರುವುಗೊಳಿಸಲಾಗುತ್ತಿದೆ…</string>
   <string name="directory_search_label">ಡೈರೆಕ್ಟರಿ</string>
   <string name="directory_search_label_work">ಕೆಲಸದ ಡೈರೆಕ್ಟರಿ</string>
   <string name="missing_name">(ಯಾವುದೇ ಹೆಸರಿಲ್ಲ)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">ಹೆಸರಿನ ಫಾರ್ಮ್ಯಾಟ್‌</string>
   <string name="display_options_view_given_name_first">ಮೊದಲ ಹೆಸರು ಮೊದಲು</string>
   <string name="display_options_view_family_name_first">ಕೊನೆಯ ಹೆಸರು ಮೊದಲು</string>
-  <string name="menu_clear_frequents">ಪುನರಾವರ್ತನೆಗಳನ್ನು ತೆರುವುಗೊಳಿಸಿ</string>
   <string name="action_menu_back_from_search">ಹುಡುಕಾಟವನ್ನು ನಿಲ್ಲಿಸಿ</string>
   <string name="description_clear_search">ಹುಡುಕಾಟವನ್ನು ತೆರವುಗೊಳಿಸಿ</string>
   <string name="select_account_dialog_title">ಖಾತೆ</string>

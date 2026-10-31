@@ -42,9 +42,6 @@
   <string name="sms_work_pager">ტექსტური შეტყობინების გაგზავნა სამსახურის პეიჯერზე</string>
   <string name="sms_assistant">ტექსტური შეტყობინების გაგზავნა %s-ისთვის</string>
   <string name="sms_mms">ტექსტური შეტყობინების გაგზავნა MMS ნომერზე</string>
-  <string name="clearFrequentsConfirmation_title">გსურთ ხშირი კონტაქტების წაშლა?</string>
-  <string name="clearFrequentsConfirmation">თქვენ წაშლით ხშირად დაკავშირებულთა სიას კონტაქტებიდან და ტელეფონის აპლიკაციიდან და აიძულებთ ელ-ფოსტის აპლიკაციებს შეისწავლონ თქვენი ადრესატების პრიორიტეტები ნულიდან.</string>
-  <string name="clearFrequentsProgress_title">ხშირი კონტაქტები იშლება…</string>
   <string name="directory_search_label">კატალოგი</string>
   <string name="directory_search_label_work">სამსახურის კატალოგი</string>
   <string name="missing_name">(სახელის გარეშე)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">სახელის ფორმატი</string>
   <string name="display_options_view_given_name_first">ჯერ სახელი</string>
   <string name="display_options_view_family_name_first">ჯერ გვარი</string>
-  <string name="menu_clear_frequents">ხშირი კონტაქტების წაშლა</string>
   <string name="action_menu_back_from_search">ძიების შეჩერება</string>
   <string name="description_clear_search">ძიების გასუფთავება</string>
   <string name="select_account_dialog_title">ანგარიში</string>

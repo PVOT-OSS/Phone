@@ -110,18 +110,6 @@
   <!-- Action string for sending an SMS to a MMS phone number -->
   <string name="sms_mms">Text MMS</string>
 
-  <!-- Title of the confirmation dialog for clearing frequents. [CHAR LIMIT=37] -->
-  <string name="clearFrequentsConfirmation_title">Clear frequently contacted?</string>
-
-  <!-- Confirmation dialog for clearing frequents. [CHAR LIMIT=NONE] -->
-    <string name="clearFrequentsConfirmation">You\'ll clear the frequently contacted list in the
-        Contacts and Phone apps, and force email apps to learn your addressing preferences from
-        scratch.
-    </string>
-
-  <!-- Title of the "Clearing frequently contacted" progress-dialog [CHAR LIMIT=35] -->
-  <string name="clearFrequentsProgress_title">Clearing frequently contacted\u2026</string>
-
   <!-- The label in section header in the contact list for a contact directory [CHAR LIMIT=128] -->
   <string name="directory_search_label">Directory</string>
 
@@ -297,9 +285,6 @@
 
   <!-- An allowable value for the "view names as" contact display option  -->
   <string name="display_options_view_family_name_first">Last name first</string>
-
-  <!--  The menu item to clear frequents [CHAR LIMIT=30] -->
-  <string name="menu_clear_frequents">Clear frequents</string>
 
   <!-- Title for Select Account Dialog [CHAR LIMIT=30] -->
   <string name="select_account_dialog_title">Account</string>

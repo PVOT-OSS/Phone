@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Αποστολή μηνύματος κειμένου προς βομβητή εργασίας</string>
   <string name="sms_assistant">Αποστολή μηνύματος προς %s</string>
   <string name="sms_mms">Αποστολή μηνύματος κειμένου ως MMS</string>
-  <string name="clearFrequentsConfirmation_title">Διαγραφή ατόμων με συχνή επικοινωνία;</string>
-  <string name="clearFrequentsConfirmation">Θα διαγράψετε τη λίστα συχνών επαφών στις εφαρμογές Επαφές και Τηλέφωνο και θα επιβάλλετε στις εφαρμογές ηλεκτρονικού ταχυδρομείου να μάθουν τις προτιμήσεις διευθύνσεών σας από την αρχή,</string>
-  <string name="clearFrequentsProgress_title">Διαγρ. ατόμων με συχνή επικοινωνία…</string>
   <string name="directory_search_label">Κατάλογος</string>
   <string name="directory_search_label_work">Κατάλογος εργασίας</string>
   <string name="missing_name">(Χωρίς όνομα)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Μορφή ονόματος</string>
   <string name="display_options_view_given_name_first">Πρώτα το όνομα</string>
   <string name="display_options_view_family_name_first">Πρώτα το επώνυμο</string>
-  <string name="menu_clear_frequents">Διαγραφή ατόμ. με συχνή επικ.</string>
   <string name="action_menu_back_from_search">τέλος αναζήτησης</string>
   <string name="description_clear_search">Διαγραφή αναζητήσεων</string>
   <string name="select_account_dialog_title">Λογαριασμός</string>

@@ -36,7 +36,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import org.prauga.phone.contacts.common.dialog.ClearFrequentsDialog;
 import org.prauga.phone.dialer.R;
 import org.prauga.phone.dialer.app.calllog.CallLogActivity;
 import org.prauga.phone.dialer.app.settings.DialerSettingsActivity;
@@ -458,9 +457,6 @@ public class MainSearchController implements SearchBarListener {
   public boolean onMenuItemClicked(MenuItem menuItem) {
     if (menuItem.getItemId() == R.id.settings) {
       activity.startActivity(new Intent(activity, DialerSettingsActivity.class));
-      return true;
-    } else if (menuItem.getItemId() == R.id.clear_frequents) {
-      ClearFrequentsDialog.show(activity.getSupportFragmentManager());
       return true;
     } else if (menuItem.getItemId() == R.id.menu_call_history) {
       final Intent intent = new Intent(activity, CallLogActivity.class);

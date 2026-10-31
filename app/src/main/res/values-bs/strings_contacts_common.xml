@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Pošalji tekstualnu poruku na poslovni pejdžer</string>
   <string name="sms_assistant">Pošalji tekstualnu poruku %s</string>
   <string name="sms_mms">Pošalji tekstualnu poruku na MMS broj</string>
-  <string name="clearFrequentsConfirmation_title">Obrisati često kontaktirane osobe?</string>
-  <string name="clearFrequentsConfirmation">Obrisat ćete listu često kontaktiranih osoba u aplikaciji Kontakti i Aplikaciji za telefon, pa će aplikacije za e-poštu morati ispočetka učiti vaše postavke adresa.</string>
-  <string name="clearFrequentsProgress_title">Brisanje često kontaktiranih osoba…</string>
   <string name="directory_search_label">Imenik</string>
   <string name="directory_search_label_work">Poslovni imenik</string>
   <string name="missing_name">(Bez imena)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Format imena</string>
   <string name="display_options_view_given_name_first">Ime prvo</string>
   <string name="display_options_view_family_name_first">Prezime prvo</string>
-  <string name="menu_clear_frequents">Obriši često kontaktirane</string>
   <string name="action_menu_back_from_search">zaustavi pretraživanje</string>
   <string name="description_clear_search">Obriši pretragu</string>
   <string name="select_account_dialog_title">Račun</string>

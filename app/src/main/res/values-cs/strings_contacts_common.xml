@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Poslat SMS na pracovní pager</string>
   <string name="sms_assistant">Poslat SMS na kontakt %s</string>
   <string name="sms_mms">Poslat SMS na číslo MMS</string>
-  <string name="clearFrequentsConfirmation_title">Vymazat často kontaktované osoby?</string>
-  <string name="clearFrequentsConfirmation">Vymažete seznam často kontaktovaných osob v aplikacích Kontakty a Telefon a e-mailové aplikace budou muset nastavení adresátů vytvořit znovu.</string>
-  <string name="clearFrequentsProgress_title">Mazání často kontaktovaných osob...</string>
   <string name="directory_search_label">Adresář</string>
   <string name="directory_search_label_work">Pracovní adresář</string>
   <string name="missing_name">(Žádné jméno)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Formát jména</string>
   <string name="display_options_view_given_name_first">Nejprve jméno</string>
   <string name="display_options_view_family_name_first">Nejprve příjmení</string>
-  <string name="menu_clear_frequents">Vymazat často kontaktované</string>
   <string name="action_menu_back_from_search">zastavit vyhledávání</string>
   <string name="description_clear_search">Vymazat vyhledávání</string>
   <string name="select_account_dialog_title">Účet</string>

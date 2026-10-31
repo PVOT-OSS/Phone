@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Pošlji SMS v službeni pozivnik</string>
   <string name="sms_assistant">Pošlji SMS pomočniku na številko %s</string>
   <string name="sms_mms">Pošlji SMS na telefonsko številko MMS</string>
-  <string name="clearFrequentsConfirmation_title">Želite izbrisati seznam pog. stikov?</string>
-  <string name="clearFrequentsConfirmation">Izbrisali boste seznam pogostih stikov v aplikacijah Stiki in Telefon, zato bodo e-poštne aplikacije začele shranjevati pogoste naslovnike od začetka.</string>
-  <string name="clearFrequentsProgress_title">Brisanje seznama pogost. stikov ...</string>
   <string name="directory_search_label">Imenik</string>
   <string name="directory_search_label_work">Delovni imenik</string>
   <string name="missing_name">(Ni imena)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Oblika imena</string>
   <string name="display_options_view_given_name_first">Najprej ime</string>
   <string name="display_options_view_family_name_first">Najprej priimek</string>
-  <string name="menu_clear_frequents">Izbriši seznam pogostih stikov</string>
   <string name="action_menu_back_from_search">ustavitev iskanja</string>
   <string name="description_clear_search">Počisti iskalno polje</string>
   <string name="select_account_dialog_title">Račun</string>

@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Envia un SMS al cercapersones de la feina</string>
   <string name="sms_assistant">Envia un SMS a %s</string>
   <string name="sms_mms">Envia un MMS</string>
-  <string name="clearFrequentsConfirmation_title">Vols esborrar els contactes freqüents?</string>
-  <string name="clearFrequentsConfirmation">S\'esborrarà la llista de contactes més freqüents a les aplicacions Contactes i Telèfon i es forçarà les aplicacions de correu electrònic a obtenir informació nova sobre les teves preferències pel que fa a adreces.</string>
-  <string name="clearFrequentsProgress_title">S\'estan esborrant contactes freq...</string>
   <string name="directory_search_label">Directori</string>
   <string name="directory_search_label_work">Directori de la feina</string>
   <string name="missing_name">(Sense nom)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Format del nom</string>
   <string name="display_options_view_given_name_first">Primer el nom</string>
   <string name="display_options_view_family_name_first">Primer els cognoms</string>
-  <string name="menu_clear_frequents">Esborra contactes freqüents</string>
   <string name="action_menu_back_from_search">Atura la cerca.</string>
   <string name="description_clear_search">Esborra la cerca</string>
   <string name="select_account_dialog_title">Compte</string>

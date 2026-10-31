@@ -42,9 +42,6 @@
   <string name="sms_work_pager">SMS – służbowy pager</string>
   <string name="sms_assistant">SMS – %s</string>
   <string name="sms_mms">SMS – MMS</string>
-  <string name="clearFrequentsConfirmation_title">Wyczyścić częste kontakty?</string>
-  <string name="clearFrequentsConfirmation">Wyczyścisz listę częstych kontaktów w aplikacjach Kontakty i Telefon. Aplikacje pocztowe będą musiały od nowa poznać Twoje preferencje adresowe.</string>
-  <string name="clearFrequentsProgress_title">Czyszczę częste kontakty…</string>
   <string name="directory_search_label">Katalog</string>
   <string name="directory_search_label_work">Katalog służbowy</string>
   <string name="missing_name">(Bez nazwy)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Format imienia i nazwiska</string>
   <string name="display_options_view_given_name_first">Najpierw imię</string>
   <string name="display_options_view_family_name_first">Najpierw nazwisko</string>
-  <string name="menu_clear_frequents">Wyczyść częste kontakty</string>
   <string name="action_menu_back_from_search">zatrzymaj wyszukiwanie</string>
   <string name="description_clear_search">Wyczyść wyszukiwanie</string>
   <string name="select_account_dialog_title">Konto</string>

@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Пошаљи SMS на пословни пејџер</string>
   <string name="sms_assistant">Пошаљи SMS на %s</string>
   <string name="sms_mms">Пошаљи SMS на број за MMS</string>
-  <string name="clearFrequentsConfirmation_title">Бришете често контактиране?</string>
-  <string name="clearFrequentsConfirmation">Обрисаћете листу често контактираних у апликацијама Контакти и Телефон, па ће имејл апликације морати поново да прикупе информације о адресирању.</string>
-  <string name="clearFrequentsProgress_title">Брисање често контактираних...</string>
   <string name="directory_search_label">Директоријум</string>
   <string name="directory_search_label_work">Директоријум за Work</string>
   <string name="missing_name">(Нема имена)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Формат имена и презимена</string>
   <string name="display_options_view_given_name_first">Прво име</string>
   <string name="display_options_view_family_name_first">Прво презиме</string>
-  <string name="menu_clear_frequents">Обриши често контактиране</string>
   <string name="action_menu_back_from_search">заустављање претраживања</string>
   <string name="description_clear_search">Брисање претраге</string>
   <string name="select_account_dialog_title">Налог</string>

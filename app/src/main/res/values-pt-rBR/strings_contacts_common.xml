@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Enviar SMS para pager comercial</string>
   <string name="sms_assistant">Enviar SMS para %s</string>
   <string name="sms_mms">Enviar SMS para MMS</string>
-  <string name="clearFrequentsConfirmation_title">Apagar contatos frequentes?</string>
-  <string name="clearFrequentsConfirmation">Você apagará a lista de contatos frequentes nos apps Contatos e Telefone, fazendo com que os apps de e-mail tenham que redefinir suas preferências de endereçamento.</string>
-  <string name="clearFrequentsProgress_title">Apagando contatos frequentes…</string>
   <string name="directory_search_label">Diretório</string>
   <string name="directory_search_label_work">Diretório de trabalho</string>
   <string name="missing_name">(Sem nome)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Formato de nome</string>
   <string name="display_options_view_given_name_first">Primeiro o nome</string>
   <string name="display_options_view_family_name_first">Primeiro o sobrenome</string>
-  <string name="menu_clear_frequents">Apagar frequentes</string>
   <string name="action_menu_back_from_search">parar de pesquisar</string>
   <string name="description_clear_search">Limpar pesquisa</string>
   <string name="select_account_dialog_title">Conta</string>

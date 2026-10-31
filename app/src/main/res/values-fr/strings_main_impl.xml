@@ -19,6 +19,5 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="main_activity_label" msgid="3121599977875141886">"Téléphone"</string>
     <string name="tab_title_call_history" msgid="5191872501729332994">"Historique"</string>
-    <string name="tab_title_speed_dial" msgid="1968484500112572774">"Num. abrégée"</string>
     <string name="tab_title_voicemail" msgid="4777655983569268504">"Messagerie"</string>
 </resources>

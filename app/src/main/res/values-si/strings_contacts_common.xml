@@ -42,9 +42,6 @@
   <string name="sms_work_pager">කාර්යාල පේජරයට කෙටි පණිවිඩයක් යවන්න</string>
   <string name="sms_assistant">%s ට කෙටි පණිවිඩයක් යවන්න</string>
   <string name="sms_mms">MMS වෙත කෙටි පණිවිඩයක් යවන්න</string>
-  <string name="clearFrequentsConfirmation_title">නිතරම සම්බන්ධ වන අය හිස් කරන්නද?</string>
-  <string name="clearFrequentsConfirmation">ඔබ සම්බන්ධතා සහ දුරකථන යෙදුම්වලින් නිතරම සම්බන්ධ වුණු අයගේ ලැයිස්තුව හිස් කර, මුල සිටම ඔබගේ ලිපින අභිරුචි ඉගෙනීමට ඊ-තැපැල් යෙදුම්වලට බල කරයි.</string>
-  <string name="clearFrequentsProgress_title">නිතරම සම්බන්ධ වන අය හිස් කරමින්…</string>
   <string name="directory_search_label">නාමාවලිය</string>
   <string name="directory_search_label_work">කාර්යාල සම්බන්ධතා නාමාවලිය</string>
   <string name="missing_name">(නමක් නොමැත)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">නමේ ආකෘතිය</string>
   <string name="display_options_view_given_name_first">මුල් නම මුලින්ම</string>
   <string name="display_options_view_family_name_first">අවසාන නම මුලින්ම</string>
-  <string name="menu_clear_frequents">නිතරමයන් හිස් කරන්න</string>
   <string name="action_menu_back_from_search">සෙවීම අවසන් කරන්න</string>
   <string name="description_clear_search">සෙවීම හිස් කරන්න</string>
   <string name="select_account_dialog_title">ගිණුම</string>

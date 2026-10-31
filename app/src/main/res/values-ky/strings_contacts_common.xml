@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Жумушчу пейжерге SMS жөнөтүү</string>
   <string name="sms_assistant">Текст жөнөтүү %s</string>
   <string name="sms_mms">MMS телефонго SMS жөнөтүү</string>
-  <string name="clearFrequentsConfirmation_title">Көп чалынгандар тизмеси тазалансынбы?</string>
-  <string name="clearFrequentsConfirmation">Байланыштар жана Телефон колдонмолорунан көп байланышкан адамдар тизмесин тазалап, даректүү жеке жөндөөлөр тууралуу билүү үчүн электрондук почта колдонмолорун иштетиңиз.</string>
-  <string name="clearFrequentsProgress_title">Көп чалынгандар тизмеси тазаланууда…</string>
   <string name="directory_search_label">Директорий</string>
   <string name="directory_search_label_work">Жумуш профилиндеги байланыштар китепчеси</string>
   <string name="missing_name">(Аты жок)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Ысым форматы</string>
   <string name="display_options_view_given_name_first">Биринчи ысымы</string>
   <string name="display_options_view_family_name_first">Биринчи фамилиясы</string>
-  <string name="menu_clear_frequents">Көп чалуулар тизмесин тазалоо</string>
   <string name="action_menu_back_from_search">издөөнү токтотуу</string>
   <string name="description_clear_search">Издөөнү тазалоо</string>
   <string name="select_account_dialog_title">Каттоо эсеби</string>

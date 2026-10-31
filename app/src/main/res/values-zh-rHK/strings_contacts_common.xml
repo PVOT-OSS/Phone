@@ -42,9 +42,6 @@
   <string name="sms_work_pager">傳送短訊至公司傳呼機</string>
   <string name="sms_assistant">傳送短訊至%s的電話</string>
   <string name="sms_mms">傳送短訊至 MMS 電話號碼</string>
-  <string name="clearFrequentsConfirmation_title">清除常用聯絡人？</string>
-  <string name="clearFrequentsConfirmation">您將清除「通訊錄」應用程式和「電話」應用程式中的常用聯絡人名單，並強制電子郵件應用程式重新取得您的寄件偏好設定。</string>
-  <string name="clearFrequentsProgress_title">正在清除常用聯絡人…</string>
   <string name="directory_search_label">名錄</string>
   <string name="directory_search_label_work">工作目錄</string>
   <string name="missing_name">(沒有名稱)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">姓名格式</string>
   <string name="display_options_view_given_name_first">名字在前</string>
   <string name="display_options_view_family_name_first">姓氏在前</string>
-  <string name="menu_clear_frequents">清除常用聯絡人</string>
   <string name="action_menu_back_from_search">停止搜尋</string>
   <string name="description_clear_search">清除搜尋</string>
   <string name="select_account_dialog_title">帳戶</string>

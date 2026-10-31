@@ -42,9 +42,6 @@
   <string name="sms_work_pager">အလုပ်ပေ့ဂျာသို့ စာပို့ပါ</string>
   <string name="sms_assistant">%sထံ စာပို့ပါ</string>
   <string name="sms_mms">MMS နံပါတ်သို့ စာပို့ပါ</string>
-  <string name="clearFrequentsConfirmation_title">အသုံးများသောလိပ်စာများရှင်းပစ်မလား?</string>
-  <string name="clearFrequentsConfirmation">အသုံးများသော အဆက်အသွယ်စာရင်းအား Contacts နှင့် Phone app များမှ သင် ရှင်းလင်းပစ်မှာဖြစ်ပြီး၊ အီးမေးလ် app များအား သင့်နှစ်သက်ရာ ​ပ​ြောဆိုဆက်ဆံမှုပုံစံကို အစမှပြန်လည် လေ့လာခိုင်းမည်။</string>
-  <string name="clearFrequentsProgress_title">အသုံးများသောလိပ်စာများ ရှင်းလင်းနေစဉ်</string>
   <string name="directory_search_label">လမ်းညွှန်</string>
   <string name="directory_search_label_work">အလုပ်လမ်းညွှန်</string>
   <string name="missing_name">(အမည်မရှိ)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">အမည် ချထားပုံစံ</string>
   <string name="display_options_view_given_name_first">ပထမ အမည် ဦးစွာ</string>
   <string name="display_options_view_family_name_first">နောက်ဆုံး အမည် ဦးစွာ</string>
-  <string name="menu_clear_frequents">မကြာခဏအရာများအား ဖယ်ရှားရန်</string>
   <string name="action_menu_back_from_search">ရှာဖွေမှုကို ရပ်ရန်</string>
   <string name="description_clear_search">ရှာဖွေမှုကို ရှင်းပါ</string>
   <string name="select_account_dialog_title">အကောင့်</string>

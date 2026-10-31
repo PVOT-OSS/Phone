@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Skicka SMS till jobbpersonsökare</string>
   <string name="sms_assistant">Skicka SMS till %s</string>
   <string name="sms_mms">Skicka SMS till MMS</string>
-  <string name="clearFrequentsConfirmation_title">Vill du rensa listan?</string>
-  <string name="clearFrequentsConfirmation">Du rensar listan över personer som du kontaktar ofta i apparna Kontakter och Telefon. E-postappar tvingas lära sig dina mottagarinställningar från början.</string>
-  <string name="clearFrequentsProgress_title">Listan rensas …</string>
   <string name="directory_search_label">Katalog</string>
   <string name="directory_search_label_work">Jobbkatalog</string>
   <string name="missing_name">(Inget namn)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Namnformat</string>
   <string name="display_options_view_given_name_first">Förnamn först</string>
   <string name="display_options_view_family_name_first">Efternamn först</string>
-  <string name="menu_clear_frequents">Rensa listan över kontakter</string>
   <string name="action_menu_back_from_search">avbryt sökning</string>
   <string name="description_clear_search">Rensa sökning</string>
   <string name="select_account_dialog_title">Konto</string>

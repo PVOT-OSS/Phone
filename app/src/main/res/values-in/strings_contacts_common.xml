@@ -42,9 +42,6 @@
   <string name="sms_work_pager">SMS pager kantor</string>
   <string name="sms_assistant">SMS %s</string>
   <string name="sms_mms">SMS MMS</string>
-  <string name="clearFrequentsConfirmation_title">Hapus yang sering dihubungi?</string>
-  <string name="clearFrequentsConfirmation">Anda akan menghapus daftar yang sering dihubungi pada aplikasi Kontak dan Ponsel, serta memaksa aplikasi email untuk mempelajari preferensi penanganan dari awal.</string>
-  <string name="clearFrequentsProgress_title">Menghapus yang sering dihubungi...</string>
   <string name="directory_search_label">Direktori</string>
   <string name="directory_search_label_work">Direktori kerja</string>
   <string name="missing_name">(Tanpa nama)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Format nama</string>
   <string name="display_options_view_given_name_first">Nama depan terlebih dulu</string>
   <string name="display_options_view_family_name_first">Nama belakang terlebih dulu</string>
-  <string name="menu_clear_frequents">Hapus yang sering</string>
   <string name="action_menu_back_from_search">menghentikan penelusuran</string>
   <string name="description_clear_search">Hapus penelusuran</string>
   <string name="select_account_dialog_title">Akun</string>

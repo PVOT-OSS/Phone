@@ -42,9 +42,6 @@
   <string name="sms_work_pager">직장 호출기로 문자 보내기</string>
   <string name="sms_assistant">%s(으)로 문자 보내기</string>
   <string name="sms_mms">MMS로 문자 보내기</string>
-  <string name="clearFrequentsConfirmation_title">자주 연락하는 사람들 목록을 삭제하시겠습니까?</string>
-  <string name="clearFrequentsConfirmation">주소록 및 휴대전화 앱에서 자주 연락하는 사람의 목록을 삭제하고 이메일 앱이 주소록 환경설정을 처음부터 다시 반영하도록 합니다.</string>
-  <string name="clearFrequentsProgress_title">자주 연락하는 사람들 목록을 삭제하는 중…</string>
   <string name="directory_search_label">디렉토리</string>
   <string name="directory_search_label_work">직장 디렉토리</string>
   <string name="missing_name">(이름 없음)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">이름 형식</string>
   <string name="display_options_view_given_name_first">이름 먼저</string>
   <string name="display_options_view_family_name_first">성 먼저</string>
-  <string name="menu_clear_frequents">자주 연락하는 사람 목록 삭제</string>
   <string name="action_menu_back_from_search">검색 중지</string>
   <string name="description_clear_search">검색창 지우기</string>
   <string name="select_account_dialog_title">계정</string>

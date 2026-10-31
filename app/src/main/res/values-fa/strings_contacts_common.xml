@@ -42,9 +42,6 @@
   <string name="sms_work_pager">ارسال پیامک به پی‌جوی محل کار</string>
   <string name="sms_assistant">ارسال پیامک به %s</string>
   <string name="sms_mms">ارسال پیامک به خدمات پیام چندرسانه‌ای</string>
-  <string name="clearFrequentsConfirmation_title">مکرراً تماس‌گرفته‌ها پاک شود؟</string>
-  <string name="clearFrequentsConfirmation">فهرست افرادی را که مکرر با آن‌ها تماس گرفته‌اید در برنامه‌های «مخاطبین» و «تلفن» پاک خواهید کرد و برنامه‌های رایانامه مجبور می‌شوند که تنظیمات برگزیده آدرس‌دهی شما را از اول یاد بگیرند.</string>
-  <string name="clearFrequentsProgress_title">درحال پاک کردن مکرراً تماس‌گرفته…</string>
   <string name="directory_search_label">فهرست</string>
   <string name="directory_search_label_work">فهرست کار</string>
   <string name="missing_name">(بدون نام)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">قالب نام</string>
   <string name="display_options_view_given_name_first">ابتدا نام</string>
   <string name="display_options_view_family_name_first">ابتدا نام خانوادگی</string>
-  <string name="menu_clear_frequents">پاک کردن مکرراً تماس‌گرفته</string>
   <string name="action_menu_back_from_search">توقف جستجو</string>
   <string name="description_clear_search">پاک کردن جستجو</string>
   <string name="select_account_dialog_title">حساب</string>

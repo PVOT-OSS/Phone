@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Enviar mensagem de texto para o pager do trabalho</string>
   <string name="sms_assistant">Enviar mensagem de texto para %s</string>
   <string name="sms_mms">Enviar mensagem de texto para um número MMS</string>
-  <string name="clearFrequentsConfirmation_title">Limpar contactos frequentes?</string>
-  <string name="clearFrequentsConfirmation">Limpa a lista de contactos frequentes nas aplicações Contactos e Telemóvel e força as aplicações de email a aprenderem as suas preferências de endereço de raiz.</string>
-  <string name="clearFrequentsProgress_title">A limpar contactos frequentes...</string>
   <string name="directory_search_label">Diretório</string>
   <string name="directory_search_label_work">Diretório de trabalho</string>
   <string name="missing_name">(Sem nome)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Formato do nome</string>
   <string name="display_options_view_given_name_first">Nome próprio em primeiro lugar</string>
   <string name="display_options_view_family_name_first">Apelido em primeiro lugar</string>
-  <string name="menu_clear_frequents">Limpar frequentes</string>
   <string name="action_menu_back_from_search">parar de pesquisar</string>
   <string name="description_clear_search">Limpar pesquisa</string>
   <string name="select_account_dialog_title">Conta</string>

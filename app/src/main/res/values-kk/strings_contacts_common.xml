@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Жұмыс пейджеріне мәтін-хабар жіберу</string>
   <string name="sms_assistant">%s нөміріне мәтін-хабар жіберу</string>
   <string name="sms_mms">MMS нөміріне мәтін-хабар жіберу</string>
-  <string name="clearFrequentsConfirmation_title">Жиі қолданылғандар тазартылсын ба?</string>
-  <string name="clearFrequentsConfirmation">Контактілер және Телефондар қолданбаларындағы жиі хабарласатындар тізімі тазаланады және электрондық пошта қолданбалары мекенжай параметрлерін басынан үйренуге мәжбүрленеді.</string>
-  <string name="clearFrequentsProgress_title">Жиі қолданылғандар тазартылуда…</string>
   <string name="directory_search_label">Анықтама</string>
   <string name="directory_search_label_work">Жұмыс каталогы</string>
   <string name="missing_name">(Атаусыз)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Ат пішімі</string>
   <string name="display_options_view_given_name_first">Алдымен аты</string>
   <string name="display_options_view_family_name_first">Алдымен тегі</string>
-  <string name="menu_clear_frequents">Жиі қолданылғандары өшіру</string>
   <string name="action_menu_back_from_search">іздеуді тоқтату</string>
   <string name="description_clear_search">Іздеуді өшіру</string>
   <string name="select_account_dialog_title">Есептік жазба</string>

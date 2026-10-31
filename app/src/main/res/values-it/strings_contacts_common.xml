@@ -42,9 +42,6 @@
   <string name="sms_work_pager">SMS a cercapersone lavoro</string>
   <string name="sms_assistant">SMS a %s</string>
   <string name="sms_mms">SMS a MMS</string>
-  <string name="clearFrequentsConfirmation_title">Cancellare contattati di frequente?</string>
-  <string name="clearFrequentsConfirmation">Verrà cancellato l\'elenco dei contatti frequenti nelle app Contatti e Telefono e le app email dovranno apprendere da zero le tue preferenze di comunicazione.</string>
-  <string name="clearFrequentsProgress_title">Cancellazione contattati di frequente…</string>
   <string name="directory_search_label">Directory</string>
   <string name="directory_search_label_work">Directory di lavoro</string>
   <string name="missing_name">(Nessun nome)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Formato nome</string>
   <string name="display_options_view_given_name_first">Prima il nome</string>
   <string name="display_options_view_family_name_first">Prima il cognome</string>
-  <string name="menu_clear_frequents">Cancella frequenti</string>
   <string name="action_menu_back_from_search">interrompi ricerca</string>
   <string name="description_clear_search">Cancella ricerca</string>
   <string name="select_account_dialog_title">Account</string>

@@ -42,9 +42,6 @@
   <string name="sms_work_pager">Envoyer un SMS au téléavertisseur professionnel</string>
   <string name="sms_assistant">Envoyer un SMS au %s</string>
   <string name="sms_mms">Envoyer un SMS au numéro de téléphone MMS</string>
-  <string name="clearFrequentsConfirmation_title">Effacer les contacts fréquents ?</string>
-  <string name="clearFrequentsConfirmation">Cette opération efface la liste des personnes que vous contactez le plus souvent dans les applications Contacts et Téléphone, et entraîne une réinitialisation des adresses mémorisées comme celles que vous utilisez le plus fréquemment dans vos applications de messagerie électronique.</string>
-  <string name="clearFrequentsProgress_title">Suppression des contacts fréquents…</string>
   <string name="directory_search_label">Répertoire</string>
   <string name="directory_search_label_work">Contacts professionnels</string>
   <string name="missing_name">(Sans nom)</string>
@@ -107,7 +104,6 @@
   <string name="display_options_view_names_as">Format du nom</string>
   <string name="display_options_view_given_name_first">Prénom en premier</string>
   <string name="display_options_view_family_name_first">Nom en premier</string>
-  <string name="menu_clear_frequents">Effacer les contacts fréquents</string>
   <string name="action_menu_back_from_search">arrêter la recherche</string>
   <string name="description_clear_search">Effacer la recherche</string>
   <string name="select_account_dialog_title">Compte</string>
