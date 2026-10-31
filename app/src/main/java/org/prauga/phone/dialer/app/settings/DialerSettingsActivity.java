@@ -43,6 +43,7 @@ import org.prauga.phone.dialer.app.BaseActivity;
 import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.compat.telephony.TelephonyManagerCompat;
 import org.prauga.phone.dialer.lookup.LookupSettingsFragment;
+import org.prauga.phone.dialer.screening.ScreeningSettingsFragment;
 import org.prauga.phone.dialer.util.PermissionsUtil;
 import org.prauga.phone.dialer.voicemail.settings.VoicemailSettingsFragment;
 import org.prauga.phone.voicemail.VoicemailClient;
@@ -152,6 +153,12 @@ public class DialerSettingsActivity extends BaseActivity implements
       lookupSettings.setFragment(LookupSettingsFragment.class.getName());
       lookupSettings.setIconSpaceReserved(false);
       getPreferenceScreen().addPreference(lookupSettings);
+
+      final Preference screeningSettings = new Preference(getContext());
+      screeningSettings.setTitle(R.string.screening_settings_title);
+      screeningSettings.setFragment(ScreeningSettingsFragment.class.getName());
+      screeningSettings.setIconSpaceReserved(false);
+      getPreferenceScreen().addPreference(screeningSettings);
 
       TelephonyManager telephonyManager = getContext().getSystemService(TelephonyManager.class);
       TelecomManager telecomManager = (TelecomManager) getContext().getSystemService(
