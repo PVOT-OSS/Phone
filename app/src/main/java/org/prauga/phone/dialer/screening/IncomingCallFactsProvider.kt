@@ -13,7 +13,9 @@ import android.provider.CallLog
 import android.provider.ContactsContract.PhoneLookup
 import android.telecom.Call
 import android.telephony.CarrierConfigManager
+import android.telephony.PhoneNumberUtils
 import android.telephony.TelephonyManager
+import androidx.core.net.toUri
 import java.util.concurrent.TimeUnit
 
 /**
@@ -35,7 +37,7 @@ class IncomingCallFactsProvider(
             verificationStatus = details.callerNumberVerificationStatus,
             isEmergencyNumber = number != null && isEmergencyNumber(number),
             hasRecentEmergencyCall = hasRecentEmergencyCall(),
-            isContact = number != null && isContact(number),
+            isContact = number != null && (isContact(number) || isFixedDialingNumber(number)),
             hasCallLogHistory = number != null && latestCallDate(number, outgoingOnly = false) != null,
             hasRecentOutgoingCall = number != null && isRecent(latestCallDate(number, outgoingOnly = true), RECENT_OUTGOING_MILLIS),
             isMarkedDoNotScreen = false,
@@ -53,6 +55,17 @@ class IncomingCallFactsProvider(
             return it.moveToFirst()
         }
     }
+
+    private fun isFixedDialingNumber(number: String): Boolean = runCatching {
+        val countryIso = telephony.simCountryIso
+        context.contentResolver.query(FDN_URI, arrayOf(FDN_NUMBER), null, null, null)?.use {
+            while (it.moveToNext()) {
+                val fdn = it.getString(0)
+                if (!fdn.isNullOrEmpty() && PhoneNumberUtils.areSamePhoneNumber(fdn, number, countryIso)) return@runCatching true
+            }
+            false
+        } ?: false
+    }.getOrDefault(false)
 
     private fun latestCallDate(number: String, outgoingOnly: Boolean): Long? {
         val uri = CallLog.Calls.CONTENT_FILTER_URI.buildUpon()
@@ -103,5 +116,7 @@ class IncomingCallFactsProvider(
     private companion object {
         val RECENT_OUTGOING_MILLIS = TimeUnit.DAYS.toMillis(7)
         const val DEFAULT_EMERGENCY_CALLBACK_SECONDS = 7200
+        val FDN_URI: Uri = "content://icc/fdn".toUri()
+        const val FDN_NUMBER = "number"
     }
 }
