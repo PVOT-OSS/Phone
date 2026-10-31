@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">Közeli helyek</string>
     <string name="lookup_settings_label">Telefonszám-lekérdezés</string>
     <string name="enable_forward_lookup_title">Címlekérdezés</string>
     <string name="enable_forward_lookup_summary">Közeli helyek megjelenítése a tárcsázóban történő kereséskor</string>

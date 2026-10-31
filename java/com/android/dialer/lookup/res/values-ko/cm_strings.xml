@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">주변 장소</string>
     <string name="lookup_settings_label">전화번호 검색</string>
     <string name="enable_forward_lookup_title">순서대로 검색</string>
     <string name="enable_forward_lookup_summary">다이얼러에서 검색 시 근처 장소 표시</string>

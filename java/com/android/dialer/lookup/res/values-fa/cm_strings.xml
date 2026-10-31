@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">مکان‌های نزدیک</string>
     <string name="lookup_settings_label">جستجوی شماره تلفن</string>
     <string name="enable_forward_lookup_title">جستجو ارسالی</string>
     <string name="enable_forward_lookup_summary">نمایش مکان‌های نزدیک هنگام جستجو در شماره‌گیر</string>

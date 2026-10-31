@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">Platser i närheten</string>
     <string name="lookup_settings_label">Telefonnummersökning</string>
     <string name="enable_forward_lookup_title">Platssökning</string>
     <string name="enable_forward_lookup_summary">Visa platser i närheten vid sökning med knappsatsen</string>

@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">Miesta v blízkosti</string>
     <string name="lookup_settings_label">Vyhľadávanie telefónneho čísla</string>
     <string name="enable_forward_lookup_title">Vyhľadávanie vpred</string>
     <string name="enable_forward_lookup_summary">Zobraziť miesta v blízkosti pri vyhľadávaní v číselníku</string>

@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">מקומות סמוכים</string>
     <string name="lookup_settings_label">חיפוש מספר טלפון</string>
     <string name="enable_forward_lookup_title">חיפוש מקדים</string>
     <string name="enable_forward_lookup_summary">הצגת מקומות סמוכים בעת חיפוש בחייגן</string>

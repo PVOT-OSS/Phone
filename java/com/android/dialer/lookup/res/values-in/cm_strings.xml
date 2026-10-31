@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">Tempat terdekat</string>
     <string name="lookup_settings_label">Penelusuran nomor telepon</string>
     <string name="enable_forward_lookup_title">Penelusuran kedepan</string>
     <string name="enable_forward_lookup_summary">Tampilkan tempat terdekat ketika mencari di dialer</string>

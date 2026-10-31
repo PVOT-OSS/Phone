@@ -44,9 +44,6 @@
   <!-- Menu item used to delete a voicemail. [CHAR LIMIT=30] -->
   <string name="call_log_trash_voicemail">Delete voicemail</string>
 
-  <!-- Text for snackbar to undo a voicemail delete. [CHAR LIMIT=30] -->
-  <string name="snackbar_voicemail_deleted">Voicemail deleted</string>
-
   <!-- Title of the confirmation dialog for clearing the call log. [CHAR LIMIT=37]  -->
   <string name="clearCallLogConfirmation_title">Clear call history?</string>
 
@@ -140,12 +137,6 @@
        activity -->
   <string name="action_menu_call_history_description">Call history</string>
 
-  <!-- Content description for the fake action menu overflow button.
-       This should be same as the description for the real action menu
-       overflow button available in ActionBar.
-       [CHAR LIMIT=NONE] -->
-  <string msgid="2295659037509008453" name="action_menu_overflow_description">More options</string>
-
   <!-- Label for the dialer app setting page [CHAR LIMIT=30]-->
   <string name="dialer_settings_label">Settings</string>
 
@@ -207,9 +198,6 @@
   -->
   <string name="description_video_call">Video call.</string>
 
-  <!-- String describing the icon used to start a voice search -->
-  <string name="description_start_voice_search">Start voice search</string>
-
   <!-- String used for displaying calls to the voicemail number in the call log -->
   <string name="voicemail">Voicemail</string>
 
@@ -233,18 +221,8 @@
        The date will be replaced by 'Today' for voicemails created on the current day. For example: Today at 2:49 PM -->
   <string name="voicemailCallLogDateTimeFormat"><xliff:g example="Jul 25, 2014" id="date">%1$s</xliff:g> at <xliff:g example="2:49 PM" id="time">%2$s</xliff:g></string>
 
-  <!-- Format for duration of voicemails which are displayed when viewing voicemail logs. For example "01:22" -->
-  <string name="voicemailDurationFormat"><xliff:g example="10" id="minutes">%1$02d</xliff:g>:<xliff:g example="20" id="seconds">%2$02d</xliff:g></string>
-
   <!-- A format string used for displaying the date, time and duration for a voicemail call log. For example: Jul 25, 2014 at 2:49 PM • 00:34 -->
   <string name="voicemailCallLogDateTimeFormatWithDuration"><xliff:g example="Jul 25, 2014 at 2:49PM" id="dateAndTime">%1$s</xliff:g> \u2022 <xliff:g example="01:22" id="duration">%2$s</xliff:g></string>
-
-  <!-- Message displayed when there is no application available to handle voice search. [CHAR LIMIT=NONE] -->
-  <string name="voice_search_not_available">Voice search not available</string>
-
-  <!-- Hint displayed in dialer search box when there is no query that is currently typed.
-       [CHAR LIMIT=30] -->
-  <string name="dialer_hint_find_contact">Search contacts</string>
 
   <!-- Text displayed when the call log is empty. -->
   <string name="call_log_all_empty">Your call history is empty</string>

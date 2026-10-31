@@ -15,7 +15,6 @@
 -->
 
 <resources>
-  <color name="voicemail_icon_disabled_tint">#80000000</color>
 
   <color name="call_record_playback_icon_color">#8a000000</color>
 

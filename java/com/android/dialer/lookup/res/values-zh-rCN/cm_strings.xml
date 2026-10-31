@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">附近地点</string>
     <string name="lookup_settings_label">电话号码查询</string>
     <string name="enable_forward_lookup_title">正向查询</string>
     <string name="enable_forward_lookup_summary">在拨号器搜索时显示附近地点</string>

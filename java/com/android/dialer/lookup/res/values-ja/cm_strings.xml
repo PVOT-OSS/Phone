@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">近くの場所</string>
     <string name="lookup_settings_label">電話番号検索</string>
     <string name="enable_forward_lookup_title">正引き検索</string>
     <string name="enable_forward_lookup_summary">ダイヤル画面で検索しているときに近くの場所を表示します</string>

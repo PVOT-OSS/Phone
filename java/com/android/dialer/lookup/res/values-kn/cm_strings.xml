@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">ಸಮೀಪದ ಸ್ಥಳಗಳು</string>
     <string name="lookup_settings_label">ಫೋನ್ ಸಂಖ್ಯೆ ಹುಡುಕು</string>
     <string name="enable_forward_lookup_title">ಮುಂಚಿತ ಮೇಲ್ವಿಚಾರಣೆ</string>
     <string name="enable_forward_lookup_summary">ಕರೆ ಘಟಕದಲ್ಲಿ ಹುಡುಕುವುವಾಗ, ಸಮೀಪದ ಸ್ಥಳಗಳನ್ನು ತೋರಿಸು</string>

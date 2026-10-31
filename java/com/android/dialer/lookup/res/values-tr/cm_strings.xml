@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">Yakın yerler</string>
     <string name="lookup_settings_label">Telefon numarası arama</string>
     <string name="enable_forward_lookup_title">Yönlendirme araması</string>
     <string name="enable_forward_lookup_summary">Çevirici içinde arama yaparken yakınlardaki yerleri göster</string>

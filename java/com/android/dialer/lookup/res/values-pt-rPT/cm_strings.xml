@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">Locais próximos</string>
     <string name="lookup_settings_label">Pesquisa de números de telefone</string>
     <string name="enable_forward_lookup_title">Pesquisa direta</string>
     <string name="enable_forward_lookup_summary">Mostrar locais próximos ao pesquisar no teclado</string>

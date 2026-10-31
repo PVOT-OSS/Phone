@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">สถานที่ใกล้เคียง</string>
     <string name="lookup_settings_label">ค้นหาหมายเลขโทรศัพท์</string>
     <string name="enable_forward_lookup_title">ค้นหาการส่งต่อ</string>
     <string name="enable_forward_lookup_summary">แสดงสถานที่ใกล้เคียงเมื่อค้นหาจากแอปโทรศัพท์</string>

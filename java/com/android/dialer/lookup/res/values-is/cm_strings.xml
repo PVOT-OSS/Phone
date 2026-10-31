@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">Nálægir staðir</string>
     <string name="lookup_settings_label">Uppfletting á símanúmeri</string>
     <string name="enable_forward_lookup_title">Leita áfram</string>
     <string name="enable_forward_lookup_summary">Sýna staði í nágrenninu þegar leitað er á hringiskjá</string>

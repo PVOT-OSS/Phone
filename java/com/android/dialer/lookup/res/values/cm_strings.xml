@@ -15,8 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- Forward lookup -->
-    <string name="nearby_places">Nearby places</string>
 
     <!-- Number lookup -->
     <string name="lookup_settings_label">Phone number lookup</string>

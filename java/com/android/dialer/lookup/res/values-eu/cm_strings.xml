@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">Inguruko tokiak</string>
     <string name="lookup_settings_label">Telefono zenbakien bilaketa</string>
     <string name="enable_forward_lookup_title">Tokien bilaketa</string>
     <string name="enable_forward_lookup_summary">Erakutsi inguruko tokiak markatzailean bilatzean</string>

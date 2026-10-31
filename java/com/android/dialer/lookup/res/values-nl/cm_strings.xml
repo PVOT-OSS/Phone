@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">Nabijgelegen plaatsen</string>
     <string name="lookup_settings_label">Telefoonnummer zoeken</string>
     <string name="enable_forward_lookup_title">Vooruit zoeken</string>
     <string name="enable_forward_lookup_summary">Toon nabijgelegen plaatsen in de kiezer tijdens het zoeken</string>

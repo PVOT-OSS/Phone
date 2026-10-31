@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">Địa điểm gần kề</string>
     <string name="lookup_settings_label">Tra cứu số điện thoại</string>
     <string name="enable_forward_lookup_title">Tra cứu xuôi</string>
     <string name="enable_forward_lookup_summary">Hiển thị các địa điểm gần kề khi tìm kiếm trong trình quay số</string>

@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">Lähedal asuvad kohad</string>
     <string name="lookup_settings_label">Numbriotsing</string>
     <string name="enable_forward_lookup_title">Edasine otsing</string>
     <string name="enable_forward_lookup_summary">Näita helistajast otsides lähedal asuvaid kohti</string>

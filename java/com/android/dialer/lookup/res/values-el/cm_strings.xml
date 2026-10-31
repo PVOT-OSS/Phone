@@ -15,7 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="nearby_places">Κοντινές τοποθεσίες</string>
     <string name="lookup_settings_label">Αναζήτηση τηλεφωνικού αριθμού</string>
     <string name="enable_forward_lookup_title">Κανονική αναζήτηση</string>
     <string name="enable_forward_lookup_summary">Εμφάνιση κοντινών τοποθεσιών κατά την αναζήτηση στην εφαρμογή τηλεφώνου</string>
