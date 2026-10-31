@@ -14,5 +14,18 @@
                 <action android:name="android.telecom.ConnectionService" />
             </intent-filter>
         </service>
+
+        <receiver
+            android:name="org.prauga.phone.dialer.testing.TestCallReceiver"
+            android:exported="true"
+            android:permission="android.permission.DUMP">
+            <intent-filter>
+                <action android:name="org.prauga.phone.testing.ANSWER" />
+                <action android:name="org.prauga.phone.testing.DECLINE" />
+                <action android:name="org.prauga.phone.testing.HANG_UP" />
+                <action android:name="org.prauga.phone.testing.SET_SCREENING" />
+                <action android:name="org.prauga.phone.testing.DUMP" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>
