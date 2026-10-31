@@ -69,7 +69,7 @@ import java.util.Optional;
  *   <li>Bottom Nav Bar, completely hidden when in search ui.
  *   <li>FAB, visible in dialpad search when dialpad is hidden. Otherwise, FAB is hidden.
  *   <li>Toolbar, expanded and visible when dialpad is hidden. Otherwise, hidden off screen.
- *   <li>Dialpad, shown through fab clicks and hidden with Android back button.
+ *   <li>Dialpad, shown through the keypad tab or the FAB and hidden with Android back button.
  * </ul>
  *
  * @see #onBackPressed()
@@ -329,9 +329,8 @@ public class MainSearchController implements SearchBarListener {
 
     if (isDialpadVisible()) {
       hideDialpad(animate);
-    } else if (!fab.isShown()) {
-      fab.show();
     }
+    fab.hide();
     showBottomNav();
     updateStatusBarColor(android.R.attr.statusBarColor);
     toolbar.collapse(animate);
@@ -526,8 +525,10 @@ public class MainSearchController implements SearchBarListener {
   }
 
   public void onRestoreInstanceState(Bundle savedInstanceState) {
-    if (savedInstanceState.getBoolean(KEY_IS_FAB_HIDDEN, false)) {
+    if (savedInstanceState.getBoolean(KEY_IS_FAB_HIDDEN, true)) {
       fab.hide();
+    } else {
+      fab.show();
     }
     boolean isSlideUp = savedInstanceState.getBoolean(KEY_IS_TOOLBAR_SLIDE_UP, false);
     if (isSlideUp) {

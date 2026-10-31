@@ -223,7 +223,6 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
         new MainBottomNavBarBottomNavTabListener(
             activity,
             activity.getSupportFragmentManager(),
-            fab,
             bottomSheet);
     bottomNav.addOnTabSelectedListener(bottomNavTabListener);
     // TODO(uabdullah): Handle case of when a sim is inserted/removed while the activity is open.
@@ -260,7 +259,7 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
     searchFragmentListener = new MainSearchFragmentListener(searchController);
     callLogAdapterOnActionModeStateChangedListener =
         new MainCallLogAdapterOnActionModeStateChangedListener();
-    callLogHostInterface = new MainCallLogHost(searchController, fab);
+    callLogHostInterface = new MainCallLogHost(searchController);
 
     lastTabController = new LastTabController(activity, bottomNav, showVoicemailTab);
 
@@ -654,27 +653,15 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
   /** @see CallLogFragment.HostInterface */
   private static final class MainCallLogHost implements CallLogFragment.HostInterface {
 
-    private final FloatingActionButton fab;
     private final MainSearchController searchController;
 
-    MainCallLogHost(MainSearchController searchController, FloatingActionButton fab) {
+    MainCallLogHost(MainSearchController searchController) {
       this.searchController = searchController;
-      this.fab = fab;
     }
 
     @Override
     public void showDialpad() {
       searchController.showDialpad(true);
-    }
-
-    @Override
-    public void enableFloatingButton(boolean enabled) {
-      LogUtil.i("MainCallLogHost.enableFloatingButton", "enabled: " + enabled);
-      if (enabled) {
-        fab.show();
-      } else {
-        fab.hide();
-      }
     }
   }
 
@@ -892,10 +879,7 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
 
   /**
    * Implementation of {@link OnBottomNavTabSelectedListener} that handles logic for showing each of
-   * the main tabs and FAB.
-   *
-   * <p>TODO(calderwoodra, uabdullah): Rethink the logic for showing/hiding the FAB when new
-   * voicemail is ready.
+   * the main tabs.
    */
   private static final class MainBottomNavBarBottomNavTabListener
       implements OnBottomNavTabSelectedListener {
@@ -906,7 +890,6 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
 
     private final TransactionSafeActivity activity;
     private final FragmentManager fragmentManager;
-    private final FloatingActionButton fab;
     private final View bottomSheet;
 
     @TabIndex private int selectedTab = TabIndex.NONE;
@@ -914,11 +897,9 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
     private MainBottomNavBarBottomNavTabListener(
         TransactionSafeActivity activity,
         FragmentManager fragmentManager,
-        FloatingActionButton fab,
         View bottomSheet) {
       this.activity = activity;
       this.fragmentManager = fragmentManager;
-      this.fab = fab;
       this.bottomSheet = bottomSheet;
     }
 
@@ -933,7 +914,6 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
       Fragment fragment = fragmentManager.findFragmentByTag(CALL_LOG_TAG);
       showFragment(fragment == null ? new CallLogFragment() : fragment, CALL_LOG_TAG);
 
-      fab.show();
       showPromotionBottomSheet(activity, bottomSheet);
     }
 
@@ -978,7 +958,6 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
       showFragment(
           fragment == null ? ContactsFragment.newInstance(Header.ADD_CONTACT) : fragment,
           CONTACTS_TAG);
-      fab.show();
     }
 
     @Override

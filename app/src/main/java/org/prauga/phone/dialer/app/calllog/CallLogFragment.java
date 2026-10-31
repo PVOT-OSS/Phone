@@ -607,10 +607,6 @@ public class CallLogFragment extends Fragment
   @CallSuper
   public void onVisible() {
     LogUtil.enterBlock("CallLogFragment.onPageSelected");
-    if (getActivity() != null && FragmentUtils.getParent(this, HostInterface.class) != null) {
-      FragmentUtils.getParentUnsafe(this, HostInterface.class)
-          .enableFloatingButton(!isModalAlertVisible());
-    }
   }
 
   public boolean isModalAlertVisible() {
@@ -631,19 +627,12 @@ public class CallLogFragment extends Fragment
         this,
         getUserVisibleHint());
     getAdapter().notifyDataSetChanged();
-    HostInterface hostInterface = FragmentUtils.getParent(this, HostInterface.class);
     if (show) {
       recyclerView.setVisibility(View.GONE);
       modalAlertView.setVisibility(View.VISIBLE);
-      if (hostInterface != null && getUserVisibleHint()) {
-        hostInterface.enableFloatingButton(false);
-      }
     } else {
       recyclerView.setVisibility(View.VISIBLE);
       modalAlertView.setVisibility(View.GONE);
-      if (hostInterface != null && getUserVisibleHint()) {
-        hostInterface.enableFloatingButton(true);
-      }
     }
   }
 
@@ -702,8 +691,6 @@ public class CallLogFragment extends Fragment
   public interface HostInterface {
 
     void showDialpad();
-
-    void enableFloatingButton(boolean enabled);
   }
 
   protected class CustomContentObserver extends ContentObserver {
