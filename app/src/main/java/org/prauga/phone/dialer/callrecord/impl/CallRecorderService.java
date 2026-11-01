@@ -216,6 +216,9 @@ public class CallRecorderService extends Service {
   }
 
   public static boolean isEnabled(Context context) {
-    return context.getResources().getBoolean(R.bool.call_recording_enabled);
+    // Recording the call's audio needs a permission only system builds of the app get.
+    return context.getResources().getBoolean(R.bool.call_recording_enabled)
+        && context.checkSelfPermission(android.Manifest.permission.CAPTURE_AUDIO_OUTPUT)
+            == PackageManager.PERMISSION_GRANTED;
   }
 }
