@@ -23,6 +23,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -133,12 +134,17 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
             top = {
                 Column(Modifier.fillMaxSize().statusBarsPadding().padding(top = PvotSpacing.M)) {
                     onHold?.let { OnHoldBanner(it, Modifier.padding(horizontal = PvotSpacing.L)) }
-                    Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) { ContactGrid(grid) }
+                    // Who the call is with sits in the upper third, clear of the controls below.
+                    Spacer(Modifier.weight(1f))
+                    Box(Modifier.fillMaxWidth().padding(horizontal = PvotSpacing.L), contentAlignment = Alignment.Center) {
+                        ContactGrid(grid)
+                    }
+                    Spacer(Modifier.weight(2f))
                 }
             },
             bottom = {
                 Column(
-                    Modifier.fillMaxWidth().navigationBarsPadding().padding(bottom = PvotSpacing.L),
+                    Modifier.fillMaxWidth().navigationBarsPadding().padding(horizontal = PvotSpacing.L).padding(bottom = PvotSpacing.L + PvotSpacing.S),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     InCallControls(buttons, endCallEnabled, ::onEndCall)
@@ -387,21 +393,6 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
             InCallButtonIds.BUTTON_RECORD_CALL,
         )
     }
-}
-
-/** The red End pill, over the dialpad while it shows. */
-@Composable
-internal fun EndCallButton(enabled: Boolean, onClick: () -> Unit) {
-    val description = stringResource(R.string.incall_content_description_end_call)
-    PvotCallActionButton(
-        action = PvotCallAction.End,
-        icon = painterResource(R.drawable.ic_phone_off),
-        label = stringResource(R.string.incall_label_end),
-        onClick = onClick,
-        labelInside = true,
-        enabled = enabled,
-        modifier = Modifier.semantics { contentDescription = description }.testTag(TestTags.INCALL_END_CALL),
-    )
 }
 
 /**
