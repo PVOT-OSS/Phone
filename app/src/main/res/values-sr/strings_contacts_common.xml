@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">Директоријум</string>
   <string name="directory_search_label_work">Директоријум за Work</string>
-  <string name="missing_name">(Нема имена)</string>
   <string name="chat_aim">Започни ћаскање преко AIM-а</string>
   <string name="chat_msn">Започни ћаскање преко Windows Live-а</string>
   <string name="chat_yahoo">Започни ћаскање преко Yahoo-а</string>

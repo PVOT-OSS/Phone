@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">လမ်းညွှန်</string>
   <string name="directory_search_label_work">အလုပ်လမ်းညွှန်</string>
-  <string name="missing_name">(အမည်မရှိ)</string>
   <string name="chat_aim">AIM သုံး၍ ချက်တင်လုပ်ခြင်း</string>
   <string name="chat_msn">Windows Liveသုံး၍ ချက်တင်ပြုလုပ်ခြင်း</string>
   <string name="chat_yahoo">Yahoo သုံး၍ ချက်တင်ပြုလုပ်ခြင်း</string>

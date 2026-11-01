@@ -15,16 +15,11 @@
   -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- String used to display calls from unknown numbers in the call log -->
-  <string name="unknown">Unknown</string>
 
   <!-- String to identify an unknown/restricted callers. ex. "Unknown 1", "Restricted 2", ect. -->
   <string name="unknown_counter">
     <xliff:g id="unknown">%1$s</xliff:g> <xliff:g id="id">%2$d</xliff:g>
   </string>
-
-  <!-- String used to display calls from pay phone in the call log -->
-  <string name="payphone">Payphone</string>
 
   <!-- String used to display calls from emergency numbers in the call log and incallui -->
   <string name="emergency_number">Emergency number</string>

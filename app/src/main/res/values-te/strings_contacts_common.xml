@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">డైరెక్టరీ</string>
   <string name="directory_search_label_work">కార్యాలయ డైరెక్టరీ</string>
-  <string name="missing_name">(పేరు లేదు)</string>
   <string name="chat_aim">AIMని ఉపయోగించి చాట్ చేయండి</string>
   <string name="chat_msn">Windows Liveని ఉపయోగించి చాట్ చేయండి</string>
   <string name="chat_yahoo">Yahooని ఉపయోగించి చాట్ చేయండి</string>

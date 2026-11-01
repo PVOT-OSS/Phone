@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">Indeks</string>
   <string name="directory_search_label_work">Indeks for arbejde</string>
-  <string name="missing_name">(Intet navn)</string>
   <string name="chat_aim">Chat ved hjælp af AIM</string>
   <string name="chat_msn">Chat ved hjælp af Windows Live</string>
   <string name="chat_yahoo">Chat ved hjælp af Yahoo</string>

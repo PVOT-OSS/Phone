@@ -17,11 +17,4 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="nearby_places">Áiteanna in aice láimhe</string>
     <string name="lookup_settings_label">Lorg uimhir theileafóin</string>
-    <string name="enable_forward_lookup_title">Lorg ar aghaidh</string>
-    <string name="enable_forward_lookup_summary">Taispeáin áiteanna in aice láimhe agus tú ag cuardach sa dialer</string>
-    <string name="enable_reverse_lookup_title">Cuardach droim ar ais</string>
-    <string name="enable_reverse_lookup_summary">Cuardaigh eolas faoin duine nó faoin áit le haghaidh uimhreacha anaithnide ar ghlaonna isteach</string>
-    <string name="forward_lookup_provider_title">Soláthraí cuardaigh ar aghaidh</string>
-    <string name="reverse_lookup_provider_title">Soláthraí cuardaigh droim ar ais</string>
-    <string name="lookup_disclaimer">Féadfaidh lorgairí fiosruithe thar phrótacal slán (https) a sheoladh chuig cianláithreáin ghréasáin chun faisnéis a bhailiú. Féadfaidh uimhir theileafóin an pháirtí eile nó an cheist chuardaigh a bheith san áireamh sa cheist</string>
 </resources>

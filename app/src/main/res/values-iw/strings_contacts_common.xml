@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">ספריה</string>
   <string name="directory_search_label_work">ספריית עבודה</string>
-  <string name="missing_name">(ללא שם)</string>
   <string name="chat_aim">‏שוחח בצ\'אט באמצעות AIM</string>
   <string name="chat_msn">‏שוחח בצ\'אט באמצעות Windows Live</string>
   <string name="chat_yahoo">‏שוחח בצ\'אט באמצעות Yahoo</string>

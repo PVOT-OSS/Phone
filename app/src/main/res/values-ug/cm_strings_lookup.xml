@@ -17,11 +17,4 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="nearby_places">ئەتراپتىكى جاي</string>
     <string name="lookup_settings_label">تېلېفون نومۇر ئىزدەش</string>
-    <string name="enable_forward_lookup_title">ئالدىغا ئىزدەش</string>
-    <string name="enable_forward_lookup_summary">نومۇر بۇرىغۇچتا ئىزدىگەندە يېقىن ئەتراپتىكى جايلارنى كۆرسىتىدۇ</string>
-    <string name="enable_reverse_lookup_title">تەتۈر ئىزدە</string>
-    <string name="enable_reverse_lookup_summary">چاقىرىلغان يوچۇن نومۇر ئۈچۈن كىشى ئىسمى ياكى ئورۇن ئۇچۇرىنى ئىزدەيدۇ</string>
-    <string name="forward_lookup_provider_title">ئالدىغا ئىزدەش تەمىنلىگۈچى</string>
-    <string name="reverse_lookup_provider_title">ئەكسى ئىزدەش تەمىنلىگۈچى</string>
-    <string name="lookup_disclaimer">ئىزدەش يىراق تور بېكەتلەرگە بىخەتەرلىك كېلىشىم (https) ى  ئارقىلىق سۈرۈشتۈرۈش ئەۋەتىپ ئۇچۇر توپلىشى مۇمكىن. سۈرۈشتۈرۈش قارشى تەرەپنىڭ تېلېفون نومۇرى ياكى ئىزدەش سۈرۈشتۈرۈشىنى ئۆز ئىچىگە ئېلىشى مۇمكىن</string>
 </resources>

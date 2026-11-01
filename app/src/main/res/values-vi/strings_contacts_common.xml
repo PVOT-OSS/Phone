@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">Thư mục</string>
   <string name="directory_search_label_work">Thư mục công việc</string>
-  <string name="missing_name">(Không có tên)</string>
   <string name="chat_aim">Trò chuyện sử dụng AIM</string>
   <string name="chat_msn">Trò chuyện sử dụng Windows Live</string>
   <string name="chat_yahoo">Trò chuyện sử dụng Yahoo</string>

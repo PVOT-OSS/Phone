@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">Uhla lwemibhalo</string>
   <string name="directory_search_label_work">Uhla lwemibhalo lomsebenzi</string>
-  <string name="missing_name">(Alikho igama)</string>
   <string name="chat_aim">Xoxa usebenzisa i-AIM</string>
   <string name="chat_msn">Xoxa usebenzisa i-Windows Live</string>
   <string name="chat_yahoo">Xoxa usebenzisa i-Yahoo</string>

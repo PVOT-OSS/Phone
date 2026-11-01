@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">Katalogs</string>
   <string name="directory_search_label_work">Darba katalogs</string>
-  <string name="missing_name">(Nav vārda)</string>
   <string name="chat_aim">Tērzēt, izmantojot AIM</string>
   <string name="chat_msn">Tērzēt, izmantojot Windows Live</string>
   <string name="chat_yahoo">Tērzēt, izmantojot Yahoo</string>

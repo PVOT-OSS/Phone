@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">નિર્દેશિકા</string>
   <string name="directory_search_label_work">કાર્ય નિર્દેશિકા</string>
-  <string name="missing_name">(નામ નથી)</string>
   <string name="chat_aim">AIM નો ઉપયોગ કરીને ચેટ કરો</string>
   <string name="chat_msn">Windows Live નો ઉપયોગ કરીને ચેટ કરો</string>
   <string name="chat_yahoo">Yahoo નો ઉપયોગ કરીને ચેટ કરો</string>

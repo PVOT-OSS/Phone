@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">Κατάλογος</string>
   <string name="directory_search_label_work">Κατάλογος εργασίας</string>
-  <string name="missing_name">(Χωρίς όνομα)</string>
   <string name="chat_aim">Συζήτηση μέσω AIM</string>
   <string name="chat_msn">Συζήτηση μέσω Windows Live</string>
   <string name="chat_yahoo">Συζήτηση μέσω Yahoo</string>

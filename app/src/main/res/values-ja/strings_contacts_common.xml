@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">ディレクトリ</string>
   <string name="directory_search_label_work">仕事用の連絡先リスト</string>
-  <string name="missing_name">（名前なし）</string>
   <string name="chat_aim">AIMでチャット</string>
   <string name="chat_msn">Windows Liveでチャット</string>
   <string name="chat_yahoo">Yahooでチャット</string>

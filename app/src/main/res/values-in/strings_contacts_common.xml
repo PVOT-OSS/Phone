@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">Direktori</string>
   <string name="directory_search_label_work">Direktori kerja</string>
-  <string name="missing_name">(Tanpa nama)</string>
   <string name="chat_aim">Ngobrol menggunakan AIM</string>
   <string name="chat_msn">Ngobrol menggunakan Windows Live</string>
   <string name="chat_yahoo">Ngobrol menggunakan Yahoo</string>

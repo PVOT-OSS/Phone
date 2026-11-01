@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">Գրացուցակ</string>
   <string name="directory_search_label_work">Աշխատանքային գրացուցակ</string>
-  <string name="missing_name">(Անանուն)</string>
   <string name="chat_aim">Զրույց AIM-ով</string>
   <string name="chat_msn">Զրույց Windows Live-ով</string>
   <string name="chat_yahoo">Զրուցել Yahoo-ով</string>

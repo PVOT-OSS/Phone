@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">Директорий</string>
   <string name="directory_search_label_work">Жумуш профилиндеги байланыштар китепчеси</string>
-  <string name="missing_name">(Аты жок)</string>
   <string name="chat_aim">AIM аркылуу чатташуу</string>
   <string name="chat_msn">Windows Live аркылуу чатташуу</string>
   <string name="chat_yahoo">Yahoo аркылуу чатташуу</string>

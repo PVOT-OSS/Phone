@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">Directorio</string>
   <string name="directory_search_label_work">Directorio de trabajo</string>
-  <string name="missing_name">(Sin nombre)</string>
   <string name="chat_aim">Chatear con AIM</string>
   <string name="chat_msn">Chatear con Windows Live</string>
   <string name="chat_yahoo">Chatear con Yahoo!</string>

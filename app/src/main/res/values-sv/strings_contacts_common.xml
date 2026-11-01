@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">Katalog</string>
   <string name="directory_search_label_work">Jobbkatalog</string>
-  <string name="missing_name">(Inget namn)</string>
   <string name="chat_aim">Chatta med AIM</string>
   <string name="chat_msn">Chatta med Windows Live</string>
   <string name="chat_yahoo">Chatta med Yahoo</string>

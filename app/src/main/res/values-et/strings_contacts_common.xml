@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">Kataloog</string>
   <string name="directory_search_label_work">Töökontaktide kataloog</string>
-  <string name="missing_name">(Nimi puudub)</string>
   <string name="chat_aim">Vestlus AIM-i kasutades</string>
   <string name="chat_msn">Vestlus Windows Live\'i kasutades</string>
   <string name="chat_yahoo">Vestlus Yahood kasutades</string>

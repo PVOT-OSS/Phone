@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">ໄດເຣັກທໍຣີ</string>
   <string name="directory_search_label_work">ໄດເຣັກທໍຣີບ່ອນເຮັດວຽກ</string>
-  <string name="missing_name">(ບໍ່ມີຊື່)</string>
   <string name="chat_aim">ສົນທະນາໂດຍໃຊ້ AIM</string>
   <string name="chat_msn">ສົນທະນາໂດຍໃຊ້ Windows Live</string>
   <string name="chat_yahoo">ສົນທະນາໂດຍໃຊ້ Yahoo</string>

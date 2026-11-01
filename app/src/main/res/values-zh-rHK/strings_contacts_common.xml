@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">名錄</string>
   <string name="directory_search_label_work">工作目錄</string>
-  <string name="missing_name">(沒有名稱)</string>
   <string name="chat_aim">使用 AIM 進行即時通訊</string>
   <string name="chat_msn">使用 Windows Live 進行即時通訊</string>
   <string name="chat_yahoo">使用 Yahoo 進行即時通訊</string>

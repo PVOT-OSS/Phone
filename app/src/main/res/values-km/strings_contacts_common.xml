@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">ថត</string>
   <string name="directory_search_label_work">ថតកន្លែងការងារ</string>
-  <string name="missing_name">(គ្មាន​ឈ្មោះ)</string>
   <string name="chat_aim">ជជែក​ដោយ​ប្រើ AIM</string>
   <string name="chat_msn">ជជែក​ដោយ​ប្រើ Windows Live</string>
   <string name="chat_yahoo">ជជែក​ដោយ​ប្រើ Yahoo</string>

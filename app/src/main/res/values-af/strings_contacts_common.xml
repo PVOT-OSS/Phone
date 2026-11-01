@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">Gids</string>
   <string name="directory_search_label_work">Werkgids</string>
-  <string name="missing_name">(Geen naam nie)</string>
   <string name="chat_aim">Klets met AIM</string>
   <string name="chat_msn">Klets met Windows Live</string>
   <string name="chat_yahoo">Klets met Yahoo</string>

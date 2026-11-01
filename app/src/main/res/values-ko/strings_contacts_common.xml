@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">디렉토리</string>
   <string name="directory_search_label_work">직장 디렉토리</string>
-  <string name="missing_name">(이름 없음)</string>
   <string name="chat_aim">AIM으로 채팅</string>
   <string name="chat_msn">Windows Live로 채팅</string>
   <string name="chat_yahoo">Yahoo로 채팅</string>

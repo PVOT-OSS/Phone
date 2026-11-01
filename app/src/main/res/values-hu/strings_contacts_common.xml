@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">Címtár</string>
   <string name="directory_search_label_work">Munkahelyi névjegyek címtára</string>
-  <string name="missing_name">(Nincs név)</string>
   <string name="chat_aim">Csevegés AIM-on</string>
   <string name="chat_msn">Csevegés a Windows Live-on</string>
   <string name="chat_yahoo">Csevegés a Yahoon</string>

@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">فهرست</string>
   <string name="directory_search_label_work">فهرست کار</string>
-  <string name="missing_name">(بدون نام)</string>
   <string name="chat_aim">‏گپ با استفاده از AIM</string>
   <string name="chat_msn">‏گپ با استفاده از Windows Live</string>
   <string name="chat_yahoo">‏گپ با استفاده از Yahoo</string>

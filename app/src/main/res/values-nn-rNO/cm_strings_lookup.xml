@@ -17,11 +17,4 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="nearby_places">Stader i nærleiken</string>
     <string name="lookup_settings_label">Oppslag av telefonnummer</string>
-    <string name="enable_forward_lookup_title">Oppslag framover</string>
-    <string name="enable_forward_lookup_summary">Vis stader i nærleiken ved søk i ringjeappen</string>
-    <string name="enable_reverse_lookup_title">Omvendt oppslag</string>
-    <string name="enable_reverse_lookup_summary">Søk etter informasjon om person eller stad for ukjende nummer når nokon ringjer</string>
-    <string name="forward_lookup_provider_title">Leverandør for oppslag framover</string>
-    <string name="reverse_lookup_provider_title">Leverandør for omvendt oppslag</string>
-    <string name="lookup_disclaimer">Oppslag kan senda førespurnader over ein trygg protokoll (https) til nettstadar for å henta informasjon. Førespurnaden kan innehalda telefonnummeret til motparten eller søketeksten</string>
 </resources>

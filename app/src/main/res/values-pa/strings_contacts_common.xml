@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">ਡਾਇਰੈਕਟਰੀ</string>
   <string name="directory_search_label_work">ਕੰਮ ਡਾਇਰੈਕਟਰੀ</string>
-  <string name="missing_name">(ਕੋਈ ਨਾਮ ਨਹੀਂ)</string>
   <string name="chat_aim">AIM ਵਰਤਦੇ ਹੋਏ ਚੈਟ ਕਰੋ</string>
   <string name="chat_msn">Windows Live ਵਰਤਦੇ ਹੋਏ ਚੈਟ ਕਰੋ</string>
   <string name="chat_yahoo">Yahoo ਵਰਤਦੇ ਹੋਏ ਚੈਟ ਕਰੋ</string>

@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">Дырэкторыя</string>
   <string name="directory_search_label_work">Працоўны каталог</string>
-  <string name="missing_name">(Без назвы)</string>
   <string name="chat_aim">Чат у AIM</string>
   <string name="chat_msn">Чат у Windows Live</string>
   <string name="chat_yahoo">Чат у Yahoo</string>

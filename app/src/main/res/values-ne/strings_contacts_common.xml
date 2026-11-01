@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">निर्देशिका</string>
   <string name="directory_search_label_work">कार्यको निर्देशिका</string>
-  <string name="missing_name">(नाम छैन)</string>
   <string name="chat_aim">AIM को प्रयोग गरेर च्याट गर्नुहोस्</string>
   <string name="chat_msn">विन्डोज लाइभ चलाई कुराकानी गर्नुहोस्</string>
   <string name="chat_yahoo">याहुको प्रयोग गरेर च्याट गर्नुहोस्</string>

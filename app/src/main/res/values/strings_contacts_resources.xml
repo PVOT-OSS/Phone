@@ -22,9 +22,6 @@
   <!-- The label in section header in the contact list for a work contact directory [CHAR LIMIT=128] -->
   <string name="directory_search_label_work">Work directory</string>
 
-  <!-- Shown as the display name for a person when the name is missing or unknown. [CHAR LIMIT=18]-->
-  <string name="missing_name">(No name)</string>
-
   <!-- Action string for starting an IM chat with the AIM protocol -->
   <string name="chat_aim">Chat using AIM</string>
   <!-- Action string for starting an IM chat with the MSN or Windows Live protocol -->

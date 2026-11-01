@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">Анықтама</string>
   <string name="directory_search_label_work">Жұмыс каталогы</string>
-  <string name="missing_name">(Атаусыз)</string>
   <string name="chat_aim">AIM қолданып чаттасу</string>
   <string name="chat_msn">Windows Live қолданып чаттасу</string>
   <string name="chat_yahoo">Yahoo қолданып чаттасу</string>

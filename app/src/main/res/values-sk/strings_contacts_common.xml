@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label">Adresár</string>
   <string name="directory_search_label_work">Pracovný adresár</string>
-  <string name="missing_name">(Bez mena)</string>
   <string name="chat_aim">Zhovárať sa pomocou služby AIM</string>
   <string name="chat_msn">Zhovárať sa pomocou služby Windows Live</string>
   <string name="chat_yahoo">Zhovárať sa pomocou služby Yahoo</string>
