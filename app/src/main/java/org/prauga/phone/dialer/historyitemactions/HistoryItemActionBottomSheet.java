@@ -36,7 +36,6 @@ import androidx.annotation.NonNull;
 
 import org.prauga.phone.dialer.R;
 import org.prauga.phone.dialer.common.Assert;
-import org.prauga.phone.dialer.compat.android.support.design.bottomsheet.BottomSheetStateCompat;
 import org.prauga.phone.dialer.theme.base.ThemeComponent;
 import org.prauga.phone.dialer.widget.ContactPhotoView;
 
@@ -83,7 +82,7 @@ public class HistoryItemActionBottomSheet extends BottomSheetDialog implements O
         // *can* be expanded to full screen.
         contactLayout.setElevation(
             background.getHeight() == bottomSheet.getHeight()
-                    && behavior.getState() == BottomSheetStateCompat.STATE_EXPANDED
+                    && behavior.getState() == BottomSheetBehavior.STATE_EXPANDED
                 ? getContext()
                     .getResources()
                     .getDimensionPixelSize(R.dimen.contact_actions_header_elevation)
@@ -153,7 +152,7 @@ public class HistoryItemActionBottomSheet extends BottomSheetDialog implements O
     if (isTouchExplorationEnabled()) {
       BottomSheetBehavior<View> behavior = BottomSheetBehavior.from(
               findViewById(com.google.android.material.R.id.design_bottom_sheet));
-      behavior.setState(BottomSheetStateCompat.STATE_EXPANDED);
+      behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
   }
 
@@ -178,10 +177,10 @@ public class HistoryItemActionBottomSheet extends BottomSheetDialog implements O
             ImmutableSet<Integer> statesToCancelBottomSheet =
                 isTouchExplorationEnabled()
                     ? ImmutableSet.of(
-                        BottomSheetStateCompat.STATE_COLLAPSED,
-                        BottomSheetStateCompat.STATE_HIDDEN,
-                        BottomSheetStateCompat.STATE_HALF_EXPANDED)
-                    : ImmutableSet.of(BottomSheetStateCompat.STATE_HIDDEN);
+                        BottomSheetBehavior.STATE_COLLAPSED,
+                        BottomSheetBehavior.STATE_HIDDEN,
+                        BottomSheetBehavior.STATE_HALF_EXPANDED)
+                    : ImmutableSet.of(BottomSheetBehavior.STATE_HIDDEN);
 
             if (statesToCancelBottomSheet.contains(newState)) {
               cancel();
