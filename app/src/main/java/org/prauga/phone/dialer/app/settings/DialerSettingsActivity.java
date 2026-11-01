@@ -44,6 +44,7 @@ import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.compat.telephony.TelephonyManagerCompat;
 import org.prauga.phone.dialer.lookup.LookupSettingsFragment;
 import org.prauga.phone.dialer.screening.ScreeningSettingsFragment;
+import org.prauga.phone.dialer.telecom.TelecomUtil;
 import org.prauga.phone.dialer.util.PermissionsUtil;
 import org.prauga.phone.dialer.voicemail.settings.VoicemailSettingsFragment;
 import org.prauga.phone.voicemail.VoicemailClient;
@@ -279,7 +280,7 @@ public class DialerSettingsActivity extends BaseActivity implements
       TelecomManager telecomManager = requireContext().getSystemService(TelecomManager.class);
       PhoneAccountHandle result = null;
       for (PhoneAccountHandle phoneAccountHandle : telecomManager.getCallCapablePhoneAccounts()) {
-        PhoneAccount phoneAccount = telecomManager.getPhoneAccount(phoneAccountHandle);
+        PhoneAccount phoneAccount = TelecomUtil.getPhoneAccount(requireContext(), phoneAccountHandle);
         if (phoneAccount == null) {
           continue;
         }

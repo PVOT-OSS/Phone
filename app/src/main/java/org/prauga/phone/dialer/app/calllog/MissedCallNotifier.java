@@ -65,6 +65,7 @@ import org.prauga.phone.dialer.notification.missedcalls.MissedCallNotificationTa
 import org.prauga.phone.dialer.phonenumbercache.ContactInfo;
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper;
 import org.prauga.phone.dialer.precall.PreCall;
+import org.prauga.phone.dialer.telecom.TelecomUtil;
 import org.prauga.phone.dialer.theme.base.ThemeComponent;
 import org.prauga.phone.dialer.util.DialerUtils;
 import org.prauga.phone.dialer.util.IntentUtil;
@@ -278,7 +279,7 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
         continue;
       }
       PhoneAccountHandle phoneAccountHandle = new PhoneAccountHandle(componentName, call.accountId);
-      PhoneAccount phoneAccount = telecomManager.getPhoneAccount(phoneAccountHandle);
+      PhoneAccount phoneAccount = TelecomUtil.getPhoneAccount(context, phoneAccountHandle);
       if (phoneAccount == null) {
         continue;
       }

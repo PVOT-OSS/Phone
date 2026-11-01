@@ -207,7 +207,7 @@ public class VoicemailSettingsFragment extends PreferenceFragmentCompat
     if (subscriptionInfo.isPresent()) {
       advancedSettingsIntent.putExtra(SUB_ID_EXTRA, subscriptionInfo.get().getSubscriptionId());
       PhoneAccount phoneAccount =
-          getContext().getSystemService(TelecomManager.class).getPhoneAccount(phoneAccountHandle);
+          TelecomUtil.getPhoneAccount(getContext(), phoneAccountHandle);
       if (phoneAccount != null) {
         advancedSettingsIntent.putExtra(SUB_LABEL_EXTRA, phoneAccount.getLabel());
       }

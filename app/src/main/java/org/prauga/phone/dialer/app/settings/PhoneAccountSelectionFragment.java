@@ -32,6 +32,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceScreen;
 
 import org.prauga.phone.dialer.R;
+import org.prauga.phone.dialer.telecom.TelecomUtil;
 
 import java.util.List;
 
@@ -127,7 +128,7 @@ public class PhoneAccountSelectionFragment extends PreferenceFragmentCompat {
 
     Context context = getActivity();
     for (PhoneAccountHandle handle : accountHandles) {
-      PhoneAccount account = telecomManager.getPhoneAccount(handle);
+      PhoneAccount account = TelecomUtil.getPhoneAccount(context, handle);
       if (account != null) {
         final boolean isSimAccount =
             0 != (account.getCapabilities() & PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION);

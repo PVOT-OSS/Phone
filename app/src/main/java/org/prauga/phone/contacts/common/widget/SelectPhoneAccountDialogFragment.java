@@ -256,7 +256,7 @@ public class SelectPhoneAccountDialogFragment extends DialogFragment {
       PhoneAccountHandle accountHandle =
           SelectPhoneAccountDialogOptionsUtil.getPhoneAccountHandle(entry);
       PhoneAccount account =
-          getContext().getSystemService(TelecomManager.class).getPhoneAccount(accountHandle);
+          TelecomUtil.getPhoneAccount(getContext(), accountHandle);
       if (account == null) {
         return rowView;
       }

@@ -37,6 +37,7 @@ import androidx.annotation.RequiresPermission;
 import org.prauga.phone.dialer.R;
 import org.prauga.phone.dialer.common.Assert;
 import org.prauga.phone.dialer.common.LogUtil;
+import org.prauga.phone.dialer.telecom.TelecomUtil;
 import org.prauga.phone.dialer.util.PermissionsUtil;
 
 import java.util.ArrayList;
@@ -169,8 +170,7 @@ import java.util.Set;
 
   private static void createVoicemailChannelForAccount(
       @NonNull Context context, @NonNull PhoneAccountHandle handle) {
-    PhoneAccount phoneAccount =
-        context.getSystemService(TelecomManager.class).getPhoneAccount(handle);
+    PhoneAccount phoneAccount = TelecomUtil.getPhoneAccount(context, handle);
     if (phoneAccount == null) {
       return;
     }
@@ -193,8 +193,7 @@ import java.util.Set;
 
   private static boolean isChannelAllowedForAccount(
       @NonNull Context context, @NonNull PhoneAccountHandle handle) {
-    PhoneAccount phoneAccount =
-        context.getSystemService(TelecomManager.class).getPhoneAccount(handle);
+    PhoneAccount phoneAccount = TelecomUtil.getPhoneAccount(context, handle);
     if (phoneAccount == null) {
       return false;
     }
