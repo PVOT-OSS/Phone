@@ -65,7 +65,7 @@ class FlipDetector {
  * Silences the ringer when the user turns the ringing phone face down, if they turned Flip To
  * Silence on. Listens to the accelerometer only while a call rings.
  */
-class FlipToSilence(private val context: Context) : SensorEventListener {
+class FlipToSilence(private val context: Context, private val onSilenced: Runnable) : SensorEventListener {
 
     private val sensors = context.getSystemService(SensorManager::class.java)
     private var detector: FlipDetector? = null
@@ -92,6 +92,7 @@ class FlipToSilence(private val context: Context) : SensorEventListener {
             LogUtil.i("FlipToSilence.onSensorChanged", "phone turned face down, silencing the ringer")
             TelecomUtil.silenceRinger(context)
             onRingingStopped()
+            onSilenced.run()
         }
     }
 

@@ -112,6 +112,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
 
   private StatusBarNotifier statusBarNotifier;
   @Nullable private FlipToSilence flipToSilence;
+  @Nullable private CallerAnnouncer callerAnnouncer;
   private ExternalCallNotifier externalCallNotifier;
   private InCallVibrationHandler vibrationHandler;
   private InCallDndHandler dndHandler;
@@ -835,14 +836,26 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
     if (context == null) {
       return;
     }
-    boolean ringing = callList != null && callList.getIncomingCall() != null;
+    DialerCall ringingCall = callList == null ? null : callList.getIncomingCall();
     if (flipToSilence == null) {
-      flipToSilence = new FlipToSilence(context);
+      flipToSilence = new FlipToSilence(context, this::onRingerSilenced);
     }
-    if (ringing) {
+    if (callerAnnouncer == null) {
+      callerAnnouncer = new CallerAnnouncer(context);
+    }
+    if (ringingCall != null) {
       flipToSilence.onRinging();
+      callerAnnouncer.onRinging(ringingCall, callList);
     } else {
       flipToSilence.onRingingStopped();
+      callerAnnouncer.stop();
+    }
+  }
+
+  /** The ringer was silenced, so stop announcing the caller too. */
+  public void onRingerSilenced() {
+    if (callerAnnouncer != null) {
+      callerAnnouncer.silence();
     }
   }
 
@@ -1451,6 +1464,11 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
         flipToSilence.onRingingStopped();
       }
       flipToSilence = null;
+
+      if (callerAnnouncer != null) {
+        callerAnnouncer.stop();
+      }
+      callerAnnouncer = null;
 
       if (vibrationHandler != null) {
         removeListener(vibrationHandler);

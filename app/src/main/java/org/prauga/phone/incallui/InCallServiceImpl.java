@@ -54,6 +54,12 @@ public class InCallServiceImpl extends InCallService {
   }
 
   @Override
+  public void onSilenceRinger() {
+    // The user silenced the ringer, for example with a volume key.
+    InCallPresenter.getInstance().onRingerSilenced();
+  }
+
+  @Override
   public void onCallAdded(Call call) {
     Trace.beginSection("InCallServiceImpl.onCallAdded");
     InCallPresenter.getInstance().onCallAdded(call);
