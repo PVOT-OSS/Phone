@@ -79,6 +79,7 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":voicemail"))
     implementation(project(":calls"))
+    implementation(project(":incallui"))
     implementation(project(":annotations"))
     annotationProcessor(project(":processor"))
 
