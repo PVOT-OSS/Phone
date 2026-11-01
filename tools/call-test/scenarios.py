@@ -180,6 +180,44 @@ def opens_when_not_default(device):
         device.shell("input keyevent KEYCODE_HOME")
 
 
+def shell_output(device, command):
+    """Output of a shell command that may find nothing yet, such as a grep while polling."""
+    return device.run("shell", command, check=False)
+
+
+def rings_before_first_unlock(device):
+    """After a restart, before the first unlock, a call must ring in the app's call screen and a
+    missed call must be notified. Sets a PIN and reboots the emulator; removes the PIN after."""
+    if not device.serial.startswith("emulator-"):
+        raise AssertionError("direct boot scenario only runs on an emulator")
+    pin = "1234"
+    device.shell(f"locksettings set-pin {pin}")
+    try:
+        device.run("reboot")
+        device.run("wait-for-device")
+        wait_for("boot", lambda: shell_output(device, "getprop sys.boot_completed") == "1", timeout=180)
+        wait_for("user locked", lambda: "RUNNING_LOCKED" in shell_output(device, "dumpsys user | grep State:"), timeout=30)
+        device.shell("logcat -b crash -c")
+        number = fresh_number()
+        device.emu(f"gsm call {number}")
+        wait_for("call screen", lambda: f"{PACKAGE}/.incallui.InCallActivity" in shell_output(
+            device, "dumpsys activity activities | grep topResumedActivity"), timeout=30)
+        device.emu(f"gsm cancel {number}")
+        wait_for("missed call notification", lambda: "GroupSummary_MissedCall" in shell_output(
+            device, f"dumpsys notification | grep pkg={PACKAGE}"), timeout=30)
+    finally:
+        # Bring up the PIN pad and enter the PIN; the keyguard needs a moment between steps.
+        device.shell("input keyevent KEYCODE_WAKEUP")
+        time.sleep(1)
+        device.shell("input keyevent 82")
+        time.sleep(2)
+        device.shell(f"input text {pin}")
+        device.shell("input keyevent 66")
+        wait_for("user unlocked", lambda: "RUNNING_UNLOCKED" in shell_output(device, "dumpsys user | grep State:"), timeout=30)
+        device.shell(f"locksettings clear --old {pin}")
+        device.shell("input keyevent KEYCODE_HOME")
+
+
 SCENARIOS = [
     incoming_missed,
     incoming_answered,
@@ -188,6 +226,7 @@ SCENARIOS = [
     outgoing_answered,
     call_survives_app_death,
     opens_when_not_default,
+    rings_before_first_unlock,
 ]
 
 
