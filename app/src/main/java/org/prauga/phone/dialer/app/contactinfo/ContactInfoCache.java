@@ -20,14 +20,12 @@ package org.prauga.phone.dialer.app.contactinfo;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.SystemClock;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 
 import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.logging.ContactSource.Type;
-import org.prauga.phone.dialer.oem.CequintCallerIdManager;
 import org.prauga.phone.dialer.phonenumbercache.ContactInfo;
 import org.prauga.phone.dialer.phonenumbercache.ContactInfoHelper;
 import org.prauga.phone.dialer.util.ExpirableCache;
@@ -60,7 +58,6 @@ public class ContactInfoCache {
   private final OnContactInfoChangedListener onContactInfoChangedListener;
   private final BlockingQueue<ContactInfoRequest> updateRequests;
   private final Handler handler;
-  private CequintCallerIdManager cequintCallerIdManager;
   private QueryThread contactInfoQueryThread;
   private volatile boolean requestProcessingDisabled = false;
 
@@ -102,9 +99,6 @@ public class ContactInfoCache {
     handler = new InnerHandler(new WeakReference<>(this));
   }
 
-  public void setCequintCallerIdManager(CequintCallerIdManager cequintCallerIdManager) {
-    this.cequintCallerIdManager = cequintCallerIdManager;
-  }
 
   public ContactInfo getValue(
       String number,
@@ -167,15 +161,6 @@ public class ContactInfoCache {
     ContactInfo info;
     if (request.isLocalRequest()) {
       info = contactInfoHelper.lookupNumber(request.number, request.countryIso);
-      if (info != null && !info.contactExists) {
-        // TODO(wangqi): Maybe skip look up if it's already available in cached number lookup
-        // service.
-        long start = SystemClock.elapsedRealtime();
-        contactInfoHelper.updateFromCequintCallerId(cequintCallerIdManager, info, request.number);
-        long time = SystemClock.elapsedRealtime() - start;
-        LogUtil.d(
-            "ContactInfoCache.queryContactInfo", "Cequint Caller Id look up takes %d ms", time);
-      }
       if (request.type == ContactInfoRequest.TYPE_LOCAL_AND_REMOTE) {
         if (!contactInfoHelper.hasName(info)) {
           enqueueRequest(

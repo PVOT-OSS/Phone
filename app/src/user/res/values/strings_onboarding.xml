@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+  -->
+<resources>
+    <string name="onboarding_role_title">Make Phone your default phone app</string>
+    <string name="onboarding_role_body">Android only lets the default phone app show the call screen, answer and decline calls, screen and block callers, and play voicemail. Without it, Phone can only dial numbers for another app to call.</string>
+    <string name="onboarding_role_action">Set as default</string>
+    <string name="onboarding_role_denied">Phone is still not your default phone app. If Android didn\'t ask, choose it in Default apps.</string>
+    <string name="onboarding_role_settings">Open Default apps</string>
+
+    <string name="onboarding_permissions_title">Allow access</string>
+    <string name="onboarding_permissions_body">Phone asks only for what it needs to work. You can change these any time in Settings.</string>
+    <string name="onboarding_permissions_action">Allow</string>
+    <string name="onboarding_permissions_blocked">Android won\'t ask again for some of these. Turn them on in Phone\'s app settings.</string>
+    <string name="onboarding_permissions_settings">Open app settings</string>
+    <string name="onboarding_permission_granted">Allowed</string>
+    <string name="onboarding_permission_blocked">Blocked</string>
+
+    <string name="onboarding_permission_phone">Phone</string>
+    <string name="onboarding_permission_phone_reason">Place calls and know which SIM a call uses.</string>
+    <string name="onboarding_permission_call_log">Call history</string>
+    <string name="onboarding_permission_call_log_reason">Show your recent and missed calls, and delete them when you ask.</string>
+    <string name="onboarding_permission_contacts">Contacts</string>
+    <string name="onboarding_permission_contacts_reason">Show who\'s calling and let you search, favourite and add contacts.</string>
+    <string name="onboarding_permission_notifications">Notifications</string>
+    <string name="onboarding_permission_notifications_reason">Ring for incoming calls and tell you about missed calls and voicemail.</string>
+
+    <string name="onboarding_not_now">Not now</string>
+</resources>

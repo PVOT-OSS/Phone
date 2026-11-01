@@ -602,7 +602,9 @@ public final class SpeedDialUiItemMutator {
     try {
       appContext.getContentResolver().applyBatch(ContactsContract.AUTHORITY, operations);
       // TODO(calderwoodra): log
-    } catch (RemoteException | OperationApplicationException e) {
+    } catch (RemoteException | OperationApplicationException | IllegalArgumentException e) {
+      // Some contacts providers reject the update ("Empty values" on vivo). The order is already
+      // saved in the speed dial database above, so only the copy in contacts is lost.
       LogUtil.e(
           "SpeedDialUiItemMutator.updatePinnedPosition",
           "Exception thrown when pinning contacts",
