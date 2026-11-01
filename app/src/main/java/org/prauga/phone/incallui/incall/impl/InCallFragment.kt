@@ -96,6 +96,7 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
 
     private var onHold by mutableStateOf<SecondaryInfo?>(null)
     private var endCallEnabled by mutableStateOf(true)
+    private var dialpadShowing by mutableStateOf(false)
     private var buttonRows by mutableIntStateOf(0)
 
     private val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
@@ -150,13 +151,23 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
                     verticalArrangement = Arrangement.spacedBy(PvotSpacing.L),
                 ) {
                     InCallButtonGrid(buttons, buttonRows)
-                    EndCallButton(endCallEnabled) {
-                        LogUtil.i("InCallFragment.onEndCall", "end call button clicked")
-                        inCallScreenDelegate.onEndCallClicked()
+                    EndCallButton(endCallEnabled, ::onEndCall)
+                }
+            },
+            overDialpad = {
+                // The dialpad leaves room at its bottom for this, so the call can end while it shows.
+                if (dialpadShowing) {
+                    Box(Modifier.navigationBarsPadding().padding(bottom = PvotSpacing.L)) {
+                        EndCallButton(endCallEnabled, ::onEndCall)
                     }
                 }
             },
         )
+    }
+
+    private fun onEndCall() {
+        LogUtil.i("InCallFragment.onEndCall", "end call button clicked")
+        inCallScreenDelegate.onEndCallClicked()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -166,6 +177,7 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
             FragmentUtils.getParent(this, InCallScreenDelegateFactory::class.java)!!.newInCallScreenDelegate(),
         )
         val delegate = inCallButtonUiDelegate
+        buttonControllers.clear()
         buttonControllers += listOf(
             ButtonController.MuteButtonController(delegate),
             ButtonController.SpeakerButtonController(delegate),
@@ -204,8 +216,9 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
         LogUtil.i("InCallFragment.onDestroyView", "InCallUiUnready")
         inCallButtonUiDelegate.onInCallButtonUiUnready()
         inCallScreenDelegate.onInCallScreenUnready()
+        // The controllers stay until the view is recreated: presenters already notifying can still
+        // reach this fragment during a fragment swap, as when a waiting call arrives.
         buttonControllers.forEach { it.setButton(null) }
-        buttonControllers.clear()
         slots = null
     }
 
@@ -267,6 +280,7 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
         LogUtil.i("InCallFragment.onInCallScreenDialpadVisibilityChange", "isShowing: $isShowing")
         getButtonController(InCallButtonIds.BUTTON_DIALPAD).setChecked(isShowing)
         slots?.onDialpadVisibilityChange(isShowing)
+        dialpadShowing = isShowing
     }
 
     override fun getAnswerAndDialpadContainerResourceId(): Int = R.id.incall_dialpad_container
@@ -401,11 +415,16 @@ internal fun EndCallButton(enabled: Boolean, onClick: () -> Unit) {
 
 /**
  * Builds a call screen's view: Compose [top] and [bottom] parts around the emergency location
- * holder, with the dialpad's container over the bottom. The holders stay plain views because
- * fragments are placed into them by id.
+ * holder, with the dialpad's container over the bottom and [overDialpad] centred above that. The
+ * holders stay plain views because fragments are placed into them by id.
  */
 object InCallScreenHost {
-    fun createView(context: Context, top: @Composable () -> Unit, bottom: @Composable () -> Unit): View {
+    fun createView(
+        context: Context,
+        top: @Composable () -> Unit,
+        bottom: @Composable () -> Unit,
+        overDialpad: @Composable () -> Unit = {},
+    ): View {
         fun compose(content: @Composable () -> Unit) = ComposeView(context).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent { PhoneScreenTheme(fillBackground = false) { content() } }
@@ -428,6 +447,15 @@ object InCallScreenHost {
                     clipToPadding = false
                 },
                 FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM),
+            )
+            // Wraps its content, so it only takes touches where it draws.
+            addView(
+                compose(overDialpad),
+                FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL,
+                ),
             )
         }
     }
