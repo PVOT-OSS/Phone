@@ -76,6 +76,7 @@ dependencies {
     implementation(project(":telephony"))
     implementation(project(":ui"))
     implementation(project(":contacts"))
+    implementation(project(":data"))
     implementation(project(":annotations"))
     annotationProcessor(project(":processor"))
 
