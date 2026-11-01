@@ -77,6 +77,7 @@ dependencies {
     implementation(project(":ui"))
     implementation(project(":contacts"))
     implementation(project(":data"))
+    implementation(project(":voicemail"))
     implementation(project(":annotations"))
     annotationProcessor(project(":processor"))
 
