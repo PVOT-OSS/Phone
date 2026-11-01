@@ -80,6 +80,21 @@ class AnswerControlsTest {
     }
 
     @Test
+    fun aShortPullDownDeclines() {
+        // The button sits about 90dp above the bottom of a phone screen, so declining must fit in that.
+        show(swipeState())
+        compose.onNodeWithTag(TestTags.ANSWER_PUCK).performTouchInput { swipe(center, center + Offset(0f, 80f * density), 400) }
+        assertThat(events).containsExactly("reject")
+    }
+
+    @Test
+    fun aQuickFlingUpAnswers() {
+        show(swipeState())
+        compose.onNodeWithTag(TestTags.ANSWER_PUCK).performTouchInput { swipe(center, center - Offset(0f, 60f * density), 60) }
+        assertThat(events).containsExactly("answer")
+    }
+
+    @Test
     fun aShortPullSpringsBackWithoutAnswering() {
         show(swipeState())
         compose.onNodeWithTag(TestTags.ANSWER_PUCK).performTouchInput { swipe(center, center - Offset(0f, 120f), 200) }

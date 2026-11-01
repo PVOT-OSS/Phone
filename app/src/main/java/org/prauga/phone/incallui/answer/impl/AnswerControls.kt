@@ -34,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -135,12 +136,19 @@ fun AnswerControls(state: AnswerUiState, actions: AnswerActions, modifier: Modif
     }
 }
 
-/** Drag the button up to answer or down to decline; it springs back if let go early. */
+/**
+ * Drag the button up to answer or down to decline, or fling it once it has moved; it springs back
+ * if let go early. Declining needs less travel: the button sits close to the bottom of the screen.
+ */
 @Composable
 private fun SwipeToAnswer(state: AnswerUiState, actions: AnswerActions, modifier: Modifier = Modifier) {
     val density = LocalDensity.current
     val threshold = with(density) { SwipeDistance.toPx() }
+    val declineThreshold = with(density) { DeclineDistance.toPx() }
+    val flingVelocity = with(density) { FlingVelocity.toPx() }
     val offset = remember { Animatable(0f) }
+    // The drag's own total: offset only catches up when its snap runs, which can be after the next delta.
+    var dragOffset by remember { mutableFloatStateOf(0f) }
     val scope = rememberCoroutineScope()
     var dragging by remember { mutableStateOf(false) }
     var done by remember { mutableStateOf(false) }
@@ -179,22 +187,28 @@ private fun SwipeToAnswer(state: AnswerUiState, actions: AnswerActions, modifier
                 .padding(vertical = PvotSpacing.L)
                 .offset { IntOffset(0, (offset.value + if (dragging || done) 0f else with(density) { nudge.dp.toPx() }).roundToInt()) }
                 .size(PuckSize)
-                .background(if (offset.value > threshold / 3) MaterialTheme.colorScheme.error else AnswerGreen, CircleShape)
+                .background(if (offset.value > declineThreshold / 2) MaterialTheme.colorScheme.error else AnswerGreen, CircleShape)
                 .draggable(
                     state = rememberDraggableState { delta ->
                         if (done) return@rememberDraggableState
-                        val value = (offset.value + delta).coerceIn(-threshold * 1.2f, threshold * 1.2f)
+                        val value = (dragOffset + delta).coerceIn(-threshold * 1.2f, declineThreshold * 1.2f)
+                        dragOffset = value
                         scope.launch { offset.snapTo(value) }
-                        actions.onProgress((-value / threshold).coerceIn(-1f, 1f))
+                        actions.onProgress((-value / if (value < 0) threshold else declineThreshold).coerceIn(-1f, 1f))
                     },
                     orientation = Orientation.Vertical,
-                    onDragStarted = { dragging = true },
-                    onDragStopped = {
+                    onDragStarted = {
+                        dragging = true
+                        dragOffset = offset.value
+                    },
+                    onDragStopped = { velocity ->
                         dragging = false
                         when {
                             done -> Unit
-                            offset.value <= -threshold -> finish(answer = true)
-                            offset.value >= threshold -> finish(answer = false)
+                            dragOffset <= -threshold -> finish(answer = true)
+                            dragOffset >= declineThreshold -> finish(answer = false)
+                            velocity <= -flingVelocity && dragOffset <= -threshold / 3 -> finish(answer = true)
+                            velocity >= flingVelocity && dragOffset >= declineThreshold / 3 -> finish(answer = false)
                             else -> {
                                 actions.onProgress(0f)
                                 offset.animateTo(0f, spring())
@@ -316,5 +330,9 @@ private val AnswerGreen = Color(0xFF1E8E3E)
 private val PuckSize = 80.dp
 private val SideSize = 56.dp
 private val SwipeDistance = 120.dp
+private val DeclineDistance = 56.dp
+
+/** How fast a released button must be moving, per second, to count as a fling. */
+private val FlingVelocity = 1200.dp
 private val SideSwipeDistance = 72.dp
 
