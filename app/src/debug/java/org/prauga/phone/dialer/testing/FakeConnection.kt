@@ -16,6 +16,9 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
     /** DTMF tones the user played, in order, including post-dial digits they chose to send. */
     val playedTones = mutableListOf<Char>()
 
+    /** The video side of the call, which the far end uses to accept, ask for or drop video. */
+    val video = FakeVideoProvider(this)
+
     private val postDialDigits = spec.number?.substringAfter(';', "").orEmpty()
 
     init {
@@ -28,7 +31,10 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
             CAPABILITY_SUPPORT_HOLD or
             CAPABILITY_MUTE or
             CAPABILITY_SEPARATE_FROM_CONFERENCE or
-            CAPABILITY_DISCONNECT_FROM_CONFERENCE
+            CAPABILITY_DISCONNECT_FROM_CONFERENCE or
+            CAPABILITY_SUPPORTS_VT_LOCAL_BIDIRECTIONAL or
+            CAPABILITY_SUPPORTS_VT_REMOTE_BIDIRECTIONAL
+        videoProvider = video
         audioModeIsVoip = false
     }
 
