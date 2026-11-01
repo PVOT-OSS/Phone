@@ -8,10 +8,13 @@ package org.prauga.phone.dialer.e2e
 import android.telecom.VideoProfile
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.Until
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
+import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.testing.FakeCallSpec
 import org.prauga.phone.dialer.testing.FakeCarrier
 import org.prauga.phone.dialer.testing.FakeConnection
@@ -24,9 +27,10 @@ import org.prauga.phone.incallui.videotech.utils.SessionModificationState
 class VideoCallTest {
 
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
+    private val deviceRule = DeviceRule()
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(DeviceRule())
+    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
 
     @Test
     fun answerVideoCallWithVideo() {
@@ -110,6 +114,26 @@ class VideoCallTest {
 
         far.video.downgradeToAudio()
 
+        CallTests.waitFor { if (InCall.onMain { !call.isVideoCall }) true else null }
+        InCall.waitForState(DialerCallState.ACTIVE)
+    }
+
+    @Test
+    fun audioOnlyButtonTurnsTheCallIntoAVoiceCall() {
+        val far = ringWithVideo()
+        CallTests.answerRingingCall()
+        val call = InCall.waitForState(DialerCallState.ACTIVE)
+        waitForVideoState(far, VideoProfile.STATE_BIDIRECTIONAL)
+
+        val button = deviceRule.device.wait(
+            Until.findObject(By.desc(context.getString(R.string.incall_content_description_downgrade_call))),
+            CallTests.TIMEOUT_MILLIS,
+        )
+        checkNotNull(button) { "no audio only button" }.click()
+
+        CallTests.waitFor { far.video.pendingRequest?.takeIf { it.videoState == VideoProfile.STATE_AUDIO_ONLY } }
+        far.video.acceptRequest()
+        waitForVideoState(far, VideoProfile.STATE_AUDIO_ONLY)
         CallTests.waitFor { if (InCall.onMain { !call.isVideoCall }) true else null }
         InCall.waitForState(DialerCallState.ACTIVE)
     }
