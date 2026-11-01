@@ -20,6 +20,7 @@ import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.testing.FakeCallSpec
 import org.prauga.phone.dialer.testing.FakeCarrier
 import org.prauga.phone.dialer.testing.FakeConnection
+import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.incallui.InCallPresenter
 import org.prauga.phone.incallui.call.CallList
 import org.prauga.phone.incallui.call.TelecomAdapter
@@ -136,17 +137,10 @@ class TwoCallsTest {
             val (held, active) = twoCalls()
             InCall.onMain { InCallPresenter.getInstance().showInCall(false, false) }
 
+            openMore()
             showsText(context.getString(R.string.incall_label_transfer)).click()
             showsText(context.getString(R.string.incall_transfer_dialog_title))
-            checkNotNull(
-                    deviceRule.device.wait(
-                        Until.findObject(By.res("android", "button1")),
-                        CallTests.TIMEOUT_MILLIS,
-                    )
-                ) {
-                    "no transfer button in the dialog"
-                }
-                .click()
+            showsText(context.getString(R.string.incall_transfer_dialog_confirm)).click()
 
             CallTests.waitFor { active.transferredTo?.takeIf { it === held } }
             InCall.waitForNoCalls()
@@ -163,7 +157,8 @@ class TwoCallsTest {
         try {
             twoCalls()
             InCall.onMain { InCallPresenter.getInstance().showInCall(false, false) }
-            showsText(context.getString(R.string.incall_label_mute))
+            openMore()
+            showsText(context.getString(R.string.incall_label_hold))
             check(
                 deviceRule.device.findObject(
                     By.text(context.getString(R.string.incall_label_transfer))
@@ -183,6 +178,19 @@ class TwoCallsTest {
         far.answerFromFarEnd()
         InCall.waitForState(DialerCallState.ACTIVE)
         return far
+    }
+
+    /** Opens the More sheet, where the call's actions beyond audio, mute and the keypad are. */
+    private fun openMore() {
+        checkNotNull(
+                deviceRule.device.wait(
+                    Until.findObject(By.res(TestTags.INCALL_MORE)),
+                    CallTests.TIMEOUT_MILLIS,
+                )
+            ) {
+                "no More button"
+            }
+            .click()
     }
 
     private fun showsText(text: String): UiObject2 =

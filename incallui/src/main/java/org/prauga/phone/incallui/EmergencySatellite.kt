@@ -9,11 +9,12 @@ import android.app.Dialog
 import android.app.PendingIntent
 import android.os.Bundle
 import android.telephony.TelephonyManager
-import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
+import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
 import org.prauga.phone.dialer.common.LogUtil
+import org.prauga.phone.dialer.ui.PvotAlertDialog
 import org.prauga.phone.incallui.call.CallList
 
 /**
@@ -89,23 +90,37 @@ object EmergencySatellite {
             val args = requireArguments()
             val intent = args.getParcelable(ARG_INTENT, PendingIntent::class.java)
             val textTo911 = args.getInt(ARG_TYPE) == HANDOVER_TYPE_T911
-            return AlertDialog.Builder(requireContext())
-                .setTitle(R.string.emergency_satellite_title)
-                .setMessage(
+            return PvotAlertDialog(
+                requireContext(),
+                getString(R.string.emergency_satellite_title),
+                getString(
                     if (textTo911) R.string.emergency_satellite_message_t911
                     else R.string.emergency_satellite_message_sos
-                )
-                .setPositiveButton(
-                    if (textTo911) R.string.emergency_satellite_open_t911
-                    else R.string.emergency_satellite_open_sos
-                ) { _, _ ->
-                    runCatching { intent?.send() }
-                        .onFailure {
-                            LogUtil.e("EmergencySatellite", "can't open the satellite app", it)
-                        }
-                }
-                .setNegativeButton(R.string.emergency_satellite_keep_trying, null)
-                .create()
+                ),
+                listOf(
+                    PvotAlertDialog.Action(
+                        getString(
+                            if (textTo911) R.string.emergency_satellite_open_t911
+                            else R.string.emergency_satellite_open_sos
+                        ),
+                        PvotDialogActionStyle.Primary,
+                        {
+                            runCatching { intent?.send() }
+                                .onFailure {
+                                    LogUtil.e(
+                                        "EmergencySatellite",
+                                        "can't open the satellite app",
+                                        it,
+                                    )
+                                }
+                        },
+                    ),
+                    PvotAlertDialog.Action(
+                        getString(R.string.emergency_satellite_keep_trying),
+                        cancels = true,
+                    ),
+                ),
+            )
         }
     }
 
