@@ -82,6 +82,10 @@
   <string name="incall_backup_calling">Backup calling</string>
   <!-- Same, after the name of the SIM the call is on [CHAR LIMIT=60] -->
   <string name="incall_backup_calling_via"><xliff:g id="sim_name" example="Work">%1$s</xliff:g> · Backup calling</string>
+  <!-- Shown when a ringing call was answered on another of the user's devices [CHAR LIMIT=60] -->
+  <string name="incall_answered_elsewhere">Answered on another device</string>
+  <!-- Shown when the call was moved to another of the user's devices [CHAR LIMIT=60] -->
+  <string name="incall_call_pulled">Call moved to another device</string>
   <!-- The "label" of the in-call Notification for an incoming ringing call. [CHAR LIMIT=60] -->
   <string name="notification_incoming_call">Incoming call</string>
   <!-- The "label" of the in-call Notification for an incoming ringing call. [CHAR LIMIT=60] -->

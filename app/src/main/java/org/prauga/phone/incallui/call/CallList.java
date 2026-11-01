@@ -551,6 +551,9 @@ public class CallList implements DialerCallDelegate {
         break;
       case DisconnectCause.REMOTE:
       case DisconnectCause.ERROR:
+      // Long enough to read "Answered on another device" or "Call moved to another device".
+      case DisconnectCause.ANSWERED_ELSEWHERE:
+      case DisconnectCause.CALL_PULLED:
         delay = DISCONNECTED_CALL_MEDIUM_TIMEOUT_MS;
         break;
       case DisconnectCause.REJECTED:

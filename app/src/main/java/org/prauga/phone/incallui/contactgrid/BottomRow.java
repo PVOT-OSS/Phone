@@ -97,7 +97,7 @@ public class BottomRow {
     } else if (state.state() == DialerCallState.DISCONNECTED) {
       label = state.disconnectCause().getLabel();
       if (TextUtils.isEmpty(label)) {
-        label = context.getString(R.string.incall_call_ended);
+        label = getEndedLabel(context, state.disconnectCause().getCode());
       }
     } else {
       label = getLabelForPhoneNumber(primaryInfo);
@@ -132,5 +132,17 @@ public class BottomRow {
   private static boolean isIncoming(PrimaryCallState state) {
     return state.state() == DialerCallState.INCOMING
         || state.state() == DialerCallState.CALL_WAITING;
+  }
+
+  /** What to say when a call ended and the network gave no wording of its own. */
+  private static CharSequence getEndedLabel(Context context, int code) {
+    switch (code) {
+      case android.telecom.DisconnectCause.ANSWERED_ELSEWHERE:
+        return context.getString(R.string.incall_answered_elsewhere);
+      case android.telecom.DisconnectCause.CALL_PULLED:
+        return context.getString(R.string.incall_call_pulled);
+      default:
+        return context.getString(R.string.incall_call_ended);
+    }
   }
 }
