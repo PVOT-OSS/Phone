@@ -20,6 +20,7 @@ import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 import org.prauga.phone.dialer.notification.NotificationChannelId
 import org.prauga.phone.dialer.testing.FakeCarrier
+import org.prauga.phone.incallui.call.TelecomAdapter
 import org.prauga.phone.incallui.call.state.DialerCallState
 
 @RunWith(AndroidJUnit4::class)
@@ -64,6 +65,23 @@ class OutgoingCallTest {
     }
 
     @Test
+    fun waitDigitsAreSentAfterTheUserConfirms() {
+        InCall.place(context, CallTests.freshNumber() + ";" + POST_DIAL_DIGITS)
+        InCall.waitForState(DialerCallState.DIALING)
+        val far = CallTests.waitFor { FakeCarrier.connections.firstOrNull() }
+        far.answerFromFarEnd()
+        val call = InCall.waitForState(DialerCallState.ACTIVE)
+
+        assertNotNull(
+            "no prompt to send the wait digits",
+            deviceRule.device.wait(Until.findObject(By.textContains(POST_DIAL_DIGITS)), CallTests.TIMEOUT_MILLIS),
+        )
+        InCall.onMain { TelecomAdapter.getInstance().postDialContinue(call.id, true) }
+
+        CallTests.waitFor { if (far.playedTones.joinToString("") == POST_DIAL_DIGITS) true else null }
+    }
+
+    @Test
     fun busyCalleeEndsTheCall() {
         val number = CallTests.freshNumber()
         val since = System.currentTimeMillis()
@@ -74,5 +92,9 @@ class OutgoingCallTest {
 
         InCall.waitForNoCalls()
         assertEquals(CallLog.Calls.OUTGOING_TYPE, CallTests.waitFor { CallTests.latestCall(context, number, since) }.type)
+    }
+
+    private companion object {
+        const val POST_DIAL_DIGITS = "4321"
     }
 }
