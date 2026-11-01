@@ -93,6 +93,7 @@ class CallerAnnouncer(private val context: Context) {
         if (setting == IncomingCallSettings.ANNOUNCE_NEVER) return false
         if (setting == IncomingCallSettings.ANNOUNCE_HEADSET && !headsetConnected()) return false
         if (calls.activeCall != null || calls.backgroundCall != null) return false
+        if (call.isSilentRinging) return false
         if (call.hasProperty(Call.Details.PROPERTY_EMERGENCY_CALLBACK_MODE)) return false
         val notifications = context.getSystemService(NotificationManager::class.java)
         if (notifications?.currentInterruptionFilter?.let { it != NotificationManager.INTERRUPTION_FILTER_ALL } == true) return false

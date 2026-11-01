@@ -1423,6 +1423,24 @@ public class DialerCall implements VideoTechListener {
     telecomCall.addConferenceParticipants(java.util.Collections.singletonList(number));
   }
 
+  /**
+   * Whether Android asked for this call to ring silently: call screening chose to, or Do Not
+   * Disturb holds it back. Such a call shouldn't take over the screen.
+   */
+  public boolean isSilentRinging() {
+    Bundle extras = telecomCall.getDetails().getExtras();
+    if (extras == null) {
+      return false;
+    }
+    try {
+      return extras.getBoolean(Call.EXTRA_SILENT_RINGING_REQUESTED)
+          || extras.getBoolean(Call.EXTRA_IS_SUPPRESSED_BY_DO_NOT_DISTURB);
+    } catch (RuntimeException e) {
+      // Extras from another app can fail to unparcel.
+      return false;
+    }
+  }
+
   /** The latest message the carrier wants shown during the call, or null. */
   @Nullable
   public CharSequence getDiagnosticMessage() {
