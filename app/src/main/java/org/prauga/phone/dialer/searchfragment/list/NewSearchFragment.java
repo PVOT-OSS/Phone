@@ -24,13 +24,8 @@ import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.view.animation.Interpolator;
-import android.widget.FrameLayout;
-import android.widget.FrameLayout.LayoutParams;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -39,12 +34,10 @@ import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.compose.ui.platform.ComposeView;
 
 import org.prauga.phone.contacts.common.extensions.PhoneDirectoryExtenderAccessor;
 import org.prauga.phone.dialer.R;
-import org.prauga.phone.dialer.animation.AnimUtils;
 import org.prauga.phone.dialer.callintent.CallInitiationType;
 import org.prauga.phone.dialer.callintent.CallIntentBuilder;
 import org.prauga.phone.dialer.callintent.CallSpecificAppData;
@@ -59,13 +52,11 @@ import org.prauga.phone.dialer.searchfragment.cp2.SearchContactsCursorLoader;
 import org.prauga.phone.dialer.searchfragment.directories.DirectoriesCursorLoader;
 import org.prauga.phone.dialer.searchfragment.directories.DirectoriesCursorLoader.Directory;
 import org.prauga.phone.dialer.searchfragment.directories.DirectoryContactsCursorLoader;
-import org.prauga.phone.dialer.searchfragment.list.SearchActionViewHolder.Action;
 import org.prauga.phone.dialer.searchfragment.nearbyplaces.NearbyPlacesCursorLoader;
 import org.prauga.phone.dialer.util.CallUtil;
 import org.prauga.phone.dialer.util.PermissionsUtil;
-import org.prauga.phone.dialer.util.ViewUtil;
-import org.prauga.phone.dialer.widget.EmptyContentView;
-import org.prauga.phone.dialer.widget.EmptyContentView.OnEmptyViewActionButtonClickedListener;
+import org.prauga.phone.dialer.util.DialerUtils;
+import org.prauga.phone.dialer.util.IntentUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,10 +65,7 @@ import java.util.List;
 
 /** Fragment used for searching contacts. */
 public final class NewSearchFragment extends Fragment
-    implements LoaderManager.LoaderCallbacks<Cursor>,
-        OnEmptyViewActionButtonClickedListener,
-        OnTouchListener,
-        RowClickListener {
+    implements LoaderManager.LoaderCallbacks<Cursor>, RowClickListener {
 
   // Since some of our queries can generate network requests, we should delay them until the user
   // stops typing to prevent generating too much network traffic.
@@ -96,9 +84,7 @@ public final class NewSearchFragment extends Fragment
   private static final String KEY_QUERY = "key_query";
   private static final String KEY_CALL_INITIATION_TYPE = "key_call_initiation_type";
 
-  private EmptyContentView emptyContentView;
-  private RecyclerView recyclerView;
-  private SearchAdapter adapter;
+  private SearchResults adapter;
   private String query;
   // Raw query number from dialpad, which may contain special character such as "+". This is used
   // for actions to add contact or send sms.
@@ -126,16 +112,13 @@ public final class NewSearchFragment extends Fragment
           LoaderManager.getInstance(this).restartLoader(DIRECTORY_CONTACTS_LOADER_ID, null, this);
         }
       };
-  private final Runnable capabilitiesUpdatedRunnable = () -> adapter.notifyDataSetChanged();
-
-  private Runnable updatePositionRunnable;
 
   private final ActivityResultLauncher<String[]> contactPermissionLauncher =
           registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(),
                   grantResults -> {
             if (grantResults.size() >= 1 && grantResults.values().iterator().next()) {
               // Force a refresh of the data since we were missing the permission before this.
-              emptyContentView.setVisibility(View.GONE);
+              adapter.setNeedsPermission(false);
               initLoaders();
             }
           });
@@ -146,7 +129,7 @@ public final class NewSearchFragment extends Fragment
             if (grantResults.size() >= 1 && grantResults.values().iterator().next()) {
               // Force a refresh of the data since we were missing the permission before this.
               loadNearbyPlacesCursor();
-              adapter.hideLocationPermissionRequest();
+              adapter.showLocationPermissionRequest(false);
             }
           });
 
@@ -158,23 +141,15 @@ public final class NewSearchFragment extends Fragment
   @Override
   public View onCreateView(
       LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_search, parent, false);
-    adapter = new SearchAdapter(getContext(), new SearchCursorManager(), this);
+    ComposeView view = new ComposeView(requireContext());
+    adapter = new SearchResults(requireContext());
     adapter.setQuery(query, rawNumber);
     adapter.setSearchActions(getActions());
     showLocationPermission();
-    emptyContentView = view.findViewById(R.id.empty_view);
-    recyclerView = view.findViewById(R.id.recycler_view);
-    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    recyclerView.setOnTouchListener(this);
-    recyclerView.setAdapter(adapter);
+    SearchScreenHost.attach(view, adapter, new FragmentSearchActions());
 
     if (!PermissionsUtil.hasContactsReadPermissions(getContext())) {
-      emptyContentView.setDescription(R.string.new_permission_no_search);
-      emptyContentView.setActionLabel(R.string.permission_single_turn_on);
-      emptyContentView.setActionClickedListener(this);
-      emptyContentView.setImage(R.drawable.empty_contacts);
-      emptyContentView.setVisibility(View.VISIBLE);
+      adapter.setNeedsPermission(true);
     } else {
       initLoaders();
     }
@@ -183,10 +158,6 @@ public final class NewSearchFragment extends Fragment
       setQuery(
           savedInstanceState.getString(KEY_QUERY),
           CallInitiationType.Type.forNumber(savedInstanceState.getInt(KEY_CALL_INITIATION_TYPE)));
-    }
-
-    if (updatePositionRunnable != null) {
-      ViewUtil.doOnPreDraw(view, false, updatePositionRunnable);
     }
     return view;
   }
@@ -295,59 +266,24 @@ public final class NewSearchFragment extends Fragment
         || !PhoneDirectoryExtenderAccessor.get(getContext()).isEnabled(getContext())
         || hasBeenDismissed()
         || !isRegularSearch()) {
-      adapter.hideLocationPermissionRequest();
+      adapter.showLocationPermissionRequest(false);
       return false;
     }
 
-    adapter.showLocationPermissionRequest(
-        v -> requestLocationPermission(), v -> dismissLocationPermission());
+    adapter.showLocationPermissionRequest(true);
     return true;
   }
 
   /** Translate the search fragment and resize it to fit on the screen. */
-  public void animatePosition(int start, int end, int duration) {
-    // Called before the view is ready, prepare a runnable to run in onCreateView
-    if (getView() == null) {
-      updatePositionRunnable = () -> animatePosition(start, end, 0);
-      return;
-    }
-    boolean slideUp = start > end;
-    Interpolator interpolator = slideUp ? AnimUtils.EASE_IN : AnimUtils.EASE_OUT;
-    int startHeight = getActivity().findViewById(android.R.id.content).getHeight();
-    int endHeight = startHeight - (end - start);
-    getView().setTranslationY(start);
-    getView()
-        .animate()
-        .translationY(end)
-        .setInterpolator(interpolator)
-        .setDuration(duration)
-        .setUpdateListener(
-            animation -> setHeight(startHeight, endHeight, animation.getAnimatedFraction()));
-    updatePositionRunnable = null;
-  }
-
-  private void setHeight(int start, int end, float percentage) {
-    View view = getView();
-    if (view == null) {
-      return;
-    }
-
-    FrameLayout.LayoutParams params = (LayoutParams) view.getLayoutParams();
-    params.height = (int) (start + (end - start) * percentage);
-    view.setLayoutParams(params);
-  }
-
   @Override
   public void onDestroy() {
     super.onDestroy();
     ThreadUtil.getUiThreadHandler().removeCallbacks(loaderCp2ContactsRunnable);
     ThreadUtil.getUiThreadHandler().removeCallbacks(loadNearbyPlacesRunnable);
     ThreadUtil.getUiThreadHandler().removeCallbacks(loadDirectoryContactsRunnable);
-    ThreadUtil.getUiThreadHandler().removeCallbacks(capabilitiesUpdatedRunnable);
   }
 
-  @Override
-  public void onEmptyViewActionButtonClicked() {
+  private void requestContactsPermission() {
     String[] deniedPermissions =
         PermissionsUtil.getPermissionsCurrentlyDenied(
             getContext(), PermissionsUtil.allContactsGroupPermissionsUsedInDialer);
@@ -427,7 +363,7 @@ public final class NewSearchFragment extends Fragment
         .edit()
         .putBoolean(KEY_LOCATION_PROMPT_DISMISSED, true)
         .apply();
-    adapter.hideLocationPermissionRequest();
+    adapter.showLocationPermissionRequest(false);
   }
 
   private boolean hasBeenDismissed() {
@@ -456,17 +392,17 @@ public final class NewSearchFragment extends Fragment
 
     List<Integer> actions = new ArrayList<>();
     if (!isRegularSearch()) {
-      actions.add(Action.CREATE_NEW_CONTACT);
-      actions.add(Action.ADD_TO_CONTACT);
+      actions.add(SearchAction.CREATE_NEW_CONTACT);
+      actions.add(SearchAction.ADD_TO_CONTACT);
     }
 
     if (isRegularSearch() && isDialableNumber) {
-      actions.add(Action.MAKE_VOICE_CALL);
+      actions.add(SearchAction.MAKE_VOICE_CALL);
     }
 
-    actions.add(Action.SEND_SMS);
+    actions.add(SearchAction.SEND_SMS);
     if (CallUtil.isVideoEnabled(getContext())) {
-      actions.add(Action.MAKE_VILTE_CALL);
+      actions.add(SearchAction.MAKE_VILTE_CALL);
     }
 
     return actions;
@@ -475,17 +411,6 @@ public final class NewSearchFragment extends Fragment
   // Returns true if currently in Regular Search (as opposed to Dialpad Search).
   private boolean isRegularSearch() {
     return callInitiationType == CallInitiationType.Type.REGULAR_SEARCH;
-  }
-
-  @Override
-  public boolean onTouch(View v, MotionEvent event) {
-    if (event.getAction() == MotionEvent.ACTION_UP) {
-      v.performClick();
-    }
-    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-      FragmentUtils.getParentUnsafe(this, SearchFragmentListener.class).onSearchListTouch();
-    }
-    return false;
   }
 
   @Override
@@ -510,6 +435,59 @@ public final class NewSearchFragment extends Fragment
             .setIsVideoCall(isVideoCall)
             .setAllowAssistedDial(true));
     FragmentUtils.getParentUnsafe(this, SearchFragmentListener.class).onCallPlacedFromSearch();
+  }
+
+  /** The search results' actions. */
+  private final class FragmentSearchActions implements SearchActions {
+
+    @Override
+    public void call(String number, int position) {
+      placeVoiceCall(number, position);
+    }
+
+    @Override
+    public void videoCall(String number, int position) {
+      placeVideoCall(number, position);
+    }
+
+    @Override
+    public void addToContact(String number) {
+      DialerUtils.startActivityWithErrorToast(
+          getContext(),
+          IntentUtil.getAddToExistingContactIntent(number),
+          R.string.add_contact_not_available);
+    }
+
+    @Override
+    public void createContact(String number) {
+      DialerUtils.startActivityWithErrorToast(getContext(), IntentUtil.getNewContactIntent(number));
+    }
+
+    @Override
+    public void sendSms(String number) {
+      DialerUtils.startActivityWithErrorToast(getContext(), IntentUtil.getSendSmsIntent(number));
+    }
+
+    @Override
+    public void allowLocation() {
+      requestLocationPermission();
+    }
+
+    @Override
+    public void dismissLocation() {
+      dismissLocationPermission();
+    }
+
+    @Override
+    public void turnOnPermission() {
+      requestContactsPermission();
+    }
+
+    @Override
+    public void listTouched() {
+      FragmentUtils.getParentUnsafe(NewSearchFragment.this, SearchFragmentListener.class)
+          .onSearchListTouch();
+    }
   }
 
   /** Callback to {@link NewSearchFragment}'s parent to be notified of important events. */

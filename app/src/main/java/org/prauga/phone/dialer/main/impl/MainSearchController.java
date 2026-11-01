@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.text.TextUtils;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -46,7 +45,9 @@ import org.prauga.phone.dialer.dialpadview.DialpadFragment;
 import org.prauga.phone.dialer.dialpadview.DialpadFragment.DialpadListener;
 import org.prauga.phone.dialer.dialpadview.DialpadFragment.OnDialpadQueryChangedListener;
 import org.prauga.phone.dialer.helplines.HelplineActivity;
-import org.prauga.phone.dialer.main.impl.bottomnav.BottomNavBar;
+import org.prauga.phone.dialer.main.impl.bottomnav.MainFabState;
+import org.prauga.phone.dialer.main.impl.bottomnav.MainNavBarState;
+import org.prauga.phone.dialer.main.impl.toolbar.MainMenuItem;
 import org.prauga.phone.dialer.main.impl.toolbar.MainToolbar;
 import org.prauga.phone.dialer.main.impl.toolbar.SearchBarListener;
 import org.prauga.phone.dialer.searchfragment.list.NewSearchFragment;
@@ -54,8 +55,6 @@ import org.prauga.phone.dialer.searchfragment.list.NewSearchFragment.SearchFragm
 import org.prauga.phone.dialer.smartdial.util.SmartDialNameMatcher;
 import org.prauga.phone.dialer.util.DialerUtils;
 import org.prauga.phone.dialer.util.TransactionSafeActivity;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,8 +84,8 @@ public class MainSearchController implements SearchBarListener {
   private static final String SEARCH_FRAGMENT_TAG = "search_fragment_tag";
 
   private final TransactionSafeActivity activity;
-  private final BottomNavBar bottomNav;
-  private final FloatingActionButton fab;
+  private final MainNavBarState bottomNav;
+  private final MainFabState fab;
   private final MainToolbar toolbar;
 
   /** View located underneath the toolbar that needs to animate with it. */
@@ -110,8 +109,8 @@ public class MainSearchController implements SearchBarListener {
 
   public MainSearchController(
       TransactionSafeActivity activity,
-      BottomNavBar bottomNav,
-      FloatingActionButton fab,
+      MainNavBarState bottomNav,
+      MainFabState fab,
       MainToolbar toolbar,
       View fragmentContainer) {
     this.activity = activity;
@@ -250,11 +249,11 @@ public class MainSearchController implements SearchBarListener {
   }
 
   private void hideBottomNav() {
-    bottomNav.setVisibility(View.GONE);
+    bottomNav.setVisible(false);
   }
 
   private void showBottomNav() {
-    bottomNav.setVisibility(View.VISIBLE);
+    bottomNav.setVisible(true);
   }
 
   /** Should be called when {@link DialpadListener#onDialpadShown()} is called. */
@@ -455,21 +454,23 @@ public class MainSearchController implements SearchBarListener {
   }
 
   @Override
-  public boolean onMenuItemClicked(MenuItem menuItem) {
-    if (menuItem.getItemId() == R.id.settings) {
-      activity.startActivity(new Intent(activity, DialerSettingsActivity.class));
-      return true;
-    } else if (menuItem.getItemId() == R.id.clear_frequents) {
-      ClearFrequentsDialog.show(activity.getSupportFragmentManager());
-      return true;
-    } else if (menuItem.getItemId() == R.id.menu_call_history) {
-      final Intent intent = new Intent(activity, CallLogActivity.class);
-      activity.startActivity(intent);
-    } else if (menuItem.getItemId() == R.id.menu_helplines) {
-      activity.startActivity(new Intent(activity, HelplineActivity.class));
+  public void onMenuItemClicked(MainMenuItem item) {
+    switch (item) {
+      case SETTINGS:
+        activity.startActivity(new Intent(activity, DialerSettingsActivity.class));
+        break;
+      case CLEAR_FREQUENTS:
+        ClearFrequentsDialog.show(activity.getSupportFragmentManager());
+        break;
+      case CALL_HISTORY:
+        activity.startActivity(new Intent(activity, CallLogActivity.class));
+        break;
+      case HELPLINES:
+        activity.startActivity(new Intent(activity, HelplineActivity.class));
+        break;
     }
-    return false;
   }
+
 
   @Override
   public void onActivityPause() {

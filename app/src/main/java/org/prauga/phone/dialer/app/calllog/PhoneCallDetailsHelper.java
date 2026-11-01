@@ -33,7 +33,6 @@ import org.prauga.phone.dialer.app.calllog.calllogcache.CallLogCache;
 import org.prauga.phone.dialer.calllogutils.PhoneCallDetails;
 import org.prauga.phone.dialer.compat.telephony.TelephonyManagerCompat;
 import org.prauga.phone.dialer.logging.ContactSource;
-import org.prauga.phone.dialer.oem.MotorolaUtils;
 import org.prauga.phone.dialer.phonenumbercache.CachedNumberLookupService;
 import org.prauga.phone.dialer.phonenumbercache.PhoneNumberCache;
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper;
@@ -44,7 +43,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
-/** Helper class to fill in the views in {@link PhoneCallDetailsViews}. */
+/** Builds the type, place and date text of a call history row. */
 public class PhoneCallDetailsHelper {
   /** The maximum number of icons will be shown to represent the call types in a group. */
   private static final int MAX_CALL_TYPE_ICONS = 3;
@@ -96,102 +95,7 @@ public class PhoneCallDetailsHelper {
     return true;
   }
 
-  /** Fills the call details views with content. */
-  public void setPhoneCallDetails(PhoneCallDetailsViews views, PhoneCallDetails details) {
-    // Display up to a given number of icons.
-    views.callTypeIcons.clear();
-    int count = details.callTypes.length;
-    boolean isVoicemail = false;
-    for (int index = 0; index < count && index < MAX_CALL_TYPE_ICONS; ++index) {
-      views.callTypeIcons.add(details.callTypes[index]);
-      if (index == 0) {
-        isVoicemail = details.callTypes[index] == Calls.VOICEMAIL_TYPE;
-      }
-    }
 
-    // Show the video icon if the call had video enabled.
-    views.callTypeIcons.setShowVideo(
-        (details.features & Calls.FEATURES_VIDEO) == Calls.FEATURES_VIDEO);
-    views.callTypeIcons.setShowHd(
-        (details.features & Calls.FEATURES_HD_CALL) == Calls.FEATURES_HD_CALL);
-    views.callTypeIcons.setShowWifi(
-        MotorolaUtils.shouldShowWifiIconInCallLog(context, details.features));
-    views.callTypeIcons.setShowAssistedDialed(
-        (details.features & TelephonyManagerCompat.FEATURES_ASSISTED_DIALING)
-            == TelephonyManagerCompat.FEATURES_ASSISTED_DIALING);
-    views.callTypeIcons.setShowRtt((details.features & Calls.FEATURES_RTT) == Calls.FEATURES_RTT);
-    views.callTypeIcons.requestLayout();
-    views.callTypeIcons.setVisibility(View.VISIBLE);
-
-    // Show the total call count only if there are more than the maximum number of icons.
-    final Integer callCount;
-    if (count > MAX_CALL_TYPE_ICONS) {
-      callCount = count;
-    } else {
-      callCount = null;
-    }
-
-    // Set the call count, location, date and if voicemail, set the duration.
-    setDetailText(views, callCount, details);
-
-    // Set the account label if it exists.
-    String accountLabel = callLogCache.getAccountLabel(details.accountHandle);
-    if (!TextUtils.isEmpty(details.viaNumber)) {
-      if (!TextUtils.isEmpty(accountLabel)) {
-        accountLabel =
-            resources.getString(
-                R.string.call_log_via_number_phone_account, accountLabel, details.viaNumber);
-      } else {
-        accountLabel = resources.getString(R.string.call_log_via_number, details.viaNumber);
-      }
-    }
-    if (!TextUtils.isEmpty(accountLabel)) {
-      views.callAccountLabel.setVisibility(View.VISIBLE);
-      views.callAccountLabel.setText(accountLabel);
-      int color = callLogCache.getAccountColor(details.accountHandle);
-      if (color == PhoneAccount.NO_HIGHLIGHT_COLOR) {
-        int defaultColor = R.color.dialer_secondary_text_color;
-        views.callAccountLabel.setTextColor(context.getResources().getColor(defaultColor,
-                context.getTheme()));
-      } else {
-        views.callAccountLabel.setTextColor(color);
-      }
-    } else {
-      views.callAccountLabel.setVisibility(View.GONE);
-    }
-
-    setNameView(views, details);
-
-    // Bold if not read
-    Typeface typeface = details.isRead ? Typeface.DEFAULT : Typeface.DEFAULT_BOLD;
-    views.nameView.setTypeface(typeface);
-    views.callLocationAndDate.setTypeface(typeface);
-    views.callLocationAndDate.setTextColor(
-        details.isRead
-            ? ThemeComponent.get(context).theme().getTextColorSecondary()
-            : ThemeComponent.get(context).theme().getTextColorPrimary());
-  }
-
-  private void setNameView(PhoneCallDetailsViews views, PhoneCallDetails details) {
-    if (!TextUtils.isEmpty(details.getPreferredName())) {
-      views.nameView.setText(details.getPreferredName());
-      // "nameView" is updated from phone number to contact name after number matching.
-      // Since TextDirection remains at View.TEXT_DIRECTION_LTR, initialize it.
-      views.nameView.setTextDirection(View.TEXT_DIRECTION_INHERIT);
-      return;
-    }
-
-    TelephonyManager telephonyManager = context.getSystemService(TelephonyManager.class);
-    if (telephonyManager.isEmergencyNumber(details.displayNumber)) {
-      views.nameView.setText(R.string.emergency_number);
-      views.nameView.setTextDirection(View.TEXT_DIRECTION_INHERIT);
-      return;
-    }
-
-    views.nameView.setText(details.displayNumber);
-    // We have a real phone number as "nameView" so make it always LTR
-    views.nameView.setTextDirection(View.TEXT_DIRECTION_LTR);
-  }
 
   /**
    * Builds a string containing the call location and date. For voicemail logs only the call date is
@@ -332,28 +236,6 @@ public class PhoneCallDetailsHelper {
     return System.currentTimeMillis();
   }
 
-  /** Sets the call count, date, and if it is a voicemail, sets the duration. */
-  private void setDetailText(
-      PhoneCallDetailsViews views, Integer callCount, PhoneCallDetails details) {
-    // Combine the count (if present) and the date.
-    CharSequence dateText = details.callLocationAndDate;
-    final CharSequence text;
-    if (callCount != null) {
-      text = resources.getString(R.string.call_log_item_count_and_date, callCount, dateText);
-    } else {
-      text = dateText;
-    }
-
-    if (details.callTypes[0] == Calls.VOICEMAIL_TYPE && details.duration > 0) {
-      views.callLocationAndDate.setText(
-          resources.getString(
-              R.string.voicemailCallLogDateTimeFormatWithDuration,
-              text,
-              getVoicemailDuration(details)));
-    } else {
-      views.callLocationAndDate.setText(text);
-    }
-  }
 
   private String getVoicemailDuration(PhoneCallDetails details) {
     long minutes = TimeUnit.SECONDS.toMinutes(details.duration);

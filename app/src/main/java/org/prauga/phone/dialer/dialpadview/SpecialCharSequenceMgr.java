@@ -57,8 +57,6 @@ import org.prauga.phone.dialer.R;
 import org.prauga.phone.dialer.common.Assert;
 import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.compat.telephony.TelephonyManagerCompat;
-import org.prauga.phone.dialer.oem.MotorolaUtils;
-import org.prauga.phone.dialer.oem.TranssionUtils;
 import org.prauga.phone.dialer.telecom.TelecomUtil;
 import org.prauga.phone.dialer.util.DialerUtils;
 import org.prauga.phone.dialer.util.PermissionsUtil;
@@ -111,10 +109,6 @@ public class SpecialCharSequenceMgr {
       return true;
     }
 
-    if (MotorolaUtils.handleSpecialCharSequence(context, input)) {
-      return true;
-    }
-
     return false;
   }
 
@@ -141,12 +135,6 @@ public class SpecialCharSequenceMgr {
    * @return true if a secret code was encountered and handled
    */
   static boolean handleSecretCode(Context context, String input) {
-    // Secret code specific to OEMs should be handled first.
-    if (TranssionUtils.isTranssionSecretCode(input)) {
-      TranssionUtils.handleTranssionSecretCode(context, input);
-      return true;
-    }
-
     // Secret codes are accessed by dialing *#*#<code>#*#* or "*#<code_starting_with_number>#"
     if (input.length() > 8 && input.startsWith("*#*#") && input.endsWith("#*#*")) {
       String secretCode = input.substring(4, input.length() - 4);
@@ -303,7 +291,8 @@ public class SpecialCharSequenceMgr {
 
   // TODO: Use TelephonyCapabilities.getDeviceIdLabel() to get the device id label instead of a
   // hard-coded string.
-  @SuppressLint("HardwareIds")
+  // The user build lacks READ_PRIVILEGED_PHONE_STATE; the SecurityException is caught below.
+  @SuppressLint({"HardwareIds", "MissingPermission"})
   static boolean handleDeviceIdDisplay(Context context, String input) {
     if (!PermissionsUtil.hasPermission(context, Manifest.permission.READ_PHONE_STATE)) {
       return false;
@@ -320,19 +309,27 @@ public class SpecialCharSequenceMgr {
       View customView = LayoutInflater.from(context).inflate(R.layout.dialog_deviceids, null);
       ViewGroup holder = customView.findViewById(R.id.deviceids_holder);
 
-      if (TelephonyManagerCompat.getPhoneCount(telephonyManager) > 1) {
-        for (int slot = 0; slot < telephonyManager.getActiveModemCount(); slot++) {
-          String deviceId = telephonyManager.getPhoneType() == TelephonyManager.PHONE_TYPE_GSM
-                  ? telephonyManager.getImei(slot)
-                  : telephonyManager.getMeid(slot);
-          if (!TextUtils.isEmpty(deviceId)) {
-            addDeviceIdRow(holder, deviceId);
+      try {
+        if (TelephonyManagerCompat.getPhoneCount(telephonyManager) > 1) {
+          for (int slot = 0; slot < telephonyManager.getActiveModemCount(); slot++) {
+            String deviceId = telephonyManager.getPhoneType() == TelephonyManager.PHONE_TYPE_GSM
+                    ? telephonyManager.getImei(slot)
+                    : telephonyManager.getMeid(slot);
+            if (!TextUtils.isEmpty(deviceId)) {
+              addDeviceIdRow(holder, deviceId);
+            }
           }
+        } else {
+          addDeviceIdRow(holder, telephonyManager.getPhoneType() == TelephonyManager.PHONE_TYPE_GSM
+                  ? telephonyManager.getImei()
+                  : telephonyManager.getMeid());
         }
-      } else {
-        addDeviceIdRow(holder, telephonyManager.getPhoneType() == TelephonyManager.PHONE_TYPE_GSM
-                ? telephonyManager.getImei()
-                : telephonyManager.getMeid());
+      } catch (SecurityException e) {
+        // Device identifiers need READ_PRIVILEGED_PHONE_STATE, which only the system build holds.
+        // About phone in Settings shows them instead.
+        context.startActivity(
+            new Intent(Settings.ACTION_DEVICE_INFO_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        return true;
       }
 
       new AlertDialog.Builder(context)
