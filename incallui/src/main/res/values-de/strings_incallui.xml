@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">Echtzeittext (Real-Time Text, RTT) dient als Unterstützung für Anrufer, die gehörlos, schwerhörig oder sprachgeschädigt sind oder zusätzlich zur gesprochenen Sprache weitere Informationen benötigen.</string>
   <string name="rtt_button_decline_request">Nein danke</string>
   <string name="rtt_button_accept_request">RTT verwenden</string>
+  <string name="manageConferenceLabel">Telefonkonferenz verwalten</string>
 </resources>

@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">La fonctionnalité TTR aide les appelants qui sont sourds ou malentendants, qui ont un trouble de la parole ou pour qui la voix ne suffit pas.</string>
   <string name="rtt_button_decline_request">Non, merci</string>
   <string name="rtt_button_accept_request">Se joindre au TTR</string>
+  <string name="manageConferenceLabel">Gérer la conférence</string>
 </resources>

@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">Linjat e ndihmës</string>
-    <string name="helplines_loading">Duke u ngarkuar\u2026</string>
     <string name="helplines_empty">Nuk u gjet asnje linjë ndihme.\nVendosni një kartë SIM dhe provoni sërish</string>
     <string name="helplines_help">Ndihmë</string>
     <string name="helplines_help_title">Këto janë të sigurta për tu telefonuar</string>
@@ -37,4 +36,5 @@
     <string name="helpline_language_inuktitut">Inuktitut</string>
     <string name="helpline_language_ojibway">Ojibway</string>
     <string name="helpline_language_turkish">Turqisht</string>
+    <string name="helplines_loading">Duke u ngarkuar\u2026</string>
 </resources>

@@ -238,4 +238,6 @@
 
   <!-- Text for button to accept RTT request. [CHAR LIMIT=20] -->
   <string name="rtt_button_accept_request">Join RTT</string>
+  <!-- Label for "Manage conference call" panel [CHAR LIMIT=40] -->
+  <string name="manageConferenceLabel" tools:ignore="UnusedResources">Manage conference call</string>
 </resources>

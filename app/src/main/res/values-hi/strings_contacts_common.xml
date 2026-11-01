@@ -18,6 +18,6 @@
   <string name="menu_clear_frequents">अक्सर किए जाने वाले साफ़ करें</string>
   <string name="action_menu_back_from_search">खोजना बंद करें</string>
   <string name="description_clear_search">खोज साफ़ करें</string>
-  <string name="call_with_a_note">नोट के साथ कॉल करें</string>
   <string name="description_search_video_call">वीडियो कॉल</string>
+    <string name="call_with_a_note">नोट के साथ कॉल करें</string>
 </resources>

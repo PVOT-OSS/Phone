@@ -18,6 +18,6 @@
   <string name="menu_clear_frequents">よく使う連絡先のクリア</string>
   <string name="action_menu_back_from_search">検索を停止</string>
   <string name="description_clear_search">検索をクリア</string>
-  <string name="call_with_a_note">メモを添付して発信</string>
   <string name="description_search_video_call">ビデオ通話</string>
+    <string name="call_with_a_note">メモを添付して発信</string>
 </resources>

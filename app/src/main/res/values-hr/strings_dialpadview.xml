@@ -3,15 +3,15 @@
   <string name="description_dial_button">biraj</string>
   <string name="dialog_voicemail_airplane_mode_message">Da biste nazvali govornu poštu, najprije isključite način rada u zrakoplovu.</string>
   <string name="dialog_voicemail_not_ready_message">Da biste postavili govornu poštu, idite na Izbornik &gt; Postavke.</string>
-  <string name="add_2sec_pause">Dodaj pauzu od 2 s.</string>
-  <string name="add_wait">Dodaj čekanje</string>
-  <string name="dialer_useDtmfDialpad">Koristite dodirnu zvučnu tipkovnicu</string>
-  <string name="dialer_returnToInCallScreen">Natrag na poziv u tijeku</string>
-  <string name="dialer_addAnotherCall">Dodaj poziv</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">Učitavanje sa SIM kartice...</string>
   <string name="simContacts_title">Kontakti na SIM kartici</string>
   <string name="menu_callNumber">Nazovite %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Nije moguće upućivati hitne pozive putem Wi‑Fi-ja</string>
+    <string name="add_2sec_pause">Dodaj pauzu od 2 s.</string>
+    <string name="add_wait">Dodaj čekanje</string>
+    <string name="dialer_useDtmfDialpad">Koristite dodirnu zvučnu tipkovnicu</string>
+    <string name="dialer_returnToInCallScreen">Natrag na poziv u tijeku</string>
+    <string name="dialer_addAnotherCall">Dodaj poziv</string>
 </resources>

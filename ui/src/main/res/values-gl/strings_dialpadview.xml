@@ -2,4 +2,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="description_image_button_plus">marca o signo máis</string>
   <string name="description_voicemail_button">chama ao correo de voz</string>
+  <string name="add_2sec_pause">Engadir pausa de 2 segundos</string>
+  <string name="add_wait">Engadir espera</string>
+  <string name="description_delete_button">retroceso</string>
+  <string name="description_dialpad_overflow">Máis opcións</string>
 </resources>

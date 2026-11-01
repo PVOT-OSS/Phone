@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">காது கேட்காதவர்கள், கேட்பதில் பிரச்சனை உள்ளவர்கள், பேச முடியாதவர்கள் அல்லது குரலுடன் கூடுதல் சேவை தேவைப்படும் அழைப்பாளர்களுக்கு RTT உதவுகிறது.</string>
   <string name="rtt_button_decline_request">வேண்டாம்</string>
   <string name="rtt_button_accept_request">RTT இல் சேர்</string>
+  <string name="manageConferenceLabel">குழு அழைப்பை நிர்வகி</string>
 </resources>

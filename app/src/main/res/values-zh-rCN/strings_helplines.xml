@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">求助热线</string>
-    <string name="helplines_loading">正在载入\u2026</string>
     <string name="helplines_empty">未找到求助热线。\n请插入一张 SIM 卡并重试</string>
     <string name="helplines_help">求助</string>
     <string name="helplines_help_title">这些都是可以安全拨打的</string>
@@ -37,4 +36,5 @@
     <string name="helpline_language_inuktitut">伊努伊特语</string>
     <string name="helpline_language_ojibway">奥吉布韦语</string>
     <string name="helpline_language_turkish">土耳其语</string>
+    <string name="helplines_loading">正在载入\u2026</string>
 </resources>

@@ -23,6 +23,14 @@
     <string name="call_stats_blocked">Blokeeritud: <xliff:g id="value">%s </xliff:g></string>
     <string name="call_stats_percent"><xliff:g id="percent">%d</xliff:g>%%</string>
     <string name="call_stats_header_total">Kokku: <xliff:g id="call_count">%1$s</xliff:g>, <xliff:g id="duration">%2$s</xliff:g></string>
+    <string name="call_stats_date_filter">Muuda ajavahemikku</string>
+    <string name="call_stats_reset_filter">Lähtesta ajavahemik</string>
+    <string name="call_stats_title_for_number">See number</string>
+    <string name="call_stats_title_of_total">Koguarvust</string>
+    <string name="call_stats_title_durations">Kõnede kestus</string>
+    <string name="call_stats_title_count">Kõnede arv</string>
+    <string name="call_stats_title_average_duration">Keskmine kõne kestus</string>
+    <string name="recent_calls_no_items_in_range">Sinu kõnelogi ei sisalda valitud ajavahemikus ühtegi kõnet.</string>
     <string name="call_stats_header_total_callsonly">Kokku: <xliff:g id="call_count">%s</xliff:g></string>
     <string name="call_stats_filter_from">Alguskuupäev</string>
     <string name="call_stats_filter_to">Lõppkuupäev</string>
@@ -35,14 +43,6 @@
     <string name="date_qs_lastmonth">Eelmine kuu</string>
     <string name="date_qs_lastquarter">Eelmine kvartal</string>
     <string name="date_qs_lastyear">Eelmine aasta</string>
-    <string name="call_stats_date_filter">Muuda ajavahemikku</string>
-    <string name="call_stats_reset_filter">Lähtesta ajavahemik</string>
     <string name="call_stats_sort_by_duration">Sorteeri kõne kestvuse järgi</string>
     <string name="call_stats_sort_by_count">Sorteeri kõnede arvu järgi</string>
-    <string name="call_stats_title_for_number">See number</string>
-    <string name="call_stats_title_of_total">Koguarvust</string>
-    <string name="call_stats_title_durations">Kõnede kestus</string>
-    <string name="call_stats_title_count">Kõnede arv</string>
-    <string name="call_stats_title_average_duration">Keskmine kõne kestus</string>
-    <string name="recent_calls_no_items_in_range">Sinu kõnelogi ei sisalda valitud ajavahemikus ühtegi kõnet.</string>
 </resources>

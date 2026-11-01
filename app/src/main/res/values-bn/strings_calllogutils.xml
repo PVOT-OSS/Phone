@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="new_call_log_carrier_video">পরিষেবা প্রদানকারীতে ভিডিও</string>
-  <string name="new_call_log_unknown">অজানা</string>
-  <string name="new_call_log_secondary_blocked">ব্লক করা নম্বর</string>
-  <string name="new_call_log_secondary_spam">স্প্যাম</string>
+    <string name="new_call_log_carrier_video">পরিষেবা প্রদানকারীতে ভিডিও</string>
+    <string name="new_call_log_unknown">অজানা</string>
+    <string name="new_call_log_secondary_blocked">ব্লক করা নম্বর</string>
+    <string name="new_call_log_secondary_spam">স্প্যাম</string>
 </resources>

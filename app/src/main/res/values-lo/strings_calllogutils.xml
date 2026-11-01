@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="new_call_log_carrier_video">ວິດີໂອຜູ້ໃຫ້ບໍລິການ</string>
-  <string name="new_call_log_unknown">ບໍ່ຮູ້ຈັກ</string>
-  <string name="new_call_log_secondary_blocked">ບລັອກແລ້ວ</string>
-  <string name="new_call_log_secondary_spam">ສະແປມ</string>
+    <string name="new_call_log_carrier_video">ວິດີໂອຜູ້ໃຫ້ບໍລິການ</string>
+    <string name="new_call_log_unknown">ບໍ່ຮູ້ຈັກ</string>
+    <string name="new_call_log_secondary_blocked">ບລັອກແລ້ວ</string>
+    <string name="new_call_log_secondary_spam">ສະແປມ</string>
 </resources>

@@ -16,4 +16,5 @@
   <string name="incall_content_description_video_off">Tắt video</string>
   <string name="incall_content_description_swap_video">Hoán đổi video</string>
   <string name="incall_label_speaker">Loa</string>
+  <string name="incall_label_more">Thêm</string>
 </resources>

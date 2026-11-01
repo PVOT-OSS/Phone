@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">వాయిస్ మెయిల్</string>
   <string name="voicemail_notifications_preference_title">నోటిఫికేషన్‌లు</string>
   <string name="voicemail_change_greeting_preference_title">వాయిస్‌మెయిల్ శుభాకాంక్షలు</string>
   <string name="change_greeting_text">రికార్డ్ చేయడానికి నొక్కండి</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">దృశ్య వాయిస్ మెయిల్‌ని ఆఫ్ చేయండి</string>
   <string name="confirm_disable_voicemail_dialog_message">ఇది ఈ యాప్‌లో నిల్వ చేయబడిన ఏవైనా వాయిస్ మెయిల్‌ మరియు Google లిప్యంతరీకరణలను తొలగిస్తుంది. మీ క్యారియర్ దాని స్వంత కాపీలను భద్రపరచుకోవచ్చు.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ఆఫ్ చేయండి</string>
+    <string name="voicemail_settings_title">వాయిస్ మెయిల్</string>
 </resources>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">Balso paštas</string>
   <string name="voicemail_notifications_preference_title">Pranešimai</string>
   <string name="voicemail_change_greeting_preference_title">Balso pašto atsakiklio žinutė</string>
   <string name="change_greeting_text">Paliesk., kad įraš.</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">Vaizdinio balso pašto išjungimas</string>
   <string name="confirm_disable_voicemail_dialog_message">Tai atlikus bus ištrinti visi balso pašto pranešimai ir „Google“ nuorašai, saugomi šioje programoje. Operatorius gali pasilikti savo kopijas.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">IŠJUNGTI</string>
+    <string name="voicemail_settings_title">Balso paštas</string>
 </resources>

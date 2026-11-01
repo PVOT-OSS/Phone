@@ -17,7 +17,7 @@
 
 <resources>
 
-  <style name="Theme.InCallScreen.ManageConference" parent="Dialer.ThemeBase.ActionBar">
+  <style name="Theme.InCallScreen.ManageConference" parent="Dialer.ThemeBase.NoActionBar">
   </style>
 
   <style name="AfterCallNotificationTheme" parent="Dialer.ThemeBase.NoActionBar">

@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT hjælper personer, som er døve, hørehæmmede, talehandicappede, eller som har brug for mere end bare tale, med at foretage opkald.</string>
   <string name="rtt_button_decline_request">Nej tak</string>
   <string name="rtt_button_accept_request">Deltag i RTT-opkald</string>
+  <string name="manageConferenceLabel">Administrer telefonmøde</string>
 </resources>

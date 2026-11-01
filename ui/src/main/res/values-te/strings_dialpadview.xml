@@ -2,4 +2,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="description_image_button_plus">డయల్ ప్లస్</string>
   <string name="description_voicemail_button">వాయిస్ మెయిల్‌కు కాల్ చేయి</string>
+  <string name="add_2sec_pause">2-సెకన్ల పాజ్‌ను జోడించండి</string>
+  <string name="add_wait">నిరీక్షణ సమయాన్ని జోడించండి</string>
+  <string name="description_delete_button">బ్యాక్‌స్పేస్</string>
+  <string name="description_dialpad_overflow">మరిన్ని ఎంపికలు</string>
 </resources>

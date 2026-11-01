@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">Funkcija RTT pomaga klicateljem, ki so gluhi, naglušni, imajo govorno motnjo ali potrebujejo več kot samo glas.</string>
   <string name="rtt_button_decline_request">Ne, hvala</string>
   <string name="rtt_button_accept_request">Pridruži se</string>
+  <string name="manageConferenceLabel">Upravljaj konferenčne klice</string>
 </resources>

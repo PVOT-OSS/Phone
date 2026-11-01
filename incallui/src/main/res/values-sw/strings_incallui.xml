@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT huwasaidia wapigaji simu ambao ni viziwi, wasioweza kuskia vyema, wenye matatizo ya kuzungumza au wanaohitaji kufanya zaidi ya kuzungumza tu.</string>
   <string name="rtt_button_decline_request">Hapana, asante</string>
   <string name="rtt_button_accept_request">Tumia RTT</string>
+  <string name="manageConferenceLabel">Dhibiti simu ya mkutano</string>
 </resources>

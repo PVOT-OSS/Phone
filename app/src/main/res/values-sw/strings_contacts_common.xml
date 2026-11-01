@@ -18,6 +18,6 @@
   <string name="menu_clear_frequents">Futa za mara kwa mara</string>
   <string name="action_menu_back_from_search">acha kutafuta</string>
   <string name="description_clear_search">Futa utafutaji</string>
-  <string name="call_with_a_note">Piga simu inayoambatana na dokezo</string>
   <string name="description_search_video_call">Simu ya video</string>
+    <string name="call_with_a_note">Piga simu inayoambatana na dokezo</string>
 </resources>

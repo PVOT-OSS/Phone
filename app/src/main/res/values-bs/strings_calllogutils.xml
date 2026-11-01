@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="new_call_log_carrier_video">Video poziv putem operatera</string>
-  <string name="new_call_log_unknown">Nepoznato</string>
-  <string name="new_call_log_secondary_blocked">Blokirano</string>
-  <string name="new_call_log_secondary_spam">Neželjena pošta</string>
+    <string name="new_call_log_carrier_video">Video poziv putem operatera</string>
+    <string name="new_call_log_unknown">Nepoznato</string>
+    <string name="new_call_log_secondary_blocked">Blokirano</string>
+    <string name="new_call_log_secondary_spam">Neželjena pošta</string>
 </resources>

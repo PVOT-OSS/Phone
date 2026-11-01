@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">যে কলাররা বধির, কানে কম শোনেন, যাদের কথা বলতে অসুবিধা হয় অথবা যারা কণ্ঠস্বরের সাথে অন্য কোনও উপায়ে নিজেদের প্রকাশ করেন, RTT বৈশিষ্ট্যটি তাদের সাহায্য করে।</string>
   <string name="rtt_button_decline_request">না থাক</string>
   <string name="rtt_button_accept_request">RTT-তে যোগ দিন</string>
+  <string name="manageConferenceLabel">কনফারেন্স কল পরিচালনা করুন</string>
 </resources>

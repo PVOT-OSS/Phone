@@ -19,15 +19,15 @@
   <!-- Minimum height used with @drawable/list_section_divider_holo_custom.
        Right now the drawable has implicit 32dip minimal height, which is confusing.
        This value is for making the hidden configuration explicit in xml. -->
-  <dimen name="list_section_divider_min_height">32dip</dimen>
 
   <!-- Height of the floating action button -->
-  <dimen name="floating_action_button_height">56dp</dimen>
   <!-- Z translation of the floating action button -->
-  <dimen name="floating_action_button_translation_z">8dp</dimen>
   <!-- Bottom margin of the floating action button -->
   <dimen name="floating_action_button_margin_bottom">16dp</dimen>
   <!-- Size of text in tabs. -->
   <dimen name="tab_text_size">14sp</dimen>
   <dimen name="tab_elevation">0dp</dimen>
+    <dimen name="list_section_divider_min_height">32dip</dimen>
+    <dimen name="floating_action_button_height">56dp</dimen>
+    <dimen name="floating_action_button_translation_z">8dp</dimen>
 </resources>

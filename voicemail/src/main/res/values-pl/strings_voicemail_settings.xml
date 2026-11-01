@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">Poczta głosowa</string>
   <string name="voicemail_notifications_preference_title">Powiadomienia</string>
   <string name="voicemail_change_greeting_preference_title">Powitanie w poczcie głosowej</string>
   <string name="change_greeting_text">Dotknij, aby nagrać</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">Wyłączanie wizualnej poczty głosowej</string>
   <string name="confirm_disable_voicemail_dialog_message">Spowoduje to usunięcie wszystkich wiadomości głosowych i transkrypcji Google przechowywanych w tej aplikacji. Operator może mieć oddzielne kopie.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">WYŁĄCZ</string>
+    <string name="voicemail_settings_title">Poczta głosowa</string>
 </resources>

@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT დახმარებას უწევს ყრუ, სმენადაქვეითებულ, შეზღუდული მეტყველების მქონე აბონენტებს, ან მათ, ვისაც სჭირდება მეტი, ვიდრე მხოლოდ ხმაა.</string>
   <string name="rtt_button_decline_request">არა, გმადლობთ</string>
   <string name="rtt_button_accept_request">RTT-თან შეერთება</string>
+  <string name="manageConferenceLabel">საკონფერენციო ზარის მართვა</string>
 </resources>

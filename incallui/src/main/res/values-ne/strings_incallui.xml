@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT ले बहिरा, सुन्नमा कठिन हुने, बोल्न नसक्ने र कल गर्दा आवाजका साथै अरू कुराहरूको आवश्यकता पर्ने मान्छेहरूलाई सहायता गर्छ।</string>
   <string name="rtt_button_decline_request">पर्दैन, धन्यवाद</string>
   <string name="rtt_button_accept_request">RTT मा सामेल हुनुहोस्</string>
+  <string name="manageConferenceLabel">सम्मेलन कलको प्रबन्ध मिलाउनहोस्</string>
 </resources>

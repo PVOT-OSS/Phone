@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">Líneas de ayuda</string>
-    <string name="helplines_loading">Cargando\u2026</string>
     <string name="helplines_empty">No se han encontrado líneas de ayuda.\nInserte una tarjeta SIM e inténtelo de nuevo</string>
     <string name="helplines_help">Ayuda</string>
     <string name="helplines_help_title">Estas son seguras para llamar</string>
@@ -37,4 +36,5 @@
     <string name="helpline_language_inuktitut">Inuit</string>
     <string name="helpline_language_ojibway">Ojibway</string>
     <string name="helpline_language_turkish">Turco</string>
+    <string name="helplines_loading">Cargando\u2026</string>
 </resources>

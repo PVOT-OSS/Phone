@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">വോയ്‌സ്‌മെയിൽ</string>
   <string name="voicemail_notifications_preference_title">അറിയിപ്പുകൾ</string>
   <string name="voicemail_change_greeting_preference_title">വോയ്‌സ്‌മെയിൽ ആശംസ</string>
   <string name="change_greeting_text">റെക്കോർഡ് ചെയ്യാൻ ടാപ്പ് ചെയ്യുക</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">വിഷ്വൽ വോയ്‌സ്‌മെയിൽ ഓഫാക്കുക</string>
   <string name="confirm_disable_voicemail_dialog_message">ഇത്, ഈ ആപ്പിനുള്ളിൽ സംഭരിച്ചിരിക്കുന്ന എല്ലാ വോയ്‌സ്‌മെയിലും Google ട്രാൻസ്‌ക്രിപ്റ്റുകളും ഇല്ലാതാക്കും. നിങ്ങളുടെ കാരിയർ അതിന്റെ തന്നെ പകർപ്പുകൾ സൂക്ഷിച്ചേക്കാം.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ഓഫാക്കുക</string>
+    <string name="voicemail_settings_title">വോയ്‌സ്‌മെയിൽ</string>
 </resources>

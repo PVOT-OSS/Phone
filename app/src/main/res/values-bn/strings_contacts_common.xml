@@ -18,6 +18,6 @@
   <string name="menu_clear_frequents">পুনরাবৃত্তি সাফ করুন</string>
   <string name="action_menu_back_from_search">সার্চ বন্ধ করুন</string>
   <string name="description_clear_search">সার্চ সাফ করুন</string>
-  <string name="call_with_a_note">একটি নোট সহ কল করুন</string>
   <string name="description_search_video_call">ভিডিও কল</string>
+    <string name="call_with_a_note">একটি নোট সহ কল করুন</string>
 </resources>

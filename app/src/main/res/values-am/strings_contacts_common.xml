@@ -18,6 +18,6 @@
   <string name="menu_clear_frequents">ተደጋጋሚዎችን አጽዳ</string>
   <string name="action_menu_back_from_search">መፈለግ አቁም</string>
   <string name="description_clear_search">ፍለጋን አጽዳ</string>
-  <string name="call_with_a_note">ከማስታወሻ ጋር ደውል</string>
   <string name="description_search_video_call">የቪዲዮ ጥሪ</string>
+    <string name="call_with_a_note">ከማስታወሻ ጋር ደውል</string>
 </resources>

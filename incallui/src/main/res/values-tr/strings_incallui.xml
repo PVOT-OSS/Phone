@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT; tam veya kısmi işitme engelli, konuşma engeli olan veya sesten fazlasına ihtiyaç duyan arayanlara yardımcı olur.</string>
   <string name="rtt_button_decline_request">Hayır, teşekkürler</string>
   <string name="rtt_button_accept_request">RTT\'ye katıl</string>
+  <string name="manageConferenceLabel">Konferans çağrısını yönet</string>
 </resources>

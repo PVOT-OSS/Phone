@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+  -->
+<resources>
+    <!-- Spoken for the button that opens more actions for a speed dial contact. -->
+    <string name="speed_dial_more_options">More options</string>
+    <!-- Snackbar after a call history row is swiped away; Undo brings it back. -->
+    <string name="call_history_deleted">Removed from call history</string>
+    <!-- Swipe action that removes a row from the call history. -->
+    <string name="call_history_delete">Delete</string>
+    <!-- Call statistics sort option: by how long the calls lasted. -->
+    <string name="call_stats_by_duration">Duration</string>
+    <!-- Call statistics sort option: by how many calls. -->
+    <string name="call_stats_by_count">Count</string>
+    <!-- Call statistics with no time range set. -->
+    <string name="call_stats_all_time">All time</string>
+    <!-- Call log row badge: the call went over Wi-Fi. [CHAR LIMIT=NONE] -->
+    <string name="description_wifi_call">Wi-Fi call</string>
+    <!-- Call log row badge: the call was in HD voice. [CHAR LIMIT=NONE] -->
+    <string name="description_hd_call">HD call</string>
+    <!-- Call log row badge: assisted dialing added a country code. [CHAR LIMIT=NONE] -->
+    <string name="description_assisted_dialing">Assisted dialing</string>
+    <!-- Title of the dialog that confirms deleting the selected calls from the call history. -->
+    <plurals name="delete_calls_confirmation_dialog_title">
+        <item quantity="one">Delete this call from your history?</item>
+        <item quantity="other">Delete these %d calls from your history?</item>
+    </plurals>
+</resources>

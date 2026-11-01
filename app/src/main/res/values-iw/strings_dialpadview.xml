@@ -3,15 +3,15 @@
   <string name="description_dial_button">חיוג</string>
   <string name="dialog_voicemail_airplane_mode_message">כדי להתקשר לתא הקולי, קודם עליך להשבית את מצב הטיסה.</string>
   <string name="dialog_voicemail_not_ready_message">כדי להגדיר את התא הקולי, עליך להיכנס לתפריט &gt; הגדרות.</string>
-  <string name="add_2sec_pause">הוספת השהיה של 2 שניות</string>
-  <string name="add_wait">הוספת השהיה</string>
-  <string name="dialer_useDtmfDialpad">שימוש במקלדת עם צלילי חיוג</string>
-  <string name="dialer_returnToInCallScreen">חזרה לשיחה הפעילה</string>
-  <string name="dialer_addAnotherCall">הוספת שיחה</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">‏אנחנו טוענים מכרטיס ה-SIM…</string>
   <string name="simContacts_title">‏אנשי הקשר בכרטיס ה-SIM</string>
   <string name="menu_callNumber">התקשרות אל %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">‏לא ניתן להתקשר לשירותי חירום דרך רשת Wi-Fi</string>
+    <string name="add_2sec_pause">הוספת השהיה של 2 שניות</string>
+    <string name="add_wait">הוספת השהיה</string>
+    <string name="dialer_useDtmfDialpad">שימוש במקלדת עם צלילי חיוג</string>
+    <string name="dialer_returnToInCallScreen">חזרה לשיחה הפעילה</string>
+    <string name="dialer_addAnotherCall">הוספת שיחה</string>
 </resources>

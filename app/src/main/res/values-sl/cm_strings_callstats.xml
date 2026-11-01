@@ -23,6 +23,14 @@
     <string name="call_stats_blocked">Blokirani: <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_percent"><xliff:g id="percent">%d</xliff:g>%%</string>
     <string name="call_stats_header_total">Skupaj: <xliff:g id="call_count">%1$s</xliff:g>, <xliff:g id="duration">%2$s</xliff:g></string>
+    <string name="call_stats_date_filter">Prilagodi časovni obseg</string>
+    <string name="call_stats_reset_filter">Ponastavi časovni obseg</string>
+    <string name="call_stats_title_for_number">Ta številka</string>
+    <string name="call_stats_title_of_total">Od skupno</string>
+    <string name="call_stats_title_durations">Dolžine klicev</string>
+    <string name="call_stats_title_count">Število klicev</string>
+    <string name="call_stats_title_average_duration">Povprečna dolžina klica</string>
+    <string name="recent_calls_no_items_in_range">Vaš dnevnik klicev ne vsebuje nobenih klicev v izbranem časovnem obsegu.</string>
     <string name="call_stats_header_total_callsonly">Skupaj: <xliff:g id="call_count">%s</xliff:g></string>
     <string name="call_stats_filter_from">Začetni datum</string>
     <string name="call_stats_filter_to">Končni datum</string>
@@ -35,14 +43,6 @@
     <string name="date_qs_lastmonth">Prejšnji mesec</string>
     <string name="date_qs_lastquarter">Prejšnje četrtletje</string>
     <string name="date_qs_lastyear">Prejšnje leto</string>
-    <string name="call_stats_date_filter">Prilagodi časovni obseg</string>
-    <string name="call_stats_reset_filter">Ponastavi časovni obseg</string>
     <string name="call_stats_sort_by_duration">Razvrsti po dolžini klica</string>
     <string name="call_stats_sort_by_count">Razvrsti po številu klicev</string>
-    <string name="call_stats_title_for_number">Ta številka</string>
-    <string name="call_stats_title_of_total">Od skupno</string>
-    <string name="call_stats_title_durations">Dolžine klicev</string>
-    <string name="call_stats_title_count">Število klicev</string>
-    <string name="call_stats_title_average_duration">Povprečna dolžina klica</string>
-    <string name="recent_calls_no_items_in_range">Vaš dnevnik klicev ne vsebuje nobenih klicev v izbranem časovnem obsegu.</string>
 </resources>

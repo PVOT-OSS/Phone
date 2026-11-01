@@ -18,6 +18,6 @@
   <string name="menu_clear_frequents">Sagedaste kustutamine</string>
   <string name="action_menu_back_from_search">otsimise peatamine</string>
   <string name="description_clear_search">Otsingu kustutamine</string>
-  <string name="call_with_a_note">Kõne koos märkusega</string>
   <string name="description_search_video_call">Videokõne</string>
+    <string name="call_with_a_note">Kõne koos märkusega</string>
 </resources>

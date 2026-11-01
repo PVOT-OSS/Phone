@@ -2,4 +2,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="description_image_button_plus">slå plusstegn</string>
   <string name="description_voicemail_button">ring talepostkassen</string>
+  <string name="add_2sec_pause">Legg til pause på 2 sek.</string>
+  <string name="add_wait">Legg til Vent</string>
+  <string name="description_delete_button">tilbaketast</string>
+  <string name="description_dialpad_overflow">Flere alternativer</string>
 </resources>

@@ -16,7 +16,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="incall_category_key" translatable="false">dialer_general_incall_category_key</string>
     <string name="incall_category_title">In-call</string>
     <string name="incall_enable_dnd_title">Enable Do Not Disturb during calls</string>
     <string name="incall_vibrate_outgoing_key" translatable="false">incall_vibrate_outgoing</string>
@@ -32,13 +31,12 @@
     <string name="allow">Allow</string>
     <string name="deny">Deny</string>
 
-    <string name="call_recording_category_key" translatable="false">call_recording_category</string>
     <string name="call_recording_category_title">Call recording</string>
+  <string name="call_recording_format_default" translatable="false">0</string>
     <string name="call_recording_format">Audio format</string>
     <string name="wb_amr_format" translatable="false">AMR-WB</string>
     <string name="aac_format" translatable="false">AAC</string>
 
-    <string name="call_via">Call via</string>
     <string name="call_via_dialog_title">Call via\u2026</string>
 
     <string name="call_log_stats_title">Statistics</string>
@@ -47,4 +45,7 @@
 
     <string name="default_dialer_text">You must set Phone as the default phone app to use it.</string>
     <string name="default_dialer_action">Set as default</string>
+    <string name="incall_category_key" translatable="false">dialer_general_incall_category_key</string>
+    <string name="call_recording_category_key" translatable="false">call_recording_category</string>
+    <string name="call_via">Call via</string>
 </resources>

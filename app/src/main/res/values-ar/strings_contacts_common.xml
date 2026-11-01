@@ -18,6 +18,6 @@
   <string name="menu_clear_frequents">محو قائمة من يتصل بهم كثيرًا</string>
   <string name="action_menu_back_from_search">إيقاف البحث</string>
   <string name="description_clear_search">محو البحث</string>
-  <string name="call_with_a_note">مكالمة مع ملاحظة</string>
   <string name="description_search_video_call">مكالمة فيديو</string>
+    <string name="call_with_a_note">مكالمة مع ملاحظة</string>
 </resources>

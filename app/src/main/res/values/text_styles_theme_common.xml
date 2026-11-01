@@ -62,7 +62,7 @@
     <item name="android:maxLines">1</item>
   </style>
 
-  <style name="Dialer.TextAppearance.OVERLINE.Ellipsize">
+    <style name="Dialer.TextAppearance.OVERLINE.Ellipsize">
     <item name="android:ellipsize">end</item>
     <item name="android:maxLines">1</item>
   </style>

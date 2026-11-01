@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT は、聴覚障害や言語障害があるなど、音声だけではコミュニケーションを取ることが困難なユーザーをサポートする機能です。</string>
   <string name="rtt_button_decline_request">参加しない</string>
   <string name="rtt_button_accept_request">RTT に参加</string>
+  <string name="manageConferenceLabel">グループ通話オプション</string>
 </resources>

@@ -16,9 +16,7 @@
   -->
 
 <resources>
-  <color name="conference_call_manager_caller_name_text_color">#4d4d4d</color>
   <!-- Used with some smaller texts in manage conference screen. -->
-  <color name="conference_call_manager_secondary_text_color">#999999</color>
 
   <!-- Background color for status bar. For portrait this will be ignored. -->
   <color name="statusbar_background_color">?android:attr/colorPrimary</color>
@@ -63,8 +61,10 @@
 
   <color name="incall_background_multiwindow_spam">#E9C22E2E</color>
 
-  <color name="incall_button_icon_color">@android:color/black</color>
 
-  <color name="incall_banner_icon_color">@android:color/system_neutral1_900</color>
-  <color name="incall_banner_timer_color">@android:color/system_neutral1_800</color>
+    <color name="conference_call_manager_caller_name_text_color">#4d4d4d</color>
+    <color name="conference_call_manager_secondary_text_color">#999999</color>
+    <color name="incall_button_icon_color">@android:color/black</color>
+    <color name="incall_banner_icon_color">@android:color/system_neutral1_900</color>
+    <color name="incall_banner_timer_color">@android:color/system_neutral1_800</color>
 </resources>

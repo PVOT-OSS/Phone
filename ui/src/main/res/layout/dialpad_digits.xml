@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+-->
+<!-- The dialpad's number field, hosted in Compose; it keeps the resizing and formatting it always had. -->
+<org.prauga.phone.dialer.dialpadview.DigitsEditText
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ex="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/digits"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:cursorVisible="false"
+    android:focusableInTouchMode="true"
+    android:freezesText="true"
+    android:gravity="center"
+    android:importantForAutofill="no"
+    android:maxLines="1"
+    android:scrollHorizontally="true"
+    android:singleLine="true"
+    android:textCursorDrawable="@null"
+    android:textSize="36sp"
+    android:textStyle="normal"
+    ex:resizing_text_min_size="@dimen/dialpad_digits_text_min_size" />
