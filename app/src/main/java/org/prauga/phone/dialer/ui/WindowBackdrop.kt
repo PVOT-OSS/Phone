@@ -47,6 +47,8 @@ fun WindowBackdrop(behind: View? = null, content: @Composable () -> Unit) {
     val backdrop = rememberPvotGlassBackdrop()
     val root = LocalView.current.rootView
     var inWindow by remember { mutableStateOf(Offset.Zero) }
+    // Reused on every draw, which runs each frame something behind changes.
+    val behindLocation = remember { IntArray(2) }
     // A child of [behind] shown, hidden or moved changes [behind]'s own drawing, so redraw then.
     var layouts by remember { mutableIntStateOf(0) }
     if (behind != null) {
@@ -70,8 +72,8 @@ fun WindowBackdrop(behind: View? = null, content: @Composable () -> Unit) {
                             native.withTranslation(-inWindow.x, -inWindow.y) { background.draw(this) }
                         }
                         if (behind != null && behind.isShown) {
-                            val location = IntArray(2).also(behind::getLocationInWindow)
-                            native.withTranslation(location[0] - inWindow.x, location[1] - inWindow.y) { behind.draw(this) }
+                            behind.getLocationInWindow(behindLocation)
+                            native.withTranslation(behindLocation[0] - inWindow.x, behindLocation[1] - inWindow.y) { behind.draw(this) }
                         }
                     }
                 },
