@@ -30,7 +30,10 @@ public abstract class AnswerMethod extends Fragment {
 
   public abstract void setHintText(@Nullable CharSequence hintText);
 
-  public abstract void setShowIncomingWillDisconnect(boolean incomingWillDisconnect);
+  /**
+   * Shows that answering will end another call, with [text] saying which; null when it won't.
+   */
+  public abstract void setIncomingWillDisconnectText(@Nullable CharSequence text);
 
   public void setContactPhoto(@Nullable Drawable contactPhoto) {
     // default implementation does nothing. Only some AnswerMethods show a photo

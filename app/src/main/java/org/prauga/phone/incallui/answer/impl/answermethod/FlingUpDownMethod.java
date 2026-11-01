@@ -133,7 +133,7 @@ public class FlingUpDownMethod extends AnswerMethod implements OnProgressChanged
   private View contactPuckContainer;
   private ImageView contactPuckBackground;
   private ImageView contactPuckIcon;
-  private View incomingDisconnectText;
+  private TextView incomingDisconnectText;
   private View spaceHolder;
   private Animator lockBounceAnim;
   private AnimatorSet lockEntryAnim;
@@ -147,6 +147,7 @@ public class FlingUpDownMethod extends AnswerMethod implements OnProgressChanged
   private Animator vibrationAnimator;
   private Drawable contactPhoto;
   private boolean incomingWillDisconnect;
+  @Nullable private CharSequence incomingWillDisconnectText;
   private FlingUpDownTouchHandler touchHandler;
   private FalsingManager falsingManager;
 
@@ -202,6 +203,9 @@ public class FlingUpDownMethod extends AnswerMethod implements OnProgressChanged
     swipeToAnswerText = (TextView) view.findViewById(R.id.incoming_swipe_to_answer_text);
     swipeToRejectText = (TextView) view.findViewById(R.id.incoming_swipe_to_reject_text);
     incomingDisconnectText = view.findViewById(R.id.incoming_will_disconnect_text);
+    if (incomingWillDisconnectText != null) {
+      incomingDisconnectText.setText(incomingWillDisconnectText);
+    }
     incomingDisconnectText.setVisibility(incomingWillDisconnect ? View.VISIBLE : View.GONE);
     incomingDisconnectText.setAlpha(incomingWillDisconnect ? 1 : 0);
     spaceHolder = view.findViewById(R.id.incoming_bouncer_space_holder);
@@ -379,10 +383,12 @@ public class FlingUpDownMethod extends AnswerMethod implements OnProgressChanged
   }
 
   @Override
-  public void setShowIncomingWillDisconnect(boolean incomingWillDisconnect) {
-    this.incomingWillDisconnect = incomingWillDisconnect;
+  public void setIncomingWillDisconnectText(@Nullable CharSequence text) {
+    this.incomingWillDisconnect = text != null;
+    this.incomingWillDisconnectText = text;
     if (incomingDisconnectText != null) {
       if (incomingWillDisconnect) {
+        incomingDisconnectText.setText(text);
         incomingDisconnectText.setVisibility(View.VISIBLE);
         spaceHolder.setVisibility(View.GONE);
         incomingDisconnectText.animate().alpha(1);

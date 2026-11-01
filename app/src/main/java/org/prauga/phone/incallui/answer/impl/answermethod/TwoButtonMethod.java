@@ -56,7 +56,7 @@ public class TwoButtonMethod extends AnswerMethod
   private View declineButton;
   private View declineLabel;
   private TextView hintTextView;
-  private boolean incomingWillDisconnect;
+  @Nullable private CharSequence incomingWillDisconnectText;
   private boolean buttonClicked;
   private CharSequence hintText;
   @Nullable
@@ -66,7 +66,7 @@ public class TwoButtonMethod extends AnswerMethod
   public void onCreate(@Nullable Bundle bundle) {
     super.onCreate(bundle);
     if (bundle != null) {
-      incomingWillDisconnect = bundle.getBoolean(STATE_INCOMING_WILL_DISCONNECT);
+      incomingWillDisconnectText = bundle.getCharSequence(STATE_INCOMING_WILL_DISCONNECT);
       hintText = bundle.getCharSequence(STATE_HINT_TEXT);
     }
   }
@@ -74,7 +74,7 @@ public class TwoButtonMethod extends AnswerMethod
   @Override
   public void onSaveInstanceState(Bundle bundle) {
     super.onSaveInstanceState(bundle);
-    bundle.putBoolean(STATE_INCOMING_WILL_DISCONNECT, incomingWillDisconnect);
+    bundle.putCharSequence(STATE_INCOMING_WILL_DISCONNECT, incomingWillDisconnectText);
     bundle.putCharSequence(STATE_HINT_TEXT, hintText);
   }
 
@@ -153,8 +153,8 @@ public class TwoButtonMethod extends AnswerMethod
   }
 
   @Override
-  public void setShowIncomingWillDisconnect(boolean incomingWillDisconnect) {
-    this.incomingWillDisconnect = incomingWillDisconnect;
+  public void setIncomingWillDisconnectText(@Nullable CharSequence text) {
+    this.incomingWillDisconnectText = text;
     updateHintText();
   }
 
@@ -166,8 +166,8 @@ public class TwoButtonMethod extends AnswerMethod
     if (!TextUtils.isEmpty(hintText) && !buttonClicked) {
       hintTextView.setText(hintText);
       hintTextView.animate().alpha(1f).start();
-    } else if (incomingWillDisconnect && !buttonClicked) {
-      hintTextView.setText(R.string.call_incoming_will_disconnect);
+    } else if (incomingWillDisconnectText != null && !buttonClicked) {
+      hintTextView.setText(incomingWillDisconnectText);
       hintTextView.animate().alpha(1f).start();
     } else {
       hintTextView.animate().alpha(0f).start();

@@ -1147,18 +1147,25 @@ public class DialerCall implements VideoTechListener {
   }
 
   /**
-   * Determines if answering this call will cause an ongoing video call to be dropped.
-   *
-   * @return {@code true} if answering this call will drop an ongoing video call, {@code false}
-   *     otherwise.
+   * Determines if answering this call will end an ongoing call, as Telecom tells the app when the
+   * ongoing call can't be held.
    */
-  public boolean answeringDisconnectsForegroundVideoCall() {
+  public boolean answeringDisconnectsOngoingCall() {
     Bundle extras = getExtras();
     if (extras == null
         || !extras.containsKey(CallCompat.Details.EXTRA_ANSWERING_DROPS_FOREGROUND_CALL)) {
       return false;
     }
     return extras.getBoolean(CallCompat.Details.EXTRA_ANSWERING_DROPS_FOREGROUND_CALL);
+  }
+
+  /** The app whose call answering this call will end, when Telecom names it. */
+  @Nullable
+  public String getAnsweringDisconnectsAppName() {
+    Bundle extras = getExtras();
+    return extras == null
+        ? null
+        : extras.getString(CallCompat.Details.EXTRA_ANSWERING_DROPS_FOREGROUND_CALL_APP_NAME);
   }
 
   private void parseCallSpecificAppData() {

@@ -508,12 +508,24 @@ public class AnswerFragment extends Fragment
     updateImportanceBadgeVisibility();
   }
 
+  /** What answering will end, from Telecom's hint on the ringing call; null when nothing. */
+  @Nullable
+  private CharSequence getIncomingWillDisconnectText() {
+    if (!primaryInfo.answeringDisconnectsOngoingCall()) {
+      return null;
+    }
+    String appName = primaryInfo.answeringDisconnectsAppName();
+    return TextUtils.isEmpty(appName)
+        ? getText(R.string.call_incoming_will_disconnect)
+        : getString(R.string.call_incoming_will_disconnect_app, appName);
+  }
+
   private void updatePrimaryUI() {
     if (getView() == null) {
       return;
     }
     contactGridManager.setPrimary(primaryInfo);
-    getAnswerMethod().setShowIncomingWillDisconnect(primaryInfo.answeringDisconnectsOngoingCall());
+    getAnswerMethod().setIncomingWillDisconnectText(getIncomingWillDisconnectText());
     getAnswerMethod()
         .setContactPhoto(
             primaryInfo.photoType() == ContactPhotoType.CONTACT ? primaryInfo.photo() : null);
