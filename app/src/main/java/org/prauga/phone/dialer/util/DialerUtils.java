@@ -172,9 +172,13 @@ public class DialerUtils {
    * @return Joined char sequences.
    */
   public static CharSequence join(Iterable<CharSequence> list) {
+    return join(list, ", ");
+  }
+
+  /** Joins {@code list} with {@code separator}, keeping each item's text direction. */
+  public static CharSequence join(Iterable<CharSequence> list, CharSequence separator) {
     StringBuilder sb = new StringBuilder();
     final BidiFormatter formatter = BidiFormatter.getInstance();
-    final CharSequence separator = ", ";
 
     Iterator<CharSequence> itr = list.iterator();
     boolean firstTime = true;
