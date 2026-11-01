@@ -32,7 +32,7 @@
   <!-- Notification strings -->
   <!-- The "label" of the in-call Notification for a dialing call, used
        as the format string for a Chronometer widget. [CHAR LIMIT=60] -->
-  <string name="notification_dialing">Dialing</string>
+  <string name="notification_dialing">Calling</string>
   <!-- The "label" of the in-call Notification for an ongoing call. [CHAR LIMIT=60] -->
   <string name="notification_ongoing_call">Ongoing call</string>
   <!-- The "label" of the in-call Notification for an ongoing video call. [CHAR LIMIT=60] -->

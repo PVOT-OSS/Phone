@@ -3,7 +3,7 @@
   <string name="wait_prompt_str">Send the following tones?\n</string>
   <string name="pause_prompt_yes">Yes</string>
   <string name="pause_prompt_no">No</string>
-  <string name="notification_dialing">Dialling</string>
+  <string name="notification_dialing">Calling</string>
   <string name="notification_ongoing_call">On-going call</string>
   <string name="notification_ongoing_video_call">Ongoing video call</string>
   <string name="notification_ongoing_paused_video_call">Ongoing video call – video paused</string>

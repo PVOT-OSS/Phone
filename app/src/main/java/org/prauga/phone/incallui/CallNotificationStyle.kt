@@ -25,4 +25,8 @@ object CallNotificationStyle {
     fun incoming(person: Person, decline: PendingIntent, answer: PendingIntent, isVideo: Boolean): Notification.CallStyle =
         Notification.CallStyle.forIncomingCall(person, decline, answer).setIsVideo(isVideo)
 
+    /** A dialing, active or held call, ended with [hangUp]. */
+    @JvmStatic
+    fun ongoing(person: Person, hangUp: PendingIntent, isVideo: Boolean): Notification.CallStyle =
+        Notification.CallStyle.forOngoingCall(person, hangUp).setIsVideo(isVideo)
 }

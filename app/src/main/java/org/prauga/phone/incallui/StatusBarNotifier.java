@@ -425,9 +425,18 @@ public class StatusBarNotifier
     setNotificationWhen(call, state, builder);
 
     // Add hang up option for any active calls (active | onhold), outgoing calls (dialing).
-    if (state == DialerCallState.ACTIVE
-        || state == DialerCallState.ONHOLD
-        || DialerCallState.isDialing(state)) {
+    boolean isOngoing =
+        state == DialerCallState.ACTIVE
+            || state == DialerCallState.ONHOLD
+            || DialerCallState.isDialing(state);
+    if (isOngoing && person != null) {
+      builder.setStyle(
+          CallNotificationStyle.ongoing(
+              person,
+              createNotificationPendingIntent(context, ACTION_HANG_UP_ONGOING_CALL),
+              call.isVideoCall()));
+      addSpeakerAction(builder, callAudioState);
+    } else if (isOngoing) {
       addHangupAction(builder);
       addSpeakerAction(builder, callAudioState);
     } else if (person != null
