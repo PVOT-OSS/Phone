@@ -82,7 +82,7 @@ abstract class CallDetailsActivityCommon extends BaseActivity {
       new CallDetailsEntryListener(this);
   private final CallDetailsHeaderViewHolder.CallDetailsHeaderListener callDetailsHeaderListener =
       new CallDetailsHeaderListener(this);
-  private final CallDetailsFooterViewHolder.DeleteCallDetailsListener deleteCallDetailsListener =
+  private final DeleteCallDetailsListener deleteCallDetailsListener =
       new DeleteCallDetailsListener(this);
   private final CallDetailsFooterViewHolder.ReportCallIdListener reportCallIdListener =
       new ReportCallIdListener(this);
@@ -193,6 +193,45 @@ abstract class CallDetailsActivityCommon extends BaseActivity {
     RecyclerView recyclerView = findViewById(R.id.recycler_view);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     recyclerView.setAdapter(adapter);
+    SwipeToDeleteCall.attach(recyclerView, this::onCallSwiped);
+  }
+
+  /** Deletes the swiped call after asking; the last call means the number's whole history. */
+  private void onCallSwiped(int entryIndex, Runnable restore) {
+    if (callDetailsEntries == null
+        || entryIndex < 0
+        || entryIndex >= callDetailsEntries.getEntriesCount()) {
+      restore.run();
+      return;
+    }
+    boolean lastCall = callDetailsEntries.getEntriesCount() == 1;
+    new AlertDialog.Builder(this)
+        .setTitle(
+            lastCall
+                ? R.string.call_details_delete_all_title
+                : R.string.call_details_delete_call_title)
+        .setNegativeButton(android.R.string.cancel, (dialog, which) -> restore.run())
+        .setOnCancelListener(dialog -> restore.run())
+        .setPositiveButton(
+            R.string.delete,
+            (dialog, which) -> {
+              if (lastCall) {
+                deleteCallDetailsListener.deleteWithoutAsking();
+              } else {
+                deleteCall(entryIndex);
+              }
+            })
+        .show();
+  }
+
+  private void deleteCall(int entryIndex) {
+    CallDetailsEntry entry = callDetailsEntries.getEntries(entryIndex);
+    DialerExecutorComponent.get(this)
+        .dialerExecutorFactory()
+        .createNonUiTaskBuilder(new DeleteCallsWorker(this))
+        .build()
+        .executeSerial(CallDetailsEntries.newBuilder().addEntries(entry).build());
+    setCallDetailsEntries(callDetailsEntries.toBuilder().removeEntries(entryIndex).build());
   }
 
   final CallDetailsAdapterCommon getAdapter() {
@@ -374,6 +413,11 @@ abstract class CallDetailsActivityCommon extends BaseActivity {
           .setNegativeButton(android.R.string.cancel, null)
           .setPositiveButton(R.string.delete, (dialog, which) -> deleteAll(activity))
           .show();
+    }
+
+    /** Deletes every call with the number, once the user already agreed. */
+    void deleteWithoutAsking() {
+      deleteAll(getActivity());
     }
 
     private void deleteAll(CallDetailsActivityCommon activity) {

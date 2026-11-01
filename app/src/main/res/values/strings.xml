@@ -53,6 +53,8 @@
   <string name="call_log_delete_entry_title">Delete this entry?</string>
   <!-- Asks before deleting all calls with a number from its call details. -->
   <string name="call_details_delete_all_title">Delete all history for this number?</string>
+  <!-- Asks before deleting one call from a number's call details. -->
+  <string name="call_details_delete_call_title">Delete this call?</string>
   <!-- Call log row label for a video call, before the time. [CHAR LIMIT=20] -->
   <string name="call_log_label_video">Video</string>
   <!-- Call log row label for an RTT call, before the time. [CHAR LIMIT=20] -->
