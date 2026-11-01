@@ -398,6 +398,8 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
     if (this.inCallActivity == null) {
       LogUtil.i(
           "InCallPresenter.unsetActivity", "No InCallActivity currently set, no need to unset.");
+      // The presenter was cleaned up while this activity was closing.
+      showInCallForHeldBackCall();
       return;
     }
     if (this.inCallActivity != inCallActivity) {
@@ -484,7 +486,21 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
     if (doAttemptCleanup) {
       attemptCleanup();
     }
+    if (inCallActivity == null) {
+      showInCallForHeldBackCall();
+    }
     Trace.endSection();
+  }
+
+  /**
+   * A call that started while the previous call screen was closing was held back until that screen
+   * was gone; by then it may be active already, which doesn't bring the screen up by itself.
+   */
+  private void showInCallForHeldBackCall() {
+    if (this.inCallActivity == null && callList != null && callList.getFirstCall() != null) {
+      LogUtil.i("InCallPresenter.showInCallForHeldBackCall", "bringing up the call screen");
+      showInCall(false /* showDialpad */, false /* newOutgoingCall */);
+    }
   }
 
   public void setManageConferenceActivity(
