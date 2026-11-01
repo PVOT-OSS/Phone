@@ -20,6 +20,8 @@ package org.prauga.phone.dialer.app.settings;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import org.prauga.phone.dialer.R;
@@ -29,5 +31,13 @@ public class DisplayOptionsSettingsFragment extends PreferenceFragmentCompat {
   @Override
   public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
     addPreferencesFromResource(R.xml.display_options_settings);
+    Preference theme = findPreference(getString(R.string.display_options_theme_key));
+    if (theme != null) {
+      theme.setOnPreferenceChangeListener(
+          (preference, value) -> {
+            AppCompatDelegate.setDefaultNightMode(DisplayOptions.nightModeOf((String) value));
+            return true;
+          });
+    }
   }
 }

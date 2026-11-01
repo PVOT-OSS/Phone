@@ -21,6 +21,7 @@ import android.os.Trace;
 
 import androidx.annotation.NonNull;
 
+import org.prauga.phone.dialer.app.settings.DisplayOptions;
 import org.prauga.phone.dialer.inject.HasRootComponent;
 import org.prauga.phone.dialer.notification.NotificationChannelManager;
 
@@ -33,6 +34,7 @@ public abstract class DialerApplication extends Application implements HasRootCo
   public void onCreate() {
     Trace.beginSection("DialerApplication.onCreate");
     super.onCreate();
+    DisplayOptions.applyTheme(this);
     NotificationChannelManager.initChannels(this);
     Trace.endSection();
   }

@@ -20,6 +20,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <ListPreference
+      android:dialogTitle="@string/display_options_theme"
+      android:key="@string/display_options_theme_key"
+      android:summary="%s"
+      android:entries="@array/display_options_theme_entries"
+      android:entryValues="@array/display_options_theme_values"
+      android:title="@string/display_options_theme"
+      android:defaultValue="-1"
+      app:iconSpaceReserved="false"/>
+
+  <SwitchPreferenceCompat
+      android:key="@string/display_options_force_portrait_key"
+      android:title="@string/display_options_force_portrait"
+      android:summary="@string/display_options_force_portrait_summary"
+      android:defaultValue="false"
+      app:iconSpaceReserved="false"/>
+
+  <ListPreference
       android:dialogTitle="@string/display_options_sort_list_by"
       android:key="@string/display_options_sort_list_by_key"
       android:summary="%s"
