@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">Tin nhắn theo thời gian thực (RTT) trợ giúp những người gọi khiếm thính, bị suy giảm thính lực, không có khả năng nói hoặc cần thêm hỗ trợ khác ngoài giọng nói.</string>
   <string name="rtt_button_decline_request">Không, cảm ơn</string>
   <string name="rtt_button_accept_request">Tham gia RTT</string>
+  <string name="manageConferenceLabel">Quản lý cuộc gọi nhiều bên</string>
 </resources>

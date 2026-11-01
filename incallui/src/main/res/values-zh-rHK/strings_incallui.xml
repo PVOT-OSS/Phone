@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">即時文字短訊 (RTT) 功能可協助失聰、有聽力障礙、語言失能或需要語音以外更多功能的通話者。</string>
   <string name="rtt_button_decline_request">不，謝謝</string>
   <string name="rtt_button_accept_request">加入即時文字短訊 (RTT)</string>
+  <string name="manageConferenceLabel">管理會議通話</string>
 </resources>

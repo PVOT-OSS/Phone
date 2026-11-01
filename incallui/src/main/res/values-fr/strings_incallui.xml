@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">Le texte en temps réel (RTT) vient en aide aux personnes sourdes, malentendantes, qui ont un trouble de la parole, ou qui ont besoin d\'une transcription en plus de la voix.</string>
   <string name="rtt_button_decline_request">Non, merci</string>
   <string name="rtt_button_accept_request">Accepter l\'appel RTT</string>
+  <string name="manageConferenceLabel">Gérer conférence téléphonique</string>
 </resources>

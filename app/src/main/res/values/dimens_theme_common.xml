@@ -15,17 +15,17 @@
   ~ limitations under the License
   -->
 <resources>
-  <dimen name="call_log_action_icon_margin_start">16dp</dimen>
-  <dimen name="call_log_action_icon_dimen">24dp</dimen>
   <dimen name="call_log_action_horizontal_padding">24dp</dimen>
   <dimen name="call_log_day_group_padding_top">15dp</dimen>
   <dimen name="call_log_day_group_padding_bottom">9dp</dimen>
   <dimen name="tab_height">48dp</dimen>
 
   <!-- Minimum a11y height and width required for all touch targets. -->
-  <dimen name="dialer_touch_target_min_size">48dp</dimen>
 
   <!-- Padding to be applied to the bottom of lists to make space for the floating action
      button -->
-  <dimen name="floating_action_button_list_bottom_padding">88dp</dimen>
+    <dimen name="call_log_action_icon_margin_start">16dp</dimen>
+    <dimen name="call_log_action_icon_dimen">24dp</dimen>
+    <dimen name="dialer_touch_target_min_size">48dp</dimen>
+    <dimen name="floating_action_button_list_bottom_padding">88dp</dimen>
 </resources>

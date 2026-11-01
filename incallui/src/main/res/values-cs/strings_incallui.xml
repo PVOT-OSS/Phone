@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">Funkce SMS během hovoru (RTT) pomáhá volajícím, kteří neslyší, jsou nedoslýchaví, mají řečovou vadu, případně potřebují víc než jen hlas z jiného důvodu.</string>
   <string name="rtt_button_decline_request">Ne, díky</string>
   <string name="rtt_button_accept_request">Připojit se k RTT</string>
+  <string name="manageConferenceLabel">Spravovat konferenční hovor</string>
 </resources>

@@ -18,6 +18,6 @@
   <string name="menu_clear_frequents">Διαγραφή ατόμ. με συχνή επικ.</string>
   <string name="action_menu_back_from_search">τέλος αναζήτησης</string>
   <string name="description_clear_search">Διαγραφή αναζητήσεων</string>
-  <string name="call_with_a_note">Κλήση με σημείωση</string>
   <string name="description_search_video_call">Βιντεοκλήση</string>
+    <string name="call_with_a_note">Κλήση με σημείωση</string>
 </resources>

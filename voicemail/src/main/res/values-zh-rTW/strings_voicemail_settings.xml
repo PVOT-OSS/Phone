@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">語音信箱</string>
   <string name="voicemail_notifications_preference_title">通知</string>
   <string name="voicemail_change_greeting_preference_title">語音信箱問候語</string>
   <string name="change_greeting_text">輕觸即可錄音</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">停用視覺化語音信箱</string>
   <string name="confirm_disable_voicemail_dialog_message">這項操作將會刪除儲存在這個應用程式中的所有語音留言和 Google 留言轉錄。請注意，你的電信業者可能會保留複本。</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">停用</string>
+    <string name="voicemail_settings_title">語音信箱</string>
 </resources>

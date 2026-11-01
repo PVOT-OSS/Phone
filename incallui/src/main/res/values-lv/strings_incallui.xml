@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT funkcionalitāte palīdz nedzirdīgiem un vājdzirdīgiem zvanītājiem, kā arī zvanītājiem, kuriem ir runas traucējumi vai ir nepieciešama ne tikai balss skaņa.</string>
   <string name="rtt_button_decline_request">Nē, paldies</string>
   <string name="rtt_button_accept_request">Pievienoties RTT</string>
+  <string name="manageConferenceLabel">Pārvaldīt konferences zvanu</string>
 </resources>

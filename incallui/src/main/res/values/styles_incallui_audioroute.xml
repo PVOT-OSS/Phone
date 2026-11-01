@@ -16,7 +16,13 @@
   -->
 <resources>
 
-  <style name="AudioRouteItem">
+
+  <style name="TransparentBottomSheetDialogTheme" parent="Theme.AppCompat.Light">
+    <item name="android:background">@android:color/transparent</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
+  </style>
+    <style name="AudioRouteItem">
     <item name="android:padding">16dp</item>
     <item name="android:background">?android:attr/selectableItemBackground</item>
     <item name="android:drawablePadding">24dp</item>
@@ -26,11 +32,5 @@
     </item>
     <item name="android:textColor">?android:attr/textColorSecondary</item>
     <item name="android:drawableTint">?android:attr/textColorSecondary</item>
-  </style>
-
-  <style name="TransparentBottomSheetDialogTheme" parent="Theme.AppCompat.Light">
-    <item name="android:background">@android:color/transparent</item>
-    <item name="android:windowBackground">@android:color/transparent</item>
-    <item name="android:statusBarColor">@android:color/transparent</item>
   </style>
 </resources>

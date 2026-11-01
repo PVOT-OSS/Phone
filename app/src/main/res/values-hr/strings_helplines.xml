@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">Brojevi za pomoć</string>
-    <string name="helplines_loading">Učitavanje\u2026</string>
     <string name="helplines_empty">Brojevi za pomoć nisu pronađeni.\nUmetnite SIM karticu i pokušajte ponovo</string>
     <string name="helplines_help">Pomoć</string>
     <string name="helplines_help_title">Ovi su sigurni za telefonski poziv</string>
@@ -36,4 +35,5 @@
     <string name="helpline_language_inuktitut">Inuktitut</string>
     <string name="helpline_language_ojibway">Ojibway</string>
     <string name="helpline_language_turkish">Turski</string>
+    <string name="helplines_loading">Učitavanje\u2026</string>
 </resources>

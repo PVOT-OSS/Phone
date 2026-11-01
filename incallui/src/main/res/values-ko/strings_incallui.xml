@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT는 청각 장애, 난청, 언어 장애가 있거나 음성 이외의 의사소통 수단이 필요한 발신자에게 도움이 됩니다.</string>
   <string name="rtt_button_decline_request">사용 안함</string>
   <string name="rtt_button_accept_request">RTT에 참여</string>
+  <string name="manageConferenceLabel">다자간 통화 관리</string>
 </resources>

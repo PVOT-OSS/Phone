@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT kar, eshitish qobiliyati va nutqiy faoliyati buzilgan shaxslarga mo‘ljallangan funksiyadir.</string>
   <string name="rtt_button_decline_request">Kerak emas</string>
   <string name="rtt_button_accept_request">Qo‘shilish</string>
+  <string name="manageConferenceLabel">Konferens-aloqani sozlash</string>
 </resources>

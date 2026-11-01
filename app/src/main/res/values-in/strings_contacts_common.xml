@@ -18,6 +18,6 @@
   <string name="menu_clear_frequents">Hapus yang sering</string>
   <string name="action_menu_back_from_search">menghentikan penelusuran</string>
   <string name="description_clear_search">Hapus penelusuran</string>
-  <string name="call_with_a_note">Telepon dengan catatan</string>
   <string name="description_search_video_call">Video call</string>
+    <string name="call_with_a_note">Telepon dengan catatan</string>
 </resources>

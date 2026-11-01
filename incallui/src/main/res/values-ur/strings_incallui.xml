@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">‏RTT ایسے کالرز کی معاونت کرتا ہے جو بہرے ہیں، اونچا سنتے ہیں، بولنے سے معزور ہیں یا ان کیلئے صرف آواز ہی کافی نہیں ہے۔</string>
   <string name="rtt_button_decline_request">نہیں شکریہ</string>
   <string name="rtt_button_accept_request">‏RTT میں شامل ہوں</string>
+  <string name="manageConferenceLabel">کانفرنس کال کا نظم کریں</string>
 </resources>

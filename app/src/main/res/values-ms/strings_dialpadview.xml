@@ -3,15 +3,15 @@
   <string name="description_dial_button">dail</string>
   <string name="dialog_voicemail_airplane_mode_message">Untuk membuat panggilan ke mel suara, mula-mula matikan mod Pesawat.</string>
   <string name="dialog_voicemail_not_ready_message">Untuk menyediakan mel suara, pergi ke Menu &gt; Tetapan.</string>
-  <string name="add_2sec_pause">Tambah jeda 2 saat</string>
-  <string name="add_wait">Tambah penungguan</string>
-  <string name="dialer_useDtmfDialpad">Gunakan pad kekunci nada sentuh</string>
-  <string name="dialer_returnToInCallScreen">Kembali ke panggilan yang sedang berlangsung</string>
-  <string name="dialer_addAnotherCall">Tambah panggilan</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">Memuatkan daripada kad SIM…</string>
   <string name="simContacts_title">Kenalan kad SIM</string>
   <string name="menu_callNumber">Panggil %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Tidak boleh membuat panggilan kecemasan melalui Wi-Fi</string>
+    <string name="add_2sec_pause">Tambah jeda 2 saat</string>
+    <string name="add_wait">Tambah penungguan</string>
+    <string name="dialer_useDtmfDialpad">Gunakan pad kekunci nada sentuh</string>
+    <string name="dialer_returnToInCallScreen">Kembali ke panggilan yang sedang berlangsung</string>
+    <string name="dialer_addAnotherCall">Tambah panggilan</string>
 </resources>

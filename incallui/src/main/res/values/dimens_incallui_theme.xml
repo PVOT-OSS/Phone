@@ -33,11 +33,11 @@
        for notification's large icon. -->
   <dimen name="notification_icon_size">64dp</dimen>
 
-  <dimen name="conference_call_manager_button_dimension">48dp</dimen>
 
   <!-- Whether or not the landscape mode layout is currently being used -->
   <bool name="is_layout_landscape">false</bool>
 
-  <dimen name="video_call_lte_to_wifi_failed_do_not_show_text_size">16sp</dimen>
 
+    <dimen name="conference_call_manager_button_dimension">48dp</dimen>
+    <dimen name="video_call_lte_to_wifi_failed_do_not_show_text_size">16sp</dimen>
 </resources>

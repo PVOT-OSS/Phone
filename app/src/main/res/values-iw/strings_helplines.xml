@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">קווי סיוע</string>
-    <string name="helplines_loading">טוען\u2026</string>
     <string name="helplines_empty">לא נמצאו קווי סיוע.\nיש להכניס כרטיס SIM ולנסות שוב.</string>
     <string name="helplines_help">עזרה</string>
     <string name="helplines_help_title">ניתן להתקשר אליהם בבטחה</string>
@@ -37,4 +36,5 @@
     <string name="helpline_language_inuktitut">אינוקטיטוט</string>
     <string name="helpline_language_ojibway">אוג\'יבוויי</string>
     <string name="helpline_language_turkish">טורקית</string>
+    <string name="helplines_loading">טוען\u2026</string>
 </resources>

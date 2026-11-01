@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">Mailbox</string>
   <string name="voicemail_notifications_preference_title">Benachrichtigungen</string>
   <string name="voicemail_change_greeting_preference_title">Mailboxbegrüßung</string>
   <string name="change_greeting_text">Zum Aufnehmen tippen</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">Visuelle Mailbox deaktivieren</string>
   <string name="confirm_disable_voicemail_dialog_message">Hiermit werden alle Mailbox-Nachrichten und Google-Transkripte gelöscht, die in dieser App gespeichert wurden. Möglicherweise speichert dein Mobilfunkanbieter eigene Kopien.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">DEAKTIVIEREN</string>
+    <string name="voicemail_settings_title">Mailbox</string>
 </resources>

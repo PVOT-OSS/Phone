@@ -18,6 +18,6 @@
   <string name="menu_clear_frequents">Gyakran keresettek törlése</string>
   <string name="action_menu_back_from_search">keresés leállítása</string>
   <string name="description_clear_search">Keresés törlése</string>
-  <string name="call_with_a_note">Hívás üzenettel</string>
   <string name="description_search_video_call">Videohívás</string>
+    <string name="call_with_a_note">Hívás üzenettel</string>
 </resources>

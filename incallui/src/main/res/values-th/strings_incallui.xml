@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT ช่วยเหลือผู้โทรที่หูหนวก ได้ยินไม่ชัด มีความบกพร่องในการพูด หรือต้องการการสื่อสารที่นอกเหนือจากเสียงพูด</string>
   <string name="rtt_button_decline_request">ไม่เป็นไร</string>
   <string name="rtt_button_accept_request">เข้าร่วม RTT</string>
+  <string name="manageConferenceLabel">จัดการการประชุมสาย</string>
 </resources>

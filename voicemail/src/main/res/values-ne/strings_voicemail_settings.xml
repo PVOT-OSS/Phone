@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">भ्वाइस मेल</string>
   <string name="voicemail_notifications_preference_title">सूचनाहरू</string>
   <string name="voicemail_change_greeting_preference_title">भ्वाइस मेलको अभिभावदन</string>
   <string name="change_greeting_text">रेकर्ड गर्न ट्याप गर्नु…</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">भिजुअल भ्वाइस मेल निष्क्रिय पार्नुहोस्</string>
   <string name="confirm_disable_voicemail_dialog_message">यस कार्यले यो अनुप्रयोगमा भण्डारण गरिएको सबै भ्वाइस मेल र Google ट्रान्सक्रिप्टहरू मेट्नेछ। तपाईंको सेवा प्रदायकले आफ्ना प्रतिलिपिहरू आफूसँग राख्न पनि सक्नेछ।</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">निष्क्रिय पार्नु…</string>
+    <string name="voicemail_settings_title">भ्वाइस मेल</string>
 </resources>

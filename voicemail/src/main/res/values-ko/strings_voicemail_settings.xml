@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">음성사서함</string>
   <string name="voicemail_notifications_preference_title">알림</string>
   <string name="voicemail_change_greeting_preference_title">음성사서함 인사말</string>
   <string name="change_greeting_text">탭하여 녹음</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">시각적 음성사서함 사용 중지</string>
   <string name="confirm_disable_voicemail_dialog_message">이렇게 하면 이 앱에 저장된 모든 음성사서함 메시지와 Google 텍스트 변환 파일이 삭제됩니다. 내 이동통신사에서 별도로 사본을 보관할 수 있습니다.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">사용 중지</string>
+    <string name="voicemail_settings_title">음성사서함</string>
 </resources>

@@ -14,18 +14,6 @@
   ~ limitations under the License
   -->
 <resources>
-  <!-- TODO(a bug): properly document this or delete it -->
-  <!-- We don't want to style this, need to discuss with Yen why this was used instead of a default theme -->
-  <style name="Theme.PreCall.DialogHolder" parent="Dialer.ThemeBase.NoActionBar">
-    <item name="android:windowBackground">@android:color/transparent</item>
-    <item name="android:windowActivityTransitions">false</item>
-    <item name="android:windowIsTranslucent">true</item>
-
-    <item name="android:statusBarColor">@android:color/transparent</item>
-    <item name="android:navigationBarColor">@android:color/transparent</item>
-    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-  </style>
-
   <!-- TODO(a bug): This is only actively used in empty_content_view.xml. Move it there. -->
   <style name="TextActionStyle">
     <item name="android:layout_width">wrap_content</item>
@@ -38,5 +26,14 @@
     <item name="android:focusable">true</item>
     <item name="android:singleLine">true</item>
     <item name="android:textAllCaps">true</item>
+  </style>
+    <style name="Theme.PreCall.DialogHolder" parent="Dialer.ThemeBase.NoActionBar">
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowActivityTransitions">false</item>
+    <item name="android:windowIsTranslucent">true</item>
+
+    <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:navigationBarColor">@android:color/transparent</item>
+    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
   </style>
 </resources>

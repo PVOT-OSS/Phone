@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">Pesan Suara</string>
   <string name="voicemail_notifications_preference_title">Notifikasi</string>
   <string name="voicemail_change_greeting_preference_title">Salam untuk pesan suara</string>
   <string name="change_greeting_text">Tap untuk Merekam</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">Menonaktifkan pesan suara visual</string>
   <string name="confirm_disable_voicemail_dialog_message">Tindakan ini akan menghapus semua pesan suara dan transkrip Google yang tersimpan dalam aplikasi ini. Operator Anda mungkin menyimpan salinannya sendiri.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">NONAKTIFKAN</string>
+    <string name="voicemail_settings_title">Pesan Suara</string>
 </resources>

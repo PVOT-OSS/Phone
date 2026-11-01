@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">Erantzungailua</string>
   <string name="voicemail_notifications_preference_title">Jakinarazpenak</string>
   <string name="voicemail_change_greeting_preference_title">Erantzungailuko agurra</string>
   <string name="change_greeting_text">Sakatu grabatzeko</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">Desaktibatu ikusizko erantzungailua</string>
   <string name="confirm_disable_voicemail_dialog_message">Aplikazio honetan gordetako ahots-mezu eta Google transkripzio guztiak ezabatuko dira. Baliteke operadoreak haien kopiak gordetzea.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">DESAKTIBATU</string>
+    <string name="voicemail_settings_title">Erantzungailua</string>
 </resources>

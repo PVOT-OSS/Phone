@@ -62,6 +62,7 @@
     <item>2</item>
     <item>-1</item>
   </string-array>
+  <string name="display_options_theme_system_value" translatable="false">-1</string>
   <!-- Display options: keep the voice call screen from rotating. [CHAR LIMIT=40] -->
   <string name="display_options_force_portrait">Keep portrait mode on calls</string>
   <string name="display_options_force_portrait_summary">Prevents accidental auto-rotation when on a call</string>
@@ -75,10 +76,6 @@
   <!--  The menu item to clear frequents [CHAR LIMIT=30] -->
   <string name="menu_clear_frequents">Clear frequents</string>
 
-  <!-- String used for actions in the dialer call log and the quick contact card to initiate
-       a call to an individual.  The user is prompted to enter a note which is sent along with
-       the call (e.g. a call subject). [CHAR LIMIT=40] -->
-  <string name="call_with_a_note">Call with a note</string>
 
   <!-- Description string for an action button to initiate a video call from search results.
        Note: AccessibilityServices use this attribute to announce what the view represents.
@@ -86,4 +83,5 @@
 
        [CHAR LIMIT=NONE]-->
   <string name="description_search_video_call">Video call</string>
+    <string name="call_with_a_note">Call with a note</string>
 </resources>

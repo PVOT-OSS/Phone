@@ -2,4 +2,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="description_image_button_plus">қосу таңбасын теру</string>
   <string name="description_voicemail_button">дауыстық хабар қызметіне қоңырау шалу</string>
+  <string name="add_2sec_pause">2 секундтық үзіліс қосу</string>
+  <string name="add_wait">\"Күту\" мүмкіндігін қосу</string>
+  <string name="description_delete_button">Backspace пернесі</string>
+  <string name="description_dialpad_overflow">Басқа опциялар</string>
 </resources>

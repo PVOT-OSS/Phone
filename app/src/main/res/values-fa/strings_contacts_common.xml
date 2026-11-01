@@ -18,6 +18,6 @@
   <string name="menu_clear_frequents">پاک کردن مکرراً تماس‌گرفته</string>
   <string name="action_menu_back_from_search">توقف جستجو</string>
   <string name="description_clear_search">پاک کردن جستجو</string>
-  <string name="call_with_a_note">تماس به همراه یادداشت</string>
   <string name="description_search_video_call">تماس ویدیویی</string>
+    <string name="call_with_a_note">تماس به همراه یادداشت</string>
 </resources>

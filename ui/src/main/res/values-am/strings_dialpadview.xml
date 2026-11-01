@@ -2,4 +2,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="description_image_button_plus">መደመር ይደውሉ</string>
   <string name="description_voicemail_button">የድምፅ መልዕክት ይደውሉ</string>
+  <string name="add_2sec_pause">2 ሴኮንድ ፋታ አክል</string>
+  <string name="add_wait">ቆይታ አክል</string>
+  <string name="description_delete_button">የኋሊት ደምሳሽ</string>
+  <string name="description_dialpad_overflow">ተጨማሪ አማራጮች</string>
 </resources>

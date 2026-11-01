@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">Галасавая пошта</string>
   <string name="voicemail_notifications_preference_title">Апавяшчэнні</string>
   <string name="voicemail_change_greeting_preference_title">Вітанне галасавой пошты</string>
   <string name="change_greeting_text">Націсніце для запісу</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">Выключыць візуальную галасавую пошту</string>
   <string name="confirm_disable_voicemail_dialog_message">Гэта прывядзе да выдалення ўсіх паведамленняў галасавой пошты і расшыфровак Google, якія захоўваюцца ў гэтай праграме. Аператар можа пакінуць свае копіі.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ВЫКЛЮЧЫЦЬ</string>
+    <string name="voicemail_settings_title">Галасавая пошта</string>
 </resources>

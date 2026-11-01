@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT assists callers who are deaf, hard of hearing, have a speech disability or need more than voice alone.</string>
   <string name="rtt_button_decline_request">No, thanks</string>
   <string name="rtt_button_accept_request">Join RTT</string>
+  <string name="manageConferenceLabel">Manage conference call</string>
 </resources>

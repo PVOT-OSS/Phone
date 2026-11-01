@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">‏RTT (טקסט בזמן אמת) היא תכונת נגישות שעוזרת לחרשים, לקויי שמיעה, לקויי דיבור או אנשים שלא יכולים להסתפק רק בקול במהלך השיחה.</string>
   <string name="rtt_button_decline_request">לא תודה</string>
   <string name="rtt_button_accept_request">‏הצטרפות ל-RTT</string>
+  <string name="manageConferenceLabel">נהל שיחת ועידה</string>
 </resources>

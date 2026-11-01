@@ -18,6 +18,6 @@
   <string name="menu_clear_frequents">Sık iletişim kurulanları sil</string>
   <string name="action_menu_back_from_search">aramayı durdur</string>
   <string name="description_clear_search">Aramayı temizle</string>
-  <string name="call_with_a_note">Notla telefon et</string>
   <string name="description_search_video_call">Görüntülü görüşme</string>
+    <string name="call_with_a_note">Notla telefon et</string>
 </resources>

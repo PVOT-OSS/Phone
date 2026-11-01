@@ -18,6 +18,6 @@
   <string name="menu_clear_frequents">Faol kontaktlarni tozalash</string>
   <string name="action_menu_back_from_search">qidiruvni to‘xtatish</string>
   <string name="description_clear_search">Izlashni tozalash</string>
-  <string name="call_with_a_note">Qo‘ng‘iroq va izoh</string>
   <string name="description_search_video_call">Video suhbat</string>
+    <string name="call_with_a_note">Qo‘ng‘iroq va izoh</string>
 </resources>

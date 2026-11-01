@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT pomaže pozivateljima koji su gluhi, nagluhi, imaju govornu manu ili im je potrebno nešto više od glasa.</string>
   <string name="rtt_button_decline_request">Ne, hvala</string>
   <string name="rtt_button_accept_request">Pridruži se RTT-u</string>
+  <string name="manageConferenceLabel">Upravljaj konf. pozivom</string>
 </resources>

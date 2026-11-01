@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">Deietan testua bidaltzeko eginbideak (RTT) deitzaile gorrei, entzumen-arazoak dituztenei, hitz egiteko ezintasunen bat dutenei edota, ahotsaz gain, beste makuluren bat behar dutenei laguntzen die.</string>
   <string name="rtt_button_decline_request">Ez, eskerrik asko</string>
   <string name="rtt_button_accept_request">Sartu RTT duen deian</string>
+  <string name="manageConferenceLabel">Kudeatu konferentzia-deia</string>
 </resources>

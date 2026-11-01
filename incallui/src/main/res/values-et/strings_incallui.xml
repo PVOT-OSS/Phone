@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT aitab kurte, kuulmis- või kõnepuudega helistajaid või neid, kes vajavad lisaks häälele muud abi.</string>
   <string name="rtt_button_decline_request">Tänan, ei</string>
   <string name="rtt_button_accept_request">Liitu RTT-ga</string>
+  <string name="manageConferenceLabel">Halda konverentskõnet</string>
 </resources>

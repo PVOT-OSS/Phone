@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">ヘルプライン</string>
-    <string name="helplines_loading">読み込み中\u2026</string>
     <string name="helplines_empty">ヘルプラインが見つかりませんでした。\nSIM カードを挿入して再度お試し下さい。</string>
     <string name="helplines_help">ヘルプ</string>
     <string name="helplines_help_title">これらは安全に通話できます</string>
@@ -37,4 +36,5 @@
     <string name="helpline_language_inuktitut">イヌクティトゥット語</string>
     <string name="helpline_language_ojibway">オジブウェー語</string>
     <string name="helpline_language_turkish">トルコ語</string>
+    <string name="helplines_loading">読み込み中\u2026</string>
 </resources>

@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">Okamžitý text pomáha volajúcim, ktorí nepočujú, majú problémy so sluchom, rečovú poruchu alebo potrebujú viac ako samotný hlas.</string>
   <string name="rtt_button_decline_request">Nie, ďakujem</string>
   <string name="rtt_button_accept_request">Povoliť okamž. text</string>
+  <string name="manageConferenceLabel">Spravovať konferenčný hovor</string>
 </resources>

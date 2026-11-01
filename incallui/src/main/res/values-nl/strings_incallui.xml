@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT helpt dove en slechthorende bellers en bellers met een spraakbeperking. Deze functie kan ook handig zijn voor bellers die meer dan alleen gesproken communicatie nodig hebben.</string>
   <string name="rtt_button_decline_request">Nee</string>
   <string name="rtt_button_accept_request">Deelnemen aan RTT</string>
+  <string name="manageConferenceLabel">Telef. vergadering beheren</string>
 </resources>

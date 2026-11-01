@@ -28,10 +28,6 @@
     <item name="android:fontFamily">@*android:string/config_bodyFontFamily</item>
   </style>
 
-  <style name="Dialer.Incall.TextAppearance.Label">
-    <item name="android:textColor">?android:attr/textColorPrimary</item>
-    <item name="android:textSize">12sp</item>
-  </style>
 
   <style name="BottomRowIcon">
     <item name="android:layout_height">24dp</item>
@@ -47,21 +43,25 @@
     <item name="android:layout_height">@dimen/incall_end_call_button_size</item>
     <item name="android:layout_width">@dimen/incall_end_call_button_size</item>
     <item name="android:padding">8dp</item>
-    <item name="android:src">@drawable/quantum_ic_call_end_vd_theme_36</item>
+    <item name="android:src">@drawable/ic_phone_off</item>
     <item name="android:tint">@color/incall_end_call_icon_color</item>
     <item name="android:stateListAnimator">@animator/disabled_alpha</item>
   </style>
 
-  <style name="Answer.Button" parent="android:Widget.Material.Button">
+
+
+
+    <style name="Dialer.Incall.TextAppearance.Label">
+    <item name="android:textColor">?android:attr/textColorPrimary</item>
+    <item name="android:textSize">12sp</item>
+  </style>
+    <style name="Answer.Button" parent="android:Widget.Material.Button">
     <item name="android:stateListAnimator">@animator/button_state</item>
   </style>
-
-  <style name="Answer.Button.Answer">
+    <style name="Answer.Button.Answer">
     <item name="android:background">@drawable/answer_answer_background</item>
   </style>
-
-  <style name="Answer.Button.Decline">
+    <style name="Answer.Button.Decline">
     <item name="android:background">@drawable/incall_end_call_background</item>
   </style>
-
 </resources>

@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">I-RTT isiza abashayi abangezwa, abezwa kanzima, abakhubazeke ngokwenkulumo, noma abadinga ngaphezu kwezwi nje kuphela.</string>
   <string name="rtt_button_decline_request">Cha ngiyabonga</string>
   <string name="rtt_button_accept_request">Joyina i-RTT</string>
+  <string name="manageConferenceLabel">Phatha ucingo lwengqungquthela</string>
 </resources>

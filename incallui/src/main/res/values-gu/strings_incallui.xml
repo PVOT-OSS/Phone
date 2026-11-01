@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">જેઓ બહેરા, ઓછું સાંભળતા, બોલવામાં તકલીફવાળા અથવા જેમને માત્ર વૉઇસ કરતાં પણ કંઈક વધુની જરૂર હોય એવા કૉલરોને RTT સહાય કરે છે.</string>
   <string name="rtt_button_decline_request">ના, આભાર</string>
   <string name="rtt_button_accept_request">RTTમાં જોડાઓ</string>
+  <string name="manageConferenceLabel">કોન્ફરન્સ કૉલ સંચાલિત કરો</string>
 </resources>

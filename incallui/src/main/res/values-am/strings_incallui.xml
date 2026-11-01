@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">አርቲቲ መስማት የተሳናቸው፣ የመስማት ችግር ያለባቸው እና የንግግር አካል ጉዳት ያለባቸው ወይም ከድምጽ ብቻ በላይ የሚያስፈልጋቸውን ደዋዮች ያግዛል።</string>
   <string name="rtt_button_decline_request">አይ አመሰግናለሁ</string>
   <string name="rtt_button_accept_request">አርቲቲን ይቀላቀሉ</string>
+  <string name="manageConferenceLabel">የስብሰባ ስልክ ጥሪ አደራጅ</string>
 </resources>

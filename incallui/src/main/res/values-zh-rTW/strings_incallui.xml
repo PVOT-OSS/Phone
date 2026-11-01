@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">即時文字訊息功能可為以下類型的來電者提供協助：聽障人士、聽力受損者、語言障礙者，或需要語音服務以外的使用者。</string>
   <string name="rtt_button_decline_request">不用了，謝謝</string>
   <string name="rtt_button_accept_request">加入即時文字訊息</string>
+  <string name="manageConferenceLabel">管理電話會議</string>
 </resources>

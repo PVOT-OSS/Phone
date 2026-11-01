@@ -3,15 +3,15 @@
   <string name="description_dial_button">mag-dial</string>
   <string name="dialog_voicemail_airplane_mode_message">Upang tumawag sa voicemail, i-off muna ang Airplane mode.</string>
   <string name="dialog_voicemail_not_ready_message">Upang mag-set up ng voicemail, pumunta sa Menu &gt; Mga Setting.</string>
-  <string name="add_2sec_pause">Magdagdag ng pag-pause na 2-seg</string>
-  <string name="add_wait">Magdagdag ng paghihintay</string>
-  <string name="dialer_useDtmfDialpad">Gumamit ng touch-tone na keypad</string>
-  <string name="dialer_returnToInCallScreen">Bumalik sa kasalukuyang tawag</string>
-  <string name="dialer_addAnotherCall">Magdagdag ng tawag</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">Naglo-load mula sa SIM card…</string>
   <string name="simContacts_title">Mga contact sa SIM card</string>
   <string name="menu_callNumber">Tawagan ang %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Di makakagawa ng mga emergency na tawag sa Wi‑Fi</string>
+    <string name="add_2sec_pause">Magdagdag ng pag-pause na 2-seg</string>
+    <string name="add_wait">Magdagdag ng paghihintay</string>
+    <string name="dialer_useDtmfDialpad">Gumamit ng touch-tone na keypad</string>
+    <string name="dialer_returnToInCallScreen">Bumalik sa kasalukuyang tawag</string>
+    <string name="dialer_addAnotherCall">Magdagdag ng tawag</string>
 </resources>

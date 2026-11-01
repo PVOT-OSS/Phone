@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">Ovozli pochta</string>
   <string name="voicemail_notifications_preference_title">Bildirishnomalar</string>
   <string name="voicemail_change_greeting_preference_title">Ovozli pochta salomlashuvi</string>
   <string name="change_greeting_text">Yozib olish</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">Vizual ovozli pochtani o‘chirib qo‘yish</string>
   <string name="confirm_disable_voicemail_dialog_message">Shu ilovada saqlanayotgan barcha ovozli xabarlar va Google transkripsiyalari o‘chirib tashlanadi. Operatoringiz ularning nusxalarini saqlab qolishi mumkin.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">O‘CHIRIB QO‘YISH</string>
+    <string name="voicemail_settings_title">Ovozli pochta</string>
 </resources>
