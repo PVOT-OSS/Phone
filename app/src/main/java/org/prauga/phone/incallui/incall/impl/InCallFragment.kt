@@ -29,18 +29,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.remember
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.layout.positionInWindow
-import androidx.compose.ui.platform.LocalView
-import com.prauga.pvot.designsystem.effects.LocalPvotGlassBackdrop
-import com.prauga.pvot.designsystem.effects.pvotGlassBackdrop
-import com.prauga.pvot.designsystem.effects.rememberPvotGlassBackdrop
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -64,6 +52,7 @@ import org.prauga.phone.dialer.common.FragmentUtils
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.TestTags
+import org.prauga.phone.dialer.ui.WindowBackdrop
 import org.prauga.phone.incallui.audioroute.AudioRouteSelectorDialogFragment
 import org.prauga.phone.incallui.audioroute.AudioRouteSelectorDialogFragment.AudioRouteSelectorPresenter
 import org.prauga.phone.incallui.contactgrid.ContactGrid
@@ -431,7 +420,7 @@ object InCallScreenHost {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 PhoneScreenTheme(fillBackground = false) {
-                    if (glass) WindowBackdrop(content) else content()
+                    if (glass) WindowBackdrop(content = content) else content()
                 }
             }
         }
@@ -465,32 +454,5 @@ object InCallScreenHost {
                 ),
             )
         }
-    }
-}
-
-/**
- * Records the window's background behind [content] as a glass backdrop, so the call's capsules
- * frost what is really behind them. The call's background is the window's, drawn by the activity,
- * so each part draws its own slice of it into the backdrop.
- */
-@Composable
-private fun WindowBackdrop(content: @Composable () -> Unit) {
-    val backdrop = rememberPvotGlassBackdrop()
-    val root = LocalView.current.rootView
-    var inWindow by remember { mutableStateOf(Offset.Zero) }
-    Box(Modifier.onGloballyPositioned { inWindow = it.positionInWindow() }) {
-        Box(
-            Modifier
-                .matchParentSize()
-                .pvotGlassBackdrop(backdrop)
-                .drawBehind {
-                    val background = root.background ?: return@drawBehind
-                    drawIntoCanvas { canvas ->
-                        canvas.translate(-inWindow.x, -inWindow.y)
-                        background.draw(canvas.nativeCanvas)
-                    }
-                },
-        )
-        CompositionLocalProvider(LocalPvotGlassBackdrop provides backdrop) { content() }
     }
 }

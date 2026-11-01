@@ -5,6 +5,7 @@
 
 package org.prauga.phone.dialer.main.impl.bottomnav
 
+import android.view.View
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -30,14 +31,16 @@ import com.prauga.pvot.designsystem.motion.PvotMotion
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.ui.PhoneTheme
 import org.prauga.phone.dialer.ui.TestTags
+import org.prauga.phone.dialer.ui.WindowBackdrop
 
 /** Puts the Compose dock into the main screen's view layout. */
 object MainChrome {
 
+    /** Binds the dock, glass over [behind], the view holding the tabs it floats over. */
     @JvmStatic
-    fun bind(dockView: ComposeView, navBar: MainNavBarState, actions: MainDockActions) {
+    fun bind(dockView: ComposeView, behind: View, navBar: MainNavBarState, actions: MainDockActions) {
         dockView.setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-        dockView.setChromeContent { MainDock(navBar, actions) }
+        dockView.setChromeContent { WindowBackdrop(behind) { MainDock(navBar, actions) } }
     }
 
     @OptIn(ExperimentalComposeUiApi::class)

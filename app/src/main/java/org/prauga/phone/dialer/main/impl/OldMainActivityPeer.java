@@ -193,6 +193,7 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
     snackbarContainer = activity.findViewById(R.id.coordinator_layout);
     MainChrome.bind(
         activity.findViewById(R.id.bottom_nav_bar),
+        snackbarContainer,
         bottomNav,
         new MainDockActions() {
           @Override
