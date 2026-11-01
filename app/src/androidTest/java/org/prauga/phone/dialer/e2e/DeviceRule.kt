@@ -20,6 +20,8 @@ class DeviceRule : ExternalResource() {
         device.wakeUp()
         Shell.run("wm dismiss-keyguard")
         Shell.run("logcat -b crash -c")
+        // Start from a quiet phone: a call from the previous test may still be ending.
+        InCall.waitForNoCalls()
     }
 
     override fun after() {
