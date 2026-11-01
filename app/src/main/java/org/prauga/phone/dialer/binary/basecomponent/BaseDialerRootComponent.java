@@ -17,14 +17,9 @@
 package org.prauga.phone.dialer.binary.basecomponent;
 
 import org.prauga.phone.dialer.activecalls.ActiveCallsComponent;
-import org.prauga.phone.dialer.calllog.CallLogComponent;
-import org.prauga.phone.dialer.calllog.database.CallLogDatabaseComponent;
-import org.prauga.phone.dialer.calllog.ui.CallLogUiComponent;
 import org.prauga.phone.dialer.common.concurrent.DialerExecutorComponent;
 import org.prauga.phone.dialer.contacts.ContactsComponent;
 import org.prauga.phone.dialer.glidephotomanager.GlidePhotoManagerComponent;
-import org.prauga.phone.dialer.phonelookup.PhoneLookupComponent;
-import org.prauga.phone.dialer.phonelookup.database.PhoneLookupDatabaseComponent;
 import org.prauga.phone.dialer.phonenumbergeoutil.PhoneNumberGeoUtilComponent;
 import org.prauga.phone.dialer.precall.PreCallComponent;
 import org.prauga.phone.dialer.preferredsim.PreferredSimComponent;
@@ -41,14 +36,9 @@ import org.prauga.phone.voicemail.VoicemailComponent;
  */
 public interface BaseDialerRootComponent
     extends ActiveCallsComponent.HasComponent,
-        CallLogComponent.HasComponent,
-        CallLogDatabaseComponent.HasComponent,
-        CallLogUiComponent.HasComponent,
         ContactsComponent.HasComponent,
         DialerExecutorComponent.HasComponent,
         GlidePhotoManagerComponent.HasComponent,
-        PhoneLookupComponent.HasComponent,
-        PhoneLookupDatabaseComponent.HasComponent,
         PhoneNumberGeoUtilComponent.HasComponent,
         PreCallComponent.HasComponent,
         PreferredSimComponent.HasComponent,
