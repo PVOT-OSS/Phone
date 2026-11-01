@@ -123,7 +123,7 @@
             android:exported="true"
             android:label="@string/dialer_settings_label"
             android:parentActivityName="org.prauga.phone.dialer.main.impl.MainActivity"
-            android:theme="@style/SettingsStyle.PvotHost">
+            android:theme="@style/Theme.Pvot">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

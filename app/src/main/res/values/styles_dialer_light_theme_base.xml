@@ -42,12 +42,6 @@
     <item name="android:dropDownSpinnerStyle">@style/Dialer.Settings.DropDownSpinnerStyle</item>
   </style>
 
-  <!-- DialerSettingsActivity draws its own top bar (PvotTopBar) above the settings screens. -->
-  <style name="SettingsStyle.PvotHost">
-    <item name="windowActionBar">false</item>
-    <item name="windowNoTitle">true</item>
-  </style>
-
   <!-- TODO(a bug): This is only actively used in empty_content_view.xml. Move it there. -->
   <style name="TextActionStyle">
     <item name="android:layout_width">wrap_content</item>

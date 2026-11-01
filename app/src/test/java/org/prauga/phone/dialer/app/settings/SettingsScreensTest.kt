@@ -7,19 +7,29 @@ package org.prauga.phone.dialer.app.settings
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.compose.material3.Text
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollToIndex
+import androidx.compose.ui.unit.dp
 import androidx.preference.PreferenceManager
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
+import com.prauga.pvot.designsystem.effects.LocalPvotGlassIntensity
+import com.prauga.pvot.designsystem.effects.LocalPvotGlassReduced
+import com.prauga.pvot.designsystem.effects.PvotGlassDefaults
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.prauga.phone.dialer.R
+import org.prauga.phone.dialer.app.settings.ui.SettingsChrome
+import org.prauga.phone.dialer.app.settings.ui.SettingsList
+import org.prauga.phone.dialer.app.settings.ui.SettingsScaffold
 import org.prauga.phone.dialer.app.settings.ui.SettingsTheme
 import org.prauga.phone.dialer.screening.CallerCategory
 import org.prauga.phone.dialer.screening.CategoryAction
@@ -106,6 +116,39 @@ class SettingsScreensTest {
             DialerSettingsActivity.KEY_SCREENING,
         ).inOrder()
         assertThat(keys).containsNoDuplicates()
+    }
+
+    @Test
+    fun theListStartsUnderTheTopBarAndFoldsItOnceScrolled() {
+        val chrome = SettingsChrome()
+        compose.setContent {
+            SettingsTheme {
+                // Solid glass holds the live background still, so the test clock can go idle.
+                CompositionLocalProvider(
+                    LocalPvotGlassReduced provides false,
+                    LocalPvotGlassIntensity provides PvotGlassDefaults.SolidIntensity,
+                ) {
+                    SettingsScaffold(title = "Settings", onBack = {}, chrome = chrome) {
+                        SettingsList { items(40) { Text("Row $it") } }
+                    }
+                }
+            }
+        }
+        compose.waitForIdle()
+        assertThat(chrome.compact).isFalse()
+        assertThat(chrome.contentPadding.calculateTopPadding()).isGreaterThan(0.dp)
+        compose.onNodeWithTag(TestTags.SETTINGS_LIST).performScrollToIndex(20)
+        compose.waitForIdle()
+        assertThat(chrome.compact).isTrue()
+    }
+
+    @Test
+    fun cancellingAChoiceKeepsTheStoredValue() {
+        showScreening()
+        compose.onNodeWithTag(TestTags.settingsRow("screening_action_first_time")).performClick()
+        compose.onNodeWithText(context.getString(android.R.string.cancel)).performClick()
+        compose.waitForIdle()
+        assertThat(prefs.getString("screening_action_first_time", null)).isNull()
     }
 
     private fun showScreening() {

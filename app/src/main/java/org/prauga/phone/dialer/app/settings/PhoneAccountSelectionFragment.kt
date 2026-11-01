@@ -12,12 +12,14 @@ import android.telecom.PhoneAccountHandle
 import android.telecom.TelecomManager
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import com.prauga.pvot.designsystem.components.list.PvotPreferenceRow
 import org.prauga.phone.dialer.app.settings.ui.SettingsComposeFragment
+import org.prauga.phone.dialer.app.settings.ui.SettingsGroup
 import org.prauga.phone.dialer.app.settings.ui.SettingsList
 import org.prauga.phone.dialer.ui.TestTags
 
@@ -28,24 +30,13 @@ import org.prauga.phone.dialer.ui.TestTags
 class PhoneAccountSelectionFragment : SettingsComposeFragment() {
 
     /** A SIM account as the list shows it. */
-    private data class SimAccount(val handle: PhoneAccountHandle, val label: String, val description: String?)
+    internal data class SimAccount(val handle: PhoneAccountHandle, val label: String, val description: String?)
 
     private var accounts by mutableStateOf(emptyList<SimAccount>())
 
     @Composable
     override fun Content() {
-        SettingsList {
-            for (account in accounts) {
-                item(key = account.handle.id) {
-                    PvotPreferenceRow(
-                        title = account.label,
-                        summary = account.description,
-                        onClick = { open(account.handle) },
-                        modifier = Modifier.testTag(TestTags.settingsRow("account_${account.handle.id}")),
-                    )
-                }
-            }
-        }
+        PhoneAccountList(accounts, ::open)
     }
 
     override fun onResume() {
@@ -87,5 +78,31 @@ class PhoneAccountSelectionFragment : SettingsComposeFragment() {
 
         /** The title of [PARAM_TARGET_FRAGMENT], as a string resource ID. */
         const val PARAM_TARGET_TITLE_RES = "target_title_res"
+    }
+}
+
+/** The SIM [accounts] on one card; [onOpen] gets the tapped one. */
+@Composable
+internal fun PhoneAccountList(
+    accounts: List<PhoneAccountSelectionFragment.SimAccount>,
+    onOpen: (PhoneAccountHandle) -> Unit,
+) {
+    SettingsList {
+        if (accounts.isNotEmpty()) {
+            item(key = "accounts") {
+                SettingsGroup {
+                    for (account in accounts) {
+                        key(account.handle.id) {
+                            PvotPreferenceRow(
+                                title = account.label,
+                                summary = account.description,
+                                onClick = { onOpen(account.handle) },
+                                modifier = Modifier.testTag(TestTags.settingsRow("account_${account.handle.id}")),
+                            )
+                        }
+                    }
+                }
+            }
+        }
     }
 }

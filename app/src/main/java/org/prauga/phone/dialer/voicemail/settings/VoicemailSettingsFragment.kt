@@ -14,6 +14,7 @@ import android.telecom.TelecomManager
 import android.telephony.TelephonyManager
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -28,6 +29,7 @@ import com.prauga.pvot.designsystem.components.list.PvotPreferenceRow
 import com.prauga.pvot.designsystem.components.list.PvotSwitchRow
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.settings.ui.SettingsComposeFragment
+import org.prauga.phone.dialer.app.settings.ui.SettingsGroup
 import org.prauga.phone.dialer.app.settings.ui.SettingsList
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.notification.NotificationChannelManager
@@ -57,64 +59,68 @@ class VoicemailSettingsFragment : SettingsComposeFragment(), VoicemailClient.Act
         val state = state ?: return
         var confirmDisable by rememberSaveable { mutableStateOf(false) }
         SettingsList {
-            item(key = "notifications") {
-                PvotPreferenceRow(
-                    title = stringResource(R.string.voicemail_notifications_preference_title),
-                    onClick = { start(notificationSettingsIntent()) },
-                    modifier = Modifier.testTag(TestTags.settingsRow("voicemail_notifications")),
-                )
-            }
-            if (state.carrierSupport) {
-                item(key = "visual_voicemail") {
-                    PvotSwitchRow(
-                        title = stringResource(R.string.voicemail_visual_voicemail_switch_title),
-                        summary = if (state.activating) stringResource(R.string.voicemail_activating_summary_info) else null,
-                        checked = state.enabled,
-                        onCheckedChange = { on ->
-                            if (on) setEnabled(true) else confirmDisable = true
-                        },
-                        modifier = Modifier.testTag(TestTags.settingsRow("visual_voicemail")),
-                    )
-                }
-                if (state.archiveAvailable) {
-                    item(key = "auto_archive") {
-                        PvotSwitchRow(
-                            title = stringResource(R.string.voicemail_visual_voicemail_auto_archive_switch_title),
-                            checked = state.archiveEnabled,
-                            onCheckedChange = {
-                                voicemailClient.setVoicemailArchiveEnabled(requireContext(), phoneAccountHandle, it)
-                                refresh()
-                            },
-                            modifier = Modifier.testTag(TestTags.settingsRow("auto_archive")),
+            item(key = "voicemail") {
+                SettingsGroup {
+                    key("notifications") {
+                        PvotPreferenceRow(
+                            title = stringResource(R.string.voicemail_notifications_preference_title),
+                            onClick = { start(notificationSettingsIntent()) },
+                            modifier = Modifier.testTag(TestTags.settingsRow("voicemail_notifications")),
+                        )
+                    }
+                    if (state.carrierSupport) {
+                        key("visual_voicemail") {
+                            PvotSwitchRow(
+                                title = stringResource(R.string.voicemail_visual_voicemail_switch_title),
+                                summary = if (state.activating) stringResource(R.string.voicemail_activating_summary_info) else null,
+                                checked = state.enabled,
+                                onCheckedChange = { on ->
+                                    if (on) setEnabled(true) else confirmDisable = true
+                                },
+                                modifier = Modifier.testTag(TestTags.settingsRow("visual_voicemail")),
+                            )
+                        }
+                        if (state.archiveAvailable) {
+                            key("auto_archive") {
+                                PvotSwitchRow(
+                                    title = stringResource(R.string.voicemail_visual_voicemail_auto_archive_switch_title),
+                                    checked = state.archiveEnabled,
+                                    onCheckedChange = {
+                                        voicemailClient.setVoicemailArchiveEnabled(requireContext(), phoneAccountHandle, it)
+                                        refresh()
+                                    },
+                                    modifier = Modifier.testTag(TestTags.settingsRow("auto_archive")),
+                                )
+                            }
+                        }
+                        key("change_pin") {
+                            PvotPreferenceRow(
+                                title = stringResource(
+                                    if (state.pinScrambled) R.string.voicemail_set_pin_preference_title
+                                    else R.string.voicemail_change_pin_preference_title,
+                                ),
+                                summary = when {
+                                    !state.enabled -> stringResource(R.string.voicemail_change_pin_preference_summary_disable)
+                                    !state.activated -> stringResource(R.string.voicemail_change_pin_preference_summary_not_activated)
+                                    else -> null
+                                },
+                                enabled = state.enabled && state.activated,
+                                onClick = {
+                                    start(Intent(requireContext(), VoicemailChangePinActivity::class.java)
+                                        .putExtra(VoicemailClient.PARAM_PHONE_ACCOUNT_HANDLE, phoneAccountHandle))
+                                },
+                                modifier = Modifier.testTag(TestTags.settingsRow("change_pin")),
+                            )
+                        }
+                    }
+                    key("advanced") {
+                        PvotPreferenceRow(
+                            title = stringResource(R.string.voicemail_advanced_settings_title),
+                            onClick = { start(advancedSettingsIntent()) },
+                            modifier = Modifier.testTag(TestTags.settingsRow("voicemail_advanced")),
                         )
                     }
                 }
-                item(key = "change_pin") {
-                    PvotPreferenceRow(
-                        title = stringResource(
-                            if (state.pinScrambled) R.string.voicemail_set_pin_preference_title
-                            else R.string.voicemail_change_pin_preference_title,
-                        ),
-                        summary = when {
-                            !state.enabled -> stringResource(R.string.voicemail_change_pin_preference_summary_disable)
-                            !state.activated -> stringResource(R.string.voicemail_change_pin_preference_summary_not_activated)
-                            else -> null
-                        },
-                        enabled = state.enabled && state.activated,
-                        onClick = {
-                            start(Intent(requireContext(), VoicemailChangePinActivity::class.java)
-                                .putExtra(VoicemailClient.PARAM_PHONE_ACCOUNT_HANDLE, phoneAccountHandle))
-                        },
-                        modifier = Modifier.testTag(TestTags.settingsRow("change_pin")),
-                    )
-                }
-            }
-            item(key = "advanced") {
-                PvotPreferenceRow(
-                    title = stringResource(R.string.voicemail_advanced_settings_title),
-                    onClick = { start(advancedSettingsIntent()) },
-                    modifier = Modifier.testTag(TestTags.settingsRow("voicemail_advanced")),
-                )
             }
         }
 

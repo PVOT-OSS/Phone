@@ -18,30 +18,40 @@ import android.telecom.PhoneAccountHandle
 import android.telecom.TelecomManager
 import android.telephony.TelephonyManager
 import android.widget.Toast
+import android.view.View
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.FragmentManager
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.prauga.pvot.designsystem.components.list.PvotPreferenceRow
-import com.prauga.pvot.designsystem.navigation.PvotTopBar
 import com.prauga.pvot.designsystem.platform.enablePvotEdgeToEdge
-import com.prauga.pvot.designsystem.theme.PvotAppTheme
+import com.prauga.pvot.designsystem.platform.setPvotContent
 import org.prauga.phone.dialer.R
-import org.prauga.phone.dialer.app.BaseActivity
+import org.prauga.phone.dialer.app.settings.ui.SettingsChrome
+import org.prauga.phone.dialer.app.settings.ui.SettingsChromeHost
 import org.prauga.phone.dialer.app.settings.ui.SettingsComposeFragment
+import org.prauga.phone.dialer.app.settings.ui.SettingsGroup
 import org.prauga.phone.dialer.app.settings.ui.SettingsList
+import org.prauga.phone.dialer.app.settings.ui.SettingsScaffold
+import org.prauga.phone.dialer.app.settings.ui.SettingsTheme
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.compat.telephony.TelephonyManagerCompat
 import org.prauga.phone.dialer.screening.ScreeningSettingsFragment
@@ -51,51 +61,115 @@ import org.prauga.phone.dialer.voicemail.settings.VoicemailSettingsFragment
 import org.prauga.phone.voicemail.VoicemailClient
 
 /**
- * Activity for dialer settings. It draws the top bar and hosts one settings screen at a time,
- * either a Compose [SettingsComposeFragment] or a [PreferenceFragmentCompat] not yet moved over.
+ * Activity for dialer settings. It draws the glass scaffold and its top bar, and hosts one settings
+ * screen at a time under the bar: a Compose [SettingsComposeFragment], or a
+ * [PreferenceFragmentCompat] opened through [onPreferenceStartFragment]. Opened screens go on the
+ * fragment back stack, which back pops before the activity finishes.
+ *
+ * It is a [FragmentActivity] rather than a plain ComponentActivity because the screens are still
+ * fragments; nothing in it needs AppCompat any more, so it sits on Theme.Pvot.
  *
  * A `header:<fragment class>` data URI opens that screen directly.
  */
-class DialerSettingsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+class DialerSettingsActivity :
+    FragmentActivity(),
+    PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
+    SettingsChromeHost {
 
     private var screenTitle by mutableStateOf("")
+
+    /** Whether the screen shown draws itself in Compose; preference screens get padded instead. */
+    private var showingCompose by mutableStateOf(true)
+
+    override val settingsChrome = SettingsChrome()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         LogUtil.enterBlock("DialerSettingsActivity.onCreate")
         enablePvotEdgeToEdge()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
         screenTitle = title.toString()
-
-        findViewById<ComposeView>(R.id.settings_top_bar).setContent {
-            PvotAppTheme {
-                PvotTopBar(
-                    title = screenTitle,
-                    modifier = Modifier.testTag(TestTags.SETTINGS_TOP_BAR),
-                    onBack = { onBackPressedDispatcher.onBackPressed() },
-                )
-            }
-        }
-        // Preference screens don't handle insets; Compose screens pad themselves (SettingsList).
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.content_frame)) { view, insets ->
-            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val isCompose = supportFragmentManager.findFragmentById(R.id.content_frame) is SettingsComposeFragment
-            view.updatePadding(left = bars.left, right = bars.right, bottom = if (isCompose) 0 else bars.bottom)
-            insets
-        }
-
-        // If savedInstanceState is non-null, the fragment manager has already restored the screen.
-        if (savedInstanceState == null) {
-            val requested = intent.data?.schemeSpecificPart
-            val fragment = requested?.let { instantiate(it) } ?: PrefsFragment()
-            supportFragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit()
-        }
 
         supportFragmentManager.addOnBackStackChangedListener {
             if (supportFragmentManager.backStackEntryCount == 0) {
                 setTitle(R.string.dialer_settings_label)
             }
-            findViewById<android.view.View>(R.id.content_frame).requestApplyInsets()
+        }
+        supportFragmentManager.registerFragmentLifecycleCallbacks(
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View, savedInstanceState: Bundle?) {
+                    if (f.id == R.id.settings_content) showingCompose = f is SettingsComposeFragment
+                }
+            },
+            false,
+        )
+
+        setPvotContent {
+            SettingsTheme {
+                SettingsScaffold(
+                    title = screenTitle,
+                    onBack = { onBackPressedDispatcher.onBackPressed() },
+                    chrome = settingsChrome,
+                ) {
+                    ScreenContainer()
+                }
+            }
+        }
+    }
+
+    /** The view the settings screens go in, filling the scaffold, under the top bar. */
+    @Composable
+    private fun ScreenContainer() {
+        val density = LocalDensity.current
+        val direction = LocalLayoutDirection.current
+        val padding = settingsChrome.contentPadding
+        val padContainer = !showingCompose
+        AndroidView(
+            factory = { context -> FragmentContainerView(context).apply { id = R.id.settings_content } },
+            modifier = Modifier.fillMaxSize(),
+            update = { container ->
+                // Compose screens scroll under the bars and pad their own lists; preference screens
+                // don't handle insets, so their container clears the bars.
+                if (padContainer) {
+                    with(density) {
+                        container.setPaddingRelative(
+                            padding.calculateStartPadding(direction).roundToPx(),
+                            padding.calculateTopPadding().roundToPx(),
+                            padding.calculateEndPadding(direction).roundToPx(),
+                            padding.calculateBottomPadding().roundToPx(),
+                        )
+                    }
+                } else {
+                    container.setPadding(0, 0, 0, 0)
+                }
+            },
+        )
+        // The container exists only once this is composed, which is after the fragment manager
+        // creates the screens' views in onStart, so the first screen is put in from here.
+        DisposableEffect(Unit) {
+            showScreen()
+            onDispose {}
+        }
+    }
+
+    /**
+     * Puts a screen in the container: the requested one (or the list) the first time, or the
+     * restored one again after the activity is recreated. A restored screen made its view before
+     * its container existed, so it is detached and attached to make its view again in the container.
+     */
+    private fun showScreen() {
+        val manager = supportFragmentManager
+        val current = manager.findFragmentById(R.id.settings_content)
+        when {
+            current == null -> {
+                val requested = intent.data?.schemeSpecificPart
+                val fragment = requested?.let { instantiate(it) } ?: PrefsFragment()
+                manager.beginTransaction().replace(R.id.settings_content, fragment).commitNow()
+            }
+            current.view?.parent == null -> {
+                // Two transactions: in one, the fragment manager cancels the detach against the attach.
+                manager.beginTransaction().detach(current).commitNow()
+                manager.beginTransaction().attach(current).commitNow()
+            }
         }
     }
 
@@ -114,7 +188,7 @@ class DialerSettingsActivity : BaseActivity(), PreferenceFragmentCompat.OnPrefer
         val fragment = instantiate(fragmentClass) ?: return
         fragment.arguments = arguments
         supportFragmentManager.beginTransaction()
-            .replace(R.id.content_frame, fragment, "")
+            .replace(R.id.settings_content, fragment, "")
             .addToBackStack(null)
             .commit()
         setTitle(title)
@@ -134,19 +208,7 @@ class DialerSettingsActivity : BaseActivity(), PreferenceFragmentCompat.OnPrefer
         override fun Content() {
             val context = LocalContext.current
             val entries = remember { settingsEntries(context) }
-            SettingsList {
-                for (entry in entries) {
-                    item(key = entry.key) {
-                        val title = stringResource(entry.titleRes)
-                        PvotPreferenceRow(
-                            title = title,
-                            onClick = { open(entry, title) },
-                            modifier = Modifier.testTag(TestTags.settingsRow(entry.key)),
-                            showChevron = entry.target is Target.Screen,
-                        )
-                    }
-                }
-            }
+            SettingsRootList(entries, ::open)
         }
 
         private fun open(entry: Entry, title: String) {
@@ -285,6 +347,47 @@ class DialerSettingsActivity : BaseActivity(), PreferenceFragmentCompat.OnPrefer
                 }
             }
             return result
+        }
+    }
+}
+
+/** The settings that change how this app looks and sounds; the rest are about calls. */
+private val APP_KEYS = setOf(
+    DialerSettingsActivity.KEY_DISPLAY_OPTIONS,
+    DialerSettingsActivity.KEY_APPEARANCE,
+    DialerSettingsActivity.KEY_SOUNDS,
+    DialerSettingsActivity.KEY_QUICK_RESPONSES,
+)
+
+/**
+ * The top-level settings [entries] in two groups, this app's look and sound and then calls, in
+ * their order; [onOpen] gets the tapped entry and its title.
+ */
+@Composable
+internal fun SettingsRootList(
+    entries: List<DialerSettingsActivity.Entry>,
+    onOpen: (DialerSettingsActivity.Entry, String) -> Unit,
+) {
+    val (app, calls) = entries.partition { it.key in APP_KEYS }
+    SettingsList {
+        for ((key, title, group) in listOf(
+            Triple("app", R.string.settings_section_app, app),
+            Triple("calls", R.string.settings_section_calls, calls),
+        )) {
+            if (group.isEmpty()) continue
+            item(key = key) {
+                SettingsGroup(title = stringResource(title)) {
+                    for (entry in group) {
+                        val entryTitle = stringResource(entry.titleRes)
+                        PvotPreferenceRow(
+                            title = entryTitle,
+                            onClick = { onOpen(entry, entryTitle) },
+                            modifier = Modifier.testTag(TestTags.settingsRow(entry.key)),
+                            showChevron = entry.target is DialerSettingsActivity.Target.Screen,
+                        )
+                    }
+                }
+            }
         }
     }
 }

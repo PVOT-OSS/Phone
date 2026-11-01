@@ -22,6 +22,7 @@ import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.settings.ui.Choice
 import org.prauga.phone.dialer.app.settings.ui.ChoiceRow
 import org.prauga.phone.dialer.app.settings.ui.SettingsComposeFragment
+import org.prauga.phone.dialer.app.settings.ui.SettingsGroup
 import org.prauga.phone.dialer.app.settings.ui.SettingsList
 
 /** How contacts are sorted and how their names are shown. */
@@ -30,8 +31,16 @@ class DisplayOptionsSettingsFragment : SettingsComposeFragment() {
     @Composable
     override fun Content() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(LocalContext.current)
-        SettingsList {
-            item {
+        DisplayOptionsList(prefs)
+    }
+}
+
+/** How contacts are sorted and named, stored in [prefs]. */
+@Composable
+internal fun DisplayOptionsList(prefs: SharedPreferences) {
+    SettingsList {
+        item(key = "display_options") {
+            SettingsGroup {
                 StringChoiceRow(
                     prefs = prefs,
                     title = R.string.display_options_sort_list_by,
@@ -40,8 +49,6 @@ class DisplayOptionsSettingsFragment : SettingsComposeFragment() {
                     entries = R.array.contact_sort_order_entries,
                     values = R.array.contact_sort_order_values,
                 )
-            }
-            item {
                 StringChoiceRow(
                     prefs = prefs,
                     title = R.string.display_options_view_names_as,

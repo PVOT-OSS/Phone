@@ -24,6 +24,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.prauga.phone.dialer.R
+import org.prauga.phone.dialer.app.settings.ui.SettingsScaffold
 import org.prauga.phone.dialer.app.settings.ui.SettingsTheme
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.ui.appearance.AppearanceSettings
@@ -108,7 +110,9 @@ class AppearanceSettingsTest {
                     LocalPvotGlassReduced provides false,
                     LocalPvotGlassIntensity provides PvotGlassDefaults.SolidIntensity,
                 ) {
-                    AppearanceSettingsList()
+                    SettingsScaffold(title = context.getString(R.string.appearance_settings_label), onBack = {}) {
+                        AppearanceSettingsList()
+                    }
                 }
             }
         }

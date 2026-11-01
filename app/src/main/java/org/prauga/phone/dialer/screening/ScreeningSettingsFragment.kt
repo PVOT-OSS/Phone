@@ -10,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -21,6 +22,8 @@ import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.settings.ui.Choice
 import org.prauga.phone.dialer.app.settings.ui.ChoiceRow
 import org.prauga.phone.dialer.app.settings.ui.SettingsComposeFragment
+import org.prauga.phone.dialer.app.settings.ui.SettingsGroup
+import org.prauga.phone.dialer.app.settings.ui.SettingsGroupDefaults
 import org.prauga.phone.dialer.app.settings.ui.SettingsList
 
 /** Lets the user choose whether each kind of unknown caller rings, rings silently or is declined. */
@@ -38,20 +41,24 @@ class ScreeningSettingsFragment : SettingsComposeFragment() {
 internal fun ScreeningSettingsList(settings: ScreeningSettings) {
     val actions = CategoryAction.entries.map { Choice(it, stringResource(labelOf(it))) }
     SettingsList {
-        for (category in CallerCategory.entries) {
-            item(key = category.name) {
-                var action by remember { mutableStateOf(settings.actionFor(category)) }
-                ChoiceRow(
-                    title = stringResource(titleOf(category)),
-                    summary = stringResource(descriptionOf(category)),
-                    choices = actions,
-                    selected = action,
-                    onSelect = {
-                        action = it
-                        settings.setAction(category, it)
-                    },
-                    testTag = ScreeningSettings.keyFor(category),
-                )
+        item(key = "categories") {
+            SettingsGroup {
+                for (category in CallerCategory.entries) {
+                    key(category.name) {
+                        var action by remember { mutableStateOf(settings.actionFor(category)) }
+                        ChoiceRow(
+                            title = stringResource(titleOf(category)),
+                            summary = stringResource(descriptionOf(category)),
+                            choices = actions,
+                            selected = action,
+                            onSelect = {
+                                action = it
+                                settings.setAction(category, it)
+                            },
+                            testTag = ScreeningSettings.keyFor(category),
+                        )
+                    }
+                }
             }
         }
         item(key = "footer") {
@@ -59,7 +66,10 @@ internal fun ScreeningSettingsList(settings: ScreeningSettings) {
                 text = stringResource(R.string.screening_settings_footer),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(horizontal = PvotSpacing.M, vertical = PvotSpacing.S),
+                modifier = Modifier.padding(
+                    horizontal = SettingsGroupDefaults.CardPadding + SettingsGroupDefaults.RowPadding,
+                    vertical = PvotSpacing.S,
+                ),
             )
         }
     }

@@ -48,7 +48,7 @@ import org.prauga.phone.dialer.app.settings.ui.Choice
 import org.prauga.phone.dialer.app.settings.ui.ChoiceRow
 import org.prauga.phone.dialer.app.settings.ui.SettingsComposeFragment
 import org.prauga.phone.dialer.app.settings.ui.SettingsList
-import org.prauga.phone.dialer.app.settings.ui.SettingsSectionHeader
+import org.prauga.phone.dialer.app.settings.ui.SettingsGroup
 import org.prauga.phone.dialer.callrecord.impl.CallRecorderService
 import org.prauga.phone.dialer.ui.TestTags
 
@@ -213,82 +213,80 @@ internal fun SoundSettingsList(model: SoundSettingsModel) {
     )
 
     SettingsList {
-        item(key = "ringtone") {
-            PvotPreferenceRow(
-                title = ringtoneTitle,
-                value = model.ringtoneName,
-                onClick = { picker.launch(model.ringtonePickerIntent(ringtoneTitle)) },
-                modifier = Modifier.testTag(TestTags.settingsRow("ringtone")),
-            )
-        }
-        if (model.hasVibrator) {
-            item(key = "vibrate_when_ringing") {
+        item(key = "ringing") {
+            SettingsGroup {
+                PvotPreferenceRow(
+                    title = ringtoneTitle,
+                    value = model.ringtoneName,
+                    onClick = { picker.launch(model.ringtonePickerIntent(ringtoneTitle)) },
+                    modifier = Modifier.testTag(TestTags.settingsRow("ringtone")),
+                )
+                if (model.hasVibrator) {
+                    PvotSwitchRow(
+                        title = stringResource(R.string.vibrate_on_ring_title),
+                        checked = model.vibrateWhenRinging,
+                        onCheckedChange = model::changeVibrateWhenRinging,
+                        modifier = Modifier.testTag(TestTags.settingsRow("vibrate_when_ringing")),
+                    )
+                }
                 PvotSwitchRow(
-                    title = stringResource(R.string.vibrate_on_ring_title),
-                    checked = model.vibrateWhenRinging,
-                    onCheckedChange = model::changeVibrateWhenRinging,
-                    modifier = Modifier.testTag(TestTags.settingsRow("vibrate_when_ringing")),
+                    title = stringResource(R.string.dtmf_tone_enable_title),
+                    checked = model.dialpadTones,
+                    onCheckedChange = model::changeDialpadTones,
+                    modifier = Modifier.testTag(TestTags.settingsRow("dialpad_tones")),
                 )
-            }
-        }
-        item(key = "dialpad_tones") {
-            PvotSwitchRow(
-                title = stringResource(R.string.dtmf_tone_enable_title),
-                checked = model.dialpadTones,
-                onCheckedChange = model::changeDialpadTones,
-                modifier = Modifier.testTag(TestTags.settingsRow("dialpad_tones")),
-            )
-        }
-        if (model.showDtmfToneLength) {
-            item(key = "dtmf_tone_length") {
-                val labels = stringArrayResource(R.array.dtmf_tone_length_entries)
-                ChoiceRow(
-                    title = stringResource(R.string.dtmf_tone_length_title),
-                    choices = labels.mapIndexed { index, label -> Choice(index, label) },
-                    selected = model.dtmfToneLength,
-                    onSelect = model::changeDtmfToneLength,
-                    testTag = "dtmf_tone_length",
-                )
+                if (model.showDtmfToneLength) {
+                    val labels = stringArrayResource(R.array.dtmf_tone_length_entries)
+                    ChoiceRow(
+                        title = stringResource(R.string.dtmf_tone_length_title),
+                        choices = labels.mapIndexed { index, label -> Choice(index, label) },
+                        selected = model.dtmfToneLength,
+                        onSelect = model::changeDtmfToneLength,
+                        testTag = "dtmf_tone_length",
+                    )
+                }
             }
         }
 
-        item(key = "incall_header") { SettingsSectionHeader(stringResource(R.string.incall_category_title)) }
-        item(key = SoundSettingsModel.KEY_ENABLE_DND) {
-            var enabled by remember { mutableStateOf(model.devicePrefs.getBoolean(SoundSettingsModel.KEY_ENABLE_DND, false)) }
-            PvotSwitchRow(
-                title = stringResource(R.string.incall_enable_dnd_title),
-                checked = enabled,
-                onCheckedChange = { on ->
-                    if (on && !model.hasDndAccess()) {
-                        // Leave it off until the user has granted access.
-                        askForDndAccess = true
-                    } else {
-                        enabled = on
-                        model.devicePrefs.edit { putBoolean(SoundSettingsModel.KEY_ENABLE_DND, on) }
+        item(key = "incall") {
+            SettingsGroup(title = stringResource(R.string.incall_category_title)) {
+                var enabled by remember {
+                    mutableStateOf(model.devicePrefs.getBoolean(SoundSettingsModel.KEY_ENABLE_DND, false))
+                }
+                PvotSwitchRow(
+                    title = stringResource(R.string.incall_enable_dnd_title),
+                    checked = enabled,
+                    onCheckedChange = { on ->
+                        if (on && !model.hasDndAccess()) {
+                            // Leave it off until the user has granted access.
+                            askForDndAccess = true
+                        } else {
+                            enabled = on
+                            model.devicePrefs.edit { putBoolean(SoundSettingsModel.KEY_ENABLE_DND, on) }
+                        }
+                    },
+                    modifier = Modifier.testTag(TestTags.settingsRow(SoundSettingsModel.KEY_ENABLE_DND)),
+                )
+                if (model.hasVibrator) {
+                    for ((keyName, title, summary) in inCallVibrations) {
+                        DeviceSwitchRow(model.devicePrefs, keyName, stringResource(title), summary?.let { stringResource(it) })
                     }
-                },
-                modifier = Modifier.testTag(TestTags.settingsRow(SoundSettingsModel.KEY_ENABLE_DND)),
-            )
-        }
-        if (model.hasVibrator) {
-            for ((keyName, title, summary) in inCallVibrations) {
-                item(key = keyName) {
-                    DeviceSwitchRow(model.devicePrefs, keyName, stringResource(title), summary?.let { stringResource(it) })
                 }
             }
         }
 
         if (model.showCallRecording) {
-            item(key = "recording_header") { SettingsSectionHeader(stringResource(R.string.call_recording_category_title)) }
-            item(key = "call_recording_format") {
-                StringChoiceRow(
-                    prefs = model.devicePrefs,
-                    title = R.string.call_recording_format,
-                    key = R.string.call_recording_format_key,
-                    default = R.string.call_recording_format_default,
-                    entries = R.array.call_recording_encoder_entries,
-                    values = R.array.call_recording_encoder_values,
-                )
+            item(key = "recording") {
+                SettingsGroup(title = stringResource(R.string.call_recording_category_title)) {
+                    StringChoiceRow(
+                        prefs = model.devicePrefs,
+                        title = R.string.call_recording_format,
+                        key = R.string.call_recording_format_key,
+                        default = R.string.call_recording_format_default,
+                        entries = R.array.call_recording_encoder_entries,
+                        values = R.array.call_recording_encoder_values,
+                    )
+                }
             }
         }
     }
