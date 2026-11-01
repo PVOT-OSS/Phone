@@ -1,0 +1,1946 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 9.5.0" type="baseline" client="gradle" dependencies="false" name="AGP (9.5.0)" variant="all" version="9.5.0">
+
+    <issue
+        id="MissingPermission"
+        message="Missing permissions required by TelephonyManager.getSimSerialNumber: android.permission.READ_PRIVILEGED_PHONE_STATE"
+        errorLine1="            accountId = telephonyManager.getSimSerialNumber();"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/fetch/FetchVoicemailReceiver.java"
+            line="112"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="WrongCommentType"
+        message="This block comment looks like it was intended to be a javadoc comment"
+        errorLine1="  * @param isResponseAuth is the response the one the server is returning us. response-auth has"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/mail/store/imap/DigestMd5Utils.java"
+            line="149"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="DefaultLocale"
+        message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead"
+        errorLine1="    return String.format(&quot;FixedLengthInputStream(in=%s, length=%d)&quot;, in.toString(), length);"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/mail/FixedLengthInputStream.java"
+            line="77"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="DefaultLocale"
+        message="Implicitly using the default locale is a common source of bugs: Use `toLowerCase(Locale)` instead. For strings meant to be internal use `Locale.ROOT`, otherwise `Locale.getDefault()`."
+        errorLine1="        String bodyPartMimeType = bodyPart.getMimeType().toLowerCase();"
+        errorLine2="                                                         ~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/imap/ImapHelper.java"
+            line="579"
+            column="58"/>
+    </issue>
+
+    <issue
+        id="DefaultLocale"
+        message="Implicitly using the default locale is a common source of bugs: Use `toLowerCase(Locale)` instead. For strings meant to be internal use `Locale.ROOT`, otherwise `Locale.getDefault()`."
+        errorLine1="        String bodyPartMimeType = bodyPart.getMimeType().toLowerCase();"
+        errorLine2="                                                         ~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/imap/ImapHelper.java"
+            line="629"
+            column="58"/>
+    </issue>
+
+    <issue
+        id="DefaultLocale"
+        message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead"
+        errorLine1="    return String.format(&quot;{%d byte literal(memory)}&quot;, data.length);"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/mail/store/imap/ImapMemoryLiteral.java"
+            line="68"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="DefaultLocale"
+        message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead"
+        errorLine1="    return String.format(&quot;{%d byte literal(file)}&quot;, size);"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/mail/store/imap/ImapTempFileLiteral.java"
+            line="116"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="DefaultLocale"
+        message="Implicitly using the default locale is a common source of bugs: Use `toUpperCase(Locale)` instead. For strings meant to be internal use `Locale.ROOT`, otherwise `Locale.getDefault()`."
+        errorLine1="    return sb.toString().toUpperCase();"
+        errorLine2="                         ~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/mail/internet/MimeMultipart.java"
+            line="66"
+            column="26"/>
+    </issue>
+
+    <issue
+        id="DefaultLocale"
+        message="Implicitly using the default locale is a common source of bugs: Use `toLowerCase(Locale)` instead. For strings meant to be internal use `Locale.ROOT`, otherwise `Locale.getDefault()`."
+        errorLine1="    String lowerCaseName = name.toLowerCase();"
+        errorLine2="                                ~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/mail/internet/MimeUtility.java"
+            line="194"
+            column="33"/>
+    </issue>
+
+    <issue
+        id="DefaultLocale"
+        message="Implicitly using the default locale is a common source of bugs: Use `toLowerCase(Locale)` instead. For strings meant to be internal use `Locale.ROOT`, otherwise `Locale.getDefault()`."
+        errorLine1="      if (part.trim().toLowerCase().startsWith(lowerCaseName)) {"
+        errorLine2="                      ~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/mail/internet/MimeUtility.java"
+            line="196"
+            column="23"/>
+    </issue>
+
+    <issue
+        id="DefaultLocale"
+        message="Implicitly using the default locale is a common source of bugs: Use `toLowerCase(Locale)` instead. For strings meant to be internal use `Locale.ROOT`, otherwise `Locale.getDefault()`."
+        errorLine1="    String mimeType = part.getMimeType().toLowerCase();"
+        errorLine2="                                         ~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/mail/internet/MimeUtility.java"
+            line="361"
+            column="42"/>
+    </issue>
+
+    <issue
+        id="DefaultLocale"
+        message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead"
+        errorLine1="        TAG, String.format(&quot;Sending sms &apos;%s&apos; to %s:%d&quot;, text, destinationNumber, applicationPort));"
+        errorLine2="             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/sms/OmtpMessageSender.java"
+            line="83"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="DefaultLocale"
+        message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead"
+        errorLine1="          String.format("
+        errorLine2="          ^">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/sync/OmtpVvmSyncService.java"
+            line="190"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="DefaultLocale"
+        message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead"
+        errorLine1="    return String.format("
+        errorLine2="           ^">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/mail/PeekableInputStream.java"
+            line="77"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="DefaultLocale"
+        message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead"
+        errorLine1="            String.format("
+        errorLine2="            ^">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/sync/VoicemailsQueryHelper.java"
+            line="279"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="DefaultLocale"
+        message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead"
+        errorLine1="      append(String.format(&quot;%tm-%td %tH:%tM:%tS.%tL - %s&quot;, c, c, c, c, c, c, msg));"
+        errorLine2="             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/VvmLog.java"
+            line="118"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="ThreadConstraint"
+        message="Call must be from `@WorkerThread`, but super method `VisualVoicemailService.onCellServiceConnected(…)` is allowing `@{Main,Ui}Thread`"
+        errorLine1="    if (!isServiceEnabled(phoneAccountHandle)) {"
+        errorLine2="         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/OmtpService.java"
+            line="64"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="ThreadConstraint"
+        message="Call must be from `@WorkerThread`, but super method `VisualVoicemailService.onSmsReceived(…)` is allowing `@{Main,Ui}Thread`"
+        errorLine1="    if (!isServiceEnabled(sms.getPhoneAccountHandle())) {"
+        errorLine2="         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/OmtpService.java"
+            line="88"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="ThreadConstraint"
+        message="Call must be from `@WorkerThread`, but context is allowing `@{Main,Ui}Thread`"
+        errorLine1="    OmtpVvmCarrierConfigHelper helper = new OmtpVvmCarrierConfigHelper(context, phoneAccountHandle);"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/sms/StatusSmsFetcher.java"
+            line="145"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;sync_preference_title&quot; is not translated in &quot;hi&quot; (Hindi), &quot;lo&quot; (Lao), &quot;lt&quot; (Lithuanian), &quot;hr&quot; (Croatian), &quot;lv&quot; (Latvian), &quot;hy&quot; (Armenian), &quot;uk&quot; (Ukrainian), &quot;ur&quot; (Urdu), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;mn&quot; (Mongolian), &quot;af&quot; (Afrikaans), &quot;mr&quot; (Marathi), &quot;uz&quot; (Uzbek), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;am&quot; (Amharic), &quot;my&quot; (Burmese), &quot;et&quot; (Estonian), &quot;eu&quot; (Basque), &quot;ar&quot; (Arabic), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;zu&quot; (Zulu), &quot;no&quot; (Norwegian), &quot;be&quot; (Belarusian), &quot;fi&quot; (Finnish), &quot;bn&quot; (Bangla), &quot;bs&quot; (Bosnian), &quot;ka&quot; (Georgian), &quot;si&quot; (Sinhala), &quot;sk&quot; (Slovak), &quot;sr&quot; (Serbian), &quot;kk&quot; (Kazakh), &quot;km&quot; (Khmer), &quot;kn&quot; (Kannada), &quot;sv&quot; (Swedish), &quot;sw&quot; (Swahili), &quot;gl&quot; (Galician), &quot;gu&quot; (Gujarati), &quot;ky&quot; (Kyrgyz), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
+        errorLine1="  &lt;string name=&quot;sync_preference_title&quot;>Sync&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/lineage_strings_voicemail_impl_configui.xml"
+            line="17"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;config_override_preference_title&quot; is not translated in &quot;hi&quot; (Hindi), &quot;lo&quot; (Lao), &quot;lt&quot; (Lithuanian), &quot;hr&quot; (Croatian), &quot;lv&quot; (Latvian), &quot;hy&quot; (Armenian), &quot;uk&quot; (Ukrainian), &quot;ur&quot; (Urdu), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;mn&quot; (Mongolian), &quot;af&quot; (Afrikaans), &quot;in&quot; (Indonesian), &quot;mr&quot; (Marathi), &quot;uz&quot; (Uzbek), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;am&quot; (Amharic), &quot;my&quot; (Burmese), &quot;et&quot; (Estonian), &quot;eu&quot; (Basque), &quot;ar&quot; (Arabic), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;zu&quot; (Zulu), &quot;no&quot; (Norwegian), &quot;be&quot; (Belarusian), &quot;fi&quot; (Finnish), &quot;bn&quot; (Bangla), &quot;sc&quot; (Sardinian), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sk&quot; (Slovak), &quot;sr&quot; (Serbian), &quot;kk&quot; (Kazakh), &quot;km&quot; (Khmer), &quot;kn&quot; (Kannada), &quot;sv&quot; (Swedish), &quot;sw&quot; (Swahili), &quot;gl&quot; (Galician), &quot;gu&quot; (Gujarati), &quot;ky&quot; (Kyrgyz), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;tl&quot; (Tagalog), &quot;da&quot; (Danish)"
+        errorLine1="  &lt;string name=&quot;config_override_preference_title&quot;>VVM config override&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/lineage_strings_voicemail_impl_configui.xml"
+            line="18"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm_unsupported_message_format&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm_unsupported_message_format&quot;>Unsupported message type, call &lt;xliff:g example=&quot;*86&quot; id=&quot;number&quot;>%s&lt;/xliff:g> to listen.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_impl.xml"
+            line="19"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_activating_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_activating_title&quot;>Activating visual voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="18"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_activating_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_activating_message&quot;>You might not receive voicemail notifications until visual voicemail is fully activated. Call voicemail to retrieve new messages until voicemail is fully activated.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="19"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_not_activate_no_signal_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_not_activate_no_signal_title&quot;>Can\&apos;t activate visual voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="21"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_not_activate_no_signal_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_not_activate_no_signal_message&quot;>Make sure your phone has a mobile network connection and try again.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="22"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_not_activate_no_signal_airplane_mode_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_not_activate_no_signal_airplane_mode_message&quot;>Turn off airplane mode and try again.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="23"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_no_signal_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_no_signal_title&quot;>No connection&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="25"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_no_signal_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_no_signal_message&quot;>You won\&apos;t be notified for new voicemails. If you\&apos;re on Wi\u2011Fi, you can check for voicemail by syncing now.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="26"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_no_signal_airplane_mode_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_no_signal_airplane_mode_message&quot;>You won\&apos;t be notified for new voicemails. Turn off airplane mode to sync your voicemail.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="27"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_no_signal_cellular_required_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_no_signal_cellular_required_message&quot;>Your phone needs a mobile data connection to check voicemail.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="28"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_activation_failed_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_activation_failed_title&quot;>Can\&apos;t activate visual voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="30"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_activation_failed_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_activation_failed_message&quot;>You can still call to check voicemail.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="31"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_no_data_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_no_data_title&quot;>Can\&apos;t update visual voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="33"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_no_data_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_no_data_message&quot;>Try again when your Wi\u2011Fi or mobile data connection is better. You can still call to check voicemail.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="34"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_no_data_cellular_required_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_no_data_cellular_required_message&quot;>Try again when your mobile data connection is better. You can still call to check voicemail.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="35"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_bad_config_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_bad_config_title&quot;>Can\&apos;t update visual voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="37"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_bad_config_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_bad_config_message&quot;>You can still call to check voicemail.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="38"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_communication_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_communication_title&quot;>Can\&apos;t update visual voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="40"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_communication_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_communication_message&quot;>You can still call to check voicemail.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="41"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_server_connection_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_server_connection_title&quot;>Can\&apos;t update visual voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="43"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_server_connection_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_server_connection_message&quot;>You can still call to check voicemail.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="44"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_server_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_server_title&quot;>Can\&apos;t update visual voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="46"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_server_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_server_message&quot;>You can still call to check voicemail.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="47"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_inbox_near_full_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_inbox_near_full_title&quot;>Inbox almost full&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="49"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_inbox_near_full_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_inbox_near_full_message&quot;>You won\&apos;t be able to receive new voicemail if your inbox is full.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="50"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_inbox_full_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_inbox_full_title&quot;>Can\&apos;t receive new voicemails&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="52"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_inbox_full_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_inbox_full_message&quot;>Your inbox is full. Try deleting some messages to receive new voicemail.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="53"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_inbox_full_turn_archive_on_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_inbox_full_turn_archive_on_title&quot;>Turn on extra storage and backup&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="55"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_inbox_full_turn_archive_on_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_inbox_full_turn_archive_on_message&quot;>Your mailbox is full. To free up space, turn on extra storage so Google can manage and backup your voicemail messages.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="56"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_inbox_almost_full_turn_archive_on_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_inbox_almost_full_turn_archive_on_title&quot;>Turn on extra storage and backup&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="58"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_inbox_almost_full_turn_archive_on_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_inbox_almost_full_turn_archive_on_message&quot;>Your mailbox is almost full. To free up space, turn on extra storage so Google can manage and backup your voicemail messages.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="59"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_pin_not_set_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_pin_not_set_title&quot;>Set your voicemail PIN&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="61"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_error_pin_not_set_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_error_pin_not_set_message&quot;>You\&apos;ll need a voicemail PIN anytime you call to access your voicemail.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="62"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_action_turn_off_airplane_mode&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_action_turn_off_airplane_mode&quot;>Airplane Mode Settings&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="64"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_action_set_pin&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_action_set_pin&quot;>Set PIN&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="65"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_action_retry&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_action_retry&quot;>Try Again&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="66"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_action_turn_archive_on&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_action_turn_archive_on&quot;>Turn on&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="67"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_action_dimiss&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_action_dimiss&quot;>No Thanks&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="68"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_action_sync&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_action_sync&quot;>Sync&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="69"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_action_call_voicemail&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_action_call_voicemail&quot;>Call Voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="70"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_action_call_customer_support&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_action_call_customer_support&quot;>Call Customer Support&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="71"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_vms_dns_failure_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_vms_dns_failure_title&quot;>Something Went Wrong&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="73"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_vms_dns_failure_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_vms_dns_failure_message&quot;>Sorry, we ran into a problem. Please try again later. If there is still a problem, please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> and tell them the error code is 9001.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="74"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_vmg_dns_failure_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_vmg_dns_failure_title&quot;>Something Went Wrong&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="76"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_vmg_dns_failure_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_vmg_dns_failure_message&quot;>Sorry, we ran into a problem. Please try again later. If there is still a problem, please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> and tell them the error code is 9002.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="77"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_spg_dns_failure_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_spg_dns_failure_title&quot;>Something Went Wrong&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="79"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_spg_dns_failure_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_spg_dns_failure_message&quot;>Sorry, we ran into a problem. Please try again later. If there is still a problem, please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> and tell them the error code is 9003.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="80"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_vms_no_cellular_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_vms_no_cellular_title&quot;>Can\&apos;t Connect to Your Voice Mailbox&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="82"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_vms_no_cellular_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_vms_no_cellular_message&quot;>Sorry, we\&apos;re having trouble connecting to your voice mailbox. If you\&apos;re in an area with poor signal strength, wait until you have a strong signal and try again. If there is still a problem, please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> and tell them the error code is 9004.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="83"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_vmg_no_cellular_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_vmg_no_cellular_title&quot;>Can\&apos;t Connect to Your Voice Mailbox&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="85"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_vmg_no_cellular_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_vmg_no_cellular_message&quot;>Sorry, we\&apos;re having trouble connecting to your voice mailbox. If you\&apos;re in an area with poor signal strength, wait until you have a strong signal and try again. If there is still a problem, please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> and tell them the error code is 9005.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="86"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_spg_no_cellular_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_spg_no_cellular_title&quot;>Can\&apos;t Connect to Your Voice Mailbox&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="88"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_spg_no_cellular_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_spg_no_cellular_message&quot;>Sorry, we\&apos;re having trouble connecting to your voice mailbox. If you\&apos;re in an area with poor signal strength, wait until you have a strong signal and try again. If there is still a problem, please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> and tell them the error code is 9006.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="89"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_vms_timeout_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_vms_timeout_title&quot;>Something Went Wrong&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="91"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_vms_timeout_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_vms_timeout_message&quot;>Sorry, we ran into a problem. Please try again later. If there is still a problem, please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> and tell them the error code is 9007.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="92"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_vmg_timeout_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_vmg_timeout_title&quot;>Something Went Wrong&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="94"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_vmg_timeout_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_vmg_timeout_message&quot;>Sorry, we ran into a problem. Please try again later. If there is still a problem, please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> and tell them the error code is 9008.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="95"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_status_sms_timeout_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_status_sms_timeout_title&quot;>Something Went Wrong&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="97"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_status_sms_timeout_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_status_sms_timeout_message&quot;>Sorry, we\&apos;re having trouble setting up your service. Please try again later. If there is still a problem, please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> and tell them the error code is 9009.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="98"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_subscriber_blocked_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_subscriber_blocked_title&quot;>Can\&apos;t Connect to Your Voice Mailbox&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="100"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_subscriber_blocked_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_subscriber_blocked_message&quot;>Sorry, we\&apos;re not able to connect to your voice mailbox at this time. Please try again later. If there is still a problem, please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> and tell them the error code is 9990.&quot;&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="101"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_unknown_user_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_unknown_user_title&quot;>Set Up Voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="103"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_unknown_user_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_unknown_user_message&quot;>Voicemail is not set up on your account. Please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> and tell them the error code is 9991.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="104"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_unknown_device_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_unknown_device_title&quot;>Voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="106"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_unknown_device_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_unknown_device_message&quot;>Visual voicemail cannot be used on this device. Please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> and tell them the error code is 9992.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="107"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_invalid_password_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_invalid_password_title&quot;>Something Went Wrong&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="109"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_invalid_password_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_invalid_password_message&quot;>Please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> and tell them the error code is 9993.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="110"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_mailbox_not_initialized_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_mailbox_not_initialized_title&quot;>Visual voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="112"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_mailbox_not_initialized_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_mailbox_not_initialized_message&quot;>To complete visual voicemail setup, please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> and tell them the error code is 9994.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="113"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_service_not_provisioned_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_service_not_provisioned_title&quot;>Visual voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="115"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_service_not_provisioned_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_service_not_provisioned_message&quot;>To complete visual voicemail setup, please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> and tell them the error code is 9995.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="116"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_service_not_activated_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_service_not_activated_title&quot;>Visual voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="118"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_service_not_activated_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_service_not_activated_message&quot;>To activate visual voicemail, please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> and tell them the error code is 9996.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="119"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_user_blocked_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_user_blocked_title&quot;>Something Went Wrong&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="121"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_user_blocked_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_user_blocked_message&quot;>To complete visual voicemail setup, please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> and tell them the error code is 9998.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="122"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_subscriber_unknown_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_subscriber_unknown_title&quot;>Visual voicemail is disabled&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="124"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_subscriber_unknown_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_subscriber_unknown_message&quot;>Please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> to activate visual voicemail.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="125"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_imap_getquota_error_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_imap_getquota_error_title&quot;>Something Went Wrong&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="127"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_imap_getquota_error_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_imap_getquota_error_message&quot;>Please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> and tell them the error code is 9997.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="128"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_imap_select_error_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_imap_select_error_title&quot;>Something Went Wrong&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="130"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_imap_select_error_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_imap_select_error_message&quot;>Please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> and tell them the error code is 9989.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="131"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_imap_error_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_imap_error_title&quot;>Something Went Wrong&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="133"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vvm3_error_imap_error_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vvm3_error_imap_error_message&quot;>Please contact Customer Service at &lt;xliff:g example=&quot;(555) 555-5555&quot; id=&quot;number&quot;>%1$s&lt;/xliff:g> and tell them the error code is 9999.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="134"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;verizon_terms_and_conditions_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;verizon_terms_and_conditions_title&quot;>Turn on visual voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="139"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;verizon_terms_and_conditions_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;verizon_terms_and_conditions_message&quot;>&lt;xliff:g>%1$s&lt;/xliff:g> By turning on visual voicemail you agree to the Verizon Wireless terms and conditions:\n\n&lt;xliff:g>%2$s&lt;/xliff:g>&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="140"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;dialer_terms_and_conditions_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;dialer_terms_and_conditions_title&quot;>Turn on visual voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="142"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;dialer_terms_and_conditions_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;dialer_terms_and_conditions_message&quot;>&lt;xliff:g>%s&lt;/xliff:g>&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="143"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;dialer_terms_and_conditions_for_verizon_1_0&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;dialer_terms_and_conditions_for_verizon_1.0&quot;>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="159"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;dialer_terms_and_conditions_learn_more&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;dialer_terms_and_conditions_learn_more&quot;>Learn&amp;#160;more&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="163"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;terms_and_conditions_decline_dialog_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;terms_and_conditions_decline_dialog_title&quot;>Disable visual voicemail?&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="176"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;verizon_terms_and_conditions_decline_dialog_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;verizon_terms_and_conditions_decline_dialog_message&quot;>Visual voicemail will be disabled if the terms and conditions are declined.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="178"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;verizon_terms_and_conditions_decline_dialog_downgrade&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;verizon_terms_and_conditions_decline_dialog_downgrade&quot;>Disable&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="179"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;dialer_terms_and_conditions_decline_dialog_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;dialer_terms_and_conditions_decline_dialog_message&quot;>Visual voicemail will be disabled if you turn off visual voicemail.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="181"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;dialer_terms_and_conditions_decline_dialog_downgrade&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;dialer_terms_and_conditions_decline_dialog_downgrade&quot;>Disable&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="182"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;verizon_terms_and_conditions_decline_set_pin_dialog_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;verizon_terms_and_conditions_decline_set_pin_dialog_message&quot;>Voicemail will only be accessible by calling *86. Set a new voicemail PIN to proceed.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="184"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;verizon_terms_and_conditions_decline_set_pin_dialog_set_pin&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;verizon_terms_and_conditions_decline_set_pin_dialog_set_pin&quot;>Set PIN&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_listui_error.xml"
+            line="185"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_settings_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_settings_title&quot;>Voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="19"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_notifications_preference_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_notifications_preference_title&quot;>Notifications&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="27"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_change_greeting_preference_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_change_greeting_preference_title&quot;>Voicemail greeting&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="30"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;current_voicemail_greeting_record_instruction&quot; is not translated in &quot;de&quot; (German), &quot;hi&quot; (Hindi), &quot;fur&quot; (Friulian), &quot;lo&quot; (Lao), &quot;pt&quot; (Portuguese), &quot;lt&quot; (Lithuanian), &quot;hr&quot; (Croatian), &quot;lv&quot; (Latvian), &quot;hu&quot; (Hungarian), &quot;hy&quot; (Armenian), &quot;ug&quot; (Uyghur), &quot;uk&quot; (Ukrainian), &quot;ur&quot; (Urdu), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;mn&quot; (Mongolian), &quot;af&quot; (Afrikaans), &quot;in&quot; (Indonesian), &quot;mr&quot; (Marathi), &quot;uz&quot; (Uzbek), &quot;ms&quot; (Malay), &quot;el&quot; (Greek), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;it&quot; (Italian), &quot;am&quot; (Amharic), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;iw&quot; (Hebrew), &quot;zh&quot; (Chinese), &quot;et&quot; (Estonian), &quot;eu&quot; (Basque), &quot;ar&quot; (Arabic), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;zu&quot; (Zulu), &quot;ro&quot; (Romanian), &quot;nl&quot; (Dutch), &quot;nn&quot; (Norwegian Nynorsk), &quot;no&quot; (Norwegian), &quot;be&quot; (Belarusian), &quot;fi&quot; (Finnish), &quot;ru&quot; (Russian), &quot;bg&quot; (Bulgarian), &quot;bn&quot; (Bangla), &quot;fr&quot; (French), &quot;sc&quot; (Sardinian), &quot;bs&quot; (Bosnian), &quot;ka&quot; (Georgian), &quot;si&quot; (Sinhala), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;ga&quot; (Irish), &quot;ca&quot; (Catalan), &quot;sq&quot; (Albanian), &quot;sr&quot; (Serbian), &quot;kk&quot; (Kazakh), &quot;km&quot; (Khmer), &quot;kn&quot; (Kannada), &quot;sv&quot; (Swedish), &quot;ko&quot; (Korean), &quot;sw&quot; (Swahili), &quot;gl&quot; (Galician), &quot;ta&quot; (Tamil), &quot;gu&quot; (Gujarati), &quot;ky&quot; (Kyrgyz), &quot;cs&quot; (Czech), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;tl&quot; (Tagalog), &quot;ckb&quot;, &quot;pl&quot; (Polish), &quot;da&quot; (Danish), &quot;tr&quot; (Turkish)"
+        errorLine1="  &lt;string name=&quot;current_voicemail_greeting_record_instruction&quot;>Record a greeting&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="33"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;current_voicemail_greeting_recording_title&quot; is not translated in &quot;de&quot; (German), &quot;hi&quot; (Hindi), &quot;fur&quot; (Friulian), &quot;lo&quot; (Lao), &quot;pt&quot; (Portuguese), &quot;lt&quot; (Lithuanian), &quot;hr&quot; (Croatian), &quot;lv&quot; (Latvian), &quot;hu&quot; (Hungarian), &quot;hy&quot; (Armenian), &quot;ug&quot; (Uyghur), &quot;uk&quot; (Ukrainian), &quot;ur&quot; (Urdu), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;mn&quot; (Mongolian), &quot;af&quot; (Afrikaans), &quot;in&quot; (Indonesian), &quot;mr&quot; (Marathi), &quot;uz&quot; (Uzbek), &quot;ms&quot; (Malay), &quot;el&quot; (Greek), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;it&quot; (Italian), &quot;am&quot; (Amharic), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;iw&quot; (Hebrew), &quot;zh&quot; (Chinese), &quot;et&quot; (Estonian), &quot;eu&quot; (Basque), &quot;ar&quot; (Arabic), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;zu&quot; (Zulu), &quot;ro&quot; (Romanian), &quot;nl&quot; (Dutch), &quot;nn&quot; (Norwegian Nynorsk), &quot;no&quot; (Norwegian), &quot;be&quot; (Belarusian), &quot;fi&quot; (Finnish), &quot;ru&quot; (Russian), &quot;bg&quot; (Bulgarian), &quot;bn&quot; (Bangla), &quot;fr&quot; (French), &quot;sc&quot; (Sardinian), &quot;bs&quot; (Bosnian), &quot;ka&quot; (Georgian), &quot;si&quot; (Sinhala), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;ga&quot; (Irish), &quot;ca&quot; (Catalan), &quot;sq&quot; (Albanian), &quot;sr&quot; (Serbian), &quot;kk&quot; (Kazakh), &quot;km&quot; (Khmer), &quot;kn&quot; (Kannada), &quot;sv&quot; (Swedish), &quot;ko&quot; (Korean), &quot;sw&quot; (Swahili), &quot;gl&quot; (Galician), &quot;ta&quot; (Tamil), &quot;gu&quot; (Gujarati), &quot;ky&quot; (Kyrgyz), &quot;cs&quot; (Czech), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;tl&quot; (Tagalog), &quot;ckb&quot;, &quot;pl&quot; (Polish), &quot;da&quot; (Danish), &quot;tr&quot; (Turkish)"
+        errorLine1="  &lt;string name=&quot;current_voicemail_greeting_recording_title&quot;>My voicemail greeting&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="36"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;change_greeting_text&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;change_greeting_text&quot;>Tap to Record&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="39"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;save_button_text&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;save_button_text&quot;>Save&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="42"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;redo_button_text&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;redo_button_text&quot;>Try Again&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="45"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_advanced_settings_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_advanced_settings_title&quot;>Advanced Settings&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="50"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_visual_voicemail_switch_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_visual_voicemail_switch_title&quot;>Visual voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="62"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_visual_voicemail_auto_archive_switch_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_visual_voicemail_auto_archive_switch_title&quot;>Extra backup and storage&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="65"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_set_pin_preference_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_set_pin_preference_title&quot;>Set PIN&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="68"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_change_pin_preference_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_change_pin_preference_title&quot;>Change PIN&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="70"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_change_pin_preference_summary_disable&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_change_pin_preference_summary_disable&quot;>Visual voicemail must be enabled to change PIN&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="72"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_change_pin_preference_summary_not_activated&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_change_pin_preference_summary_not_activated&quot;>Visual voicemail is not activated yet, please try again later&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="73"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vm_change_pin_progress_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vm_change_pin_progress_message&quot;>Please wait.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="76"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vm_change_pin_error_too_short&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vm_change_pin_error_too_short&quot;>The new PIN is too short.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="78"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vm_change_pin_error_too_long&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vm_change_pin_error_too_long&quot;>The new PIN is too long.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="80"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vm_change_pin_error_too_weak&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vm_change_pin_error_too_weak&quot;>The new PIN is too weak. A strong password should not have continuous sequence or repeated digits.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="82"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vm_change_pin_error_mismatch&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vm_change_pin_error_mismatch&quot;>The old PIN does not match.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="84"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vm_change_pin_error_invalid&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vm_change_pin_error_invalid&quot;>The new PIN contains invalid characters.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="86"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;vm_change_pin_error_system_error&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;vm_change_pin_error_system_error&quot;>Unable to change PIN&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="88"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;change_pin_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;change_pin_title&quot;>Change Voicemail PIN&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="91"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;change_pin_continue_label&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;change_pin_continue_label&quot;>Continue&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="93"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;change_pin_enter_old_pin_header&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;change_pin_enter_old_pin_header&quot;>Confirm your old PIN&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="95"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;change_pin_enter_old_pin_hint&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;change_pin_enter_old_pin_hint&quot;>Enter your voicemail PIN to continue.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="97"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;change_pin_enter_new_pin_header&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;change_pin_enter_new_pin_header&quot;>Set a new PIN&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="99"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;change_pin_enter_new_pin_hint&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;change_pin_enter_new_pin_hint&quot;>PIN must be &lt;xliff:g example=&quot;4&quot; id=&quot;min&quot;>%1$d&lt;/xliff:g>-&lt;xliff:g example=&quot;7&quot; id=&quot;max&quot;>%2$d&lt;/xliff:g> digits.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="101"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;change_pin_confirm_pin_header&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;change_pin_confirm_pin_header&quot;>Confirm your PIN&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="103"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;change_pin_confirm_pins_dont_match&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;change_pin_confirm_pins_dont_match&quot;>PINs don\&apos;t match&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="105"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;change_pin_succeeded&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;change_pin_succeeded&quot;>Voicemail PIN updated&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="107"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;change_pin_system_error&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;change_pin_system_error&quot;>Unable to set PIN&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="109"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;voicemail_activating_summary_info&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;voicemail_activating_summary_info&quot;>Activating voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="112"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;confirm_disable_voicemail_dialog_title&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;confirm_disable_voicemail_dialog_title&quot;>Turn off visual voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="115"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;confirm_disable_voicemail_dialog_message&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;confirm_disable_voicemail_dialog_message&quot;>This will delete any voicemail and Google transcripts stored within this app. Your carrier may keep its own copies.&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="117"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;confirm_disable_voicemail_accept_dialog_label&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;sc&quot; (Sardinian), &quot;ga&quot; (Irish), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;confirm_disable_voicemail_accept_dialog_label&quot;>TURN OFF&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="119"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;digits&quot;): This should probably be a plural rather than a string"
+        errorLine1="  &lt;string name=&quot;change_pin_enter_new_pin_hint&quot;>PIN must be %1$d–%2$d digits long.&lt;/string>"
+        errorLine2="  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-en-rAU/strings_voicemail_settings.xml"
+            line="28"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;digits&quot;): This should probably be a plural rather than a string"
+        errorLine1="  &lt;string name=&quot;change_pin_enter_new_pin_hint&quot;>PIN must be %1$d–%2$d digits long.&lt;/string>"
+        errorLine2="  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-en-rGB/strings_voicemail_settings.xml"
+            line="28"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;digits&quot;): This should probably be a plural rather than a string"
+        errorLine1="  &lt;string name=&quot;change_pin_enter_new_pin_hint&quot;>PIN must be %1$d–%2$d digits long.&lt;/string>"
+        errorLine2="  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-en-rIN/strings_voicemail_settings.xml"
+            line="28"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;digits&quot;): This should probably be a plural rather than a string"
+        errorLine1="  &lt;string name=&quot;change_pin_enter_new_pin_hint&quot;>PIN must be &lt;xliff:g example=&quot;4&quot; id=&quot;min&quot;>%1$d&lt;/xliff:g>-&lt;xliff:g example=&quot;7&quot; id=&quot;max&quot;>%2$d&lt;/xliff:g> digits.&lt;/string>"
+        errorLine2="  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_voicemail_settings.xml"
+            line="101"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="HardwareIds"
+        message="Using `getSimSerialNumber` to get device identifiers is not recommended"
+        errorLine1="            accountId = telephonyManager.getSimSerialNumber();"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/fetch/FetchVoicemailReceiver.java"
+            line="112"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="HardwareIds"
+        message="Using `getLine1Number` to get device identifiers is not recommended"
+        errorLine1="            this.helper"
+        errorLine2="            ^">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/protocol/Vvm3Subscriber.java"
+            line="174"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="InefficientWeight"
+        message="Use a `layout_width` of `0dp` instead of `232dp` for better performance"
+        errorLine1="        android:layout_width=&quot;232dp&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_current_voicemail_greeting.xml"
+            line="99"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
+        errorLine1="  &lt;string name=&quot;vvm3_error_vms_dns_failure_message&quot;>Vaia, tivemos un problema... Téntao de novo máis tarde. Se o problema continúa, ponte en contacto co servizo de atención ao cliente (%1$s) e indica o código de erro 9001.&lt;/string>"
+        errorLine2="                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-gl/strings_voicemail_listui_error.xml"
+            line="43"
+            column="53"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
+        errorLine1="  &lt;string name=&quot;vvm3_error_vmg_dns_failure_message&quot;>Vaia, tivemos un problema... Téntao de novo máis tarde. Se o problema continúa, ponte en contacto co servizo de atención ao cliente (%1$s) e indica o código de erro 9002.&lt;/string>"
+        errorLine2="                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-gl/strings_voicemail_listui_error.xml"
+            line="45"
+            column="53"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
+        errorLine1="  &lt;string name=&quot;vvm3_error_spg_dns_failure_message&quot;>Vaia, tivemos un problema... Téntao de novo máis tarde. Se o problema continúa, ponte en contacto co servizo de atención ao cliente (%1$s) e indica o código de erro 9003.&lt;/string>"
+        errorLine2="                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-gl/strings_voicemail_listui_error.xml"
+            line="47"
+            column="53"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
+        errorLine1="  &lt;string name=&quot;vvm3_error_vms_timeout_message&quot;>Vaia, tivemos un problema... Téntao de novo máis tarde. Se o problema continúa, ponte en contacto co servizo de atención ao cliente (%1$s) e indica o código de erro 9007.&lt;/string>"
+        errorLine2="                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-gl/strings_voicemail_listui_error.xml"
+            line="55"
+            column="49"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
+        errorLine1="  &lt;string name=&quot;vvm3_error_vmg_timeout_message&quot;>Vaia, tivemos un problema... Téntao de novo máis tarde. Se o problema continúa, ponte en contacto co servizo de atención ao cliente (%1$s) e indica o código de erro 9008.&lt;/string>"
+        errorLine2="                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-gl/strings_voicemail_listui_error.xml"
+            line="57"
+            column="49"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
+        errorLine1="  &lt;string name=&quot;vvm3_error_status_sms_timeout_message&quot;>Vaia, tivemos un problema ao configurar o teu servizo... Téntao de novo máis tarde. Se o problema continúa, ponte en contacto co servizo de atención ao cliente (%1$s) e indica o código de erro 9009.&lt;/string>"
+        errorLine2="                                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-gl/strings_voicemail_listui_error.xml"
+            line="59"
+            column="56"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
+        errorLine1="  &lt;string name=&quot;vm_change_pin_progress_message&quot;>Espera...&lt;/string>"
+        errorLine2="                                                ~~~~~~~~~">
+        <location
+            file="src/main/res/values-es/strings_voicemail_settings.xml"
+            line="16"
+            column="49"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
+        errorLine1="  &lt;string name=&quot;vm_change_pin_progress_message&quot;>Prit...&lt;/string>"
+        errorLine2="                                                ~~~~~~~">
+        <location
+            file="src/main/res/values-sq/strings_voicemail_settings.xml"
+            line="16"
+            column="49"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/voicemail_tos_image.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/voicemail_tos_image.png"/>
+    </issue>
+
+    <issue
+        id="IconDensities"
+        message="Missing the following drawables in `drawable-hdpi`: ic_circles_add_googblue_48dp.png, ic_play_circle_filled_googblue_48dp.png">
+        <location
+            file="src/main/res/drawable-hdpi"/>
+    </issue>
+
+    <issue
+        id="IconDensities"
+        message="Missing the following drawables in `drawable-mdpi`: ic_circles_add_googblue_48dp.png, ic_play_circle_filled_googblue_48dp.png">
+        <location
+            file="src/main/res/drawable-mdpi"/>
+    </issue>
+
+    <issue
+        id="IconDensities"
+        message="Missing the following drawables in `drawable-xxhdpi`: ic_circles_add_googblue_48dp.png, ic_play_circle_filled_googblue_48dp.png">
+        <location
+            file="src/main/res/drawable-xxhdpi"/>
+    </issue>
+
+    <issue
+        id="ButtonStyle"
+        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)"
+        errorLine1="    &lt;Button"
+        errorLine2="     ~~~~~~">
+        <location
+            file="src/main/res/layout/voicemail_change_pin.xml"
+            line="79"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="ButtonStyle"
+        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)"
+        errorLine1="    &lt;Button"
+        errorLine2="     ~~~~~~">
+        <location
+            file="src/main/res/layout/voicemail_change_pin.xml"
+            line="87"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute"
+        errorLine1="    &lt;EditText"
+        errorLine2="     ~~~~~~~~">
+        <location
+            file="src/main/res/layout/voicemail_change_pin.xml"
+            line="59"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="    &lt;ImageButton"
+        errorLine2="     ~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_current_voicemail_greeting.xml"
+            line="50"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="    &lt;ImageButton"
+        errorLine2="     ~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_current_voicemail_greeting.xml"
+            line="85"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="LabelFor"
+        message="Missing accessibility label: provide either a view with an `android:labelFor` that references this view or provide an `android:hint`"
+        errorLine1="    &lt;EditText"
+        errorLine2="     ~~~~~~~~">
+        <location
+            file="src/main/res/layout/voicemail_change_pin.xml"
+            line="59"
+            column="6"/>
+    </issue>
+
+</issues>

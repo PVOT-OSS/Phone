@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 9.5.0" type="baseline" client="gradle" dependencies="false" name="AGP (9.5.0)" variant="all" version="9.5.0">
+
+    <issue
+        id="MissingSuperCall"
+        message="Overriding method should call `super.draw`"
+        errorLine1="  public void draw(Canvas canvas) {"
+        errorLine2="              ~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/dialer/dialpadview/DialpadTextView.java"
+            line="47"
+            column="15"/>
+    </issue>
+
+    <issue
+        id="ResourceType"
+        message="Expected resource of type fraction"
+        errorLine1="    letterToTileRatio = res.getFraction(R.dimen.letter_to_tile_ratio, 1, 1);"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/dialer/lettertile/LetterTileDrawable.java"
+            line="127"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="CustomViewStyleable"
+        message="By convention, the custom view (`DialpadView`) and the declare-styleable (`Dialpad`) should have the same name (various editor features rely on this convention)"
+        errorLine1="    TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Dialpad);"
+        errorLine2="                                                         ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/dialer/dialpadview/DialpadView.java"
+            line="109"
+            column="58"/>
+    </issue>
+
+    <issue
+        id="CustomViewStyleable"
+        message="By convention, the custom view (`ResizingTextEditText`) and the declare-styleable (`ResizingText`) should have the same name (various editor features rely on this convention)"
+        errorLine1="    TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ResizingText);"
+        errorLine2="                                                         ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/dialer/widget/ResizingTextEditText.java"
+            line="38"
+            column="58"/>
+    </issue>
+
+    <issue
+        id="InflateParams"
+        message="Avoid passing `null` as the view root (needed to resolve layout parameters on the inflated layout&apos;s root element)"
+        errorLine1="      TextView textView = (TextView) inflater.inflate(R.layout.selectable_text_view, null);"
+        errorLine2="                                                                                     ~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/dialer/widget/MessageFragment.java"
+            line="102"
+            column="86"/>
+    </issue>
+
+    <issue
+        id="UseCompatLoadingForDrawables"
+        message="Use `AppCompatResources.getDrawable()`"
+        errorLine1="          (RippleDrawable) getContext().getDrawable(R.drawable.btn_dialpad_key);"
+        errorLine2="                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/dialer/dialpadview/DialpadView.java"
+            line="198"
+            column="28"/>
+    </issue>
+
+    <issue
+        id="UseCompatLoadingForDrawables"
+        message="Use `ResourcesCompat.getDrawable()`"
+        errorLine1="    defaultPersonAvatar = res.getDrawable(R.drawable.quantum_ic_person_vd_theme_24, null);"
+        errorLine2="                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/dialer/lettertile/LetterTileDrawable.java"
+            line="128"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="UseCompatLoadingForDrawables"
+        message="Use `ResourcesCompat.getDrawable()`"
+        errorLine1="    defaultBusinessAvatar = res.getDrawable(R.drawable.quantum_ic_business_vd_theme_24, null);"
+        errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/dialer/lettertile/LetterTileDrawable.java"
+            line="129"
+            column="29"/>
+    </issue>
+
+    <issue
+        id="UseCompatLoadingForDrawables"
+        message="Use `ResourcesCompat.getDrawable()`"
+        errorLine1="    defaultVoicemailAvatar = res.getDrawable(R.drawable.quantum_ic_voicemail_vd_theme_24, null);"
+        errorLine2="                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/dialer/lettertile/LetterTileDrawable.java"
+            line="130"
+            column="30"/>
+    </issue>
+
+    <issue
+        id="UseCompatLoadingForDrawables"
+        message="Use `ResourcesCompat.getDrawable()`"
+        errorLine1="    defaultSpamAvatar = res.getDrawable(R.drawable.quantum_ic_report_vd_theme_24, null);"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/dialer/lettertile/LetterTileDrawable.java"
+            line="131"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="UseCompatLoadingForDrawables"
+        message="Use `ResourcesCompat.getDrawable()`"
+        errorLine1="    defaultConferenceAvatar = res.getDrawable(R.drawable.quantum_ic_group_vd_theme_24, null);"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/dialer/lettertile/LetterTileDrawable.java"
+            line="132"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UseCompoundDrawables"
+        message="This tag and its children can be replaced by one `&lt;TextView/>` and a compound drawable"
+        errorLine1="    &lt;LinearLayout"
+        errorLine2="     ~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_message.xml"
+            line="65"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `?android:attr/colorBackground` with a theme that also paints a background (inferred theme is `@android:style/Theme.Holo`)"
+        errorLine1="  android:background=&quot;?android:attr/colorBackground&quot;>"
+        errorLine2="  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_message.xml"
+            line="23"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `?android:selectableItemBackground` with a theme that also paints a background (inferred theme is `@android:style/Theme.Holo`)"
+        errorLine1="  android:background=&quot;?android:selectableItemBackground&quot;/>"
+        errorLine2="  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/selectable_text_view.xml"
+            line="24"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute"
+        errorLine1="    &lt;EditText"
+        errorLine2="     ~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_message.xml"
+            line="50"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="ClickableViewAccessibility"
+        message="Custom view `DigitsEditText` overrides `onTouchEvent` but not `performClick`"
+        errorLine1="  public boolean onTouchEvent(MotionEvent event) {"
+        errorLine2="                 ~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/dialer/dialpadview/DigitsEditText.java"
+            line="49"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="ClickableViewAccessibility"
+        message="Custom view `LockableViewPager` overrides `onTouchEvent` but not `performClick`"
+        errorLine1="  public boolean onTouchEvent(MotionEvent motionEvent) {"
+        errorLine2="                 ~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/dialer/widget/LockableViewPager.java"
+            line="49"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="  &lt;ImageView"
+        errorLine2="   ~~~~~~~~~">
+        <location
+            file="src/main/res/layout-land/empty_content_view.xml"
+            line="18"
+            column="4"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="  &lt;ImageView"
+        errorLine2="   ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/empty_content_view.xml"
+            line="18"
+            column="4"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="      &lt;ImageView"
+        errorLine2="       ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/fragment_message.xml"
+            line="75"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Number formatting does not take into account locale settings. Consider using `String.format` instead."
+        errorLine1="      remainingChar.setText(Integer.toString(charLimit));"
+        errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/dialer/widget/MessageFragment.java"
+            line="96"
+            column="29"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Number formatting does not take into account locale settings. Consider using `String.format` instead."
+        errorLine1="      remainingChar.setText(Integer.toString(charLimit - s.length()));"
+        errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/dialer/widget/MessageFragment.java"
+            line="136"
+            column="29"/>
+    </issue>
+
+</issues>
