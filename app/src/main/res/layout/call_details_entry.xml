@@ -83,4 +83,27 @@
       android:layout_below="@id/play_recordings"
       android:maxLines="2"
       android:visibility="gone"/>
+
+  <!-- What was sent with the call through call composer: urgent, a note and a picture. -->
+  <TextView
+      android:id="@+id/composer_info"
+      style="@style/Dialer.TextAppearance.Secondary"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/call_entry_bottom_padding"
+      android:layout_marginStart="@dimen/call_entry_text_left_margin"
+      android:layout_marginEnd="@dimen/call_entry_padding"
+      android:layout_below="@id/rtt_transcript"
+      android:visibility="gone"/>
+
+  <ImageView
+      android:id="@+id/composer_picture"
+      android:layout_width="120dp"
+      android:layout_height="120dp"
+      android:layout_marginBottom="@dimen/call_entry_bottom_padding"
+      android:layout_marginStart="@dimen/call_entry_text_left_margin"
+      android:layout_below="@id/composer_info"
+      android:contentDescription="@string/call_details_composer_picture"
+      android:scaleType="centerCrop"
+      android:visibility="gone"/>
 </RelativeLayout>

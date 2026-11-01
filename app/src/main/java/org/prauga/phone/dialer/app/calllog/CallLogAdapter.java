@@ -856,7 +856,15 @@ public class CallLogAdapter extends GroupingListAdapter
               .setFeatures(cursor.getInt(CallLogQuery.FEATURES))
 
               .setCallMappingId(String.valueOf(cursor.getLong(CallLogQuery.DATE)));
-
+      String subject = cursor.getString(CallLogQuery.SUBJECT);
+      if (subject != null) {
+        entry.setSubject(subject);
+      }
+      entry.setIsUrgent(cursor.getInt(CallLogQuery.PRIORITY) == CallLog.Calls.PRIORITY_URGENT);
+      String picture = cursor.getString(CallLogQuery.COMPOSER_PHOTO_URI);
+      if (picture != null) {
+        entry.setComposerPictureUri(picture);
+      }
 
       String phoneAccountComponentName = cursor.getString(CallLogQuery.ACCOUNT_COMPONENT_NAME);
 

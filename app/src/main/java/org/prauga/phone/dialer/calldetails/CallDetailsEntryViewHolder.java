@@ -29,6 +29,7 @@ import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,6 +74,8 @@ public class CallDetailsEntryViewHolder extends RecyclerView.ViewHolder {
   private final TextView playbackButton;
 
   private final Context context;
+  private final TextView composerInfo;
+  private final ImageView composerPicture;
 
   public CallDetailsEntryViewHolder(
       View container, CallDetailsEntryListener callDetailsEntryListener) {
@@ -86,6 +89,8 @@ public class CallDetailsEntryViewHolder extends RecyclerView.ViewHolder {
 
     playbackButton = (TextView) container.findViewById(R.id.play_recordings);
     rttTranscript = container.findViewById(R.id.rtt_transcript);
+    composerInfo = container.findViewById(R.id.composer_info);
+    composerPicture = container.findViewById(R.id.composer_picture);
     this.callDetailsEntryListener = callDetailsEntryListener;
   }
 
@@ -162,6 +167,11 @@ public class CallDetailsEntryViewHolder extends RecyclerView.ViewHolder {
     } else {
       rttTranscript.setVisibility(View.GONE);
     }
+
+    CharSequence composer = ComposerDetails.describe(context, entry);
+    composerInfo.setText(composer);
+    composerInfo.setVisibility(composer == null ? View.GONE : View.VISIBLE);
+    ComposerDetails.showPicture(composerPicture, entry);
   }
 
   private void handleRecordingClick(View v, List<CallRecording> recordings) {

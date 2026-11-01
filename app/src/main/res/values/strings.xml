@@ -518,4 +518,12 @@
 
   <!-- Label under the name of a spam number in the call log. [CHAR LIMIT=15] -->
   <string name="spam_number_call_log_label">Spam</string>
+  <!-- Call details: the call was marked urgent with call composer [CHAR LIMIT=40] -->
+  <string name="call_details_composer_urgent">Urgent</string>
+  <!-- Call details: the note sent with the call through call composer, in quotes [CHAR LIMIT=NONE] -->
+  <string name="call_details_composer_note">“<xliff:g id="note" example="Running late">%1$s</xliff:g>”</string>
+  <!-- Call details: the call was urgent and came with a note [CHAR LIMIT=NONE] -->
+  <string name="call_details_composer_urgent_note">Urgent · “<xliff:g id="note" example="Running late">%1$s</xliff:g>”</string>
+  <!-- Content description of the picture sent with a call [CHAR LIMIT=NONE] -->
+  <string name="call_details_composer_picture">Picture sent with the call</string>
 </resources>
