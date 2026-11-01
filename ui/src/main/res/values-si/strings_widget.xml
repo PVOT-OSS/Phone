@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="custom_message_hint">අභිරුචි පණිවිඩයක් ලියන්න</string>
+  <string name="toolbar_close">වසන්න</string>
+</resources>

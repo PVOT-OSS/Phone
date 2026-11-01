@@ -3,8 +3,6 @@
   <string name="description_dialpad_back">തിരികെ പോകുക</string>
   <string name="description_dialpad_overflow">കൂടുതൽ‍ ഓപ്‌ഷനുകള്‍</string>
   <string name="description_delete_button">ബാക്ക്‌സ്‌പെയ്‌സ്</string>
-  <string name="description_image_button_plus">ഡയൽ പ്ലസ്</string>
-  <string name="description_voicemail_button">വോയ്‌സ്‌മെയിൽ വിളിക്കുക</string>
   <string name="description_dial_button">ഡയൽ ചെയ്യുക</string>
   <string name="dialog_voicemail_airplane_mode_message">വോയ്‌സ്‌മെയിൽ വിളിക്കാൻ ആദ്യം ഫ്ലൈറ്റ് മോഡ് ഓഫാക്കുക.</string>
   <string name="dialog_voicemail_not_ready_message">വോയ്‌സ്‌മെയിൽ സജ്ജീകരിക്കുന്നതിന്, മെനു &gt; ക്രമീകരണങ്ങൾ എന്നതിലേക്ക് പോകുക.</string>

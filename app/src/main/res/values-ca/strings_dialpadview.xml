@@ -3,8 +3,6 @@
   <string name="description_dialpad_back">Torna enrere</string>
   <string name="description_dialpad_overflow">Més opcions</string>
   <string name="description_delete_button">retrocés</string>
-  <string name="description_image_button_plus">afegeix el signe +</string>
-  <string name="description_voicemail_button">truca a la bústia de veu</string>
   <string name="description_dial_button">marca</string>
   <string name="dialog_voicemail_airplane_mode_message">Per trucar a la bústia de veu, primer has de desactivar el mode d\'avió.</string>
   <string name="dialog_voicemail_not_ready_message">Per configurar la bústia de veu, ves a Menú &gt; Configuració.</string>

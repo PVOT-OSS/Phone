@@ -32,50 +32,6 @@
     <item name="android:windowLightStatusBar">true</item>
   </style>
 
-  <style name="Dialer.ThemeBase.NoActionBar">
-    <!-- Copied from Theme.AppCompat.Light.NoActionBar. We can remove this and update the Dialer
-        base style once none of our activities depend on ActionBar anymore. -->
-    <item name="windowActionBar">false</item>
-    <item name="windowNoTitle">true</item>
-
-    <item name="colorControlHighlight">@color/dialer_ripple_color</item>
-    <item name="android:windowLightStatusBar">true</item>
-  </style>
-
-  <!-- Activities and Applications should inherit from one of the themes above. -->
-  <style name="Dialer.ThemeBase">
-    <item name="android:forceDarkAllowed">true</item>
-    <!-- These values should be used to color all backgrounds. -->
-    <item name="android:colorBackground">@color/dialer_background_color</item>
-    <item name="android:colorBackgroundFloating">@color/dialer_background_floating</item>
-    <item name="colorBackgroundSearchBar">@color/dialer_search_bar_color</item>
-
-    <!-- These values should be used to set text color. -->
-    <item name="android:textColorPrimary">@color/dialer_primary_text_color</item>
-    <item name="android:textColorSecondary">@color/dialer_secondary_text_color</item>
-    <item name="android:textColorPrimaryInverse">@color/google_grey_300</item>
-    <item name="android:textColorSecondaryInverse">@color/google_grey_400</item>
-    <item name="android:textColorHint">@color/google_grey_600</item>
-
-    <!-- These will be automatically used to color most Appcompat/Material widgets. -->
-    <item name="android:colorPrimary">@color/dialer_primary_color</item>
-    <item name="colorPrimary">@color/dialer_primary_color</item>
-    <item name="android:colorPrimaryDark">@color/dialer_primary_color</item>
-    <item name="colorPrimaryDark">@color/dialer_primary_color</item>
-    <item name="android:colorAccent">@color/dialer_theme_color</item>
-    <item name="colorAccent">@color/dialer_theme_color</item>
-
-    <!-- Used to automatically style check/selected checkbox, switches and radio buttons -->
-    <item name="colorControlActivated">?android:attr/colorAccent</item>
-
-    <!-- Dialer specific attributes. -->
-    <item name="colorIcon">@color/google_grey_700</item>
-    <item name="colorIconSecondary">@color/google_grey_400</item>
-    <item name="colorTextOnUnthemedDarkBackground">@android:color/system_neutral1_0</item>
-    <item name="colorIconOnUnthemedDarkBackground">@android:color/system_neutral1_0</item>
-    <item name="colorCallNotificationBackground">@android:color/system_accent2_200</item>
-  </style>
-
   <!-- TODO(a bug): investigate making this style's parent Dialer.ThemeBase.NoActionBar -->
   <style name="Theme.AppCompat.Translucent" parent="Theme.AppCompat.NoActionBar">
     <item name="android:windowNoTitle">true</item>
@@ -97,6 +53,4 @@
   <style name="Dialer.Settings.PreferenceTheme" parent="@style/PreferenceThemeOverlay">
     <item name="switchPreferenceCompatStyle">@style/Dialer.SwitchPreferenceCompat</item>
   </style>
-
-
 </resources>

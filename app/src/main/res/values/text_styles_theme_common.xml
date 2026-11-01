@@ -25,28 +25,10 @@
     <item name="android:fontFamily">@*android:string/config_bodyFontFamily</item>
   </style>
 
-  <style name="Dialer.TextAppearance.Header2" parent="TextAppearance.AppCompat">
-    <item name="android:textColor">?android:attr/textColorPrimary</item>
-    <item name="android:textSize">16sp</item>
-    <item name="android:fontFamily">@*android:string/config_headlineFontFamilyMedium</item>
-  </style>
-
   <style name="Dialer.TextAppearance.SubHeader" parent="TextAppearance.AppCompat">
     <item name="android:textColor">?android:attr/textColorPrimary</item>
     <item name="android:textSize">16sp</item>
     <item name="android:fontFamily">@*android:string/config_headlineFontFamilyMedium</item>
-  </style>
-
-  <style name="Dialer.TextAppearance.Primary" parent="TextAppearance.AppCompat">
-    <item name="android:textColor">?android:attr/textColorPrimary</item>
-    <item name="android:textSize">16sp</item>
-    <item name="android:fontFamily">@*android:string/config_bodyFontFamily</item>
-  </style>
-
-  <style name="Dialer.TextAppearance.Secondary" parent="TextAppearance.AppCompat">
-    <item name="android:textColor">?android:attr/textColorSecondary</item>
-    <item name="android:textSize">14sp</item>
-    <item name="android:fontFamily">@*android:string/config_bodyFontFamily</item>
   </style>
 
   <style name="Dialer.TextAppearance.Secondary2" parent="TextAppearance.AppCompat">
@@ -77,11 +59,6 @@
   </style>
 
   <style name="Dialer.TextAppearance.Primary.Ellipsize">
-    <item name="android:ellipsize">end</item>
-    <item name="android:maxLines">1</item>
-  </style>
-
-  <style name="Dialer.TextAppearance.Secondary.Ellipsize">
     <item name="android:ellipsize">end</item>
     <item name="android:maxLines">1</item>
   </style>

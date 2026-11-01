@@ -3,8 +3,6 @@
   <string name="description_dialpad_back">Terug navigeren</string>
   <string name="description_dialpad_overflow">Meer opties</string>
   <string name="description_delete_button">backspace</string>
-  <string name="description_image_button_plus">plustoets</string>
-  <string name="description_voicemail_button">voicemail bellen</string>
   <string name="description_dial_button">bellen</string>
   <string name="dialog_voicemail_airplane_mode_message">Als je je voicemail wilt bellen, moet je eerst de vliegtuigmodus uitschakelen.</string>
   <string name="dialog_voicemail_not_ready_message">Voor het instellen van voicemail ga je naar Menu &gt; Instellingen.</string>

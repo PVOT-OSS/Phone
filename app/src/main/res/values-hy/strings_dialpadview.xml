@@ -3,8 +3,6 @@
   <string name="description_dialpad_back">Հետ գնալ</string>
   <string name="description_dialpad_overflow">Այլ ընտրանքներ</string>
   <string name="description_delete_button">հետշարժ</string>
-  <string name="description_image_button_plus">հավաքել պլյուս</string>
-  <string name="description_voicemail_button">զանգել ձայնային փոստին</string>
   <string name="description_dial_button">համարհավաքել</string>
   <string name="dialog_voicemail_airplane_mode_message">Ձայնային փոստին զանգելու համար նախ անջատեք Ինքնաթիռի ռեժիմը:</string>
   <string name="dialog_voicemail_not_ready_message">Ձայնային փոստը կարգավորելու համար անցեք Ընտրացնակ &gt; Կարգավորումներ:</string>

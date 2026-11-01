@@ -15,11 +15,6 @@
   ~ limitations under the License
   -->
 <resources>
-  <!-- Hint in a text field to compose a custom message to send with a phone call [CHAR LIMIT=27] -->
-  <string name="custom_message_hint">Write a custom message</string>
-
-  <!-- Accessibility string for close/navigation icon in DialerToolbar -->
-  <string name="toolbar_close">Close</string>
 
   <!-- [CHAR LIMIT=NONE] Shown when there are no contacts in the all contacts list. -->
   <string name="all_contacts_empty">You don\'t have any contacts yet</string>

@@ -15,7 +15,6 @@
   ~ limitations under the License
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <dimen name="button_horizontal_padding">16dp</dimen>
 
   <!-- Select All/Multi Select -->
   <dimen name="select_all_text_size">14sp</dimen>

@@ -3,8 +3,6 @@
   <string name="description_dialpad_back">ಹಿಂದಕ್ಕೆ ನ್ಯಾವಿಗೇಟ್ ಮಾಡು</string>
   <string name="description_dialpad_overflow">ಇನ್ನಷ್ಟು ಆಯ್ಕೆಗಳು</string>
   <string name="description_delete_button">backspace</string>
-  <string name="description_image_button_plus">ಡಯಲ್ ಪ್ಲಸ್</string>
-  <string name="description_voicemail_button">ಧ್ವನಿಮೇಲ್‌‌ಗೆ ಕರೆ ಮಾಡಿ</string>
   <string name="description_dial_button">ಡಯಲ್</string>
   <string name="dialog_voicemail_airplane_mode_message">ಧ್ವನಿಮೇಲ್‌ಗೆ ಕರೆ ಮಾಡಲು, ಮೊದಲು ಏರ್‌ಪ್ಲೇನ್‌‌ ಮೋಡ್‌‌ ಆಫ್‌ ಮಾಡಿ.</string>
   <string name="dialog_voicemail_not_ready_message">ಧ್ವನಿಮೇಲ್‌ ಹೊಂದಿಸಲು, ಮೆನು &gt; ಸೆಟ್ಟಿಂಗ್‌ಗಳುಗೆ ಹೋಗಿ.</string>

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="custom_message_hint">Tulis pesan khusus</string>
-  <string name="toolbar_close">Tutup</string>
   <string name="all_contacts_empty">Anda belum memiliki kontak</string>
   <string name="all_contacts_empty_add_contact_action">Buat kontak baru</string>
   <string name="permission_single_turn_on">Aktifkan</string>

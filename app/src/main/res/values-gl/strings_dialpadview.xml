@@ -3,8 +3,6 @@
   <string name="description_dialpad_back">Volver á vista anterior</string>
   <string name="description_dialpad_overflow">Máis opcións</string>
   <string name="description_delete_button">retroceso</string>
-  <string name="description_image_button_plus">marca o signo máis</string>
-  <string name="description_voicemail_button">chama ao correo de voz</string>
   <string name="description_dial_button">marca</string>
   <string name="dialog_voicemail_airplane_mode_message">Para chamar ao correo de voz, primeiro desactiva o modo avión.</string>
   <string name="dialog_voicemail_not_ready_message">Para configurar o correo de voz, accede a Menú &gt; Configuración.</string>

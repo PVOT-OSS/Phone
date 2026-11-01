@@ -3,8 +3,6 @@
   <string name="description_dialpad_back">Идите назад</string>
   <string name="description_dialpad_overflow">Још опција</string>
   <string name="description_delete_button">backspace</string>
-  <string name="description_image_button_plus">унесите плус</string>
-  <string name="description_voicemail_button">позовите говорну пошту</string>
   <string name="description_dial_button">бирајте број</string>
   <string name="dialog_voicemail_airplane_mode_message">Да бисте позвали говорну пошту, прво искључите режим рада у авиону.</string>
   <string name="dialog_voicemail_not_ready_message">Да бисте подесили говорну пошту, идите у Мени &gt; Подешавања.</string>

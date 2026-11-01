@@ -21,9 +21,6 @@
        This value is for making the hidden configuration explicit in xml. -->
   <dimen name="list_section_divider_min_height">32dip</dimen>
 
-  <!-- contact browser list margins -->
-  <dimen name="contact_browser_list_item_photo_size">40dp</dimen>
-
   <!-- Height of the floating action button -->
   <dimen name="floating_action_button_height">56dp</dimen>
   <!-- Z translation of the floating action button -->

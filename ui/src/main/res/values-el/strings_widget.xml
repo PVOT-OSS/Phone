@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="custom_message_hint">Γράψτε ένα προσαρμ. μήνυμα</string>
+  <string name="toolbar_close">Κλείσιμο</string>
+</resources>

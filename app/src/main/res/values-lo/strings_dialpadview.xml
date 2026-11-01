@@ -3,8 +3,6 @@
   <string name="description_dialpad_back">ນຳທາງກັບຄືນ</string>
   <string name="description_dialpad_overflow">ໂຕເລືອກເພີ່ມເຕີມ</string>
   <string name="description_delete_button">ປຸ່ມ backspace</string>
-  <string name="description_image_button_plus">ແປ້ນພິມບວກ</string>
-  <string name="description_voicemail_button">ໂທຫາເບີຂໍ້ຄວາມສຽງ</string>
   <string name="description_dial_button">ໂທ</string>
   <string name="dialog_voicemail_airplane_mode_message">ທ່ານຕ້ອງປິດໂໝດຢູ່ເທິງຍົນກ່ອນເພື່ອໂທຫາເບີຂໍ້ຄວາມສຽງ.</string>
   <string name="dialog_voicemail_not_ready_message">ເພື່ອຕັ້ງຄ່າຂໍ້ຄວາມສຽງ ໃຫ້ໄປທີ່ ເມນູ &gt; ການຕັ້ງຄ່າ.</string>

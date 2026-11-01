@@ -3,8 +3,6 @@
   <string name="description_dialpad_back">Geri naviqasiya edin</string>
   <string name="description_dialpad_overflow">Daha çox seçim</string>
   <string name="description_delete_button">geri düyməsi</string>
-  <string name="description_image_button_plus">üstəgəl işarəsini yığın</string>
-  <string name="description_voicemail_button">səsli e-poçta zəng edin</string>
   <string name="description_dial_button">nömrə yığın</string>
   <string name="dialog_voicemail_airplane_mode_message">Səsli e-poçta zəng etmək üçün Təyyarə rejimini deaktiv edin.</string>
   <string name="dialog_voicemail_not_ready_message">Səsli e-poçtu ayarlamaq üçün Menyu &gt; Ayarlar bölməsinə daxil olun.</string>

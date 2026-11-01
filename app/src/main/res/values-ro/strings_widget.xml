@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="custom_message_hint">Scrieți mesaj personalizat</string>
-  <string name="toolbar_close">Închideți</string>
   <string name="all_contacts_empty">Nu aveți încă persoane de contact.</string>
   <string name="all_contacts_empty_add_contact_action">Creați o intrare nouă</string>
   <string name="permission_single_turn_on">Activați</string>

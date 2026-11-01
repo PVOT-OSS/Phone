@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="custom_message_hint">Rakstīt pielāgotu ziņojumu</string>
-  <string name="toolbar_close">Aizvērt</string>
   <string name="all_contacts_empty">Jums vēl nav nevienas kontaktpersonas.</string>
   <string name="all_contacts_empty_add_contact_action">Izveidot jaunu kontaktpersonu</string>
   <string name="permission_single_turn_on">Ieslēgt</string>

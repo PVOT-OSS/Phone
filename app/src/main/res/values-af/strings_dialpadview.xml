@@ -3,8 +3,6 @@
   <string name="description_dialpad_back">Gaan terug</string>
   <string name="description_dialpad_overflow">Meer opsies</string>
   <string name="description_delete_button">backspace</string>
-  <string name="description_image_button_plus">belblok-plus</string>
-  <string name="description_voicemail_button">bel stemboodskapdiens</string>
   <string name="description_dial_button">bel</string>
   <string name="dialog_voicemail_airplane_mode_message">Om stemboodskapdiens te bel, skakel eers vliegtuigmodus af.</string>
   <string name="dialog_voicemail_not_ready_message">Om stemboodskapdiens op te stel, gaan na Kieslys &gt; Instellings.</string>
