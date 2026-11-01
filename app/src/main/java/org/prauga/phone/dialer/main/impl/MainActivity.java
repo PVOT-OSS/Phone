@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.splashscreen.SplashScreen;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.prauga.phone.dialer.R;
@@ -47,6 +48,9 @@ public class MainActivity extends TransactionSafeActivity
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+    // The splash hands over to Theme.Pvot; the peer's AppCompat theme is set over it until the
+    // main screen is Compose through and through.
+    SplashScreen.installSplashScreen(this);
     setTheme(R.style.MainActivityTheme);
     super.onCreate(savedInstanceState);
     LogUtil.enterBlock("MainActivity.onCreate");

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+  -->
+<resources>
+    <!-- PvotLightColorScheme.background; the window shows it before the first Compose frame. -->
+    <color name="pvot_window_background">#FFFFFFFF</color>
+    <!-- The call window behind its own background: dark in both themes, as the call screens are. -->
+    <color name="pvot_incall_window_background">#FF000000</color>
+</resources>

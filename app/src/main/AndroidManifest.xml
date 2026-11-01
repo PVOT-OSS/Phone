@@ -256,7 +256,7 @@
             android:label="@string/main_activity_label"
             android:launchMode="singleTask"
             android:resizeableActivity="true"
-            android:theme="@style/LaunchTheme"
+            android:theme="@style/Theme.Pvot.Splash"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing">
 
             <intent-filter>
