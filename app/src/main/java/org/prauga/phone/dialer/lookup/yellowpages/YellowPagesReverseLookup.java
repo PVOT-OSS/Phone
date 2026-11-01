@@ -112,7 +112,7 @@ public class YellowPagesReverseLookup extends ReverseLookup {
     if (info.photoUrl != null) {
       builder.setPhotoUri(info.photoUrl);
     } else {
-      builder.setPhotoUri(ContactBuilder.PHOTO_URI_BUSINESS);
+      builder.setPhotoUri(ContactBuilder.businessPhotoUri(context));
     }
 
     return builder.build();

@@ -70,7 +70,7 @@ public class OpenStreetMapForwardLookup extends ForwardLookup {
         RADIUS, lastLocation.getLatitude(), lastLocation.getLongitude());
 
     try {
-      return getEntries(new JSONObject(LookupUtils.httpPost(LOOKUP_URL, null, request)));
+      return getEntries(context, new JSONObject(LookupUtils.httpPost(LOOKUP_URL, null, request)));
     } catch (IOException e) {
       Log.e(TAG, "Failed to execute query", e);
     } catch (JSONException e) {
@@ -80,7 +80,7 @@ public class OpenStreetMapForwardLookup extends ForwardLookup {
     return null;
   }
 
-  private List<ContactInfo> getEntries(JSONObject results) throws JSONException {
+  private List<ContactInfo> getEntries(Context context, JSONObject results) throws JSONException {
     ArrayList<ContactInfo> details = new ArrayList<>();
     JSONArray elements = results.getJSONArray(RESULT_ELEMENTS);
 
@@ -118,7 +118,7 @@ public class OpenStreetMapForwardLookup extends ForwardLookup {
         ContactBuilder builder = ContactBuilder.forForwardLookup(phoneNumber)
             .setName(ContactBuilder.Name.createDisplayName(displayName))
             .addPhoneNumber(ContactBuilder.PhoneNumber.createMainNumber(phoneNumber))
-            .setPhotoUri(ContactBuilder.PHOTO_URI_BUSINESS);
+            .setPhotoUri(ContactBuilder.businessPhotoUri(context));
 
         if (address != null) {
             ContactBuilder.Address a = new ContactBuilder.Address();

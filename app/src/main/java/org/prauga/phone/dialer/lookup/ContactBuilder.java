@@ -18,6 +18,7 @@
 package org.prauga.phone.dialer.lookup;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
@@ -30,7 +31,6 @@ import android.provider.ContactsContract.DisplayNameSources;
 import android.util.Log;
 
 import org.prauga.phone.contacts.common.util.Constants;
-import org.prauga.phone.dialer.BuildConfig;
 import org.prauga.phone.dialer.R;
 import org.prauga.phone.dialer.phonenumbercache.ContactInfo;
 
@@ -46,12 +46,14 @@ public class ContactBuilder {
   private static final boolean DEBUG = false;
 
   /** Default photo for businesses if no other image is found */
-  public static final String PHOTO_URI_BUSINESS = new Uri.Builder()
-      .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
-      .authority(BuildConfig.APPLICATION_ID)
-      .appendPath(String.valueOf(R.drawable.ic_places_picture_180_holo_light))
-      .build()
-      .toString();
+  public static String businessPhotoUri(Context context) {
+    return new Uri.Builder()
+        .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+        .authority(context.getPackageName())
+        .appendPath(String.valueOf(R.drawable.ic_places_picture_180_holo_light))
+        .build()
+        .toString();
+  }
 
   private final ArrayList<Address> addresses = new ArrayList<>();
   private final ArrayList<PhoneNumber> phoneNumbers = new ArrayList<>();
