@@ -340,7 +340,7 @@
         <activity
             android:name="org.prauga.phone.dialer.postcall.PostCallActivity"
             android:exported="false"
-            android:theme="@style/Dialer.ThemeBase.NoActionBar"
+            android:theme="@style/Theme.Pvot.Transparent"
             android:windowSoftInputMode="adjustResize" />
 
         <activity

@@ -14,6 +14,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.content.edit
 import androidx.core.os.UserManagerCompat
 import androidx.fragment.app.DialogFragment
 import androidx.preference.PreferenceManager
@@ -46,7 +47,7 @@ class VideoChargesAlertDialogFragment : DialogFragment() {
 
     private fun onPositiveButtonClicked(preferences: SharedPreferences, isChecked: Boolean) {
         LogUtil.i("VideoChargesAlertDialogFragment.onPositiveButtonClicked", "isChecked: %b", isChecked)
-        preferences.edit().putBoolean(KEY_DO_NOT_SHOW_VIDEO_CHARGES_ALERT, isChecked).apply()
+        preferences.edit { putBoolean(KEY_DO_NOT_SHOW_VIDEO_CHARGES_ALERT, isChecked) }
 
         val dialerCall = CallList.getInstance().getCallById(requireArguments().getString(ARG_CALL_ID))
         dialerCall?.setDidDismissVideoChargesAlertDialog(true)
