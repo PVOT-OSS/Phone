@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Slå på Kontakter-tillatelsen for å slå på hurtigoppringning.</string>
   <string name="speed_dial_turn_on_contacts_permission">Slå på</string>
   <string name="speed_dial_remove_favorites">Fjern fra favoritter</string>
-    <string name="favorites_header">Favoritter</string>
-    <string name="contact_menu_remove">Fjern</string>
-    <string name="speed_dial_no_contacts_description">Du har ikke lagt til noen favoritter ennå</string>
-    <string name="speed_dial_no_contacts_action_text">Legg til favoritt</string>
 </resources>

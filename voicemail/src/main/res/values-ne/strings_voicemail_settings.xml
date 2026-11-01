@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">भिजुअल भ्वाइस मेल निष्क्रिय पार्नुहोस्</string>
   <string name="confirm_disable_voicemail_dialog_message">यस कार्यले यो अनुप्रयोगमा भण्डारण गरिएको सबै भ्वाइस मेल र Google ट्रान्सक्रिप्टहरू मेट्नेछ। तपाईंको सेवा प्रदायकले आफ्ना प्रतिलिपिहरू आफूसँग राख्न पनि सक्नेछ।</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">निष्क्रिय पार्नु…</string>
-    <string name="voicemail_settings_title">भ्वाइस मेल</string>
 </resources>

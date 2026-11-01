@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Выключыць візуальную галасавую пошту</string>
   <string name="confirm_disable_voicemail_dialog_message">Гэта прывядзе да выдалення ўсіх паведамленняў галасавой пошты і расшыфровак Google, якія захоўваюцца ў гэтай праграме. Аператар можа пакінуць свае копіі.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ВЫКЛЮЧЫЦЬ</string>
-    <string name="voicemail_settings_title">Галасавая пошта</string>
 </resources>

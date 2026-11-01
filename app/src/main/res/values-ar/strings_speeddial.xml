@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">لتمكين الاتصال السريع، شغِّل إذن جهات الاتصال.</string>
   <string name="speed_dial_turn_on_contacts_permission">تفعيل</string>
   <string name="speed_dial_remove_favorites">الإزالة من العناصر المفضّلة</string>
-    <string name="favorites_header">المفضّلة</string>
-    <string name="contact_menu_remove">إزالة</string>
-    <string name="speed_dial_no_contacts_description">لم تضف أي عناصر إلى المفضّلة حتى الآن</string>
-    <string name="speed_dial_no_contacts_action_text">إضافة إلى المُفضلة</string>
 </resources>

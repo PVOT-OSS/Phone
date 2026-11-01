@@ -7,9 +7,5 @@
   <string name="assisted_dialing_country_code_entry_failure">Oppringningsassistanse ble brukt</string>
   <string name="rtt_transcript_not_available">Transkripsjoner er bare tilgjengelige for anrop med meldinger</string>
   <string name="rtt_transcript_link">Se transkripsjonen</string>
-    <string name="call_details_report_call_id">Rapportér feil nummer</string>
-    <string name="report_caller_id_dialog_title">Rapportér feil nummer</string>
-    <string name="report_caller_id_failed">Kunne ikke rapportere nummeret</string>
-    <string name="report_caller_id_toast">Nummeret er rapportert</string>
   <string name="call_details_message">Melding</string>
 </resources>

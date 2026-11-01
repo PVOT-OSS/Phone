@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">දෘශ්‍ය හඬ තැපෑල ක්‍රියාවිරහිත කරන්න</string>
   <string name="confirm_disable_voicemail_dialog_message">මෙම යෙදුම තුළ ගබඩා කර ඇති ඕනෑම හඬ තැපැල් සහ Google පිටපත් මකනු ඇත. ඔබගේ වාහකය තමන්ගේම පිටපත් තබා ගත හැකිය.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ක්‍රියාවිරහිත කරන්න</string>
-    <string name="voicemail_settings_title">හඬ තැපෑල</string>
 </resources>

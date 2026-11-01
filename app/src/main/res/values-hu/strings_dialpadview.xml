@@ -9,9 +9,4 @@
   <string name="simContacts_title">Névjegyek a SIM-kártyán</string>
   <string name="menu_callNumber">Hívás: %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Nem lehet segélyhívást kezdeményezni Wi-Fi-n keresztül</string>
-    <string name="add_2sec_pause">2 mp-es szünet hozzáadása</string>
-    <string name="add_wait">Várakozás hozzáadása</string>
-    <string name="dialer_useDtmfDialpad">Hangkódos telefonbillentyűzet használata</string>
-    <string name="dialer_returnToInCallScreen">Vissza a folyamatban lévő híváshoz</string>
-    <string name="dialer_addAnotherCall">Hívás hozzáadása</string>
 </resources>

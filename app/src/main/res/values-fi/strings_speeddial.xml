@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Jos haluat käyttää pikavalintaa, ota Yhteystiedot-käyttöoikeus käyttöön.</string>
   <string name="speed_dial_turn_on_contacts_permission">Ota käyttöön</string>
   <string name="speed_dial_remove_favorites">Poista suosikeista</string>
-    <string name="favorites_header">Suosikit</string>
-    <string name="contact_menu_remove">Poista</string>
-    <string name="speed_dial_no_contacts_description">Et ole vielä lisännyt suosikkeja</string>
-    <string name="speed_dial_no_contacts_action_text">Lisää suosikki</string>
 </resources>

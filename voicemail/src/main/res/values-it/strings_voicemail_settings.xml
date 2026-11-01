@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Disattiva la lettura dei messaggi vocali</string>
   <string name="confirm_disable_voicemail_dialog_message">Tutti i messaggi vocali e le trascrizioni Google memorizzati all\'interno di questa app verranno eliminati. L\'operatore può conservare delle copie.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">DISATTIVA</string>
-    <string name="voicemail_settings_title">Segreteria</string>
 </resources>

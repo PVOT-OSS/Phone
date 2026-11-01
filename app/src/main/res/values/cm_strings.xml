@@ -45,7 +45,4 @@
 
     <string name="default_dialer_text">You must set Phone as the default phone app to use it.</string>
     <string name="default_dialer_action">Set as default</string>
-    <string name="incall_category_key" translatable="false">dialer_general_incall_category_key</string>
-    <string name="call_recording_category_key" translatable="false">call_recording_category</string>
-    <string name="call_via">Call via</string>
 </resources>

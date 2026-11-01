@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Түргэн залгалтыг идэвхжүүлэхийн тулд харилцагчийн зөвшөөрлийг идэвхжүүлнэ үү.</string>
   <string name="speed_dial_turn_on_contacts_permission">Асаах</string>
   <string name="speed_dial_remove_favorites">Дуртайгаас хасах</string>
-    <string name="favorites_header">Дуртай</string>
-    <string name="contact_menu_remove">Хасах</string>
-    <string name="speed_dial_no_contacts_description">Та одоогоор ямар ч дуртай зүйлс нэмээгүй байна</string>
-    <string name="speed_dial_no_contacts_action_text">Дуртай зүйлээ нэмэх</string>
 </resources>

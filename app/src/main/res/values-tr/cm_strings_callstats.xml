@@ -31,18 +31,4 @@
     <string name="call_stats_title_count">Arama sayısı</string>
     <string name="call_stats_title_average_duration">Ortalama arama süresi</string>
     <string name="recent_calls_no_items_in_range">Arama kaydı seçilen zaman aralığında herhangi bir arama içermiyor.</string>
-    <string name="call_stats_header_total_callsonly">Toplam: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Başlangıç tarihi</string>
-    <string name="call_stats_filter_to">Bitiş tarihi</string>
-    <string name="call_stats_filter_picker_title">Filtreleme aralığı</string>
-    <string name="date_quick_selection">Hızlı seçim</string>
-    <string name="date_qs_currentmonth">Bu ay</string>
-    <string name="date_qs_currentquarter">Şu anki çeyrek</string>
-    <string name="date_qs_currentyear">Bu yıl</string>
-    <string name="date_qs_lastweek">Geçen hafta</string>
-    <string name="date_qs_lastmonth">Geçen ay</string>
-    <string name="date_qs_lastquarter">Geçen çeyrek</string>
-    <string name="date_qs_lastyear">Geçen yıl</string>
-    <string name="call_stats_sort_by_duration">Arama süresine göre sırala</string>
-    <string name="call_stats_sort_by_count">Arama sayısına göre sırala</string>
 </resources>

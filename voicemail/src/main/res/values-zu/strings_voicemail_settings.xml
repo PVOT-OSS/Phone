@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Vala ivoyisimeyili yokubuka</string>
   <string name="confirm_disable_voicemail_dialog_message">Lokhu kuzosula noma iyiphi ivoyisimeyili nemibhalo ye-Google elondolozwe ngaphakathi kwalolu hlelo lokusebenza. Inkampani yakho yenethiwekhi ikugcina kumakhophi ayo.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">VALA</string>
-    <string name="voicemail_settings_title">Ivoyisimeyili</string>
 </resources>

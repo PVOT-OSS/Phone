@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">స్పీడ్ డయల్‌ను ప్రారంభించడానికి, పరిచయాల అనుమతిని ఆన్ చేయండి.</string>
   <string name="speed_dial_turn_on_contacts_permission">ఆన్ చేయి</string>
   <string name="speed_dial_remove_favorites">ఇష్టమైనవాటి నుండి తీసివేయండి</string>
-    <string name="favorites_header">ఇష్టమైనవి</string>
-    <string name="contact_menu_remove">తీసివేయి</string>
-    <string name="speed_dial_no_contacts_description">మీరు ఇంకా ఇష్టమైనవి జోడించలేదు.</string>
-    <string name="speed_dial_no_contacts_action_text">ఇష్టమైనవి జోడించు</string>
 </resources>

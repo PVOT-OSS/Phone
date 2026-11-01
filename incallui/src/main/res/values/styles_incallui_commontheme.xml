@@ -51,17 +51,4 @@
 
 
 
-    <style name="Dialer.Incall.TextAppearance.Label">
-    <item name="android:textColor">?android:attr/textColorPrimary</item>
-    <item name="android:textSize">12sp</item>
-  </style>
-    <style name="Answer.Button" parent="android:Widget.Material.Button">
-    <item name="android:stateListAnimator">@animator/button_state</item>
-  </style>
-    <style name="Answer.Button.Answer">
-    <item name="android:background">@drawable/answer_answer_background</item>
-  </style>
-    <style name="Answer.Button.Decline">
-    <item name="android:background">@drawable/incall_end_call_background</item>
-  </style>
 </resources>

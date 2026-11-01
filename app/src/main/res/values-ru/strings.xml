@@ -97,31 +97,6 @@
   <string name="call_log_action_block_number">Заблокировать номер</string>
   <string name="call_log_action_unblock_number">Разблокировать номер</string>
   <string name="spam_number_call_log_label">Спам</string>
-    <string name="call_log_trash_voicemail">Удалить голосовое сообщение</string>
-    <string name="snackbar_voicemail_deleted">Сообщение удалено</string>
-    <string name="clearCallLogProgress_title">Очистка журнала звонков…</string>
-    <string name="description_playback_speakerphone">Включить или отключить громкую связь</string>
-    <string name="description_playback_seek">Выбрать позицию для воспроизведения</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">Ещё</string>
-    <string name="description_entering_bulk_action_mode">Вы вошли в режим массового действия</string>
-    <string name="description_leaving_bulk_action_mode">Вы вышли из режима массового действия</string>
-    <string name="description_selecting_bulk_action_mode">Выбран объект %1$s</string>
-    <string name="description_unselecting_bulk_action_mode">Выбор объекта %1$s отменен</string>
-    <string name="description_contact_details">Сведения о контакте %1$s</string>
-    <string name="description_spam_contact_details">Сведения о контакте %1$s (подозрение на спам)</string>
-    <string name="description_num_calls">Вызовов: %1$s.</string>
-    <string name="description_video_call">Видеовстреча</string>
-    <string name="select_all">Выбрать все</string>
-    <string name="description_incoming_missed_call">Пропущен вызов от контакта ^1. ^2, ^3, ^4.</string>
-    <string name="description_incoming_answered_call">Принят вызов от контакта ^1. ^2, ^3, ^4.</string>
-    <string name="description_unread_voicemail">Непрослушанное сообщение от контакта ^1, ^2, ^3, ^4.</string>
-    <string name="description_read_voicemail">Голосовая почта от контакта ^1, ^2, ^3, ^4.</string>
-    <string name="description_outgoing_call">Вызов контакту ^1. ^2, ^3, ^4.</string>
-    <string name="description_create_new_contact_action">Добавить контакт: ^1</string>
-    <string name="description_add_to_existing_contact_action">Добавить \"^1\" к контакту</string>
-    <string name="description_details_action">^1 – сведения о вызове</string>
-    <string name="call_log_action_block_report_number">Заблокировать/сообщить о спаме</string>
-    <string name="call_log_action_remove_spam">Не спам</string>
   <string name="call_log_blocked_title">Заблокировано</string>
   <string name="call_log_contacts_title">Контакты</string>
 </resources>

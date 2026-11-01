@@ -23,5 +23,4 @@
   <!-- Option displayed in call log to delete a call log item. [CHAR LIMIT=30] -->
   <string name="delete">Delete</string>
 
-    <string name="call_details_menu_label">Call details</string>
 </resources>

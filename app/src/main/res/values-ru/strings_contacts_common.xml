@@ -19,5 +19,4 @@
   <string name="action_menu_back_from_search">прекратить поиск</string>
   <string name="description_clear_search">Очистить условия поиска</string>
   <string name="description_search_video_call">Видеовызов</string>
-    <string name="call_with_a_note">Написать сообщение абоненту</string>
 </resources>

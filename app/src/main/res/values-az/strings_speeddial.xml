@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Sürətli yığımı aktivləşdirmək üçün, Kontakt icazələrini aktivləşdirin.</string>
   <string name="speed_dial_turn_on_contacts_permission">Aktiv edin</string>
   <string name="speed_dial_remove_favorites">Favoritlərdən silin</string>
-    <string name="favorites_header">Sevimlilər</string>
-    <string name="contact_menu_remove">Silin</string>
-    <string name="speed_dial_no_contacts_description">Hələ heç bir sevimli element əlavə etməmisiniz</string>
-    <string name="speed_dial_no_contacts_action_text">Sevimlilərə əlavə edin</string>
 </resources>

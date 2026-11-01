@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Визуалдық дауыстық хабарды өшіру</string>
   <string name="confirm_disable_voicemail_dialog_message">Бұл әрекет осы қолданбада сақталған дауыстық хабарлар мен Google транскрипцияларын жояды. Оператор өз көшірмелерін сақтауы мүмкін.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ӨШІРУ</string>
-    <string name="voicemail_settings_title">Дауыстық хабар</string>
 </resources>

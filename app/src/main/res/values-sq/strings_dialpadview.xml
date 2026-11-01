@@ -9,9 +9,4 @@
   <string name="simContacts_title">Kontaktet e kartës SIM</string>
   <string name="menu_callNumber">Telefono %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Nuk mund të kryhen telefonata urgjence me WiFi</string>
-    <string name="add_2sec_pause">Shto një ndërprerje 2-sekondëshe</string>
-    <string name="add_wait">Shto një pritje</string>
-    <string name="dialer_useDtmfDialpad">Përdor bllokun e tasteve me tone të prekjes</string>
-    <string name="dialer_returnToInCallScreen">Kthehu te telefonata në vazhdim</string>
-    <string name="dialer_addAnotherCall">Shto telefonatë</string>
 </resources>

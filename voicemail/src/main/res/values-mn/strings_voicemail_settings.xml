@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Уншиж болох дуут шууданг унтраах</string>
   <string name="confirm_disable_voicemail_dialog_message">Ингэснээр энэ апп дотор хадгалсан аливаа дуут шуудан болон Google сийрүүлгийг устгах болно. Таны үүрэн холбооны компанид өөрийнх нь хуулбар хадгалагдаж байж магадгүй.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">УНТРААХ</string>
-    <string name="voicemail_settings_title">Дуут шуудан</string>
 </resources>

@@ -7,9 +7,5 @@
   <string name="assisted_dialing_country_code_entry_failure">전화번호 도우미가 사용됨</string>
   <string name="rtt_transcript_not_available">텍스트 변환 기능은 메시지가 있는 통화에만 사용할 수 있습니다.</string>
   <string name="rtt_transcript_link">스크립트 보기</string>
-    <string name="call_details_report_call_id">잘못된 번호 신고하기</string>
-    <string name="report_caller_id_dialog_title">잘못된 번호 신고</string>
-    <string name="report_caller_id_failed">번호를 신고할 수 없습니다.</string>
-    <string name="report_caller_id_toast">번호가 신고되었습니다.</string>
   <string name="call_details_message">메시지</string>
 </resources>

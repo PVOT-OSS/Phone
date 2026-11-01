@@ -31,18 +31,4 @@
     <string name="call_stats_title_count">Cunntas nan gairmean</string>
     <string name="call_stats_title_average_duration">Faide cuibheasach nan gairmean</string>
     <string name="recent_calls_no_items_in_range">Chan eil gairm sam bith ann an loga nan gairmean agad am broinn rainse na h-ama a thagh thu.</string>
-    <string name="call_stats_header_total_callsonly">Iomlan: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Ceann-là tòiseachaidh</string>
-    <string name="call_stats_filter_to">Ceann-là crìochnachaidh</string>
-    <string name="call_stats_filter_picker_title">Rainse na criathraige</string>
-    <string name="date_quick_selection">Grad-thaghadh</string>
-    <string name="date_qs_currentmonth">Am mìos</string>
-    <string name="date_qs_currentquarter">An cairteal seo</string>
-    <string name="date_qs_currentyear">Am bliadhna</string>
-    <string name="date_qs_lastweek">An t-seachdain seo chaidh</string>
-    <string name="date_qs_lastmonth">Am mìos seo chaidh</string>
-    <string name="date_qs_lastquarter">An cairteal seo chaidh</string>
-    <string name="date_qs_lastyear">An-uiridh</string>
-    <string name="call_stats_sort_by_duration">Seòrsaich a-rèir faide na gairme</string>
-    <string name="call_stats_sort_by_count">Seòrsaich a-rèir cunntas nan gairmea</string>
 </resources>

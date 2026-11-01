@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Изключване на визуалната гласова поща</string>
   <string name="confirm_disable_voicemail_dialog_message">Това ще изтрие гласовите съобщения и преписите от Google, съхранявани в приложението. Операторът ви може да запази свои копия.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ИЗКЛЮЧВАНЕ</string>
-    <string name="voicemail_settings_title">Гласова поща</string>
 </resources>

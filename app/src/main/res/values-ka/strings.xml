@@ -93,31 +93,6 @@
   <string name="call_log_action_block_number">ნომრის დაბლოკვა</string>
   <string name="call_log_action_unblock_number">ნომრის განბლოკვა</string>
   <string name="spam_number_call_log_label">სპამი</string>
-    <string name="call_log_trash_voicemail">ხმოვანი ფოსტის წაშლა</string>
-    <string name="snackbar_voicemail_deleted">ხმოვანი ფოსტა წაიშალა</string>
-    <string name="clearCallLogProgress_title">მიმდ. ზარ. ისტ. გასუფთავება…</string>
-    <string name="description_playback_speakerphone">სპიკერები შეგიძლიათ ჩართოთ და გამორთოთ.</string>
-    <string name="description_playback_seek">დაკვრის პოზიციის მოძებნა</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">სხვა პარამეტრები</string>
-    <string name="description_entering_bulk_action_mode">მიმდინარეობს ერთიანი ქმედების რეჟიმში შესვლა</string>
-    <string name="description_leaving_bulk_action_mode">ერთიანი ქმედების რეჟიმიდან გამოხვედით</string>
-    <string name="description_selecting_bulk_action_mode">არჩეულია %1$s</string>
-    <string name="description_unselecting_bulk_action_mode">%1$s-ის არჩევა გაუქმდა</string>
-    <string name="description_contact_details">%1$s-ის კონტაქტის დეტალები</string>
-    <string name="description_spam_contact_details">სავარაუდოდ სპამერი აბონენტის %1$s საკონტაქტო დეტალები</string>
-    <string name="description_num_calls">%1$s ზარი.</string>
-    <string name="description_video_call">ვიდეოზარი.</string>
-    <string name="select_all">ყველას არჩევა</string>
-    <string name="description_incoming_missed_call">გამოტოვებული ზარი აბონენტისგან: ^1, ^2, ^3, ^4.</string>
-    <string name="description_incoming_answered_call">უპასუხო ზარი აბონენტისგან ^1, ^2, ^3, ^4.</string>
-    <string name="description_unread_voicemail">წაუკითხავი ხმოვანი ფოსტა აბონენტისგან: ^1, ^2, ^3, ^4.</string>
-    <string name="description_read_voicemail">ხმოვანი ფოსტა აბონენტისგან: ^1, ^2, ^3, ^4.</string>
-    <string name="description_outgoing_call">ზარი აბონენტთან ^1, ^2, ^3, ^4.</string>
-    <string name="description_create_new_contact_action">^1-ისთვის კონტაქტის შექმნა</string>
-    <string name="description_add_to_existing_contact_action">^1-ის დამატება არსებულ კონტაქტზე</string>
-    <string name="description_details_action">^1 ზარის დეტალები</string>
-    <string name="call_log_action_block_report_number">დაბლოკვა/სპამის შეტყობინება</string>
-    <string name="call_log_action_remove_spam">არ არის სპამი</string>
   <string name="call_log_blocked_title">დაბლოკილი</string>
   <string name="call_log_contacts_title">კონტაქტები</string>
 </resources>

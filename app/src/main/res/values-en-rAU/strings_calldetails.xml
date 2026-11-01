@@ -7,9 +7,5 @@
   <string name="assisted_dialing_country_code_entry_failure">Assisted dialling was used</string>
   <string name="rtt_transcript_not_available">Transcript available only for calls with messaging</string>
   <string name="rtt_transcript_link">See transcript</string>
-    <string name="call_details_report_call_id">Report inaccurate number</string>
-    <string name="report_caller_id_dialog_title">Report incorrect number</string>
-    <string name="report_caller_id_failed">Couldn\'t report number</string>
-    <string name="report_caller_id_toast">Number reported</string>
   <string name="call_details_message">Message</string>
 </resources>

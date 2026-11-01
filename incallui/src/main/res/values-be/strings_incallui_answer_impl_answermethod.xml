@@ -4,7 +4,4 @@
   <string name="call_incoming_swipe_to_reject">Правядзіце пальцам уніз, каб адхіліць</string>
   <string name="call_incoming_decline">Адхіліць</string>
   <string name="call_incoming_answer">Адказаць</string>
-    <string name="a11y_incoming_call_swipe_to_answer">Правядзіце двума пальцамі ўверх, каб адказаць, ці ўніз, каб адхіліць выклік</string>
-    <string name="a11y_call_incoming_decline_description">Адхіліць</string>
-    <string name="a11y_call_incoming_answer_description">Адказаць</string>
 </resources>

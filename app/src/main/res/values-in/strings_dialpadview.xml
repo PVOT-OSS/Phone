@@ -9,9 +9,4 @@
   <string name="simContacts_title">Kontak di kartu SIM</string>
   <string name="menu_callNumber">Telepon %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Tidak dapat melakukan panggilan darurat melalui Wi-Fi</string>
-    <string name="add_2sec_pause">Tambahkan jeda 2 dtk</string>
-    <string name="add_wait">Tambahkan tunggu</string>
-    <string name="dialer_useDtmfDialpad">Gunakan keypad nada sentuh</string>
-    <string name="dialer_returnToInCallScreen">Kembali ke panggilan sedang berlangsung</string>
-    <string name="dialer_addAnotherCall">Tambahkan panggilan</string>
 </resources>

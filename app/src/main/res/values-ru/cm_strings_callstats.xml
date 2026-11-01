@@ -31,18 +31,4 @@
     <string name="call_stats_title_count">Количество вызовов</string>
     <string name="call_stats_title_average_duration">Средняя продолж. разговора</string>
     <string name="recent_calls_no_items_in_range">В журнале вызовов нет записей за указанный период времени.</string>
-    <string name="call_stats_header_total_callsonly">Всего: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Дата начала</string>
-    <string name="call_stats_filter_to">Дата окончания</string>
-    <string name="call_stats_filter_picker_title">Диапазон выбора</string>
-    <string name="date_quick_selection">Быстрый выбор</string>
-    <string name="date_qs_currentmonth">Текущий месяц</string>
-    <string name="date_qs_currentquarter">Текущий квартал</string>
-    <string name="date_qs_currentyear">Текущий год</string>
-    <string name="date_qs_lastweek">Прошлая неделя</string>
-    <string name="date_qs_lastmonth">Прошлый месяц</string>
-    <string name="date_qs_lastquarter">Прошлый квартал</string>
-    <string name="date_qs_lastyear">Прошлый год</string>
-    <string name="call_stats_sort_by_duration">Сорт. по длительности</string>
-    <string name="call_stats_sort_by_count">Сорт. по количеству</string>
 </resources>

@@ -9,9 +9,4 @@
   <string name="simContacts_title">SIM картадагы байланыштар</string>
   <string name="menu_callNumber">%s номерине чалуу</string>
   <string name="dialpad_hint_emergency_calling_not_available">WiFi аркылуу шашылыш чалуулар иштетилген жок</string>
-    <string name="add_2sec_pause">2-сек. тыныгууну кошуңуз</string>
-    <string name="add_wait">Тыныгуу кошуу</string>
-    <string name="dialer_useDtmfDialpad">Тоналдык терүү тактасын колдонуу</string>
-    <string name="dialer_returnToInCallScreen">Аткарылып жаткан чалууга кайтуу</string>
-    <string name="dialer_addAnotherCall">Чалууну кошуу</string>
 </resources>

@@ -83,5 +83,4 @@
 
        [CHAR LIMIT=NONE]-->
   <string name="description_search_video_call">Video call</string>
-    <string name="call_with_a_note">Call with a note</string>
 </resources>

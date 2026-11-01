@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Slökkva á myndrænu talhólfi</string>
   <string name="confirm_disable_voicemail_dialog_message">Þetta eyðir öllum talhólfsskilaboðum og textauppskrift Google sem forritið geymir. Símafyrirtækið þitt gæti geymt sín eigin afrit.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">SLÖKKVA</string>
-    <string name="voicemail_settings_title">Talhólf</string>
 </resources>

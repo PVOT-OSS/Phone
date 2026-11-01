@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">વિઝ્યુઅલ વૉઇસમેઇલ બંધ કરો</string>
   <string name="confirm_disable_voicemail_dialog_message">આ ક્રિયા આ ઍપમાં સંગ્રહિત કોઈપણ વૉઇસમેઇલ અને Google ટ્રાન્સ્ક્રિપ્ટને ડિલીટ કરી નાખશે. તમારા કૅરિઅર તેમની કૉપિ કદાચ જાળવી રાખી શકે છે.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">બંધ કરો</string>
-    <string name="voicemail_settings_title">વૉઇસમેઇલ</string>
 </resources>

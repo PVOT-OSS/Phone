@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Slå visuel telefonsvarer fra</string>
   <string name="confirm_disable_voicemail_dialog_message">Dette sletter eventuelle talebeskeder og Google-transskriptioner, der er gemt i appen. Dit mobilselskab gemmer muligvis separate kopier.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">SLÅ FRA</string>
-    <string name="voicemail_settings_title">Telefonsvarer</string>
 </resources>

@@ -112,10 +112,4 @@
   <!-- The label for the confirm-disable-voicemail button [CHAR LIMIT=16] -->
   <string name="confirm_disable_voicemail_accept_dialog_label">TURN OFF</string>
 
-    <string name="voicemail_settings_title">Voicemail</string>
-    <string name="voicemail_notifications_key" translatable="false">voicemail_notification_key</string>
-    <string name="voicemail_advanced_settings_key" translatable="false">voicemail_advanced_settings_key</string>
-    <string name="voicemail_visual_voicemail_key" translatable="false">voicemail_visual_voicemail_key</string>
-    <string name="voicemail_visual_voicemail_archive_key" translatable="false">archive_is_enabled</string>
-    <string name="voicemail_change_pin_key" translatable="false">voicemail_change_pin_key</string>
 </resources>

@@ -9,9 +9,4 @@
   <string name="simContacts_title">Кантакты SIM-карты</string>
   <string name="menu_callNumber">Выклікаць %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Экстранныя выклікі ў сетцы Wi‑Fi недаступныя</string>
-    <string name="add_2sec_pause">Дадаць 2-секундную паўзу</string>
-    <string name="add_wait">Дадаць чаканне</string>
-    <string name="dialer_useDtmfDialpad">Выкарыстаць танальную клавіятуру</string>
-    <string name="dialer_returnToInCallScreen">Вярнуцца да бягучага выкліку</string>
-    <string name="dialer_addAnotherCall">Дадаць выклік</string>
 </resources>

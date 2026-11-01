@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Để bật tính năng quay số nhanh, hãy bật quyền đối với Danh bạ.</string>
   <string name="speed_dial_turn_on_contacts_permission">Bật</string>
   <string name="speed_dial_remove_favorites">Xóa khỏi mục ưa thích</string>
-    <string name="favorites_header">Liên hệ ưa thích</string>
-    <string name="contact_menu_remove">Xóa</string>
-    <string name="speed_dial_no_contacts_description">Bạn chưa thêm bất kỳ liên hệ yêu thích nào</string>
-    <string name="speed_dial_no_contacts_action_text">Thêm liên hệ yêu thích</string>
 </resources>

@@ -93,31 +93,6 @@
   <string name="call_log_action_block_number">നമ്പർ ബ്ലോക്കുചെയ്യുക</string>
   <string name="call_log_action_unblock_number">നമ്പർ അൺബ്ലോക്കുചെയ്യുക</string>
   <string name="spam_number_call_log_label">സ്‌പാം</string>
-    <string name="call_log_trash_voicemail">വോയ്‌സ്മെയിൽ ഇല്ലാതാക്കുക</string>
-    <string name="snackbar_voicemail_deleted">വോയ്സ്മെയിൽ ഇല്ലാതാക്കി</string>
-    <string name="clearCallLogProgress_title">കോൾ ചരിത്രം മായ്‌ക്കുന്നു...</string>
-    <string name="description_playback_speakerphone">സ്‌പീക്കർ ഫോൺ ഓണാക്കുക അല്ലെങ്കിൽ ഓഫാക്കുക</string>
-    <string name="description_playback_seek">പ്ലേബാക്ക് സ്ഥാനം തിരയുക</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">കൂടുതൽ‍ ഓപ്‌ഷനുകള്‍</string>
-    <string name="description_entering_bulk_action_mode">ബൾക്ക് പ്രവർത്തന മോഡിലേക്ക് പ്രവേശിക്കുന്നു</string>
-    <string name="description_leaving_bulk_action_mode">ബൾക്ക് പ്രവർത്തന മോഡ് വിട്ടു</string>
-    <string name="description_selecting_bulk_action_mode">%1$s തിരഞ്ഞെടുത്തു</string>
-    <string name="description_unselecting_bulk_action_mode">%1$s തിരഞ്ഞെടുത്തത് മാറ്റി</string>
-    <string name="description_contact_details">%1$s എന്നതിന്റെ കോൺ‌ടാക്റ്റ് വിശദാംശങ്ങൾ</string>
-    <string name="description_spam_contact_details">സംശയമുള്ള %1$s സ്‌പാം കോളറിന്റെ കോൺടാക്‌റ്റ് വിശദാംശങ്ങൾ</string>
-    <string name="description_num_calls">%1$s കോളുകൾ.</string>
-    <string name="description_video_call">വീഡിയോ കോൾ.</string>
-    <string name="select_all">എല്ലാം തിരഞ്ഞെടുക്കുക</string>
-    <string name="description_incoming_missed_call">^1, ^2, ^3, ^4 എന്നതിൽ നിന്നുള്ള മിസ്ഡ് കോൾ.</string>
-    <string name="description_incoming_answered_call">^1, ^2, ^3, ^4 എന്നതിൽ നിന്നുള്ള മറുപടി നൽകിയ കോൾ.</string>
-    <string name="description_unread_voicemail">^1, ^2, ^3, ^4 എന്നതിൽ നിന്നുള്ള വായിക്കാത്ത വോയ്സ്മെയിൽ.</string>
-    <string name="description_read_voicemail">^1, ^2, ^3, ^4 എന്നതിൽ നിന്നുള്ള വോയ്സ്മെയിൽ.</string>
-    <string name="description_outgoing_call">^1, ^2, ^3, ^4 എന്നതിലേക്കുള്ള കോൾ.</string>
-    <string name="description_create_new_contact_action">^1 എന്നതിനായി കോൺടാക്റ്റ് സൃഷ്‌ടിക്കുക</string>
-    <string name="description_add_to_existing_contact_action">നിലവിലുള്ള കോൺടാക്റ്റിലേക്ക് ^1 ചേർക്കുക</string>
-    <string name="description_details_action">^1 എന്നയാളുടെ കോൾ വിശദാംശങ്ങൾ</string>
-    <string name="call_log_action_block_report_number">ബ്ലോക്കുചെയ്യുക/സ്പാമാണെന്ന് റിപ്പോർട്ടുചെയ്യുക</string>
-    <string name="call_log_action_remove_spam">സ്പാം അല്ല</string>
   <string name="call_log_blocked_title">തടഞ്ഞിരിക്കുന്നു</string>
   <string name="call_log_contacts_title">കോണ്‍ടാക്റ്റുകള്‍</string>
 </resources>

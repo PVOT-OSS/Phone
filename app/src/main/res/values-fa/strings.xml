@@ -93,31 +93,6 @@
   <string name="call_log_action_block_number">مسدود کردن شماره</string>
   <string name="call_log_action_unblock_number">رفع انسداد شماره</string>
   <string name="spam_number_call_log_label">هرزنامه</string>
-    <string name="call_log_trash_voicemail">حذف پست صوتی</string>
-    <string name="snackbar_voicemail_deleted">پست صوتی حذف شد</string>
-    <string name="clearCallLogProgress_title">در حال پاک کردن سابقه تماس...</string>
-    <string name="description_playback_speakerphone">روشن یا خاموش کردن بلندگوی تلفن</string>
-    <string name="description_playback_seek">جستجوی موقعیت بازپخش</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">گزینه‌های بیشتر</string>
-    <string name="description_entering_bulk_action_mode">درحال ورود به حالت اقدام انبوه</string>
-    <string name="description_leaving_bulk_action_mode">خروج از حالت اقدام انبوه</string>
-    <string name="description_selecting_bulk_action_mode">%1$s انتخاب شد</string>
-    <string name="description_unselecting_bulk_action_mode">%1$s از حالت انتخاب خارج شد</string>
-    <string name="description_contact_details">جزئیات تماس برای %1$s</string>
-    <string name="description_spam_contact_details">جزئیات تماس برای تماس‌گیرندگان هرزنامه پشتیبانی شده %1$s</string>
-    <string name="description_num_calls">%1$s تماس.</string>
-    <string name="description_video_call">تماس ویدئویی.</string>
-    <string name="select_all">انتخاب همه</string>
-    <string name="description_incoming_missed_call">تماس از دست رفته از ^1، ‏^2، ‏^3، ‏^4.</string>
-    <string name="description_incoming_answered_call">تماس پاسخ داده شده از ^1، ‏^2، ‏^3، ‏^4.</string>
-    <string name="description_unread_voicemail">پست صوتی خوانده نشده از ^1،‏ ^2،‏ ^3،‏ ^4.</string>
-    <string name="description_read_voicemail">پست صوتی از ^1،‏ ^2،‏ ^3،‏ ^4.</string>
-    <string name="description_outgoing_call">تماس با ^1، ‏^2، ‏^3، ‏^4.</string>
-    <string name="description_create_new_contact_action">ایجاد مخاطب برای ^1</string>
-    <string name="description_add_to_existing_contact_action">افزودن ^1 به مخاطب موجود</string>
-    <string name="description_details_action">جزئیات تماس برای ^1</string>
-    <string name="call_log_action_block_report_number">مسدود کردن/گزارش هرزنامه</string>
-    <string name="call_log_action_remove_spam">هرزنامه نیست</string>
   <string name="call_log_blocked_title">مسدود شده</string>
   <string name="call_log_contacts_title">مخاطبین</string>
 </resources>

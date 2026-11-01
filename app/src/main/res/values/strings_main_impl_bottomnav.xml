@@ -30,6 +30,4 @@
   <string name="dock_action_add">Add</string>
 
   <!-- Notification badge indicating that there are more than 9 notifications for the user [CHAR LIMIT=3] -->
-    <string name="tab_title_speed_dial">Favorites</string>
-    <string name="bottom_nav_count_9_plus">9+</string>
 </resources>

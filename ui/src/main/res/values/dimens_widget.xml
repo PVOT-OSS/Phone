@@ -23,11 +23,4 @@
   <dimen name="empty_list_message_text_size">16sp</dimen>
 
   <!-- Floating Action Button -->
-    <dimen name="message_item_text_size">16sp</dimen>
-    <dimen name="textview_item_padding">16dp</dimen>
-    <dimen name="message_remaining_char_text_size">12sp</dimen>
-    <dimen name="message_divider_height">1dp</dimen>
-    <dimen name="send_container_width">48dp</dimen>
-    <dimen name="floating_action_button_margin_right">16dp</dimen>
-    <dimen name="floating_action_button_width">56dp</dimen>
 </resources>

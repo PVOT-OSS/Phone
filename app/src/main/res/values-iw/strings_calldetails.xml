@@ -7,9 +7,5 @@
   <string name="assisted_dialing_country_code_entry_failure">השתמשת בעזרה בחיוג</string>
   <string name="rtt_transcript_not_available">התמלול מבוצע רק לשיחות עם הודעות</string>
   <string name="rtt_transcript_link">הצגת התמליל</string>
-    <string name="call_details_report_call_id">דיווח על מספר לא מדויק</string>
-    <string name="report_caller_id_dialog_title">דיווח על מספר שגוי</string>
-    <string name="report_caller_id_failed">לא ניתן היה לדווח על המספר</string>
-    <string name="report_caller_id_toast">המספר דיווח</string>
   <string name="call_details_message">הודעה</string>
 </resources>

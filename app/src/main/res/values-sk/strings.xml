@@ -97,31 +97,6 @@
   <string name="call_log_action_block_number">Blokovať číslo</string>
   <string name="call_log_action_unblock_number">Zrušiť blokovanie čísla</string>
   <string name="spam_number_call_log_label">Spam</string>
-    <string name="call_log_trash_voicemail">Odstrániť hlasovú správu</string>
-    <string name="snackbar_voicemail_deleted">Hlas. schránka odstránená</string>
-    <string name="clearCallLogProgress_title">Vymazáva sa história hovorov...</string>
-    <string name="description_playback_speakerphone">Zapnúť alebo vypnúť reproduktor</string>
-    <string name="description_playback_seek">Hľadať pozíciu prehrávania</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">Ďalšie možnosti</string>
-    <string name="description_entering_bulk_action_mode">Vstupuje sa do režimu hromadných akcií</string>
-    <string name="description_leaving_bulk_action_mode">Odišli ste z režimu hromadných akcií</string>
-    <string name="description_selecting_bulk_action_mode">Položka %1$s bola vybraná</string>
-    <string name="description_unselecting_bulk_action_mode">Výber položky %1$s bol zrušený</string>
-    <string name="description_contact_details">Podrobnosti kontaktu pre %1$s</string>
-    <string name="description_spam_contact_details">Podrobnosti kontaktu pri podozrení, že volajúci %1$s je šíriteľ spamu</string>
-    <string name="description_num_calls">Počet volaní: %1$s.</string>
-    <string name="description_video_call">Videohovor</string>
-    <string name="select_all">Vybrať všetko</string>
-    <string name="description_incoming_missed_call">Zmeškaný hovor – kontakt ^1, ^2, ^3, ^4.</string>
-    <string name="description_incoming_answered_call">Prijatý hovor – kontakt ^1, ^2, ^3, ^4.</string>
-    <string name="description_unread_voicemail">Neprečítaná správa v hlasovej schránke od ^1, ^2, ^3, ^4.</string>
-    <string name="description_read_voicemail">Správa v hlasovej schránke od ^1, ^2, ^3, ^4.</string>
-    <string name="description_outgoing_call">Volanie – kontakt ^1, ^2, ^3, ^4.</string>
-    <string name="description_create_new_contact_action">Vytvoriť kontakt pre ^1</string>
-    <string name="description_add_to_existing_contact_action">Pridať údaj ^1 ku kontaktu</string>
-    <string name="description_details_action">Podrobnosti hovoru pre kontakt ^1</string>
-    <string name="call_log_action_block_report_number">Blokovať / nahlásiť spam</string>
-    <string name="call_log_action_remove_spam">Toto nie je spam</string>
   <string name="call_log_blocked_title">Blokované</string>
   <string name="call_log_contacts_title">Kontakty</string>
 </resources>

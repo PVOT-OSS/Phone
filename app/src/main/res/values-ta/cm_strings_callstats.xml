@@ -31,18 +31,4 @@
     <string name="call_stats_title_count">அழைப்பு எண்ணிக்கை</string>
     <string name="call_stats_title_average_duration">சராசரி அழைப்புக் காலம்</string>
     <string name="recent_calls_no_items_in_range">உமது அழைப்புப் பதிவில் தேர்ந்த நேர வரம்பில் எந்த அழைப்பும் இல்லை.</string>
-    <string name="call_stats_header_total_callsonly">மொத்தம்: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">தொடக்க நாள்</string>
-    <string name="call_stats_filter_to">முடிவு நாள்</string>
-    <string name="call_stats_filter_picker_title">வரம்பை வடிக்க</string>
-    <string name="date_quick_selection">விரைந்த தேர்வுசெய்தல்</string>
-    <string name="date_qs_currentmonth">நடப்புத் திங்கள்</string>
-    <string name="date_qs_currentquarter">நடப்புக் காலாண்டு</string>
-    <string name="date_qs_currentyear">நடப்பு ஆண்டு</string>
-    <string name="date_qs_lastweek">கடந்த கிழமை</string>
-    <string name="date_qs_lastmonth">கடந்த திங்கள்</string>
-    <string name="date_qs_lastquarter">கடந்த காலாண்டு</string>
-    <string name="date_qs_lastyear">கடந்த ஆண்டு</string>
-    <string name="call_stats_sort_by_duration">அழைப்புக் காலத்தின்படி வரிசையாக்குக</string>
-    <string name="call_stats_sort_by_count">அழைப்பு எண்ணிக்கையின்படி வரிசையாக்குக</string>
 </resources>

@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Vizuālā balss pasta izslēgšana</string>
   <string name="confirm_disable_voicemail_dialog_message">Tiks dzēsti visi balss pasta ziņojumi un Google transkripcijas, kas saglabātas šajā lietotnē. Iespējams, jūsu mobilo sakaru operators saglabās savas kopijas.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">IZSLĒGT</string>
-    <string name="voicemail_settings_title">Balss pasts</string>
 </resources>

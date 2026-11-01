@@ -9,9 +9,4 @@
   <string name="simContacts_title">SIM-kortin yhteystiedot</string>
   <string name="menu_callNumber">Soita %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Hätäpuhelujen soittaminen Wi-Fi-yhteyden kautta ei onnistu</string>
-    <string name="add_2sec_pause">Lisää 2 sekunnin tauko</string>
-    <string name="add_wait">Lisää tauko</string>
-    <string name="dialer_useDtmfDialpad">Käytä näppäimistöä</string>
-    <string name="dialer_returnToInCallScreen">Palaa meneillään olevaan puheluun</string>
-    <string name="dialer_addAnotherCall">Lisää puhelu</string>
 </resources>

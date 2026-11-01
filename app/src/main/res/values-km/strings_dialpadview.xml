@@ -9,9 +9,4 @@
   <string name="simContacts_title">ទំនាក់ទំនង​នៅ​ក្នុង​ស៊ីម​កាត</string>
   <string name="menu_callNumber">ហៅ​ទៅ​កាន់ %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">មិន​អាចធ្វើការ​ហៅ​បន្ទាន់​តាម WiFi បានទេ</string>
-    <string name="add_2sec_pause">បញ្ចូល​ការផ្អាក 2 វិនាទី</string>
-    <string name="add_wait">បញ្ចូល​ការ​រង់ចាំ</string>
-    <string name="dialer_useDtmfDialpad">ប្រើ​បន្ទះ​ចុច​លេខ​តាម​ការប៉ះ​ជា​សំឡេង</string>
-    <string name="dialer_returnToInCallScreen">កំពុង​ត្រឡប់​ទៅកាន់​ការ​ហៅ</string>
-    <string name="dialer_addAnotherCall">បញ្ចូល​ការហៅទូរសព្ទ</string>
 </resources>

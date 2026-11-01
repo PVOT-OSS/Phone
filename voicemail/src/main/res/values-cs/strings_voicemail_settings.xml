@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Vypnout vizuální hlasovou schránku</string>
   <string name="confirm_disable_voicemail_dialog_message">Tím smažete všechny hlasové zprávy a přepisy od Googlu uložené v této aplikaci. Váš operátor si může uchovávat vlastní kopie.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">VYPNOUT</string>
-    <string name="voicemail_settings_title">Hlasová schránka</string>
 </resources>

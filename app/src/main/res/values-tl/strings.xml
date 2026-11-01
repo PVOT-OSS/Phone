@@ -93,31 +93,6 @@
   <string name="call_log_action_block_number">I-block ang numero</string>
   <string name="call_log_action_unblock_number">I-unblock ang numero</string>
   <string name="spam_number_call_log_label">Spam</string>
-    <string name="call_log_trash_voicemail">I-delete ang voicemail</string>
-    <string name="snackbar_voicemail_deleted">Na-delete voicemail</string>
-    <string name="clearCallLogProgress_title">Kini-clear ang history ng tawag…</string>
-    <string name="description_playback_speakerphone">I-on o i-off ang speakerphone</string>
-    <string name="description_playback_seek">Hanapin ang posisyon ng playback</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">Higit pang mga pagpipilian</string>
-    <string name="description_entering_bulk_action_mode">Pumapasok sa bulk action mode</string>
-    <string name="description_leaving_bulk_action_mode">Umalis sa bulk action mode</string>
-    <string name="description_selecting_bulk_action_mode">Napili %1$s</string>
-    <string name="description_unselecting_bulk_action_mode">Inalis sa pagkakapili %1$s</string>
-    <string name="description_contact_details">Mga detalye sa pakikipag-ugnayan para kay/sa %1$s</string>
-    <string name="description_spam_contact_details">Mga detalye sa pakikipag-ugnayan para sa pinaghihinalaang spam na tumatawag%1$s</string>
-    <string name="description_num_calls">%1$s (na) tawag.</string>
-    <string name="description_video_call">Video call.</string>
-    <string name="select_all">Piliin lahat</string>
-    <string name="description_incoming_missed_call">Hindi nasagot na tawag mula kay/sa ^1, ^2, ^3, ^4.</string>
-    <string name="description_incoming_answered_call">Nasagot na tawag mula kay/sa ^1, ^2, ^3, ^4.</string>
-    <string name="description_unread_voicemail">Hindi pa nababasang voicemail mula sa/kay ^1, ^2, ^3, ^4.</string>
-    <string name="description_read_voicemail">Voicemail mula sa/kay ^1, ^2, ^3, ^4.</string>
-    <string name="description_outgoing_call">Tawag kay/sa ^1, ^2, ^3, ^4.</string>
-    <string name="description_create_new_contact_action">Gumawa ng contact para kay/sa ^1</string>
-    <string name="description_add_to_existing_contact_action">Idagdag si/ang ^1 sa umiiral nang contact</string>
-    <string name="description_details_action">Mga detalye ng tawag para sa/kay ^1</string>
-    <string name="call_log_action_block_report_number">I-block/iulat ang spam</string>
-    <string name="call_log_action_remove_spam">Hindi spam</string>
   <string name="call_log_blocked_title">Naka-block</string>
   <string name="call_log_contacts_title">Mga Contact</string>
 </resources>

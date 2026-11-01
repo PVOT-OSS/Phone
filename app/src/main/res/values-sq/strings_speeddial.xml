@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Për të aktivizuar telefonatën e shpejtë, aktivizo lejen e \"Kontakteve\".</string>
   <string name="speed_dial_turn_on_contacts_permission">Aktivizo</string>
   <string name="speed_dial_remove_favorites">Hiq nga të preferuarat</string>
-    <string name="favorites_header">Të preferuarat</string>
-    <string name="contact_menu_remove">Hiq</string>
-    <string name="speed_dial_no_contacts_description">Nuk ke shtuar ende asnjë të preferuar</string>
-    <string name="speed_dial_no_contacts_action_text">Shto si të preferuar</string>
 </resources>

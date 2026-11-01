@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Ili kuwasha kipengele cha unaowasiliana nao zaidi, washa ruhusa ya Anwani.</string>
   <string name="speed_dial_turn_on_contacts_permission">Washa</string>
   <string name="speed_dial_remove_favorites">Ondoa kwenye vipendwa</string>
-    <string name="favorites_header">Unazopendelea</string>
-    <string name="contact_menu_remove">Ondoa</string>
-    <string name="speed_dial_no_contacts_description">Bado hujaongeza anwani zozote unazowasiliana nazo sana</string>
-    <string name="speed_dial_no_contacts_action_text">Ongeza anwani unayowasiliana nayo sana</string>
 </resources>

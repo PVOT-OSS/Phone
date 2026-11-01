@@ -9,9 +9,4 @@
   <string name="simContacts_title">Kontaktpersoner på SIM-kortet</string>
   <string name="menu_callNumber">Ring til %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Det er ikke muligt at foretage nødopkald via Wi‑Fi</string>
-    <string name="add_2sec_pause">Tilføj pause på 2 sek.</string>
-    <string name="add_wait">Tilføj ventetid</string>
-    <string name="dialer_useDtmfDialpad">Brug trykknaptastatur</string>
-    <string name="dialer_returnToInCallScreen">Vend tilbage til igangværende opkald</string>
-    <string name="dialer_addAnotherCall">Tilføj opkald</string>
 </resources>

@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Dezactivați mesageria vocală vizuală</string>
   <string name="confirm_disable_voicemail_dialog_message">Astfel, se vor șterge mesajele vocale și transcrierile Google stocate în această aplicație. E posibil ca operatorul să păstreze o copie.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">DEZACTIVAȚI</string>
-    <string name="voicemail_settings_title">Mesagerie vocală</string>
 </resources>

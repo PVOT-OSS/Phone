@@ -9,9 +9,4 @@
   <string name="simContacts_title">SIM kartes kontaktpersonas</string>
   <string name="menu_callNumber">Zvanīt: %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Izmantojot Wi-Fi, nevar veikt ārkārtas izsaukumus.</string>
-    <string name="add_2sec_pause">Pievienot 2 sekundes ilgu pauzi</string>
-    <string name="add_wait">Pievienot gaidīšanas funkciju</string>
-    <string name="dialer_useDtmfDialpad">Izmantot skārientastatūru</string>
-    <string name="dialer_returnToInCallScreen">Atgriezties pie pašreizējā zvana</string>
-    <string name="dialer_addAnotherCall">Pievienot zvanu</string>
 </resources>

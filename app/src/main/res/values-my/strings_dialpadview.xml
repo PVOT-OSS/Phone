@@ -9,9 +9,4 @@
   <string name="simContacts_title">ဆင်းမ်ကဒ်အဆက်အသွယ်များ</string>
   <string name="menu_callNumber">%s ကို ဖုန်းခေါ်ရန်</string>
   <string name="dialpad_hint_emergency_calling_not_available">Wi‑Fi ဖြင့် အရေးပေါ်ခေါ်ဆိုမှုများ ပြုလုပ်၍မရပါ</string>
-    <string name="add_2sec_pause">၂-စက္ကန့် ခဏရပ်ရန်</string>
-    <string name="add_wait">စောင့်ဆိုင်းရန်</string>
-    <string name="dialer_useDtmfDialpad">နှိပ်ခလုတ်လက်ကွက်ကို အသုံးပြုရန်</string>
-    <string name="dialer_returnToInCallScreen">လက်ရှိဖုန်းပြောနေမှုသို့ ပြန်သွားရန်</string>
-    <string name="dialer_addAnotherCall">နောက်ထပ်ဖုန်းတစ်ခု ခေါ်ဆိုရန်</string>
 </resources>

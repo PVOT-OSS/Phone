@@ -31,18 +31,4 @@
     <string name="call_stats_title_count">Aantal gesprekken</string>
     <string name="call_stats_title_average_duration">Gemiddelde gespreksduur</string>
     <string name="recent_calls_no_items_in_range">Uw oproepgeschiedenis bevat geen oproepen in het geselecteerde tijdsbereik.</string>
-    <string name="call_stats_header_total_callsonly">Totaal: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Begindatum</string>
-    <string name="call_stats_filter_to">Einddatum</string>
-    <string name="call_stats_filter_picker_title">Filterbereik</string>
-    <string name="date_quick_selection">Snelle selectie</string>
-    <string name="date_qs_currentmonth">Huidige maand</string>
-    <string name="date_qs_currentquarter">Huidig kwartaal</string>
-    <string name="date_qs_currentyear">Huidig jaar</string>
-    <string name="date_qs_lastweek">Vorige week</string>
-    <string name="date_qs_lastmonth">Vorige maand</string>
-    <string name="date_qs_lastquarter">Vorig kwartaal</string>
-    <string name="date_qs_lastyear">Vorig jaar</string>
-    <string name="call_stats_sort_by_duration">Sorteren op gespreksduur</string>
-    <string name="call_stats_sort_by_count">Sorteren op gespreksaantal</string>
 </resources>

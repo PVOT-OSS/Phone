@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Για να ενεργοποιήσετε την ταχεία κλήση, ενεργοποιήστε την άδεια επαφών.</string>
   <string name="speed_dial_turn_on_contacts_permission">Ενεργοποίηση</string>
   <string name="speed_dial_remove_favorites">Κατάργηση από τα αγαπημένα</string>
-    <string name="favorites_header">Αγαπημένα</string>
-    <string name="contact_menu_remove">Κατάργηση</string>
-    <string name="speed_dial_no_contacts_description">Δεν έχετε προσθέσει ακόμα αγαπημένα</string>
-    <string name="speed_dial_no_contacts_action_text">Προσθήκη αγαπημένου</string>
 </resources>

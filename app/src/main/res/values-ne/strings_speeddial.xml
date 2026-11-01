@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">स्पिड डायल सक्षम पार्न सम्पर्कहरूमाथिको अनुमति सक्रिय गर्नुहोस्।</string>
   <string name="speed_dial_turn_on_contacts_permission">सक्रिय गर्नुहोस्</string>
   <string name="speed_dial_remove_favorites">मन पर्ने कुराहरूबाट सम्पर्क ठेगाना हटाउनुहोस्</string>
-    <string name="favorites_header">मन पर्ने कुराहरू</string>
-    <string name="contact_menu_remove">हटाउनुहोस्</string>
-    <string name="speed_dial_no_contacts_description">तपाईंले अहिलेसम्म कुनै पनि मन पर्ने सम्पर्क थप्नुभएको छैन</string>
-    <string name="speed_dial_no_contacts_action_text">मन पर्ने सम्पर्क थप्नुहोस्</string>
 </resources>

@@ -31,18 +31,4 @@
     <string name="call_stats_title_count">تعداد تماس</string>
     <string name="call_stats_title_average_duration">متوسط مدت زمان تماس</string>
     <string name="recent_calls_no_items_in_range">لیست تماس شما در محدوده زمانی مشخص شده دارای هیچ تماسی نیست.</string>
-    <string name="call_stats_header_total_callsonly">مجموع میزان تماس: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">تاریخ شروع</string>
-    <string name="call_stats_filter_to">تاریخ اتمام</string>
-    <string name="call_stats_filter_picker_title">محدوده فیلتر</string>
-    <string name="date_quick_selection">انتخاب سریع</string>
-    <string name="date_qs_currentmonth">ماه فعلی</string>
-    <string name="date_qs_currentquarter">سه ماهه فعلی</string>
-    <string name="date_qs_currentyear">سال فعلی</string>
-    <string name="date_qs_lastweek">هفته گذشته</string>
-    <string name="date_qs_lastmonth">ماه گذشته</string>
-    <string name="date_qs_lastquarter">سه ماهه گذشته</string>
-    <string name="date_qs_lastyear">سال گذشته</string>
-    <string name="call_stats_sort_by_duration">مرتب‌سازی براساس مدت تماس</string>
-    <string name="call_stats_sort_by_count">مرتب‌سازی براساس تعداد تماس</string>
 </resources>

@@ -27,13 +27,4 @@
     <item name="android:singleLine">true</item>
     <item name="android:textAllCaps">true</item>
   </style>
-    <style name="Theme.PreCall.DialogHolder" parent="Dialer.ThemeBase.NoActionBar">
-    <item name="android:windowBackground">@android:color/transparent</item>
-    <item name="android:windowActivityTransitions">false</item>
-    <item name="android:windowIsTranslucent">true</item>
-
-    <item name="android:statusBarColor">@android:color/transparent</item>
-    <item name="android:navigationBarColor">@android:color/transparent</item>
-    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-  </style>
 </resources>

@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Tezkor raqam terish uchun Kontaktlar ilovasi ruxsatnomasini yoqing.</string>
   <string name="speed_dial_turn_on_contacts_permission">Yoqish</string>
   <string name="speed_dial_remove_favorites">Saralanganlardan olib tashlash</string>
-    <string name="favorites_header">Saralanganlar</string>
-    <string name="contact_menu_remove">Olib tashlash</string>
-    <string name="speed_dial_no_contacts_description">Birorta kontaktni hali saralanganlarga kiritmagansiz</string>
-    <string name="speed_dial_no_contacts_action_text">Saralanganlarga kiritish</string>
 </resources>

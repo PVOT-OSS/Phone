@@ -31,18 +31,4 @@
     <string name="call_stats_title_count">چاقىرىش قېتىم سانى</string>
     <string name="call_stats_title_average_duration">ئوتتۇرىچە سۆزلىشىش ۋاقتى</string>
     <string name="recent_calls_no_items_in_range">تاللانغان ۋاقىت دائىرىسىدە ھېچقانداق چاقىرىش خاتىرىسى يوق.</string>
-    <string name="call_stats_header_total_callsonly">جەمئىي: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">باشلاش چېسلاسى</string>
-    <string name="call_stats_filter_to">ئاخىرلىشىش چېسلاسى</string>
-    <string name="call_stats_filter_picker_title">سۈزگۈچ دائىرىسى</string>
-    <string name="date_quick_selection">تېز تاللاش</string>
-    <string name="date_qs_currentmonth">نۆۋەتتىكى ئاي</string>
-    <string name="date_qs_currentquarter">نۆۋەتتىكى پەسىل</string>
-    <string name="date_qs_currentyear">نۆۋەتتىكى يىل</string>
-    <string name="date_qs_lastweek">ئالدىنقى ھەپتە</string>
-    <string name="date_qs_lastmonth">ئالدىنقى ئاي</string>
-    <string name="date_qs_lastquarter">ئالدىنقى پەسىل</string>
-    <string name="date_qs_lastyear">ئۆتكەن يىل</string>
-    <string name="call_stats_sort_by_duration">سۆزلىشىش ۋاقتى بويىچە تەرتىپلە</string>
-    <string name="call_stats_sort_by_count">چاقىرىش قېتىم سانى بويىچە تەرتىپلە</string>
 </resources>

@@ -31,18 +31,4 @@
     <string name="call_stats_title_count">ژمارەی پەیوەندییەکان</string>
     <string name="call_stats_title_average_duration">تێکڕای ماوەی پەیوەندی</string>
     <string name="recent_calls_no_items_in_range">تۆماری پەیوەندییەکانت هیچ پەیوەندییەکی تێدا نییە لەم مەودا کاتییەی هەڵبژێردراوە.</string>
-    <string name="call_stats_header_total_callsonly">سەرجەم: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">ڕێککەوتی دەستپێکردن</string>
-    <string name="call_stats_filter_to">ڕێککەوتی کۆتایی</string>
-    <string name="call_stats_filter_picker_title">مەودای پاڵاوتن</string>
-    <string name="date_quick_selection">دیاریکردنی خێرا</string>
-    <string name="date_qs_currentmonth">ئەم مانگە</string>
-    <string name="date_qs_currentquarter">ئەم چارەکە</string>
-    <string name="date_qs_currentyear">ئەمساڵ</string>
-    <string name="date_qs_lastweek">هەفتەی ڕابردوو</string>
-    <string name="date_qs_lastmonth">مانگی ڕابردوو</string>
-    <string name="date_qs_lastquarter">چارەکی ڕابردوو</string>
-    <string name="date_qs_lastyear">ساڵی ڕابردوو</string>
-    <string name="call_stats_sort_by_duration">ڕیزکردن بەپێی ماوەی پەیوەندی</string>
-    <string name="call_stats_sort_by_count">ڕیزکردن بەپێی ژمارەی پەیوەندی</string>
 </resources>

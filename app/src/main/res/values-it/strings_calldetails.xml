@@ -7,9 +7,5 @@
   <string name="assisted_dialing_country_code_entry_failure">È stata utilizzata la composizione assistita</string>
   <string name="rtt_transcript_not_available">Trascrizione disponibile solo per le chiamate con messaggi</string>
   <string name="rtt_transcript_link">Visualizza trascrizione</string>
-    <string name="call_details_report_call_id">Segnala numero sbagliato</string>
-    <string name="report_caller_id_dialog_title">Segnala numero errato</string>
-    <string name="report_caller_id_failed">Impossibile segnalare il numero</string>
-    <string name="report_caller_id_toast">Numero segnalato</string>
   <string name="call_details_message">Invia SMS</string>
 </resources>

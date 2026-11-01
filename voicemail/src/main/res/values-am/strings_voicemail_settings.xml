@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">ዕይታዊ የድምጽ መልዕክትን አጥፋ</string>
   <string name="confirm_disable_voicemail_dialog_message">ይህ ማንኛውንም የድምጽ መልዕክት እና በዚህ መተግበሪያ ውስጥ የተቀመጡ የGoogle ወደ ጽሁፍ ግልባጮችን ይሰርዛል። አገልግሎት አቅራቢዎ የራሱን ቅጅ ሊያቆይ ይችላል።</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">አጥፋ</string>
-    <string name="voicemail_settings_title">የድምፅ መልዕክት</string>
 </resources>

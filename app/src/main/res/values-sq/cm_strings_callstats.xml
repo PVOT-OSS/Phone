@@ -31,18 +31,4 @@
     <string name="call_stats_title_count">Numërimi i thirrjeve</string>
     <string name="call_stats_title_average_duration">Kohëzgjatja mesatare e telefonatave</string>
     <string name="recent_calls_no_items_in_range">Lista e thirrjeve nuk përmban asnjë thirrje gjatë periudhës kohore të zgjedhur.</string>
-    <string name="call_stats_header_total_callsonly">Totali: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Data e fillimit</string>
-    <string name="call_stats_filter_to">Data e mbarimit</string>
-    <string name="call_stats_filter_picker_title">Vargu i filtrimit</string>
-    <string name="date_quick_selection">Përzgjedhje e shpejtë</string>
-    <string name="date_qs_currentmonth">Muaji aktual</string>
-    <string name="date_qs_currentquarter">Simestri aktual</string>
-    <string name="date_qs_currentyear">Viti aktual</string>
-    <string name="date_qs_lastweek">Java e kaluar</string>
-    <string name="date_qs_lastmonth">Muaji i kaluar</string>
-    <string name="date_qs_lastquarter">Simestri i kaluar</string>
-    <string name="date_qs_lastyear">Viti i kaluar</string>
-    <string name="call_stats_sort_by_duration">Rendit sipas kohëzgjatjes</string>
-    <string name="call_stats_sort_by_count">Rendit sipas numërimit</string>
 </resources>

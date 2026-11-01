@@ -93,31 +93,6 @@
   <string name="call_log_action_block_number">Sekat nombor</string>
   <string name="call_log_action_unblock_number">Nyahsekat nombor</string>
   <string name="spam_number_call_log_label">Spam</string>
-    <string name="call_log_trash_voicemail">Padamkan mel suara</string>
-    <string name="snackbar_voicemail_deleted">Mel suara dipadamkan</string>
-    <string name="clearCallLogProgress_title">Mengosongkan sejarah panggilan...</string>
-    <string name="description_playback_speakerphone">Hidupkan atau matikan pembesar suara</string>
-    <string name="description_playback_seek">Dapatkan kedudukan main balik</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">Lagi pilihan</string>
-    <string name="description_entering_bulk_action_mode">Memasuki mod tindakan pukal</string>
-    <string name="description_leaving_bulk_action_mode">Meninggalkan mod tindakan pukal</string>
-    <string name="description_selecting_bulk_action_mode">%1$s dipilih</string>
-    <string name="description_unselecting_bulk_action_mode">%1$s dinyahpilih</string>
-    <string name="description_contact_details">Butiran hubungan untuk %1$s</string>
-    <string name="description_spam_contact_details">Butiran hubungan pemanggil spam yang disyaki %1$s</string>
-    <string name="description_num_calls">%1$s panggilan.</string>
-    <string name="description_video_call">Panggilan video.</string>
-    <string name="select_all">Pilih semua</string>
-    <string name="description_incoming_missed_call">Panggilan tidak dijawab daripada ^1, ^2, ^3, ^4.</string>
-    <string name="description_incoming_answered_call">Panggilan telah dijawab daripada ^1, ^2, ^3, ^4.</string>
-    <string name="description_unread_voicemail">Mel suara yang belum dibaca daripada ^1, ^2, ^3, ^4.</string>
-    <string name="description_read_voicemail">Mel suara daripada ^1, ^2, ^3, ^4.</string>
-    <string name="description_outgoing_call">Buat panggilan kepada ^1, ^2, ^3, ^4.</string>
-    <string name="description_create_new_contact_action">Buat kenalan untuk ^1</string>
-    <string name="description_add_to_existing_contact_action">Tambahkan ^1 pada kenalan yang sedia ada</string>
-    <string name="description_details_action">Butiran panggilan untuk ^1</string>
-    <string name="call_log_action_block_report_number">Sekat/laporkan spam</string>
-    <string name="call_log_action_remove_spam">Bukan spam</string>
   <string name="call_log_blocked_title">Disekat</string>
   <string name="call_log_contacts_title">Kenalan</string>
 </resources>

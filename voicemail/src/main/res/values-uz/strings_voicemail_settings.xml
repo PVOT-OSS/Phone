@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Vizual ovozli pochtani o‘chirib qo‘yish</string>
   <string name="confirm_disable_voicemail_dialog_message">Shu ilovada saqlanayotgan barcha ovozli xabarlar va Google transkripsiyalari o‘chirib tashlanadi. Operatoringiz ularning nusxalarini saqlab qolishi mumkin.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">O‘CHIRIB QO‘YISH</string>
-    <string name="voicemail_settings_title">Ovozli pochta</string>
 </resources>

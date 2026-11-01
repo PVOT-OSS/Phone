@@ -9,9 +9,4 @@
   <string name="simContacts_title">‏אנשי הקשר בכרטיס ה-SIM</string>
   <string name="menu_callNumber">התקשרות אל %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">‏לא ניתן להתקשר לשירותי חירום דרך רשת Wi-Fi</string>
-    <string name="add_2sec_pause">הוספת השהיה של 2 שניות</string>
-    <string name="add_wait">הוספת השהיה</string>
-    <string name="dialer_useDtmfDialpad">שימוש במקלדת עם צלילי חיוג</string>
-    <string name="dialer_returnToInCallScreen">חזרה לשיחה הפעילה</string>
-    <string name="dialer_addAnotherCall">הוספת שיחה</string>
 </resources>

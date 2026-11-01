@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Görünən səsli e-poçtu deaktiv edin</string>
   <string name="confirm_disable_voicemail_dialog_message">Bununla bu tətbiq daxilində saxlanılan hər hansı səsli e-poçt və Google transkripsiyaları silinəcək. Operator onların nüsxələrini saxlaya bilər.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">DEAKTİV EDİN</string>
-    <string name="voicemail_settings_title">Səsli e-poçt</string>
 </resources>

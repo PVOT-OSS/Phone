@@ -9,9 +9,4 @@
   <string name="simContacts_title">SIM 卡联系人</string>
   <string name="menu_callNumber">拨打 %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">无法通过 WLAN 拨打紧急呼救电话</string>
-    <string name="add_2sec_pause">加入 2 秒暂停时间</string>
-    <string name="add_wait">加入等待时间</string>
-    <string name="dialer_useDtmfDialpad">使用按键式键盘</string>
-    <string name="dialer_returnToInCallScreen">返回正在进行的通话</string>
-    <string name="dialer_addAnotherCall">添加通话</string>
 </resources>

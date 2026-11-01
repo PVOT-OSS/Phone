@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Visuele voicemail uitschakelen</string>
   <string name="confirm_disable_voicemail_dialog_message">Hiermee worden voicemails en Google-transcripten verwijderd die zijn opgeslagen in deze app. Mogelijk bewaart uw provider zelf nog kopieën.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">UITSCHAKELEN</string>
-    <string name="voicemail_settings_title">Voicemail</string>
 </resources>

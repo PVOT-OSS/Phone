@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Jei norite įgalinti spartųjį rinkimą, įjunkite Kontaktų leidimą.</string>
   <string name="speed_dial_turn_on_contacts_permission">Įjungti</string>
   <string name="speed_dial_remove_favorites">Pašalinti iš mėgstamiausių</string>
-    <string name="favorites_header">Mėgstamiausi</string>
-    <string name="contact_menu_remove">Pašalinti</string>
-    <string name="speed_dial_no_contacts_description">Dar nepridėjote jokių mėgstamiausių</string>
-    <string name="speed_dial_no_contacts_action_text">Pridėti mėgstamiausią</string>
 </resources>

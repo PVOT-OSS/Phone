@@ -19,5 +19,4 @@
   <string name="action_menu_back_from_search">zaustavi pretraživanje</string>
   <string name="description_clear_search">Brisanje pretraživanja</string>
   <string name="description_search_video_call">Videopoziv</string>
-    <string name="call_with_a_note">Poziv uz bilješku</string>
 </resources>

@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">වේග ඩයල් කිරීම සබල කිරීමට, සම්බන්ධතා අවසරය ක්‍රියාත්මක කරන්න.</string>
   <string name="speed_dial_turn_on_contacts_permission">ක්‍රියාත්මක කරන්න</string>
   <string name="speed_dial_remove_favorites">ප්‍රියතම වෙතින් ඉවත් කරන්න</string>
-    <string name="favorites_header">ප්‍රියතම</string>
-    <string name="contact_menu_remove">ඉවත් කරන්න</string>
-    <string name="speed_dial_no_contacts_description">ඔබ තවම ප්‍රියතම එක් කර නැත</string>
-    <string name="speed_dial_no_contacts_action_text">ප්‍රියතම එක් කරන්න</string>
 </resources>
