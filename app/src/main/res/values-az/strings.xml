@@ -93,31 +93,6 @@
   <string name="call_log_action_block_number">Nömrəni blok edin</string>
   <string name="call_log_action_unblock_number">Nömrəni blokdan çıxarın</string>
   <string name="spam_number_call_log_label">Spam</string>
-    <string name="call_log_trash_voicemail">Səsli məktubu silin</string>
-    <string name="snackbar_voicemail_deleted">Səsli məktub silindi</string>
-    <string name="clearCallLogProgress_title">Zəng tarixçəsi silinir…</string>
-    <string name="description_playback_speakerphone">Spikerfonu aktiv və ya deaktiv edin</string>
-    <string name="description_playback_seek">Oxutma pozisiyası axtarın</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">Daha çox seçim</string>
-    <string name="description_entering_bulk_action_mode">Toplu əməliyyat rejiminə daxil olunur</string>
-    <string name="description_leaving_bulk_action_mode">Toplu əməliyyat rejimi tərk edilir</string>
-    <string name="description_selecting_bulk_action_mode">%1$s seçildi</string>
-    <string name="description_unselecting_bulk_action_mode">%1$s seçilmədi</string>
-    <string name="description_contact_details">%1$s üçün kontakt detalları</string>
-    <string name="description_spam_contact_details">%1$s şübhəli spam zəng edəni üçün kontakt detalları</string>
-    <string name="description_num_calls">%1$s zəng.</string>
-    <string name="description_video_call">Video çağrı.</string>
-    <string name="select_all">Hamısını seçin</string>
-    <string name="description_incoming_missed_call">Buraxılmış zənglər: ^1, ^2, ^3, ^4.</string>
-    <string name="description_incoming_answered_call">Zəngləri cavablandırıb: ^1, ^2, ^3, ^4.</string>
-    <string name="description_unread_voicemail">^1, ^2, ^3, ^4 hesabına gələn oxunmamış səsli mesaj.</string>
-    <string name="description_read_voicemail">^1, ^2, ^3, ^4 hesabına gələn səsli mesaj.</string>
-    <string name="description_outgoing_call">Zəng et: ^1, ^2, ^3, ^4.</string>
-    <string name="description_create_new_contact_action">^1 üçün kontakt yaradın</string>
-    <string name="description_add_to_existing_contact_action">Mövcud kontakta ^1 əlavə edin</string>
-    <string name="description_details_action">^1 üçün detalları çağırın</string>
-    <string name="call_log_action_block_report_number">Spamı blok edin/bildirin</string>
-    <string name="call_log_action_remove_spam">Spam deyil</string>
   <string name="call_log_blocked_title">Bloklanmış</string>
   <string name="call_log_contacts_title">Kontaktlar</string>
 </resources>

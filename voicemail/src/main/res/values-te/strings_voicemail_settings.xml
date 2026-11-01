@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">దృశ్య వాయిస్ మెయిల్‌ని ఆఫ్ చేయండి</string>
   <string name="confirm_disable_voicemail_dialog_message">ఇది ఈ యాప్‌లో నిల్వ చేయబడిన ఏవైనా వాయిస్ మెయిల్‌ మరియు Google లిప్యంతరీకరణలను తొలగిస్తుంది. మీ క్యారియర్ దాని స్వంత కాపీలను భద్రపరచుకోవచ్చు.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ఆఫ్ చేయండి</string>
-    <string name="voicemail_settings_title">వాయిస్ మెయిల్</string>
 </resources>

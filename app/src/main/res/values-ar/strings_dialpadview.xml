@@ -9,9 +9,4 @@
   <string name="simContacts_title">‏شريحة SIM وجهات الاتصال</string>
   <string name="menu_callNumber">الاتصال بالرقم %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">‏يتعذّر إجراء مكالمات طوارئ عبر WiFi.</string>
-    <string name="add_2sec_pause">إضافة ثانيتين إيقاف مؤقت</string>
-    <string name="add_wait">إضافة انتظار</string>
-    <string name="dialer_useDtmfDialpad">استخدام لوحة مفاتيح نغمات باللمس</string>
-    <string name="dialer_returnToInCallScreen">عودة إلى المكالمة الجارية</string>
-    <string name="dialer_addAnotherCall">إضافة مكالمة</string>
 </resources>

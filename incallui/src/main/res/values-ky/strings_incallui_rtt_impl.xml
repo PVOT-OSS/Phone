@@ -4,6 +4,4 @@
   <string name="rtt_input_hint">Билдирүүнү териңиз</string>
   <string name="rtt_status_banner_text">RTT чалууга %s кошулгуча күтө туралы…</string>
   <string name="rtt_transcript_advisory">Маектешиңиз жазып жатканыңызды көрө алат. Транскрипциялар түзмөгүңүздөгү чалуулар таржымалында сакталат.</string>
-    <string name="content_description_rtt_chat_avatar">Аватар</string>
-    <string name="rtt_button_back">Артка</string>
 </resources>

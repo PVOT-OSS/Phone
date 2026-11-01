@@ -93,31 +93,6 @@
   <string name="call_log_action_block_number">ಸಂಖ್ಯೆಯನ್ನು ನಿರ್ಬಂಧಿಸು</string>
   <string name="call_log_action_unblock_number">ಸಂಖ್ಯೆಯನ್ನು ಅನಿರ್ಬಂಧಿಸು</string>
   <string name="spam_number_call_log_label">ಸ್ಪ್ಯಾಮ್</string>
-    <string name="call_log_trash_voicemail">ಧ್ವನಿಮೇಲ್‌ ಅಳಿಸಿ</string>
-    <string name="snackbar_voicemail_deleted">ಧ್ವನಿಮೇಲ್ ಅಳಿಸಲಾಗಿದೆ</string>
-    <string name="clearCallLogProgress_title">ಕರೆ ಇತಿಹಾಸವನ್ನು ತೆರವುಗೊಳಿಸಲಾಗುತ್ತಿದೆ…</string>
-    <string name="description_playback_speakerphone">ಸ್ಪೀಕರ್‌ಫೋನ್ ಸ್ವಿಚ್ ಆನ್ ಅಥವಾ ಆಫ್ ಮಾಡಿ</string>
-    <string name="description_playback_seek">ಪ್ಲೇಬ್ಯಾಕ್ ಸ್ಥಾನವನ್ನು ಪಡೆಯಿರಿ</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">ಇನ್ನಷ್ಟು ಆಯ್ಕೆಗಳು</string>
-    <string name="description_entering_bulk_action_mode">ದೊಡ್ಡ ಪ್ರಮಾಣದ ಕ್ರಿಯೆಯ ಮೋಡ್‌ಗೆ ಪ್ರವೇಶಿಸಲಾಗುತ್ತಿದೆ</string>
-    <string name="description_leaving_bulk_action_mode">ದೊಡ್ಡ ಪ್ರಮಾಣದ ಕ್ರಿಯೆಯ ಮೋಡ್ ತೊರೆಯಲಾಗಿದೆ</string>
-    <string name="description_selecting_bulk_action_mode">%1$s ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ</string>
-    <string name="description_unselecting_bulk_action_mode">%1$s ಆಯ್ಕೆಯನ್ನು ರದ್ದುಮಾಡಲಾಗಿದೆ</string>
-    <string name="description_contact_details">%1$s ಗೆ ಸಂಪರ್ಕ ವಿವರಗಳು</string>
-    <string name="description_spam_contact_details">%1$s ಶಂಕಿತ ಸ್ಪ್ಯಾಮ್ ಕರೆದಾರರಿಗಾಗಿ ಸಂಪರ್ಕ ವಿವರಗಳು</string>
-    <string name="description_num_calls">%1$s ಕರೆಗಳು.</string>
-    <string name="description_video_call">ವೀಡಿಯೊ ಕರೆ.</string>
-    <string name="select_all">ಎಲ್ಲವನ್ನೂ ಆಯ್ಕೆ ಮಾಡಿ</string>
-    <string name="description_incoming_missed_call">^1, ^2, ^3, ^4 ರಿಂದ ತಪ್ಪಿದ ಕರೆ.</string>
-    <string name="description_incoming_answered_call">^1, ^2, ^3, ^4 ರಿಂದ ಕರೆಗೆ ಉತ್ತರಿಸಲಾಗಿದೆ.</string>
-    <string name="description_unread_voicemail">^1, ^2, ^3, ^4 ರಿಂದ ಓದದಿರುವ ಧ್ವನಿಮೇಲ್.</string>
-    <string name="description_read_voicemail">^1, ^2, ^3, ^4 ರಿಂದ ಧ್ವನಿಮೇಲ್.</string>
-    <string name="description_outgoing_call">^1, ^2, ^3, ^4 ಗೆ ಕರೆ.</string>
-    <string name="description_create_new_contact_action">^1 ಗೆ ಸಂಪರ್ಕವನ್ನು ರಚಿಸಿ</string>
-    <string name="description_add_to_existing_contact_action">ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಸಂಪರ್ಕಕ್ಕೆ ^1 ಸೇರಿಸಿ</string>
-    <string name="description_details_action">^1 ಗೆ ಸಂಪರ್ಕದ ವಿವರಗಳು</string>
-    <string name="call_log_action_block_report_number">ಸ್ಪ್ಯಾಮ್ ನಿರ್ಬಂಧಿಸು/ವರದಿ ಮಾಡು</string>
-    <string name="call_log_action_remove_spam">ಸ್ಪ್ಯಾಮ್‌ ಅಲ್ಲ</string>
   <string name="call_log_blocked_title">ನಿರ್ಬಂಧಿಸಲಾಗಿದೆ</string>
   <string name="call_log_contacts_title">ಸಂಪರ್ಕಗಳು</string>
 </resources>

@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">ເພື່ອເປີດໃຊ້ການໂທດ່ວນ, ໃຫ້ເປີດສິດອະນຸຍາດລາຍຊື່ຜູ້ຕິດຕໍ່ກ່ອນ</string>
   <string name="speed_dial_turn_on_contacts_permission">ເປີດ</string>
   <string name="speed_dial_remove_favorites">ລຶບອອກຈາກລາຍການທີ່ມັກ</string>
-    <string name="favorites_header">ລາຍການທີ່ມັກ</string>
-    <string name="contact_menu_remove">ລຶບ</string>
-    <string name="speed_dial_no_contacts_description">ທ່ານຍັງບໍ່ໄດ້ເພີ່ມລາຍການທີ່ມັກເທື່ອ</string>
-    <string name="speed_dial_no_contacts_action_text">ເພີ່ມ​ລາຍ​ການ​ທີ່​ມັກ</string>
 </resources>

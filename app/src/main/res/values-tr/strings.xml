@@ -93,31 +93,6 @@
   <string name="call_log_action_block_number">Numarayı engelle</string>
   <string name="call_log_action_unblock_number">Numaranın engellemesini kaldır</string>
   <string name="spam_number_call_log_label">Spam</string>
-    <string name="call_log_trash_voicemail">Sesli mesajı sil</string>
-    <string name="snackbar_voicemail_deleted">Sesli mesaj silindi</string>
-    <string name="clearCallLogProgress_title">Çağrı geçmişi temizleniyor…</string>
-    <string name="description_playback_speakerphone">Hoperlörü aç veya kapat</string>
-    <string name="description_playback_seek">Oynatma konumunu ayarla</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">Diğer seçenekler</string>
-    <string name="description_entering_bulk_action_mode">Toplu işlem moduna giriliyor</string>
-    <string name="description_leaving_bulk_action_mode">Toplu işlem modundan çıkıldı</string>
-    <string name="description_selecting_bulk_action_mode">Seçildi: %1$s</string>
-    <string name="description_unselecting_bulk_action_mode">Seçimi kaldırıldı: %1$s</string>
-    <string name="description_contact_details">%1$s için kişi ayrıntıları</string>
-    <string name="description_spam_contact_details">Spam olduğundan şüphelenilen arayanın (%1$s) kişi ayrıntıları</string>
-    <string name="description_num_calls">%1$s çağrı.</string>
-    <string name="description_video_call">Video görüşmesi.</string>
-    <string name="select_all">Tümünü seç</string>
-    <string name="description_incoming_missed_call">Cevapsız çağrı: ^1, ^2, ^3, ^4.</string>
-    <string name="description_incoming_answered_call">Cevaplanan çağrı: ^1, ^2, ^3, ^4.</string>
-    <string name="description_unread_voicemail">Dinlenmemiş sesli posta: ^1, ^2, ^3, ^4.</string>
-    <string name="description_read_voicemail">Sesli posta: ^1, ^2, ^3, ^4</string>
-    <string name="description_outgoing_call">Yapılan çağrı: ^1, ^2, ^3, ^4.</string>
-    <string name="description_create_new_contact_action">^1 için kişi oluştur</string>
-    <string name="description_add_to_existing_contact_action">^1 bilgisini mevcut kişiye ekle</string>
-    <string name="description_details_action">^1 için çağrı ayrıntıları</string>
-    <string name="call_log_action_block_report_number">Engelle/spam bildir</string>
-    <string name="call_log_action_remove_spam">Spam değil</string>
   <string name="call_log_blocked_title">Engellendi</string>
   <string name="call_log_contacts_title">Kişiler</string>
 </resources>

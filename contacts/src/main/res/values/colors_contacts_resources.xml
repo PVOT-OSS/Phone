@@ -39,7 +39,4 @@
   <!-- Divider line on the call subject dialog. -->
 
   <!-- Text color for the SEND & CALL button on the call subject dialog. -->
-    <color name="call_subject_limit_exceeded">#d1041c</color>
-    <color name="call_subject_divider">#d8d8d8</color>
-    <color name="call_subject_button">#00c853</color>
 </resources>

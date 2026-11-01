@@ -27,7 +27,6 @@ import org.prauga.phone.dialer.phonenumbergeoutil.impl.PhoneNumberGeoUtilModule;
 import org.prauga.phone.dialer.precall.impl.PreCallModule;
 import org.prauga.phone.dialer.preferredsim.PreferredSimModule;
 import org.prauga.phone.dialer.preferredsim.suggestion.stub.StubSimSuggestionModule;
-import org.prauga.phone.dialer.promotion.impl.PromotionModule;
 import org.prauga.phone.dialer.storage.StorageModule;
 import org.prauga.phone.dialer.theme.base.impl.AospThemeModule;
 import org.prauga.phone.voicemail.impl.VoicemailModule;
@@ -48,7 +47,6 @@ import javax.inject.Singleton;
       PhoneNumberGeoUtilModule.class,
       PreCallModule.class,
       PreferredSimModule.class,
-      PromotionModule.class,
       StorageModule.class,
       StubSimSuggestionModule.class,
       AospThemeModule.class,

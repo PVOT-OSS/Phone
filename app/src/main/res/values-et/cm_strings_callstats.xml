@@ -31,18 +31,4 @@
     <string name="call_stats_title_count">Kõnede arv</string>
     <string name="call_stats_title_average_duration">Keskmine kõne kestus</string>
     <string name="recent_calls_no_items_in_range">Sinu kõnelogi ei sisalda valitud ajavahemikus ühtegi kõnet.</string>
-    <string name="call_stats_header_total_callsonly">Kokku: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Alguskuupäev</string>
-    <string name="call_stats_filter_to">Lõppkuupäev</string>
-    <string name="call_stats_filter_picker_title">Filtri vahemik</string>
-    <string name="date_quick_selection">Kiirvalik</string>
-    <string name="date_qs_currentmonth">Käesolev kuu</string>
-    <string name="date_qs_currentquarter">Käesolev kvartal</string>
-    <string name="date_qs_currentyear">Käesolev aasta</string>
-    <string name="date_qs_lastweek">Eelmine nädal</string>
-    <string name="date_qs_lastmonth">Eelmine kuu</string>
-    <string name="date_qs_lastquarter">Eelmine kvartal</string>
-    <string name="date_qs_lastyear">Eelmine aasta</string>
-    <string name="call_stats_sort_by_duration">Sorteeri kõne kestvuse järgi</string>
-    <string name="call_stats_sort_by_count">Sorteeri kõnede arvu järgi</string>
 </resources>

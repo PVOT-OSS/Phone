@@ -1,7 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="new_call_log_carrier_video">தொலைத்தொடர்பு நிறுவன வீடியோ</string>
-    <string name="new_call_log_unknown">தெரியாத எண்கள்</string>
-    <string name="new_call_log_secondary_blocked">தடுக்கப்பட்டது</string>
-    <string name="new_call_log_secondary_spam">ஸ்பேம்</string>
 </resources>

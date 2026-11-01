@@ -9,9 +9,4 @@
   <string name="simContacts_title">ລາຍຊື່ຜູ້ຕິດຕໍ່ SIM card</string>
   <string name="menu_callNumber">ໂທ​ຫາ %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">ບໍ່ສາມາດໂທສຸກເສີນຜ່ານ Wi‑Fi ໄດ້</string>
-    <string name="add_2sec_pause">ເພີ່ມການຂັ້ນເວລາ 2 ວິນາທີ</string>
-    <string name="add_wait">ເພີ່ມການລໍຖ້າ</string>
-    <string name="dialer_useDtmfDialpad">ໃຊ້ປຸ່ມກົດສັນຍານສຽງ</string>
-    <string name="dialer_returnToInCallScreen">ກັບໄປການໂທທີ່ກຳລັງດຳເນີນຢູ່</string>
-    <string name="dialer_addAnotherCall">ເພີ່ມການໂທ</string>
 </resources>

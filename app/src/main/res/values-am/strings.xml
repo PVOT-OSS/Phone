@@ -93,31 +93,6 @@
   <string name="call_log_action_block_number">ቁጥርን አግድ</string>
   <string name="call_log_action_unblock_number">ቁጥርን አታግድ</string>
   <string name="spam_number_call_log_label">አይፈለጌ መልዕክት</string>
-    <string name="call_log_trash_voicemail">የድምፅ መልዕክት ሰርዝ</string>
-    <string name="snackbar_voicemail_deleted">የድምጽ ፖስታ ተፈልጎ ተገኝቷል</string>
-    <string name="clearCallLogProgress_title">የጥሪ ታሪክን በማጽዳት ላይ…</string>
-    <string name="description_playback_speakerphone">የስልክ ድምጽ ማጉያን ያብሩ ወይም ያጥፉ</string>
-    <string name="description_playback_seek">የመልሶ ማጫወት ቦታ ይፈልጉ</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">ተጨማሪ አማራጮች</string>
-    <string name="description_entering_bulk_action_mode">ወደ የጅምላ እርምጃ ሁነታ በመግባት ላይ</string>
-    <string name="description_leaving_bulk_action_mode">ከጅምላ እርምጃ ሁነታ ለቀው ወጥተዋል</string>
-    <string name="description_selecting_bulk_action_mode">%1$s ተመርጧል</string>
-    <string name="description_unselecting_bulk_action_mode">%1$s አልተመረጠም</string>
-    <string name="description_contact_details">የ%1$s እውቂያ ዝርዝሮች</string>
-    <string name="description_spam_contact_details">የተጠረጠረው አይፈለጌ ጥሪ አድራጊ ማግኛ አድራሻ%1$s</string>
-    <string name="description_num_calls">%1$s ጥሪዎች።</string>
-    <string name="description_video_call">የቪዲዮ ጥሪ።</string>
-    <string name="select_all">ሁሉንም ምረጥ</string>
-    <string name="description_incoming_missed_call">ከ^1፣ ^2፣ ^3፣ ^4 ያመለጠ ጥሪ።</string>
-    <string name="description_incoming_answered_call">ከ^1፣ ^2፣ ^3፣ ^4 መልስ የተሰጠው ጥሪ።</string>
-    <string name="description_unread_voicemail">ያልተነበበ የድምጽ ፖስታ ከ^1፣ ^2፣ ^3፣ ^4።</string>
-    <string name="description_read_voicemail">የድምጽ ፖስታ ከ^1፣ ^2፣ ^3፣ ^4።</string>
-    <string name="description_outgoing_call">ወደ ^1፣ ^2፣ ^3፣ ^4 ደውል።</string>
-    <string name="description_create_new_contact_action">ለ^1 እውቂያ ፍጠር</string>
-    <string name="description_add_to_existing_contact_action">^1ን ወደ አሁን ያለ እውቂያ አክል</string>
-    <string name="description_details_action">የ^1 የጥሪ ዝርዝሮች</string>
-    <string name="call_log_action_block_report_number">አይፈለጌ መልእክትን አግድ/ሪፖርት አድርግ</string>
-    <string name="call_log_action_remove_spam">አይፈለጌ መልዕክት አይደለም</string>
   <string name="call_log_blocked_title">ታግዷል</string>
   <string name="call_log_contacts_title">ዕውቂያዎች</string>
 </resources>

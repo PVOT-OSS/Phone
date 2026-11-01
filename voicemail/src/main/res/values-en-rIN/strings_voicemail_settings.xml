@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Turn off visual voicemail</string>
   <string name="confirm_disable_voicemail_dialog_message">This will delete any voicemail and Google transcripts stored within this app. Your operator may keep its own copies.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">TURN OFF</string>
-    <string name="voicemail_settings_title">Voicemail</string>
 </resources>

@@ -93,31 +93,6 @@
   <string name="call_log_action_block_number">Nummer blockieren</string>
   <string name="call_log_action_unblock_number">Blockierung der Nummer aufheben</string>
   <string name="spam_number_call_log_label">Spam</string>
-    <string name="call_log_trash_voicemail">Mailboxnachricht löschen</string>
-    <string name="snackbar_voicemail_deleted">Mailbox gelöscht</string>
-    <string name="clearCallLogProgress_title">Anrufliste wird gelöscht…</string>
-    <string name="description_playback_speakerphone">Freisprechfunktion aktivieren oder deaktivieren</string>
-    <string name="description_playback_seek">Wiedergabeposition suchen</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">Mehr Optionen</string>
-    <string name="description_entering_bulk_action_mode">Es wird in den Modus für Bulk-Aktionen gewechselt</string>
-    <string name="description_leaving_bulk_action_mode">Der Modus für Bulk-Aktionen wurde verlassen</string>
-    <string name="description_selecting_bulk_action_mode">%1$s ausgewählt</string>
-    <string name="description_unselecting_bulk_action_mode">Auswahl für %1$s aufgehoben</string>
-    <string name="description_contact_details">Kontaktdetails für %1$s</string>
-    <string name="description_spam_contact_details">Kontaktdetails für möglichen Spamanrufer %1$s</string>
-    <string name="description_num_calls">%1$s Anrufe</string>
-    <string name="description_video_call">Videoanruf</string>
-    <string name="select_all">Alle auswählen</string>
-    <string name="description_incoming_missed_call">Anruf von ^1, ^2, ^3, ^4 verpasst</string>
-    <string name="description_incoming_answered_call">Anruf von ^1, ^2, ^3, ^4 angenommen</string>
-    <string name="description_unread_voicemail">Ungelesene Mailboxnachricht von ^1, ^2, ^3, ^4.</string>
-    <string name="description_read_voicemail">Mailboxnachricht von ^1, ^2, ^3, ^4.</string>
-    <string name="description_outgoing_call">Ausgehender Anruf an ^1, ^2, ^3, ^4</string>
-    <string name="description_create_new_contact_action">Kontakt für ^1 erstellen</string>
-    <string name="description_add_to_existing_contact_action">^1 zu vorhandenem Kontakt hinzufügen</string>
-    <string name="description_details_action">Anrufdetails für ^1</string>
-    <string name="call_log_action_block_report_number">Blockieren/Spam melden</string>
-    <string name="call_log_action_remove_spam">Kein Spam</string>
   <string name="call_log_blocked_title">Blockiert</string>
   <string name="call_log_contacts_title">Kontakte</string>
 </resources>

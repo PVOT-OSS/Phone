@@ -43,18 +43,4 @@
     <string name="call_stats_range_end">End date</string>
     <!-- The date range dialog's heading: the start date, a dash, the end date. -->
     <string name="call_stats_range_heading"><xliff:g id="start">%1$s</xliff:g> – <xliff:g id="end">%2$s</xliff:g></string>
-    <string name="call_stats_header_total_callsonly">Total: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Start date</string>
-    <string name="call_stats_filter_to">End date</string>
-    <string name="call_stats_filter_picker_title">Filter range</string>
-    <string name="date_quick_selection">Quick selection</string>
-    <string name="date_qs_currentmonth">Current month</string>
-    <string name="date_qs_currentquarter">Current quarter</string>
-    <string name="date_qs_currentyear">Current year</string>
-    <string name="date_qs_lastweek">Last week</string>
-    <string name="date_qs_lastmonth">Last month</string>
-    <string name="date_qs_lastquarter">Last quarter</string>
-    <string name="date_qs_lastyear">Last year</string>
-    <string name="call_stats_sort_by_duration">Sort by call duration</string>
-    <string name="call_stats_sort_by_count">Sort by call count</string>
 </resources>

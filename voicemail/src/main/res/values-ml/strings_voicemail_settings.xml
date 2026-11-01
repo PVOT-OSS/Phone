@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">വിഷ്വൽ വോയ്‌സ്‌മെയിൽ ഓഫാക്കുക</string>
   <string name="confirm_disable_voicemail_dialog_message">ഇത്, ഈ ആപ്പിനുള്ളിൽ സംഭരിച്ചിരിക്കുന്ന എല്ലാ വോയ്‌സ്‌മെയിലും Google ട്രാൻസ്‌ക്രിപ്റ്റുകളും ഇല്ലാതാക്കും. നിങ്ങളുടെ കാരിയർ അതിന്റെ തന്നെ പകർപ്പുകൾ സൂക്ഷിച്ചേക്കാം.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ഓഫാക്കുക</string>
-    <string name="voicemail_settings_title">വോയ്‌സ്‌മെയിൽ</string>
 </resources>

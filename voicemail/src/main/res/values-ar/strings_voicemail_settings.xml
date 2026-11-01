@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">إيقاف البريد الصوتي المرئي</string>
   <string name="confirm_disable_voicemail_dialog_message">‏سيؤدي هذا إلى حذف أي بريد صوتي وأي نصوص رسائل صوتية على Google مخزّنة داخل هذا التطبيق. قد يحتفظ مشغل شبكة الجوال بنسخة لديه.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">إيقاف</string>
-    <string name="voicemail_settings_title">بريد صوتي</string>
 </resources>

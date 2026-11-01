@@ -9,9 +9,4 @@
   <string name="simContacts_title">‏SIM کارڈ کے رابطے</string>
   <string name="menu_callNumber">%s کو کال کریں</string>
   <string name="dialpad_hint_emergency_calling_not_available">‏Wi‑Fi کے ذریعے ایمرجنسی کالز نہیں کر سکتے</string>
-    <string name="add_2sec_pause">2 سیکنڈ کا توقف شامل کریں</string>
-    <string name="add_wait">انتظار شامل کریں</string>
-    <string name="dialer_useDtmfDialpad">ٹچ ٹون کی پیڈ استعمال کریں</string>
-    <string name="dialer_returnToInCallScreen">جاری کال پر واپس لوٹیں</string>
-    <string name="dialer_addAnotherCall">کال شامل کریں</string>
 </resources>

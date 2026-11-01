@@ -7,9 +7,5 @@
   <string name="assisted_dialing_country_code_entry_failure">Koristili ste potpomognuto biranje</string>
   <string name="rtt_transcript_not_available">Transkript je dostupan samo za pozive sa razmenom poruka</string>
   <string name="rtt_transcript_link">Prikaži transkript</string>
-    <string name="call_details_report_call_id">Prijavi netačan broj</string>
-    <string name="report_caller_id_dialog_title">Prijavite netačan broj</string>
-    <string name="report_caller_id_failed">Prijavljivanje broja nije uspelo</string>
-    <string name="report_caller_id_toast">Broj je prijavljen</string>
   <string name="call_details_message">Pošalji SMS</string>
 </resources>

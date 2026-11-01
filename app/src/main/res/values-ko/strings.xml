@@ -93,31 +93,6 @@
   <string name="call_log_action_block_number">번호 차단</string>
   <string name="call_log_action_unblock_number">번호 차단 해제</string>
   <string name="spam_number_call_log_label">스팸</string>
-    <string name="call_log_trash_voicemail">음성사서함 삭제</string>
-    <string name="snackbar_voicemail_deleted">음성사서함 삭제됨</string>
-    <string name="clearCallLogProgress_title">통화 기록을 삭제하는 중…</string>
-    <string name="description_playback_speakerphone">스피커폰 켜고 끄기</string>
-    <string name="description_playback_seek">재생 위치 찾기</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">옵션 더보기</string>
-    <string name="description_entering_bulk_action_mode">일괄 작업 모드 시작 중</string>
-    <string name="description_leaving_bulk_action_mode">일괄 작업 모드 종료됨</string>
-    <string name="description_selecting_bulk_action_mode">%1$s 선택됨</string>
-    <string name="description_unselecting_bulk_action_mode">%1$s 선택 취소됨</string>
-    <string name="description_contact_details">%1$s의 연락처 세부정보</string>
-    <string name="description_spam_contact_details">스팸으로 의심되는 발신자 %1$s의 연락처 세부정보</string>
-    <string name="description_num_calls">통화 횟수: %1$s번</string>
-    <string name="description_video_call">화상 통화</string>
-    <string name="select_all">모두 선택</string>
-    <string name="description_incoming_missed_call">^1의 부재중 전화(^2, ^3, ^4)</string>
-    <string name="description_incoming_answered_call">^1에게 걸려온 수신 전화(^2, ^3, ^4)</string>
-    <string name="description_unread_voicemail">^1, ^2, ^3, ^4에서 보낸 읽지 않은 음성사서함</string>
-    <string name="description_read_voicemail">^1, ^2, ^3, ^4에서 보낸 음성사서함</string>
-    <string name="description_outgoing_call">^1에게 건 전화(^2, ^3, ^4)</string>
-    <string name="description_create_new_contact_action">^1 연락처 만들기</string>
-    <string name="description_add_to_existing_contact_action">^1님을 기존 연락처에 추가합니다.</string>
-    <string name="description_details_action">^1의 통화 세부정보</string>
-    <string name="call_log_action_block_report_number">스팸 차단/신고</string>
-    <string name="call_log_action_remove_spam">스팸 해제</string>
   <string name="call_log_blocked_title">차단됨</string>
   <string name="call_log_contacts_title">주소록</string>
 </resources>

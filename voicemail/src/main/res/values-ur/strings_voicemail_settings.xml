@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">بصری صوتی میل آف کریں</string>
   <string name="confirm_disable_voicemail_dialog_message">‏یہ اس ایپ میں اسٹور کردہ کسی بھی صوتی میل اور Google ٹرانسکرپٹ کو حذف کر دے گا۔ آپ کا کیریئر خود اپنی کاپیاں رکھ سکتا ہے۔</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">آف کریں</string>
-    <string name="voicemail_settings_title">صوتی میل</string>
 </resources>

@@ -35,6 +35,4 @@
 
   <!-- Remove button that shows up when contact is long-pressed. [CHAR LIMIT=NONE] -->
 
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">More options</string>
-    <string name="main_remove_contact">Remove</string>
 </resources>

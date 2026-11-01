@@ -9,9 +9,4 @@
   <string name="simContacts_title">Stiki na kartici SIM</string>
   <string name="menu_callNumber">Pokliči %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Klicev v sili ni mogoče opravljati prek omrežja Wi-Fi</string>
-    <string name="add_2sec_pause">Dodaj 2 sekundi premora</string>
-    <string name="add_wait">Dodaj čakanje</string>
-    <string name="dialer_useDtmfDialpad">Uporabi številčnico za tonsko izbiranje</string>
-    <string name="dialer_returnToInCallScreen">Nazaj na klic, ki poteka</string>
-    <string name="dialer_addAnotherCall">Dodaj klic</string>
 </resources>

@@ -9,9 +9,4 @@
   <string name="simContacts_title">SIM kart kişileri</string>
   <string name="menu_callNumber">Telefon et: %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Kablosuz ağ üzerinden acil durum araması yapılamaz</string>
-    <string name="add_2sec_pause">2 saniyelik duraklama ekle</string>
-    <string name="add_wait">Bekleme ekle</string>
-    <string name="dialer_useDtmfDialpad">Telefon tuş takımını kullan</string>
-    <string name="dialer_returnToInCallScreen">Devam eden çağrıya dön</string>
-    <string name="dialer_addAnotherCall">Çağrı ekle</string>
 </resources>

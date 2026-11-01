@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">خاموش کردن پست صوتی تصویری</string>
   <string name="confirm_disable_voicemail_dialog_message">‏با این کار پست‌های صوتی و آوانویسی‌های Google ذخیره‌شده در این برنامه حذف خواهند شد. ممکن است شرکت مخابراتی‌تان نسخه‌های خود را نگه‌دارد.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">خاموش کردن</string>
-    <string name="voicemail_settings_title">پست صوتی</string>
 </resources>

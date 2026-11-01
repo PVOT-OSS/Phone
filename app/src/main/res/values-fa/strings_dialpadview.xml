@@ -9,9 +9,4 @@
   <string name="simContacts_title">مخاطبین سیم‌کارت</string>
   <string name="menu_callNumber">تماس با %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">‏برقراری تماس اضطراری ازطریق Wi‑Fi امکان‌پذیر نیست</string>
-    <string name="add_2sec_pause">افزودن یک مکث ۲ ثانیه‌ای</string>
-    <string name="add_wait">افزودن انتظار</string>
-    <string name="dialer_useDtmfDialpad">استفاده از صفحه‌کلید لمسی</string>
-    <string name="dialer_returnToInCallScreen">برگشت به تماس درحال انجام</string>
-    <string name="dialer_addAnotherCall">افزودن تماس</string>
 </resources>

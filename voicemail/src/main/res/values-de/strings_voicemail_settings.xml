@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Visuelle Mailbox deaktivieren</string>
   <string name="confirm_disable_voicemail_dialog_message">Hiermit werden alle Mailbox-Nachrichten und Google-Transkripte gelöscht, die in dieser App gespeichert wurden. Möglicherweise speichert dein Mobilfunkanbieter eigene Kopien.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">DEAKTIVIEREN</string>
-    <string name="voicemail_settings_title">Mailbox</string>
 </resources>

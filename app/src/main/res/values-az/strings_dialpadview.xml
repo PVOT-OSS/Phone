@@ -9,9 +9,4 @@
   <string name="simContacts_title">SIM kart kontaktları</string>
   <string name="menu_callNumber">%s nömrəsinə zəng edin</string>
   <string name="dialpad_hint_emergency_calling_not_available">Wi‑Fi vasitəsilə təcili zənglər etmək mümkün deyil</string>
-    <string name="add_2sec_pause">2 saniyəlik pauza əlavə edin</string>
-    <string name="add_wait">Gözləmə əlavə edin</string>
-    <string name="dialer_useDtmfDialpad">Düyməli klaviaturadan istifadə edin</string>
-    <string name="dialer_returnToInCallScreen">Davam edən zəngə qayıdın</string>
-    <string name="dialer_addAnotherCall">Zəng əlavə edin</string>
 </resources>

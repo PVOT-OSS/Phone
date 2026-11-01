@@ -9,9 +9,4 @@
   <string name="simContacts_title">Kenalan kad SIM</string>
   <string name="menu_callNumber">Panggil %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Tidak boleh membuat panggilan kecemasan melalui Wi-Fi</string>
-    <string name="add_2sec_pause">Tambah jeda 2 saat</string>
-    <string name="add_wait">Tambah penungguan</string>
-    <string name="dialer_useDtmfDialpad">Gunakan pad kekunci nada sentuh</string>
-    <string name="dialer_returnToInCallScreen">Kembali ke panggilan yang sedang berlangsung</string>
-    <string name="dialer_addAnotherCall">Tambah panggilan</string>
 </resources>

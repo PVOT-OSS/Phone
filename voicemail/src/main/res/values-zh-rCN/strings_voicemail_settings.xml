@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">关闭可视语音信箱</string>
   <string name="confirm_disable_voicemail_dialog_message">这会删除此应用中存储的所有语音邮件和 Google 转录的内容。您的运营商可能会保留自己的副本。</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">关闭</string>
-    <string name="voicemail_settings_title">语音邮件</string>
 </resources>

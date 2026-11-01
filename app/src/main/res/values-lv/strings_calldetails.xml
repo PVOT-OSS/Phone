@@ -7,9 +7,5 @@
   <string name="assisted_dialing_country_code_entry_failure">Tika izmantota numura sastādīšanas palīdzība</string>
   <string name="rtt_transcript_not_available">Transkripcija ir pieejama tikai zvaniem ar ziņojumapmaiņu.</string>
   <string name="rtt_transcript_link">Skatīt transkripciju</string>
-    <string name="call_details_report_call_id">Ziņot par neprecīzu numuru</string>
-    <string name="report_caller_id_dialog_title">Ziņošana par nepareizu numuru</string>
-    <string name="report_caller_id_failed">Nevarēja nosūtīt ziņojumu par numuru</string>
-    <string name="report_caller_id_toast">Ziņojums par numuru nosūtīts</string>
   <string name="call_details_message">Īsziņa</string>
 </resources>

@@ -9,9 +9,4 @@
   <string name="simContacts_title">সিম কার্ডের পরিচিতিগুলি</string>
   <string name="menu_callNumber">%s নম্বরে কল করুন</string>
   <string name="dialpad_hint_emergency_calling_not_available">ওয়াই-ফাইয়ের মাধ্যমে জরুরি কল করা যাবে না</string>
-    <string name="add_2sec_pause">২-সেকেন্ড বিরতি যোগ করুন</string>
-    <string name="add_wait">অপেক্ষা যোগ করুন</string>
-    <string name="dialer_useDtmfDialpad">টাচ-টোন কীপ্যাড ব্যবহার করুন</string>
-    <string name="dialer_returnToInCallScreen">আগের কলে ফিরে যান</string>
-    <string name="dialer_addAnotherCall">কল যোগ করুন</string>
 </resources>

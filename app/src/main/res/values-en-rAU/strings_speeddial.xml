@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">To enable speed dial, turn on the Contacts permission.</string>
   <string name="speed_dial_turn_on_contacts_permission">Turn on</string>
   <string name="speed_dial_remove_favorites">Remove from favourites</string>
-    <string name="favorites_header">Favourites</string>
-    <string name="contact_menu_remove">Remove</string>
-    <string name="speed_dial_no_contacts_description">You haven\'t added any favourites yet</string>
-    <string name="speed_dial_no_contacts_action_text">Add favourite</string>
 </resources>

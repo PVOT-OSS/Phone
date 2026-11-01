@@ -1,7 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="new_call_log_carrier_video">វីដេអូ​តាម​ក្រុមហ៊ុន​សេវា​ទូរសព្ទ</string>
-    <string name="new_call_log_unknown">មិន​ស្គាល់</string>
-    <string name="new_call_log_secondary_blocked">បាន​ទប់ស្កាត់</string>
-    <string name="new_call_log_secondary_spam">សារ​ឥត​បាន​ការ</string>
 </resources>

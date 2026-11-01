@@ -9,9 +9,4 @@
   <string name="simContacts_title">Επαφές στην κάρτα SIM</string>
   <string name="menu_callNumber">Κλήση %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Δεν είναι δυνατές οι κλήσεις έκτακτης ανάγκης μέσω Wi‑Fi</string>
-    <string name="add_2sec_pause">Προσθήκη παύσης 2 δευτερολέπτων</string>
-    <string name="add_wait">Προσθήκη αναμονής</string>
-    <string name="dialer_useDtmfDialpad">Χρησιμοποιήστε το πληκτρολόγιο αφής ηχητικών τόνων</string>
-    <string name="dialer_returnToInCallScreen">Επιστροφή στην κλήση που βρίσκεται σε εξέλιξη</string>
-    <string name="dialer_addAnotherCall">Προσθήκη κλήσης</string>
 </resources>

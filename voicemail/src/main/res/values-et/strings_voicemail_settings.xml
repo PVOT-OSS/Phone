@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Visuaalse kõneposti väljalülitamine</string>
   <string name="confirm_disable_voicemail_dialog_message">See kustutab kõik selles rakenduses salvestatud kõnepostisõnumid ja Google\'i transkriptsioonid. Teie operaator võib säilitada oma koopiad.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">LÜLITA VÄLJA</string>
-    <string name="voicemail_settings_title">Kõnepost</string>
 </resources>

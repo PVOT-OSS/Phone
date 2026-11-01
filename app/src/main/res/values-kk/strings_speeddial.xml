@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Жылдам теру функциясын қосу үшін \"Контактілерге\" кіруге рұқсат беріңіз.</string>
   <string name="speed_dial_turn_on_contacts_permission">Қосу</string>
   <string name="speed_dial_remove_favorites">Таңдаулылар тізімінен жою</string>
-    <string name="favorites_header">Таңдаулылар</string>
-    <string name="contact_menu_remove">Жою</string>
-    <string name="speed_dial_no_contacts_description">Әлі ешбір контакт қосылған жоқ</string>
-    <string name="speed_dial_no_contacts_action_text">Таңдаулылар тізіміне қосу</string>
 </resources>

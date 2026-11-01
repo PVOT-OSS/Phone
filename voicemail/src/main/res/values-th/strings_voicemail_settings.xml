@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">ปิดข้อความเสียงพร้อมภาพ</string>
   <string name="confirm_disable_voicemail_dialog_message">วิธีนี้จะลบข้อความเสียงและการถอดเสียงของ Google ที่เก็บในแอปนี้ แต่ผู้ให้บริการอาจเก็บสำเนาของตนเองไว้ได้</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ปิด</string>
-    <string name="voicemail_settings_title">ข้อความเสียง</string>
 </resources>

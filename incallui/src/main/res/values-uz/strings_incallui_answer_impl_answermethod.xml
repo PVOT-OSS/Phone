@@ -4,7 +4,4 @@
   <string name="call_incoming_swipe_to_reject">Rad etish uchun pastga suring</string>
   <string name="call_incoming_decline">Rad etish</string>
   <string name="call_incoming_answer">Javob berish</string>
-    <string name="a11y_incoming_call_swipe_to_answer">Qo‘ng‘iroqqa javob berish uchun ikki barmoq bilan tepaga yoki rad etish uchun pastga suring.</string>
-    <string name="a11y_call_incoming_decline_description">Rad etish</string>
-    <string name="a11y_call_incoming_answer_description">Javob berish</string>
 </resources>

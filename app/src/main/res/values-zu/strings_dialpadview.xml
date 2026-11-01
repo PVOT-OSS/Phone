@@ -9,9 +9,4 @@
   <string name="simContacts_title">Othintana nabo bekhadi le-SIM</string>
   <string name="menu_callNumber">Shayela %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Ayikwazi ukwenza amakholi aphuthumayo nge-Wi-Fi</string>
-    <string name="add_2sec_pause">Faka ukumisa okwesikhashana kwamasekhondi angu-2</string>
-    <string name="add_wait">Yengeza ukulinda</string>
-    <string name="dialer_useDtmfDialpad">Sebenzisa ikhiphedi yethoni yokuthinta</string>
-    <string name="dialer_returnToInCallScreen">Buyela kukholi eqhubekayo</string>
-    <string name="dialer_addAnotherCall">Engeza ikholi</string>
 </resources>

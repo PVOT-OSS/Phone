@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Activa el permís Contactes per activar el marcatge ràpid.</string>
   <string name="speed_dial_turn_on_contacts_permission">Activa</string>
   <string name="speed_dial_remove_favorites">Suprimeix dels preferits</string>
-    <string name="favorites_header">Preferits</string>
-    <string name="contact_menu_remove">Suprimeix</string>
-    <string name="speed_dial_no_contacts_description">Encara no has afegit cap preferit</string>
-    <string name="speed_dial_no_contacts_action_text">Afegeix als preferits</string>
 </resources>

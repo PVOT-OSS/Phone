@@ -9,9 +9,4 @@
   <string name="simContacts_title">SIM txarteleko kontaktuak</string>
   <string name="menu_callNumber">Deitu %s zenbakira</string>
   <string name="dialpad_hint_emergency_calling_not_available">Ezin duzu egin larrialdi-deirik Wi-Fi bidez</string>
-    <string name="add_2sec_pause">Gehitu 2 segundoko pausa</string>
-    <string name="add_wait">Gehitu itxaronaldia</string>
-    <string name="dialer_useDtmfDialpad">Erabili ukipen-tonuak dituen teklatua</string>
-    <string name="dialer_returnToInCallScreen">Itzuli abian den deira</string>
-    <string name="dialer_addAnotherCall">Gehitu deia</string>
 </resources>

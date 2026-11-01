@@ -93,31 +93,6 @@
   <string name="call_log_action_block_number">Bloker nummer</string>
   <string name="call_log_action_unblock_number">Fjern blokering af nummer</string>
   <string name="spam_number_call_log_label">Spam</string>
-    <string name="call_log_trash_voicemail">Slet talemeddelelsen</string>
-    <string name="snackbar_voicemail_deleted">Talebeskeden blev slettet</string>
-    <string name="clearCallLogProgress_title">Opkaldshistorik ryddes...</string>
-    <string name="description_playback_speakerphone">Slå medhør til eller fra</string>
-    <string name="description_playback_seek">Søg efter afspilningsposition</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">Flere valgmuligheder</string>
-    <string name="description_entering_bulk_action_mode">Massehandlingstilstanden startes</string>
-    <string name="description_leaving_bulk_action_mode">Massehandlingstilstanden blev afsluttet</string>
-    <string name="description_selecting_bulk_action_mode">Valgt %1$s</string>
-    <string name="description_unselecting_bulk_action_mode">Fravalgt %1$s</string>
-    <string name="description_contact_details">Kontaktoplysninger for %1$s</string>
-    <string name="description_spam_contact_details">Kontaktoplysninger om formodet spammer %1$s</string>
-    <string name="description_num_calls">%1$s opkald.</string>
-    <string name="description_video_call">Videoopkald.</string>
-    <string name="select_all">Vælg alt</string>
-    <string name="description_incoming_missed_call">Mistet opkald fra ^1, ^2, ^3, ^4.</string>
-    <string name="description_incoming_answered_call">Besvaret opkald fra ^1, ^2, ^3, ^4.</string>
-    <string name="description_unread_voicemail">Ulæst talebesked fra ^1, ^2, ^3, ^4.</string>
-    <string name="description_read_voicemail">Talebesked fra ^1, ^2, ^3, ^4.</string>
-    <string name="description_outgoing_call">Ring til ^1, ^2, ^3, ^4.</string>
-    <string name="description_create_new_contact_action">Opret en kontaktperson for ^1</string>
-    <string name="description_add_to_existing_contact_action">Føj ^1 til en eksisterende kontaktperson</string>
-    <string name="description_details_action">Opkaldsoplysninger for ^1</string>
-    <string name="call_log_action_block_report_number">Bloker/rapportér spam</string>
-    <string name="call_log_action_remove_spam">Ikke spam</string>
   <string name="call_log_blocked_title">Blokeret</string>
   <string name="call_log_contacts_title">Kontaktpersoner</string>
 </resources>

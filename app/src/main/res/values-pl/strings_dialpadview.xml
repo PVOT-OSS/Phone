@@ -9,9 +9,4 @@
   <string name="simContacts_title">Kontakty z karty SIM</string>
   <string name="menu_callNumber">Zadzwoń: %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Nie można nawiązywać połączeń alarmowych przez Wi‑Fi</string>
-    <string name="add_2sec_pause">Dodaj 2-sekundową pauzę</string>
-    <string name="add_wait">Dodaj oczekiwanie</string>
-    <string name="dialer_useDtmfDialpad">Użyj klawiatury tonowej</string>
-    <string name="dialer_returnToInCallScreen">Wróć do aktywnego połączenia</string>
-    <string name="dialer_addAnotherCall">Dodaj połączenie</string>
 </resources>

@@ -7,9 +7,5 @@
   <string name="assisted_dialing_country_code_entry_failure">S-a folosit apelarea asistată.</string>
   <string name="rtt_transcript_not_available">Transcrierea este disponibilă numai pentru apeluri cu mesagerie</string>
   <string name="rtt_transcript_link">Vedeți transcrierea</string>
-    <string name="call_details_report_call_id">Raportați numărul ca incorect</string>
-    <string name="report_caller_id_dialog_title">Raportați un număr incorect</string>
-    <string name="report_caller_id_failed">Numărul nu a putut fi raportat.</string>
-    <string name="report_caller_id_toast">Numărul a fost raportat.</string>
   <string name="call_details_message">Mesaj</string>
 </resources>

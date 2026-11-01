@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Slå tilladelsen Kontaktpersoner til for at aktivere hurtigopkald.</string>
   <string name="speed_dial_turn_on_contacts_permission">Slå til</string>
   <string name="speed_dial_remove_favorites">Fjern fra foretrukne</string>
-    <string name="favorites_header">Foretrukne</string>
-    <string name="contact_menu_remove">Fjern</string>
-    <string name="speed_dial_no_contacts_description">Du har endnu ikke tilføjet nogen foretrukne</string>
-    <string name="speed_dial_no_contacts_action_text">Tilføj som foretrukken</string>
 </resources>

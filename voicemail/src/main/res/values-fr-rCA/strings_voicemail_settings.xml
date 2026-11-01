@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Désactiver la messagerie vocale visuelle</string>
   <string name="confirm_disable_voicemail_dialog_message">Cette action supprimera les messages vocaux et les transcriptions Google stockés dans cette application. Il se peut que votre fournisseur de services conserve ses propres copies.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">DÉSACTIVER</string>
-    <string name="voicemail_settings_title">Messagerie vocale</string>
 </resources>

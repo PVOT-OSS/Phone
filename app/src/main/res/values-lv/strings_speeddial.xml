@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Lai iespējotu ātros zvanus, ieslēdziet atļauju Kontaktpersonas.</string>
   <string name="speed_dial_turn_on_contacts_permission">Ieslēgt</string>
   <string name="speed_dial_remove_favorites">Noņemt no izlases</string>
-    <string name="favorites_header">Izlase</string>
-    <string name="contact_menu_remove">Noņemt</string>
-    <string name="speed_dial_no_contacts_description">Jūs vēl neesat pievienojis nevienu izlases vienumu.</string>
-    <string name="speed_dial_no_contacts_action_text">Pievienot izlasei</string>
 </resources>

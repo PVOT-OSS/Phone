@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">A vizuális hangposta kikapcsolása</string>
   <string name="confirm_disable_voicemail_dialog_message">Ezzel törli az alkalmazásban tárolt hangpostaüzeneteket és Google-átiratokat. A szolgáltató megtarthatja a saját másolatokat.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">KIKAPCSOLÁS</string>
-    <string name="voicemail_settings_title">Hangposta</string>
 </resources>

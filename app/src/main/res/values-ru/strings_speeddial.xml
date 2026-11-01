@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Чтобы настроить быстрый набор, предоставьте приложению разрешение \"Контакты\".</string>
   <string name="speed_dial_turn_on_contacts_permission">Предоставить</string>
   <string name="speed_dial_remove_favorites">Удалить из избранного</string>
-    <string name="favorites_header">Избранные</string>
-    <string name="contact_menu_remove">Удалить</string>
-    <string name="speed_dial_no_contacts_description">У вас ещё нет избранных контактов.</string>
-    <string name="speed_dial_no_contacts_action_text">Добавить в избранное</string>
 </resources>

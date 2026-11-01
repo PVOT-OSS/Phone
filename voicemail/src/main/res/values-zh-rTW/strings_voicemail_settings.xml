@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">停用視覺化語音信箱</string>
   <string name="confirm_disable_voicemail_dialog_message">這項操作將會刪除儲存在這個應用程式中的所有語音留言和 Google 留言轉錄。請注意，你的電信業者可能會保留複本。</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">停用</string>
-    <string name="voicemail_settings_title">語音信箱</string>
 </resources>

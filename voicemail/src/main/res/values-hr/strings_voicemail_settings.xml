@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Isključivanje vizualne govorne pošte</string>
   <string name="confirm_disable_voicemail_dialog_message">Time će se izbrisati sve poruke govorne pošte i Googleovi prijepisi spremljeni u ovoj aplikaciji. Vaš mobilni operater može sačuvati vlastite kopije.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ISKLJUČI</string>
-    <string name="voicemail_settings_title">Govorna pošta</string>
 </resources>

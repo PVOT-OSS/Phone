@@ -9,9 +9,4 @@
   <string name="simContacts_title">सिम कार्ड संपर्क</string>
   <string name="menu_callNumber">%s वर कॉल करा</string>
   <string name="dialpad_hint_emergency_calling_not_available">वाय-फाय वरून आणीबाणी कॉल करू शकत नाही</string>
-    <string name="add_2sec_pause">2-सेकंदांचा विराम जोडा</string>
-    <string name="add_wait">वाट पाहणे जोडा</string>
-    <string name="dialer_useDtmfDialpad">टच-टोन कीपॅड वापरा</string>
-    <string name="dialer_returnToInCallScreen">चालू असलेल्या कॉलवर परत जा</string>
-    <string name="dialer_addAnotherCall">कॉल जोडा</string>
 </resources>

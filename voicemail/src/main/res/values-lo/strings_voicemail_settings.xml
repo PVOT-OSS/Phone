@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">ປິດຂໍ້ຄວາມສຽງສະເໝືອນ</string>
   <string name="confirm_disable_voicemail_dialog_message">ນີ້ຈະເປັນການລຶບຂໍ້ຄວາມສຽງໃດກໍຕາມທີ່ມີ ແລະ ການຖອດຂໍ້ຄວາມສຽງ Google ທີ່ບັນທຶກໄວ້ພາຍໃນແອັບນີ້. ຜູ້ໃຫ້ບໍລິການຂອງທ່ານອາດມີສຳເນົາຂອງຕົວເອງໄວ້ຢູ່.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ປິດ</string>
-    <string name="voicemail_settings_title">ຂໍ້ຄວາມສຽງ</string>
 </resources>

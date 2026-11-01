@@ -19,5 +19,4 @@
   <string name="action_menu_back_from_search">arrêter la recherche</string>
   <string name="description_clear_search">Effacer la recherche</string>
   <string name="description_search_video_call">Appel vidéo</string>
-    <string name="call_with_a_note">Appeler avec une note</string>
 </resources>

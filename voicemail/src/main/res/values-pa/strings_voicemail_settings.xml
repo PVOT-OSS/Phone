@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">ਦ੍ਰਿਸ਼ਟੀਗਤ ਵੌਇਸਮੇਲ ਨੂੰ ਬੰਦ ਕਰੋ</string>
   <string name="confirm_disable_voicemail_dialog_message">ਇਹ ਇਸ ਐਪ ਵਿੱਚ ਰੱਖਿਅਤ ਕੀਤੇ ਕਿਸੇ ਵੀ ਵੌਇਸਮੇਲ ਅਤੇ Google ਪ੍ਰਤਿਲਿਪੀਆਂ ਨੂੰ ਮਿਟਾ ਦੇਵੇਗਾ। ਤੁਹਾਡਾ ਕੈਰੀਅਰ ਇਸ ਦੀਆਂ ਕਾਪੀਆਂ ਆਪਣੇ ਕੋਲ ਰੱਖ ਸਕਦਾ ਹੈ।</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ਬੰਦ ਕਰੋ</string>
-    <string name="voicemail_settings_title">ਵੌਇਸਮੇਲ</string>
 </resources>

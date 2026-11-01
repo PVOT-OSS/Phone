@@ -93,31 +93,6 @@
   <string name="call_log_action_block_number">नंबर अवरोधित करा</string>
   <string name="call_log_action_unblock_number">नंबर अनावरोधित करा</string>
   <string name="spam_number_call_log_label">स्पॅम</string>
-    <string name="call_log_trash_voicemail">व्हॉइसमेल हटवा</string>
-    <string name="snackbar_voicemail_deleted">व्हॉइसमेल आढळले</string>
-    <string name="clearCallLogProgress_title">कॉल इतिहास साफ करत आहे…</string>
-    <string name="description_playback_speakerphone">स्‍पीकरफोन चालू किंवा बंद करा</string>
-    <string name="description_playback_seek">प्लेबॅक स्थान शोधतात</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">अधिक पर्याय</string>
-    <string name="description_entering_bulk_action_mode">मोठ्या प्रमाणात क्रिया मोडमध्ये प्रवेश करत आहे</string>
-    <string name="description_leaving_bulk_action_mode">मोठ्या प्रमाणात क्रिया मोड सोडत आहे</string>
-    <string name="description_selecting_bulk_action_mode">%1$s निवडले</string>
-    <string name="description_unselecting_bulk_action_mode">%1$s ची निवड रद्द केली</string>
-    <string name="description_contact_details">%1$s साठी संपर्क तपशील</string>
-    <string name="description_spam_contact_details">संशयास्पद स्पॅम कॉलर %1$s साठी संपर्क तपशील</string>
-    <string name="description_num_calls">%1$s कॉल.</string>
-    <string name="description_video_call">व्हिडिओ कॉल.</string>
-    <string name="select_all">सर्व निवडा</string>
-    <string name="description_incoming_missed_call">^1, ^2, ^3, ^4 वरून कॉल सुटला.</string>
-    <string name="description_incoming_answered_call">^1, ^2, ^3, ^4 वरून कॉलला उत्तर दिले.</string>
-    <string name="description_unread_voicemail">^1, ^2, ^3, ^4 कडून न वाचलेला व्हॉइसमेल.</string>
-    <string name="description_read_voicemail">^1, ^2, ^3, ^4 कडून व्हॉॅइसमेल.</string>
-    <string name="description_outgoing_call">^1, ^2, ^3, ^4 वर कॉल करा.</string>
-    <string name="description_create_new_contact_action">^1 साठी संपर्क तयार करा</string>
-    <string name="description_add_to_existing_contact_action">विद्यमान संपर्कांमध्ये ^1 जोडा</string>
-    <string name="description_details_action">^1 साठी कॉल तपशील</string>
-    <string name="call_log_action_block_report_number">अवरोधित करा/स्पॅमचा अहवाल द्या</string>
-    <string name="call_log_action_remove_spam">स्पॅम नाही</string>
   <string name="call_log_blocked_title">अवरोधित केले</string>
   <string name="call_log_contacts_title">संपर्क</string>
 </resources>

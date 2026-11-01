@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Da biste omogućili brzo biranje, uključite dopuštenje za kontakte.</string>
   <string name="speed_dial_turn_on_contacts_permission">Uključi</string>
   <string name="speed_dial_remove_favorites">Uklanjanje iz favorita</string>
-    <string name="favorites_header">Omiljeni kontakti</string>
-    <string name="contact_menu_remove">Ukloni</string>
-    <string name="speed_dial_no_contacts_description">Još niste dodali nijednog favorita</string>
-    <string name="speed_dial_no_contacts_action_text">Dodavanje favorita</string>
 </resources>

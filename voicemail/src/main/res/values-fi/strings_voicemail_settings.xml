@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Poista visuaalinen vastaaja käytöstä</string>
   <string name="confirm_disable_voicemail_dialog_message">Kaikki tähän sovellukseen tallennetut vastaajaviestit ja Google-transkriptiot poistetaan. Operaattorisi saattaa säilyttää omat kopionsa.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">POISTA KÄYTÖSTÄ</string>
-    <string name="voicemail_settings_title">Vastaaja</string>
 </resources>

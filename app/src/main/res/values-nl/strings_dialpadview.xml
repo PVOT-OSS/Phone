@@ -9,9 +9,4 @@
   <string name="simContacts_title">Contacten op simkaart</string>
   <string name="menu_callNumber">%s bellen</string>
   <string name="dialpad_hint_emergency_calling_not_available">Er kunnen geen noodoproepen worden gemaakt via wifi</string>
-    <string name="add_2sec_pause">Pauze van 2 seconden toevoegen</string>
-    <string name="add_wait">Wachten toevoegen</string>
-    <string name="dialer_useDtmfDialpad">Toetsenblok voor toetsgeluid gebruiken</string>
-    <string name="dialer_returnToInCallScreen">Terug naar actieve oproep</string>
-    <string name="dialer_addAnotherCall">Oproep toevoegen</string>
 </resources>

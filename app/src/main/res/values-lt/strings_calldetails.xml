@@ -7,9 +7,5 @@
   <string name="assisted_dialing_country_code_entry_failure">Buvo naudojamas pagalbinis numerio rinkimas</string>
   <string name="rtt_transcript_not_available">Nuorašai galimi, tik kai skambučiai atliekami naudojant susirašinėjimo funkciją</string>
   <string name="rtt_transcript_link">Žr. nuorašą</string>
-    <string name="call_details_report_call_id">Pranešti apie netikslų numerį</string>
-    <string name="report_caller_id_dialog_title">Pranešimas apie netinkamą numerį</string>
-    <string name="report_caller_id_failed">Nepavyko pranešti apie numerį</string>
-    <string name="report_caller_id_toast">Apie numerį pranešta</string>
   <string name="call_details_message">Pranešimas</string>
 </resources>

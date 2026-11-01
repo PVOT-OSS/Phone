@@ -9,9 +9,4 @@
   <string name="simContacts_title">SIM-kaardi kontaktid</string>
   <string name="menu_callNumber">Helistamine numbrile %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">WiFi kaudu ei saa hädaabikõnesid teha</string>
-    <string name="add_2sec_pause">Lisa kahesekundiline paus</string>
-    <string name="add_wait">Lisa ootamine</string>
-    <string name="dialer_useDtmfDialpad">Kasuta puutetooniga klahvistikku</string>
-    <string name="dialer_returnToInCallScreen">Naase käimasolevale kõnele</string>
-    <string name="dialer_addAnotherCall">Lisa kõne</string>
 </resources>

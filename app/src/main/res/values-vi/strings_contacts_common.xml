@@ -19,5 +19,4 @@
   <string name="action_menu_back_from_search">ngừng tìm kiếm</string>
   <string name="description_clear_search">Xóa tìm kiếm</string>
   <string name="description_search_video_call">Gọi điện video</string>
-    <string name="call_with_a_note">Gọi điện kèm theo ghi chú</string>
 </resources>

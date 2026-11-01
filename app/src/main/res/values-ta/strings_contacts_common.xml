@@ -19,5 +19,4 @@
   <string name="action_menu_back_from_search">தேடுவதை நிறுத்து</string>
   <string name="description_clear_search">தேடலை அழி</string>
   <string name="description_search_video_call">வீடியோ அழைப்பைத் தொடங்குவதற்கான பொத்தான்</string>
-    <string name="call_with_a_note">குறிப்புடன் அழைக்கவும்</string>
 </resources>

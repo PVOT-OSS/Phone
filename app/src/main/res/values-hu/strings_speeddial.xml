@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">A gyorshívás engedélyezéséhez kapcsolja be a Névjegyek engedélyt.</string>
   <string name="speed_dial_turn_on_contacts_permission">Bekapcsolás</string>
   <string name="speed_dial_remove_favorites">Eltávolítás a kedvencek közül</string>
-    <string name="favorites_header">Kedvencek</string>
-    <string name="contact_menu_remove">Eltávolítás</string>
-    <string name="speed_dial_no_contacts_description">Még nem adott hozzá kedvenceket.</string>
-    <string name="speed_dial_no_contacts_action_text">Új kedvenc hozzáadása</string>
 </resources>

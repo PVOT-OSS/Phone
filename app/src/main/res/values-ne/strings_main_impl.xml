@@ -20,5 +20,4 @@
     <string name="main_activity_label" msgid="3121599977875141886">"फोन"</string>
     <string name="tab_title_call_history" msgid="5191872501729332994">"कल इतिहास"</string>
     <string name="tab_title_voicemail" msgid="4777655983569268504">"भ्वाइस मेल"</string>
-    <string name="tab_title_speed_dial" msgid="1968484500112572774">"स्पिड डायल"</string>
 </resources>

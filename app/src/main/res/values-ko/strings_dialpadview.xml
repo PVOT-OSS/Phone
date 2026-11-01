@@ -9,9 +9,4 @@
   <string name="simContacts_title">SIM 카드 연락처</string>
   <string name="menu_callNumber">%s에 전화걸기</string>
   <string name="dialpad_hint_emergency_calling_not_available">Wi‑Fi로는 긴급 전화를 걸 수 없습니다.</string>
-    <string name="add_2sec_pause">2초간 일시중지 추가</string>
-    <string name="add_wait">대기 시간 추가</string>
-    <string name="dialer_useDtmfDialpad">터치톤 키패드 사용</string>
-    <string name="dialer_returnToInCallScreen">진행 중인 통화로 돌아가기</string>
-    <string name="dialer_addAnotherCall">통화 추가</string>
 </resources>

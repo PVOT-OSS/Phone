@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Görsel sesli mesaj özelliğini kapatın</string>
   <string name="confirm_disable_voicemail_dialog_message">Bu işlemle, bu uygulamada depolanan tüm sesli mesajlar ve Google çeviri yazıları silinecek. Operatörünüz bunların birer kopyasını saklayabilir.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">KAPAT</string>
-    <string name="voicemail_settings_title">Sesli mesaj</string>
 </resources>

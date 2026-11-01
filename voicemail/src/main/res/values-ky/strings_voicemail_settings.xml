@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Визуалдык үн почтасын өчүрүңүз</string>
   <string name="confirm_disable_voicemail_dialog_message">Бул колдонмодо сакталган үн почтасын жана Google транскрипттерин жок кылат. Байланыш операторуңуз көчүрмөлөрүн өзүндө сактайт.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ӨЧҮРҮҮ</string>
-    <string name="voicemail_settings_title">Үн почтасы</string>
 </resources>

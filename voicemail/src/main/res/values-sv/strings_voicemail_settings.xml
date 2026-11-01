@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Stäng av visuell röstbrevlåda</string>
   <string name="confirm_disable_voicemail_dialog_message">Det tar bort alla röstmeddelanden och lagrade Google-transkript i den här appen. Din operatör kanske behåller egna kopior.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">INAKTIVERA</string>
-    <string name="voicemail_settings_title">Röstbrevlåda</string>
 </resources>

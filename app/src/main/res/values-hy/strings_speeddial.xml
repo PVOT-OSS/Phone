@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Արագ համարհավաքման գործառույթից օգտվելու համար միացրեք «Կոնտակտներ» թույլտվությունը:</string>
   <string name="speed_dial_turn_on_contacts_permission">Միացնել</string>
   <string name="speed_dial_remove_favorites">Հեռացնել ընտրանուց</string>
-    <string name="favorites_header">Ընտրանի</string>
-    <string name="contact_menu_remove">Հեռացնել</string>
-    <string name="speed_dial_no_contacts_description">Ցանկում դեռ նախընտրած կոնտակտներ չեք ավելացրել</string>
-    <string name="speed_dial_no_contacts_action_text">Ավելացնել նախընտրած կոնտակտ</string>
 </resources>

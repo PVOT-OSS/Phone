@@ -31,18 +31,4 @@
     <string name="call_stats_title_count">Contègiu mutidas</string>
     <string name="call_stats_title_average_duration">Durada mèdia de is mutidas</string>
     <string name="recent_calls_no_items_in_range">In su registru de is mutidas non nch\'at nissuna mutida in su perìudu de tempus seletzionadu.</string>
-    <string name="call_stats_header_total_callsonly">Totale: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Data de su cumintzu</string>
-    <string name="call_stats_filter_to">Data de fine</string>
-    <string name="call_stats_filter_picker_title">Intervallu</string>
-    <string name="date_quick_selection">Seletzione lestra</string>
-    <string name="date_qs_currentmonth">Custu mese</string>
-    <string name="date_qs_currentquarter">Custu trimestre</string>
-    <string name="date_qs_currentyear">Ocannu</string>
-    <string name="date_qs_lastweek">Sa chida colada</string>
-    <string name="date_qs_lastmonth">Su mese coladu</string>
-    <string name="date_qs_lastquarter">Su trimestre coladu</string>
-    <string name="date_qs_lastyear">S\'annu coladu</string>
-    <string name="call_stats_sort_by_duration">Assenta pro longària</string>
-    <string name="call_stats_sort_by_count">Assenta pro nùmeru de mutida</string>
 </resources>

@@ -7,9 +7,5 @@
   <string name="assisted_dialing_country_code_entry_failure">स्वतः दिइने सुझावमार्फत डायलिङ प्रयोग गरियो</string>
   <string name="rtt_transcript_not_available">सन्देश प्रवाहको सुविधा भएका कलहरूमा मात्र ट्रान्सक्रिप्ट उपलब्ध छ</string>
   <string name="rtt_transcript_link">ट्रान्सक्रिप्ट हेर्नुहोस्</string>
-    <string name="call_details_report_call_id">गलत नम्बरको रिपोर्ट गर्नुहोस्</string>
-    <string name="report_caller_id_dialog_title">गलत नम्बरको रिपोर्ट गर्नुहोस्</string>
-    <string name="report_caller_id_failed">नम्बरको रिपोर्ट गर्न सकिएन</string>
-    <string name="report_caller_id_toast">नम्बरको रिपोर्ट गरियो</string>
   <string name="call_details_message">सन्देश</string>
 </resources>

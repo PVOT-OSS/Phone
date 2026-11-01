@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Nika amandla ukudayela okusheshayo, vula imvume yoxhumana nabo.</string>
   <string name="speed_dial_turn_on_contacts_permission">Vula</string>
   <string name="speed_dial_remove_favorites">Susa kusukela kuzintandokazi</string>
-    <string name="favorites_header">Izintandokazi</string>
-    <string name="contact_menu_remove">Susa</string>
-    <string name="speed_dial_no_contacts_description">Awukangezi noma yikuphi ukubhalisa okwamanje</string>
-    <string name="speed_dial_no_contacts_action_text">Engeza intandokazi</string>
 </resources>

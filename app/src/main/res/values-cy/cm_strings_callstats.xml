@@ -31,18 +31,4 @@
     <string name="call_stats_title_count">Nifer galwadau</string>
     <string name="call_stats_title_average_duration">Hyd galwadau ar gyfartaledd</string>
     <string name="recent_calls_no_items_in_range">Nid yw dy log galwadau yn cynnwys unrhyw alwadau yn y cyfnod dan sylw.</string>
-    <string name="call_stats_header_total_callsonly">Cyfanswm: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Dyddiad dechrau</string>
-    <string name="call_stats_filter_to">Dyddiad gorffen</string>
-    <string name="call_stats_filter_picker_title">Ystod hidlydd</string>
-    <string name="date_quick_selection">Dewis cyflym</string>
-    <string name="date_qs_currentmonth">Mis presennol</string>
-    <string name="date_qs_currentquarter">Chwarter presennol</string>
-    <string name="date_qs_currentyear">Blwyddyn bresennol</string>
-    <string name="date_qs_lastweek">Wythnos diwethaf</string>
-    <string name="date_qs_lastmonth">Mis diwethaf</string>
-    <string name="date_qs_lastquarter">Chwarter diwethaf</string>
-    <string name="date_qs_lastyear">Blwyddyn ddiwethaf</string>
-    <string name="call_stats_sort_by_duration">Trefnu yn ôl hyd alwadau</string>
-    <string name="call_stats_sort_by_count">Trefnu yn ôl nifer galwadau</string>
 </resources>

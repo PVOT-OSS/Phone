@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Wyłączanie wizualnej poczty głosowej</string>
   <string name="confirm_disable_voicemail_dialog_message">Spowoduje to usunięcie wszystkich wiadomości głosowych i transkrypcji Google przechowywanych w tej aplikacji. Operator może mieć oddzielne kopie.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">WYŁĄCZ</string>
-    <string name="voicemail_settings_title">Poczta głosowa</string>
 </resources>

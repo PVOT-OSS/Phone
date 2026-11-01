@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Matikan mel suara visual</string>
   <string name="confirm_disable_voicemail_dialog_message">Tindakan ini akan memadamkan sebarang mel suara dan transkrip Google yang disimpan dalam apl ini. Pembawa anda mungkin menyimpan salinannya sendiri.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">MATIKAN</string>
-    <string name="voicemail_settings_title">Mel suara</string>
 </resources>

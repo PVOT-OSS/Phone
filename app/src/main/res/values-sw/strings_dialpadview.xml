@@ -9,9 +9,4 @@
   <string name="simContacts_title">Anwani za SIM kadi</string>
   <string name="menu_callNumber">Piga simu %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Huwezi kupiga simu ya dharura kupitia Wi‑Fi</string>
-    <string name="add_2sec_pause">Ongeza usitishaji wa sekunde 2</string>
-    <string name="add_wait">Ongeza muda wa kusubiri</string>
-    <string name="dialer_useDtmfDialpad">Tumia kibao cha kuchapa cha sauti na kugusa</string>
-    <string name="dialer_returnToInCallScreen">Rudi kwenye simu inayoendelea</string>
-    <string name="dialer_addAnotherCall">Ongeza simu</string>
 </resources>

@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">ಸ್ಪೀಡ್ ಡಯಲ್ ಸಕ್ರಿಯಗೊಳಿಸಲು, ಸಂಪರ್ಕಗಳ ಅನುಮತಿಯನ್ನು ಆನ್ ಮಾಡಿ.</string>
   <string name="speed_dial_turn_on_contacts_permission">ಆನ್ ಮಾಡಿ</string>
   <string name="speed_dial_remove_favorites">ಮೆಚ್ಚಿನವುಗಳಿಂದ ತೆಗೆದುಹಾಕಿ</string>
-    <string name="favorites_header">ಮೆಚ್ಚಿನವುಗಳು</string>
-    <string name="contact_menu_remove">ತೆಗೆದುಹಾಕಿ</string>
-    <string name="speed_dial_no_contacts_description">ನೀವು ಇದುವರೆಗೂ ಯಾವುದೇ ಮೆಚ್ಚಿನವುಗಳನ್ನು ಸೇರಿಸಿಲ್ಲ.</string>
-    <string name="speed_dial_no_contacts_action_text">ಮೆಚ್ಚಿನದನ್ನು ಸೇರಿಸಿ</string>
 </resources>

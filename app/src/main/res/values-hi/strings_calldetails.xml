@@ -7,9 +7,5 @@
   <string name="assisted_dialing_country_code_entry_failure">डायलिंग सहायता का उपयोग किया गया</string>
   <string name="rtt_transcript_not_available">सिर्फ़ मैसेज वाले कॉल ही लेख में बदले जा सकते हैं</string>
   <string name="rtt_transcript_link">मैसेज को लेख के रूप में देखें</string>
-    <string name="call_details_report_call_id">गलत जानकारी देने वाले नंबर की रिपोर्ट करें</string>
-    <string name="report_caller_id_dialog_title">गलत नंबर की रिपोर्ट करें</string>
-    <string name="report_caller_id_failed">नंबर की रिपोर्ट नहीं की जा सकी</string>
-    <string name="report_caller_id_toast">नंबर की रिपोर्ट की गई</string>
   <string name="call_details_message">मैसेज भेजें</string>
 </resources>

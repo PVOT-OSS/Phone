@@ -93,31 +93,6 @@
   <string name="call_log_action_block_number">Blokkeer nommer</string>
   <string name="call_log_action_unblock_number">Deblokkeer nommer</string>
   <string name="spam_number_call_log_label">Strooipos</string>
-    <string name="call_log_trash_voicemail">Vee stemboodskap uit</string>
-    <string name="snackbar_voicemail_deleted">Stemboodskap is uitgevee</string>
-    <string name="clearCallLogProgress_title">Vee tans oproepgeskiedenis uit …</string>
-    <string name="description_playback_speakerphone">Skakel luidsprekerfoon aan of af</string>
-    <string name="description_playback_seek">Soek terugspeelposisie</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">Meer opsies</string>
-    <string name="description_entering_bulk_action_mode">Gaan tans grootmaathandelingmodus in</string>
-    <string name="description_leaving_bulk_action_mode">Het grootmaathandelingmodus verlaat</string>
-    <string name="description_selecting_bulk_action_mode">Het %1$s gekies</string>
-    <string name="description_unselecting_bulk_action_mode">Het %1$s ontkies</string>
-    <string name="description_contact_details">Kontakbesonderhede van %1$s</string>
-    <string name="description_spam_contact_details">Kontakbesonderhede vir verdagte strooiposbeller %1$s</string>
-    <string name="description_num_calls">%1$s oproepe.</string>
-    <string name="description_video_call">Video-oproep.</string>
-    <string name="select_all">Kies alles</string>
-    <string name="description_incoming_missed_call">Oproep gemis vanaf ^1, ^2, ^3, ^4.</string>
-    <string name="description_incoming_answered_call">Oproep geantwoord vanaf ^1, ^2, ^3, ^4.</string>
-    <string name="description_unread_voicemail">Ongeleeste stempos vanaf ^1, ^2, ^3, ^4.</string>
-    <string name="description_read_voicemail">Stempos vanaf ^1, ^2, ^3, ^4.</string>
-    <string name="description_outgoing_call">Oproep na ^1, ^2, ^3, ^4.</string>
-    <string name="description_create_new_contact_action">Skep kontak vir ^1</string>
-    <string name="description_add_to_existing_contact_action">Voeg ^1 by \'n bestaande kontak</string>
-    <string name="description_details_action">Oproepbesonderhede vir ^1</string>
-    <string name="call_log_action_block_report_number">Blokkeer/gee strooipos aan</string>
-    <string name="call_log_action_remove_spam">Nie strooipos nie</string>
   <string name="call_log_blocked_title">Geblokkeer</string>
   <string name="call_log_contacts_title">Kontakte</string>
 </resources>

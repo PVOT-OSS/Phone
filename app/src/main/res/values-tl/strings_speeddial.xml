@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Para i-enable ang speed dial, i-on ang pahintulot ng Mga Contact.</string>
   <string name="speed_dial_turn_on_contacts_permission">I-on</string>
   <string name="speed_dial_remove_favorites">Alisin sa mga paborito</string>
-    <string name="favorites_header">Mga Paborito</string>
-    <string name="contact_menu_remove">Alisin</string>
-    <string name="speed_dial_no_contacts_description">Hindi ka pa nagdaragdag ng anumang paborito</string>
-    <string name="speed_dial_no_contacts_action_text">Magdagdag ng paborito</string>
 </resources>

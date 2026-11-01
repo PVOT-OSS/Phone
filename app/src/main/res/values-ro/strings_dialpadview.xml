@@ -9,9 +9,4 @@
   <string name="simContacts_title">Agenda de pe cardul SIM</string>
   <string name="menu_callNumber">Apelați %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Nu puteți efectua apeluri de urgență prin Wi-Fi</string>
-    <string name="add_2sec_pause">Adăugați o pauză de 2 secunde</string>
-    <string name="add_wait">Adăugați interval de așteptare</string>
-    <string name="dialer_useDtmfDialpad">Tastatura tactilă cu sunet</string>
-    <string name="dialer_returnToInCallScreen">Reveniți la apelul în curs</string>
-    <string name="dialer_addAnotherCall">Adăugați un apel</string>
 </resources>

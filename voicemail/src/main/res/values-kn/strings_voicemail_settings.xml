@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">ದೃಶ್ಯ ಧ್ವನಿಮೇಲ್ ಆಫ್ ಮಾಡಿ</string>
   <string name="confirm_disable_voicemail_dialog_message">ಈ ಅಪ್ಲಿಕೇಶನ್‌ನಲ್ಲಿ ಸಂಗ್ರಹಿಸಲಾದ ಯಾವುದೇ ಧ್ವನಿಮೇಲ್ ಮತ್ತು Google ಲಿಪ್ಯಂತರಗಳನ್ನು ಇದು ಅಳಿಸುತ್ತದೆ. ನಿಮ್ಮ ವಾಹಕವು ತನ್ನದೇ ಆದ ನಕಲುಗಳನ್ನು ಇರಿಸಿಕೊಳ್ಳಬಹುದು.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ಆಫ್</string>
-    <string name="voicemail_settings_title">ಧ್ವನಿಮೇಲ್</string>
 </resources>

@@ -9,9 +9,4 @@
   <string name="simContacts_title">Контакты на SIM</string>
   <string name="menu_callNumber">Позвонить: %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Экстренные вызовы по Wi‑Fi недоступны.</string>
-    <string name="add_2sec_pause">Добавить двухсекундную паузу</string>
-    <string name="add_wait">Добавить паузу</string>
-    <string name="dialer_useDtmfDialpad">Панель тонального набора</string>
-    <string name="dialer_returnToInCallScreen">Вернуться к текущему вызову</string>
-    <string name="dialer_addAnotherCall">Добавить вызов</string>
 </resources>

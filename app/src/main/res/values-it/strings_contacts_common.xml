@@ -19,5 +19,4 @@
   <string name="action_menu_back_from_search">interrompi ricerca</string>
   <string name="description_clear_search">Cancella ricerca</string>
   <string name="description_search_video_call">Videochiamata</string>
-    <string name="call_with_a_note">Chiama e invia una nota</string>
 </resources>
