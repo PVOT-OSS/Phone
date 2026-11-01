@@ -18,6 +18,6 @@
   <string name="menu_clear_frequents">Obriši često kontaktirane</string>
   <string name="action_menu_back_from_search">zaustavi pretraživanje</string>
   <string name="description_clear_search">Obriši pretragu</string>
-  <string name="call_with_a_note">Poziv s bilješkom</string>
   <string name="description_search_video_call">Video poziv</string>
+    <string name="call_with_a_note">Poziv s bilješkom</string>
 </resources>

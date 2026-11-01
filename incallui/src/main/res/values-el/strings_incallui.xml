@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">Το RTT υποβοηθά καλούντες που είναι κωφοί ή αντιμετωπίζουν προβλήματα ακοής ή ομιλίας, καθώς και όσους χρειάζονται κάτι περισσότερο από απλή φωνητική επικοινωνία.</string>
   <string name="rtt_button_decline_request">Όχι, ευχαριστώ</string>
   <string name="rtt_button_accept_request">Συμμετοχή σε RTT</string>
+  <string name="manageConferenceLabel">Διαχείριση κλήσης συνδιάσκεψης</string>
 </resources>

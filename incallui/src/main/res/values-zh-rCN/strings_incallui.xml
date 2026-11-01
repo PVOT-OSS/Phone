@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT 可为以下类型的来电者提供协助：失聪者、听力障碍人士、语言障碍人士或需要语音以外服务的人。</string>
   <string name="rtt_button_decline_request">不用了</string>
   <string name="rtt_button_accept_request">加入 RTT</string>
+  <string name="manageConferenceLabel">管理电话会议</string>
 </resources>

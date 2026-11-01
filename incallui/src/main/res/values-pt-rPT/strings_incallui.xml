@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">A RTT assiste os autores de chamadas surdos, com deficiências auditivas, dificuldades da fala ou que precisem de mais do que apenas a voz.</string>
   <string name="rtt_button_decline_request">Não, obrigado</string>
   <string name="rtt_button_accept_request">Participar na RTT</string>
+  <string name="manageConferenceLabel">Gerir conferência</string>
 </resources>

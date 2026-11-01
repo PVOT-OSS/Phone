@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">Röstbrevlåda</string>
   <string name="voicemail_notifications_preference_title">Aviseringar</string>
   <string name="voicemail_change_greeting_preference_title">Hälsningsmeddelande</string>
   <string name="change_greeting_text">Tryck och spela in</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">Stäng av visuell röstbrevlåda</string>
   <string name="confirm_disable_voicemail_dialog_message">Det tar bort alla röstmeddelanden och lagrade Google-transkript i den här appen. Din operatör kanske behåller egna kopior.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">INAKTIVERA</string>
+    <string name="voicemail_settings_title">Röstbrevlåda</string>
 </resources>

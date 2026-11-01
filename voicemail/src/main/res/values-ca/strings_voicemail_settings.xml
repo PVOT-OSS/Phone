@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">Bústia de veu</string>
   <string name="voicemail_notifications_preference_title">Notificacions</string>
   <string name="voicemail_change_greeting_preference_title">Salutació de la bústia de veu</string>
   <string name="change_greeting_text">Toca per gravar</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">Desactiva la bústia de veu visual</string>
   <string name="confirm_disable_voicemail_dialog_message">Se suprimiran els missatges de veu i les transcripcions de Google desats en aquesta aplicació. És possible que l\'operador de telefonia mòbil en conservi còpies.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">DESACTIVA</string>
+    <string name="voicemail_settings_title">Bústia de veu</string>
 </resources>

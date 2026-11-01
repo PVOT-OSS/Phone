@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT допомагає користувачам із вадами слуху, мовлення та іншим користувачам, для яких голосового спілкування недостатньо.</string>
   <string name="rtt_button_decline_request">Ні, дякую</string>
   <string name="rtt_button_accept_request">Приєднатися до RTT</string>
+  <string name="manageConferenceLabel">Керувати конференц-зв’язком</string>
 </resources>

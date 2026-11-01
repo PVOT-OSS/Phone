@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+  -->
+<resources>
+    <!-- Title of the group of settings for how the app looks and sounds, at the top of settings. -->
+    <string name="settings_section_app">General</string>
+    <!-- Title of the group of settings about calls, in the settings list. -->
+    <string name="settings_section_calls">Calling</string>
+</resources>

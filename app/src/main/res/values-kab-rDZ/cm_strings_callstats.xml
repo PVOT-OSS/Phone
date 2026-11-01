@@ -21,6 +21,11 @@
     <string name="call_stats_missed">Yettwazeglen: <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_blocked">Iweḥlen: <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_header_total">Asemday: <xliff:g id="call_count">%1$s</xliff:g>, <xliff:g id="duration">%2$s</xliff:g></string>
+    <string name="call_stats_title_for_number">Uṭṭun-agi</string>
+    <string name="call_stats_title_of_total">G uɣrud</string>
+    <string name="call_stats_title_durations">Tinzagin n usiwel</string>
+    <string name="call_stats_title_count">Amessḍan n isawalan</string>
+    <string name="call_stats_title_average_duration">Tanzagt talemmast n isawalen</string>
     <string name="call_stats_header_total_callsonly">Aɣrud: <xliff:g id="call_count">%s</xliff:g></string>
     <string name="call_stats_filter_from">Azemz n tazwara</string>
     <string name="call_stats_filter_to">Azemz n tagara</string>
@@ -35,9 +40,4 @@
     <string name="date_qs_lastyear">Assegas yezrin</string>
     <string name="call_stats_sort_by_duration">Smizzwer s tnzagt talemmast n isawalen</string>
     <string name="call_stats_sort_by_count">Smizzwer s umessḍan n isawalan</string>
-    <string name="call_stats_title_for_number">Uṭṭun-agi</string>
-    <string name="call_stats_title_of_total">G uɣrud</string>
-    <string name="call_stats_title_durations">Tinzagin n usiwel</string>
-    <string name="call_stats_title_count">Amessḍan n isawalan</string>
-    <string name="call_stats_title_average_duration">Tanzagt talemmast n isawalen</string>
 </resources>

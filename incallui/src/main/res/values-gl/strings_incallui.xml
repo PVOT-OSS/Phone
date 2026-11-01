@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">A función RTT constitúe unha axuda para todos aqueles emisores de chamadas que padezan xordeira ou outros problemas auditivos, teñan algún trastorno da fala ou necesiten algo máis que a voz para comunicarse.</string>
   <string name="rtt_button_decline_request">Non, grazas</string>
   <string name="rtt_button_accept_request">Unirse a RTT</string>
+  <string name="manageConferenceLabel">Xestionar confer. telefónica</string>
 </resources>

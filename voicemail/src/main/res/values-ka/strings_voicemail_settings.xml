@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">ხმოვანი ფოსტა</string>
   <string name="voicemail_notifications_preference_title">შეტყობინებები</string>
   <string name="voicemail_change_greeting_preference_title">ხმოვანი ფოსტის მისალმება</string>
   <string name="change_greeting_text">შეეხეთ ჩასაწერად</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">ვიზუალური ხმოვანი ფოსტის გამორთვა</string>
   <string name="confirm_disable_voicemail_dialog_message">ეს წაშლის ამ აპში შენახულ ნებისმიერ ხმოვან შეტყობინებას და Google ტრანსკრიპტს. შესაძლოა თქვენმა ოპერატორმა შეინახოს თავისი ასლები.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">გამორთვა</string>
+    <string name="voicemail_settings_title">ხმოვანი ფოსტა</string>
 </resources>

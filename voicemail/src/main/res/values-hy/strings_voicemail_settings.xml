@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">Ձայնային փոստ</string>
   <string name="voicemail_notifications_preference_title">Ծանուցումներ</string>
   <string name="voicemail_change_greeting_preference_title">Ձայնային փոստի ողջույն</string>
   <string name="change_greeting_text">Սկսել ձայնագրումը</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">Անջատել ձայնային փոստի ցուցադրումը</string>
   <string name="confirm_disable_voicemail_dialog_message">Կջնջվեն այս հավելվածում պահված ամբողջ ձայնային փոստն ու ձայնագրությունների տեքստերը՝ տառադրված Google-ի հատուկ ծառայության միջոցով: Դրանց պատճենները հնարավոր է մնան ձեր օպերատորի մոտ:</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ԱՆՋԱՏԵԼ</string>
+    <string name="voicemail_settings_title">Ձայնային փոստ</string>
 </resources>

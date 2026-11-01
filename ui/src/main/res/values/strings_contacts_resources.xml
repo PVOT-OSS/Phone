@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- String used for actions in the dialer call log and the quick contact card to initiate
+       a call to an individual.  The user is prompted to enter a note which is sent along with
+       the call (e.g. a call subject). [CHAR LIMIT=40] -->
+  <string name="call_with_a_note">Call with a note</string>
+</resources>

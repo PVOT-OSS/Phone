@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">Voicemail</string>
   <string name="voicemail_notifications_preference_title">Meldingen</string>
   <string name="voicemail_change_greeting_preference_title">Voicemailbegroeting</string>
   <string name="change_greeting_text">Tik om op te nemen</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">Visuele voicemail uitschakelen</string>
   <string name="confirm_disable_voicemail_dialog_message">Hiermee worden voicemails en Google-transcripten verwijderd die zijn opgeslagen in deze app. Mogelijk bewaart uw provider zelf nog kopieën.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">UITSCHAKELEN</string>
+    <string name="voicemail_settings_title">Voicemail</string>
 </resources>

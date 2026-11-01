@@ -23,6 +23,14 @@
     <string name="call_stats_blocked">Sperra: <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_percent"><xliff:g id="percent">%d</xliff:g>%%</string>
     <string name="call_stats_header_total">Totalt: <xliff:g id="call_count">%1$s</xliff:g>, <xliff:g id="duration">%2$s</xliff:g></string>
+    <string name="call_stats_date_filter">Juster tidsrom</string>
+    <string name="call_stats_reset_filter">Nullstill tidsrom</string>
+    <string name="call_stats_title_for_number">Dette nummeret</string>
+    <string name="call_stats_title_of_total">Av totalt</string>
+    <string name="call_stats_title_durations">Samtalelengd</string>
+    <string name="call_stats_title_count">Samtalemengd</string>
+    <string name="call_stats_title_average_duration">Gjennomsnittleg samtalelengd</string>
+    <string name="recent_calls_no_items_in_range">Samtaleloggen inneheld ingen samtalar i det valde tidsrommet.</string>
     <string name="call_stats_header_total_callsonly">Totalt: <xliff:g id="call_count">%s</xliff:g></string>
     <string name="call_stats_filter_from">Startdato</string>
     <string name="call_stats_filter_to">Sluttdato</string>
@@ -35,14 +43,6 @@
     <string name="date_qs_lastmonth">Førre månad</string>
     <string name="date_qs_lastquarter">Førre kvartal</string>
     <string name="date_qs_lastyear">I fjor</string>
-    <string name="call_stats_date_filter">Juster tidsrom</string>
-    <string name="call_stats_reset_filter">Nullstill tidsrom</string>
     <string name="call_stats_sort_by_duration">Sorter etter samtalelengd</string>
     <string name="call_stats_sort_by_count">Sorter etter samtalemengd</string>
-    <string name="call_stats_title_for_number">Dette nummeret</string>
-    <string name="call_stats_title_of_total">Av totalt</string>
-    <string name="call_stats_title_durations">Samtalelengd</string>
-    <string name="call_stats_title_count">Samtalemengd</string>
-    <string name="call_stats_title_average_duration">Gjennomsnittleg samtalelengd</string>
-    <string name="recent_calls_no_items_in_range">Samtaleloggen inneheld ingen samtalar i det valde tidsrommet.</string>
 </resources>

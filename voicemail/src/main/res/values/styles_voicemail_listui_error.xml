@@ -16,7 +16,21 @@
   -->
 
 <resources>
-  <style name="ErrorActionStyle">
+
+
+
+  <style name="TosLinkStyle">
+    <item name="android:textColor">?android:attr/colorPrimary</item>
+    <item name="android:fontFamily">@*android:string/config_headlineFontFamilyMedium</item>
+  </style>
+
+  <style name="TosDetailsTextStyle">
+    <item name="android:textSize">12sp</item>
+    <item name="android:textColor">?android:attr/textColorSecondary</item>
+    <item name="android:fontFamily">@*android:string/config_bodyFontFamily</item>
+    <item name="android:lineSpacingExtra">12sp</item>
+  </style>
+    <style name="ErrorActionStyle">
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">48dp</item>
     <item name="android:gravity">end|center_vertical</item>
@@ -31,8 +45,7 @@
     <item name="android:textSize">14sp</item>
     <item name="android:minHeight">48dp</item>
   </style>
-
-  <style name="ErrorActionDeclineStyle">
+    <style name="ErrorActionDeclineStyle">
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">48dp</item>
     <item name="android:gravity">end|center_vertical</item>
@@ -47,23 +60,10 @@
     <item name="android:textSize">14sp</item>
     <item name="android:minHeight">48dp</item>
   </style>
-
-  <style name="RaisedErrorActionStyle" parent="Widget.AppCompat.Button.Colored">
+    <style name="RaisedErrorActionStyle" parent="Widget.AppCompat.Button.Colored">
     <item name="android:layout_width">wrap_content</item>
     <item name="android:colorButtonNormal">?android:attr/colorPrimary</item>
     <item name="android:textSize">14sp</item>
     <item name="android:layout_height">@dimen/call_log_action_height</item>
-  </style>
-
-  <style name="TosLinkStyle">
-    <item name="android:textColor">?android:attr/colorPrimary</item>
-    <item name="android:fontFamily">@*android:string/config_headlineFontFamilyMedium</item>
-  </style>
-
-  <style name="TosDetailsTextStyle">
-    <item name="android:textSize">12sp</item>
-    <item name="android:textColor">?android:attr/textColorSecondary</item>
-    <item name="android:fontFamily">@*android:string/config_bodyFontFamily</item>
-    <item name="android:lineSpacingExtra">12sp</item>
   </style>
 </resources>

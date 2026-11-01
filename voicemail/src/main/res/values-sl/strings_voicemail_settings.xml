@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">Odzivnik</string>
   <string name="voicemail_notifications_preference_title">Obvestila</string>
   <string name="voicemail_change_greeting_preference_title">Pozdravno sporočilo v odzivniku</string>
   <string name="change_greeting_text">Dotak. se za sneman.</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">Izklop vizualnih sporočil v odzivniku</string>
   <string name="confirm_disable_voicemail_dialog_message">S tem bodo izbrisana vsa sporočila v odzivniku in Googlovi prepisi, shranjeni v tej aplikaciji. Operater bo morda obdržal svoje kopije.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">IZKLOPI</string>
+    <string name="voicemail_settings_title">Odzivnik</string>
 </resources>

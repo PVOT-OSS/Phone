@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT ਬੋਲੇ, ਗੂੰਗੇ, ਸੁਣਨ ਸੰਬੰਧੀ ਪਰੇਸ਼ਾਨੀਆਂ ਵਾਲੇ ਕਾਲਰਾਂ ਜਾਂ ਚੀਜ਼ਾਂ ਨੂੰ ਸਮਝਣ ਲਈ ਅਵਾਜ਼ ਤੋਂ ਇਲਾਵਾ ਹੋਰ ਚੀਜ਼ਾਂ \'ਤੇ ਨਿਰਭਰ ਕਰਨ ਵਾਲੇ ਕਾਲਰਾਂ ਦੀ ਸਹਾਇਤਾ ਕਰਦਾ ਹੈ।</string>
   <string name="rtt_button_decline_request">ਨਹੀਂ ਧੰਨਵਾਦ</string>
   <string name="rtt_button_accept_request">RTT ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਵੋ</string>
+  <string name="manageConferenceLabel">ਕਾਨਫਰੰਸ ਕਾਲ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ</string>
 </resources>

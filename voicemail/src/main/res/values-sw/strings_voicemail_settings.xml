@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">Ujumbe wa sauti</string>
   <string name="voicemail_notifications_preference_title">Arifa</string>
   <string name="voicemail_change_greeting_preference_title">Salamu za ujumbe wa sauti</string>
   <string name="change_greeting_text">Gusa ili Urekodi</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">Zima ujumbe wa sauti unaoonekana</string>
   <string name="confirm_disable_voicemail_dialog_message">Huenda hii ikafuta ujumbe wa sauti na nukuu za Google zilizohifadhiwa kwenye programu hii. Mtoa huduma za mtandao unaotumia anaweza kuhifadhi nakala zake.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ZIMA</string>
+    <string name="voicemail_settings_title">Ujumbe wa sauti</string>
 </resources>

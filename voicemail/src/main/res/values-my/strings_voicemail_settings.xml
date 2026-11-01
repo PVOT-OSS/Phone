@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">အသံမေးလ်</string>
   <string name="voicemail_notifications_preference_title">အသိပေးချက်များ</string>
   <string name="voicemail_change_greeting_preference_title">အသံမေးလ် နှုတ်ခွန်းဆက်သမှု</string>
   <string name="change_greeting_text">အသံဖမ်းရန် တို့ပါ</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">ကြည့်ရှုစီမံနိုင်သော အသံမေးလ်ကို ပိတ်ပါ</string>
   <string name="confirm_disable_voicemail_dialog_message">ဤသည်က ဤအက်ပ်အတွင်း သိမ်းဆည်းထားသော မည်သည့်အသံမေးလ်နှင့် Google စာသားမှတ်တမ်းကိုမဆို ဖျက်ပစ်ပါမည်။ သင့်ဖုန်းကုမ္ပဏီသည် ၎င်း၏ကိုယ်ပိုင်မိတ္တူများကို သိမ်းဆည်းထားနိုင်သည်။</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ပိတ်ရန်</string>
+    <string name="voicemail_settings_title">အသံမေးလ်</string>
 </resources>

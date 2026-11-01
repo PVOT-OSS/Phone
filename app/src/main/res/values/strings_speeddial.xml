@@ -15,8 +15,8 @@
   ~ limitations under the License
   -->
 <resources>
-  <!-- header for a list of contacts that are the users favorites. [CHAR LIMIT=30] -->
-  <string name="favorites_header">Favorites</string>
+  <!-- Header above the favorites at the top of the dialpad tab, called with one tap [CHAR LIMIT=30] -->
+  <string name="quick_dial_header">Quick dial</string>
 
   <!-- header for a list of contacts that are suggestions for the user to place calls to based on
     their frequently contacted contacts. [CHAR LIMIT=30] -->
@@ -49,7 +49,6 @@
   <string name="contact_menu_message">Message</string>
 
   <!-- Text for a button that removes the item from the list [CHAR LIMIT=15]-->
-  <string name="contact_menu_remove">Remove</string>
 
   <!-- Text for a button that opens the contact's info [CHAR LIMIT=15]-->
   <string name="contact_menu_contact_info">Contact info</string>
@@ -63,12 +62,10 @@
   <!-- The label of the button used to turn on a single permission [CHAR LIMIT=30]-->
   <string name="speed_dial_turn_on_contacts_permission">Turn on</string>
 
-  <!-- [CHAR LIMIT=NONE] Shown when there are no contacts in the all contacts list. -->
-  <string name="speed_dial_no_contacts_description">You haven\'t added any favorites yet</string>
-
-  <!-- [CHAR LIMIT=NONE] Shown as an action when the all contacts list is empty -->
-  <string name="speed_dial_no_contacts_action_text">Add favorite</string>
-
   <!-- Text shown on a dragging target that removes the contact from favorites -->
   <string name="speed_dial_remove_favorites">Remove from favorites</string>
+    <string name="favorites_header">Favorites</string>
+    <string name="contact_menu_remove">Remove</string>
+    <string name="speed_dial_no_contacts_description">You haven\'t added any favorites yet</string>
+    <string name="speed_dial_no_contacts_action_text">Add favorite</string>
 </resources>

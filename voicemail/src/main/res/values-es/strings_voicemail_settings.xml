@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">Buzón de voz</string>
   <string name="voicemail_notifications_preference_title">Notificaciones</string>
   <string name="voicemail_change_greeting_preference_title">Saludo del buzón de voz</string>
   <string name="change_greeting_text">Toca para grabar</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">Desactivar el buzón de voz visual</string>
   <string name="confirm_disable_voicemail_dialog_message">Esta acción eliminará las transcripciones de Google y los mensajes de voz almacenados en esta aplicación. Es posible que tu operador guarde una copia de ellos.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">DESACTIVAR</string>
+    <string name="voicemail_settings_title">Buzón de voz</string>
 </resources>

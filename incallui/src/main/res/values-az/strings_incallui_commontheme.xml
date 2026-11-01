@@ -16,4 +16,5 @@
   <string name="incall_content_description_video_off">Video deaktivdir</string>
   <string name="incall_content_description_swap_video">Videonu dəyişdirin</string>
   <string name="incall_label_speaker">Dinamik</string>
+  <string name="incall_label_more">Daha çox</string>
 </resources>

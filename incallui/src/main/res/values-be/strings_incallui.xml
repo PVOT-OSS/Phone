@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT дапамагае абанентам з парушэннямі слыху і маўлення.</string>
   <string name="rtt_button_decline_request">Не, дзякуй</string>
   <string name="rtt_button_accept_request">Падключыць RTT</string>
+  <string name="manageConferenceLabel">Кіраванне канферэнц-выклікам</string>
 </resources>

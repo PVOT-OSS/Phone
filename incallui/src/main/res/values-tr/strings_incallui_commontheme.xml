@@ -16,4 +16,5 @@
   <string name="incall_content_description_video_off">Video kapalı</string>
   <string name="incall_content_description_swap_video">Videoyu değiştirin</string>
   <string name="incall_label_speaker">Hoparlör</string>
+  <string name="incall_label_more">Daha fazla</string>
 </resources>

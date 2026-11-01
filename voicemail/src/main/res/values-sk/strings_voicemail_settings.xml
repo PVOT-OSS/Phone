@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">Hlasová správa</string>
   <string name="voicemail_notifications_preference_title">Upozornenia</string>
   <string name="voicemail_change_greeting_preference_title">Pozdrav hlasovej schránky</string>
   <string name="change_greeting_text">Klepnutím nahrávate</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">Vypnutie vizuálnej hlasovej schránky</string>
   <string name="confirm_disable_voicemail_dialog_message">Odstránite tým všetky hlasové správy a prepisy od Googlu uložené v tejto aplikácii. Váš operátor si môže uchovávať vlastné kópie.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">VYPNÚŤ</string>
+    <string name="voicemail_settings_title">Hlasová správa</string>
 </resources>

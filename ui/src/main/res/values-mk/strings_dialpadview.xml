@@ -2,4 +2,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="description_image_button_plus">бирај плус</string>
   <string name="description_voicemail_button">повикајте ја говорната пошта</string>
+  <string name="add_2sec_pause">Додај пауза од 2 сек.</string>
+  <string name="add_wait">Додај чекање</string>
+  <string name="description_delete_button">избриши</string>
+  <string name="description_dialpad_overflow">Повеќе опции</string>
 </resources>

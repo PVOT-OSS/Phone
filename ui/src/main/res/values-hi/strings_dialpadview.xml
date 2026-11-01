@@ -2,4 +2,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="description_image_button_plus">प्लस डायल करें</string>
   <string name="description_voicemail_button">वॉइसमेल पर कॉल करें</string>
+  <string name="add_2sec_pause">2-सेकंड का विराम जोड़ें</string>
+  <string name="add_wait">प्रतीक्षा का समय बढ़ाएं</string>
+  <string name="description_delete_button">backspace</string>
+  <string name="description_dialpad_overflow">अधिक विकल्प</string>
 </resources>

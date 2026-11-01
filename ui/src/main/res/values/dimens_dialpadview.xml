@@ -16,4 +16,5 @@
 
 <resources>
   <dimen name="dialpad_key_button_translate_y">100dp</dimen>
+  <dimen name="dialpad_digits_text_min_size">24sp</dimen>
 </resources>

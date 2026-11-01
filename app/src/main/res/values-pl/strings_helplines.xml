@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">Telefony zaufania</string>
-    <string name="helplines_loading">Wczytywanie\u2026</string>
     <string name="helplines_empty">Nie znaleziono telefonów zaufania.\nWłóż kartę SIM i spróbuj ponownie</string>
     <string name="helplines_help">Pomoc</string>
     <string name="helplines_help_title">Na te numery można bezpiecznie dzwonić</string>
@@ -37,4 +36,5 @@
     <string name="helpline_language_inuktitut">Eskimoski</string>
     <string name="helpline_language_ojibway">Odżibwe</string>
     <string name="helpline_language_turkish">Turecki</string>
+    <string name="helplines_loading">Wczytywanie\u2026</string>
 </resources>

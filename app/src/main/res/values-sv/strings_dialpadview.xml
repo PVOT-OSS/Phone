@@ -3,15 +3,15 @@
   <string name="description_dial_button">ring</string>
   <string name="dialog_voicemail_airplane_mode_message">Om du vill ringa röstbrevlådan måste du först inaktivera flygplansläget.</string>
   <string name="dialog_voicemail_not_ready_message">Välj Meny &gt; Inställningar om du vill konfigurera röstbrevlådan.</string>
-  <string name="add_2sec_pause">Lägg till en paus på 2 sek.</string>
-  <string name="add_wait">Lägg till väntetid</string>
-  <string name="dialer_useDtmfDialpad">Använd tonvalstelefon</string>
-  <string name="dialer_returnToInCallScreen">Återvänd till pågående samtal</string>
-  <string name="dialer_addAnotherCall">Lägg till samtal</string>
   <string name="imei">IMEI-kod</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">Läser in från SIM-kort …</string>
   <string name="simContacts_title">Kontakter från SIM-kort</string>
   <string name="menu_callNumber">Ring %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Det går inte att ringa nödsamtal över Wi‑Fi</string>
+    <string name="add_2sec_pause">Lägg till en paus på 2 sek.</string>
+    <string name="add_wait">Lägg till väntetid</string>
+    <string name="dialer_useDtmfDialpad">Använd tonvalstelefon</string>
+    <string name="dialer_returnToInCallScreen">Återvänd till pågående samtal</string>
+    <string name="dialer_addAnotherCall">Lägg till samtal</string>
 </resources>

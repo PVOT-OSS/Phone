@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT ជួយ​អ្នក​ហៅ​ទូរសព្ទ​ដែល​​ថ្លង់ ពិបាក​ក្នុង​ការស្ដាប់ មិន​អាច​និយាយ​បាន ឬ​មាន​តម្រូវការ​ក្រៅ​ពី​​សំឡេង។</string>
   <string name="rtt_button_decline_request">ទេ អរគុណ</string>
   <string name="rtt_button_accept_request">ចូលរួម RTT</string>
+  <string name="manageConferenceLabel">គ្រប់គ្រងការហៅជាក្រុម</string>
 </resources>

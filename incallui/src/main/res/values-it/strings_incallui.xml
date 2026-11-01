@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT aiuta i chiamanti con disabilità uditive o del linguaggio e le persone che hanno bisogno di un supporto scritto oltre alla voce.</string>
   <string name="rtt_button_decline_request">No grazie</string>
   <string name="rtt_button_accept_request">Partecipa a RTT</string>
+  <string name="manageConferenceLabel">Gestisci audioconferenza</string>
 </resources>

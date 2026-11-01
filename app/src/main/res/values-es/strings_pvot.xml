@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+  -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="call_history_delete">Eliminar</string>
+  <string name="description_assisted_dialing">Marcación asistida</string>
+  <string name="speed_dial_more_options">Más opciones</string>
+</resources>

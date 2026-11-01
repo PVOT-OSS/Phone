@@ -23,6 +23,14 @@
     <string name="call_stats_blocked">შეზღუდული: <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_percent"><xliff:g id="percent">%d</xliff:g>%%</string>
     <string name="call_stats_header_total">სულ: <xliff:g id="call_count">%1$s</xliff:g>, <xliff:g id="duration">%2$s</xliff:g></string>
+    <string name="call_stats_date_filter">დროის შუალედის შერჩევა</string>
+    <string name="call_stats_reset_filter">დროის შუალედის ჩამოყრა</string>
+    <string name="call_stats_title_for_number">ამ ნომრის</string>
+    <string name="call_stats_title_of_total">სულ</string>
+    <string name="call_stats_title_durations">ზარების ხანგრძლივობა</string>
+    <string name="call_stats_title_count">ზარების რაოდენობა</string>
+    <string name="call_stats_title_average_duration">ზარის საშუალო ხანგრძლივობა</string>
+    <string name="recent_calls_no_items_in_range">ჩანაწერებში ვერ მოიძებნა ზარები, დროის შერჩეული შუალედისთვის.</string>
     <string name="call_stats_header_total_callsonly">სულ: <xliff:g id="call_count">%s</xliff:g></string>
     <string name="call_stats_filter_from">დაწყების თარიღი</string>
     <string name="call_stats_filter_to">დასრულების თარიღი</string>
@@ -35,14 +43,6 @@
     <string name="date_qs_lastmonth">წინა თვე</string>
     <string name="date_qs_lastquarter">წინა კვარტალი</string>
     <string name="date_qs_lastyear">წინა წელი</string>
-    <string name="call_stats_date_filter">დროის შუალედის შერჩევა</string>
-    <string name="call_stats_reset_filter">დროის შუალედის ჩამოყრა</string>
     <string name="call_stats_sort_by_duration">ზარების ხანგრძლივობით დალაგება</string>
     <string name="call_stats_sort_by_count">ზარების რაოდენობით დალაგება</string>
-    <string name="call_stats_title_for_number">ამ ნომრის</string>
-    <string name="call_stats_title_of_total">სულ</string>
-    <string name="call_stats_title_durations">ზარების ხანგრძლივობა</string>
-    <string name="call_stats_title_count">ზარების რაოდენობა</string>
-    <string name="call_stats_title_average_duration">ზარის საშუალო ხანგრძლივობა</string>
-    <string name="recent_calls_no_items_in_range">ჩანაწერებში ვერ მოიძებნა ზარები, დროის შერჩეული შუალედისთვის.</string>
 </resources>

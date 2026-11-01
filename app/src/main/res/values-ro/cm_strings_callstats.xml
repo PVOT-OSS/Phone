@@ -23,6 +23,14 @@
     <string name="call_stats_blocked">Blocat: <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_percent"><xliff:g id="percent">%d</xliff:g>%%</string>
     <string name="call_stats_header_total">Total: <xliff:g id="call_count">%1$s</xliff:g>, <xliff:g id="duration">%2$s</xliff:g></string>
+    <string name="call_stats_date_filter">Ajustare interval de timp</string>
+    <string name="call_stats_reset_filter">Resetare interval de timp</string>
+    <string name="call_stats_title_for_number">Acest număr</string>
+    <string name="call_stats_title_of_total">Din total</string>
+    <string name="call_stats_title_durations">Durate apeluri</string>
+    <string name="call_stats_title_count">Număr apeluri</string>
+    <string name="call_stats_title_average_duration">Durata medie a apelului</string>
+    <string name="recent_calls_no_items_in_range">Istoricul apelurilor nu conține apeluri în intervalul de timp selectat.</string>
     <string name="call_stats_header_total_callsonly">Total: <xliff:g id="call_count">%s</xliff:g></string>
     <string name="call_stats_filter_from">Data de început</string>
     <string name="call_stats_filter_to">Data de sfârșit</string>
@@ -35,14 +43,6 @@
     <string name="date_qs_lastmonth">Luna trecută</string>
     <string name="date_qs_lastquarter">Trimestrul trecut</string>
     <string name="date_qs_lastyear">Anul trecut</string>
-    <string name="call_stats_date_filter">Ajustare interval de timp</string>
-    <string name="call_stats_reset_filter">Resetare interval de timp</string>
     <string name="call_stats_sort_by_duration">Sortare după durata apelului</string>
     <string name="call_stats_sort_by_count">Sortare după numărul de apeluri</string>
-    <string name="call_stats_title_for_number">Acest număr</string>
-    <string name="call_stats_title_of_total">Din total</string>
-    <string name="call_stats_title_durations">Durate apeluri</string>
-    <string name="call_stats_title_count">Număr apeluri</string>
-    <string name="call_stats_title_average_duration">Durata medie a apelului</string>
-    <string name="recent_calls_no_items_in_range">Istoricul apelurilor nu conține apeluri în intervalul de timp selectat.</string>
 </resources>

@@ -18,6 +18,6 @@
   <string name="menu_clear_frequents">Tyhjennä usein käytetyt</string>
   <string name="action_menu_back_from_search">lopeta hakeminen</string>
   <string name="description_clear_search">Tyhjennä haku</string>
-  <string name="call_with_a_note">Soita ja lähetä muistiinpano</string>
   <string name="description_search_video_call">Videopuhelu</string>
+    <string name="call_with_a_note">Soita ja lähetä muistiinpano</string>
 </resources>

@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">Linky pomoci</string>
-    <string name="helplines_loading">Načítání\u2026</string>
     <string name="helplines_empty">Nebyly nalezeny žádné linky pomoci.\nVložte SIM kartu a zkuste to znovu</string>
     <string name="helplines_help">Pomoc</string>
     <string name="helplines_help_title">Volat je bezpečné</string>
@@ -37,4 +36,5 @@
     <string name="helpline_language_inuktitut">Inuktitutština</string>
     <string name="helpline_language_ojibway">Ojibwayština</string>
     <string name="helpline_language_turkish">Turečtina</string>
+    <string name="helplines_loading">Načítání\u2026</string>
 </resources>

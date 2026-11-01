@@ -15,13 +15,21 @@
   ~ limitations under the License
   -->
 <resources>
-  <style name="DialtactsTheme" parent="Dialer.ThemeBase.ActionBar">
+
+
+  <!-- Text style for tabs. -->
+
+
+
+
+
+
+    <style name="DialtactsTheme" parent="Dialer.ThemeBase.ActionBar">
     <item name="android:windowLightNavigationBar">true</item>
     <item name="android:navigationBarColor">?android:attr/windowBackground</item>
     <item name="android:navigationBarDividerColor">@null</item>
   </style>
-
-  <style name="TransparentTheme" parent="DialtactsTheme">
+    <style name="TransparentTheme" parent="DialtactsTheme">
     <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
     <item name="android:windowBackground">@android:color/transparent</item>
     <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
@@ -30,24 +38,20 @@
     <item name="android:windowNoTitle">true</item>
     <item name="android:windowIsFloating">true</item>
   </style>
-
-  <!-- Text style for tabs. -->
-  <style name="DialtactsActionBarTabTextStyle"
+    <style name="DialtactsActionBarTabTextStyle"
     parent="android:style/Widget.Material.Light.ActionBar.TabText">
     <item name="android:textColor">@color/tab_text</item>
     <item name="android:textSize">@dimen/tab_text_size</item>
     <item name="android:fontFamily">@*android:string/config_headlineFontFamilyMedium</item>
   </style>
-
-  <style name="CallLogActionStyle">
+    <style name="CallLogActionStyle">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">@dimen/call_log_action_height</item>
     <item name="android:background">?android:attr/selectableItemBackground</item>
     <item name="android:orientation">horizontal</item>
     <item name="android:gravity">center_vertical</item>
   </style>
-
-  <style name="CallLogActionTextStyle" parent="Dialer.TextAppearance.Primary.Ellipsize">
+    <style name="CallLogActionTextStyle" parent="Dialer.TextAppearance.Primary.Ellipsize">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:paddingStart">@dimen/call_log_action_horizontal_padding</item>
@@ -55,8 +59,7 @@
     <item name="android:focusable">true</item>
     <item name="android:importantForAccessibility">no</item>
   </style>
-
-  <style name="CallLogActionSupportTextStyle" parent="Dialer.TextAppearance.Secondary.Ellipsize">
+    <style name="CallLogActionSupportTextStyle" parent="Dialer.TextAppearance.Secondary.Ellipsize">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:paddingStart">@dimen/call_log_action_horizontal_padding</item>
@@ -64,23 +67,20 @@
     <item name="android:focusable">true</item>
     <item name="android:importantForAccessibility">no</item>
   </style>
-
-  <style name="CallLogActionIconStyle">
+    <style name="CallLogActionIconStyle">
     <item name="android:layout_width">@dimen/call_log_action_icon_dimen</item>
     <item name="android:layout_height">@dimen/call_log_action_icon_dimen</item>
     <item name="android:layout_marginStart">@dimen/call_log_action_icon_margin_start</item>
     <item name="android:tint">?colorIcon</item>
     <item name="android:importantForAccessibility">no</item>
   </style>
-
-  <style name="VoicemailPlaybackLayoutButtonStyle">
+    <style name="VoicemailPlaybackLayoutButtonStyle">
     <item name="android:layout_width">56dp</item>
     <item name="android:layout_height">56dp</item>
     <item name="android:background">@drawable/oval_ripple</item>
     <item name="android:padding">8dp</item>
   </style>
-
-  <style name="DialerFlatButtonStyle" parent="@android:style/Widget.Material.Button">
+    <style name="DialerFlatButtonStyle" parent="@android:style/Widget.Material.Button">
     <item name="android:background">?android:attr/selectableItemBackground</item>
     <item name="android:paddingEnd">@dimen/button_horizontal_padding</item>
     <item name="android:paddingStart">@dimen/button_horizontal_padding</item>

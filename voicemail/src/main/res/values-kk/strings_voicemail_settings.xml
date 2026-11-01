@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">Дауыстық хабар</string>
   <string name="voicemail_notifications_preference_title">Хабарландырулар</string>
   <string name="voicemail_change_greeting_preference_title">Дауыстық поштаның сәлемдесу мәтіні</string>
   <string name="change_greeting_text">Жазу үшін түртіңіз</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">Визуалдық дауыстық хабарды өшіру</string>
   <string name="confirm_disable_voicemail_dialog_message">Бұл әрекет осы қолданбада сақталған дауыстық хабарлар мен Google транскрипцияларын жояды. Оператор өз көшірмелерін сақтауы мүмкін.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ӨШІРУ</string>
+    <string name="voicemail_settings_title">Дауыстық хабар</string>
 </resources>

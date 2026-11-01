@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT ຈະຊ່ວຍເຫຼືອຜູ້ໂທທີ່ຫູໜວກ, ມີບັນຫາໃນການໄດ້ຍິນ, ບໍ່ສາມາດເວົ້າໄດ້ ຫຼື ຕ້ອງການໃຊ້ຫຼາຍກວ່າສຽງ.</string>
   <string name="rtt_button_decline_request">ບໍ່, ຂອບໃຈ</string>
   <string name="rtt_button_accept_request">ເຂົ້າຮ່ວມ RTT</string>
+  <string name="manageConferenceLabel">ຈັດ​ການ​ການ​ປະ​ຊຸມ​ທາງໂທລະສັບ</string>
 </resources>

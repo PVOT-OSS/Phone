@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">TTR oferă asistență apelanților fără auz, cu deficiențe de auz, care au dizabilități de vorbire sau care au nevoie de mai mult decât vocea.</string>
   <string name="rtt_button_decline_request">Nu</string>
   <string name="rtt_button_accept_request">Conectați-vă la TTR</string>
+  <string name="manageConferenceLabel">Gestionați conferința telefonică</string>
 </resources>

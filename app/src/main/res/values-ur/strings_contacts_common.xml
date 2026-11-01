@@ -18,6 +18,6 @@
   <string name="menu_clear_frequents">اکثر و بیشتر کو صاف کریں</string>
   <string name="action_menu_back_from_search">تلاش کرنا بند کریں</string>
   <string name="description_clear_search">تلاش صاف کریں</string>
-  <string name="call_with_a_note">ایک نوٹ کے ساتھ کال کریں</string>
   <string name="description_search_video_call">ویڈیو کال</string>
+    <string name="call_with_a_note">ایک نوٹ کے ساتھ کال کریں</string>
 </resources>

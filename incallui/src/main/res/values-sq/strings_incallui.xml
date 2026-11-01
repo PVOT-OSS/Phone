@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">Funksioni RTT ndihmon telefonuesit që janë të shurdhër, kanë vështirësi dëgjimi, kanë një aftësi të kufizuar të të folurit ose që kanë nevojë për më shumë se thjesht zërin.</string>
   <string name="rtt_button_decline_request">Jo</string>
   <string name="rtt_button_accept_request">Bashkohu në RTT</string>
+  <string name="manageConferenceLabel">Menaxho telefonatën konferencë</string>
 </resources>

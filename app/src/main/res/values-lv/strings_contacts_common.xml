@@ -18,6 +18,6 @@
   <string name="menu_clear_frequents">Dzēst bieži lietotos kontaktus</string>
   <string name="action_menu_back_from_search">pārtraukt meklēšanu</string>
   <string name="description_clear_search">Notīrīt meklēšanas lauku</string>
-  <string name="call_with_a_note">Zvanīt ar piezīmi</string>
   <string name="description_search_video_call">Videozvans</string>
+    <string name="call_with_a_note">Zvanīt ar piezīmi</string>
 </resources>

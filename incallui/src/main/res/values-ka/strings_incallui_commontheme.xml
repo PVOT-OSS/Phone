@@ -16,4 +16,5 @@
   <string name="incall_content_description_video_off">ვიდეო გამორთულია</string>
   <string name="incall_content_description_swap_video">ვიდეოს შენაცვლება</string>
   <string name="incall_label_speaker">სპიკერი</string>
+  <string name="incall_label_more">სხვა</string>
 </resources>

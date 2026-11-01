@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">Yardım hatları</string>
-    <string name="helplines_loading">Yükleniyor\u2026</string>
     <string name="helplines_empty">Yardım hattı bulunamadı.\nBir sim kart takın ve tekrar deneyin</string>
     <string name="helplines_help">Yardım</string>
     <string name="helplines_help_title">Bunları aramak güvenli</string>
@@ -37,4 +36,5 @@
     <string name="helpline_language_inuktitut">İnuitçe</string>
     <string name="helpline_language_ojibway">Ojibway</string>
     <string name="helpline_language_turkish">Türkçe</string>
+    <string name="helplines_loading">Yükleniyor\u2026</string>
 </resources>

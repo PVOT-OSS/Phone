@@ -2,4 +2,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="description_image_button_plus">plus na klawiaturze</string>
   <string name="description_voicemail_button">zadzwoń na pocztę głosową</string>
+  <string name="add_2sec_pause">Dodaj 2-sekundową pauzę</string>
+  <string name="add_wait">Dodaj oczekiwanie</string>
+  <string name="description_delete_button">usuń</string>
+  <string name="description_dialpad_overflow">Więcej opcji</string>
 </resources>

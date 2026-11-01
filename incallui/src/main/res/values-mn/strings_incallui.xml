@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT нь дүлий, хатуу чихтэй, хэл ярианы хөгжлийн бэрхшээлтэй, эсвэл хэн нэгний тусламжтай ярьдаг дуудлага хийгчдэд тусладаг.</string>
   <string name="rtt_button_decline_request">Үгүй</string>
   <string name="rtt_button_accept_request">RTT-д нэгдэх</string>
+  <string name="manageConferenceLabel">Хурлын дуудлага удирдах</string>
 </resources>

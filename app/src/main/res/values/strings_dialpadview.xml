@@ -31,24 +31,18 @@
          while the system isn't ready for the access. [CHAR LIMIT=NONE] -->
   <string name="dialog_voicemail_not_ready_message">To set up voicemail, go to Menu &gt; Settings.</string>
 
-  <!-- Menu items for dialpad options as part of Pause and Wait ftr [CHAR LIMIT=30] -->
-  <string name="add_2sec_pause">Add 2-sec pause</string>
-  <string name="add_wait">Add wait</string>
 
   <!-- Item label: jump to the in-call DTMF dialpad.
          (Part of a list of options shown in the dialer when another call
          is already in progress.) -->
-  <string name="dialer_useDtmfDialpad">Use touch-tone keypad</string>
 
   <!-- Item label: jump to the in-call UI.
        (Part of a list of options shown in the dialer when another call
        is already in progress.) -->
-  <string name="dialer_returnToInCallScreen">Return to call in progress</string>
 
   <!-- Item label: use the Dialer's keypad to add another call.
        (Part of a list of options shown in the dialer when another call
        is already in progress.) -->
-  <string name="dialer_addAnotherCall">Add call</string>
 
   <!-- The title of a dialog that displays the IMEI of the phone -->
   <string name="imei">IMEI</string>
@@ -68,4 +62,9 @@
   <!-- Warning hint shown in the dialpad input field when emergency call (911, etc.) cannot be made over wifi.
        [CHAR_LIMIT=60] -->
   <string name="dialpad_hint_emergency_calling_not_available">Can\'t make emergency calls over WiFi</string>
+    <string name="add_2sec_pause">Add 2-sec pause</string>
+    <string name="add_wait">Add wait</string>
+    <string name="dialer_useDtmfDialpad">Use touch-tone keypad</string>
+    <string name="dialer_returnToInCallScreen">Return to call in progress</string>
+    <string name="dialer_addAnotherCall">Add call</string>
 </resources>

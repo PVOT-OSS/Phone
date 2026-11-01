@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">හඬ තැපෑල</string>
   <string name="voicemail_notifications_preference_title">දැනුම්දීම්</string>
   <string name="voicemail_change_greeting_preference_title">හඬ තැපැල් සුබ පැතුම</string>
   <string name="change_greeting_text">පටිගත කිරී. තට්ටු ක.</string>
@@ -34,4 +33,5 @@
   <string name="confirm_disable_voicemail_dialog_title">දෘශ්‍ය හඬ තැපෑල ක්‍රියාවිරහිත කරන්න</string>
   <string name="confirm_disable_voicemail_dialog_message">මෙම යෙදුම තුළ ගබඩා කර ඇති ඕනෑම හඬ තැපැල් සහ Google පිටපත් මකනු ඇත. ඔබගේ වාහකය තමන්ගේම පිටපත් තබා ගත හැකිය.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ක්‍රියාවිරහිත කරන්න</string>
+    <string name="voicemail_settings_title">හඬ තැපෑල</string>
 </resources>

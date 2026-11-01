@@ -2,4 +2,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="description_image_button_plus">πληκτρολόγηση συν</string>
   <string name="description_voicemail_button">κλήση αυτόματου τηλεφωνητή</string>
+  <string name="add_2sec_pause">Προσθήκη παύσης 2 δευτερολέπτων</string>
+  <string name="add_wait">Προσθήκη αναμονής</string>
+  <string name="description_delete_button">backspace</string>
+  <string name="description_dialpad_overflow">Περισσότερες επιλογές</string>
 </resources>

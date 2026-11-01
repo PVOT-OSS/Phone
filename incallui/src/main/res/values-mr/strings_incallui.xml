@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT अशा कॉलरना साहाय्य करते जे बहिरे असतात, कमी ऐकू येते किंवा बोलताना अडखळतात किंवा ज्‍यांना फक्‍त आवाज पुरेसा नसतो.</string>
   <string name="rtt_button_decline_request">नाही नको</string>
   <string name="rtt_button_accept_request">RTT मध्‍ये सामील व्‍हा</string>
+  <string name="manageConferenceLabel">परिषद कॉल व्यवस्थापित करा</string>
 </resources>

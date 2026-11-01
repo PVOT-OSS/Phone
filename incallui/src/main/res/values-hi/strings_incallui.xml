@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">आरटीटी सुविधा ऐसे कॉल करने वालों (कॉलर) की मदद करती है, जो बधिर हैं, ऊंचा सुनते हैं, ठीक से बोल नहीं पाते या जिनके लिए सिर्फ़ आवाज़ काफ़ी नहीं होती.</string>
   <string name="rtt_button_decline_request">नहीं, धन्यवाद</string>
   <string name="rtt_button_accept_request">आरटीटी में शामिल हों</string>
+  <string name="manageConferenceLabel">कॉन्फ़्रेंस कॉल प्रबंधित करें</string>
 </resources>
