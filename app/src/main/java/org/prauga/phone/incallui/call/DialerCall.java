@@ -321,6 +321,7 @@ public class DialerCall implements VideoTechListener {
               // currently conferenceable calls available or Connection Capabilities.
             case android.telecom.Connection.EVENT_CALL_MERGE_FAILED:
               isMergeInProcess = false;
+              Toast.makeText(context, R.string.incall_merge_failed, Toast.LENGTH_SHORT).show();
               update();
               break;
             case TelephonyManagerCompat.EVENT_HANDOVER_VIDEO_FROM_WIFI_TO_LTE:

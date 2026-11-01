@@ -58,6 +58,8 @@
 
   <!-- The "label" of the in-call Notification for a call that's on hold -->
   <string name="notification_on_hold">On hold</string>
+  <!-- Toast shown when the network could not merge the calls into a conference. -->
+  <string name="incall_merge_failed">Failed to merge call.</string>
   <!-- The "label" of the in-call Notification for an incoming ringing call. [CHAR LIMIT=60] -->
   <string name="notification_incoming_call">Incoming call</string>
   <!-- The "label" of the in-call Notification for an incoming ringing call. [CHAR LIMIT=60] -->
