@@ -5,6 +5,7 @@
 
 package org.prauga.phone.dialer.e2e
 
+import android.app.NotificationManager
 import android.provider.CallLog
 import android.telecom.DisconnectCause
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -17,6 +18,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
+import org.prauga.phone.dialer.notification.NotificationChannelId
 import org.prauga.phone.dialer.testing.FakeCarrier
 import org.prauga.phone.incallui.call.state.DialerCallState
 
@@ -46,6 +48,19 @@ class OutgoingCallTest {
 
         InCall.waitForNoCalls()
         assertEquals(CallLog.Calls.OUTGOING_TYPE, CallTests.waitFor { CallTests.latestCall(context, number, since) }.type)
+    }
+
+    @Test
+    fun connectedCallShowsOngoingNotification() {
+        InCall.place(context, CallTests.freshNumber())
+        InCall.waitForState(DialerCallState.DIALING)
+        CallTests.waitFor { FakeCarrier.connections.firstOrNull() }.answerFromFarEnd()
+        InCall.waitForState(DialerCallState.ACTIVE)
+
+        val notifications = context.getSystemService(NotificationManager::class.java)
+        CallTests.waitFor {
+            notifications.activeNotifications.firstOrNull { it.notification.channelId == NotificationChannelId.ONGOING_CALL }
+        }
     }
 
     @Test
