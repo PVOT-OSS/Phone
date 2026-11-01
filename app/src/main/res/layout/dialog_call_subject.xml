@@ -113,6 +113,47 @@
         android:textColor="?android:attr/textColorSecondary"
         android:textSize="@dimen/call_subject_dialog_secondary_text_size"/>
 
+      <!-- Call composer: shown when the SIM supports it. -->
+      <LinearLayout
+        android:id="@+id/composer_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/call_subject_dialog_margin"
+        android:layout_marginStart="@dimen/call_subject_dialog_margin"
+        android:layout_marginEnd="@dimen/call_subject_dialog_margin"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <CheckBox
+          android:id="@+id/composer_urgent"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="@string/call_composer_urgent"
+          android:textSize="@dimen/call_subject_dialog_secondary_text_size"/>
+
+        <ImageView
+          android:id="@+id/composer_picture_preview"
+          android:layout_width="40dp"
+          android:layout_height="40dp"
+          android:layout_marginEnd="8dp"
+          android:contentDescription="@string/call_composer_picture_description"
+          android:scaleType="centerCrop"
+          android:visibility="gone"/>
+
+        <TextView
+          android:id="@+id/composer_add_picture"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:background="?attr/selectableItemBackground"
+          android:minHeight="48dp"
+          android:gravity="center_vertical"
+          android:text="@string/call_composer_add_picture"
+          android:textColor="@color/call_subject_button"
+          android:textSize="@dimen/call_subject_dialog_secondary_text_size"/>
+      </LinearLayout>
+
       <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"

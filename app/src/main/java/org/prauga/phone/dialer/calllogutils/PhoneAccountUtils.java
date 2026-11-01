@@ -56,7 +56,10 @@ public class PhoneAccountUtils {
       Context context, @Nullable PhoneAccountHandle accountHandle) {
     final PhoneAccount account = TelecomUtil.getPhoneAccount(context, accountHandle);
 
-    return account != null && account.hasCapabilities(PhoneAccount.CAPABILITY_CALL_SUBJECT);
+    // Call composer carries a subject too.
+    return account != null
+        && (account.hasCapabilities(PhoneAccount.CAPABILITY_CALL_SUBJECT)
+            || account.hasCapabilities(PhoneAccount.CAPABILITY_CALL_COMPOSER));
   }
 
   /**

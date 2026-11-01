@@ -137,18 +137,22 @@ public class CallSubjectDialog extends AppCompatActivity {
   private String mNumberLabel;
   private int mContactType;
   private PhoneAccountHandle mPhoneAccountHandle;
+  private CallComposerOptions mComposerOptions;
   /** Handles starting a call with a call subject specified. */
   private final View.OnClickListener mSendAndCallOnClickListener = v -> {
     String subject = mCallSubjectView.getText().toString();
-    PreCall.start(
-            CallSubjectDialog.this,
-            new CallIntentBuilder(mNumber, CallInitiationType.Type.CALL_SUBJECT_DIALOG)
-                    .setPhoneAccountHandle(mPhoneAccountHandle)
-                    .setCallSubject(subject));
-
-    mSubjectHistory.add(subject);
-    saveSubjectHistory(mSubjectHistory);
-    finish();
+    CallIntentBuilder builder =
+        new CallIntentBuilder(mNumber, CallInitiationType.Type.CALL_SUBJECT_DIALOG)
+            .setPhoneAccountHandle(mPhoneAccountHandle)
+            .setCallSubject(subject);
+    mComposerOptions.send(
+        builder,
+        () -> {
+          PreCall.start(CallSubjectDialog.this, builder);
+          mSubjectHistory.add(subject);
+          saveSubjectHistory(mSubjectHistory);
+          finish();
+        });
   };
 
   /** Click listener which handles user clicks outside of the dialog. */
@@ -293,6 +297,7 @@ public class CallSubjectDialog extends AppCompatActivity {
     mSubjectList = findViewById(R.id.subject_list);
     mSubjectList.setOnItemClickListener(mItemClickListener);
     mSubjectList.setVisibility(View.GONE);
+    mComposerOptions = new CallComposerOptions(this, mPhoneAccountHandle);
 
     updateContactInfo();
     updateCharacterLimit();

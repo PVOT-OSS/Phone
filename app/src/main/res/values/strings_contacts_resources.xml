@@ -334,6 +334,16 @@
 
   <!-- Hint text shown in the call subject dialog. [CHAR LIMIT=255] -->
   <string name="call_subject_hint">Type a note to send with call ...</string>
+  <!-- Call composer option in the "call with a note" dialog: mark the call as urgent for the person called [CHAR LIMIT=30] -->
+  <string name="call_composer_urgent">Urgent</string>
+  <!-- Call composer button in the "call with a note" dialog: choose a picture to send with the call [CHAR LIMIT=30] -->
+  <string name="call_composer_add_picture">Add picture</string>
+  <!-- Same button once a picture was chosen [CHAR LIMIT=30] -->
+  <string name="call_composer_change_picture">Change picture</string>
+  <!-- Content description of the chosen picture's thumbnail [CHAR LIMIT=NONE] -->
+  <string name="call_composer_picture_description">Picture to send with the call</string>
+  <!-- Shown when the chosen picture couldn't be sent; the call goes ahead without it [CHAR LIMIT=NONE] -->
+  <string name="call_composer_picture_failed">Couldn\'t send the picture. Calling without it.</string>
 
   <!-- Button used to start a new call with the user entered subject. [CHAR LIMIT=32] -->
   <string name="send_and_call_button">SEND &amp; CALL</string>
