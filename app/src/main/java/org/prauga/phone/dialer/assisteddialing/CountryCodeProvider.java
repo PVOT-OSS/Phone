@@ -38,7 +38,6 @@ public final class CountryCodeProvider {
           "CA" /* Canada */,
           "GB" /* United Kingdom */,
           "JP" /* Japan */,
-          "MX" /* Mexico */,
           "US" /* United States */);
 
   private final Set<String> supportedCountryCodes;

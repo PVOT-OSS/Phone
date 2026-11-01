@@ -100,7 +100,7 @@ final class Constraints {
       return false;
     }
 
-    return areSupportedCountryCodes(userHomeCountryCode, userRoamingCountryCode)
+    return isSupportedHomeCountry(userHomeCountryCode)
         && isUserRoaming(userHomeCountryCode, userRoamingCountryCode)
         && isNotInternationalNumber(parsedPhoneNumber)
         && isNotEmergencyNumber(numberToCheck, context)
@@ -117,25 +117,12 @@ final class Constraints {
   }
 
   /**
-   * Returns a boolean indicating the support of both provided country codes for assisted dialing.
-   * Both country codes must be allowed for the return value to be true.
+   * Returns whether the home country is one assisted dialing supports. The country the user is in
+   * can be anywhere: dialing home from it works the same way.
    */
-  private boolean areSupportedCountryCodes(
-      @NonNull String userHomeCountryCode, @NonNull String userRoamingCountryCode) {
-    if (TextUtils.isEmpty(userHomeCountryCode)) {
-      LogUtil.i("Constraints.areSupportedCountryCodes", "userHomeCountryCode was empty");
-      return false;
-    }
-
-    if (TextUtils.isEmpty(userRoamingCountryCode)) {
-      LogUtil.i("Constraints.areSupportedCountryCodes", "userRoamingCountryCode was empty");
-      return false;
-    }
-
-    boolean result =
-        countryCodeProvider.isSupportedCountryCode(userHomeCountryCode)
-            && countryCodeProvider.isSupportedCountryCode(userRoamingCountryCode);
-    LogUtil.i("Constraints.areSupportedCountryCodes", String.valueOf(result));
+  private boolean isSupportedHomeCountry(@NonNull String userHomeCountryCode) {
+    boolean result = countryCodeProvider.isSupportedCountryCode(userHomeCountryCode);
+    LogUtil.i("Constraints.isSupportedHomeCountry", String.valueOf(result));
     return result;
   }
 
