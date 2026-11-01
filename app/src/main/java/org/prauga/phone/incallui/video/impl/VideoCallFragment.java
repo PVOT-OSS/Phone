@@ -135,6 +135,7 @@ public class VideoCallFragment extends Fragment
   private CheckableImageButton muteButton;
   private CheckableImageButton cameraOffButton;
   private ImageButton swapCameraButton;
+  private ImageButton downgradeToAudioButton;
   private View switchOnHoldButton;
   private View onHoldContainer;
   private SwitchOnHoldCallController switchOnHoldCallController;
@@ -246,6 +247,8 @@ public class VideoCallFragment extends Fragment
         (ImageView) view.findViewById(R.id.videocall_preview_off_blurred_image_view);
     swapCameraButton = (ImageButton) view.findViewById(R.id.videocall_switch_video);
     swapCameraButton.setOnClickListener(this);
+    downgradeToAudioButton = view.findViewById(R.id.videocall_downgrade_audio);
+    downgradeToAudioButton.setOnClickListener(this);
     view.findViewById(R.id.videocall_switch_controls)
         .setVisibility(getActivity().isInMultiWindowMode() ? View.GONE : View.VISIBLE);
     switchOnHoldButton = view.findViewById(R.id.videocall_switch_on_hold);
@@ -634,6 +637,10 @@ public class VideoCallFragment extends Fragment
       }
       inCallButtonUiDelegate.toggleCameraClicked();
       videoCallScreenDelegate.resetAutoFullscreenTimer();
+    } else if (v == downgradeToAudioButton) {
+      LogUtil.i("VideoCallFragment.onClick", "audio only button clicked");
+      inCallButtonUiDelegate.changeToVoiceClicked();
+      videoCallScreenDelegate.resetAutoFullscreenTimer();
     }
   }
 
@@ -787,6 +794,8 @@ public class VideoCallFragment extends Fragment
       switchOnHoldCallController.setVisible(show);
     } else if (buttonId == InCallButtonIds.BUTTON_SWITCH_CAMERA) {
       swapCameraButton.setEnabled(show);
+    } else if (buttonId == InCallButtonIds.BUTTON_DOWNGRADE_TO_AUDIO) {
+      downgradeToAudioButton.setVisibility(show ? View.VISIBLE : View.GONE);
     }
   }
 

@@ -46,6 +46,8 @@
   <string name="incall_content_description_video_on">Video on</string>
 
   <string name="incall_content_description_video_off">Video off</string>
+  <!-- Description of the video call button that turns the call into a voice call. [CHAR LIMIT=NONE] -->
+  <string name="incall_content_description_downgrade_call">Audio only</string>
 
   <string name="incall_content_description_swap_video">Swap video</string>
 
