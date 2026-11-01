@@ -10,6 +10,7 @@ import android.content.ContentResolver
 import android.content.Context
 import android.database.ContentObserver
 import android.database.Cursor
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.provider.CallLog
@@ -45,14 +46,17 @@ data class CallStatsEntry(val cachedInfo: ContactInfo, val details: CallStatsDet
 /** Reads the call log into per-number statistics. */
 object CallStatsLoader {
 
-    /** Calls after [from] and before [to] (each -1 for no limit), one entry per number. */
-    fun load(resolver: ContentResolver, from: Long, to: Long): List<CallStatsEntry> {
+    /**
+     * Calls after [from] and before [to] (each -1 for no limit), one entry per number. [uri] is
+     * [TelecomUtil.getCallLogUri]: voicemails are only readable by the default dialer.
+     */
+    fun load(resolver: ContentResolver, uri: Uri, from: Long, to: Long): List<CallStatsEntry> {
         val selection = mutableListOf<String>()
         val args = mutableListOf<String>()
         if (from != -1L) { selection += "(${Calls.DATE} > ?)"; args += from.toString() }
         if (to != -1L) { selection += "(${Calls.DATE} < ?)"; args += to.toString() }
         return resolver.query(
-            Calls.CONTENT_URI_WITH_VOICEMAIL,
+            uri,
             CallStatsQuery._PROJECTION,
             selection.joinToString(" AND "),
             args.toTypedArray(),
@@ -168,7 +172,7 @@ data class CallStatsFilter(val from: Long = -1, val to: Long = -1, val sortByDur
 class CallStatsListViewModel(
     application: Application,
     private val load: (from: Long, to: Long) -> List<CallStatsEntry> = { from, to ->
-        CallStatsLoader.load(application.contentResolver, from, to)
+        CallStatsLoader.load(application.contentResolver, TelecomUtil.getCallLogUri(application), from, to)
     },
     private val hasPermission: () -> Boolean = { PermissionsUtil.hasCallLogReadPermissions(application) },
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
