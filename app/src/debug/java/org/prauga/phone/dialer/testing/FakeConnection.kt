@@ -13,8 +13,10 @@ import android.telecom.PhoneAccount
 /** A call on the fake carrier; the user's side acts through Telecom, the far end through this class. */
 class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connection() {
 
-    /** DTMF tones the user played, in order. */
+    /** DTMF tones the user played, in order, including post-dial digits they chose to send. */
     val playedTones = mutableListOf<Char>()
+
+    private val postDialDigits = spec.number?.substringAfter(';', "").orEmpty()
 
     init {
         val address = spec.number?.let { Uri.fromParts(PhoneAccount.SCHEME_TEL, it, null) }
@@ -54,8 +56,15 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
         playedTones += c
     }
 
-    /** The far end picks up an outgoing call. */
-    fun answerFromFarEnd() = setActive()
+    override fun onPostDialContinue(proceed: Boolean) {
+        if (proceed) playedTones += postDialDigits.toList()
+    }
+
+    /** The far end picks up an outgoing call; digits after a wait (;) then wait for the user. */
+    fun answerFromFarEnd() {
+        setActive()
+        if (postDialDigits.isNotEmpty()) setPostDialWait(postDialDigits)
+    }
 
     /**
      * The far end or the network ends the call with [cause]. By default a call that is still
