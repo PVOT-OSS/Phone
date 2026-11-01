@@ -19,7 +19,6 @@ package org.prauga.phone.dialer.activecalls;
 import android.content.Context;
 
 import org.prauga.phone.dialer.inject.HasRootComponent;
-import org.prauga.phone.dialer.inject.IncludeInDialerRoot;
 
 import dagger.Subcomponent;
 
@@ -35,7 +34,6 @@ public abstract class ActiveCallsComponent {
   }
 
   /** Used to refer to the root application component. */
-  @IncludeInDialerRoot
   public interface HasComponent {
     ActiveCallsComponent activeCallsComponent();
   }

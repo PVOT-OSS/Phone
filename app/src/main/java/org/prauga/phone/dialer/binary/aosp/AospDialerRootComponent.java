@@ -19,17 +19,14 @@ package org.prauga.phone.dialer.binary.aosp;
 
 import org.prauga.phone.dialer.activecalls.ActiveCallsModule;
 import org.prauga.phone.dialer.binary.basecomponent.BaseDialerRootComponent;
-import org.prauga.phone.dialer.calllog.CallLogModule;
 import org.prauga.phone.dialer.common.concurrent.DialerExecutorModule;
 import org.prauga.phone.dialer.contacts.ContactsModule;
 import org.prauga.phone.dialer.glidephotomanager.GlidePhotoManagerModule;
 import org.prauga.phone.dialer.inject.ContextModule;
-import org.prauga.phone.dialer.phonelookup.PhoneLookupModule;
 import org.prauga.phone.dialer.phonenumbergeoutil.impl.PhoneNumberGeoUtilModule;
 import org.prauga.phone.dialer.precall.impl.PreCallModule;
 import org.prauga.phone.dialer.preferredsim.PreferredSimModule;
 import org.prauga.phone.dialer.preferredsim.suggestion.stub.StubSimSuggestionModule;
-import org.prauga.phone.dialer.promotion.impl.PromotionModule;
 import org.prauga.phone.dialer.storage.StorageModule;
 import org.prauga.phone.dialer.theme.base.impl.AospThemeModule;
 import org.prauga.phone.voicemail.impl.VoicemailModule;
@@ -43,16 +40,13 @@ import javax.inject.Singleton;
 @Component(
     modules = {
       ActiveCallsModule.class,
-      CallLogModule.class,
       ContactsModule.class,
       ContextModule.class,
       DialerExecutorModule.class,
       GlidePhotoManagerModule.class,
-      PhoneLookupModule.class,
       PhoneNumberGeoUtilModule.class,
       PreCallModule.class,
       PreferredSimModule.class,
-      PromotionModule.class,
       StorageModule.class,
       StubSimSuggestionModule.class,
       AospThemeModule.class,

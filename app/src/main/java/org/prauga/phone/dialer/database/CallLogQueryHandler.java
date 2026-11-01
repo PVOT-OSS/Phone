@@ -154,6 +154,37 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
 
   /** Fetches the list of calls in the call log. */
   private void fetchCalls(int token, int callType, boolean newOnly, long newerThan) {
+    FetchQuery query = buildFetchQuery(context, callType, newOnly, newerThan, logLimit);
+    startQuery(
+        token,
+        null,
+        query.uri,
+        CallLogQuery.getProjection(),
+        query.selection,
+        query.selectionArgs,
+        Calls.DEFAULT_SORT_ORDER);
+  }
+
+  /** The URI, selection and arguments of a call log query; sort by {@link Calls#DEFAULT_SORT_ORDER}. */
+  public static final class FetchQuery {
+    public final Uri uri;
+    public final String selection;
+    public final String[] selectionArgs;
+
+    FetchQuery(Uri uri, String selection, String[] selectionArgs) {
+      this.uri = uri;
+      this.selection = selection;
+      this.selectionArgs = selectionArgs;
+    }
+  }
+
+  /**
+   * Builds the query for calls of {@code callType} ({@link #CALL_TYPE_ALL} for every type but
+   * voicemail), newer than {@code newerThan} when it is positive, at most {@code logLimit} rows
+   * ({@code -1} for the default limit) and only new calls if {@code newOnly}.
+   */
+  public static FetchQuery buildFetchQuery(
+      Context context, int callType, boolean newOnly, long newerThan, int logLimit) {
     StringBuilder where = new StringBuilder();
     List<String> selectionArgs = new ArrayList<>();
 
@@ -198,20 +229,12 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
     }
 
     final int limit = (logLimit == -1) ? NUM_LOGS_TO_DISPLAY : logLimit;
-    final String selection = where.length() > 0 ? where.toString() : null;
     Uri uri =
         TelecomUtil.getCallLogUri(context)
             .buildUpon()
             .appendQueryParameter(Calls.LIMIT_PARAM_KEY, Integer.toString(limit))
             .build();
-    startQuery(
-        token,
-        null,
-        uri,
-        CallLogQuery.getProjection(),
-        selection,
-        selectionArgs.toArray(new String[0]),
-        Calls.DEFAULT_SORT_ORDER);
+    return new FetchQuery(uri, where.toString(), selectionArgs.toArray(new String[0]));
   }
 
   /** Cancel any pending fetch request. */
