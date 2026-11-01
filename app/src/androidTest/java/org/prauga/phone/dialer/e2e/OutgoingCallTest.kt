@@ -33,6 +33,26 @@ class OutgoingCallTest {
     val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
 
     @Test
+    fun callPlacedRightAfterAnotherEndsGetsItsCallScreen() {
+        InCall.place(context, CallTests.freshNumber())
+        InCall.waitForState(DialerCallState.DIALING)
+        CallTests.waitFor { FakeCarrier.connections.firstOrNull() }.hangUpFromFarEnd()
+        InCall.waitForNoCalls()
+
+        // The first call's screen is still closing when the next call is placed.
+        val number = CallTests.freshNumber()
+        InCall.place(context, number)
+
+        assertNotNull(
+            "no call screen for the second call",
+            deviceRule.device.wait(
+                Until.findObject(By.pkg(context.packageName).textContains(number.takeLast(4))),
+                CallTests.TIMEOUT_MILLIS,
+            ),
+        )
+    }
+
+    @Test
     fun answeredCallIsLoggedAsOutgoing() {
         val number = CallTests.freshNumber()
         val since = System.currentTimeMillis()
