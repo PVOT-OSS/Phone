@@ -47,6 +47,27 @@ class CallLogScreenTest {
     }
 
     @Test
+    fun missedFilterShowsOnlyMissedCalls() {
+        val answered = CallTests.freshNumber()
+        FakeCarrier.ring(context, FakeCallSpec(number = answered))
+        CallTests.answerRingingCall()
+        CallTests.waitFor { FakeCarrier.connections.firstOrNull() }.hangUpFromFarEnd()
+        InCall.waitForNoCalls()
+        val missed = CallTests.freshNumber()
+        FakeCarrier.ring(context, FakeCallSpec(number = missed))
+        CallTests.waitForRinging().hangUpFromFarEnd()
+        InCall.waitForNoCalls()
+
+        context.startActivity(MainComponent.getShowCallLogIntent(context).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        val device = deviceRule.device
+        assertNotNull("answered call not listed", device.wait(Until.findObject(By.textContains(answered.takeLast(4))), CallTests.TIMEOUT_MILLIS))
+        checkNotNull(device.findObject(By.res(context.packageName, "call_log_filter_missed"))) { "no Missed chip" }.click()
+
+        assertNotNull("missed call not listed", device.wait(Until.findObject(By.textContains(missed.takeLast(4))), CallTests.TIMEOUT_MILLIS))
+        check(device.wait(Until.gone(By.textContains(answered.takeLast(4))), CallTests.TIMEOUT_MILLIS)) { "answered call still listed under Missed" }
+    }
+
+    @Test
     fun recentCallSaysJustNow() {
         val number = CallTests.freshNumber()
         val since = System.currentTimeMillis()
