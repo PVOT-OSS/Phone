@@ -40,6 +40,8 @@ android {
     packaging {
         resources {
             excludes += "META-INF/DEPENDENCIES"
+            // Libraries ship their .proto files for each other's imports; the app doesn't need them.
+            excludes += "org/prauga/**/*.proto"
         }
     }
 
@@ -71,6 +73,7 @@ protobuf {
 
 dependencies {
     implementation(project(":common"))
+    implementation(project(":telephony"))
     implementation(project(":annotations"))
     annotationProcessor(project(":processor"))
 
