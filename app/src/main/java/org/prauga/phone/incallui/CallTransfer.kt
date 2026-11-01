@@ -22,8 +22,9 @@ import org.prauga.phone.incallui.call.CallList
 import org.prauga.phone.incallui.call.DialerCall
 
 /**
- * Consultative transfer: the active call is handed over to the held one, so the two other people
- * end up talking to each other.
+ * Handing a call over: to the held call (consultative transfer, so the two other people end up
+ * talking to each other) or straight to a number (blind transfer); and adding people to a
+ * conference the network hosts.
  */
 object CallTransfer {
 
@@ -50,6 +51,11 @@ object CallTransfer {
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.CINNAMON_BUN &&
             call.can(Call.Details.CAPABILITY_TRANSFER) &&
             carrierAllowsTransfer(context, call)
+
+    /** Whether people can be added straight to [call], a conference the network hosts. */
+    @JvmStatic
+    fun canAddParticipant(call: DialerCall): Boolean =
+        call.isConferenceCall && call.can(Call.Details.CAPABILITY_ADD_PARTICIPANT)
 
     private fun carrierAllowsTransfer(context: Context, call: DialerCall): Boolean {
         if (context.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {

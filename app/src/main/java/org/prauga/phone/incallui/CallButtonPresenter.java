@@ -291,6 +291,13 @@ public class CallButtonPresenter
 
   @Override
   public void addCallClicked() {
+    InCallActivity activity = getActivity();
+    if (call != null && activity != null && CallTransfer.canAddParticipant(call)) {
+      // The network hosts the conference: add the number to it rather than placing another call.
+      NumberPromptDialogFragment.show(
+          activity, NumberPromptDialogFragment.Action.ADD_PARTICIPANT, call.getId());
+      return;
+    }
     InCallPresenter.getInstance().addCallClicked();
   }
 
@@ -511,7 +518,8 @@ public class CallButtonPresenter
     final boolean isCallOnHold = call.getState() == DialerCallState.ONHOLD;
 
     final boolean showAddCall =
-        TelecomAdapter.getInstance().canAddCall() && UserManagerCompat.isUserUnlocked(context);
+        (TelecomAdapter.getInstance().canAddCall() || CallTransfer.canAddParticipant(call))
+            && UserManagerCompat.isUserUnlocked(context);
     final boolean showMerge = call.can(android.telecom.Call.Details.CAPABILITY_MERGE_CONFERENCE);
     final boolean showUpgradeToVideo = !isVideo && (hasVideoCallCapabilities(call));
     final boolean showDowngradeToAudio = isVideo && isDowngradeToAudioSupported(call);
