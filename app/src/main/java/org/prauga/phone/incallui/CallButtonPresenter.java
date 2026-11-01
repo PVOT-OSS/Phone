@@ -255,6 +255,9 @@ public class CallButtonPresenter
     LogUtil.i(
         "CallButtonPresenter", "turning on mute: %s, clicked by user: %s", checked, clickedByUser);
     TelecomAdapter.getInstance().mute(checked);
+    if (clickedByUser) {
+      MuteSound.play(context, checked);
+    }
   }
 
   @Override

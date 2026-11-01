@@ -103,8 +103,10 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
       TelecomAdapter.getInstance().setAudioRoute(CallAudioState.ROUTE_WIRED_OR_EARPIECE);
     } else if (action.equals(ACTION_MUTE)) {
       TelecomAdapter.getInstance().mute(true);
+      MuteSound.play(context, true);
     } else if (action.equals(ACTION_UNMUTE)) {
       TelecomAdapter.getInstance().mute(false);
+      MuteSound.play(context, false);
     } else if (action.equals(ACTION_UNHOLD)) {
       DialerCall heldCall = CallList.getInstance().getBackgroundCall();
       if (heldCall != null) {
