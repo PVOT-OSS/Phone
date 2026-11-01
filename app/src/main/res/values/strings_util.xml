@@ -35,6 +35,12 @@
   <!-- Text of warning to be shown when the user attempts to make an outgoing Wireless
        Preferred Service call when there is an VoLTE call in progress -->
   <string name="outgoing_wps_warning">Placing a WPS call will disconnect your existing call.</string>
+  <!-- Title of the dialog shown before calling a number the user blocked. -->
+  <string name="calling_blocked_number_title">Call <xliff:g id="number" example="(650) 555-0100">%1$s</xliff:g>?</string>
+  <!-- Message of the dialog shown before calling a number the user blocked. -->
+  <string name="calling_blocked_number_message">You blocked <xliff:g id="number" example="(650) 555-0100">%1$s</xliff:g>. If they call you, you won\'t receive their call.</string>
+  <!-- Button that goes ahead with calling a blocked number. -->
+  <string name="calling_blocked_number_call">Call</string>
 
   <!-- Text for button which indicates that the user wants to proceed with an action. -->
   <string name="dialog_continue">Continue</string>
