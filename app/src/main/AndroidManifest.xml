@@ -270,16 +270,7 @@
             android:exported="false"
             android:label="@string/call_details" />
 
-        <activity
-            android:name="org.prauga.phone.dialer.calldetails.CallDetailsActivity"
-            android:exported="false"
-            android:label="@string/call_details" />
 
-        <provider
-            android:name="org.prauga.phone.dialer.calllog.database.AnnotatedCallLogContentProvider"
-            android:authorities="org.prauga.phone.dialer.annotatedcalllog"
-            android:exported="false"
-            android:multiprocess="false" />
 
         <activity
             android:name="org.prauga.phone.dialer.helplines.HelplineActivity"
@@ -412,11 +403,6 @@
             android:launchMode="singleTask"
             android:theme="@style/MainActivityTheme" />
 
-        <provider
-            android:name="org.prauga.phone.dialer.phonelookup.database.PhoneLookupHistoryContentProvider"
-            android:authorities="org.prauga.phone.dialer.phonelookuphistory"
-            android:exported="false"
-            android:multiprocess="false" />
 
         <activity
             android:name="org.prauga.phone.dialer.postcall.PostCallActivity"
