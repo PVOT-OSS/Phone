@@ -50,9 +50,11 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
             CAPABILITY_SEPARATE_FROM_CONFERENCE or
             CAPABILITY_DISCONNECT_FROM_CONFERENCE or
             CAPABILITY_SUPPORTS_VT_LOCAL_BIDIRECTIONAL or
-            CAPABILITY_SUPPORTS_VT_REMOTE_BIDIRECTIONAL
+            CAPABILITY_SUPPORTS_VT_REMOTE_BIDIRECTIONAL or
+            CAPABILITY_TRANSFER_CONSULTATIVE
         videoProvider = video
         connectionProperties = spec.properties
+        if (!spec.extras.isEmpty) putExtras(spec.extras)
         audioModeIsVoip = false
     }
 
@@ -95,6 +97,18 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
     override fun handleRttUpgradeResponse(rttTextStream: RttTextStream?) {
         rttRequestAccepted = rttTextStream != null
         if (rttTextStream != null) startRtt(rttTextStream)
+    }
+
+    /** The call this one was transferred to, once the user transferred it. */
+    @Volatile
+    var transferredTo: FakeConnection? = null
+        private set
+
+    override fun onTransfer(otherConnection: Connection) {
+        transferredTo = otherConnection as? FakeConnection
+        // The network connects the two other people and drops the user from both calls.
+        (otherConnection as? FakeConnection)?.end(DisconnectCause(DisconnectCause.LOCAL))
+        end(DisconnectCause(DisconnectCause.LOCAL))
     }
 
     override fun onPostDialContinue(proceed: Boolean) {
