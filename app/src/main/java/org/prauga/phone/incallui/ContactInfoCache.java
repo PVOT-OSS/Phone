@@ -812,6 +812,11 @@ public class ContactInfoCache implements OnImageLoadCompleteListener {
       if (!isWaitingForThisQuery(cw.callId, queryToken.queryId)) {
         return;
       }
+      if (!ci.contactExists && TextUtils.isEmpty(ci.cnapName)) {
+        // The contacts lookup knows nothing of the network's name for the caller: keep it, or
+        // a caller who isn't a contact shows as a bare number.
+        ci.cnapName = cw.cnapName;
+      }
       long start = SystemClock.uptimeMillis();
       maybeUpdateFromCequintCallerId(ci, cw.cnapName, isIncoming);
       long time = SystemClock.uptimeMillis() - start;
