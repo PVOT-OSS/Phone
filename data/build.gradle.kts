@@ -79,7 +79,6 @@ dependencies {
     implementation(libs.libphonenumber.geocoder)
     implementation(libs.material)
     implementation(libs.protobuf.javalite)
-    implementation(libs.volley)
     compileOnly(libs.auto.value.annotations)
 
     annotationProcessor(libs.auto.value)

@@ -33,7 +33,6 @@ android {
     }
 
     buildFeatures {
-        aidl = true
         buildConfig = true
     }
 
@@ -94,9 +93,6 @@ dependencies {
     implementation(libs.androidx.localbroadcastmanager)
     implementation(libs.androidx.preference)
     implementation(libs.androidx.recyclerview)
-    implementation(libs.apache.mime4j.core)
-    implementation(libs.apache.mime4j.dom)
-    implementation(libs.commons.io)
     implementation(libs.dagger)
     implementation(libs.error.prone.annotations)
     implementation(libs.glide)
@@ -109,7 +105,6 @@ dependencies {
     implementation(libs.androidx.car.app)
     implementation(libs.protobuf.javalite)
     implementation(libs.pvot.design.system)
-    implementation(libs.volley)
     compileOnly(libs.auto.value.annotations)
 
     testImplementation(libs.junit)
