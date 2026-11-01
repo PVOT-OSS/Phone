@@ -139,7 +139,44 @@ def outgoing_answered(device):
     assert_logged(device, number, since, OUTGOING)
 
 
-SCENARIOS = [incoming_missed, incoming_answered, incoming_declined, screening_first_time_declined, outgoing_answered]
+def app_pid(device):
+    return device.run("shell", f"pidof {PACKAGE}", check=False)
+
+
+def call_survives_app_death(device):
+    """Killing the app mid-call must not drop the call. Telecom moves it to the system dialer's UI
+    for the rest of the call; it still ends normally and is logged."""
+    number, since = fresh_number(), now_millis(device)
+    device.emu(f"gsm call {number}")
+    wait_for("ringing call", lambda: has_call(device, "INCOMING", number))
+    device.broadcast("ANSWER")
+    wait_for("active call", lambda: has_call(device, "ACTIVE", number))
+    device.shell(f"kill -9 {app_pid(device)}")
+    time.sleep(3)
+    assert "mCallState=2" in device.shell("dumpsys telephony.registry"), "call dropped when the app died"
+    device.emu(f"gsm cancel {number}")
+    assert_logged(device, number, since, INCOMING)
+
+SCENARIOS = [
+    incoming_missed,
+    incoming_answered,
+    incoming_declined,
+    screening_first_time_declined,
+    outgoing_answered,
+    call_survives_app_death,
+]
+
+
+def end_all_calls(device):
+    for line in device.emu("gsm list").splitlines():
+        match = re.search(r"(\d{3,})", line)
+        if match:
+            device.emu(f"gsm cancel {match.group(1)}")
+    for _ in range(5):
+        if "mCallState=0" in device.shell("dumpsys telephony.registry") and not device.calls():
+            break
+        device.shell("input keyevent KEYCODE_ENDCALL")
+        time.sleep(1)
 
 
 def prepare(device, apk):
@@ -177,11 +214,7 @@ def main():
                 failures += 1
                 print(f"FAIL {scenario.__name__}: {error}")
             finally:
-                for _ in range(3):
-                    if not device.calls():
-                        break
-                    device.broadcast("HANG_UP")
-                    time.sleep(0.5)
+                end_all_calls(device)
     finally:
         restore(device)
     print(f"{len(selected) - failures}/{len(selected)} passed")
