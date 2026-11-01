@@ -434,10 +434,12 @@ public class StatusBarNotifier
             || DialerCallState.isDialing(state);
     if (isOngoing && person != null) {
       builder.setStyle(
-          CallNotificationStyle.ongoing(
-              person,
-              createNotificationPendingIntent(context, ACTION_HANG_UP_ONGOING_CALL),
-              call.isVideoCall()));
+          withVerification(
+              call,
+              CallNotificationStyle.ongoing(
+                  person,
+                  createNotificationPendingIntent(context, ACTION_HANG_UP_ONGOING_CALL),
+                  call.isVideoCall())));
     } else if (isOngoing) {
       addHangupAction(builder);
     }
@@ -456,11 +458,13 @@ public class StatusBarNotifier
                   ? ACTION_ANSWER_VIDEO_INCOMING_CALL
                   : ACTION_ANSWER_VOICE_INCOMING_CALL);
       builder.setStyle(
-          CallNotificationStyle.incoming(
-              person,
-              createNotificationPendingIntent(context, ACTION_DECLINE_INCOMING_CALL),
-              answer,
-              call.isVideoCall()));
+          withVerification(
+              call,
+              CallNotificationStyle.incoming(
+                  person,
+                  createNotificationPendingIntent(context, ACTION_DECLINE_INCOMING_CALL),
+                  answer,
+                  call.isVideoCall())));
     } else if (state == DialerCallState.INCOMING || state == DialerCallState.CALL_WAITING) {
       addDismissAction(builder);
       if (call.isVideoCall()) {
@@ -469,6 +473,13 @@ public class StatusBarNotifier
         addAnswerAction(builder);
       }
     }
+  }
+
+  private Notification.CallStyle withVerification(DialerCall call, Notification.CallStyle style) {
+    if (call.isCallerVerified()) {
+      return CallNotificationStyle.markVerified(context, style);
+    }
+    return style;
   }
 
   /**

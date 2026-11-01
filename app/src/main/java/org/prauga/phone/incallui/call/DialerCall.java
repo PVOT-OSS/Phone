@@ -1009,6 +1009,13 @@ public class DialerCall implements VideoTechListener {
     return getVideoTech().isTransmittingOrReceiving() || VideoProfile.isVideo(getVideoState());
   }
 
+  /** Whether the network verified the caller's number (STIR/SHAKEN). */
+  public boolean isCallerVerified() {
+    return telecomCall != null
+        && telecomCall.getDetails().getCallerNumberVerificationStatus()
+            == Connection.VERIFICATION_STATUS_PASSED;
+  }
+
   public boolean isActiveRttCall() {
     return getTelecomCall().isRttActive();
   }
