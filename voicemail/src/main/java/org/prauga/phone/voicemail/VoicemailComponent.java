@@ -20,7 +20,6 @@ package org.prauga.phone.voicemail;
 import android.content.Context;
 
 import org.prauga.phone.dialer.inject.HasRootComponent;
-import org.prauga.phone.dialer.inject.IncludeInDialerRoot;
 
 import dagger.Subcomponent;
 
@@ -36,7 +35,6 @@ public abstract class VoicemailComponent {
   }
 
   /** Used to refer to the root application component. */
-  @IncludeInDialerRoot
   public interface HasComponent {
     VoicemailComponent voicemailComponent();
   }

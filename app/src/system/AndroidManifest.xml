@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+  -->
+<!-- Only in the system build, installed as a privileged app in the PVOT ROM. Every permission here
+     is signature or privileged; the ROM grants them through privapp/privapp-permissions-org.prauga.phone.xml. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.ALLOW_ANY_CODEC_FOR_PLAYBACK" />
+    <!-- Lets the Wi-Fi visual voicemail client use the carrier's restricted network. -->
+    <uses-permission android:name="android.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS" />
+    <uses-permission android:name="android.permission.CONTROL_INCALL_EXPERIENCE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS_PRIVILEGED" />
+    <uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
+    <!-- Device identifiers for the *#06# code. -->
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
+    <!-- Starts the in-call screen without the delay after the user presses home. -->
+    <uses-permission android:name="android.permission.STOP_APP_SWITCHES" />
+    <!-- Closes the notification shade when a call is answered from it. -->
+    <uses-permission android:name="android.permission.BROADCAST_CLOSE_SYSTEM_DIALOGS" />
+    <!-- Records both sides of a call (VOICE_CALL audio source). -->
+    <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
+
+    <application>
+        <service
+            android:name="org.prauga.phone.dialer.callrecord.impl.CallRecorderService"
+            android:process="org.prauga.phone.incallui" />
+
+        <receiver
+            android:name="org.prauga.phone.voicemail.impl.CarrierVvmPackageInstalledReceiver"
+            android:exported="true"
+            android:permission="android.permission.BIND_VISUAL_VOICEMAIL_SERVICE">
+            <intent-filter>
+                <!-- system dialer only broadcast -->
+                <action android:name="com.android.internal.telephony.CARRIER_VVM_PACKAGE_INSTALLED" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
