@@ -17,13 +17,10 @@
 
 package org.prauga.phone.incallui.telecomeventui;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
 import androidx.core.os.UserManagerCompat;
@@ -34,6 +31,7 @@ import org.prauga.phone.dialer.common.Assert;
 import org.prauga.phone.dialer.common.FragmentUtils;
 import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.storage.StorageComponent;
+import org.prauga.phone.incallui.InCallDialogs;
 import org.prauga.phone.incallui.call.CallList;
 import org.prauga.phone.incallui.call.DialerCall;
 
@@ -100,30 +98,17 @@ public class InternationalCallOnWifiDialogFragment extends DialogFragment {
           "shouldShow indicated InternationalCallOnWifiDialogFragment should not have showed");
     }
 
-    View dialogView =
-        View.inflate(getActivity(), R.layout.frag_international_call_on_wifi_dialog, null);
-
-    CheckBox alwaysWarn = dialogView.findViewById(R.id.always_warn);
-
     SharedPreferences preferences = StorageComponent.get(getActivity()).unencryptedSharedPrefs();
     // The default is set to false in this case to ensure that the first time the dialog opens,
     // the checkbox is unchecked.
-    alwaysWarn.setChecked(preferences.getBoolean(ALWAYS_SHOW_WARNING_PREFERENCE_KEY, false));
-
-    AlertDialog alertDialog =
-        new AlertDialog.Builder(getActivity())
-            .setCancelable(false)
-            .setView(dialogView)
-            .setPositiveButton(
-                android.R.string.ok,
-                (dialog, which) -> onPositiveButtonClick(preferences, alwaysWarn.isChecked()))
-            .setNegativeButton(
-                android.R.string.cancel,
-                (dialog, which) -> onNegativeButtonClick(preferences, alwaysWarn.isChecked()))
-            .create();
-
-    alertDialog.setCanceledOnTouchOutside(false);
-    return alertDialog;
+    Dialog dialog =
+        InCallDialogs.internationalCallOnWifi(
+            requireContext(),
+            preferences.getBoolean(ALWAYS_SHOW_WARNING_PREFERENCE_KEY, false),
+            alwaysWarn -> onPositiveButtonClick(preferences, alwaysWarn),
+            alwaysWarn -> onNegativeButtonClick(preferences, alwaysWarn));
+    setCancelable(false);
+    return dialog;
   }
 
   private void onPositiveButtonClick(@NonNull SharedPreferences preferences, boolean alwaysWarn) {

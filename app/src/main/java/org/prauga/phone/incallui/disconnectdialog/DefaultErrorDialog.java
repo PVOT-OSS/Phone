@@ -16,7 +16,6 @@
 
 package org.prauga.phone.incallui.disconnectdialog;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.telecom.DisconnectCause;
@@ -25,6 +24,7 @@ import android.util.Pair;
 
 import androidx.annotation.NonNull;
 
+import org.prauga.phone.incallui.InCallDialogs;
 import org.prauga.phone.incallui.call.DialerCall;
 
 /** Default error dialog shown to user after disconnect. */
@@ -42,11 +42,7 @@ public class DefaultErrorDialog implements DisconnectDialog {
     DisconnectCause disconnectCause = call.getDisconnectCause();
     CharSequence message = disconnectCause.getDescription();
 
-    Dialog dialog =
-        new AlertDialog.Builder(context)
-            .setMessage(message)
-            .setPositiveButton(android.R.string.cancel, null)
-            .create();
+    Dialog dialog = InCallDialogs.message(context, message);
     return new Pair<>(dialog, message);
   }
 }

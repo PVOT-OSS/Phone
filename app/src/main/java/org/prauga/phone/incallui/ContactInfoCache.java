@@ -23,7 +23,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.SystemClock;
 import android.os.Trace;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Contacts;
@@ -50,8 +49,6 @@ import org.prauga.phone.dialer.common.concurrent.DialerExecutor.Worker;
 import org.prauga.phone.dialer.common.concurrent.DialerExecutorComponent;
 import org.prauga.phone.dialer.logging.ContactLookupResult;
 import org.prauga.phone.dialer.logging.ContactSource;
-import org.prauga.phone.dialer.oem.CequintCallerIdManager;
-import org.prauga.phone.dialer.oem.CequintCallerIdManager.CequintCallerIdContact;
 import org.prauga.phone.dialer.phonenumbercache.CachedNumberLookupService;
 import org.prauga.phone.dialer.phonenumbercache.CachedNumberLookupService.CachedContactInfo;
 import org.prauga.phone.dialer.phonenumbercache.ContactInfo;
@@ -510,46 +507,6 @@ public class ContactInfoCache implements OnImageLoadCompleteListener {
     return cacheEntry;
   }
 
-  private void maybeUpdateFromCequintCallerId(
-      CallerInfo callerInfo, String cnapName, boolean isIncoming) {
-    if (!CequintCallerIdManager.isCequintCallerIdEnabled(context)) {
-      return;
-    }
-    if (callerInfo.phoneNumber == null) {
-      return;
-    }
-    CequintCallerIdContact cequintCallerIdContact =
-        CequintCallerIdManager.getCequintCallerIdContactForCall(
-            context, callerInfo.phoneNumber, cnapName, isIncoming);
-
-    if (cequintCallerIdContact == null) {
-      return;
-    }
-    boolean hasUpdate = false;
-
-    if (TextUtils.isEmpty(callerInfo.name) && !TextUtils.isEmpty(cequintCallerIdContact.name())) {
-      callerInfo.name = cequintCallerIdContact.name();
-      hasUpdate = true;
-    }
-    if (!TextUtils.isEmpty(cequintCallerIdContact.geolocation())) {
-      callerInfo.geoDescription = cequintCallerIdContact.geolocation();
-      callerInfo.shouldShowGeoDescription = true;
-      hasUpdate = true;
-    }
-    // Don't overwrite photo in local contacts.
-    if (!callerInfo.contactExists
-        && callerInfo.contactDisplayPhotoUri == null
-        && cequintCallerIdContact.photoUri() != null) {
-      callerInfo.contactDisplayPhotoUri = Uri.parse(cequintCallerIdContact.photoUri());
-      hasUpdate = true;
-    }
-    // Set contact to exist to avoid phone number service lookup.
-    if (hasUpdate) {
-      callerInfo.contactExists = true;
-      callerInfo.contactLookupResultType = ContactLookupResult.Type.CEQUINT;
-    }
-  }
-
   /**
    * Implemented for ContactsAsyncHelper.OnImageLoadCompleteListener interface. Update contact photo
    * when image is loaded in worker thread.
@@ -809,10 +766,6 @@ public class ContactInfoCache implements OnImageLoadCompleteListener {
       if (!isWaitingForThisQuery(cw.callId, queryToken.queryId)) {
         return;
       }
-      long start = SystemClock.uptimeMillis();
-      maybeUpdateFromCequintCallerId(ci, cw.cnapName, isIncoming);
-      long time = SystemClock.uptimeMillis() - start;
-      Log.d(TAG, "Cequint Caller Id look up takes " + time + " ms.");
       updateCallerInfoInCacheOnAnyThread(cw.callId, cw.numberPresentation, ci, true, queryToken);
     }
 

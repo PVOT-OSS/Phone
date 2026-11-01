@@ -40,7 +40,7 @@ import org.prauga.phone.incallui.incall.protocol.InCallScreenDelegate;
 import org.prauga.phone.incallui.speakerbuttonlogic.SpeakerButtonInfo;
 
 /** Manages a single button. */
-interface ButtonController {
+public interface ButtonController {
 
   boolean isEnabled();
 

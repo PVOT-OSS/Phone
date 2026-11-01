@@ -57,23 +57,9 @@ public class OnHoldFragment extends Fragment {
   @Override
   public View onCreateView(
       LayoutInflater layoutInflater, @Nullable ViewGroup viewGroup, @Nullable Bundle bundle) {
-    final View view = layoutInflater.inflate(R.layout.incall_on_hold_banner, viewGroup, false);
-
-    SecondaryInfo secondaryInfo = getArguments().getParcelable(ARG_INFO, SecondaryInfo.class);
-    secondaryInfo = Assert.isNotNull(secondaryInfo);
-
-    ((TextView) view.findViewById(R.id.hold_contact_name))
-        .setText(
-            secondaryInfo.nameIsNumber()
-                ? PhoneNumberUtils.createTtsSpannable(
-                    BidiFormatter.getInstance()
-                        .unicodeWrap(secondaryInfo.name(), TextDirectionHeuristics.LTR))
-                : secondaryInfo.name());
-    ((ImageView) view.findViewById(R.id.hold_phone_icon))
-        .setImageResource(
-            secondaryInfo.isVideoCall()
-                ? R.drawable.quantum_ic_videocam_vd_white_24
-                : R.drawable.quantum_ic_phone_paused_vd_theme_24);
+    SecondaryInfo secondaryInfo =
+        Assert.isNotNull(getArguments().getParcelable(ARG_INFO, SecondaryInfo.class));
+    final View view = OnHoldBannerHost.create(requireContext(), secondaryInfo);
     view.addOnAttachStateChangeListener(
         new OnAttachStateChangeListener() {
           @Override

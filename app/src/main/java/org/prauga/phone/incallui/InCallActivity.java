@@ -20,7 +20,6 @@ package org.prauga.phone.incallui;
 import android.app.ActivityManager;
 import android.app.ActivityManager.AppTask;
 import android.app.ActivityManager.TaskDescription;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.KeyguardManager;
 import android.content.Context;
@@ -42,7 +41,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.CheckBox;
 import android.widget.Toast;
 
 import androidx.annotation.ColorInt;
@@ -772,7 +770,6 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     } else {
       if (show) {
         showDialpadFragment();
-        getDialpadFragment().animateShowDialpad();
       }
       getDialpadFragment()
           .getView()
@@ -1113,32 +1110,12 @@ public class InCallActivity extends TransactionSafeFragmentActivity
 
     dismissPendingDialogs();
 
-    AlertDialog.Builder builder =
-        new AlertDialog.Builder(this).setTitle(R.string.video_call_lte_to_wifi_failed_title);
-
-    // This allows us to use the theme of the dialog instead of the activity
-    View dialogCheckBoxView =
-        View.inflate(builder.getContext(), R.layout.video_call_lte_to_wifi_failed, null /* root */);
-    CheckBox wifiHandoverFailureCheckbox =
-        (CheckBox) dialogCheckBoxView.findViewById(R.id.video_call_lte_to_wifi_failed_checkbox);
-    wifiHandoverFailureCheckbox.setChecked(false);
-
     InCallUiLock lock = InCallPresenter.getInstance().acquireInCallUiLock("WifiFailedDialog");
     errorDialog =
-        builder
-            .setView(dialogCheckBoxView)
-            .setMessage(R.string.video_call_lte_to_wifi_failed_message)
-            .setOnCancelListener(dialogInterface -> onDialogDismissed())
-            .setPositiveButton(
-                android.R.string.ok,
-                (dialogInterface, id) -> {
-                  call.setDoNotShowDialogForHandoffToWifiFailure(
-                      wifiHandoverFailureCheckbox.isChecked());
-                  dialogInterface.cancel();
-                  onDialogDismissed();
-                })
-            .setOnDismissListener(dialogInterface -> lock.release())
-            .create();
+        InCallDialogs.wifiHandoverFailed(
+            this, doNotShow -> call.setDoNotShowDialogForHandoffToWifiFailure(doNotShow));
+    errorDialog.setOnCancelListener(dialogInterface -> onDialogDismissed());
+    errorDialog.setOnDismissListener(dialogInterface -> lock.release());
     errorDialog.show();
   }
 

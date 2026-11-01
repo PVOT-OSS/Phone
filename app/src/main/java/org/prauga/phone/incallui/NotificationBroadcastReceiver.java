@@ -199,6 +199,11 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
             .setDeliveryGroupPolicy(BroadcastOptions.DELIVERY_GROUP_POLICY_MOST_RECENT)
             .setDeferralPolicy(BroadcastOptions.DEFERRAL_POLICY_UNTIL_ACTIVE)
             .toBundle();
-    context.sendBroadcast(intent, null /* receiverPermission */, options);
+    try {
+      context.sendBroadcast(intent, null /* receiverPermission */, options);
+    } catch (SecurityException e) {
+      // Only the system build holds BROADCAST_CLOSE_SYSTEM_DIALOGS; the shade then stays open.
+      LogUtil.i("NotificationBroadcastReceiver.closeSystemDialogs", "not allowed: " + e);
+    }
   }
 }

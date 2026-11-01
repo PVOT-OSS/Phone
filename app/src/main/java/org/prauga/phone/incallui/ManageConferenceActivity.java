@@ -18,7 +18,6 @@
 package org.prauga.phone.incallui;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import androidx.fragment.app.Fragment;
 
@@ -39,10 +38,8 @@ public class ManageConferenceActivity extends BaseActivity {
     super.onCreate(savedInstanceState);
     InCallPresenter.getInstance().setManageConferenceActivity(this);
 
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     setContentView(R.layout.activity_manage_conference);
-    setupInsets(findViewById(R.id.manageConferencePanel));
     Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.manageConferencePanel);
     if (fragment == null) {
       fragment = new ConferenceManagerFragment();
@@ -59,16 +56,6 @@ public class ManageConferenceActivity extends BaseActivity {
     if (isFinishing()) {
       InCallPresenter.getInstance().setManageConferenceActivity(null);
     }
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    final int itemId = item.getItemId();
-    if (itemId == android.R.id.home) {
-      onBackPressed();
-      return true;
-    }
-    return super.onOptionsItemSelected(item);
   }
 
   @Override

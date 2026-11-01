@@ -34,7 +34,6 @@ import androidx.annotation.Nullable;
 
 import org.prauga.phone.dialer.common.Assert;
 import org.prauga.phone.dialer.common.LogUtil;
-import org.prauga.phone.dialer.promotion.impl.RttPromotion;
 import org.prauga.phone.dialer.shortcuts.ShortcutUsageReporter;
 import org.prauga.phone.incallui.call.state.DialerCallState;
 import org.prauga.phone.incallui.videotech.utils.SessionModificationState;
@@ -127,11 +126,6 @@ public class CallList implements DialerCallDelegate {
 
     if (call.getState() == DialerCallState.INCOMING
         || call.getState() == DialerCallState.CALL_WAITING) {
-      if (call.isActiveRttCall()) {
-        if (!call.isPhoneAccountRttCapable()) {
-          RttPromotion.setEnabled(context);
-        }
-      }
       onIncoming(call);
     } else {
       onUpdateCall(call);

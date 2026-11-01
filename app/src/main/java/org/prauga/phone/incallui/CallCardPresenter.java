@@ -49,7 +49,6 @@ import org.prauga.phone.dialer.common.Assert;
 import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.contacts.ContactsComponent;
 import org.prauga.phone.dialer.multimedia.MultimediaData;
-import org.prauga.phone.dialer.oem.MotorolaUtils;
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper;
 import org.prauga.phone.dialer.postcall.PostCall;
 import org.prauga.phone.dialer.preferredsim.suggestion.SuggestionProvider;
@@ -399,10 +398,8 @@ public class CallCardPresenter
                   && primaryContactInfo.userType == ContactsUtils.USER_TYPE_WORK);
       boolean isHdAudioCall =
           isPrimaryCallActive() && primary.hasProperty(Details.PROPERTY_HIGH_DEF_AUDIO);
-      boolean isAttemptingHdAudioCall =
-          !isHdAudioCall
-              && !primary.hasProperty(DialerCall.PROPERTY_CODEC_KNOWN)
-              && MotorolaUtils.shouldBlinkHdIconWhenConnectingCall(context);
+      // Only Sprint's HD codec blinked the HD icon while connecting.
+      boolean isAttemptingHdAudioCall = false;
 
       boolean isBusiness = primaryContactInfo != null && primaryContactInfo.isBusiness;
 
