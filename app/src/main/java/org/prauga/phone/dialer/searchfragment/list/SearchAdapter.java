@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import org.prauga.phone.dialer.R;
 import org.prauga.phone.dialer.common.Assert;
+import org.prauga.phone.dialer.searchfragment.calllog.CallLogSearchViewHolder;
 import org.prauga.phone.dialer.searchfragment.common.RowClickListener;
 import org.prauga.phone.dialer.searchfragment.common.SearchCursor;
 import org.prauga.phone.dialer.searchfragment.cp2.SearchContactViewHolder;
@@ -71,7 +72,12 @@ public final class SearchAdapter extends RecyclerView.Adapter<ViewHolder> {
         return new NearbyPlaceViewHolder(
             LayoutInflater.from(context).inflate(R.layout.search_contact_row, root, false),
             rowClickListener);
+      case RowType.CALL_LOG_ROW:
+        return new CallLogSearchViewHolder(
+            LayoutInflater.from(context).inflate(R.layout.search_contact_row, root, false),
+            rowClickListener);
       case RowType.CONTACT_HEADER:
+      case RowType.CALL_LOG_HEADER:
       case RowType.DIRECTORY_HEADER:
       case RowType.NEARBY_PLACES_HEADER:
         return new HeaderViewHolder(
@@ -104,6 +110,8 @@ public final class SearchAdapter extends RecyclerView.Adapter<ViewHolder> {
   public void onBindViewHolder(ViewHolder holder, int position) {
     if (holder instanceof SearchContactViewHolder) {
       ((SearchContactViewHolder) holder).bind(searchCursorManager.getCursor(position), query);
+    } else if (holder instanceof CallLogSearchViewHolder) {
+      ((CallLogSearchViewHolder) holder).bind(searchCursorManager.getCursor(position), query);
     } else if (holder instanceof NearbyPlaceViewHolder) {
       ((NearbyPlaceViewHolder) holder).bind(searchCursorManager.getCursor(position), query);
     } else if (holder instanceof DirectoryContactViewHolder) {
@@ -153,6 +161,14 @@ public final class SearchAdapter extends RecyclerView.Adapter<ViewHolder> {
   /** Sets the actions to be shown at the bottom of the search results. */
   void setSearchActions(List<Integer> actions) {
     if (searchCursorManager.setSearchActions(actions)) {
+      notifyDataSetChanged();
+    }
+  }
+
+  /** Sets the numbers from the call history that aren't contacts. */
+  public void setCallLogCursor(SearchCursor cursor) {
+    if (searchCursorManager.setCallLogCursor(cursor)) {
+      searchCursorManager.setQuery(query);
       notifyDataSetChanged();
     }
   }
