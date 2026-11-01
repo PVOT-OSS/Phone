@@ -17,7 +17,6 @@
   -->
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -45,28 +44,21 @@
         android:id="@+id/search_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
-    <!-- Dialpad button (Compose). Dodges snackbars, which set their inset edge to bottom. -->
-    <androidx.compose.ui.platform.ComposeView
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        app:layout_dodgeInsetEdges="bottom"/>
   </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-  <!-- Nav bar (Compose) -->
+  <!-- Dock (Compose) -->
   <androidx.compose.ui.platform.ComposeView
       android:id="@+id/bottom_nav_bar"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"/>
 
-  <!-- Holds Dialpad fragment -->
+  <!-- Holds Dialpad fragment, the dialpad tab's keypad above the dock -->
   <FrameLayout
       android:id="@+id/dialpad_fragment_container"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:layout_above="@+id/bottom_nav_bar"
       android:elevation="10dp"/>
 
   <!-- TODO(calderwoodra): investigate what this is for and why we want it. -->

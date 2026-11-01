@@ -5,17 +5,13 @@
 
 package org.prauga.phone.dialer.main.impl.bottomnav
 
-import org.prauga.phone.dialer.ui.PhoneTheme
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -26,33 +22,26 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
-import com.prauga.pvot.designsystem.components.button.PvotFab
+import com.prauga.pvot.designsystem.components.PvotDock
+import com.prauga.pvot.designsystem.components.PvotDockAction
+import com.prauga.pvot.designsystem.components.PvotDockItem
 import com.prauga.pvot.designsystem.motion.PvotDurations
 import com.prauga.pvot.designsystem.motion.PvotMotion
-import com.prauga.pvot.designsystem.navigation.PvotNavBar
-import com.prauga.pvot.designsystem.navigation.PvotTabItem
-import com.prauga.pvot.designsystem.theme.PvotSpacing
 import org.prauga.phone.dialer.R
+import org.prauga.phone.dialer.ui.PhoneTheme
 import org.prauga.phone.dialer.ui.TestTags
 
-/** Puts the Compose nav bar and dialpad button into the main screen's view layout. */
+/** Puts the Compose dock into the main screen's view layout. */
 object MainChrome {
 
     @JvmStatic
-    fun bind(
-        navBarView: ComposeView,
-        fabView: ComposeView,
-        navBar: MainNavBarState,
-        fab: MainFabState,
-        onFabClick: Runnable,
-    ) {
-        navBarView.setChromeContent { MainNavBar(navBar) }
-        fabView.setChromeContent { MainFab(fab, onClick = onFabClick::run) }
+    fun bind(dockView: ComposeView, navBar: MainNavBarState, actions: MainDockActions) {
+        dockView.setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+        dockView.setChromeContent { MainDock(navBar, actions) }
     }
 
     @OptIn(ExperimentalComposeUiApi::class)
     private fun ComposeView.setChromeContent(content: @Composable () -> Unit) {
-        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
             PhoneTheme {
                 Box(Modifier.semantics { testTagsAsResourceId = true }) { content() }
@@ -61,10 +50,27 @@ object MainChrome {
     }
 }
 
-/** The main screen's tabs, with unread badges on recents and voicemail. */
+/** What the selected tab's pill does: dial on the dialpad, search on recents, add on contacts. */
+interface MainDockActions {
+
+    /** Places a call with the dialpad's number. */
+    fun onDial()
+
+    /** Opens search. */
+    fun onSearch()
+
+    /** Creates a contact. */
+    fun onAddContact()
+}
+
+/**
+ * The main screen's tabs as a dock, with unread badges on recents and voicemail. The selected
+ * tab's pill runs that tab's action; voicemail has none.
+ */
 @Composable
-fun MainNavBar(state: MainNavBarState, modifier: Modifier = Modifier) {
+fun MainDock(state: MainNavBarState, actions: MainDockActions, modifier: Modifier = Modifier) {
     val tabs = state.tabs
+    val items = tabs.map { tab -> dockItem(tab, state.notificationCount(tab), actions) }
     AnimatedVisibility(
         visible = state.isVisible,
         modifier = modifier,
@@ -73,46 +79,36 @@ fun MainNavBar(state: MainNavBarState, modifier: Modifier = Modifier) {
         exit = slideOutVertically(tween(PvotDurations.Short)) { it } +
             fadeOut(tween(PvotDurations.Short)),
     ) {
-        PvotNavBar(
-            selectedTab = tabs.indexOf(state.selectedTab),
-            onTabClick = { state.selectTab(tabs[it]) },
-            tabs = tabs.map { tab -> tabItem(tab, state.notificationCount(tab)) },
+        PvotDock(
+            items = items,
+            selectedIndex = tabs.indexOf(state.selectedTab),
+            onSelect = { state.selectTab(tabs[it]) },
             modifier = Modifier.testTag(TestTags.MAIN_NAV_BAR),
         )
     }
 }
 
-/** The dialpad button, which scales away while the dialpad or search is open. */
 @Composable
-fun MainFab(state: MainFabState, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    AnimatedVisibility(
-        visible = state.isShown,
-        modifier = modifier,
-        enter = scaleIn(tween(PvotDurations.Medium, easing = PvotMotion.Settle)) +
-            fadeIn(tween(PvotDurations.Medium)),
-        exit = scaleOut(tween(PvotDurations.Short)) + fadeOut(tween(PvotDurations.Short)),
-    ) {
-        // Padding inside the view leaves room for the shadow, which the view would clip.
-        PvotFab(
-            icon = painterResource(R.drawable.ic_dialpad),
-            onClick = onClick,
-            contentDescription = stringResource(R.string.dialpad_button_content_description),
-            modifier = Modifier.padding(PvotSpacing.L).testTag(TestTags.MAIN_FAB),
-        )
-    }
-}
-
-private fun tabItem(@TabIndex tab: Int, badgeCount: Int): PvotTabItem {
-    val (icon, label) = when (tab) {
-        TabIndex.SPEED_DIAL -> R.drawable.ic_star to R.string.tab_title_speed_dial
-        TabIndex.CALL_LOG -> R.drawable.ic_history to R.string.tab_title_call_history
-        TabIndex.CONTACTS -> R.drawable.ic_users to R.string.tab_all_contacts
-        else -> R.drawable.ic_call_voicemail to R.string.tab_title_voicemail
-    }
-    return PvotTabItem(
-        iconRes = icon,
-        labelRes = label,
-        contentDescriptionRes = label,
+private fun dockItem(@TabIndex tab: Int, badgeCount: Int, actions: MainDockActions): PvotDockItem = when (tab) {
+    TabIndex.DIALPAD -> PvotDockItem(
+        icon = painterResource(R.drawable.ic_dialpad),
+        label = stringResource(R.string.tab_title_dialpad),
+        action = PvotDockAction(painterResource(R.drawable.ic_phone), stringResource(R.string.dock_action_dial), actions::onDial),
+    )
+    TabIndex.CALL_LOG -> PvotDockItem(
+        icon = painterResource(R.drawable.ic_history),
+        label = stringResource(R.string.tab_title_call_history),
+        action = PvotDockAction(painterResource(R.drawable.ic_search), stringResource(R.string.dock_action_search), actions::onSearch),
+        badgeCount = badgeCount,
+    )
+    TabIndex.CONTACTS -> PvotDockItem(
+        icon = painterResource(R.drawable.ic_users),
+        label = stringResource(R.string.tab_all_contacts),
+        action = PvotDockAction(painterResource(R.drawable.ic_user_plus), stringResource(R.string.dock_action_add), actions::onAddContact),
+    )
+    else -> PvotDockItem(
+        icon = painterResource(R.drawable.ic_call_voicemail),
+        label = stringResource(R.string.tab_title_voicemail),
         badgeCount = badgeCount,
     )
 }

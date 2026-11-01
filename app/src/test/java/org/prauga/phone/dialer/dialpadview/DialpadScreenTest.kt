@@ -116,15 +116,6 @@ class DialpadScreenTest {
     }
 
     @Test
-    fun theCallButtonShowsAfterTheSlideAndCalls() {
-        show()
-        compose.onNodeWithTag(TestTags.DIALPAD_CALL).assertDoesNotExist()
-        state.callButtonVisible = true
-        compose.onNodeWithTag(TestTags.DIALPAD_CALL).performClick()
-        assertThat(events).containsExactly("call")
-    }
-
-    @Test
     fun theMenuButtonOpensTheOptions() {
         show()
         compose.onNodeWithTag(TestTags.DIALPAD_MENU).assertDoesNotExist()
@@ -162,7 +153,6 @@ class DialpadScreenTest {
     fun screenshotDark() {
         state.deleteEnabled = true
         state.menuButtonVisible = true
-        state.callButtonVisible = true
         state.hint = "Can't make emergency calls over WiFi"
         show()
         compose.waitForIdle()

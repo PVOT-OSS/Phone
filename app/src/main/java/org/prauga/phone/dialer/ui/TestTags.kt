@@ -104,7 +104,6 @@ object TestTags {
     const val DIALPAD_DIGITS = "dialpad_digits"
     const val DIALPAD_MENU = "dialpad_menu"
     const val DIALPAD_DELETE = "dialpad_delete"
-    const val DIALPAD_CALL = "dialpad_call"
 
     /** A dialpad key, by its digit or symbol. */
     fun dialpadKey(number: String) = "dialpad_key_$number"

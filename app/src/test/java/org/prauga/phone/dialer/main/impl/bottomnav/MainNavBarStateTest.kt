@@ -17,7 +17,7 @@ class MainNavBarStateTest {
 
     private class RecordingListener : MainNavBarState.OnBottomNavTabSelectedListener {
         val selected = mutableListOf<String>()
-        override fun onSpeedDialSelected() { selected += "speed_dial" }
+        override fun onDialpadSelected() { selected += "dialpad" }
         override fun onCallLogSelected() { selected += "call_log" }
         override fun onContactsSelected() { selected += "contacts" }
         override fun onVoicemailSelected() { selected += "voicemail" }
@@ -40,10 +40,10 @@ class MainNavBarStateTest {
 
     @Test
     fun reselectingATabTellsListenersAgain() {
-        state.selectTab(TabIndex.SPEED_DIAL)
-        state.selectTab(TabIndex.SPEED_DIAL)
+        state.selectTab(TabIndex.DIALPAD)
+        state.selectTab(TabIndex.DIALPAD)
 
-        assertThat(listener.selected).containsExactly("speed_dial", "speed_dial")
+        assertThat(listener.selected).containsExactly("dialpad", "dialpad")
     }
 
     @Test
@@ -54,12 +54,12 @@ class MainNavBarStateTest {
 
     @Test
     fun voicemailTabIsLastAndOnlyWhenShown() {
-        assertThat(state.tabs).containsExactly(TabIndex.SPEED_DIAL, TabIndex.CALL_LOG, TabIndex.CONTACTS).inOrder()
+        assertThat(state.tabs).containsExactly(TabIndex.DIALPAD, TabIndex.CALL_LOG, TabIndex.CONTACTS).inOrder()
 
         state.showVoicemail(true)
 
         assertThat(state.tabs).containsExactly(
-            TabIndex.SPEED_DIAL, TabIndex.CALL_LOG, TabIndex.CONTACTS, TabIndex.VOICEMAIL,
+            TabIndex.DIALPAD, TabIndex.CALL_LOG, TabIndex.CONTACTS, TabIndex.VOICEMAIL,
         ).inOrder()
     }
 
@@ -70,8 +70,8 @@ class MainNavBarStateTest {
 
         state.showVoicemail(false)
 
-        assertThat(state.selectedTab).isEqualTo(TabIndex.SPEED_DIAL)
-        assertThat(listener.selected).containsExactly("voicemail", "speed_dial").inOrder()
+        assertThat(state.selectedTab).isEqualTo(TabIndex.DIALPAD)
+        assertThat(listener.selected).containsExactly("voicemail", "dialpad").inOrder()
     }
 
     @Test
@@ -95,17 +95,5 @@ class MainNavBarStateTest {
         assertThat(state.notificationCount(TabIndex.CALL_LOG)).isEqualTo(3)
         assertThat(state.notificationCount(TabIndex.VOICEMAIL)).isEqualTo(1)
         assertThat(state.notificationCount(TabIndex.CONTACTS)).isEqualTo(0)
-    }
-
-    @Test
-    fun fabShowsAndHides() {
-        val fab = MainFabState()
-        assertThat(fab.isShown).isTrue()
-
-        fab.hide()
-        assertThat(fab.isShown).isFalse()
-
-        fab.show()
-        assertThat(fab.isShown).isTrue()
     }
 }

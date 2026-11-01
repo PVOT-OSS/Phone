@@ -99,20 +99,6 @@ class CallHistoryFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (!isHidden) onVisible()
-    }
-
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-        if (!hidden) onVisible()
-    }
-
-    private fun onVisible() {
-        FragmentUtils.getParent(this, CallLogHost::class.java)?.enableFloatingButton(true)
-    }
-
     companion object {
         private const val ARG_CALL_TYPE = "call_type"
 

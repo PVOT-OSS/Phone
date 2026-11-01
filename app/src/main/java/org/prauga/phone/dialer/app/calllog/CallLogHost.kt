@@ -9,9 +9,6 @@ package org.prauga.phone.dialer.app.calllog
 interface CallLogHost {
     /** Opens the dialpad. */
     fun showDialpad()
-
-    /** Shows or hides the dialpad button. */
-    fun enableFloatingButton(enabled: Boolean)
 }
 
 /** Told about changes the main screen reflects outside the tab. */

@@ -99,7 +99,6 @@ public class DialpadFragment extends Fragment
         DialpadCallbacks {
 
   private static final String TAG = "DialpadFragment";
-  private static final String PSEUDO_EMERGENCY_NUMBER = "01189998819991197253";
   private static final String EMPTY_NUMBER = "";
   private static final char PAUSE = ',';
   private static final char WAIT = ';';
@@ -114,6 +113,7 @@ public class DialpadFragment extends Fragment
   /** Identifier for the "Add Call" intent extra. */
   private static final String ADD_CALL_MODE_KEY = "add_call_mode";
   private static final String PREF_DIGITS_FILLED_BY_INTENT = "pref_digits_filled_by_intent";
+  private static final String PREF_DIGITS = "pref_digits";
   private static final String PREF_IS_DIALPAD_SLIDE_OUT = "pref_is_dialpad_slide_out";
 
   /**
@@ -353,6 +353,14 @@ public class DialpadFragment extends Fragment
     initPhoneNumberFormattingTextWatcherExecutor.executeSerial(getCurrentCountryIso());
 
     digits.setCursorVisible(false);
+    // The digits field lives inside the Compose screen, out of reach of the view state restore
+    // when the screen is rebuilt, so the number is saved and put back here.
+    if (savedState != null) {
+      CharSequence saved = savedState.getCharSequence(PREF_DIGITS);
+      if (saved != null) {
+        digits.setText(saved);
+      }
+    }
     DialpadScreenHost.attach(fragmentView, uiState, digits, this);
     Trace.endSection();
     return fragmentView;
@@ -647,7 +655,6 @@ public class DialpadFragment extends Fragment
     LogUtil.enterBlock("DialpadFragment.onStop");
     super.onStop();
 
-    uiState.setCallButtonVisible(false);
     synchronized (toneGeneratorLock) {
       if (toneGenerator != null) {
         toneGenerator.release();
@@ -666,6 +673,9 @@ public class DialpadFragment extends Fragment
     super.onSaveInstanceState(outState);
     outState.putBoolean(PREF_DIGITS_FILLED_BY_INTENT, digitsFilledByIntent);
     outState.putBoolean(PREF_IS_DIALPAD_SLIDE_OUT, isDialpadSlideUp);
+    if (digits != null) {
+      outState.putCharSequence(PREF_DIGITS, digits.getText().toString());
+    }
   }
 
   @Override
@@ -1168,11 +1178,6 @@ public class DialpadFragment extends Fragment
     animate = value;
   }
 
-  /** Turns the call button red for the pretend emergency number, as a joke. */
-  public void process_quote_emergency_unquote(String query) {
-    uiState.setPseudoEmergency(PSEUDO_EMERGENCY_NUMBER.equals(query));
-  }
-
   /** Animate the dialpad down off the screen. */
   public void slideDown(boolean animate, AnimationListener listener) {
     Assert.checkArgument(isDialpadSlideUp);
@@ -1188,7 +1193,6 @@ public class DialpadFragment extends Fragment
     slideDown.setAnimationListener(listener);
     slideDown.setDuration(animate ? dialpadSlideInDuration : 0);
     getView().startAnimation(slideDown);
-    uiState.setCallButtonVisible(false);
   }
 
   /** Animate the dialpad up onto the screen. */
@@ -1204,19 +1208,6 @@ public class DialpadFragment extends Fragment
     Animation slideUp = AnimationUtils.loadAnimation(getContext(), animation);
     slideUp.setInterpolator(AnimUtils.EASE_IN);
     slideUp.setDuration(animate ? dialpadSlideInDuration : 0);
-    slideUp.setAnimationListener(
-        new AnimationListener() {
-          @Override
-          public void onAnimationStart(Animation animation) {}
-
-          @Override
-          public void onAnimationEnd(Animation animation) {
-            uiState.setCallButtonVisible(true);
-          }
-
-          @Override
-          public void onAnimationRepeat(Animation animation) {}
-        });
     getView().startAnimation(slideUp);
   }
 

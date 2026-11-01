@@ -119,7 +119,6 @@ class VoicemailFragment : Fragment() {
     private fun listener(): CallLogListener? = FragmentUtils.getParent(this, CallLogListener::class.java)
 
     private fun onVisible() {
-        FragmentUtils.getParent(this, CallLogHost::class.java)?.enableFloatingButton(true)
         requireActivity().volumeControlStream = VoicemailAudioManager.PLAYBACK_STREAM
         syncUnlessBlocked()
     }

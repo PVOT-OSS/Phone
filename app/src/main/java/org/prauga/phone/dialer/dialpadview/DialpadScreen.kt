@@ -5,6 +5,7 @@
 
 package org.prauga.phone.dialer.dialpadview
 
+import android.content.res.Configuration
 import android.telecom.PhoneAccountHandle
 import android.view.KeyEvent
 import android.view.ViewGroup
@@ -27,12 +28,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -51,6 +53,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.PointerEventTimeoutCancellationException
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.platform.testTag
@@ -88,10 +91,6 @@ class DialpadUiState {
     var rateText by mutableStateOf<String?>(null)
     var deleteEnabled by mutableStateOf(false)
     var menuButtonVisible by mutableStateOf(false)
-    var callButtonVisible by mutableStateOf(false)
-
-    /** Whether the number is the pretend emergency number, which turns the call button red. */
-    var pseudoEmergency by mutableStateOf(false)
 
     var menuOpen by mutableStateOf(false)
     var menuEnabled by mutableStateOf(false)
@@ -120,59 +119,80 @@ interface DialpadCallbacks {
 /** One dialpad key: its key code, digit and letters. */
 data class DialpadKeySpec(val keyCode: Int, val number: String, val letters: String?, val secondaryLetters: String?)
 
-/** The dialpad: the number with its delete button, the twelve keys and the call button. */
+/**
+ * The dialpad: the number with its menu and delete buttons, then the twelve keys. In landscape the
+ * number sits beside the keys, which share the height and leave out their letters.
+ */
 @Composable
 fun DialpadScreen(state: DialpadUiState, digits: EditText, callbacks: DialpadCallbacks, modifier: Modifier = Modifier) {
     val keys = rememberKeys()
-    val textColor = MaterialTheme.colorScheme.onSurface.toArgb()
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(MaterialTheme.shapes.extraLarge)
-            .background(MaterialTheme.colorScheme.surfaceContainer)
-            .navigationBarsPadding()
-            .padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.M)
-            .testTag(TestTags.DIALPAD),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        state.rateCountry?.let { country ->
-            Text(
-                text = "$country  ${state.rateText.orEmpty()}",
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-        Row(Modifier.fillMaxWidth().height(64.dp), verticalAlignment = Alignment.CenterVertically) {
-            Box(Modifier.size(48.dp))
-            AndroidView(
-                factory = { digits.also { (it.parent as? ViewGroup)?.removeView(it) } },
-                update = { it.setTextColor(textColor) },
-                modifier = Modifier.weight(1f).height(56.dp).testTag(TestTags.DIALPAD_DIGITS),
-            )
-            DeleteButton(state.deleteEnabled, callbacks)
-        }
-        state.hint?.let { hint ->
-            Text(text = hint, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
-        }
-        Spacer(Modifier.height(PvotSpacing.S))
-        DialpadKeyGrid(onKey = callbacks::onKey, onKeyLongPress = callbacks::onKeyLongPress, keys = keys)
-        Spacer(Modifier.height(PvotSpacing.S))
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
-            Box(Modifier.size(KeySize), contentAlignment = Alignment.Center) {
-                if (state.menuButtonVisible) {
-                    IconButton(onClick = callbacks::onMenuOpen, modifier = Modifier.testTag(TestTags.DIALPAD_MENU)) {
-                        Icon(painterResource(R.drawable.ic_dots_vertical), contentDescription = stringResource(R.string.description_dialpad_overflow))
-                    }
-                }
+    // Decided from the configuration, not from measuring: the digits field must be in the view
+    // tree when the fragment restores its text, which content composed during layout misses.
+    val sideBySide = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
+    val panel = modifier
+        .fillMaxWidth()
+        .clip(MaterialTheme.shapes.extraLarge)
+        .background(MaterialTheme.colorScheme.surfaceContainer)
+        .padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.M)
+        .testTag(TestTags.DIALPAD)
+    if (sideBySide) {
+        Row(panel.fillMaxHeight(), verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
+                NumberRow(state, digits, callbacks)
             }
-            CallButton(state, callbacks)
-            Box(Modifier.size(KeySize))
+            Spacer(Modifier.size(PvotSpacing.L))
+            DialpadKeyGrid(
+                onKey = callbacks::onKey,
+                onKeyLongPress = callbacks::onKeyLongPress,
+                modifier = Modifier.weight(1f).fillMaxHeight(),
+                keys = keys,
+                compact = true,
+            )
+        }
+    } else {
+        Column(panel, horizontalAlignment = Alignment.CenterHorizontally) {
+            NumberRow(state, digits, callbacks)
+            Spacer(Modifier.height(PvotSpacing.S))
+            // The dock's Dial pill places the call, so the keys are the last thing here.
+            DialpadKeyGrid(onKey = callbacks::onKey, onKeyLongPress = callbacks::onKeyLongPress, keys = keys)
         }
     }
     if (state.menuOpen) DialpadMenu(state, callbacks)
 }
 
 private val KeySize = 72.dp
+
+
+/** The call rate, the number between the menu and delete buttons, and any warning under it. */
+@Composable
+private fun NumberRow(state: DialpadUiState, digits: EditText, callbacks: DialpadCallbacks) {
+    val textColor = MaterialTheme.colorScheme.onSurface.toArgb()
+    state.rateCountry?.let { country ->
+        Text(
+            text = "$country  ${state.rateText.orEmpty()}",
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+    Row(Modifier.fillMaxWidth().height(64.dp), verticalAlignment = Alignment.CenterVertically) {
+        Box(Modifier.size(48.dp), contentAlignment = Alignment.Center) {
+            if (state.menuButtonVisible) {
+                IconButton(onClick = callbacks::onMenuOpen, modifier = Modifier.testTag(TestTags.DIALPAD_MENU)) {
+                    Icon(painterResource(R.drawable.ic_dots_vertical), contentDescription = stringResource(R.string.description_dialpad_overflow))
+                }
+            }
+        }
+        AndroidView(
+            factory = { digits.also { (it.parent as? ViewGroup)?.removeView(it) } },
+            update = { it.setTextColor(textColor) },
+            modifier = Modifier.weight(1f).height(56.dp).testTag(TestTags.DIALPAD_DIGITS),
+        )
+        DeleteButton(state.deleteEnabled, callbacks)
+    }
+    state.hint?.let { hint ->
+        Text(text = hint, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
+    }
+}
 
 /**
  * The twelve dialpad keys. A key reports going down and up through [onKey], so its tone plays
@@ -185,11 +205,14 @@ fun DialpadKeyGrid(
     modifier: Modifier = Modifier,
     longPressKeys: Boolean = true,
     keys: List<DialpadKeySpec> = rememberKeys(),
+    compact: Boolean = false,
 ) {
     Column(modifier) {
         for (row in keys.chunked(3)) {
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                for (key in row) DialpadKey(key, onKey, if (longPressKeys) onKeyLongPress else { _ -> false }, longPressKeys)
+            // Compact rows share the grid's height, so the keys fit a short screen.
+            val rowModifier = if (compact) Modifier.fillMaxWidth().weight(1f) else Modifier.fillMaxWidth()
+            Row(rowModifier, horizontalArrangement = Arrangement.SpaceEvenly) {
+                for (key in row) DialpadKey(key, onKey, if (longPressKeys) onKeyLongPress else { _ -> false }, longPressKeys, compact)
             }
         }
     }
@@ -229,6 +252,7 @@ private fun DialpadKey(
     onKey: (Int, Boolean) -> Unit,
     onKeyLongPress: (Int) -> Boolean,
     longPressKeys: Boolean,
+    compact: Boolean,
 ) {
     val source = remember { MutableInteractionSource() }
     val longPressDescription = if (!longPressKeys) null else when (key.keyCode) {
@@ -239,7 +263,7 @@ private fun DialpadKey(
     val description = listOfNotNull(key.number, key.letters?.takeIf { key.keyCode != KeyEvent.KEYCODE_0 }).joinToString(",")
     Column(
         modifier = Modifier
-            .size(KeySize)
+            .then(if (compact) Modifier.width(KeySize).fillMaxHeight() else Modifier.size(KeySize))
             .pvotPressScale(source)
             .clip(CircleShape)
             .pointerInput(key.keyCode) {
@@ -277,13 +301,15 @@ private fun DialpadKey(
     ) {
         Text(text = key.number, style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onSurface)
         // The "+" under 0 is a long press, so it only shows where long presses work.
-        val letters = key.letters?.takeUnless { key.keyCode == KeyEvent.KEYCODE_0 && !longPressKeys }
-            ?: if (key.keyCode == KeyEvent.KEYCODE_1) " " else null
-        if (letters != null) {
-            Text(text = letters, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
-        key.secondaryLetters?.let {
-            Text(text = it, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        if (!compact) {
+            val letters = key.letters?.takeUnless { key.keyCode == KeyEvent.KEYCODE_0 && !longPressKeys }
+                ?: if (key.keyCode == KeyEvent.KEYCODE_1) " " else null
+            if (letters != null) {
+                Text(text = letters, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            key.secondaryLetters?.let {
+                Text(text = it, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
         }
     }
 }
@@ -327,42 +353,6 @@ private fun DeleteButton(enabled: Boolean, callbacks: DialpadCallbacks) {
         )
     }
 }
-
-@Composable
-private fun CallButton(state: DialpadUiState, callbacks: DialpadCallbacks) {
-    val source = remember { MutableInteractionSource() }
-    val container by animateColorAsState(
-        if (state.pseudoEmergency) MaterialTheme.colorScheme.error else CallGreen,
-        tween(PvotDurations.Medium),
-        label = "callButtonColor",
-    )
-    Box(Modifier.size(KeySize), contentAlignment = Alignment.Center) {
-        AnimatedVisibility(
-            visible = state.callButtonVisible,
-            enter = scaleIn(tween(PvotDurations.Medium, easing = PvotMotion.Settle)) + fadeIn(tween(PvotDurations.Short)),
-            exit = scaleOut(tween(PvotDurations.Short)) + fadeOut(tween(PvotDurations.Short)),
-        ) {
-            IconButton(
-                onClick = callbacks::onCall,
-                interactionSource = source,
-                modifier = Modifier
-                    .size(KeySize)
-                    .pvotPressScale(source)
-                    .background(container, CircleShape)
-                    .testTag(TestTags.DIALPAD_CALL),
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_phone),
-                    contentDescription = stringResource(R.string.description_dial_button),
-                    tint = androidx.compose.ui.graphics.Color.White,
-                )
-            }
-        }
-    }
-}
-
-/** The call button keeps the green people expect of it, in light and dark. */
-private val CallGreen = androidx.compose.ui.graphics.Color(0xFF1E8E3E)
 
 @Composable
 private fun DialpadMenu(state: DialpadUiState, callbacks: DialpadCallbacks) {

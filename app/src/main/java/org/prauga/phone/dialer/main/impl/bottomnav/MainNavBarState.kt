@@ -12,7 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import org.prauga.phone.dialer.common.LogUtil
 
-/** State of the main screen's nav bar: the selected tab, the voicemail tab and unread badges. */
+/** State of the main screen's dock: the selected tab, the voicemail tab and unread badges. */
 class MainNavBarState {
 
     /** The selected [TabIndex], or [TabIndex.NONE] before the first selection. */
@@ -33,7 +33,7 @@ class MainNavBarState {
     /** The tabs in the bar, in order. */
     val tabs: List<Int>
         get() = buildList {
-            add(TabIndex.SPEED_DIAL)
+            add(TabIndex.DIALPAD)
             add(TabIndex.CALL_LOG)
             add(TabIndex.CONTACTS)
             if (isVoicemailShown) add(TabIndex.VOICEMAIL)
@@ -45,7 +45,7 @@ class MainNavBarState {
         selectedTab = tab
         listeners.forEach { listener ->
             when (tab) {
-                TabIndex.SPEED_DIAL -> listener.onSpeedDialSelected()
+                TabIndex.DIALPAD -> listener.onDialpadSelected()
                 TabIndex.CALL_LOG -> listener.onCallLogSelected()
                 TabIndex.CONTACTS -> listener.onContactsSelected()
                 TabIndex.VOICEMAIL -> listener.onVoicemailSelected()
@@ -55,15 +55,15 @@ class MainNavBarState {
     }
 
     /**
-     * Shows or hides the voicemail tab. Hiding it while it is selected moves to the speed dial tab.
+     * Shows or hides the voicemail tab. Hiding it while it is selected moves to the dialpad tab.
      */
     fun showVoicemail(show: Boolean) {
         LogUtil.i("MainNavBarState.showVoicemail", "showing tab: %b", show)
         val wasShown = isVoicemailShown
         isVoicemailShown = show
         if (wasShown && !show && selectedTab == TabIndex.VOICEMAIL) {
-            LogUtil.i("MainNavBarState.showVoicemail", "hid voicemail tab, moving to speed dial")
-            selectTab(TabIndex.SPEED_DIAL)
+            LogUtil.i("MainNavBarState.showVoicemail", "hid voicemail tab, moving to dialpad")
+            selectTab(TabIndex.DIALPAD)
         }
     }
 
@@ -83,8 +83,8 @@ class MainNavBarState {
     /** Listener for tab selections. */
     interface OnBottomNavTabSelectedListener {
 
-        /** Speed dial tab was selected. */
-        fun onSpeedDialSelected()
+        /** Dialpad tab was selected. */
+        fun onDialpadSelected()
 
         /** Call log tab was selected. */
         fun onCallLogSelected()
@@ -98,22 +98,6 @@ class MainNavBarState {
 
     private companion object {
         val ALL_TABS =
-            setOf(TabIndex.SPEED_DIAL, TabIndex.CALL_LOG, TabIndex.CONTACTS, TabIndex.VOICEMAIL)
-    }
-}
-
-/** State of the main screen's dialpad button. */
-class MainFabState {
-
-    /** Whether the button is shown. */
-    var isShown by mutableStateOf(true)
-        private set
-
-    fun show() {
-        isShown = true
-    }
-
-    fun hide() {
-        isShown = false
+            setOf(TabIndex.DIALPAD, TabIndex.CALL_LOG, TabIndex.CONTACTS, TabIndex.VOICEMAIL)
     }
 }

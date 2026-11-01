@@ -6,13 +6,10 @@
 package org.prauga.phone.dialer.main.impl.bottomnav
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.isRoot
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onFirst
@@ -22,7 +19,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.google.common.truth.Truth.assertThat
-import com.prauga.pvot.designsystem.theme.PvotAppTheme
+import org.prauga.phone.dialer.ui.PhoneTheme
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,25 +28,27 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
-/** The main screen's nav bar and dialpad button. */
+/** The main screen's dock: tabs, badges and the selected tab's action. */
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(qualifiers = "en-rUS-w411dp-h891dp-night-xxhdpi")
-class MainChromeTest {
+class MainDockTest {
 
     @get:Rule val compose = createComposeRule()
 
-    private val navBar = MainNavBarState().apply { selectTab(TabIndex.SPEED_DIAL) }
-    private val fab = MainFabState()
+    private val navBar = MainNavBarState().apply { selectTab(TabIndex.DIALPAD) }
+    private val actions = mutableListOf<String>()
+    private val dockActions = object : MainDockActions {
+        override fun onDial() { actions += "dial" }
+        override fun onSearch() { actions += "search" }
+        override fun onAddContact() { actions += "add" }
+    }
 
-    private fun setChrome(onFabClick: () -> Unit = {}) {
+    private fun setChrome() {
         compose.setContent {
-            PvotAppTheme {
+            PhoneTheme {
                 Column(Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.background)) {
-                    Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
-                        MainFab(fab, onFabClick)
-                    }
-                    MainNavBar(navBar)
+                    MainDock(navBar, dockActions)
                 }
             }
         }
@@ -65,12 +64,30 @@ class MainChromeTest {
     }
 
     @Test
-    fun selectedTabShowsItsLabel() {
-        navBar.selectTab(TabIndex.CALL_LOG)
+    fun theSelectedTabsPillNamesItsAction() {
+        setChrome()
+        compose.onNodeWithText("Dial").assertExists()
+
+        compose.onNodeWithContentDescription("Recents").performClick()
+
+        compose.onNodeWithText("Search").assertExists()
+        compose.onNodeWithText("Dial").assertDoesNotExist()
+    }
+
+    @Test
+    fun tappingThePillRunsTheTabsAction() {
+        navBar.showVoicemail(true)
         setChrome()
 
-        compose.onNodeWithText("Recents").assertExists()
-        compose.onNodeWithContentDescription("Recents").assertExists()
+        compose.onNodeWithContentDescription("Dialpad").performClick()
+        compose.onNodeWithContentDescription("Recents").performClick()
+        compose.onNodeWithContentDescription("Recents").performClick()
+        compose.onNodeWithContentDescription("Contacts").performClick()
+        compose.onNodeWithContentDescription("Contacts").performClick()
+        compose.onNodeWithContentDescription("Voicemail").performClick()
+        compose.onNodeWithContentDescription("Voicemail").performClick()
+
+        assertThat(actions).containsExactly("dial", "search", "add").inOrder()
     }
 
     @Test
@@ -93,7 +110,7 @@ class MainChromeTest {
     }
 
     @Test
-    fun barHidesWhileSearching() {
+    fun dockHidesWhileSearching() {
         setChrome()
         compose.onNodeWithTag(TestTags.MAIN_NAV_BAR).assertExists()
 
@@ -103,25 +120,13 @@ class MainChromeTest {
     }
 
     @Test
-    fun fabOpensTheDialpadAndHides() {
-        var clicks = 0
-        setChrome(onFabClick = { clicks++ })
-
-        compose.onNodeWithContentDescription("key pad").performClick()
-        assertThat(clicks).isEqualTo(1)
-
-        fab.hide()
-        compose.onNodeWithTag(TestTags.MAIN_FAB).assertDoesNotExist()
-    }
-
-    @Test
     fun screenshotDark() {
         navBar.showVoicemail(true)
         navBar.setNotificationCount(TabIndex.CALL_LOG, 3)
         navBar.setNotificationCount(TabIndex.VOICEMAIL, 120)
         setChrome()
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/main/chrome_dark.png")
+        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/main/dock_dark.png")
     }
 
     @Test
@@ -130,6 +135,6 @@ class MainChromeTest {
         navBar.setNotificationCount(TabIndex.CALL_LOG, 3)
         setChrome()
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/main/chrome_light.png")
+        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/main/dock_light.png")
     }
 }

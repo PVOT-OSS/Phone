@@ -129,7 +129,7 @@ class MissedCallNotificationTest {
     }
 
     private fun switchAwayFromRecents() {
-        val label = context.getString(R.string.tab_title_speed_dial)
+        val label = context.getString(R.string.tab_title_dialpad)
         val tab = deviceRule.device.findObject(By.text(label)) ?: deviceRule.device.findObject(By.desc(label))
         checkNotNull(tab) { "tab \"$label\" not shown" }.click()
     }
