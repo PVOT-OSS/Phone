@@ -14,6 +14,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
+import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.testing.FakeCallSpec
 import org.prauga.phone.dialer.testing.FakeCarrier
 import org.prauga.phone.dialer.testing.FakeConnection
@@ -95,6 +96,52 @@ class RttCallTest {
         check(!InCall.onMain { call.isActiveRttCall }) { "call switched to RTT" }
     }
 
+    @Test
+    fun switchToVoiceFromTheRttMenu() {
+        val (call, far) = answeredRttCall()
+
+        openMenu().click()
+
+        CallTests.waitFor { if (!far.isRtt) true else null }
+        CallTests.waitFor { if (InCall.onMain { !call.isActiveRttCall }) true else null }
+        InCall.waitForState(DialerCallState.ACTIVE)
+    }
+
+    @Test
+    fun farEndTurningRttOffLeavesAVoiceCall() {
+        val (call, far) = answeredRttCall()
+
+        far.stopRttFromFarEnd()
+
+        CallTests.waitFor { if (InCall.onMain { !call.isActiveRttCall }) true else null }
+        CallTests.waitFor { if (deviceRule.device.findObject(By.res(context.packageName, "rtt_chat_input")) == null) true else null }
+        InCall.waitForState(DialerCallState.ACTIVE)
+    }
+
+    /**
+     * Opens the RTT call's menu and returns its "Switch to voice" item. The chat opens the keyboard
+     * as it appears, and a tap while the screen is still settling can miss, so tap again if needed.
+     */
+    private fun openMenu(): UiObject2 {
+        val switchToVoice = By.text(context.getString(R.string.rtt_button_downgrade))
+        repeat(MENU_ATTEMPTS) {
+            deviceRule.device.waitForIdle()
+            findView("rtt_overflow_button").click()
+            deviceRule.device.wait(Until.findObject(switchToVoice), MENU_WAIT_MILLIS)?.let { return it }
+        }
+        error("RTT menu did not open")
+    }
+
+    private fun answeredRttCall(): Pair<DialerCall, FakeConnection> {
+        FakeCarrier.ring(context, FakeCallSpec(CallTests.freshNumber(), rtt = true))
+        val far = CallTests.waitForRinging()
+        CallTests.answerRingingCall()
+        val call = InCall.waitForState(DialerCallState.ACTIVE)
+        waitForRtt(call)
+        findView("rtt_chat_input")
+        return call to far
+    }
+
     private fun connectedVoiceCall(): Pair<DialerCall, FakeConnection> {
         InCall.place(context, CallTests.freshNumber())
         InCall.waitForState(DialerCallState.DIALING)
@@ -112,5 +159,7 @@ class RttCallTest {
 
     private companion object {
         const val SETTLE_MILLIS = 1_500L
+        const val MENU_ATTEMPTS = 3
+        const val MENU_WAIT_MILLIS = 3_000L
     }
 }
