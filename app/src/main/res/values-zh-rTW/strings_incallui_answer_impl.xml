@@ -17,4 +17,5 @@
   <string name="a11y_description_incoming_call_answer_and_release">接聽來電及結束進行中的通話</string>
   <string name="call_incoming_video_is_off">已關閉攝影機</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">用雙指向上滑動可接聽，向下滑動可拒接。</string>
+  <string name="call_incoming_important">重要</string>
 </resources>

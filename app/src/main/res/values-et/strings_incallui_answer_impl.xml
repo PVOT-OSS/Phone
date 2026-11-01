@@ -17,4 +17,5 @@
   <string name="a11y_description_incoming_call_answer_and_release">Vastake ja lõpetage käimasolev kõne</string>
   <string name="call_incoming_video_is_off">Video on välja lülitatud</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Vastamiseks pühkige kahe sõrmega üles. Keeldumiseks pühkige kahe sõrmega alla.</string>
+  <string name="call_incoming_important">Tähtis</string>
 </resources>

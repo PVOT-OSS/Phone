@@ -17,4 +17,5 @@
   <string name="a11y_description_incoming_call_answer_and_release">Қоңырауға жауап беру және ағымдағы қоңырауды аяқтау</string>
   <string name="call_incoming_video_is_off">Бейне өшірулі</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Жауап беру үшін екі саусақпен жоғары сырғытылады. Қабылдамау үшін екі саусақпен төмен сырғытылады.</string>
+  <string name="call_incoming_important">Маңызды</string>
 </resources>

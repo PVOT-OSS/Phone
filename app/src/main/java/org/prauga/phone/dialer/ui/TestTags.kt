@@ -158,6 +158,8 @@ object TestTags {
 
     /** The incoming call screen: the swipe button, the two plain buttons and the side buttons. */
     const val ANSWER_PUCK = "answer_puck"
+    /** The Important badge on an urgent incoming call; the old view's id, which the device tests look for. */
+    const val IMPORTANT_CALL_BADGE = "incall_important_call_badge"
     const val ANSWER_ACCEPT = "answer_accept"
     const val ANSWER_DECLINE = "answer_decline"
     const val ANSWER_SECONDARY = "answer_secondary"

@@ -17,4 +17,5 @@
   <string name="a11y_description_incoming_call_answer_and_release">Vastaa puheluun ja lopeta nykyinen puhelu</string>
   <string name="call_incoming_video_is_off">Videokuva ei ole käytössä.</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Vastaa pyyhkäisemällä ylös kahdella sormella. Hylkää pyyhkäisemällä alas kahdella sormella.</string>
+  <string name="call_incoming_important">Tärkeä</string>
 </resources>

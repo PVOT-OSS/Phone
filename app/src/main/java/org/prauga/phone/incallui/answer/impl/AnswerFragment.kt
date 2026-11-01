@@ -18,6 +18,8 @@ import android.view.accessibility.AccessibilityEvent
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.compose.animation.core.Animatable
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,6 +27,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -39,19 +42,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import com.prauga.pvot.designsystem.motion.PvotMotion
+import com.prauga.pvot.designsystem.theme.PvotCallEnd
+import com.prauga.pvot.designsystem.theme.PvotOnCallEnd
 import com.prauga.pvot.designsystem.theme.PvotSpacing
+import kotlin.math.abs
+import kotlin.math.max
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.settings.IncomingCallSettings
 import org.prauga.phone.dialer.common.Assert
 import org.prauga.phone.dialer.common.FragmentUtils
 import org.prauga.phone.dialer.common.LogUtil
+import org.prauga.phone.dialer.multimedia.MultimediaData
 import org.prauga.phone.dialer.telecom.TelecomUtil
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
+import org.prauga.phone.dialer.ui.TestTags
+import org.prauga.phone.dialer.ui.UriThumbnail
 import org.prauga.phone.incallui.answer.impl.CreateCustomSmsDialogFragment.CreateCustomSmsHolder
 import org.prauga.phone.incallui.answer.impl.SmsBottomSheetFragment.SmsSheetHolder
 import org.prauga.phone.incallui.answer.protocol.AnswerScreen
@@ -70,8 +84,6 @@ import org.prauga.phone.incallui.incalluilock.InCallUiLock
 import org.prauga.phone.incallui.util.AccessibilityUtil
 import org.prauga.phone.incallui.video.protocol.VideoCallScreen
 import org.prauga.phone.incallui.videotech.utils.VideoUtils
-import kotlin.math.abs
-import kotlin.math.max
 
 /** The incoming call screen: who is calling, and the controls to answer, decline or reply. */
 class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, CreateCustomSmsHolder, AnswerActions {
@@ -81,6 +93,9 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
     private var contactGrid: ContactGridState? = null
     private val ui = AnswerUiState()
     private var primaryInfo: PrimaryInfo = PrimaryInfo.empty()
+
+    /** What the caller sent with call composer, shown under who is calling; null for nothing. */
+    private var callerData by mutableStateOf<MultimediaData?>(null)
     private var primaryCallState: PrimaryCallState? = null
     private var textResponses: ArrayList<CharSequence>? = null
     private var textResponsesFragment: SmsBottomSheetFragment? = null
@@ -124,7 +139,7 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
         ui.answerIcon = when {
             isVideoCall || isVideoUpgradeRequest -> R.drawable.ic_video
             isRttCall -> R.drawable.ic_message
-            else -> R.drawable.ic_phone
+            else -> R.drawable.ic_call_filled
         }
 
         answerScreenDelegate = FragmentUtils.getParentUnsafe(this, AnswerScreenDelegateFactory::class.java).newAnswerScreenDelegate(this)
@@ -191,6 +206,7 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
                     },
                     avatarSize = if (showAvatar) 112.dp else 0.dp,
                 )
+                callerData?.let { CallerData(it) }
                 if (videoOff) {
                     Column(Modifier.padding(64.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                         Icon(painterResource(R.drawable.ic_video_off), contentDescription = null)
@@ -291,6 +307,8 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
         if (view == null) return
         contactGrid?.setPrimary(primaryInfo)
         ui.incomingWillDisconnectText = incomingWillDisconnectText()
+        // A video upgrade request is not a new call; what a spam caller sent isn't shown.
+        callerData = primaryInfo.multimediaData()?.takeIf { !isVideoUpgradeRequest && !primaryInfo.isSpam && it.hasData() }
     }
 
     // AnswerScreen
@@ -598,3 +616,45 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
         }
     }
 }
+
+/**
+ * What the caller sent with call composer: the Important badge for an urgent call, the note and
+ * the picture.
+ */
+@androidx.compose.runtime.Composable
+private fun CallerData(data: MultimediaData) {
+    Column(
+        Modifier.padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.M),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(PvotSpacing.M),
+    ) {
+        if (data.isImportant) {
+            Text(
+                text = stringResource(R.string.call_incoming_important),
+                style = MaterialTheme.typography.labelLarge,
+                fontWeight = FontWeight.Bold,
+                color = PvotOnCallEnd,
+                modifier = Modifier
+                    .background(PvotCallEnd, CircleShape)
+                    .padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.S)
+                    .testTag(TestTags.IMPORTANT_CALL_BADGE),
+            )
+        }
+        data.text?.takeIf { it.isNotBlank() }?.let { note ->
+            Text(
+                text = note,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Center,
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+        data.imageUri?.let { picture ->
+            UriThumbnail(picture, stringResource(R.string.call_composer_picture_description), CallerPictureSize)
+        }
+    }
+}
+
+/** Size of the picture a caller sent with the call. */
+private val CallerPictureSize = 160.dp

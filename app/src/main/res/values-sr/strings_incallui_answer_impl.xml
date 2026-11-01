@@ -17,4 +17,5 @@
   <string name="a11y_description_incoming_call_answer_and_release">Јавите се и завршите позив који је у току</string>
   <string name="call_incoming_video_is_off">Камера је искључена</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Превуците нагоре помоћу два прста да бисте одговорили. Превуците надоле помоћу два прста да бисте одбили.</string>
+  <string name="call_incoming_important">Важно</string>
 </resources>

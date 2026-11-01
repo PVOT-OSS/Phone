@@ -17,4 +17,5 @@
   <string name="a11y_description_incoming_call_answer_and_release">Ответить и завершить текущий вызов</string>
   <string name="call_incoming_video_is_off">Камера выключена</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Проведите двумя пальцами по экрану вверх, чтобы ответить, или вниз, чтобы отклонить вызов.</string>
+  <string name="call_incoming_important">Важный звонок</string>
 </resources>

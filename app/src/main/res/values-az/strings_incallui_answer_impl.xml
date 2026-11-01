@@ -17,4 +17,5 @@
   <string name="a11y_description_incoming_call_answer_and_release">Cavab verin və gedən zəngi bitirin</string>
   <string name="call_incoming_video_is_off">Videoları deaktivdir</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Cavab vermək üçün iki barmaq ilə yuxarı sürüşdürün. İmtina etmək üçün iki barmaq ilə aşağı sürüşdürün.</string>
+  <string name="call_incoming_important">Önəmli</string>
 </resources>

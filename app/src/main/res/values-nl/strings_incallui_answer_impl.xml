@@ -17,4 +17,5 @@
   <string name="a11y_description_incoming_call_answer_and_release">Opnemen en actieve oproep beëindigen</string>
   <string name="call_incoming_video_is_off">Video is uit</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Veeg met twee vingers omhoog om te beantwoorden. Veeg met twee vingers omlaag om te weigeren.</string>
+  <string name="call_incoming_important">Belangrijk</string>
 </resources>

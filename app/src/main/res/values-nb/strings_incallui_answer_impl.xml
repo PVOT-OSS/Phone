@@ -17,4 +17,5 @@
   <string name="a11y_description_incoming_call_answer_and_release">Svar, og avslutt samtalen som er i gang</string>
   <string name="call_incoming_video_is_off">Video er av</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Sveip oppover med to fingre for å svare. Sveip nedover med to fingre for å avvise.</string>
+  <string name="call_incoming_important">Viktig</string>
 </resources>

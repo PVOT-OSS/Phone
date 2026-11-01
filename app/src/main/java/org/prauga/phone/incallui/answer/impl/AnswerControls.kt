@@ -7,12 +7,12 @@ package org.prauga.phone.incallui.answer.impl
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -24,17 +24,19 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -42,10 +44,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.lerp
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -59,14 +66,22 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import com.prauga.pvot.designsystem.components.call.PvotCallAction
+import com.prauga.pvot.designsystem.components.call.PvotCallActionButton
+import com.prauga.pvot.designsystem.components.pvotGlassSurface
+import com.prauga.pvot.designsystem.effects.LocalPvotGlassBackdrop
+import com.prauga.pvot.designsystem.motion.PvotMotion
+import com.prauga.pvot.designsystem.theme.PvotCallAnswer
+import com.prauga.pvot.designsystem.theme.PvotCallEnd
+import com.prauga.pvot.designsystem.theme.PvotOnCallAnswer
+import com.prauga.pvot.designsystem.theme.PvotOnCallEnd
 import com.prauga.pvot.designsystem.theme.PvotSpacing
-import com.prauga.pvot.designsystem.theme.PvotTheme
-import kotlinx.coroutines.launch
-import org.prauga.phone.dialer.R
-import org.prauga.phone.dialer.ui.TestTags
 import kotlin.math.abs
 import kotlin.math.hypot
 import kotlin.math.roundToInt
+import kotlinx.coroutines.launch
+import org.prauga.phone.dialer.R
+import org.prauga.phone.dialer.ui.TestTags
 
 /** A button beside the answer control: decline with a message, answer as audio, or answer and end the other call. */
 data class AnswerSideAction(
@@ -81,7 +96,7 @@ class AnswerUiState {
     /** Two plain buttons instead of the swipe, for TalkBack and split screen. */
     var twoButtons by mutableStateOf(false)
     @get:DrawableRes
-    var answerIcon by mutableIntStateOf(R.drawable.ic_phone)
+    var answerIcon by mutableIntStateOf(R.drawable.ic_call_filled)
 
     /** The line above the answer control, or null for "Swipe up to answer". */
     var hint by mutableStateOf<CharSequence?>(null)
@@ -141,13 +156,16 @@ fun AnswerControls(state: AnswerUiState, actions: AnswerActions, modifier: Modif
 
 /**
  * Drag the button up to answer or down to decline, or fling it once it has moved; it springs back
- * if let go early. Declining needs less travel: the button sits close to the bottom of the screen.
+ * if let go early. It sits in a glass track with the two ends marked, the answer end above and the
+ * decline end below, so both directions have the same room and can be seen. The button turns red,
+ * with the hung-up handset, as it is pulled down.
  */
 @Composable
 private fun SwipeToAnswer(state: AnswerUiState, actions: AnswerActions, modifier: Modifier = Modifier) {
     val density = LocalDensity.current
-    val threshold = with(density) { SwipeDistance.toPx() }
-    val declineThreshold = with(density) { DeclineDistance.toPx() }
+    val haptics = LocalHapticFeedback.current
+    val travel = with(density) { SwipeTravel.toPx() }
+    val threshold = travel * ThresholdFraction
     val flingVelocity = with(density) { FlingVelocity.toPx() }
     val offset = remember { Animatable(0f) }
     // The drag's own total: offset only catches up when its snap runs, which can be after the next delta.
@@ -155,6 +173,8 @@ private fun SwipeToAnswer(state: AnswerUiState, actions: AnswerActions, modifier
     val scope = rememberCoroutineScope()
     var dragging by remember { mutableStateOf(false) }
     var done by remember { mutableStateOf(false) }
+    // Which end the button is past, for a tick as it crosses: -1 answer, 1 decline, 0 neither.
+    var armed by remember { mutableIntStateOf(0) }
     // A small nudge every few seconds says the button moves.
     val nudge by rememberInfiniteTransition(label = "answerNudge").animateFloat(
         initialValue = 0f,
@@ -175,126 +195,156 @@ private fun SwipeToAnswer(state: AnswerUiState, actions: AnswerActions, modifier
     val declineLabel = stringResource(R.string.call_incoming_decline)
     fun finish(answer: Boolean) {
         done = true
+        haptics.performHapticFeedback(if (answer) HapticFeedbackType.Confirm else HapticFeedbackType.Reject)
         if (answer) actions.onAnswer() else actions.onReject()
     }
-    val declining = offset.value > declineThreshold / 2
+    // How far toward decline, 0 to 1, and toward answer.
+    val toDecline = (offset.value / threshold).coerceIn(0f, 1f)
+    val toAnswer = (-offset.value / threshold).coerceIn(0f, 1f)
+    val hintAlpha = 1f - (abs(offset.value) / threshold).coerceIn(0f, 1f)
+    val puckColor = lerp(PvotCallAnswer, PvotCallEnd, toDecline)
     Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             text = (state.hint ?: stringResource(R.string.call_incoming_swipe_to_answer)).toString(),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
-            modifier = Modifier.alpha(1f - (abs(offset.value) / threshold).coerceIn(0f, 1f)),
+            modifier = Modifier.alpha(hintAlpha).padding(bottom = PvotSpacing.M),
         )
         Box(
-            modifier = Modifier
-                .padding(vertical = PvotSpacing.L)
-                .offset { IntOffset(0, (offset.value + if (dragging || done) 0f else with(density) { nudge.dp.toPx() }).roundToInt()) }
-                .size(PuckSize)
-                .background(if (declining) MaterialTheme.colorScheme.error else PvotTheme.extendedColors.success, CircleShape)
+            Modifier
+                .width(TrackWidth)
+                .height(PuckSize + SwipeTravel * 2)
+                .pvotGlassSurface(LocalPvotGlassBackdrop.current, TrackWidth / 2, role = null)
+                // On the track, which stays put, so the button follows the finger one to one.
                 .draggable(
                     state = rememberDraggableState { delta ->
                         if (done) return@rememberDraggableState
-                        val value = (dragOffset + delta).coerceIn(-threshold * 1.2f, declineThreshold * 1.2f)
+                        val value = (dragOffset + delta).coerceIn(-travel, travel)
                         dragOffset = value
                         scope.launch { offset.snapTo(value) }
-                        actions.onProgress((-value / if (value < 0) threshold else declineThreshold).coerceIn(-1f, 1f))
+                        actions.onProgress((-value / threshold).coerceIn(-1f, 1f))
+                        val now = when {
+                            value <= -threshold -> -1
+                            value >= threshold -> 1
+                            else -> 0
+                        }
+                        if (now != 0 && now != armed) haptics.performHapticFeedback(HapticFeedbackType.GestureThresholdActivate)
+                        armed = now
                     },
                     orientation = Orientation.Vertical,
                     onDragStarted = {
                         dragging = true
                         dragOffset = offset.value
+                        haptics.performHapticFeedback(HapticFeedbackType.SegmentTick)
                     },
                     onDragStopped = { velocity ->
                         dragging = false
+                        armed = 0
                         when {
                             done -> Unit
                             dragOffset <= -threshold -> finish(answer = true)
-                            dragOffset >= declineThreshold -> finish(answer = false)
+                            dragOffset >= threshold -> finish(answer = false)
                             velocity <= -flingVelocity && dragOffset <= -threshold / 3 -> finish(answer = true)
-                            velocity >= flingVelocity && dragOffset >= declineThreshold / 3 -> finish(answer = false)
+                            velocity >= flingVelocity && dragOffset >= threshold / 3 -> finish(answer = false)
                             else -> {
                                 actions.onProgress(0f)
-                                offset.animateTo(0f, spring())
+                                offset.animateTo(0f, PvotMotion.bounceSpring())
                             }
                         }
                     },
-                )
-                .semantics {
-                    role = Role.Button
-                    contentDescription = answerLabel
-                    customActions = listOf(
-                        CustomAccessibilityAction(answerLabel) { finish(answer = true); true },
-                        CustomAccessibilityAction(declineLabel) { finish(answer = false); true },
-                    )
-                }
-                .testTag(TestTags.ANSWER_PUCK),
+                ),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(
-                painter = painterResource(state.answerIcon),
-                contentDescription = null,
-                tint = if (declining) MaterialTheme.colorScheme.onError else PvotTheme.extendedColors.onSuccess,
-                modifier = Modifier.size(32.dp),
-            )
+            // The two ends: what reaching each one does.
+            TrackEnd(R.drawable.ic_call_filled, PvotCallAnswer, toAnswer, Modifier.align(Alignment.TopCenter))
+            TrackEnd(R.drawable.ic_call_end, PvotCallEnd, toDecline, Modifier.align(Alignment.BottomCenter))
+            Box(
+                modifier = Modifier
+                    .offset { IntOffset(0, (offset.value + if (dragging || done) 0f else with(density) { nudge.dp.toPx() }).roundToInt()) }
+                    .graphicsLayer {
+                        val grow = 1f + PuckGrowth * maxOf(toAnswer, toDecline)
+                        scaleX = grow
+                        scaleY = grow
+                    }
+                    .size(PuckSize)
+                    .shadow(PvotSpacing.S, CircleShape, ambientColor = puckColor, spotColor = puckColor)
+                    .background(puckColor, CircleShape)
+                    .semantics {
+                        role = Role.Button
+                        contentDescription = answerLabel
+                        customActions = listOf(
+                            CustomAccessibilityAction(answerLabel) { finish(answer = true); true },
+                            CustomAccessibilityAction(declineLabel) { finish(answer = false); true },
+                        )
+                    }
+                    .testTag(TestTags.ANSWER_PUCK),
+                contentAlignment = Alignment.Center,
+            ) {
+                // The answer icon turns into the hung-up handset on the way down.
+                Crossfade(targetState = toDecline > 0.5f, label = "puckIcon") { declining ->
+                    Icon(
+                        painter = painterResource(if (declining) R.drawable.ic_call_end else state.answerIcon),
+                        contentDescription = null,
+                        tint = if (declining) PvotOnCallEnd else PvotOnCallAnswer,
+                        modifier = Modifier.size(PuckIconSize),
+                    )
+                }
+            }
         }
         Text(
             text = stringResource(R.string.call_incoming_swipe_to_reject),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
-            modifier = Modifier.alpha(1f - (abs(offset.value) / threshold).coerceIn(0f, 1f)),
+            modifier = Modifier.alpha(hintAlpha).padding(top = PvotSpacing.M),
         )
     }
 }
 
-/** Decline and answer as two buttons, for TalkBack and split screen. */
+/** One end of the answer track: its icon, brighter as the button comes closer ([reach] 0 to 1). */
+@Composable
+private fun TrackEnd(@DrawableRes icon: Int, color: Color, reach: Float, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(icon),
+        contentDescription = null,
+        tint = color.copy(alpha = TrackEndAlpha + (1f - TrackEndAlpha) * reach),
+        modifier = modifier
+            .padding(vertical = (SwipeTravel - TrackEndSize) / 2)
+            .size(TrackEndSize)
+            .graphicsLayer {
+                val grow = 1f + TrackEndGrowth * reach
+                scaleX = grow
+                scaleY = grow
+            },
+    )
+}
+
+/** Decline and answer as two labelled buttons, for TalkBack, split screen and single tap answering. */
 @Composable
 private fun TwoButtons(state: AnswerUiState, actions: AnswerActions) {
     Row(
         Modifier.fillMaxWidth().padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.L),
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
-        RoundAction(
-            R.drawable.ic_phone_off,
-            stringResource(R.string.call_incoming_decline),
-            MaterialTheme.colorScheme.error,
-            MaterialTheme.colorScheme.onError,
-            TestTags.ANSWER_DECLINE,
-        ) {
-            actions.onReject()
-        }
-        RoundAction(
-            state.answerIcon,
-            stringResource(R.string.call_incoming_answer),
-            PvotTheme.extendedColors.success,
-            PvotTheme.extendedColors.onSuccess,
-            TestTags.ANSWER_ACCEPT,
-        ) {
-            actions.onAnswer()
-        }
-    }
-}
-
-@Composable
-private fun RoundAction(@DrawableRes icon: Int, label: String, color: Color, contentColor: Color, tag: String, onClick: () -> Unit) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Box(
-            Modifier
-                .size(PuckSize)
-                .background(color, CircleShape)
-                .pointerInput(onClick) { detectTapGestures { onClick() } }
-                .semantics {
-                    role = Role.Button
-                    contentDescription = label
-                    onClick { onClick(); true }
-                }
-                .testTag(tag),
-            contentAlignment = Alignment.Center,
-        ) {
-            Icon(painterResource(icon), contentDescription = null, tint = contentColor, modifier = Modifier.size(32.dp))
-        }
-        Text(label, style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = PvotSpacing.S))
+        PvotCallActionButton(
+            action = PvotCallAction.Decline,
+            icon = painterResource(R.drawable.ic_call_end),
+            label = stringResource(R.string.call_incoming_decline),
+            onClick = actions::onReject,
+            size = PuckSize,
+            showLabel = true,
+            modifier = Modifier.testTag(TestTags.ANSWER_DECLINE),
+        )
+        PvotCallActionButton(
+            action = PvotCallAction.Answer,
+            icon = painterResource(state.answerIcon),
+            label = stringResource(R.string.call_incoming_answer),
+            onClick = actions::onAnswer,
+            size = PuckSize,
+            showLabel = true,
+            modifier = Modifier.testTag(TestTags.ANSWER_ACCEPT),
+        )
     }
 }
 
@@ -313,18 +363,25 @@ private fun SideButton(action: AnswerSideAction?, onAction: () -> Unit, actions:
     var drag by remember { mutableStateOf(Offset.Zero) }
     val label = stringResource(action.accessibilityLabel)
     val description = stringResource(action.description)
+    val haptics = LocalHapticFeedback.current
     Box(
         modifier = Modifier
             .offset { IntOffset(drag.x.roundToInt(), drag.y.roundToInt()) }
             .size(SideSize)
             .background(MaterialTheme.colorScheme.surfaceContainerHigh, CircleShape)
             .pointerInput(action) {
-                detectTapGestures { actions.onSideHint(action) }
+                detectTapGestures {
+                    haptics.performHapticFeedback(HapticFeedbackType.SegmentTick)
+                    actions.onSideHint(action)
+                }
             }
             .pointerInput(action) {
                 detectDragGestures(
                     onDragEnd = {
-                        if (hypot(drag.x, drag.y) >= distance) onAction()
+                        if (hypot(drag.x, drag.y) >= distance) {
+                            haptics.performHapticFeedback(HapticFeedbackType.Confirm)
+                            onAction()
+                        }
                         drag = Offset.Zero
                     },
                     onDragCancel = { drag = Offset.Zero },
@@ -346,11 +403,25 @@ private fun SideButton(action: AnswerSideAction?, onAction: () -> Unit, actions:
 }
 
 private val PuckSize = 80.dp
+private val PuckIconSize = 34.dp
 private val SideSize = 56.dp
-private val SwipeDistance = 120.dp
-private val DeclineDistance = 56.dp
+
+/** How far the button can go each way in its track; it does its action past [ThresholdFraction] of it. */
+private val SwipeTravel = 96.dp
+private const val ThresholdFraction = 0.75f
+
+/** How much the button grows as it reaches an end. */
+private const val PuckGrowth = 0.08f
+
+/** The track is a little wider than the button. */
+private val TrackWidth = PuckSize + PvotSpacing.M
+
+/** The icons at the track's ends: faint until the button comes close. */
+private val TrackEndSize = 28.dp
+private const val TrackEndAlpha = 0.45f
+private const val TrackEndGrowth = 0.2f
 
 /** How fast a released button must be moving, per second, to count as a fling. */
-private val FlingVelocity = 1200.dp
+private val FlingVelocity = 800.dp
 private val SideSwipeDistance = 72.dp
 

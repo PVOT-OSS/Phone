@@ -17,4 +17,5 @@
   <string name="a11y_description_incoming_call_answer_and_release">الرد وإنهاء مكالمة جارية</string>
   <string name="call_incoming_video_is_off">الفيديو قيد إيقاف التشغيل</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">مرر بأصبعين لأعلى للرد. مرر بأصبعين لأسفل للرفض.</string>
+  <string name="call_incoming_important">مهم</string>
 </resources>

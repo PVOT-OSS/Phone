@@ -17,4 +17,5 @@
   <string name="a11y_description_incoming_call_answer_and_release">Ирсэн дуудлагыг авч, одоогийн дуудлагыг таслах</string>
   <string name="call_incoming_video_is_off">Видео идэвхгүй байна</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Хариулах бол хоёр хуруугаар дээш шударна уу. Таслах бол хоёр хуруугаар доош шударна уу.</string>
+  <string name="call_incoming_important">Чухал</string>
 </resources>

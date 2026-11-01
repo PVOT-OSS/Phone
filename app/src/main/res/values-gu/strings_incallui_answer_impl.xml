@@ -17,4 +17,5 @@
   <string name="a11y_description_incoming_call_answer_and_release">જવાબ આપો અને ચાલુ કૉલ સમાપ્ત કરો</string>
   <string name="call_incoming_video_is_off">વિડિઓ બંધ છે</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">જવાબ આપવા માટે બે આંગળી ઉપર સ્વાઇપ કરો. નકારવા માટે બે આંગળી નીચે સ્વાઇપ કરો.</string>
+  <string name="call_incoming_important">મહત્વપૂર્ણ</string>
 </resources>

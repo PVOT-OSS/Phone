@@ -17,4 +17,5 @@
   <string name="a11y_description_incoming_call_answer_and_release">Jawab dan tamatkan panggilan yang sedang berlangsung</string>
   <string name="call_incoming_video_is_off">Video dimatikan</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Leret dua jari ke atas untuk menjawab. Leret dua jari ke bawah untuk menolak.</string>
+  <string name="call_incoming_important">Penting</string>
 </resources>

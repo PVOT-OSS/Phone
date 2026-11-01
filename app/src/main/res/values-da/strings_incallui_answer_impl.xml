@@ -17,4 +17,5 @@
   <string name="a11y_description_incoming_call_answer_and_release">Besvar, og afslut det igangværende opkald</string>
   <string name="call_incoming_video_is_off">Video er deaktiveret</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Stryg op med to fingre for at besvare. Stryg ned med to fingre for at afvise.</string>
+  <string name="call_incoming_important">Vigtigt</string>
 </resources>

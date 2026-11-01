@@ -80,11 +80,18 @@ class AnswerControlsTest {
     }
 
     @Test
-    fun aShortPullDownDeclines() {
-        // The button sits about 90dp above the bottom of a phone screen, so declining must fit in that.
+    fun aPullDownToTheDeclineEndDeclines() {
+        // The track leaves the same room below the button as above it.
         show(swipeState())
-        compose.onNodeWithTag(TestTags.ANSWER_PUCK).performTouchInput { swipe(center, center + Offset(0f, 80f * density), 400) }
+        compose.onNodeWithTag(TestTags.ANSWER_PUCK).performTouchInput { swipe(center, center + Offset(0f, 90f * density), 400) }
         assertThat(events).containsExactly("reject")
+    }
+
+    @Test
+    fun aShortSlowPullDownSpringsBack() {
+        show(swipeState())
+        compose.onNodeWithTag(TestTags.ANSWER_PUCK).performTouchInput { swipe(center, center + Offset(0f, 30f * density), 600) }
+        assertThat(events).doesNotContain("reject")
     }
 
     @Test
