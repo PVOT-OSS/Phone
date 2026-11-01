@@ -30,7 +30,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.prauga.pvot.designsystem.components.PvotSegmentedControl
+import com.prauga.pvot.designsystem.components.PvotTabRow
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.common.FragmentUtils
@@ -63,19 +63,18 @@ class CallHistoryFragment : Fragment() {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
             PhoneScreenTheme {
-                // All / Missed on the Recents tab; the call history screen filters with its tabs.
-                var missedOnly by rememberSaveable { mutableStateOf(false) }
+                // All, Missed, Contacts and Blocked on the Recents tab; the call history screen
+                // also has Statistics.
+                var filter by rememberSaveable { mutableStateOf(CallLogFilter.ALL) }
+                val missedOnly = filter == CallLogFilter.MISSED
                 Column(Modifier.fillMaxSize()) {
-                    PvotSegmentedControl(
-                        options = listOf(
-                            stringResource(R.string.call_log_all_title),
-                            stringResource(R.string.call_log_missed_title),
-                        ),
-                        selectedIndex = if (missedOnly) 1 else 0,
-                        onSelect = { missedOnly = it == 1 },
+                    PvotTabRow(
+                        tabs = recentsFilterLabels(),
+                        selectedIndex = filter.ordinal,
+                        onSelect = { filter = CallLogFilter.entries[it] },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.S)
+                            .padding(horizontal = PvotSpacing.L)
                             .testTag(TestTags.RECENTS_FILTER),
                     )
                     key(missedOnly) {
@@ -83,7 +82,8 @@ class CallHistoryFragment : Fragment() {
                             viewModel = if (missedOnly) missedViewModel else viewModel,
                             callType = if (missedOnly) Calls.MISSED_TYPE else callType,
                             modifier = Modifier.weight(1f),
-                            showEmptyAction = !missedOnly && showsEmptyAction(callType, isCallLogActivity = false),
+                            showEmptyAction = filter == CallLogFilter.ALL && showsEmptyAction(callType, isCallLogActivity = false),
+                            filter = filter,
                             onShowDialpad = {
                                 FragmentUtils.getParent(this@CallHistoryFragment, CallLogHost::class.java)
                                     ?.showDialpad()
@@ -123,3 +123,12 @@ class CallHistoryFragment : Fragment() {
             CallHistoryFragment().apply { arguments = bundleOf(ARG_CALL_TYPE to callType) }
     }
 }
+
+/** The labels of [CallLogFilter]'s tabs, in its order. */
+@androidx.compose.runtime.Composable
+internal fun recentsFilterLabels(): List<String> = listOf(
+    stringResource(R.string.call_log_all_title),
+    stringResource(R.string.call_log_missed_title),
+    stringResource(R.string.call_log_contacts_title),
+    stringResource(R.string.call_log_blocked_title),
+)

@@ -58,6 +58,8 @@ import com.prauga.pvot.designsystem.components.PvotScreen
 import com.prauga.pvot.designsystem.components.PvotScreenDefaults
 import com.prauga.pvot.designsystem.components.button.PvotButton
 import com.prauga.pvot.designsystem.components.button.PvotButtonStyle
+import com.prauga.pvot.designsystem.components.progress.PvotProportionBar
+import com.prauga.pvot.designsystem.components.progress.PvotProportionBarDefaults
 import com.prauga.pvot.designsystem.navigation.PvotTopBar
 import com.prauga.pvot.designsystem.navigation.rememberPvotTopBarCompact
 import com.prauga.pvot.designsystem.platform.enablePvotEdgeToEdge
@@ -308,9 +310,10 @@ private fun StatsSection(
                 ShareBar(stringResource(R.string.call_stats_title_for_number), forNumber, numberShares)
                 ShareBar(stringResource(R.string.call_stats_title_of_total), ofTotal, totalShares)
             }
+            val colors = statColors()
             for ((line, amount) in lines) {
-                Row(horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S)) {
-                    Spacer(Modifier.size(PvotSpacing.M).clip(CircleShape).background(colorFor(line.type)).align(Alignment.CenterVertically))
+                Row(horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S), verticalAlignment = Alignment.CenterVertically) {
+                    PvotProportionBarDefaults.LegendDot(colors.colorFor(line.type))
                     Text(stringResource(labelFor(line.type), amount), Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
                     line.percent?.let {
                         Text(stringResource(R.string.call_stats_percent, it), style = MaterialTheme.typography.bodyMedium,
@@ -330,26 +333,13 @@ private fun ShareBar(label: String, amount: String, shares: List<StatShare>) {
             Text(label, Modifier.weight(1f), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Text(amount, style = MaterialTheme.typography.bodySmall)
         }
-        Row(
-            Modifier.fillMaxWidth().height(PvotSpacing.S).clip(PvotShapes.Pill)
-                .background(MaterialTheme.colorScheme.surfaceVariant),
-        ) {
-            for (share in shares.filter { it.fraction > 0f }) {
-                Spacer(Modifier.weight(share.fraction).fillMaxSize().background(colorFor(share.type)))
-            }
-            val rest = 1f - shares.sumOf { it.fraction.toDouble() }.toFloat()
-            if (rest > 0.0001f) Spacer(Modifier.weight(rest))
-        }
+        PvotProportionBar(
+            segments = segmentsOf(shares.associate { it.type to it.fraction }),
+            colors = statColors(),
+        )
     }
 }
 
-@Composable
-private fun colorFor(type: Int): Color = when (type) {
-    Calls.INCOMING_TYPE -> MaterialTheme.colorScheme.primary
-    Calls.OUTGOING_TYPE -> MaterialTheme.colorScheme.tertiary
-    Calls.MISSED_TYPE -> MaterialTheme.colorScheme.error
-    else -> MaterialTheme.colorScheme.outline
-}
 
 private fun labelFor(type: Int): Int = when (type) {
     Calls.INCOMING_TYPE -> R.string.call_stats_incoming

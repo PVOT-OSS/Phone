@@ -82,7 +82,7 @@ class CallLogActivityScreenTest {
         show(startTab = CallLogActivity.TAB_ALL)
         compose.onNodeWithText("Missed").performClick()
         compose.onNodeWithText("Statistics").performClick()
-        assertThat(events).containsExactly("tab 1", "tab 2").inOrder()
+        assertThat(events).containsExactly("tab 1", "tab 4").inOrder()
     }
 
     @Test

@@ -61,9 +61,18 @@ fun CallHistoryRoute(
     topPadding: Dp = 0.dp,
     voicemail: VoicemailParts? = null,
     onSelectionModeChanged: (enabled: Boolean, exit: () -> Unit) -> Unit = { _, _ -> },
+    filter: CallLogFilter = CallLogFilter.ALL,
 ) {
     val context = LocalContext.current
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    val loadedState by viewModel.state.collectAsStateWithLifecycle()
+    // Contacts and Blocked narrow the loaded rows; All and Missed come from the query.
+    val state = loadedState.let { loaded ->
+        if (loaded is CallHistoryUiState.Loaded && filter.narrows) {
+            loaded.copy(groups = loaded.groups.filter { filter.matches(it, loaded.blockedNumbers) })
+        } else {
+            loaded
+        }
+    }
     val pendingDeletes by viewModel.pendingDeletes.collectAsStateWithLifecycle()
     val version by viewModel.contactInfoVersion.collectAsStateWithLifecycle()
     val resolver = remember(context) { CallLogRowResolver(context, CallLogCache(context)) }
@@ -288,3 +297,28 @@ private tailrec fun Context.findActivity(): Activity? = when (this) {
 /** Whether a list of [callType] calls offers "Make a call" when empty, on the main screen only. */
 internal fun showsEmptyAction(callType: Int, isCallLogActivity: Boolean) =
     !isCallLogActivity && callType == CallLogQueryHandler.CALL_TYPE_ALL
+
+/** Which calls a call history list shows. */
+enum class CallLogFilter {
+    /** Every call but voicemail. */
+    ALL,
+
+    /** Missed and rejected calls; the list's view model queries these. */
+    MISSED,
+
+    /** Calls with someone in the contacts. */
+    CONTACTS,
+
+    /** Calls from numbers that are blocked, or that were blocked. */
+    BLOCKED;
+
+    /** Whether this filter narrows the loaded rows, rather than the query choosing them. */
+    val narrows: Boolean get() = this == CONTACTS || this == BLOCKED
+
+    /** Whether [group] shows under this filter, given the [blockedNumbers]. */
+    fun matches(group: CallLogGroup, blockedNumbers: Set<String>): Boolean = when (this) {
+        ALL, MISSED -> true
+        CONTACTS -> !group.cachedInfo.lookupKey.isNullOrEmpty() || group.cachedInfo.lookupUri != null
+        BLOCKED -> Calls.BLOCKED_TYPE in group.callTypes || group.number in blockedNumbers
+    }
+}

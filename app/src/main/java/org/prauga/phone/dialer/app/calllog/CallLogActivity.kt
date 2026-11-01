@@ -58,7 +58,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.prauga.pvot.designsystem.components.PvotDialog
 import com.prauga.pvot.designsystem.components.PvotDialogAction
 import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
-import com.prauga.pvot.designsystem.components.PvotSegmentedControl
+import com.prauga.pvot.designsystem.components.PvotTabRow
 import com.prauga.pvot.designsystem.navigation.PvotTopBar
 import com.prauga.pvot.designsystem.navigation.PvotTopBarAction
 import com.prauga.pvot.designsystem.platform.enablePvotEdgeToEdge
@@ -144,7 +144,9 @@ class CallLogActivity : ComponentActivity() {
     companion object {
         const val TAB_ALL = 0
         const val TAB_MISSED = 1
-        const val TAB_STATS = 2
+        const val TAB_CONTACTS = 2
+        const val TAB_BLOCKED = 3
+        const val TAB_STATS = 4
 
         private const val ACTION_MAIN = "org.prauga.phone.dialer.main.impl.MAIN"
     }
@@ -207,6 +209,16 @@ private fun CallLogContent(
                 onMissedCallRead = {},
                 modifier = modifier,
                 topPadding = topPadding,
+            )
+            CallLogActivity.TAB_CONTACTS, CallLogActivity.TAB_BLOCKED -> CallHistoryRoute(
+                viewModel = allCalls,
+                callType = CallLogQueryHandler.CALL_TYPE_ALL,
+                showEmptyAction = false,
+                onShowDialpad = {},
+                onMissedCallRead = {},
+                modifier = modifier,
+                topPadding = topPadding,
+                filter = if (tab == CallLogActivity.TAB_CONTACTS) CallLogFilter.CONTACTS else CallLogFilter.BLOCKED,
             )
             else -> CallStatsRoute(stats, modifier, topPadding)
         }
@@ -272,17 +284,15 @@ internal fun CallLogTopBar(
                 }
             },
         )
-        PvotSegmentedControl(
-            options = listOf(
-                stringResource(R.string.call_log_all_title),
-                stringResource(R.string.call_log_missed_title),
-                stringResource(R.string.call_log_stats_title),
-            ),
+        // The Recents filters and Statistics; five tabs scroll rather than squeeze.
+        PvotTabRow(
+            tabs = recentsFilterLabels() + stringResource(R.string.call_log_stats_title),
             selectedIndex = tab,
             onSelect = onTabSelected,
+            scrollable = true,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.S)
+                .padding(horizontal = PvotSpacing.S)
                 .testTag(TestTags.CALL_HISTORY_TABS),
         )
     }

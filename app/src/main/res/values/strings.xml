@@ -254,6 +254,12 @@
        [CHAR LIMIT=30] -->
   <string name="call_log_missed_title">Missed</string>
 
+  <!-- Title for the call log tab with calls from people in the contacts only [CHAR LIMIT=30] -->
+  <string name="call_log_contacts_title">Contacts</string>
+
+  <!-- Title for the call log tab with calls from blocked numbers only [CHAR LIMIT=30] -->
+  <string name="call_log_blocked_title">Blocked</string>
+
   <!-- Accessibility text for the tab showing the user's contacts. [CHAR LIMIT=40] -->
   <string name="tab_all_contacts">Contacts</string>
 

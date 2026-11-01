@@ -38,6 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.style.TextOverflow
+import com.prauga.pvot.designsystem.components.progress.PvotProportionBar
 import java.util.Locale
 import com.prauga.pvot.coreui.PvotEmptyContent
 import com.prauga.pvot.coreui.PvotLoadingContent
@@ -249,31 +250,15 @@ private fun ShareBar(details: CallStatsDetails, first: CallStatsDetails, byDurat
             add(Calls.MISSED_TYPE to value(details, false, Calls.MISSED_TYPE) * ratio / full)
             add(Calls.BLOCKED_TYPE to value(details, false, Calls.BLOCKED_TYPE) * ratio / full)
         }
-    }.filter { it.second > 0f }
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            // Lines up with the row's text, after its avatar.
-            .padding(start = PvotSpacing.L * 2 + PvotListRowDefaults.LeadingSize, end = PvotSpacing.L, bottom = PvotSpacing.S)
-            .height(PvotSpacing.S)
-            .clip(PvotShapes.Pill)
-            .background(MaterialTheme.colorScheme.surfaceContainerHigh),
-    ) {
-        for ((type, fraction) in parts) {
-            Box(Modifier.weight(fraction).fillMaxSize().background(colorFor(type)))
-        }
-        val rest = 1f - parts.sumOf { it.second.toDouble() }.toFloat()
-        if (rest > 0.0001f) Spacer(Modifier.weight(rest))
-    }
+    }.toMap()
+    PvotProportionBar(
+        segments = segmentsOf(parts),
+        // Lines up with the row's text, after its avatar.
+        modifier = Modifier.padding(start = PvotSpacing.L * 2 + PvotListRowDefaults.LeadingSize, end = PvotSpacing.L, bottom = PvotSpacing.S),
+        colors = statColors(),
+    )
 }
 
 private fun value(details: CallStatsDetails, byDuration: Boolean, type: Int = ALL): Float =
     if (byDuration) details.getRequestedDuration(type).toFloat() else details.getRequestedCount(type).toFloat()
 
-@Composable
-private fun colorFor(type: Int): Color = when (type) {
-    Calls.INCOMING_TYPE -> MaterialTheme.colorScheme.primary
-    Calls.OUTGOING_TYPE -> MaterialTheme.colorScheme.tertiary
-    Calls.MISSED_TYPE -> MaterialTheme.colorScheme.error
-    else -> MaterialTheme.colorScheme.outline
-}
