@@ -14,18 +14,6 @@
   ~ limitations under the License
   -->
 <resources>
-  <!-- TODO(a bug): properly document this or delete it -->
-  <!-- We don't want to style this, need to discuss with Yen why this was used instead of a default theme -->
-  <style name="Theme.PreCall.DialogHolder" parent="Dialer.ThemeBase.NoActionBar">
-    <item name="android:windowBackground">@android:color/transparent</item>
-    <item name="android:windowActivityTransitions">false</item>
-    <item name="android:windowIsTranslucent">true</item>
-
-    <item name="android:statusBarColor">@android:color/transparent</item>
-    <item name="android:navigationBarColor">@android:color/transparent</item>
-    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-  </style>
-
   <!-- Style applied to the "Settings" screen.  Keep in sync with SettingsLight in Telephony. -->
   <style name="SettingsStyle" parent="Dialer.ThemeBase.ActionBar">
     <!-- Setting text. -->

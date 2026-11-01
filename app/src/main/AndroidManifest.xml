@@ -349,7 +349,7 @@
             android:exported="true"
             android:noHistory="true"
             android:permission="android.permission.CALL_PHONE"
-            android:theme="@style/Theme.PreCall.DialogHolder">
+            android:theme="@style/Theme.Pvot.Transparent">
             <intent-filter>
                 <action android:name="org.prauga.phone.dialer.LAUNCH_PRE_CALL" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -367,7 +367,7 @@
             android:excludeFromRecents="true"
             android:exported="false"
             android:noHistory="true"
-            android:theme="@style/Theme.PreCall.DialogHolder"></activity>
+            android:theme="@style/Theme.Pvot.Transparent"></activity>
 
         <provider
             android:name="org.prauga.phone.dialer.preferredsim.impl.PreferredSimFallbackProvider"

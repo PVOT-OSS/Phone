@@ -24,8 +24,8 @@ import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
 
+import androidx.activity.ComponentActivity;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import org.prauga.phone.dialer.callintent.CallInitiationType.Type;
 import org.prauga.phone.dialer.callintent.CallIntentBuilder;
@@ -41,7 +41,7 @@ import com.google.common.collect.ImmutableList;
  *
  * @see CallIntentBuilder
  */
-public class LaunchPreCallActivity extends AppCompatActivity {
+public class LaunchPreCallActivity extends ComponentActivity {
 
   public static final String EXTRA_PHONE_ACCOUNT_HANDLE = "phone_account_handle";
 
