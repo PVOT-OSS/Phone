@@ -352,7 +352,11 @@ public class CallButtonPresenter
   @Override
   public void changeToVoiceClicked() {
     LogUtil.enterBlock("CallButtonPresenter.changeToVoiceClicked");
-    call.getVideoTech().downgradeToAudio();
+    if (call.isActiveRttCall()) {
+      call.stopRtt();
+    } else {
+      call.getVideoTech().downgradeToAudio();
+    }
   }
 
   @Override

@@ -41,7 +41,7 @@ public interface InCallButtonUiDelegate {
 
   void changeToVideoClicked();
 
-  /** Turns a video call into a voice call. */
+  /** Turns a video or RTT call into a voice call. */
   void changeToVoiceClicked();
 
   void changeToRttClicked();

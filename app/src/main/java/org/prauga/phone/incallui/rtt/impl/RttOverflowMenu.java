@@ -61,6 +61,12 @@ public class RttOverflowMenu extends PopupWindow implements OnCheckedChangeListe
     dialpadButton.setOnCheckedChangeListener(this);
     addCallButton = view.findViewById(R.id.menu_add_call);
     addCallButton.setOnClickListener(v -> this.inCallButtonUiDelegate.addCallClicked());
+    view.findViewById(R.id.menu_switch_to_voice)
+        .setOnClickListener(
+            v -> {
+              this.inCallButtonUiDelegate.changeToVoiceClicked();
+              dismiss();
+            });
     swapCallButton = view.findViewById(R.id.menu_swap_call);
     swapCallButton.setOnClickListener(
         v -> {

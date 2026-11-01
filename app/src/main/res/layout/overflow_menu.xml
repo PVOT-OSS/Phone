@@ -51,4 +51,9 @@
       android:drawableStart="@drawable/quantum_ic_swap_calls_vd_theme_24"
       android:text="@string/incall_label_swap"
       android:visibility="gone"/>
+  <org.prauga.phone.incallui.rtt.impl.RttCheckableButton
+      android:id="@+id/menu_switch_to_voice"
+      style="@style/RttButton"
+      android:drawableStart="@drawable/quantum_ic_phone_vd_theme_24"
+      android:text="@string/rtt_button_downgrade"/>
 </LinearLayout>

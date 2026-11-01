@@ -37,6 +37,8 @@
 
   <!-- Displayed when RTT upgrade request failed -->
   <string name="rtt_call_not_available_toast">RTT not available for this call</string>
+  <!-- RTT call menu item that turns the RTT call into a voice call. [CHAR LIMIT=30] -->
+  <string name="rtt_button_downgrade">Switch to voice</string>
 
   <!-- String used to build a phone number type and phone number string.
      Example: Mobile 650-555-1212  -->

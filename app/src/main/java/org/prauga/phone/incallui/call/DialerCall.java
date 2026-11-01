@@ -1062,6 +1062,11 @@ public class DialerCall implements VideoTechListener {
     getTelecomCall().sendRttRequest();
   }
 
+  /** Turns RTT off, carrying on as a voice call. */
+  public void stopRtt() {
+    getTelecomCall().stopRtt();
+  }
+
   public void respondToRttRequest(boolean accept, int rttRequestId) {
     getTelecomCall().respondToRttRequest(rttRequestId, accept);
   }
