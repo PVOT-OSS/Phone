@@ -48,6 +48,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.chip.ChipGroup;
 
 import org.prauga.phone.dialer.R;
 import org.prauga.phone.dialer.app.calllog.CallLogAdapter.CallFetcher;
@@ -312,6 +313,30 @@ public class CallLogFragment extends Fragment
     multiSelectUnSelectAllViewContent.setOnClickListener(null);
     selectUnselectAllIcon.setOnClickListener(this);
     selectUnselectAllViewText.setOnClickListener(this);
+    setupFilters(view);
+  }
+
+  /** All / Missed chips on the Recents tab; the call history screen filters with its tabs. */
+  private void setupFilters(View view) {
+    ChipGroup filters = view.findViewById(R.id.call_log_filters);
+    if (isCallLogActivity) {
+      return;
+    }
+    filters.setVisibility(View.VISIBLE);
+    filters.check(
+        callTypeFilter == Calls.MISSED_TYPE ? R.id.call_log_filter_missed : R.id.call_log_filter_all);
+    filters.setOnCheckedStateChangeListener(
+        (group, checkedIds) -> {
+          int filter =
+              checkedIds.contains(R.id.call_log_filter_missed)
+                  ? Calls.MISSED_TYPE
+                  : CallLogQueryHandler.CALL_TYPE_ALL;
+          if (filter != callTypeFilter) {
+            callTypeFilter = filter;
+            refreshDataRequired = true;
+            refreshData();
+          }
+        });
   }
 
   protected void setupData() {
