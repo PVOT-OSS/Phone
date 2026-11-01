@@ -41,6 +41,8 @@ data class CallLogGroup(
     val dayGroup: Int,
     @CallbackAction val callbackAction: Int,
     val entries: CallDetailsEntries,
+    /** A voicemail's transcript, when the carrier sent one. */
+    val transcription: String? = null,
 ) {
     /** The newest call's type. */
     val callType: Int get() = callTypes.first()
@@ -140,6 +142,7 @@ object CallLogGrouper {
             dayGroup = dayGroups[rowId] ?: CallLogGroupBuilder.DAY_GROUP_NONE,
             callbackAction = callbackActions[rowId] ?: CallbackAction.NONE,
             entries = entries.build(),
+            transcription = first.transcription,
         )
     }
 
@@ -159,5 +162,6 @@ object CallLogGrouper {
         val callType: Int = cursor.getInt(CallLogQuery.CALL_TYPE)
         val isRead: Boolean = cursor.getInt(CallLogQuery.IS_READ) == 1
         val dataUsage: Long? = if (cursor.isNull(CallLogQuery.DATA_USAGE)) null else cursor.getLong(CallLogQuery.DATA_USAGE)
+        val transcription: String? = cursor.getString(CallLogQuery.TRANSCRIPTION)?.takeIf { it.isNotBlank() }
     }
 }

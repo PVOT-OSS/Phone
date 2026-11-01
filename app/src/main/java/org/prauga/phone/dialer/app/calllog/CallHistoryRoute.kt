@@ -15,6 +15,9 @@ import android.telephony.TelephonyManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
@@ -25,9 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.prauga.phone.contacts.common.dialog.CallSubjectDialog
+import com.prauga.pvot.designsystem.theme.PvotSpacing
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.calllog.calllogcache.CallLogCache
-import org.prauga.phone.dialer.app.voicemail.VoicemailPlaybackControls
 import org.prauga.phone.dialer.app.voicemail.VoicemailPlaybackPresenter
 import org.prauga.phone.dialer.app.voicemail.VoicemailPlaybackState
 import org.prauga.phone.dialer.app.voicemail.VoicemailStatusCard
@@ -59,6 +62,7 @@ fun CallHistoryRoute(
     onMissedCallRead: () -> Unit,
     modifier: Modifier = Modifier,
     topPadding: Dp = 0.dp,
+    bottomPadding: Dp? = null,
     voicemail: VoicemailParts? = null,
     onSelectionModeChanged: (enabled: Boolean, exit: () -> Unit) -> Unit = { _, _ -> },
     filter: CallLogFilter = CallLogFilter.ALL,
@@ -122,12 +126,11 @@ fun CallHistoryRoute(
         actions = actions,
         modifier = modifier,
         topPadding = topPadding,
+        bottomPadding = bottomPadding ?: (WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() + PvotSpacing.L),
         emptyIcon = if (voicemail != null) R.drawable.ic_call_voicemail else R.drawable.ic_history,
         header = statusMessage?.takeUnless { it.isModal }?.let { message -> { VoicemailStatusCard(message) } },
         fullScreen = statusMessage?.takeIf { it.isModal }?.let { message -> { VoicemailTermsScreen(message) } },
-        openRowContent = voicemail?.let { parts ->
-            { row -> if (row.group.voicemailUri != null) VoicemailPlaybackControls(parts.playbackState) }
-        },
+        voicemailPlayback = voicemail?.playbackState,
         selectable = voicemail != null,
     )
 }

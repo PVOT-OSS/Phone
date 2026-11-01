@@ -49,6 +49,7 @@ public final class CallLogQuery {
   public static final int CACHED_PHOTO_URI = 22;
   public static final int POST_DIAL_DIGITS = 23;
   public static final int VIA_NUMBER = 24;
+  public static final int TRANSCRIPTION = 25;
 
   private static final String[] PROJECTION =
       new String[] {
@@ -77,6 +78,7 @@ public final class CallLogQuery {
         Calls.CACHED_PHOTO_URI, // 22
         CallLog.Calls.POST_DIAL_DIGITS, // 23
         CallLog.Calls.VIA_NUMBER, // 24
+        Calls.TRANSCRIPTION, // 25
       };
 
   @NonNull

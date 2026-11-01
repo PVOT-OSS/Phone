@@ -14,6 +14,8 @@ import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.isDialog
 import androidx.compose.ui.test.isRoot
+import androidx.compose.ui.test.assertCountEquals
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onLast
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.longClick
@@ -28,7 +30,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.prauga.phone.dialer.R
-import org.prauga.phone.dialer.app.voicemail.VoicemailPlaybackControls
 import org.prauga.phone.dialer.app.voicemail.VoicemailPlaybackState
 import org.prauga.phone.dialer.app.voicemail.VoicemailStatusCard
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
@@ -47,6 +48,7 @@ class VoicemailScreenTest {
     @get:Rule val compose = createComposeRule()
 
     private val first = callLogGroup(1, "+15550100", listOf(Calls.VOICEMAIL_TYPE), isRead = false, voicemailUri = "content://voicemail/1")
+        .copy(transcription = "Hi, it's Ada. Call me back about the meeting tomorrow.")
     private val second = callLogGroup(2, "+15550199", listOf(Calls.VOICEMAIL_TYPE), voicemailUri = "content://voicemail/2")
     private val rows = mapOf(
         1L to row(first, "Ada Lovelace", listOf(RowAction.CALL, RowAction.DELETE), PrimaryAction.PLAY_VOICEMAIL, "Today, 9:30 AM • 00:42"),
@@ -87,7 +89,7 @@ class VoicemailScreenTest {
                 showEmptyAction = false,
                 actions = actions,
                 header = header?.let { message -> { VoicemailStatusCard(message) } },
-                openRowContent = { VoicemailPlaybackControls(playback) },
+                voicemailPlayback = playback,
                 selectable = true,
             )
         }
@@ -97,9 +99,25 @@ class VoicemailScreenTest {
     fun thePlayButtonOpensTheRowAndPlays() {
         show()
         compose.onNodeWithTag(TestTags.callHistoryPrimary(1)).performClick()
-        compose.onNodeWithTag(TestTags.VOICEMAIL_PLAYBACK).assertExists()
-        compose.onNodeWithText("00:12").assertExists()
+        compose.onNodeWithTag(TestTags.VOICEMAIL_PLAYBACK, useUnmergedTree = true).assertExists()
+        compose.onNodeWithText("00:12", useUnmergedTree = true).assertExists()
         assertThat(actions.events).containsExactly("opened 1 play")
+    }
+
+    @Test
+    fun aVoicemailsTranscriptIsItsTitleAndTheCallerIsUnderIt() {
+        show()
+        compose.onNodeWithText("Hi, it's Ada. Call me back about the meeting tomorrow.", useUnmergedTree = true).assertExists()
+        compose.onNodeWithText("Ada Lovelace", useUnmergedTree = true).assertExists()
+        // Without a transcript the caller is the title, and only there.
+        compose.onAllNodesWithText("+15550199", useUnmergedTree = true).assertCountEquals(1)
+    }
+
+    @Test
+    fun theCallBackButtonCallsTheCaller() {
+        show()
+        compose.onNodeWithTag(TestTags.callHistoryAction(1, "CALL")).performClick()
+        assertThat(actions.events).containsExactly("CALL 1")
     }
 
     @Test

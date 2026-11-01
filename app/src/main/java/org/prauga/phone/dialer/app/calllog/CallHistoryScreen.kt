@@ -22,6 +22,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -35,20 +38,19 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -71,8 +73,9 @@ import com.prauga.pvot.designsystem.components.PvotScreen
 import com.prauga.pvot.designsystem.components.PvotSnackbarHost
 import com.prauga.pvot.designsystem.components.button.PvotButton
 import com.prauga.pvot.designsystem.components.button.PvotButtonStyle
-import com.prauga.pvot.designsystem.components.button.PvotFabDefaults
 import com.prauga.pvot.designsystem.components.list.PvotLetterTileDefaults
+import com.prauga.pvot.designsystem.components.button.PvotIconButton
+import com.prauga.pvot.designsystem.components.button.PvotIconButtonDefaults
 import com.prauga.pvot.designsystem.components.list.PvotListRow
 import com.prauga.pvot.designsystem.components.list.PvotSwipeRow
 import com.prauga.pvot.designsystem.components.list.PvotSwipeRowDefaults
@@ -81,8 +84,10 @@ import com.prauga.pvot.designsystem.motion.PvotMotion
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import kotlinx.coroutines.launch
 import org.prauga.phone.dialer.R
+import org.prauga.phone.dialer.app.voicemail.VoicemailPlaybackState
 import org.prauga.phone.dialer.ui.ContactAvatar
 import org.prauga.phone.dialer.ui.TestTags
+import org.prauga.phone.dialer.ui.fullWidthRow
 
 /** What a call history list does when the user acts. */
 interface CallHistoryActions {
@@ -123,7 +128,7 @@ interface CallHistoryActions {
  * @param emptyIcon The empty list's icon
  * @param header Shown above the calls, such as a voicemail status message
  * @param fullScreen Shown instead of the list while not null, such as the carrier's terms
- * @param openRowContent Shown in an open row above its actions, such as voicemail playback
+ * @param voicemailPlayback The voicemail tab's playback, which shows voicemails as cards
  * @param selectable Whether a long press starts selecting rows to delete together
  */
 @Composable
@@ -136,10 +141,11 @@ fun CallHistoryScreen(
     actions: CallHistoryActions,
     modifier: Modifier = Modifier,
     topPadding: Dp = 0.dp,
+    bottomPadding: Dp = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() + PvotSpacing.L,
     @DrawableRes emptyIcon: Int = R.drawable.ic_history,
     header: (@Composable () -> Unit)? = null,
     fullScreen: (@Composable () -> Unit)? = null,
-    openRowContent: (@Composable (CallLogRowUi) -> Unit)? = null,
+    voicemailPlayback: VoicemailPlaybackState? = null,
     selectable: Boolean = false,
     listState: LazyListState = rememberLazyListState(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
@@ -174,11 +180,12 @@ fun CallHistoryScreen(
                         resolve = resolve,
                         actions = actions,
                         header = header,
-                        openRowContent = openRowContent,
+                        voicemailPlayback = voicemailPlayback,
                         selectable = selectable,
                         listState = listState,
                         snackbarHostState = snackbarHostState,
                         topPadding = topPadding,
+                        bottomPadding = bottomPadding,
                     )
                 }
             }
@@ -187,7 +194,7 @@ fun CallHistoryScreen(
             hostState = snackbarHostState,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = PvotFabDefaults.Size + PvotSpacing.L * 2),
+                .padding(bottom = bottomPadding),
         )
     }
 }
@@ -210,11 +217,12 @@ private fun HistoryList(
     resolve: (CallLogGroup, Int, Boolean) -> CallLogRowUi,
     actions: CallHistoryActions,
     header: (@Composable () -> Unit)?,
-    openRowContent: (@Composable (CallLogRowUi) -> Unit)?,
+    voicemailPlayback: VoicemailPlaybackState?,
     selectable: Boolean,
     listState: LazyListState,
     snackbarHostState: SnackbarHostState,
     topPadding: Dp,
+    bottomPadding: Dp,
 ) {
     var expandedRowId by rememberSaveable { mutableStateOf<Long?>(null) }
     var selected by rememberSaveable { mutableStateOf(emptySet<Long>()) }
@@ -261,10 +269,9 @@ private fun HistoryList(
         PvotScreen(
             modifier = Modifier.weight(1f).fillMaxWidth().testTag(TestTags.CALL_HISTORY_LIST),
             state = listState,
-            // The bottom clears the dialpad button that floats over the list.
             contentPadding = PaddingValues(
                 top = (if (selecting) 0.dp else topPadding) + PvotSpacing.S,
-                bottom = PvotFabDefaults.Size + PvotSpacing.L * 2,
+                bottom = bottomPadding,
             ),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start,
@@ -275,48 +282,71 @@ private fun HistoryList(
                 Column(Modifier.animateItem()) {
                     if (group.dayGroup != previousDay) DayHeader(group.dayGroup)
                     val row = resolve(group, index, group.number in blockedNumbers)
+                    val expanded = expandedRowId == group.rowId && !selecting
+                    val onClick: () -> Unit = { if (selecting) select(selection.toggled(group.rowId)) else toggle(row) }
+                    val onLongClick: (() -> Unit)? = if (selectable && group.voicemailUri != null) {
+                        { select(selection + group.rowId) }
+                    } else null
+                    val onPlay: () -> Unit = {
+                        expandedRowId = group.rowId
+                        actions.opened(row, playNow = true)
+                    }
+                    val onDelete: () -> Unit = {
+                        if (expandedRowId == group.rowId) {
+                            expandedRowId = null
+                            actions.closed(row)
+                        }
+                        actions.deleteLater(group)
+                        scope.launch {
+                            snackbarHostState.currentSnackbarData?.dismiss()
+                            val result = snackbarHostState.showSnackbar(
+                                message = deletedMessage,
+                                actionLabel = undoLabel,
+                                duration = SnackbarDuration.Short,
+                            )
+                            if (result == SnackbarResult.ActionPerformed) {
+                                actions.undoDelete(group)
+                            } else {
+                                actions.commitDelete(group)
+                            }
+                        }
+                    }
+                    // The Delete button removes every call in the row, so it asks first.
+                    val onRowAction = { action: RowAction ->
+                        when (action) {
+                            RowAction.BLOCK -> confirmBlock = row
+                            RowAction.UNBLOCK -> confirmUnblock = row
+                            RowAction.DELETE -> confirmDelete = row
+                            else -> actions.rowAction(row, action)
+                        }
+                    }
                     key(group.rowId) {
-                        HistoryRow(
-                            row = row,
-                            expanded = expandedRowId == group.rowId && !selecting,
-                            isSelected = group.rowId in selection,
-                            onClick = {
-                                if (selecting) select(selection.toggled(group.rowId)) else toggle(row)
-                            },
-                            onLongClick = if (selectable && group.voicemailUri != null) {
-                                { select(selection + group.rowId) }
-                            } else null,
-                            onPlay = {
-                                expandedRowId = group.rowId
-                                actions.opened(row, playNow = true)
-                            },
-                            onDelete = {
-                                if (expandedRowId == group.rowId) {
-                                    expandedRowId = null
-                                    actions.closed(row)
-                                }
-                                actions.deleteLater(group)
-                                scope.launch {
-                                    snackbarHostState.currentSnackbarData?.dismiss()
-                                    val result = snackbarHostState.showSnackbar(
-                                        message = deletedMessage,
-                                        actionLabel = undoLabel,
-                                        duration = SnackbarDuration.Short,
-                                    )
-                                    if (result == SnackbarResult.ActionPerformed) {
-                                        actions.undoDelete(group)
-                                    } else {
-                                        actions.commitDelete(group)
-                                    }
-                                }
-                            },
-                            actions = actions,
-                            openRowContent = openRowContent,
-                            onBlock = { confirmBlock = row },
-                            onUnblock = { confirmUnblock = row },
-                            // The Delete button removes every call in the row, so it asks first.
-                            onAskDelete = { confirmDelete = row },
-                        )
+                        if (voicemailPlayback != null && group.voicemailUri != null) {
+                            VoicemailCard(
+                                row = row,
+                                playback = voicemailPlayback,
+                                expanded = expanded,
+                                isSelected = group.rowId in selection,
+                                onClick = onClick,
+                                onLongClick = onLongClick,
+                                onPlay = onPlay,
+                                onDelete = onDelete,
+                                actions = actions,
+                                onRowAction = onRowAction,
+                            )
+                        } else {
+                            HistoryRow(
+                                row = row,
+                                expanded = expanded,
+                                isSelected = group.rowId in selection,
+                                onClick = onClick,
+                                onLongClick = onLongClick,
+                                onPlay = onPlay,
+                                onDelete = onDelete,
+                                actions = actions,
+                                onRowAction = onRowAction,
+                            )
+                        }
                     }
                 }
             }
@@ -449,15 +479,13 @@ private fun HistoryRow(
     onPlay: () -> Unit,
     onDelete: () -> Unit,
     actions: CallHistoryActions,
-    openRowContent: (@Composable (CallLogRowUi) -> Unit)?,
-    onBlock: () -> Unit,
-    onUnblock: () -> Unit,
-    onAskDelete: () -> Unit,
+    onRowAction: (RowAction) -> Unit,
 ) {
     val canSwipeCall = row.primaryAction == PrimaryAction.CALL || row.primaryAction == PrimaryAction.VIDEO_CALL ||
         row.primaryAction == PrimaryAction.CALL_VOICEMAIL
     Column {
         PvotSwipeRow(
+            modifier = Modifier.fullWidthRow(),
             startAction = if (canSwipeCall) {
                 PvotSwipeRowDefaults.action(
                     label = stringResource(R.string.call),
@@ -478,7 +506,7 @@ private fun HistoryRow(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         fontWeight = if (row.group.isRead) null else FontWeight.Bold,
-                        style = MaterialTheme.typography.bodyLarge.copy(
+                        style = MaterialTheme.typography.titleMedium.copy(
                             textDirection = if (row.titleIsNumber) TextDirection.Ltr else TextDirection.Content,
                         ),
                         color = if (row.group.callType == Calls.MISSED_TYPE && !row.group.isRead) {
@@ -501,23 +529,18 @@ private fun HistoryRow(
                         )
                     }
                 },
-                trailing = if (expanded && row.primaryAction == PrimaryAction.PLAY_VOICEMAIL) {
-                    null
-                } else {
-                    { PrimaryButton(row, onPlay, actions) }
-                },
+                trailing = { PrimaryButton(row, onPlay, actions) },
                 onClick = onClick,
                 onLongClick = onLongClick,
                 selected = expanded || isSelected,
             )
         }
         AnimatedVisibility(
-            visible = expanded && (row.actions.isNotEmpty() || openRowContent != null),
+            visible = expanded && row.actions.isNotEmpty(),
             enter = expandVertically(tween(PvotDurations.Medium, easing = PvotMotion.Settle)) + fadeIn(tween(PvotDurations.Medium)),
             exit = shrinkVertically(tween(PvotDurations.Short)) + fadeOut(tween(PvotDurations.Short)),
         ) {
             Column(Modifier.padding(start = PvotSpacing.L, end = PvotSpacing.L, bottom = PvotSpacing.M)) {
-                openRowContent?.invoke(row)
                 FlowRow(
                     modifier = Modifier.fillMaxWidth().testTag(TestTags.callHistoryActions(row.group.rowId)),
                     horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S),
@@ -527,14 +550,7 @@ private fun HistoryRow(
                         val (label, icon) = labelAndIcon(action, row)
                         PvotButton(
                             text = label,
-                            onClick = {
-                                when (action) {
-                                    RowAction.BLOCK -> onBlock()
-                                    RowAction.UNBLOCK -> onUnblock()
-                                    RowAction.DELETE -> onAskDelete()
-                                    else -> actions.rowAction(row, action)
-                                }
-                            },
+                            onClick = { onRowAction(action) },
                             modifier = Modifier.testTag(TestTags.callHistoryAction(row.group.rowId, action.name)),
                             style = PvotButtonStyle.Tonal,
                             icon = painterResource(icon),
@@ -546,20 +562,26 @@ private fun HistoryRow(
     }
 }
 
+/** A check in place of a selected row's avatar. */
 @Composable
-private fun SelectedTile() {
+internal fun SelectedTile(size: Dp = PvotLetterTileDefaults.Size) {
     Box(
         modifier = Modifier
-            .size(PvotLetterTileDefaults.Size)
+            .size(size)
             .background(MaterialTheme.colorScheme.primary, CircleShape),
         contentAlignment = Alignment.Center,
     ) {
-        Icon(painterResource(R.drawable.ic_check), contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary)
+        Icon(
+            painter = painterResource(R.drawable.ic_check),
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onPrimary,
+            modifier = Modifier.size(size * 0.6f),
+        )
     }
 }
 
 @Composable
-private fun labelAndIcon(action: RowAction, row: CallLogRowUi): Pair<String, Int> = when (action) {
+internal fun labelAndIcon(action: RowAction, row: CallLogRowUi): Pair<String, Int> = when (action) {
     RowAction.CALL -> TextUtils.expandTemplate(stringResource(R.string.call_log_action_call), row.title).toString() to R.drawable.ic_phone
     RowAction.VIDEO_CALL -> stringResource(R.string.call_log_action_video_call) to R.drawable.ic_video
     RowAction.SEND_MESSAGE -> stringResource(R.string.call_log_action_send_message) to R.drawable.ic_message
@@ -646,14 +668,11 @@ private fun PrimaryButton(row: CallLogRowUi, onPlay: () -> Unit, actions: CallHi
         PrimaryAction.PLAY_VOICEMAIL -> { icon = R.drawable.ic_player_play; description = R.string.description_voicemail_action }
         PrimaryAction.CALL, PrimaryAction.CALL_VOICEMAIL -> { icon = R.drawable.ic_phone; description = R.string.description_call_action }
     }
-    IconButton(
+    PvotIconButton(
+        icon = painterResource(icon),
+        contentDescription = TextUtils.expandTemplate(stringResource(description), row.title).toString(),
         onClick = { if (row.primaryAction == PrimaryAction.PLAY_VOICEMAIL) onPlay() else actions.primaryAction(row) },
         modifier = Modifier.testTag(TestTags.callHistoryPrimary(row.group.rowId)),
-    ) {
-        Icon(
-            painter = painterResource(icon),
-            contentDescription = TextUtils.expandTemplate(stringResource(description), row.title).toString(),
-            tint = MaterialTheme.colorScheme.primary,
-        )
-    }
+        colors = PvotIconButtonDefaults.plainColors(MaterialTheme.colorScheme.primary),
+    )
 }
