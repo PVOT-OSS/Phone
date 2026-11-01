@@ -24,6 +24,7 @@ import static android.Manifest.permission.CALL_PHONE;
 import static android.Manifest.permission.MODIFY_PHONE_STATE;
 import static android.Manifest.permission.READ_CALL_LOG;
 import static android.Manifest.permission.READ_CONTACTS;
+import static android.Manifest.permission.READ_PHONE_NUMBERS;
 import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.READ_VOICEMAIL;
 import static android.Manifest.permission.RECEIVE_SMS;
@@ -70,6 +71,7 @@ public class PermissionsUtil {
               READ_CALL_LOG,
               WRITE_CALL_LOG,
               READ_PHONE_STATE,
+              READ_PHONE_NUMBERS,
               MODIFY_PHONE_STATE,
               RECEIVE_SMS,
               SEND_SMS,
