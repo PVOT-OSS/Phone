@@ -17,6 +17,8 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,17 +29,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyGridState
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -70,15 +70,11 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.prauga.pvot.coreui.PvotEmptyContent
-import com.prauga.pvot.coreui.PvotLoadingContent
 import com.prauga.pvot.coreui.PvotSectionHeader
 import com.prauga.pvot.designsystem.components.PvotBottomSheet
 import com.prauga.pvot.designsystem.components.PvotDialog
 import com.prauga.pvot.designsystem.components.PvotDialogAction
 import com.prauga.pvot.designsystem.components.PvotSheetItem
-import com.prauga.pvot.designsystem.components.button.PvotButton
-import com.prauga.pvot.designsystem.components.button.PvotButtonStyle
-import com.prauga.pvot.designsystem.components.button.PvotFabDefaults
 import com.prauga.pvot.designsystem.components.list.PvotListRow
 import com.prauga.pvot.designsystem.effects.pvotPressScale
 import com.prauga.pvot.designsystem.motion.PvotDurations
@@ -108,134 +104,125 @@ interface SpeedDialActions {
 }
 
 private val FavoriteAvatarSize = 72.dp
+private val SuggestionAvatarSize = 56.dp
+private val TileWidth = 80.dp
 
-/** The favorites tab: starred contacts in a grid the user can reorder, then frequent contacts. */
+/** Side margin of the quick dial rows, wider than the screen padding so the tiles sit inset. */
+private val QuickDialMargin = PvotSpacing.L + PvotSpacing.S
+
+/**
+ * The dialpad tab's quick dial, at the top above the keypad: starred contacts in a row the user
+ * can reorder, ending with a tile to add one, then frequent contacts in a row of their own.
+ */
 @Composable
 fun SpeedDialScreen(
     state: SpeedDialUiState,
     actions: SpeedDialActions,
     modifier: Modifier = Modifier,
-    gridState: LazyGridState = rememberLazyGridState(),
+    listState: LazyListState = rememberLazyListState(),
 ) {
-    Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(modifier.fillMaxSize()) {
         when (state) {
-            SpeedDialUiState.Loading -> PvotLoadingContent()
+            SpeedDialUiState.Loading -> Unit
             SpeedDialUiState.NeedsPermission -> PvotEmptyContent(
                 message = stringResource(R.string.speed_dial_contacts_permission_description),
-                modifier = Modifier.padding(PvotSpacing.L),
+                modifier = Modifier.align(Alignment.TopCenter).padding(PvotSpacing.L),
                 icon = { Icon(painterResource(R.drawable.ic_star), contentDescription = null) },
                 actionLabel = stringResource(R.string.speed_dial_turn_on_contacts_permission),
                 onAction = actions::turnOnPermission,
             )
-            SpeedDialUiState.Empty -> PvotEmptyContent(
-                message = stringResource(R.string.speed_dial_no_contacts_description),
-                modifier = Modifier.padding(PvotSpacing.L),
-                icon = { Icon(painterResource(R.drawable.ic_star), contentDescription = null) },
-                actionLabel = stringResource(R.string.speed_dial_no_contacts_action_text),
-                onAction = actions::addFavorite,
-            )
-            is SpeedDialUiState.Loaded -> SpeedDialGrid(state, actions, gridState)
+            SpeedDialUiState.Empty -> QuickDial(SpeedDialUiState.Loaded(emptyList(), emptyList()), actions, listState)
+            is SpeedDialUiState.Loaded -> QuickDial(state, actions, listState)
         }
     }
 }
 
 @Composable
-private fun SpeedDialGrid(state: SpeedDialUiState.Loaded, actions: SpeedDialActions, gridState: LazyGridState) {
+private fun QuickDial(state: SpeedDialUiState.Loaded, actions: SpeedDialActions, listState: LazyListState) {
     var menuFor by remember { mutableStateOf<SpeedDialUiItem?>(null) }
     var suggestionMenuFor by remember { mutableStateOf<SpeedDialUiItem?>(null) }
     var chooserFor by remember { mutableStateOf<SpeedDialUiItem?>(null) }
     val haptics = LocalHapticFeedback.current
     val favoritesByKey by rememberUpdatedState(state.favorites.associateBy(::favoriteKey))
     val currentActions by rememberUpdatedState(actions)
-    val dragState = remember(gridState) {
+    val dragState = remember(listState) {
         FavoriteDragState(
-            gridState = gridState,
+            items = FavoriteDragState.rowItems(listState),
             onMove = { from, to -> currentActions.move(from, to) },
             onRemove = { key -> favoritesByKey[key]?.let(currentActions::remove) },
         )
     }
     dragState.favoriteKeys = state.favorites.map(::favoriteKey)
 
-    Box(Modifier.fillMaxSize()) {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
-            state = gridState,
-            modifier = Modifier
-                .fillMaxSize()
-                .testTag(TestTags.SPEED_DIAL_GRID)
-                .onGloballyPositioned { dragState.gridBounds = it.boundsInRoot() },
-            // The bottom clears the dialpad button that floats over the list.
-            contentPadding = PaddingValues(
-                start = PvotSpacing.S,
-                end = PvotSpacing.S,
-                bottom = PvotFabDefaults.Size + PvotSpacing.L * 2,
-            ),
-            verticalArrangement = Arrangement.spacedBy(PvotSpacing.S),
-        ) {
-            item(key = "favorites_header", span = { GridItemSpan(maxLineSpan) }) {
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(start = PvotSpacing.S, top = PvotSpacing.S),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    PvotSectionHeader(title = stringResource(R.string.favorites_header), modifier = Modifier.weight(1f))
-                    PvotButton(
-                        text = stringResource(R.string.speed_dial_add_button_text),
-                        onClick = actions::addFavorite,
-                        modifier = Modifier.testTag(TestTags.SPEED_DIAL_ADD),
-                        style = PvotButtonStyle.Text,
-                        icon = painterResource(R.drawable.ic_plus),
+    Box(Modifier.fillMaxWidth()) {
+        Column(Modifier.fillMaxWidth().padding(top = PvotSpacing.M)) {
+            PvotSectionHeader(
+                title = stringResource(R.string.quick_dial_header),
+                modifier = Modifier.padding(horizontal = QuickDialMargin),
+            )
+            LazyRow(
+                state = listState,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag(TestTags.SPEED_DIAL_GRID)
+                    .onGloballyPositioned { dragState.rowBounds = it.boundsInRoot() },
+                contentPadding = PaddingValues(horizontal = QuickDialMargin),
+                horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S),
+            ) {
+                itemsIndexed(state.favorites, key = { _, item -> favoriteKey(item) }) { _, item ->
+                    val key = favoriteKey(item)
+                    val dragging = dragState.draggingKey == key
+                    FavoriteTile(
+                        item = item,
+                        lifted = dragging,
+                        overRemove = dragging && dragState.isOverRemove,
+                        modifier = Modifier
+                            // The same modifiers either way, so lifting does not restart the gesture.
+                            .zIndex(if (dragging) 1f else 0f)
+                            .animateItem(placementSpec = if (dragging) null else spring(stiffness = Spring.StiffnessMediumLow, visibilityThreshold = IntOffset.VisibilityThreshold))
+                            .graphicsLayer {
+                                if (dragging) {
+                                    translationX = dragState.offset.x
+                                    translationY = dragState.offset.y
+                                }
+                            }
+                            .testTag(TestTags.speedDialFavorite(item.contactId())),
+                        gestures = { source ->
+                            Modifier.favoriteGestures(
+                                key = key,
+                                state = dragState,
+                                interactionSource = source,
+                                onTap = { onFavoriteTap(item, actions) { chooserFor = item } },
+                                onLongPress = { menuFor = item },
+                                onLift = { haptics.performHapticFeedback(HapticFeedbackType.LongPress) },
+                            )
+                        },
+                        onTapForAccessibility = { onFavoriteTap(item, actions) { chooserFor = item } },
+                        onLongPressForAccessibility = { menuFor = item },
                     )
                 }
-            }
-            itemsIndexed(state.favorites, key = { _, item -> favoriteKey(item) }) { _, item ->
-                val key = favoriteKey(item)
-                val dragging = dragState.draggingKey == key
-                FavoriteTile(
-                    item = item,
-                    lifted = dragging,
-                    overRemove = dragging && dragState.isOverRemove,
-                    modifier = Modifier
-                        // The same modifiers either way, so lifting does not restart the gesture.
-                        .zIndex(if (dragging) 1f else 0f)
-                        .animateItem(placementSpec = if (dragging) null else spring(stiffness = Spring.StiffnessMediumLow, visibilityThreshold = IntOffset.VisibilityThreshold))
-                        .graphicsLayer {
-                            if (dragging) {
-                                translationX = dragState.offset.x
-                                translationY = dragState.offset.y
-                            }
-                        }
-                        .testTag(TestTags.speedDialFavorite(item.contactId())),
-                    gestures = { source ->
-                        Modifier.favoriteGestures(
-                            key = key,
-                            state = dragState,
-                            interactionSource = source,
-                            onTap = { onFavoriteTap(item, actions) { chooserFor = item } },
-                            onLongPress = { menuFor = item },
-                            onLift = { haptics.performHapticFeedback(HapticFeedbackType.LongPress) },
-                        )
-                    },
-                    onTapForAccessibility = { onFavoriteTap(item, actions) { chooserFor = item } },
-                    onLongPressForAccessibility = { menuFor = item },
-                )
+                item(key = "add") { AddTile(onClick = actions::addFavorite) }
             }
             if (state.suggestions.isNotEmpty()) {
-                item(key = "suggestions_header", span = { GridItemSpan(maxLineSpan) }) {
-                    PvotSectionHeader(
-                        title = stringResource(R.string.suggestions_header),
-                        modifier = Modifier.fillMaxWidth().padding(start = PvotSpacing.S, top = PvotSpacing.L),
-                    )
-                }
-                itemsIndexed(
-                    state.suggestions,
-                    key = { index, item -> "suggestion_${index}_${item.contactId()}" },
-                    span = { _, _ -> GridItemSpan(maxLineSpan) },
-                ) { _, item ->
-                    SuggestionRow(
-                        item = item,
-                        onClick = { item.defaultChannel()?.let { actions.call(it) } },
-                        onMore = { suggestionMenuFor = item },
-                    )
+                PvotSectionHeader(
+                    title = stringResource(R.string.suggestions_header),
+                    modifier = Modifier.padding(start = QuickDialMargin, end = QuickDialMargin, top = PvotSpacing.S),
+                )
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding = PaddingValues(horizontal = QuickDialMargin),
+                    horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S),
+                ) {
+                    itemsIndexed(
+                        state.suggestions,
+                        key = { index, item -> "suggestion_${index}_${item.contactId()}" },
+                    ) { _, item ->
+                        SuggestionTile(
+                            item = item,
+                            onClick = { item.defaultChannel()?.let { actions.call(it) } },
+                            onMore = { suggestionMenuFor = item },
+                        )
+                    }
                 }
             }
         }
@@ -257,6 +244,35 @@ private fun SpeedDialGrid(state: SpeedDialUiState.Loaded, actions: SpeedDialActi
     menuFor?.let { item -> FavoriteMenu(item, actions, onDismiss = { menuFor = null }) }
     suggestionMenuFor?.let { item -> SuggestionMenu(item, actions, onDismiss = { suggestionMenuFor = null }) }
     chooserFor?.let { item -> NumberChooser(item, actions, onDismiss = { chooserFor = null }) }
+}
+
+/** The tile at the end of the favorites that adds one. */
+@Composable
+private fun AddTile(onClick: () -> Unit) {
+    val source = remember { MutableInteractionSource() }
+    val label = stringResource(R.string.speed_dial_add_button_text)
+    Column(
+        modifier = Modifier
+            .width(TileWidth)
+            .pvotPressScale(source)
+            .clickable(interactionSource = source, indication = null, role = Role.Button, onClick = onClick)
+            .padding(vertical = PvotSpacing.S)
+            .testTag(TestTags.SPEED_DIAL_ADD),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Box(
+            Modifier.size(FavoriteAvatarSize).background(MaterialTheme.colorScheme.surfaceContainerHigh, CircleShape),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(painterResource(R.drawable.ic_plus), contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+        }
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(top = PvotSpacing.S),
+        )
+    }
 }
 
 internal fun favoriteKey(item: SpeedDialUiItem): Any = "favorite_${item.contactId()}"
@@ -296,6 +312,7 @@ private fun FavoriteTile(
     val moreLabel = stringResource(R.string.speed_dial_more_options)
     Column(
         modifier = modifier
+            .width(TileWidth)
             .pvotPressScale(source)
             .then(gestures(source))
             .semantics(mergeDescendants = true) {
@@ -336,47 +353,58 @@ private fun FavoriteTile(
                 }
             }
         }
-        // The name and number type step aside while the favorite is lifted.
-        Column(Modifier.alpha(if (lifted) 0f else 1f), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                text = item.name(),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(top = PvotSpacing.S, start = PvotSpacing.XS, end = PvotSpacing.XS),
-            )
-            Text(
-                text = channel?.label().orEmpty(),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-        }
+        // The name steps aside while the favorite is lifted.
+        Text(
+            text = item.name(),
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurface,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.alpha(if (lifted) 0f else 1f).padding(top = PvotSpacing.S),
+        )
     }
 }
 
+/** A frequent contact: tap calls them, long press or the more action opens their options. */
 @Composable
-private fun SuggestionRow(item: SpeedDialUiItem, onClick: () -> Unit, onMore: () -> Unit) {
-    PvotListRow(
-        title = item.name(),
-        modifier = Modifier.testTag(TestTags.speedDialSuggestion(item.contactId())),
-        supportingText = item.defaultChannel()?.let { channelSummary(it) },
-        leading = {
-            ContactAvatar(name = item.name(), photoUri = item.photoUri(), colorKey = item.lookupKey() ?: item.contactId())
-        },
-        trailing = {
-            IconButton(onClick = onMore, modifier = Modifier.testTag(TestTags.speedDialSuggestionMore(item.contactId()))) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_dots_vertical),
-                    contentDescription = stringResource(R.string.speed_dial_more_options),
-                )
-            }
-        },
-        onClick = onClick,
-    )
+private fun SuggestionTile(item: SpeedDialUiItem, onClick: () -> Unit, onMore: () -> Unit) {
+    val source = remember { MutableInteractionSource() }
+    val callLabel = stringResource(R.string.disambig_option_voice_call)
+    val moreLabel = stringResource(R.string.speed_dial_more_options)
+    Column(
+        modifier = Modifier
+            .width(TileWidth)
+            .pvotPressScale(source)
+            .combinedClickable(
+                interactionSource = source,
+                indication = null,
+                role = Role.Button,
+                onClickLabel = callLabel,
+                onLongClickLabel = moreLabel,
+                onLongClick = onMore,
+                onClick = onClick,
+            )
+            .padding(vertical = PvotSpacing.S)
+            .testTag(TestTags.speedDialSuggestion(item.contactId())),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        ContactAvatar(
+            name = item.name(),
+            photoUri = item.photoUri(),
+            colorKey = item.lookupKey() ?: item.contactId(),
+            size = SuggestionAvatarSize,
+        )
+        Text(
+            text = item.name(),
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(top = PvotSpacing.S),
+        )
+    }
 }
 
 /** "Mobile (650) 555-1212", or the number alone when it has no type. */

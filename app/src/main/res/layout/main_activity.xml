@@ -53,11 +53,12 @@
       android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"/>
 
-  <!-- Holds Dialpad fragment, the dialpad tab's keypad above the dock -->
+  <!-- Holds Dialpad fragment, the dialpad tab's keypad above the dock. It wraps the keypad, so
+       the quick dial above it takes touches. -->
   <FrameLayout
       android:id="@+id/dialpad_fragment_container"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      android:layout_height="wrap_content"
       android:layout_above="@+id/bottom_nav_bar"
       android:elevation="10dp"/>
 

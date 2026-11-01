@@ -10,8 +10,7 @@ import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
-import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
-import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -22,18 +21,21 @@ import androidx.compose.ui.input.pointer.PointerEventTimeoutCancellationExceptio
 import androidx.compose.ui.input.pointer.changedToUp
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChange
-import androidx.compose.ui.unit.toOffset
-import androidx.compose.ui.unit.toSize
+import androidx.compose.ui.geometry.Size
+
+/** A laid out item of the favorites row: its key and its bounds within the row. */
+class FavoriteItemBounds(val key: Any, val bounds: Rect)
 
 /**
- * Drag state of the favorites grid: which favorite is lifted, how far it has moved, and whether
+ * Drag state of the favorites row: which favorite is lifted, how far it has moved, and whether
  * it is over the remove target.
  *
  * Favorites are keyed by [favoriteKey]. While dragging, the lifted favorite swaps places with the
  * one under its center through [onMove]; dropping it on the remove target calls [onRemove].
+ * [items] gives the visible items' bounds, as [rowItems] does for a horizontal lazy row.
  */
 class FavoriteDragState(
-    private val gridState: LazyGridState,
+    private val items: () -> List<FavoriteItemBounds>,
     private val onMove: (from: Int, to: Int) -> Unit,
     private val onRemove: (key: Any) -> Unit,
 ) {
@@ -53,8 +55,8 @@ class FavoriteDragState(
     var isOverRemove by mutableStateOf(false)
         private set
 
-    /** The grid's and the remove target's bounds in the root, set from layout. */
-    var gridBounds: Rect = Rect.Zero
+    /** The row's and the remove target's bounds in the root, set from layout. */
+    var rowBounds: Rect = Rect.Zero
     var removeBounds: Rect = Rect.Zero
 
     /** Keys of the favorites in order, updated each composition. */
@@ -74,17 +76,18 @@ class FavoriteDragState(
     fun drag(delta: Offset) {
         val key = draggingKey ?: return
         offset += delta
-        val dragged = itemInfo(key) ?: return
-        val center = dragged.offset.toOffset() + offset + dragged.size.toSize().center()
-        isOverRemove = removeBounds.contains(gridBounds.topLeft + center)
+        val visible = items()
+        val dragged = visible.firstOrNull { it.key == key } ?: return
+        val center = dragged.bounds.topLeft + offset + dragged.bounds.size.center()
+        isOverRemove = removeBounds.contains(rowBounds.topLeft + center)
         if (isOverRemove) return
-        val target = gridState.layoutInfo.visibleItemsInfo.firstOrNull {
-            it.key != key && it.key in favoriteKeys && Rect(it.offset.toOffset(), it.size.toSize()).contains(center)
+        val target = visible.firstOrNull {
+            it.key != key && it.key in favoriteKeys && it.bounds.contains(center)
         } ?: return
         val from = favoriteKeys.indexOf(key)
         val to = favoriteKeys.indexOf(target.key)
         // The lifted favorite takes the target's place; keep it under the finger.
-        offset += dragged.offset.toOffset() - target.offset.toOffset()
+        offset += dragged.bounds.topLeft - target.bounds.topLeft
         onMove(from, to)
     }
 
@@ -97,10 +100,18 @@ class FavoriteDragState(
         offset = Offset.Zero
     }
 
-    private fun itemInfo(key: Any): LazyGridItemInfo? =
-        gridState.layoutInfo.visibleItemsInfo.firstOrNull { it.key == key }
+    private fun Size.center() = Offset(width / 2, height / 2)
 
-    private fun androidx.compose.ui.geometry.Size.center() = Offset(width / 2, height / 2)
+    companion object {
+        /** The visible items of a horizontal [LazyListState], each as tall as the row. */
+        fun rowItems(listState: LazyListState): () -> List<FavoriteItemBounds> = {
+            val info = listState.layoutInfo
+            val height = info.viewportSize.height.toFloat()
+            info.visibleItemsInfo.map {
+                FavoriteItemBounds(it.key, Rect(Offset(it.offset.toFloat(), 0f), Size(it.size.toFloat(), height)))
+            }
+        }
+    }
 }
 
 /**

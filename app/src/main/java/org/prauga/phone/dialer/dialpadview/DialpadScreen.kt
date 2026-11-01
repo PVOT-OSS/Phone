@@ -396,7 +396,7 @@ object DialpadScreenHost {
         view.setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         view.setContent {
             PhoneScreenTheme(fillBackground = false) {
-                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) { DialpadScreen(state, digits, callbacks) }
+                Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomCenter) { DialpadScreen(state, digits, callbacks) }
             }
         }
     }

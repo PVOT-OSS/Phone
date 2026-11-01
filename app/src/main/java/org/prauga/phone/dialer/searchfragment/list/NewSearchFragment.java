@@ -163,6 +163,26 @@ public final class NewSearchFragment extends Fragment
   }
 
   @Override
+  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    updateVisibility();
+  }
+
+  /**
+   * On the dialpad the results show only once a digit is typed; until then the dialpad tab's quick
+   * dial shows through, and takes the touches, from under the empty results.
+   */
+  private void updateVisibility() {
+    View view = getView();
+    if (view == null) {
+      return;
+    }
+    boolean idleDialpad =
+        callInitiationType == CallInitiationType.Type.DIALPAD && TextUtils.isEmpty(query);
+    view.setVisibility(idleDialpad ? View.INVISIBLE : View.VISIBLE);
+  }
+
+  @Override
   public void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
     outState.putInt(KEY_CALL_INITIATION_TYPE, callInitiationType.getNumber());
@@ -245,6 +265,7 @@ public final class NewSearchFragment extends Fragment
   public void setQuery(String query, CallInitiationType.Type callInitiationType) {
     this.query = query;
     this.callInitiationType = callInitiationType;
+    updateVisibility();
     if (adapter != null) {
       adapter.setQuery(query, rawNumber);
       adapter.setSearchActions(getActions());

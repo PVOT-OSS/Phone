@@ -141,7 +141,7 @@ class SpeedDialScreenTest {
     @Test
     fun suggestionMenuAddsAFavorite() {
         show()
-        compose.onNodeWithTag(TestTags.speedDialSuggestionMore(4)).performClick()
+        compose.onNodeWithTag(TestTags.speedDialSuggestion(4)).performTouchInput { longClick() }
         compose.onNodeWithTag(TestTags.SPEED_DIAL_MENU_STAR).performClick()
         assertThat(actions.events).containsExactly("star Dev Patel")
     }
@@ -164,8 +164,7 @@ class SpeedDialScreenTest {
     fun noFavoritesOffersToAddOne() {
         state = SpeedDialUiState.Empty
         show()
-        compose.onNodeWithText("You haven't added any favorites yet").assertExists()
-        compose.onNodeWithText("Add favorite").performClick()
+        compose.onNodeWithTag(TestTags.SPEED_DIAL_ADD).performClick()
         assertThat(actions.events).containsExactly("add")
     }
 

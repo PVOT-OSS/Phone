@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="favorites_header">Таңдаулылар</string>
   <string name="suggestions_header">Жиі қолданылатын</string>
   <string name="speed_dial_add_button_text">Қосу</string>
   <string name="speed_dial_remember_this_choice">Таңдалған нөмірді еске сақтау</string>
@@ -14,7 +13,5 @@
   <string name="suggested_contact_bottom_sheet_add_favorite_option">Таңдаулылар тізіміне қосу</string>
   <string name="speed_dial_contacts_permission_description">Жылдам теру функциясын қосу үшін \"Контактілерге\" кіруге рұқсат беріңіз.</string>
   <string name="speed_dial_turn_on_contacts_permission">Қосу</string>
-  <string name="speed_dial_no_contacts_description">Әлі ешбір контакт қосылған жоқ</string>
-  <string name="speed_dial_no_contacts_action_text">Таңдаулылар тізіміне қосу</string>
   <string name="speed_dial_remove_favorites">Таңдаулылар тізімінен жою</string>
 </resources>

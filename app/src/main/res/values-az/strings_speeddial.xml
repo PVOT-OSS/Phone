@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="favorites_header">Sevimlilər</string>
   <string name="suggestions_header">Daimi kontaktlar</string>
   <string name="speed_dial_add_button_text">Əlavə edin</string>
   <string name="speed_dial_remember_this_choice">Bu seçimi yadda saxlayın</string>
@@ -14,7 +13,5 @@
   <string name="suggested_contact_bottom_sheet_add_favorite_option">Sevimlilərə əlavə edin</string>
   <string name="speed_dial_contacts_permission_description">Sürətli yığımı aktivləşdirmək üçün, Kontakt icazələrini aktivləşdirin.</string>
   <string name="speed_dial_turn_on_contacts_permission">Aktiv edin</string>
-  <string name="speed_dial_no_contacts_description">Hələ heç bir sevimli element əlavə etməmisiniz</string>
-  <string name="speed_dial_no_contacts_action_text">Sevimlilərə əlavə edin</string>
   <string name="speed_dial_remove_favorites">Favoritlərdən silin</string>
 </resources>

@@ -73,7 +73,6 @@ object TestTags {
     fun speedDialSuggestion(contactId: Long) = "speed_dial_suggestion_$contactId"
 
     /** The more options button of a frequent contact. */
-    fun speedDialSuggestionMore(contactId: Long) = "speed_dial_suggestion_more_$contactId"
 
     /** A number in the speed dial number chooser. */
     fun speedDialChannel(number: String, video: Boolean) = "speed_dial_channel_${number}_$video"

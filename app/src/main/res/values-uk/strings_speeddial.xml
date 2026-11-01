@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="favorites_header">Вибрані</string>
   <string name="suggestions_header">Найчастіше на зв’язку</string>
   <string name="speed_dial_add_button_text">Додати</string>
   <string name="speed_dial_remember_this_choice">Запам’ятати цей вибір</string>
@@ -14,7 +13,5 @@
   <string name="suggested_contact_bottom_sheet_add_favorite_option">Додати до вподобань</string>
   <string name="speed_dial_contacts_permission_description">Щоб активувати швидкий набір, увімкніть дозвіл \"Контакти\".</string>
   <string name="speed_dial_turn_on_contacts_permission">Увімкнути</string>
-  <string name="speed_dial_no_contacts_description">У списку поки немає вибраних контактів</string>
-  <string name="speed_dial_no_contacts_action_text">Додати вибраний контакт</string>
   <string name="speed_dial_remove_favorites">Видалити з вибраного</string>
 </resources>
