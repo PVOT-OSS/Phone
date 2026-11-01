@@ -6,6 +6,7 @@
 package org.prauga.phone.dialer.testing
 
 import android.net.Uri
+import android.os.Bundle
 import android.telecom.Connection
 import android.telecom.Connection.RttModifyStatus
 import android.telecom.Connection.RttTextStream
@@ -51,7 +52,8 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
             CAPABILITY_DISCONNECT_FROM_CONFERENCE or
             CAPABILITY_SUPPORTS_VT_LOCAL_BIDIRECTIONAL or
             CAPABILITY_SUPPORTS_VT_REMOTE_BIDIRECTIONAL or
-            CAPABILITY_TRANSFER_CONSULTATIVE
+            CAPABILITY_TRANSFER_CONSULTATIVE or
+            spec.capabilities
         videoProvider = video
         connectionProperties = spec.properties
         if (!spec.extras.isEmpty) putExtras(spec.extras)
@@ -64,6 +66,55 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
     }
 
     override fun onReject() = end(DisconnectCause(DisconnectCause.REJECTED))
+
+    /** Why the user declined the call, when they gave a reason. */
+    @Volatile
+    var rejectReason: Int? = null
+        private set
+
+    override fun onReject(rejectReason: Int) {
+        this.rejectReason = rejectReason
+        end(DisconnectCause(DisconnectCause.REJECTED))
+    }
+
+    /** Where the user forwarded the ringing call, once they did. */
+    @Volatile
+    var deflectedTo: Uri? = null
+        private set
+
+    override fun onDeflect(address: Uri) {
+        deflectedTo = address
+        end(DisconnectCause(DisconnectCause.LOCAL))
+    }
+
+    /** The number the user transferred the call to without consulting, once they did. */
+    @Volatile
+    var transferredToNumber: Uri? = null
+        private set
+
+    override fun onTransfer(number: Uri, isConfirmationRequired: Boolean) {
+        transferredToNumber = number
+        end(DisconnectCause(DisconnectCause.LOCAL))
+    }
+
+    /** The network shows [message] under [id] on the user's call screen. */
+    fun showDiagnosticMessage(id: Int, message: String) = FakeCarrier.onMain {
+        sendConnectionEvent(
+            android.telecom.Call.EVENT_DISPLAY_DIAGNOSTIC_MESSAGE,
+            Bundle().apply {
+                putInt(android.telecom.Call.EXTRA_DIAGNOSTIC_MESSAGE_ID, id)
+                putCharSequence(android.telecom.Call.EXTRA_DIAGNOSTIC_MESSAGE, message)
+            },
+        )
+    }
+
+    /** The network takes the message under [id] off the user's call screen. */
+    fun clearDiagnosticMessage(id: Int) = FakeCarrier.onMain {
+        sendConnectionEvent(
+            android.telecom.Call.EVENT_CLEAR_DIAGNOSTIC_MESSAGE,
+            Bundle().apply { putInt(android.telecom.Call.EXTRA_DIAGNOSTIC_MESSAGE_ID, id) },
+        )
+    }
 
     override fun onDisconnect() = end(DisconnectCause(DisconnectCause.LOCAL))
 
@@ -179,6 +230,7 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
     fun hangUpFromFarEnd(cause: DisconnectCause) = FakeCarrier.onMain { end(cause) }
 
     private fun end(cause: DisconnectCause) {
+        (conference as? FakeConference)?.onConnectionEnded(this)
         setDisconnected(cause)
         destroy()
         FakeCarrier.forget(this)

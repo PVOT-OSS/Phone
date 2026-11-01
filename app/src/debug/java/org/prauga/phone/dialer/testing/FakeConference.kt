@@ -20,6 +20,18 @@ class FakeConference(account: PhoneAccountHandle) : Conference(account) {
             Connection.CAPABILITY_MANAGE_CONFERENCE
     }
 
+    /** Numbers the user added straight to the conference, in order. */
+    val addedParticipants = java.util.concurrent.CopyOnWriteArrayList<android.net.Uri>()
+
+    /** Lets the user add people straight to the conference, as a network-hosted one does. */
+    fun acceptParticipants() = FakeCarrier.onMain {
+        connectionCapabilities = connectionCapabilities or Connection.CAPABILITY_ADD_PARTICIPANT
+    }
+
+    override fun onAddConferenceParticipants(participants: List<android.net.Uri>) {
+        addedParticipants += participants
+    }
+
     override fun onDisconnect() {
         connections.toList().forEach { it.onDisconnect() }
         setDisconnected(DisconnectCause(DisconnectCause.LOCAL))
@@ -31,6 +43,15 @@ class FakeConference(account: PhoneAccountHandle) : Conference(account) {
         if (connections.size < 2) {
             connections.toList().forEach { removeConnection(it) }
             setDisconnected(DisconnectCause(DisconnectCause.OTHER))
+            destroy()
+        }
+    }
+
+    /** A call in the conference ended; the conference ends with its last call. */
+    fun onConnectionEnded(connection: Connection) {
+        removeConnection(connection)
+        if (connections.isEmpty()) {
+            setDisconnected(DisconnectCause(DisconnectCause.REMOTE))
             destroy()
         }
     }
