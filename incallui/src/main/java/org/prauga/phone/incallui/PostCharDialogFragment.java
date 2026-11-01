@@ -17,7 +17,6 @@
 
 package org.prauga.phone.incallui;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -55,20 +54,10 @@ public class PostCharDialogFragment extends DialogFragment {
       postDialStr = savedInstanceState.getString(STATE_POST_CHARS);
     }
 
-    final StringBuilder buf = new StringBuilder();
-    buf.append(getResources().getText(R.string.wait_prompt_str));
-    buf.append(postDialStr);
-
-    final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-    builder.setMessage(buf.toString());
-
-    builder.setPositiveButton(
-        R.string.pause_prompt_yes,
-            (dialog, whichButton) -> TelecomAdapter.getInstance().postDialContinue(callId, true));
-    builder.setNegativeButton(R.string.pause_prompt_no, (dialog, whichButton) -> dialog.cancel());
-
-    final AlertDialog dialog = builder.create();
-    return dialog;
+    return InCallDialogs.postDial(
+        requireContext(),
+        postDialStr,
+        () -> TelecomAdapter.getInstance().postDialContinue(callId, true));
   }
 
   @Override

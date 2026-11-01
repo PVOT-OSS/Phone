@@ -348,13 +348,6 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
 
     AudioModeProvider.getInstance().addListener(this);
 
-    // Add listener to notify Telephony process when the incoming call screen is started or
-    // finished. This is for hiding USSD dialog because the incoming call screen should have
-    // higher precedence over this dialog.
-    MotorolaInCallUiNotifier motorolaInCallUiNotifier = new MotorolaInCallUiNotifier(context);
-    addInCallUiListener(motorolaInCallUiNotifier);
-    addListener(motorolaInCallUiNotifier);
-
     LogUtil.d("InCallPresenter.setUp", "Finished InCallPresenter.setUp");
     Trace.endSection();
   }
