@@ -8,9 +8,11 @@ package org.prauga.phone.dialer.e2e
 import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.graphics.drawable.Icon
 import android.telecom.CallAudioState
 import android.telecom.Connection
 import android.telecom.DisconnectCause
+import android.telecom.TelecomManager
 import android.telecom.VideoProfile
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -22,6 +24,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
+import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.notification.NotificationChannelId
 import org.prauga.phone.dialer.testing.FakeCallSpec
 import org.prauga.phone.dialer.testing.FakeCarrier
@@ -87,7 +90,7 @@ class CallNotificationTest {
         InCall.waitForState(DialerCallState.DIALING)
 
         val notification = callNotification(NotificationChannelId.ONGOING_CALL) { it.callType == CALL_TYPE_ONGOING }
-        assertEquals("Calling", notification.extras.getCharSequence(Notification.EXTRA_TEXT)?.toString())
+        assertEquals(status(R.string.notification_dialing), notification.text)
     }
 
     @Test
@@ -144,12 +147,83 @@ class CallNotificationTest {
         InCall.onMain { call.hold() }
         InCall.waitForState(DialerCallState.ONHOLD)
         callNotification(NotificationChannelId.ONGOING_CALL) {
-            it.extras.getCharSequence(Notification.EXTRA_TEXT)?.toString() == "On hold"
+            it.text == status(R.string.notification_on_hold)
         }
 
         sendAction("Unhold")
         CallTests.waitFor { far.takeIf { it.state == Connection.STATE_ACTIVE } }
     }
+
+    @Test
+    fun ringingCallTextsFollowTheCall() {
+        ringAndExpect(FakeCallSpec(CallTests.freshNumber()), context.getString(R.string.notification_incoming_call))
+        ringAndExpect(FakeCallSpec(CallTests.freshNumber(), rtt = true), context.getString(R.string.notification_incoming_rtt_call))
+        ringAndExpect(
+            FakeCallSpec(CallTests.freshNumber(), videoState = VideoProfile.STATE_BIDIRECTIONAL),
+            context.getString(R.string.notification_incoming_video_call),
+        )
+        ringAndExpect(
+            FakeCallSpec(CallTests.freshNumber(), properties = Connection.PROPERTY_WIFI),
+            context.getString(R.string.notification_incoming_call_wifi_template, wifiBrand()),
+        )
+    }
+
+    @Test
+    fun activeCallTexts() {
+        connectedCall()
+        callNotification(NotificationChannelId.ONGOING_CALL) { it.text == status(R.string.notification_ongoing_call) }
+    }
+
+    @Test
+    fun activeWifiCallSaysSoAndUsesTheWifiIcon() {
+        FakeCarrier.ring(context, FakeCallSpec(CallTests.freshNumber(), properties = Connection.PROPERTY_WIFI))
+        CallTests.waitForRinging()
+        CallTests.answerRingingCall()
+
+        val notification = callNotification(NotificationChannelId.ONGOING_CALL) {
+            it.text == status(context.getString(R.string.notification_ongoing_call_wifi_template, wifiBrand()))
+        }
+        assertEquals(R.drawable.ic_wifi_calling, notification.smallIcon.resId)
+    }
+
+    @Test
+    fun verifiedCallerGetsTheCheck() {
+        FakeCarrier.ring(context, FakeCallSpec(CallTests.freshNumber(), verificationStatus = Connection.VERIFICATION_STATUS_PASSED))
+        CallTests.waitForRinging()
+
+        callNotification(NotificationChannelId.INCOMING_CALL) {
+            it.callType == CALL_TYPE_INCOMING && it.extras.getParcelable(Notification.EXTRA_VERIFICATION_ICON, Icon::class.java) != null
+        }
+    }
+
+    @Test
+    fun unverifiedCallerGetsNoCheck() {
+        FakeCarrier.ring(context, FakeCallSpec(CallTests.freshNumber()))
+        CallTests.waitForRinging()
+
+        val notification = callNotification(NotificationChannelId.INCOMING_CALL) { it.callType == CALL_TYPE_INCOMING }
+        check(notification.extras.getParcelable(Notification.EXTRA_VERIFICATION_ICON, Icon::class.java) == null) { "unverified caller marked verified" }
+    }
+
+    private fun ringAndExpect(spec: FakeCallSpec, text: String) {
+        FakeCarrier.ring(context, spec)
+        val far = CallTests.waitForRinging()
+        callNotification(NotificationChannelId.INCOMING_CALL) { it.text == status(text) }
+        far.hangUpFromFarEnd()
+        InCall.waitForNoCalls()
+    }
+
+    /** [text] as the notification shows it: with the calling account named when there is more than one. */
+    private fun status(text: String): String {
+        val accounts = context.getSystemService(TelecomManager::class.java).callCapablePhoneAccounts
+        return if (accounts.size > 1) context.getString(R.string.notification_status_via_account, text, "Fake carrier") else text
+    }
+
+    private fun status(textId: Int): String = status(context.getString(textId))
+
+    private fun wifiBrand(): String = context.getString(R.string.notification_call_wifi_brand)
+
+    private val Notification.text: String? get() = extras.getCharSequence(Notification.EXTRA_TEXT)?.toString()
 
     private fun connectedCall(): FakeConnection {
         InCall.place(context, CallTests.freshNumber())
