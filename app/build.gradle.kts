@@ -11,6 +11,26 @@ plugins {
     alias(libs.plugins.roborazzi)
 }
 
+import java.util.Properties
+
+/**
+ * The release signing key, from keystore.properties at the project root (not in git) or from the
+ * PHONE_KEYSTORE_* environment variables, as a CI job sets them. Null when neither is there: the
+ * release build is then signed with the debug key, so it still installs for testing.
+ */
+val releaseSigning: Map<String, String>? = run {
+    val file = rootProject.file("keystore.properties")
+    val props = Properties().apply { if (file.exists()) file.inputStream().use(::load) }
+    fun value(key: String, env: String) = props.getProperty(key) ?: System.getenv(env)
+    val storeFile = value("storeFile", "PHONE_KEYSTORE_FILE") ?: return@run null
+    mapOf(
+        "storeFile" to storeFile,
+        "storePassword" to value("storePassword", "PHONE_KEYSTORE_PASSWORD").orEmpty(),
+        "keyAlias" to value("keyAlias", "PHONE_KEY_ALIAS").orEmpty(),
+        "keyPassword" to value("keyPassword", "PHONE_KEY_PASSWORD").orEmpty(),
+    )
+}
+
 val versionMajor = 1
 val versionMinor = 0
 val versionPatch = 0
@@ -47,8 +67,21 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
 
+    signingConfigs {
+        releaseSigning?.let { key ->
+            create("release") {
+                storeFile = rootProject.file(key.getValue("storeFile"))
+                storePassword = key.getValue("storePassword")
+                keyAlias = key.getValue("keyAlias")
+                keyPassword = key.getValue("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
+            // The real key when one is set up, else the debug key so a release build installs for testing.
+            signingConfig = signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
