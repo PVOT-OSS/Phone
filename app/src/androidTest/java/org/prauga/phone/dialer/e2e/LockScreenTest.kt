@@ -34,6 +34,8 @@ class LockScreenTest {
 
     @Test
     fun ringingCallWakesThePhoneAndShowsOverTheLockScreen() {
+        // Once the call is answered the call screen dismisses a lock screen that has no PIN, as it
+        // always has; with a PIN the phone stays locked. Only the ringing part is checked here.
         val number = CallTests.freshNumber()
         lock()
 
@@ -44,11 +46,10 @@ class LockScreenTest {
             deviceRule.device.wait(Until.findObject(By.textContains(number.takeLast(4))), CallTests.TIMEOUT_MILLIS),
         )
         check(deviceRule.device.isScreenOn) { "screen stayed off" }
-        check(keyguard.isKeyguardLocked) { "phone was unlocked" }
+        check(keyguard.isKeyguardLocked) { "phone was unlocked while ringing" }
 
         CallTests.answerRingingCall()
         InCall.waitForState(DialerCallState.ACTIVE)
-        check(keyguard.isKeyguardLocked) { "answering unlocked the phone" }
         CallTests.waitFor { FakeCarrier.connections.firstOrNull() }.hangUpFromFarEnd()
         InCall.waitForNoCalls()
     }
@@ -66,7 +67,9 @@ class LockScreenTest {
         check(keyguard.isKeyguardLocked) { "phone was unlocked" }
     }
 
+    /** Turns the screen off with the lock screen up, once the unlock from the test's setup has finished. */
     private fun lock() {
+        CallTests.waitFor { if (!keyguard.isKeyguardLocked) true else null }
         deviceRule.device.sleep()
         CallTests.waitFor { if (!deviceRule.device.isScreenOn && keyguard.isKeyguardLocked) true else null }
     }
