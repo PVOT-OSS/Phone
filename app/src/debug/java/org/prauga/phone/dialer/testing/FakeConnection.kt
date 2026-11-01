@@ -22,7 +22,11 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
         setCallerDisplayName(null, spec.presentation)
         setCallerNumberVerificationStatus(spec.verificationStatus)
         setVideoState(spec.videoState)
-        connectionCapabilities = CAPABILITY_HOLD or CAPABILITY_SUPPORT_HOLD or CAPABILITY_MUTE
+        connectionCapabilities = CAPABILITY_HOLD or
+            CAPABILITY_SUPPORT_HOLD or
+            CAPABILITY_MUTE or
+            CAPABILITY_SEPARATE_FROM_CONFERENCE or
+            CAPABILITY_DISCONNECT_FROM_CONFERENCE
         audioModeIsVoip = false
     }
 
@@ -40,6 +44,11 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
     override fun onHold() = setOnHold()
 
     override fun onUnhold() = setActive()
+
+    override fun onSeparate() {
+        conference?.onSeparate(this)
+        setActive()
+    }
 
     override fun onPlayDtmfTone(c: Char) {
         playedTones += c

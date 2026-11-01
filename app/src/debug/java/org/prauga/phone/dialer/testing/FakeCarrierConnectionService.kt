@@ -6,6 +6,7 @@
 package org.prauga.phone.dialer.testing
 
 import android.telecom.Connection
+import android.telecom.Conference
 import android.telecom.ConnectionRequest
 import android.telecom.ConnectionService
 import android.telecom.PhoneAccountHandle
@@ -34,5 +35,15 @@ class FakeCarrierConnectionService : ConnectionService() {
             it.setDialing()
             FakeCarrier.remember(it)
         }
+    }
+
+    override fun onConference(connection1: Connection, connection2: Connection) {
+        val conference: Conference = FakeConference(FakeCarrier.accountHandle(this))
+        conference.addConnection(connection1)
+        conference.addConnection(connection2)
+        connection1.setActive()
+        connection2.setActive()
+        conference.setActive()
+        addConference(conference)
     }
 }

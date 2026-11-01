@@ -52,10 +52,18 @@ object FakeCarrier {
 
     internal fun remember(connection: FakeConnection) {
         live += connection
+        updateConferenceable()
     }
 
     internal fun forget(connection: FakeConnection) {
         live -= connection
+        updateConferenceable()
+    }
+
+    private fun updateConferenceable() {
+        for (connection in live) {
+            connection.conferenceables = live.filter { it !== connection }
+        }
     }
 
     private fun telecom(context: Context) = context.getSystemService(TelecomManager::class.java)
