@@ -44,6 +44,10 @@ class FakeCarrierConnectionService : ConnectionService() {
     }
 
     override fun onConference(connection1: Connection, connection2: Connection) {
+        if (FakeCarrier.failMerges) {
+            connection1.sendConnectionEvent(Connection.EVENT_CALL_MERGE_FAILED, null)
+            return
+        }
         val conference: Conference = FakeConference(FakeCarrier.accountHandle(this))
         conference.addConnection(connection1)
         conference.addConnection(connection2)

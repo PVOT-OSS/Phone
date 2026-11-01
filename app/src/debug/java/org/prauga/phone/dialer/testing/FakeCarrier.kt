@@ -23,6 +23,10 @@ object FakeCarrier {
     private const val ACCOUNT_ID = "fake_carrier"
     private val live = CopyOnWriteArrayList<FakeConnection>()
 
+    /** When true the network refuses to merge calls into a conference. */
+    @Volatile
+    var failMerges = false
+
     /** Calls currently on the fake carrier, oldest first. */
     val connections: List<FakeConnection> get() = live.toList()
 
@@ -44,6 +48,7 @@ object FakeCarrier {
     }
 
     fun unregister(context: Context) {
+        failMerges = false
         live.forEach { it.hangUpFromFarEnd() }
         telecom(context).unregisterPhoneAccount(accountHandle(context))
     }
