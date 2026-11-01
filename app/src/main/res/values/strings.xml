@@ -66,6 +66,8 @@
   <string name="notification_missedCall_silent">Missed call \u2022 On Silent mode</string>
   <!-- The phone's user in the missed call notification's conversation; not normally shown. -->
   <string name="notification_missedCall_self">You</string>
+  <!-- Call log time for a call less than a minute ago. [CHAR LIMIT=20] -->
+  <string name="call_log_time_just_now">Just now</string>
   <!-- Missed call notification message used when there are multiple missed calls -->
   <string name="notification_missedCallsMsg"><xliff:g id="num_missed_calls">%d</xliff:g> missed calls</string>
   <!-- Message for "call back" Action, which is displayed in the missed call notificaiton.
