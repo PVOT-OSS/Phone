@@ -123,13 +123,15 @@ class MissedCallNotificationTest {
 
     private fun openRecents() {
         context.startActivity(MainComponent.getShowCallLogIntent(context).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-        checkNotNull(deviceRule.device.wait(Until.findObject(By.text(context.getString(R.string.tab_title_speed_dial))), CallTests.TIMEOUT_MILLIS)) {
+        checkNotNull(deviceRule.device.wait(Until.findObject(By.res("call_history_list")), CallTests.TIMEOUT_MILLIS)) {
             "main screen not shown"
         }
     }
 
     private fun switchAwayFromRecents() {
-        deviceRule.device.findObject(By.text(context.getString(R.string.tab_title_speed_dial))).click()
+        val label = context.getString(R.string.tab_title_speed_dial)
+        val tab = deviceRule.device.findObject(By.text(label)) ?: deviceRule.device.findObject(By.desc(label))
+        checkNotNull(tab) { "tab \"$label\" not shown" }.click()
     }
 
     private companion object {

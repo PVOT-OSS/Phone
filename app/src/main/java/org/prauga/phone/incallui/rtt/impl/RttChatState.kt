@@ -99,8 +99,11 @@ class RttChatMessages {
         return message.content
     }
 
-    /** Restores the chat after the screen came back; returns our unfinished message, if any. */
-    fun onRestoreRttChat(transcript: RttTranscript): String? {
+    /**
+     * Restores the chat after the screen came back; returns our unfinished message, if any. A call
+     * that has said nothing yet has no [transcript].
+     */
+    fun onRestoreRttChat(transcript: RttTranscript?): String? {
         LogUtil.enterBlock("RttChatMessages.onRestoreRttChat")
         messages = RttChatMessage.fromTranscript(transcript)
         lastIndexOfLocalMessage = RttChatMessage.getLastIndexLocalMessage(messages)

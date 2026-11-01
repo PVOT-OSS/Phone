@@ -61,7 +61,8 @@ class CallLogScreenTest {
         context.startActivity(MainComponent.getShowCallLogIntent(context).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         val device = deviceRule.device
         assertNotNull("answered call not listed", device.wait(Until.findObject(By.textContains(answered.takeLast(4))), CallTests.TIMEOUT_MILLIS))
-        checkNotNull(device.findObject(By.res(context.packageName, "call_log_filter_missed"))) { "no Missed chip" }.click()
+        val filter = checkNotNull(device.findObject(By.res("recents_filter"))) { "no All / Missed filter" }
+        checkNotNull(filter.findObject(By.text(context.getString(R.string.call_log_missed_title)))) { "no Missed choice" }.click()
 
         assertNotNull("missed call not listed", device.wait(Until.findObject(By.textContains(missed.takeLast(4))), CallTests.TIMEOUT_MILLIS))
         check(device.wait(Until.gone(By.textContains(answered.takeLast(4))), CallTests.TIMEOUT_MILLIS)) { "answered call still listed under Missed" }

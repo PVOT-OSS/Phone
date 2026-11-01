@@ -6,6 +6,7 @@
 package org.prauga.phone.dialer.e2e
 
 import android.net.Uri
+import java.util.regex.Pattern
 import android.os.Bundle
 import android.telecom.DisconnectCause
 import android.telecom.PhoneAccount
@@ -100,14 +101,18 @@ class DisconnectMessageTest {
 
     /** A dialog button; its label is compared ignoring case, as buttons may be shown in capitals. */
     private fun findButton(id: String, label: String): UiObject2 {
-        val button = checkNotNull(deviceRule.device.wait(Until.findObject(By.res("android", id)), CallTests.TIMEOUT_MILLIS)) {
-            "button \"$label\" not shown"
-        }
+        // An AlertDialog's button by its id, or a Compose dialog's by its label in any case.
+        val byLabel = By.text(Pattern.compile(Pattern.quote(label), Pattern.CASE_INSENSITIVE))
+        val button = deviceRule.device.wait(Until.findObject(By.res("android", id)), SHORT_WAIT_MILLIS)
+            ?: checkNotNull(deviceRule.device.wait(Until.findObject(byLabel), CallTests.TIMEOUT_MILLIS)) {
+                "button \"$label\" not shown"
+            }
         check(button.text.equals(label, ignoreCase = true)) { "button says \"${button.text}\", expected \"$label\"" }
         return button
     }
 
     private companion object {
+        const val SHORT_WAIT_MILLIS = 1_000L
         const val POSITIVE = "button1"
         const val NETWORK_MESSAGE = "Not registered on network."
         const val RESTRICTED_MESSAGE = "Outgoing calls are restricted by FDN."

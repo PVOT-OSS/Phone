@@ -18,6 +18,7 @@ import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.testing.FakeCallSpec
 import org.prauga.phone.dialer.testing.FakeCarrier
 import org.prauga.phone.dialer.testing.FakeConnection
+import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.incallui.call.DialerCall
 import org.prauga.phone.incallui.call.state.DialerCallState
 
@@ -129,7 +130,7 @@ class RttCallTest {
         val switchToVoice = By.text(context.getString(R.string.rtt_button_downgrade))
         repeat(MENU_ATTEMPTS) {
             deviceRule.device.waitForIdle()
-            findView("rtt_overflow_button").click()
+            findView(TestTags.RTT_MENU).click()
             deviceRule.device.wait(Until.findObject(switchToVoice), MENU_WAIT_MILLIS)?.let { return it }
         }
         error("RTT menu did not open")
@@ -155,10 +156,12 @@ class RttCallTest {
 
     private fun waitForRtt(call: DialerCall) = CallTests.waitFor { if (InCall.onMain { call.isActiveRttCall }) true else null }
 
-    private fun findView(id: String): UiObject2 =
-        checkNotNull(deviceRule.device.wait(Until.findObject(By.res(context.packageName, id)), CallTests.TIMEOUT_MILLIS)) {
-            "$id not shown"
-        }
+    /** The view with [id], or, for a Compose button, the one labelled with the string of that name. */
+    private fun findView(id: String): UiObject2 {
+        val label = context.resources.getIdentifier(id, "string", context.packageName).takeIf { it != 0 }?.let(context::getString)
+        val selector = if (label != null) By.text(label) else By.res(java.util.regex.Pattern.compile("(.*:id/)?$id"))
+        return checkNotNull(deviceRule.device.wait(Until.findObject(selector), CallTests.TIMEOUT_MILLIS)) { "$id not shown" }
+    }
 
     private companion object {
         const val SETTLE_MILLIS = 1_500L

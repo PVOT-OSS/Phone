@@ -337,6 +337,7 @@ object RttChatHost {
     /** The chat's text field: borderless, one line, sending on the keyboard's action key. */
     @JvmStatic
     fun createInput(context: android.content.Context): EditText = EditText(context).apply {
+        id = R.id.rtt_chat_input
         background = null
         setHint(R.string.rtt_input_hint)
         imeOptions = android.view.inputmethod.EditorInfo.IME_ACTION_SEND

@@ -238,7 +238,8 @@ class CallLogRowResolver(
             actions += if (isBlocked) RowAction.UNBLOCK else RowAction.BLOCK
         }
         if (!group.isVoicemail) actions += RowAction.DETAILS
-        if (!group.voicemailUri.isNullOrEmpty()) actions += RowAction.DELETE
+        // Every row can be deleted from its actions, which asks first, as well as by swiping.
+        actions += RowAction.DELETE
         return actions
     }
 
