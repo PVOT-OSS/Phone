@@ -7,6 +7,7 @@ coroutines = "1.11.0"
 dagger = "2.60.1"
 glide = "4.16.0"
 kotlin = "2.4.21"
+ksp = "2.3.12"
 libphonenumber = "9.0.42"
 protobuf = "4.36.2"
 protobufPlugin = "0.10.0"
@@ -70,5 +71,6 @@ volley = "com.android.volley:volley:1.2.1"
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }

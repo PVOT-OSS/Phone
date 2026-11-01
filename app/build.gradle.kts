@@ -6,6 +6,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.protobuf)
     alias(libs.plugins.roborazzi)
 }
@@ -196,7 +197,9 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
 
+    // Dagger generates through KSP. AutoValue and Glide have no KSP processor, so they stay on
+    // javac; no Dagger component or module refers to a class they generate.
+    ksp(libs.dagger.compiler)
     annotationProcessor(libs.auto.value)
-    annotationProcessor(libs.dagger.compiler)
     annotationProcessor(libs.glide.compiler)
 }
