@@ -63,7 +63,7 @@ public class AssistedDialingSettingFragment extends PreferenceFragmentCompat {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    assistedDialingMediator = ConcreteCreator.createNewAssistedDialingMediator();
+    assistedDialingMediator = ConcreteCreator.createNewAssistedDialingMediator(requireContext());
     countryCodeProvider = ConcreteCreator.getCountryCodeProvider();
   }
 

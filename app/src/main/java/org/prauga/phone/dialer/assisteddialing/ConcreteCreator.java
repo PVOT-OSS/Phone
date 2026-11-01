@@ -16,6 +16,15 @@
 
 package org.prauga.phone.dialer.assisteddialing;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.UserManager;
+import android.telephony.TelephonyManager;
+import androidx.annotation.NonNull;
+import androidx.preference.PreferenceManager;
+import org.prauga.phone.dialer.R;
+import org.prauga.phone.dialer.common.LogUtil;
+
 /**
  * A Creator for AssistedDialingMediators.
  *
@@ -25,12 +34,35 @@ package org.prauga.phone.dialer.assisteddialing;
 public final class ConcreteCreator {
 
   /**
-   * Creates a new AssistedDialingMediator
+   * Creates a new AssistedDialingMediator. Assisted dialing is on unless the user turned it off,
+   * and needs the user to have unlocked the phone since it started, as its settings live in
+   * credential-protected storage.
    *
    * @return An AssistedDialingMediator
    */
-  public static AssistedDialingMediator createNewAssistedDialingMediator() {
-    return new AssistedDialingMediatorStub();
+  public static AssistedDialingMediator createNewAssistedDialingMediator(@NonNull Context context) {
+    UserManager userManager = context.getSystemService(UserManager.class);
+    if (userManager == null || !userManager.isUserUnlocked()) {
+      LogUtil.i("ConcreteCreator.createNewAssistedDialingMediator", "user is locked");
+      return new AssistedDialingMediatorStub();
+    }
+
+    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    if (!prefs.getBoolean(context.getString(R.string.assisted_dialing_setting_toggle_key), true)) {
+      LogUtil.i("ConcreteCreator.createNewAssistedDialingMediator", "disabled by local setting");
+      return new AssistedDialingMediatorStub();
+    }
+
+    TelephonyManager telephonyManager = context.getSystemService(TelephonyManager.class);
+    if (telephonyManager == null) {
+      return new AssistedDialingMediatorStub();
+    }
+
+    String userHomeCountry =
+        prefs.getString(context.getString(R.string.assisted_dialing_setting_cc_key), null);
+    return new AssistedDialingMediatorImpl(
+        new LocationDetector(telephonyManager, userHomeCountry),
+        new NumberTransformer(new Constraints(context, getCountryCodeProvider())));
   }
 
   /**
