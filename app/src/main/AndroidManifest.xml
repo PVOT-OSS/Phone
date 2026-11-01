@@ -575,6 +575,7 @@
 
         <activity
             android:name="org.prauga.phone.incallui.AudioRouteSelectorActivity"
+            android:directBootAware="true"
             android:excludeFromRecents="true"
             android:exported="false"
             android:noHistory="true"
