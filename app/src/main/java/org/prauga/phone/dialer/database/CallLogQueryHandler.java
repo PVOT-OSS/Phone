@@ -164,7 +164,12 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
       where.append(" AND (").append(Calls.NEW).append(" = 1)");
     }
 
-    if (callType > CALL_TYPE_ALL) {
+    if (callType == Calls.MISSED_TYPE) {
+      // Rejected calls count as missed: the user didn't talk to the caller either way.
+      where.append(" AND (").append(Calls.TYPE).append(" IN (?, ?))");
+      selectionArgs.add(Integer.toString(Calls.MISSED_TYPE));
+      selectionArgs.add(Integer.toString(Calls.REJECTED_TYPE));
+    } else if (callType > CALL_TYPE_ALL) {
       where.append(" AND (").append(Calls.TYPE).append(" = ?)");
       selectionArgs.add(Integer.toString(callType));
     } else {
