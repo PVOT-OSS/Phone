@@ -23,22 +23,8 @@
     <string name="call_stats_blocked">المحظورة: <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_percent"><xliff:g id="percent">%d</xliff:g>%%</string>
     <string name="call_stats_header_total">الإجمالي: <xliff:g id="call_count">%1$s</xliff:g> ، <xliff:g id="duration">%2$s</xliff:g></string>
-    <string name="call_stats_header_total_callsonly">الإجمالي: <xliff:g id="call_count"> %s </xliff:g></string>
-    <string name="call_stats_filter_from">تاريخ البدء</string>
-    <string name="call_stats_filter_to">تاريخ الانتهاء</string>
-    <string name="call_stats_filter_picker_title">نطاق التصفية</string>
-    <string name="date_quick_selection">التحديد السريع</string>
-    <string name="date_qs_currentmonth">الشهر الحالي</string>
-    <string name="date_qs_currentquarter">ربع السنة الحالي</string>
-    <string name="date_qs_currentyear">السنة الحالية</string>
-    <string name="date_qs_lastweek">الأسبوع الماضي</string>
-    <string name="date_qs_lastmonth">الشهر الماضي</string>
-    <string name="date_qs_lastquarter">ربع السنة الأخير</string>
-    <string name="date_qs_lastyear">العام الماضي</string>
     <string name="call_stats_date_filter">ضبط النطاق الزمني</string>
     <string name="call_stats_reset_filter">إعادة تعيين النطاق الزمني</string>
-    <string name="call_stats_sort_by_duration">ترتيب حسب مدة المكالمة</string>
-    <string name="call_stats_sort_by_count">ترتيب حسب عدد المكالمات</string>
     <string name="call_stats_title_for_number">هذا الرقم</string>
     <string name="call_stats_title_of_total">من الإجمالي</string>
     <string name="call_stats_title_durations">مدد المكالمات</string>

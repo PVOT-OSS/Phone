@@ -10,7 +10,6 @@
   <string name="contact_menu_voice_call">Гласовен повик</string>
   <string name="contact_menu_video_call">Видеоповик</string>
   <string name="contact_menu_message">Порака</string>
-  <string name="contact_menu_remove">Отстрани</string>
   <string name="contact_menu_contact_info">Инф. за контакт</string>
   <string name="suggested_contact_bottom_sheet_add_favorite_option">Додај во омилени</string>
   <string name="speed_dial_contacts_permission_description">За да овозможите брзо бирање, вклучете ја дозволата за контакти.</string>

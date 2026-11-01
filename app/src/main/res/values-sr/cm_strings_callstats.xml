@@ -23,22 +23,8 @@
     <string name="call_stats_blocked">Блокираних: <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_percent"><xliff:g id="percent">%d</xliff:g>%%</string>
     <string name="call_stats_header_total">Укупно: <xliff:g id="call_count">%1$s</xliff:g>, <xliff:g id="duration">%2$s</xliff:g></string>
-    <string name="call_stats_header_total_callsonly">Укупно: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Почетни датум</string>
-    <string name="call_stats_filter_to">Крајњи датум</string>
-    <string name="call_stats_filter_picker_title">Опсег филтера</string>
-    <string name="date_quick_selection">Брзи одабир</string>
-    <string name="date_qs_currentmonth">Тренутни месец</string>
-    <string name="date_qs_currentquarter">Текући квартал</string>
-    <string name="date_qs_currentyear">Текућа година</string>
-    <string name="date_qs_lastweek">Прошла недеља</string>
-    <string name="date_qs_lastmonth">Прошли месец</string>
-    <string name="date_qs_lastquarter">Прошли квартал</string>
-    <string name="date_qs_lastyear">Прошла година</string>
     <string name="call_stats_date_filter">Подеси временски опсег</string>
     <string name="call_stats_reset_filter">Ресетуј временски опсег</string>
-    <string name="call_stats_sort_by_duration">Сортирај по трајању позива</string>
-    <string name="call_stats_sort_by_count">Сортирај по броју позива</string>
     <string name="call_stats_title_for_number">Овај број</string>
     <string name="call_stats_title_of_total">Од укупно</string>
     <string name="call_stats_title_durations">Трајања позива</string>

@@ -5,11 +5,8 @@
   <string name="action_copy_number_text">నంబర్‌ను కాపీ చేయి</string>
   <string name="action_edit_number_before_call">కాల్ చేయడానికి ముందు నంబర్‌ను సవరించు</string>
   <string name="call_log_delete_all">కాల్ చరిత్రను క్లియర్ చేయి</string>
-  <string name="call_log_trash_voicemail">వాయిస్ మెయిల్‌ను తొలగించు</string>
-  <string name="snackbar_voicemail_deleted">వాయిస్‌‍మెయిల్ తొలగించింది</string>
   <string name="clearCallLogConfirmation_title">కాల్ చరిత్రను తీసివేయాలా?</string>
   <string name="clearCallLogConfirmation">దీని వలన మీ చరిత్ర నుండి అన్ని కాల్‌లు తొలగించబడతాయి</string>
-  <string name="clearCallLogProgress_title">కాల్ చరిత్రను క్లియర్ చేస్తోంది…</string>
   <string name="notification_missedCallTitle">సమాధానం ఇవ్వని కాల్</string>
   <string name="notification_missedWorkCallTitle">మిస్డ్ కార్యాలయ కాల్</string>
   <string name="notification_missedCallsTitle">మిస్డ్ కాల్‌లు</string>
@@ -29,18 +26,9 @@
   <string name="voicemail_fetching_content">వాయిస్ మెయిల్‌ను లోడ్ చేస్తోంది…</string>
   <string name="voicemail_fetching_timout">వాయిస్ మెయిల్‌ను లోడ్ చేయడం సాధ్యపడలేదు</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
-  <string name="description_playback_speakerphone">స్పీకర్‌ఫోన్‌ను స్విచ్ ఆన్ లేదా స్విచ్ ఆఫ్ చేయి</string>
-  <string name="description_playback_seek">ప్లేబ్యాక్ స్థానాన్ని కావాల్సిన చోటుకి జరపండి</string>
   <string name="action_menu_call_history_description">కాల్ చరిత్ర</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">మరిన్ని ఎంపికలు</string>
   <string name="dialer_settings_label">సెట్టింగ్‌లు</string>
-  <string name="description_entering_bulk_action_mode">బల్క్ చర్య మోడ్‌లోకి ప్రవేశిస్తున్నారు</string>
-  <string name="description_leaving_bulk_action_mode">బల్క్ చర్య మోడ్ నుండి నిష్క్రమించారు</string>
-  <string name="description_selecting_bulk_action_mode">%1$s ఎంచుకోబడింది</string>
-  <string name="description_unselecting_bulk_action_mode">%1$s ఎంపిక తీసివేయబడింది</string>
-  <string name="description_contact_details">%1$s యొక్క సంప్రదింపు వివరాలు</string>
-  <string name="description_spam_contact_details">అనుమానాస్పద స్పామ్ కాలర్ %1$s సంప్రదింపు వివరాలు</string>
-  <string name="description_num_calls">%1$s కాల్‌లు.</string>
   <string name="description_video_call">వీడియో కాల్.</string>
   <string name="description_start_voice_search">వాయిస్ శోధనను ప్రారంభించండి</string>
   <string name="voicemail">వాయిస్ మెయిల్</string>
@@ -69,25 +57,16 @@
   <string name="search_shortcut_add_to_contact">పరిచయానికి జోడించు</string>
   <string name="search_shortcut_send_sms_message">SMS పంపు</string>
   <string name="search_shortcut_make_video_call">వీడియో కాల్ చేయండి</string>
-  <string name="select_all">అన్నీ ఎంచుకోండి</string>
   <string name="call_log_action_video_call">వీడియో కాల్</string>
   <string name="call_log_action_send_message">సందేశాన్ని పంపు</string>
   <string name="call_log_action_details">కాల్ వివరాలు</string>
   <string name="call_log_action_share_voicemail">దీనికి/వీటికి పంపు …</string>
   <string name="call_log_action_call">^1కి కాల్ చేయి</string>
-  <string name="description_incoming_missed_call">^1, ^2 నుండి ^3 ^4కి మిస్డ్ కాల్ ఇచ్చారు.</string>
-  <string name="description_incoming_answered_call">^1, ^2 నుండి ^3 ^4కి చేసిన కాల్‌కి సమాధానం ఇచ్చారు.</string>
-  <string name="description_unread_voicemail">^1 నుండి చదవని వాయిస్ మెయిల్, ^2, ^3, ^4.</string>
-  <string name="description_read_voicemail">^1 నుండి వాయిస్ మెయిల్, ^2, ^3, ^4.</string>
-  <string name="description_outgoing_call">^1, ^2కి ^3 ^4 నుండి కాల్ చేసారు.</string>
   <string name="call_log_via_number">%1$s ద్వారా</string>
   <string name="call_log_via_number_phone_account">%2$s ద్వారా %1$s</string>
   <string name="description_call_action">^1కి కాల్ చేయి</string>
   <string name="description_video_call_action">^1కి వీడియో కాల్.</string>
   <string name="description_voicemail_action">^1 నుండి వచ్చిన వాయిస్ మెయిల్‌ను వినండి</string>
-  <string name="description_create_new_contact_action">^1 కోసం పరిచయాన్ని సృష్టించండి</string>
-  <string name="description_add_to_existing_contact_action">^1ని ఇప్పటికే ఉన్న పరిచయానికి జోడించండి</string>
-  <string name="description_details_action">^1 యొక్క కాల్ వివరాలు</string>
   <string name="call_log_header_today">ఈ రోజు</string>
   <string name="call_log_header_yesterday">నిన్న</string>
   <string name="call_log_header_other">పాతది</string>
@@ -113,9 +92,7 @@
   <string name="permission_no_calllog">మీ కాల్ లాగ్‌ను చూడటానికి, ఫోన్ అనుమతిని ఆన్ చేయండి.</string>
   <string name="toast_cannot_write_system_settings">సిస్టమ్ సెట్టింగ్‌లకు వ్రాయడం కోసం ఫోన్ అనువర్తనానికి అనుమతి లేదు.</string>
   <string name="blocked_number_call_log_label">బ్లాక్ చేయబడింది</string>
-  <string name="call_log_action_block_report_number">బ్లాక్ చేయి/స్పామ్‌గానివేదించు</string>
   <string name="call_log_action_block_number">నంబర్‌ను బ్లాక్ చేయి</string>
-  <string name="call_log_action_remove_spam">స్పామ్ కాదు</string>
   <string name="call_log_action_unblock_number">నంబర్‌ను అన్‌బ్లాక్ చేయి</string>
   <string name="spam_number_call_log_label">స్పామ్</string>
 </resources>

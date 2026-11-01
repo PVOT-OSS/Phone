@@ -10,7 +10,6 @@
   <string name="contact_menu_voice_call">Ovozli chaqiruv</string>
   <string name="contact_menu_video_call">Video chaqiruv</string>
   <string name="contact_menu_message">Xabar yozish</string>
-  <string name="contact_menu_remove">Olib tashlash</string>
   <string name="contact_menu_contact_info">Kontakt axboroti</string>
   <string name="suggested_contact_bottom_sheet_add_favorite_option">Saralanganlarga kiritish</string>
   <string name="speed_dial_contacts_permission_description">Tezkor raqam terish uchun Kontaktlar ilovasi ruxsatnomasini yoqing.</string>

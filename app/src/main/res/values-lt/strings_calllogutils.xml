@@ -37,8 +37,4 @@
   <string name="description_via_number_phone_account">%1$s, numeriu %2$s</string>
   <string name="voicemail_string">Balso paštas</string>
   <string name="just_now">Ką tik</string>
-  <string name="new_call_log_carrier_video">Operatoriaus vaizdo skambučiai</string>
-  <string name="new_call_log_unknown">Nežinoma</string>
-  <string name="new_call_log_secondary_blocked">Užblokuota</string>
-  <string name="new_call_log_secondary_spam">Šlamštas</string>
 </resources>

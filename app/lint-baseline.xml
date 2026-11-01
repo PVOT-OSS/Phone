@@ -21849,4 +21849,15 @@
             column="69"/>
     </issue>
 
+    <issue
+        id="ThreadConstraint"
+        message="Branch must run from `@{Main,Ui}Thread`, incompatible with the other that must run from `@WorkerThread`"
+        errorLine1="    } else if (OmtpConstants.SUBSCRIBER_PROVISIONED.equals(message.getProvisioningStatus())) {"
+        errorLine2="           ^">
+        <location
+            file="src/main/java/org/prauga/phone/voicemail/impl/protocol/Vvm3Protocol.java"
+            line="144"
+            column="12"/>
+    </issue>
+
 </issues>

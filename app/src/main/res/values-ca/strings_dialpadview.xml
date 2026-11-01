@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">Per configurar la bústia de veu, ves a Menú &gt; Configuració.</string>
   <string name="add_2sec_pause">Afegeix una pausa de 2 segons</string>
   <string name="add_wait">Afegeix una espera</string>
-  <string name="dialer_useDtmfDialpad">Utilitza el teclat de tons</string>
-  <string name="dialer_returnToInCallScreen">Torna a la trucada en curs</string>
-  <string name="dialer_addAnotherCall">Afegeix una trucada</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">S\'està carregant des de la targeta SIM...</string>

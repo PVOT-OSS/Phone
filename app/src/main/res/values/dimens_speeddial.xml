@@ -16,5 +16,4 @@
   -->
 <resources>
   <dimen name="expanded_search_bar_height">64dp</dimen>
-  <dimen name="expanded_search_bar_height_minus">-64dp</dimen>
 </resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+  -->
+<resources>
+    <!-- Button that shows the notes sent with recent calls, to reuse one. -->
+    <string name="call_subject_recent">Recent notes</string>
+    <!-- Spoken for the button that opens more actions for a speed dial contact. -->
+    <string name="speed_dial_more_options">More options</string>
+    <!-- Snackbar after a call history row is swiped away; Undo brings it back. -->
+    <string name="call_history_deleted">Removed from call history</string>
+    <!-- Swipe action that removes a row from the call history. -->
+    <string name="call_history_delete">Delete</string>
+    <!-- Call statistics sort option: by how long the calls lasted. -->
+    <string name="call_stats_by_duration">Duration</string>
+    <!-- Call statistics sort option: by how many calls. -->
+    <string name="call_stats_by_count">Count</string>
+    <!-- Call statistics with no time range set. -->
+    <string name="call_stats_all_time">All time</string>
+</resources>

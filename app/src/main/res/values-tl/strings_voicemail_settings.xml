@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">Voicemail</string>
   <string name="voicemail_notifications_preference_title">Mga Notification</string>
   <string name="voicemail_change_greeting_preference_title">Voicemail greeting</string>
   <string name="change_greeting_text">I-tap para Mag-record</string>

@@ -17,5 +17,4 @@
   <string name="a11y_description_incoming_call_answer_and_release">Javite se i završite poziv koji je u toku</string>
   <string name="call_incoming_video_is_off">Kamera je isključena</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Prevucite nagore pomoću dva prsta da biste odgovorili. Prevucite nadole pomoću dva prsta da biste odbili.</string>
-  <string name="call_incoming_important">Važno</string>
 </resources>

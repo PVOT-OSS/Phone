@@ -23,22 +23,8 @@
     <string name="call_stats_blocked">Appels bloqués : <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_percent"><xliff:g id="percent">%d</xliff:g> %%</string>
     <string name="call_stats_header_total">Total : <xliff:g id="call_count">%1$s</xliff:g>, <xliff:g id="duration">%2$s</xliff:g></string>
-    <string name="call_stats_header_total_callsonly">Total : <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Date de début</string>
-    <string name="call_stats_filter_to">Date de fin</string>
-    <string name="call_stats_filter_picker_title">Plage de filtrage</string>
-    <string name="date_quick_selection">Sélection rapide</string>
-    <string name="date_qs_currentmonth">Mois en cours</string>
-    <string name="date_qs_currentquarter">Trimestre en cours</string>
-    <string name="date_qs_currentyear">Année en cours</string>
-    <string name="date_qs_lastweek">Semaine dernière</string>
-    <string name="date_qs_lastmonth">Mois dernier</string>
-    <string name="date_qs_lastquarter">Trimestre dernier</string>
-    <string name="date_qs_lastyear">Année dernière</string>
     <string name="call_stats_date_filter">Régler la période</string>
     <string name="call_stats_reset_filter">Réinitialiser la période</string>
-    <string name="call_stats_sort_by_duration">Trier par durée d\'appel</string>
-    <string name="call_stats_sort_by_count">Trier par nombre d\'appels</string>
     <string name="call_stats_title_for_number">Ce numéro</string>
     <string name="call_stats_title_of_total">Du total</string>
     <string name="call_stats_title_durations">Durées d’appel</string>

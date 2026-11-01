@@ -27,32 +27,12 @@
     <item name="android:textStyle">bold</item>
   </style>
 
-  <style name="DirectoryHeaderStyle" parent="@android:style/TextAppearance.Small">
-    <item name="android:textSize">14sp</item>
-    <item name="android:textColor">?android:attr/textColorSecondary</item>
-    <item name="android:fontFamily">@*android:string/config_headlineFontFamilyMedium</item>
-  </style>
 
   <!-- TextView style used for headers.
 
 This is similar to ?android:attr/listSeparatorTextView but uses different
 background and text color. See also android:style/Widget.Holo.TextView.ListSeparator
 (which is private, so we cannot specify it as a parent style).  -->
-  <style name="ContactListSeparatorTextViewStyle">
-    <item name="android:layout_width">match_parent</item>
-    <item name="android:layout_height">wrap_content</item>
-    <!-- See comments for @dimen/list_section_divider_min_height -->
-    <item name="android:minHeight">@dimen/list_section_divider_min_height</item>
-    <item name="android:textAppearance">@style/DirectoryHeaderStyle</item>
-    <item name="android:gravity">center_vertical</item>
-    <item name="android:paddingLeft">8dip</item>
-    <item name="android:paddingStart">8dip</item>
-    <item name="android:paddingTop">4dip</item>
-    <item name="android:paddingBottom">4dip</item>
-    <item name="android:ellipsize">end</item>
-    <item name="android:singleLine">true</item>
-    <item name="android:textAllCaps">false</item>
-  </style>
 
   <style name="TextAppearanceMedium" parent="@android:style/TextAppearance.Medium">
     <item name="android:textSize">16sp</item>
@@ -79,18 +59,4 @@ background and text color. See also android:style/Widget.Holo.TextView.ListSepar
     <item name="android:windowIsFloating">true</item>
   </style>
 
-  <style name="Theme.CallSubjectDialogTheme" parent="@android:style/Theme.Material.Light.Dialog">
-    <item name="android:layout_width">match_parent</item>
-    <item name="android:layout_height">match_parent</item>
-
-    <!-- No backgrounds, titles or window float -->
-    <item name="android:windowIsTranslucent">true</item>
-    <item name="android:windowNoTitle">true</item>
-    <item name="android:windowFullscreen">false</item>
-    <item name="android:windowIsFloating">true</item>
-    <item name="android:windowBackground">@android:color/transparent</item>
-    <item name="android:windowDrawsSystemBarBackgrounds">false</item>
-    <item name="android:windowContentOverlay">@null</item>
-    <item name="android:windowElevation">0dp</item>
-  </style>
 </resources>

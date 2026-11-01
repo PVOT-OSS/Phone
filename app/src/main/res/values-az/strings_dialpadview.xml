@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">Səsli e-poçtu ayarlamaq üçün Menyu &gt; Ayarlar bölməsinə daxil olun.</string>
   <string name="add_2sec_pause">2 saniyəlik pauza əlavə edin</string>
   <string name="add_wait">Gözləmə əlavə edin</string>
-  <string name="dialer_useDtmfDialpad">Düyməli klaviaturadan istifadə edin</string>
-  <string name="dialer_returnToInCallScreen">Davam edən zəngə qayıdın</string>
-  <string name="dialer_addAnotherCall">Zəng əlavə edin</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">SIM kartdan yüklənir...</string>

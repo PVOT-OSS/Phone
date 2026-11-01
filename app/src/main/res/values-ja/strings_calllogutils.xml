@@ -33,8 +33,4 @@
   <string name="description_via_number_phone_account">%1$s（%2$s）で受信</string>
   <string name="voicemail_string">ボイスメール</string>
   <string name="just_now">たった今</string>
-  <string name="new_call_log_carrier_video">携帯通信会社経由のビデオ通話</string>
-  <string name="new_call_log_unknown">不明</string>
-  <string name="new_call_log_secondary_blocked">ブロック中</string>
-  <string name="new_call_log_secondary_spam">迷惑電話</string>
 </resources>

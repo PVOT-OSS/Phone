@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">ボイスメールを設定するには、[メニュー] &gt; [設定] の順に開いてください。</string>
   <string name="add_2sec_pause">2 秒間の停止を追加</string>
   <string name="add_wait">待機を追加</string>
-  <string name="dialer_useDtmfDialpad">プッシュ式キーパッドを使用</string>
-  <string name="dialer_returnToInCallScreen">通話に戻る</string>
-  <string name="dialer_addAnotherCall">通話を追加</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">SIM カードから読み込み中…</string>

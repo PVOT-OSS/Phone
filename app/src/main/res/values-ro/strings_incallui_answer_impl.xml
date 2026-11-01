@@ -17,5 +17,4 @@
   <string name="a11y_description_incoming_call_answer_and_release">Răspundeți și încheiați apelul în curs</string>
   <string name="call_incoming_video_is_off">Camera video este dezactivată.</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Glisați cu două degete în sus pentru a răspunde și în jos pentru a respinge.</string>
-  <string name="call_incoming_important">Important</string>
 </resources>

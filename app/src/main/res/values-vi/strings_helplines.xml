@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">Đường dây nóng</string>
-    <string name="helplines_loading">Đang tải\u2026</string>
     <string name="helplines_empty">Không tìm thấy đường dây nóng.\nHãy nhét thẻ SIM và thử lại</string>
     <string name="helplines_help">Trợ giúp</string>
     <string name="helplines_help_title">Những số này an toàn để gọi</string>

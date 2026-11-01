@@ -33,8 +33,4 @@
   <string name="description_via_number_phone_account">در %1$s، ازطریق %2$s</string>
   <string name="voicemail_string">پست صوتی</string>
   <string name="just_now">لحظاتی پیش</string>
-  <string name="new_call_log_carrier_video">تماس ویدیویی با شرکت مخابراتی</string>
-  <string name="new_call_log_unknown">نامشخص</string>
-  <string name="new_call_log_secondary_blocked">مسدودشده</string>
-  <string name="new_call_log_secondary_spam">هرزنامه</string>
 </resources>

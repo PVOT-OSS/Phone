@@ -33,8 +33,4 @@
   <string name="description_via_number_phone_account">%1$sలో, %2$s ద్వారా</string>
   <string name="voicemail_string">వాయిస్ మెయిల్</string>
   <string name="just_now">ఇప్పుడే</string>
-  <string name="new_call_log_carrier_video">క్యారియర్ వీడియో</string>
-  <string name="new_call_log_unknown">తెలియదు</string>
-  <string name="new_call_log_secondary_blocked">బ్లాక్ చేయబడింది</string>
-  <string name="new_call_log_secondary_spam">స్పామ్</string>
 </resources>

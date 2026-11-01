@@ -10,7 +10,6 @@
   <string name="contact_menu_voice_call">Дауыстық қоңырау</string>
   <string name="contact_menu_video_call">Бейне қоңырау</string>
   <string name="contact_menu_message">Хабар</string>
-  <string name="contact_menu_remove">Жою</string>
   <string name="contact_menu_contact_info">Контакт деректері</string>
   <string name="suggested_contact_bottom_sheet_add_favorite_option">Таңдаулылар тізіміне қосу</string>
   <string name="speed_dial_contacts_permission_description">Жылдам теру функциясын қосу үшін \"Контактілерге\" кіруге рұқсат беріңіз.</string>

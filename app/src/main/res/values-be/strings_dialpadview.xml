@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">Каб наладзіць галасавую пошту, перайдзіце ў раздзел \"Меню &gt; Налады\".</string>
   <string name="add_2sec_pause">Дадаць 2-секундную паўзу</string>
   <string name="add_wait">Дадаць чаканне</string>
-  <string name="dialer_useDtmfDialpad">Выкарыстаць танальную клавіятуру</string>
-  <string name="dialer_returnToInCallScreen">Вярнуцца да бягучага выкліку</string>
-  <string name="dialer_addAnotherCall">Дадаць выклік</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">Загрузка з SIM-карты...</string>

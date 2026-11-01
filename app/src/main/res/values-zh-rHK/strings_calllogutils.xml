@@ -33,8 +33,4 @@
   <string name="description_via_number_phone_account">在 %1$s 上透過 %2$s</string>
   <string name="voicemail_string">留言</string>
   <string name="just_now">剛剛</string>
-  <string name="new_call_log_carrier_video">流動網絡供應商視像</string>
-  <string name="new_call_log_unknown">不明</string>
-  <string name="new_call_log_secondary_blocked">已封鎖</string>
-  <string name="new_call_log_secondary_spam">垃圾號碼</string>
 </resources>

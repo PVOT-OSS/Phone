@@ -35,8 +35,4 @@
   <string name="description_via_number_phone_account">pe %1$s, prin %2$s</string>
   <string name="voicemail_string">Mesagerie vocală</string>
   <string name="just_now">Adineauri</string>
-  <string name="new_call_log_carrier_video">Apel video prin operator</string>
-  <string name="new_call_log_unknown">Necunoscut</string>
-  <string name="new_call_log_secondary_blocked">Blocate</string>
-  <string name="new_call_log_secondary_spam">Spam</string>
 </resources>

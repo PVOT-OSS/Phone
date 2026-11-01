@@ -17,5 +17,4 @@
   <string name="a11y_description_incoming_call_answer_and_release">מענה וסיום שיחה</string>
   <string name="call_incoming_video_is_off">הווידאו מושבת</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">החלק עם שתי אצבעות למעלה כדי לענות או למטה כדי לדחות.</string>
-  <string name="call_incoming_important">חשוב</string>
 </resources>

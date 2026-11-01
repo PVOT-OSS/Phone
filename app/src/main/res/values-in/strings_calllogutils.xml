@@ -33,8 +33,4 @@
   <string name="description_via_number_phone_account">di %1$s, melalui %2$s</string>
   <string name="voicemail_string">Pesan suara</string>
   <string name="just_now">Baru saja</string>
-  <string name="new_call_log_carrier_video">Video operator</string>
-  <string name="new_call_log_unknown">Tidak dikenal</string>
-  <string name="new_call_log_secondary_blocked">Diblokir</string>
-  <string name="new_call_log_secondary_spam">Spam</string>
 </resources>

@@ -117,12 +117,5 @@
   <string name="send_and_call_button">SIŲSTI IR SKAMBINTI</string>
   <string name="call_subject_limit">%1$s / %2$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">Skirtukas „%1$s“.</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="one"> Skirtukas „%1$s“. %2$d neskaitytas elementas. </item>
-    <item quantity="few"> Skirtukas „%1$s“. %2$d neskaityti elementai. </item>
-    <item quantity="many"> Skirtukas „%1$s“. %2$d neskaityto elemento. </item>
-    <item quantity="other"> Skirtukas „%1$s“. %2$d neskaitytų elementų. </item>
-  </plurals>
   <string name="description_search_video_call">Vaizdo skambutis</string>
 </resources>

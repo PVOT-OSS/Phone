@@ -117,10 +117,5 @@
   <string name="send_and_call_button">ΑΠΟΣΤΟΛΗ ΚΑΙ ΚΛΗΣΗ</string>
   <string name="call_subject_limit">%1$s / %2$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">Καρτέλα %1$s.</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="one"> Καρτέλα %1$s. %2$d μη αναγνωσμένο στοιχείο. </item>
-    <item quantity="other"> Καρτέλα %1$s. %2$d μη αναγνωσμένα στοιχεία. </item>
-  </plurals>
   <string name="description_search_video_call">Βιντεοκλήση</string>
 </resources>

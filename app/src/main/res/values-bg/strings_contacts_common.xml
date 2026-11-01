@@ -117,10 +117,5 @@
   <string name="send_and_call_button">ИЗПРАЩАНЕ И ОБАЖДАНЕ</string>
   <string name="call_subject_limit">%1$s/%2$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">Раздел „%1$s“.</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="one">Раздел „%1$s“. %2$d непрочетен елемент. </item>
-    <item quantity="other">Раздел „%1$s“. %2$d непрочетени елемента. </item>
-  </plurals>
   <string name="description_search_video_call">Видеообаждане</string>
 </resources>

@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">ხმოვანი ფოსტის დასაყენებლად გადადით: მენიუ &gt; პარამეტრები.</string>
   <string name="add_2sec_pause">ორწამიანი პაუზის დამატება</string>
   <string name="add_wait">ლოდინის დამატება</string>
-  <string name="dialer_useDtmfDialpad">ტონალური კლავიატურის გამოყენება</string>
-  <string name="dialer_returnToInCallScreen">მიმდინარე ზარზე დაბრუნება</string>
-  <string name="dialer_addAnotherCall">ზარის დამატება</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">მიმდინარეობს ჩატვირთვა SIM ბარათიდან…</string>

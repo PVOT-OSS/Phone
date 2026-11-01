@@ -17,5 +17,4 @@
   <string name="a11y_description_incoming_call_answer_and_release">Sagutin at tapusin ang kasalukuyang tawag</string>
   <string name="call_incoming_video_is_off">Naka-off ang video</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">I-swipe nang pataas gamit ang dalawang daliri upang sagutin. I-swipe nang pababa gamit ang dalawang daliri upang tanggihan.</string>
-  <string name="call_incoming_important">Mahalaga</string>
 </resources>

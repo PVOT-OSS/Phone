@@ -37,8 +37,4 @@
   <string name="description_via_number_phone_account">v računu %1$s, prek številke %2$s</string>
   <string name="voicemail_string">Odzivnik</string>
   <string name="just_now">Pravkar</string>
-  <string name="new_call_log_carrier_video">Videoklic prek operaterja</string>
-  <string name="new_call_log_unknown">Neznano</string>
-  <string name="new_call_log_secondary_blocked">Blokirano</string>
-  <string name="new_call_log_secondary_spam">Neželeno</string>
 </resources>

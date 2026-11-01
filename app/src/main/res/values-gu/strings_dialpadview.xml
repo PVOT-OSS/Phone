@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">વૉઇસમેઇલ સેટ કરવા માટે, મેનૂ &gt; સેટિંગ્સ પર જાઓ.</string>
   <string name="add_2sec_pause">2-સેકંડનો વિરામ ઉમેરો</string>
   <string name="add_wait">પ્રતીક્ષા ઉમેરો</string>
-  <string name="dialer_useDtmfDialpad">ટચ-ટોન કીપેડનો ઉપયોગ કરો</string>
-  <string name="dialer_returnToInCallScreen">કૉલ પર પાછા આવવું પ્રગતિ પર છે</string>
-  <string name="dialer_addAnotherCall">કૉલ ઉમેરો</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">SIM કાર્ડમાંથી લોડ કરી રહ્યાં છીએ…</string>

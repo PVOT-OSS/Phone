@@ -17,5 +17,4 @@
   <string name="a11y_description_incoming_call_answer_and_release">উত্তর দিন এবং  চলছে এমন কল কেটে দিন</string>
   <string name="call_incoming_video_is_off">ভিডিও বন্ধ আছে</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">উত্তর দিতে উপরের দিকে, প্রত্যাখ্যান করতে নিচের দিকে দুই আঙুল দিয়ে সোয়াইপ করুন৷</string>
-  <string name="call_incoming_important">গুরুত্বপূর্ণ</string>
 </resources>

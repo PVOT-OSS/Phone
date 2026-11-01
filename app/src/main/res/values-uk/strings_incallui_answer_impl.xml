@@ -17,5 +17,4 @@
   <string name="a11y_description_incoming_call_answer_and_release">Відповісти на виклик, завершивши поточний</string>
   <string name="call_incoming_video_is_off">Відео вимкнено</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Проведіть двома пальцями вгору, щоб відповісти, або вниз, щоб відхилити дзвінок.</string>
-  <string name="call_incoming_important">Важливо</string>
 </resources>

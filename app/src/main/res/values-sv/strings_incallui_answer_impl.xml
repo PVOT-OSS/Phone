@@ -17,5 +17,4 @@
   <string name="a11y_description_incoming_call_answer_and_release">Svara och avsluta pågående samtal</string>
   <string name="call_incoming_video_is_off">Video avstängd</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Dra två fingrar uppåt för att svara och två nedåt för att avvisa.</string>
-  <string name="call_incoming_important">Viktigt</string>
 </resources>

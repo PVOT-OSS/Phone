@@ -49,7 +49,6 @@
   <string name="contact_menu_message">Message</string>
 
   <!-- Text for a button that removes the item from the list [CHAR LIMIT=15]-->
-  <string name="contact_menu_remove">Remove</string>
 
   <!-- Text for a button that opens the contact's info [CHAR LIMIT=15]-->
   <string name="contact_menu_contact_info">Contact info</string>

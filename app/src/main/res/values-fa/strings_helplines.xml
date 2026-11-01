@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">خطوط راهنما</string>
-    <string name="helplines_loading">در حال بارگیری\u2026</string>
     <string name="helplines_empty">خطوط راهنما یافت نشد.\nسیم کارت را وارد کنید و دوباره امتحان کنید</string>
     <string name="helplines_help">راهنما</string>
     <string name="helplines_help_title">تماس با اینها ایمن است</string>

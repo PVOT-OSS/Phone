@@ -117,12 +117,5 @@
   <string name="send_and_call_button">ЗАТЕЛЕФОНУВАТИ Й НАДІСЛАТИ</string>
   <string name="call_subject_limit">%1$s з %2$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">Вкладка \"%1$s\".</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="one"> Вкладка \"%1$s\". %2$d непрочитаний елемент. </item>
-    <item quantity="few"> Вкладка \"%1$s\". %2$d непрочитаних елементи. </item>
-    <item quantity="many"> Вкладка \"%1$s\". %2$d непрочитаних елементів. </item>
-    <item quantity="other"> Вкладка \"%1$s\". %2$d непрочитаного елемента. </item>
-  </plurals>
   <string name="description_search_video_call">Відеодзвінок</string>
 </resources>

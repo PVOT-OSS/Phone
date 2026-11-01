@@ -33,8 +33,4 @@
   <string name="description_via_number_phone_account">на %1$s, на %2$s</string>
   <string name="voicemail_string">Говорна пошта</string>
   <string name="just_now">Пред малку</string>
-  <string name="new_call_log_carrier_video">Видеоповик преку оператор</string>
-  <string name="new_call_log_unknown">Непознато</string>
-  <string name="new_call_log_secondary_blocked">Блокирано</string>
-  <string name="new_call_log_secondary_spam">Спам</string>
 </resources>

@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">உதவி எண்கள்</string>
-    <string name="helplines_loading">ஏற்றுகிறது\u2026</string>
     <string name="helplines_empty">உதவி எண்கள் எவையும் அல்ல.\nசெறிவு அட்டையைச் செருகி மீண்டும் முயல்க</string>
     <string name="helplines_help">உதவி</string>
     <string name="helplines_help_title">இவை அழைக்கப் பாதுகாப்பானவை</string>

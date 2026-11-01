@@ -17,5 +17,4 @@
   <string name="a11y_description_incoming_call_answer_and_release">उत्तर द्या आणि सुरु असलेला कॉल बंद करा</string>
   <string name="call_incoming_video_is_off">व्हिडिओ बंद आहे</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">उत्तर देण्यासाठी दोन बोटांनी वर स्वाइप करा. नकार देण्यासाठी दोन बोटांनी खाली स्वाइप करा.</string>
-  <string name="call_incoming_important">महत्त्वाचे</string>
 </resources>

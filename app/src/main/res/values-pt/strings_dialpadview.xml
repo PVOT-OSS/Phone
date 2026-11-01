@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">Para configurar o correio de voz, acesse Menu &gt; Configurações.</string>
   <string name="add_2sec_pause">Adicionar pausa de 2 segundos</string>
   <string name="add_wait">Adicionar espera</string>
-  <string name="dialer_useDtmfDialpad">Usar teclado multifrequencial</string>
-  <string name="dialer_returnToInCallScreen">Retornar para a chamada em espera</string>
-  <string name="dialer_addAnotherCall">Nova chamada</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">Carregando do cartão SIM...</string>

@@ -17,5 +17,4 @@
   <string name="a11y_description_incoming_call_answer_and_release">Адказаць і скончыць бягучы выклік</string>
   <string name="call_incoming_video_is_off">Відэа адключана</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Правядзіце двума пальцамі ўверх, каб адказаць; двума пальцамі ўніз – каб адхіліць.</string>
-  <string name="call_incoming_important">Важны</string>
 </resources>

@@ -5,11 +5,8 @@
   <string name="action_copy_number_text">Raqamdan nusxa olish</string>
   <string name="action_edit_number_before_call">Tahrirlash va telefon qilish</string>
   <string name="call_log_delete_all">Qo‘ng‘iroqlar tarixini tozalash</string>
-  <string name="call_log_trash_voicemail">Ovozli xabarni o‘chirish</string>
-  <string name="snackbar_voicemail_deleted">Ovozli pochta o‘chirildi</string>
   <string name="clearCallLogConfirmation_title">Qo‘ng‘iroqlar tarixi tozalansinmi?</string>
   <string name="clearCallLogConfirmation">Barcha qo‘ng‘iroqlar tarixi o‘chib ketadi.</string>
-  <string name="clearCallLogProgress_title">Qo‘ng‘iroqlar tarixi tozalanmoqda…</string>
   <string name="notification_missedCallTitle">Javobsiz chaqiruv</string>
   <string name="notification_missedWorkCallTitle">Javobsiz chaqiruv (ish)</string>
   <string name="notification_missedCallsTitle">Javobsiz chaqiruvlar</string>
@@ -29,18 +26,9 @@
   <string name="voicemail_fetching_content">Ovozli xabar yuklanmoqda…</string>
   <string name="voicemail_fetching_timout">Ovozli xabarni yuklab bo‘lmadi</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
-  <string name="description_playback_speakerphone">Karnayni yoqish yoki o‘chirish</string>
-  <string name="description_playback_seek">Ijro vaziyatini qidirish</string>
   <string name="action_menu_call_history_description">Chaqiruvlar tarixi</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">Boshqa parametrlar</string>
   <string name="dialer_settings_label">Sozlamalar</string>
-  <string name="description_entering_bulk_action_mode">Yoppasiga bajariladigan amallar rejimiga o‘tilmoqda</string>
-  <string name="description_leaving_bulk_action_mode">Yoppasiga bajariladigan amallar rejimidan chiqib ketildi</string>
-  <string name="description_selecting_bulk_action_mode">%1$s tanlandi</string>
-  <string name="description_unselecting_bulk_action_mode">%1$s tanlovi bekor qilindi</string>
-  <string name="description_contact_details">%1$s uchun kontakt ma’lumotlari</string>
-  <string name="description_spam_contact_details">%1$s abonentining ma’lumotlari (spam deb taxmin qilinmoqda)</string>
-  <string name="description_num_calls">%1$s ta qo‘ng‘iroq.</string>
   <string name="description_video_call">Video qo‘ng‘iroq.</string>
   <string name="description_start_voice_search">Ovozli qidiruvni boshlash</string>
   <string name="voicemail">Ovozli pochta</string>
@@ -69,25 +57,16 @@
   <string name="search_shortcut_add_to_contact">Mavjud kontaktga saqlash</string>
   <string name="search_shortcut_send_sms_message">SMS yuborish</string>
   <string name="search_shortcut_make_video_call">Videoqo‘ng‘iroq qilish</string>
-  <string name="select_all">Hammasini tanlash</string>
   <string name="call_log_action_video_call">Video qo‘ng‘iroq</string>
   <string name="call_log_action_send_message">Xabar yuborish</string>
   <string name="call_log_action_details">Chaqiruv tafsilotlari</string>
   <string name="call_log_action_share_voicemail">Yuborish:</string>
   <string name="call_log_action_call">Chaqiruv: ^1</string>
-  <string name="description_incoming_missed_call">Javobsiz chaqiruv: ^1, ^2, ^3, ^4.</string>
-  <string name="description_incoming_answered_call">Qo‘ng‘iroqqa javob berildi: ^1, ^2, ^3, ^4.</string>
-  <string name="description_unread_voicemail">O‘qilmagan ovozli xabar (^1, ^2, ^3, ^4).</string>
-  <string name="description_read_voicemail">Ovozli xabar (^1, ^2, ^3, ^4).</string>
-  <string name="description_outgoing_call">Chaqiruv: ^1. ^2, ^3, ^4.</string>
   <string name="call_log_via_number">%1$s raqami orqali</string>
   <string name="call_log_via_number_phone_account">%1$s, %2$s raqami orqali</string>
   <string name="description_call_action">Chaqiruv: ^1</string>
   <string name="description_video_call_action">Video qo‘ng‘iroq qilish: ^1.</string>
   <string name="description_voicemail_action">^1 kontaktidan kelgan ovozli xabarni tinglash</string>
-  <string name="description_create_new_contact_action">Yangi kontakt yaratish: ^1</string>
-  <string name="description_add_to_existing_contact_action">Mavjud kontaktlarga qo‘shish: ^1</string>
-  <string name="description_details_action">^1 – qo‘ng‘iroq tafsilotlari</string>
   <string name="call_log_header_today">Bugun</string>
   <string name="call_log_header_yesterday">Kecha</string>
   <string name="call_log_header_other">Eskiroq</string>
@@ -113,9 +92,7 @@
   <string name="permission_no_calllog">Qo‘ng‘iroqlaringiz ro‘yxatini ko‘rish uchun “Telefon” ruxsatnomasini yoqing.</string>
   <string name="toast_cannot_write_system_settings">Telefon ilovasida tizim sozlamalarini o‘zgartirish uchun ruxsat yo‘q.</string>
   <string name="blocked_number_call_log_label">Bloklandi</string>
-  <string name="call_log_action_block_report_number">Bloklash/spam deb belgilash</string>
   <string name="call_log_action_block_number">Raqamni bloklash</string>
-  <string name="call_log_action_remove_spam">Spam emas</string>
   <string name="call_log_action_unblock_number">Raqamni blokdan chiqarish</string>
   <string name="spam_number_call_log_label">Spam</string>
 </resources>

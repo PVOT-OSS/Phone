@@ -35,8 +35,4 @@
   <string name="description_via_number_phone_account">na %1$s, preko %2$s</string>
   <string name="voicemail_string">Govorna pošta</string>
   <string name="just_now">Malopre</string>
-  <string name="new_call_log_carrier_video">Video poziv preko operatera</string>
-  <string name="new_call_log_unknown">Nepoznati brojevi</string>
-  <string name="new_call_log_secondary_blocked">Blokirani</string>
-  <string name="new_call_log_secondary_spam">Nepoželjno</string>
 </resources>

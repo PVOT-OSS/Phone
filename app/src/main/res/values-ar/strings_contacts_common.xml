@@ -117,14 +117,5 @@
   <string name="send_and_call_button">إرسال واتصال</string>
   <string name="call_subject_limit">%1$s / %2$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">علامة تبويب %1$s.</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="zero"> %1$s علامة تبويب. %2$d عناصر غير مقروءة. </item>
-    <item quantity="one"> %1$s علامة تبويب. عنصر واحد (%2$d) غير مقروء. </item>
-    <item quantity="two"> علامتا تبويب %1$s. %2$d عناصر غير مقروءة. </item>
-    <item quantity="few"> %1$s علامات تبويب. %2$d عناصر غير مقروءة. </item>
-    <item quantity="many"> %1$s علامة تبويب. %2$d عناصر غير مقروءة. </item>
-    <item quantity="other"> %1$s علامة تبويب. %2$d عناصر غير مقروءة. </item>
-  </plurals>
   <string name="description_search_video_call">مكالمة فيديو</string>
 </resources>

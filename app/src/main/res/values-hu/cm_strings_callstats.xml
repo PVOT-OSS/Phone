@@ -23,22 +23,8 @@
     <string name="call_stats_blocked">Blokkolt: <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_percent"><xliff:g id="percent">%d</xliff:g>%%</string>
     <string name="call_stats_header_total">Összesen <xliff:g id="call_count">%1$s</xliff:g> db, <xliff:g id="duration">%2$s</xliff:g> hosszban</string>
-    <string name="call_stats_header_total_callsonly">Összesen: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Kezdődátum</string>
-    <string name="call_stats_filter_to">Záródátum</string>
-    <string name="call_stats_filter_picker_title">Szűrési tartomány</string>
-    <string name="date_quick_selection">Gyorskiválasztás</string>
-    <string name="date_qs_currentmonth">Jelenlegi hónap</string>
-    <string name="date_qs_currentquarter">Jelenlegi negyedév</string>
-    <string name="date_qs_currentyear">Jelenlegi év</string>
-    <string name="date_qs_lastweek">Előző hét</string>
-    <string name="date_qs_lastmonth">Előző hónap</string>
-    <string name="date_qs_lastquarter">Előző negyedév</string>
-    <string name="date_qs_lastyear">Előző év</string>
     <string name="call_stats_date_filter">Időszakbeállítás</string>
     <string name="call_stats_reset_filter">Időszaktörlés</string>
-    <string name="call_stats_sort_by_duration">Rendezés hívásidőtartam szerint</string>
-    <string name="call_stats_sort_by_count">Rendezés hívások száma szerint</string>
     <string name="call_stats_title_for_number">Ez a szám</string>
     <string name="call_stats_title_of_total">Az összesből</string>
     <string name="call_stats_title_durations">Hívásidőtartam</string>

@@ -37,8 +37,4 @@
   <string name="description_via_number_phone_account">на %1$s, праз %2$s</string>
   <string name="voicemail_string">Галасавая пошта</string>
   <string name="just_now">Зараз</string>
-  <string name="new_call_log_carrier_video">Відэавыклік праз аператара</string>
-  <string name="new_call_log_unknown">Невядома</string>
-  <string name="new_call_log_secondary_blocked">Заблакіравана</string>
-  <string name="new_call_log_secondary_spam">Спам</string>
 </resources>

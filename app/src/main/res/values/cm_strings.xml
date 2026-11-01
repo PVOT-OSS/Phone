@@ -16,7 +16,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="incall_category_key" translatable="false">dialer_general_incall_category_key</string>
     <string name="incall_category_title">In-call</string>
     <string name="incall_enable_dnd_title">Enable Do Not Disturb during calls</string>
     <string name="incall_vibrate_outgoing_key" translatable="false">incall_vibrate_outgoing</string>
@@ -32,9 +31,9 @@
     <string name="allow">Allow</string>
     <string name="deny">Deny</string>
 
-    <string name="call_recording_category_key" translatable="false">call_recording_category</string>
     <string name="call_recording_category_title">Call recording</string>
     <string name="call_recording_format_key" translatable="false">call_recording_format</string>
+    <string name="call_recording_format_default" translatable="false">0</string>
     <string name="call_recording_format">Audio format</string>
     <string name="wb_amr_format" translatable="false">AMR-WB</string>
     <string name="aac_format" translatable="false">AAC</string>

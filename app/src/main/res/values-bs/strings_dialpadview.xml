@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">Da postavite govornu poštu, idite na Meni &gt; Postavke.</string>
   <string name="add_2sec_pause">Dodajte pauzu od 2 sekunde</string>
   <string name="add_wait">Dodajte čekanje</string>
-  <string name="dialer_useDtmfDialpad">Korištenje tastature za tonsko biranje</string>
-  <string name="dialer_returnToInCallScreen">Povratak na poziv</string>
-  <string name="dialer_addAnotherCall">Dodajte poziv</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">Učitavanje sa SIM kartice…</string>

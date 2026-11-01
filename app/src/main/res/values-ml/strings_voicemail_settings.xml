@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">വോയ്‌സ്‌മെയിൽ</string>
   <string name="voicemail_notifications_preference_title">അറിയിപ്പുകൾ</string>
   <string name="voicemail_change_greeting_preference_title">വോയ്‌സ്‌മെയിൽ ആശംസ</string>
   <string name="change_greeting_text">റെക്കോർഡ് ചെയ്യാൻ ടാപ്പ് ചെയ്യുക</string>

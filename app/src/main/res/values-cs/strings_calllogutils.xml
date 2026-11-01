@@ -37,8 +37,4 @@
   <string name="description_via_number_phone_account">na účet %1$s, z čísla %2$s</string>
   <string name="voicemail_string">Hlasová schránka</string>
   <string name="just_now">Právě teď</string>
-  <string name="new_call_log_carrier_video">Videohovor přes operátora</string>
-  <string name="new_call_log_unknown">Neznámé</string>
-  <string name="new_call_log_secondary_blocked">Blokované</string>
-  <string name="new_call_log_secondary_spam">Spam</string>
 </resources>

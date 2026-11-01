@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">هێڵەکانی یارمەتی</string>
-    <string name="helplines_loading">بارکردن…</string>
     <string name="helplines_empty">هیچ هێڵێکی یارمەتی نەدۆزرایەوە.\nسیمکارتێک دابنێ و دووبارە هەوڵ بدەرەوە</string>
     <string name="helplines_help">یارمەتی</string>
     <string name="helplines_help_title">ئەمانە بۆ پەیوەندیکردن مەترسییان نییە</string>

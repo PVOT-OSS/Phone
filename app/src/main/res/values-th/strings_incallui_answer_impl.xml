@@ -17,5 +17,4 @@
   <string name="a11y_description_incoming_call_answer_and_release">รับและวางสาย</string>
   <string name="call_incoming_video_is_off">วิดีโอปิดอยู่</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">ใช้สองนิ้วเลื่อนขึ้นเพื่อรับสายและเลื่อนลงเพื่อตัดสาย</string>
-  <string name="call_incoming_important">สำคัญ</string>
 </resources>

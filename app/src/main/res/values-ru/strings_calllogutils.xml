@@ -37,8 +37,4 @@
   <string name="description_via_number_phone_account">%1$s, номер %2$s</string>
   <string name="voicemail_string">Голосовая почта</string>
   <string name="just_now">Только что</string>
-  <string name="new_call_log_carrier_video">Видеовызов</string>
-  <string name="new_call_log_unknown">Неизвестный номер</string>
-  <string name="new_call_log_secondary_blocked">Заблокированные</string>
-  <string name="new_call_log_secondary_spam">Спам</string>
 </resources>

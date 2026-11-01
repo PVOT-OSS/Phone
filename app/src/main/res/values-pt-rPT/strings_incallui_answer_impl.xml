@@ -17,5 +17,4 @@
   <string name="a11y_description_incoming_call_answer_and_release">Atender e terminar uma chamada em curso</string>
   <string name="call_incoming_video_is_off">O vídeo está desativado</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Deslize rapidamente com dois dedos para cima para responder. Deslize rapidamente com dois dedos para baixo para recusar.</string>
-  <string name="call_incoming_important">Importante</string>
 </resources>

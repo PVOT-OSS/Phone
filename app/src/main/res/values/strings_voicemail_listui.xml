@@ -36,6 +36,5 @@ If you do not accept all of these terms and conditions, do not use Visual Voice 
   <string translatable="false" name="verizon_terms_and_conditions_accept_english">Turn On</string>
 
   <!-- Text for snackbar to undo a voicemail delete. [CHAR LIMIT=30] -->
-  <string name="snackbar_voicemail_deleted">Voicemail deleted</string>
 
 </resources>

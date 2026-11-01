@@ -5,11 +5,8 @@
   <string name="action_copy_number_text">Nömrəni kopyalayın</string>
   <string name="action_edit_number_before_call">Zəng etmədən öncə nömrəyə düzəliş edin</string>
   <string name="call_log_delete_all">Zəng tarixçəsini təmizlə</string>
-  <string name="call_log_trash_voicemail">Səsli məktubu silin</string>
-  <string name="snackbar_voicemail_deleted">Səsli məktub silindi</string>
   <string name="clearCallLogConfirmation_title">Zəng tarixçəsi təmizlənsin?</string>
   <string name="clearCallLogConfirmation">Bu, tarixçənizdən bütün zəngləri siləcəkdir</string>
-  <string name="clearCallLogProgress_title">Zəng tarixçəsi silinir…</string>
   <string name="notification_missedCallTitle">Buraxılmış zəng</string>
   <string name="notification_missedWorkCallTitle">Buraxılmış iş çağrısı</string>
   <string name="notification_missedCallsTitle">Buraxılmış zənglər</string>
@@ -29,18 +26,9 @@
   <string name="voicemail_fetching_content">Səsli poçt yüklənir…</string>
   <string name="voicemail_fetching_timout">Səsli poçtu yükləmək mümkün olmadı</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
-  <string name="description_playback_speakerphone">Spikerfonu aktiv və ya deaktiv edin</string>
-  <string name="description_playback_seek">Oxutma pozisiyası axtarın</string>
   <string name="action_menu_call_history_description">Zəng tarixçəsi</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">Daha çox seçim</string>
   <string name="dialer_settings_label">Ayarlar</string>
-  <string name="description_entering_bulk_action_mode">Toplu əməliyyat rejiminə daxil olunur</string>
-  <string name="description_leaving_bulk_action_mode">Toplu əməliyyat rejimi tərk edilir</string>
-  <string name="description_selecting_bulk_action_mode">%1$s seçildi</string>
-  <string name="description_unselecting_bulk_action_mode">%1$s seçilmədi</string>
-  <string name="description_contact_details">%1$s üçün kontakt detalları</string>
-  <string name="description_spam_contact_details">%1$s şübhəli spam zəng edəni üçün kontakt detalları</string>
-  <string name="description_num_calls">%1$s zəng.</string>
   <string name="description_video_call">Video çağrı.</string>
   <string name="description_start_voice_search">Səs axtarışına başlayın</string>
   <string name="voicemail">Səsli poçt</string>
@@ -69,25 +57,16 @@
   <string name="search_shortcut_add_to_contact">Kontakta əlavə edin</string>
   <string name="search_shortcut_send_sms_message">SMS göndərin</string>
   <string name="search_shortcut_make_video_call">Video zəng edin</string>
-  <string name="select_all">Hamısını seçin</string>
   <string name="call_log_action_video_call">Video zəng</string>
   <string name="call_log_action_send_message">Mesaj göndərin</string>
   <string name="call_log_action_details">Zəng detalları</string>
   <string name="call_log_action_share_voicemail">Bu şəxsə göndərin:</string>
   <string name="call_log_action_call">^1 nömrəsinə zəng edin</string>
-  <string name="description_incoming_missed_call">Buraxılmış zənglər: ^1, ^2, ^3, ^4.</string>
-  <string name="description_incoming_answered_call">Zəngləri cavablandırıb: ^1, ^2, ^3, ^4.</string>
-  <string name="description_unread_voicemail">^1, ^2, ^3, ^4 hesabına gələn oxunmamış səsli mesaj.</string>
-  <string name="description_read_voicemail">^1, ^2, ^3, ^4 hesabına gələn səsli mesaj.</string>
-  <string name="description_outgoing_call">Zəng et: ^1, ^2, ^3, ^4.</string>
   <string name="call_log_via_number">%1$s vasitəsilə</string>
   <string name="call_log_via_number_phone_account">%1$s %2$s vasitəsilə</string>
   <string name="description_call_action">Çağrı ^1</string>
   <string name="description_video_call_action">^1 video zəng edin.</string>
   <string name="description_voicemail_action">^1 tərəfdən səsli mesajı dinləyin</string>
-  <string name="description_create_new_contact_action">^1 üçün kontakt yaradın</string>
-  <string name="description_add_to_existing_contact_action">Mövcud kontakta ^1 əlavə edin</string>
-  <string name="description_details_action">^1 üçün detalları çağırın</string>
   <string name="call_log_header_today">Bu gün</string>
   <string name="call_log_header_yesterday">Dünən</string>
   <string name="call_log_header_other">Keçmi</string>
@@ -113,9 +92,7 @@
   <string name="permission_no_calllog">Çağrı jurnalınızı görmək üçün Telefon icazəsini aktivləşdirin.</string>
   <string name="toast_cannot_write_system_settings">Telefon tətbiqinin sistem ayarlarına yazmaq icazəsi yoxdur.</string>
   <string name="blocked_number_call_log_label">Bloklanmış</string>
-  <string name="call_log_action_block_report_number">Spamı blok edin/bildirin</string>
   <string name="call_log_action_block_number">Nömrəni blok edin</string>
-  <string name="call_log_action_remove_spam">Spam deyil</string>
   <string name="call_log_action_unblock_number">Nömrəni blokdan çıxarın</string>
   <string name="spam_number_call_log_label">Spam</string>
 </resources>

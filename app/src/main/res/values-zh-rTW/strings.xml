@@ -5,11 +5,8 @@
   <string name="action_copy_number_text">複製號碼</string>
   <string name="action_edit_number_before_call">撥打前編輯號碼</string>
   <string name="call_log_delete_all">清除通話記錄</string>
-  <string name="call_log_trash_voicemail">刪除語音留言</string>
-  <string name="snackbar_voicemail_deleted">已刪除語音留言</string>
   <string name="clearCallLogConfirmation_title">清除通話記錄？</string>
   <string name="clearCallLogConfirmation">這項操作會將所有通話從您的記錄中刪除</string>
-  <string name="clearCallLogProgress_title">正在清除通話記錄…</string>
   <string name="notification_missedCallTitle">未接來電</string>
   <string name="notification_missedWorkCallTitle">未接公司來電</string>
   <string name="notification_missedCallsTitle">未接來電</string>
@@ -29,18 +26,9 @@
   <string name="voicemail_fetching_content">正在載入語音留言…</string>
   <string name="voicemail_fetching_timout">無法載入語音留言</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
-  <string name="description_playback_speakerphone">切換擴音器開關</string>
-  <string name="description_playback_seek">指定播放時間點</string>
   <string name="action_menu_call_history_description">通話記錄</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">更多選項</string>
   <string name="dialer_settings_label">設定</string>
-  <string name="description_entering_bulk_action_mode">已進入大量操作模式</string>
-  <string name="description_leaving_bulk_action_mode">已離開大量操作模式</string>
-  <string name="description_selecting_bulk_action_mode">已選取：%1$s</string>
-  <string name="description_unselecting_bulk_action_mode">已取消選取：%1$s</string>
-  <string name="description_contact_details">「%1$s」的聯絡詳細資料</string>
-  <string name="description_spam_contact_details">可疑的騷擾/廣告電話來電者 (%1$s) 的聯絡資訊</string>
-  <string name="description_num_calls">通話 %1$s 次。</string>
   <string name="description_video_call">視訊通話。</string>
   <string name="description_start_voice_search">開始進行語音搜尋</string>
   <string name="voicemail">語音留言</string>
@@ -69,25 +57,16 @@
   <string name="search_shortcut_add_to_contact">新增至聯絡人</string>
   <string name="search_shortcut_send_sms_message">傳送簡訊</string>
   <string name="search_shortcut_make_video_call">進行視訊通話</string>
-  <string name="select_all">全選</string>
   <string name="call_log_action_video_call">視訊通話</string>
   <string name="call_log_action_send_message">傳送簡訊</string>
   <string name="call_log_action_details">通話詳細資料</string>
   <string name="call_log_action_share_voicemail">傳送至…</string>
   <string name="call_log_action_call">撥號給「^1」</string>
-  <string name="description_incoming_missed_call">未接來電：^1/^2/^3/^4</string>
-  <string name="description_incoming_answered_call">已接來電：^1/^2/^3/^4</string>
-  <string name="description_unread_voicemail">您有一則未讀語音留言，來電者：^1，^2，^3，^4。</string>
-  <string name="description_read_voicemail">您有一則語音留言，來電者：^1，^2，^3，^4。</string>
-  <string name="description_outgoing_call">撥出通話：^1/^2/^3/^4</string>
   <string name="call_log_via_number">透過 %1$s</string>
   <string name="call_log_via_number_phone_account">%1$s (透過 %2$s)</string>
   <string name="description_call_action">撥號給「^1」</string>
   <string name="description_video_call_action">與「^1」視訊通話。</string>
   <string name="description_voicemail_action">聽取「^1」的語音留言</string>
-  <string name="description_create_new_contact_action">建立「^1」的聯絡人資訊</string>
-  <string name="description_add_to_existing_contact_action">將「^1」新增到現有的聯絡人</string>
-  <string name="description_details_action">與「^1」通話的詳細資料</string>
   <string name="call_log_header_today">今天</string>
   <string name="call_log_header_yesterday">昨天</string>
   <string name="call_log_header_other">較舊</string>
@@ -113,9 +92,7 @@
   <string name="permission_no_calllog">如要查看您的通話記錄，請開啟「電話」存取權限。</string>
   <string name="toast_cannot_write_system_settings">電話應用程式的權限不足，無法寫入系統設定。</string>
   <string name="blocked_number_call_log_label">已封鎖</string>
-  <string name="call_log_action_block_report_number">封鎖/回報為騷擾/廣告電話</string>
   <string name="call_log_action_block_number">封鎖號碼</string>
-  <string name="call_log_action_remove_spam">非騷擾/廣告電話</string>
   <string name="call_log_action_unblock_number">解除封鎖號碼</string>
   <string name="spam_number_call_log_label">騷擾/廣告電話</string>
 </resources>

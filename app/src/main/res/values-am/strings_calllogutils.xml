@@ -33,8 +33,4 @@
   <string name="description_via_number_phone_account">በ %1$s ላይ፣ በ %2$s በኩል</string>
   <string name="voicemail_string">የድምፅ መልዕክት</string>
   <string name="just_now">ልክ አሁን</string>
-  <string name="new_call_log_carrier_video">የአገልግሎት አቅራቢ ቪዲዮ</string>
-  <string name="new_call_log_unknown">ያልታወቀ</string>
-  <string name="new_call_log_secondary_blocked">የታገደ</string>
-  <string name="new_call_log_secondary_spam">አይፈለጌ መልዕክት</string>
 </resources>

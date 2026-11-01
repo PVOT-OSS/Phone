@@ -33,8 +33,4 @@
   <string name="description_via_number_phone_account">fiók: %1$s, szám: %2$s</string>
   <string name="voicemail_string">Hangposta</string>
   <string name="just_now">Éppen most</string>
-  <string name="new_call_log_carrier_video">Szolgáltatói videohívás</string>
-  <string name="new_call_log_unknown">Ismeretlen</string>
-  <string name="new_call_log_secondary_blocked">Letiltva</string>
-  <string name="new_call_log_secondary_spam">Spam</string>
 </resources>

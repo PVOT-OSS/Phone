@@ -17,5 +17,4 @@
   <string name="a11y_description_incoming_call_answer_and_release">ይመልሱ እና በመካሄድ ላይ ያለ ጥሪን ይጨርሱ</string>
   <string name="call_incoming_video_is_off">ቪዲዮ ጠፍቷል</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">ለመመለስ በሁለት ጣት ወደ ላይ ያንሸራቱ። ላለመቀበል በሁለት ጣት ወደ ታች ያንሸራቱ።</string>
-  <string name="call_incoming_important">አስፈላጊ</string>
 </resources>

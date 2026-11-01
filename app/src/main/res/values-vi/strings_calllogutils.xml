@@ -33,8 +33,4 @@
   <string name="description_via_number_phone_account">trên %1$s, qua %2$s</string>
   <string name="voicemail_string">Thư thoại</string>
   <string name="just_now">Vừa xong</string>
-  <string name="new_call_log_carrier_video">Cuộc gọi video của nhà mạng</string>
-  <string name="new_call_log_unknown">Không xác định</string>
-  <string name="new_call_log_secondary_blocked">Bị chặn</string>
-  <string name="new_call_log_secondary_spam">Spam</string>
 </resources>

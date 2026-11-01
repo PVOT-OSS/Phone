@@ -117,11 +117,5 @@
   <string name="send_and_call_button">TRIMITEȚI ȘI APELAȚI</string>
   <string name="call_subject_limit">%1$s/%2$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">Fila %1$s</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="one"> Fila %1$s. %2$d element necitit. </item>
-    <item quantity="few"> Fila %1$s. %2$d elemente necitite. </item>
-    <item quantity="other"> Fila %1$s. %2$d de elemente necitite. </item>
-  </plurals>
   <string name="description_search_video_call">Apel video</string>
 </resources>

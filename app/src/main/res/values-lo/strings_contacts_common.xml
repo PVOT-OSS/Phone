@@ -117,10 +117,5 @@
   <string name="send_and_call_button">ສົ່ງ ແລະ ໂທ</string>
   <string name="call_subject_limit">%1$s / %2$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">ແຖບ %1$s.</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="one">ແຖບ %1$s. %2$d ລາຍການບໍ່ທັນໄດ້ອ່ານ. </item>
-    <item quantity="other">ແຖບ %1$s. %2$d ລາຍການບໍ່ທັນໄດ້ອ່ານ. </item>
-  </plurals>
   <string name="description_search_video_call">ໂທວິດີໂອ</string>
 </resources>

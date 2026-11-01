@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">Kõneposti seadistamiseks tehke valikud Menüü &gt; Seaded.</string>
   <string name="add_2sec_pause">Lisa kahesekundiline paus</string>
   <string name="add_wait">Lisa ootamine</string>
-  <string name="dialer_useDtmfDialpad">Kasuta puutetooniga klahvistikku</string>
-  <string name="dialer_returnToInCallScreen">Naase käimasolevale kõnele</string>
-  <string name="dialer_addAnotherCall">Lisa kõne</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">Laadimine SIM-kaardilt …</string>

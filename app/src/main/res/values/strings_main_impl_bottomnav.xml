@@ -23,5 +23,4 @@
   <string name="tab_title_voicemail">Voicemail</string>
 
   <!-- Notification badge indicating that there are more than 9 notifications for the user [CHAR LIMIT=3] -->
-  <string name="bottom_nav_count_9_plus">9+</string>
 </resources>

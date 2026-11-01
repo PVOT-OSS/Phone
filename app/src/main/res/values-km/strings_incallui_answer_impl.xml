@@ -17,5 +17,4 @@
   <string name="a11y_description_incoming_call_answer_and_release">ឆ្លើយ និង​បញ្ចប់​ការ​ហៅ​ទូរសព្ទ​ដែល​កំពុង​ដំណើរការ</string>
   <string name="call_incoming_video_is_off">វីដេអូត្រូវបានបិទ</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">អូស​ម្រាម​ដៃ​ពីរ​ឡើងលើ​ ដើម្បី​ឆ្លើយ។ អូស​ម្រាមដៃ​ពីរ​ចុះ​ក្រោម​ ដើម្បី​បដិសេធ។</string>
-  <string name="call_incoming_important">សំខាន់</string>
 </resources>

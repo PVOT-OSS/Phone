@@ -10,7 +10,6 @@
   <string name="contact_menu_voice_call">Səsli Zəng</string>
   <string name="contact_menu_video_call">Video Zəng</string>
   <string name="contact_menu_message">Mesaj</string>
-  <string name="contact_menu_remove">Silin</string>
   <string name="contact_menu_contact_info">Kontakt məlumatı</string>
   <string name="suggested_contact_bottom_sheet_add_favorite_option">Sevimlilərə əlavə edin</string>
   <string name="speed_dial_contacts_permission_description">Sürətli yığımı aktivləşdirmək üçün, Kontakt icazələrini aktivləşdirin.</string>

@@ -17,5 +17,4 @@
   <string name="a11y_description_incoming_call_answer_and_release">Чалууга жооп бериңиз же учурдагы чалууну аяктаңыз</string>
   <string name="call_incoming_video_is_off">Видео өчүк</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Жооп берүү үчүн экранды өйдө сүрүп, четке кагуу үчүн ылдый сүрүп коюңуз.</string>
-  <string name="call_incoming_important">Маанилүү</string>
 </resources>

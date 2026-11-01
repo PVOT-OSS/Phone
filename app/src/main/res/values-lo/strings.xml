@@ -5,11 +5,8 @@
   <string name="action_copy_number_text">ອັດ​ສຳ​ເນົາ​ໝາຍເລກ</string>
   <string name="action_edit_number_before_call">ແກ້ໄຂໝາຍເລກກ່ອນໂທ</string>
   <string name="call_log_delete_all">ລຶບ​ປະ​ຫວັດ​ການ​ໂທ​</string>
-  <string name="call_log_trash_voicemail">ລຶບຂໍ້ຄວາມສຽງ</string>
-  <string name="snackbar_voicemail_deleted">ລຶບ​ຂໍ້​ຄວາມ​ສຽງ​ແລ້ວ</string>
   <string name="clearCallLogConfirmation_title">ລຶບ​ປະ​ຫວັດ​ການ​ໂທ​ບໍ?</string>
   <string name="clearCallLogConfirmation">ອັນ​ນີ້​ຈະ​ລຶບ​ທຸກ​ສາຍ​ໂທ​ຈາກ​ປະ​ຫວັດ​ຂອງ​ທ່ານ</string>
-  <string name="clearCallLogProgress_title">ກຳ​ລັງ​ລຶບ​ປະ​ຫວັດ​ການ​ໂທ…</string>
   <string name="notification_missedCallTitle">ສາຍທີ່ບໍ່ໄດ້ຮັບ</string>
   <string name="notification_missedWorkCallTitle">ສາຍບໍ່ໄດ້ຮັບຈາກບ່ອນເຮັດວຽກ</string>
   <string name="notification_missedCallsTitle">ສາຍທີ່ບໍ່ໄດ້ຮັບ</string>
@@ -29,18 +26,9 @@
   <string name="voicemail_fetching_content">ກຳ​ລັງ​ໂຫຼດ​ຂໍ້​ຄວາມ​ສຽງ…</string>
   <string name="voicemail_fetching_timout">ບໍ່​ສາ​ມາດ​ໂຫຼດ​ຂໍ້​ຄວາມ​ສຽງ​ໄດ້</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
-  <string name="description_playback_speakerphone">​ປິດຫຼື​ເປີດ​ລຳ​ໂພງ​ມື​ຖື</string>
-  <string name="description_playback_seek">​ຊອກ​ຫາ​ຕຳ​​ແໜ່ງ​ຫຼິ້ນ</string>
   <string name="action_menu_call_history_description">ປະຫວັດການໂທ</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">ໂຕເລືອກເພີ່ມເຕີມ</string>
   <string name="dialer_settings_label">ການ​ຕັ້ງ​ຄ່າ</string>
-  <string name="description_entering_bulk_action_mode">ກຳລັງເຂົ້າໂໝດຄຳສັ່ງຈຳນວນຫຼາຍ</string>
-  <string name="description_leaving_bulk_action_mode">ອອກຈາກໂໝດຄຳສັ່ງຈຳນວນຫຼາຍແລ້ວ</string>
-  <string name="description_selecting_bulk_action_mode">ເລືອກ %1$s ແລ້ວ</string>
-  <string name="description_unselecting_bulk_action_mode">ເຊົາເລືອກ %1$s ແລ້ວ</string>
-  <string name="description_contact_details">ລາຍລະອຽດ​ລາຍຊື່​ຜູ່ຕິດຕໍ່​ສຳລັບ %1$s</string>
-  <string name="description_spam_contact_details">ລາຍລະອຽດການຕິດຕໍ່ສຳລັບຜູ້ໂທທີ່ສົງໄສວ່າເປັນສະແປມ %1$s</string>
-  <string name="description_num_calls">%1$s ການໂທ.</string>
   <string name="description_video_call">ການ​ໂທ​ດ້ວຍ​ວິ​ດີ​ໂອ.</string>
   <string name="description_start_voice_search">ເລີ່ມການຊອກຫາດ້ວຍສຽງ</string>
   <string name="voicemail">ຂໍ້ຄວາມສຽງ</string>
@@ -69,25 +57,16 @@
   <string name="search_shortcut_add_to_contact">ເພີ່ມ​ໃສ່​ລາຍ​ຊື່</string>
   <string name="search_shortcut_send_sms_message">ສົ່ງ SMS</string>
   <string name="search_shortcut_make_video_call">​ໂທ​ອອກ​ດ້ວຍ​ວິ​ດີ​ໂອ</string>
-  <string name="select_all">ເລືອກທັງໝົດ</string>
   <string name="call_log_action_video_call">​ໂທ​ດ້ວຍ​ວິ​ດີ​ໂອ</string>
   <string name="call_log_action_send_message">ສົ່ງຂໍ້ຄວາມ</string>
   <string name="call_log_action_details">ລາຍລະອຽດ​ການໂທ</string>
   <string name="call_log_action_share_voicemail">ສົ່ງໄປ ...</string>
   <string name="call_log_action_call">ໂທຫາ ^1</string>
-  <string name="description_incoming_missed_call">ສາຍ​ບໍ່​ໄດ້​ຮັບ​ຈາກ ^1, ^2, ^3, ^4.</string>
-  <string name="description_incoming_answered_call">ຮັບ​ສາຍ​ໂທ​ຈາກ ^1, ^2, ^3, ^4.</string>
-  <string name="description_unread_voicemail">ຂໍ້​ຄວາມ​ສຽງ​ບໍ່​ໄດ້​ອ່ານ​ຈາກ ^1, ^2, ^3, ^4.</string>
-  <string name="description_read_voicemail">ຂໍ້​ຄວາມ​ສຽງ​ຈາກ ^1, ^2, ^3, ^4.</string>
-  <string name="description_outgoing_call">ໂທ​ຫາ ^1, ^2, ^3, ^4.</string>
   <string name="call_log_via_number">ຜ່ານ %1$s</string>
   <string name="call_log_via_number_phone_account">%1$s ຜ່ານ %2$s</string>
   <string name="description_call_action">ໂທ​ຫາ ^1</string>
   <string name="description_video_call_action">ການ​ໂທວິ​ດີ​ໂອ ^1.</string>
   <string name="description_voicemail_action">​ຟັງ​ຂໍ້​ຄວາມ​ສຽງ​ຈາກ ^1</string>
-  <string name="description_create_new_contact_action">ສ້າງ​ລາຍ​ຊື່​ສຳ​ລັບ ^1</string>
-  <string name="description_add_to_existing_contact_action">ເພີ່ມ ^1 ໃສ່​ລາຍ​ຊື່​ທີ່​ມີ​ຢູ່</string>
-  <string name="description_details_action">ລາຍລະອຽດ​ການ​ໂທ​ສຳລັບ ^1</string>
   <string name="call_log_header_today">ມື້ນີ້</string>
   <string name="call_log_header_yesterday">ມື້​ວານ​ນີ້</string>
   <string name="call_log_header_other">ເກົ່າກວ່າ</string>
@@ -113,9 +92,7 @@
   <string name="permission_no_calllog">ເພື່ອ​ເບິ່ງ​ບັນ​ທຶກ​ການ​ໂທ​ຂອງ​ທ່ານ, ເປີດ​ການ​ອະ​ນຸ​ຍາດ​ໂທ​ລະ​ສັບ.</string>
   <string name="toast_cannot_write_system_settings">ແອັບໂທລະສັບບໍ່ມີການອະນຸຍາດໃຫ້ຂຽນໃສ່ການຕັ້ງຄ່າລະບົບ.</string>
   <string name="blocked_number_call_log_label">ບລັອກ​ແລ້ວ</string>
-  <string name="call_log_action_block_report_number">ບລັອກ/ລາຍງານສະແປມ</string>
   <string name="call_log_action_block_number">ບ​ລັອກ​ໝາຍ​ເລກ</string>
-  <string name="call_log_action_remove_spam">ບໍ່ແມ່ນສະແປມ</string>
   <string name="call_log_action_unblock_number">ປົດ​ບ​ລັອກ​ໝາຍ​ເລກ</string>
   <string name="spam_number_call_log_label">ສະແປມ</string>
 </resources>

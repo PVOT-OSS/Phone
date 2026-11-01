@@ -33,8 +33,4 @@
   <string name="description_via_number_phone_account">en %1$s por medio de %2$s</string>
   <string name="voicemail_string">Correo de voz</string>
   <string name="just_now">Recién</string>
-  <string name="new_call_log_carrier_video">Video del proveedor</string>
-  <string name="new_call_log_unknown">Desconocido</string>
-  <string name="new_call_log_secondary_blocked">Bloqueada</string>
-  <string name="new_call_log_secondary_spam">Spam</string>
 </resources>

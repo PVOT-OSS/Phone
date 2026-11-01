@@ -17,5 +17,4 @@
   <string name="a11y_description_incoming_call_answer_and_release">Rispondi e termina la chiamata in corso</string>
   <string name="call_incoming_video_is_off">Il video è disattivato</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Fai scorrere con due dita verso l\'alto per rispondere e verso il basso per rifiutare.</string>
-  <string name="call_incoming_important">Importante</string>
 </resources>

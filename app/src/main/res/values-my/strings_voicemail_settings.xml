@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">အသံမေးလ်</string>
   <string name="voicemail_notifications_preference_title">အသိပေးချက်များ</string>
   <string name="voicemail_change_greeting_preference_title">အသံမေးလ် နှုတ်ခွန်းဆက်သမှု</string>
   <string name="change_greeting_text">အသံဖမ်းရန် တို့ပါ</string>

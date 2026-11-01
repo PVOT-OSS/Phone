@@ -33,8 +33,4 @@
   <string name="description_via_number_phone_account">på %1$s via %2$s</string>
   <string name="voicemail_string">Talepost</string>
   <string name="just_now">Nå nettopp</string>
-  <string name="new_call_log_carrier_video">Video via mobiloperatør</string>
-  <string name="new_call_log_unknown">Ukjent</string>
-  <string name="new_call_log_secondary_blocked">Blokkert</string>
-  <string name="new_call_log_secondary_spam">Nettsøppel</string>
 </resources>

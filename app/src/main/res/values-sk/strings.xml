@@ -5,11 +5,8 @@
   <string name="action_copy_number_text">Kopírovať číslo</string>
   <string name="action_edit_number_before_call">Pred volaním upraviť číslo</string>
   <string name="call_log_delete_all">Vymazať históriu hovorov</string>
-  <string name="call_log_trash_voicemail">Odstrániť hlasovú správu</string>
-  <string name="snackbar_voicemail_deleted">Hlas. schránka odstránená</string>
   <string name="clearCallLogConfirmation_title">Chcete vymazať históriu hovorov?</string>
   <string name="clearCallLogConfirmation">Týmto z histórie odstránite všetky hovory.</string>
-  <string name="clearCallLogProgress_title">Vymazáva sa história hovorov...</string>
   <string name="notification_missedCallTitle">Zmeškaný hovor</string>
   <string name="notification_missedWorkCallTitle">Zmeškaný pracovný hovor</string>
   <string name="notification_missedCallsTitle">Zmeškané hovory</string>
@@ -31,18 +28,9 @@
   <string name="voicemail_fetching_content">Načítava sa hlasová schránka…</string>
   <string name="voicemail_fetching_timout">Hlasovú schránku sa nepodarilo načítať</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
-  <string name="description_playback_speakerphone">Zapnúť alebo vypnúť reproduktor</string>
-  <string name="description_playback_seek">Hľadať pozíciu prehrávania</string>
   <string name="action_menu_call_history_description">História hovorov</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">Ďalšie možnosti</string>
   <string name="dialer_settings_label">Nastavenia</string>
-  <string name="description_entering_bulk_action_mode">Vstupuje sa do režimu hromadných akcií</string>
-  <string name="description_leaving_bulk_action_mode">Odišli ste z režimu hromadných akcií</string>
-  <string name="description_selecting_bulk_action_mode">Položka %1$s bola vybraná</string>
-  <string name="description_unselecting_bulk_action_mode">Výber položky %1$s bol zrušený</string>
-  <string name="description_contact_details">Podrobnosti kontaktu pre %1$s</string>
-  <string name="description_spam_contact_details">Podrobnosti kontaktu pri podozrení, že volajúci %1$s je šíriteľ spamu</string>
-  <string name="description_num_calls">Počet volaní: %1$s.</string>
   <string name="description_video_call">Videohovor</string>
   <string name="description_start_voice_search">Spustenie hlasového vyhľadávania</string>
   <string name="voicemail">Hlasová schránka</string>
@@ -73,25 +61,16 @@
   <string name="search_shortcut_add_to_contact">Pridať ku kontaktu</string>
   <string name="search_shortcut_send_sms_message">Odoslať SMS</string>
   <string name="search_shortcut_make_video_call">Uskutočniť videohovor</string>
-  <string name="select_all">Vybrať všetko</string>
   <string name="call_log_action_video_call">Videohovor</string>
   <string name="call_log_action_send_message">Odoslať správu</string>
   <string name="call_log_action_details">Podrobnosti hovoru</string>
   <string name="call_log_action_share_voicemail">Poslať cez aplikáciu…</string>
   <string name="call_log_action_call">Zavolať kontakt ^1</string>
-  <string name="description_incoming_missed_call">Zmeškaný hovor – kontakt ^1, ^2, ^3, ^4.</string>
-  <string name="description_incoming_answered_call">Prijatý hovor – kontakt ^1, ^2, ^3, ^4.</string>
-  <string name="description_unread_voicemail">Neprečítaná správa v hlasovej schránke od ^1, ^2, ^3, ^4.</string>
-  <string name="description_read_voicemail">Správa v hlasovej schránke od ^1, ^2, ^3, ^4.</string>
-  <string name="description_outgoing_call">Volanie – kontakt ^1, ^2, ^3, ^4.</string>
   <string name="call_log_via_number">prostredníctvom čísla %1$s</string>
   <string name="call_log_via_number_phone_account">%1$s prostredníctvom čísla %2$s</string>
   <string name="description_call_action">Zavolať kontakt ^1</string>
   <string name="description_video_call_action">Spustiť videohovor s kontaktom ^1</string>
   <string name="description_voicemail_action">Vypočuť si správu v hlasovej schránke od používateľa ^1</string>
-  <string name="description_create_new_contact_action">Vytvoriť kontakt pre ^1</string>
-  <string name="description_add_to_existing_contact_action">Pridať údaj ^1 ku kontaktu</string>
-  <string name="description_details_action">Podrobnosti hovoru pre kontakt ^1</string>
   <string name="call_log_header_today">Dnes</string>
   <string name="call_log_header_yesterday">Včera</string>
   <string name="call_log_header_other">Staršie</string>
@@ -117,9 +96,7 @@
   <string name="permission_no_calllog">Ak si chcete zobraziť denník hovorov, zapnite povolenie Telefón.</string>
   <string name="toast_cannot_write_system_settings">Telefónna aplikácia nemá povolenie na zápis do nastavení systému.</string>
   <string name="blocked_number_call_log_label">Blokované</string>
-  <string name="call_log_action_block_report_number">Blokovať / nahlásiť spam</string>
   <string name="call_log_action_block_number">Blokovať číslo</string>
-  <string name="call_log_action_remove_spam">Toto nie je spam</string>
   <string name="call_log_action_unblock_number">Zrušiť blokovanie čísla</string>
   <string name="spam_number_call_log_label">Spam</string>
 </resources>

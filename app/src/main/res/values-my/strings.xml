@@ -5,11 +5,8 @@
   <string name="action_copy_number_text">နံပါတ်ကိုကူးရန်</string>
   <string name="action_edit_number_before_call">မခေါ်ဆိုမီ နံပါတ်ကိုတည်းဖြတ်ရန်</string>
   <string name="call_log_delete_all">ခေါ်ဆိုမှု မှတ်တမ်း ရှင်းရန်</string>
-  <string name="call_log_trash_voicemail">အသံပို့စာ အားဖျက်ရန်</string>
-  <string name="snackbar_voicemail_deleted">အသံမေးလ် ရှာတွေ့ခဲ့</string>
   <string name="clearCallLogConfirmation_title">ခေါ်ဆိုမှု မှတ်တမ်းကို ဖယ်ရှားရမလား။</string>
   <string name="clearCallLogConfirmation">ဒါက သင့် မှတ်တမ်းထဲက ခေါ်ဆိုမှုများ  အားလုံးကို ဖျက်ပစ်မည်</string>
-  <string name="clearCallLogProgress_title">ခေါ်ဆိုမှု မှတ်တမ်းကို ရှင်းနေ…</string>
   <string name="notification_missedCallTitle">လွဲသွားသော ဖုန်းခေါ်မှု</string>
   <string name="notification_missedWorkCallTitle">လွတ်သွားသည့် အလုပ်ဆိုင်ရာ ခ​ေါ်ဆိုမှု</string>
   <string name="notification_missedCallsTitle">လွတ်သွားသော ခေါ်ဆိုမှုများ</string>
@@ -29,18 +26,9 @@
   <string name="voicemail_fetching_content">အသံမေးလ်ကို တင်ပေးနေ…</string>
   <string name="voicemail_fetching_timout">အသံမေးလ်ကို တင်မပေးနိုင်ခဲ့</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
-  <string name="description_playback_speakerphone">စပီကာဖုန်းကို ဖွင့် သို့မဟုတ် ပိတ်ရန်</string>
-  <string name="description_playback_seek">အသံပြန်ဖွင့်ရေး နေရာကို ရှာရန်</string>
   <string name="action_menu_call_history_description">ခေါ်ဆိုမှုမှတ်တမ်း</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">ပိုမိုရွေးချယ်စရာများ</string>
   <string name="dialer_settings_label">ဆက်တင်များ</string>
-  <string name="description_entering_bulk_action_mode">တပြိုင်နက်တည်း စုပြုံလုပ်ဆောင်ချက်မုဒ်ကို ထည့်သွင်းခြင်း</string>
-  <string name="description_leaving_bulk_action_mode">တပြိုင်နက်တည်း စုပြုံလုပ်ဆောင်ချက်မုဒ်မှ ထွက်လိုက်သည်</string>
-  <string name="description_selecting_bulk_action_mode">ရွေးချယ်ထားသော %1$s</string>
-  <string name="description_unselecting_bulk_action_mode">မရွေးချယ်ထားသော %1$s</string>
-  <string name="description_contact_details">%1$s ရဲ့ အဆက်အသွယ် အသေးစိတ်</string>
-  <string name="description_spam_contact_details">သံသယဖြစ်ဖွယ်စပမ်းခေါ်ဆိုသူ %1$s အတွက် အဆက်အသွယ်အသေးစိတ်</string>
-  <string name="description_num_calls">%1$s ခါ</string>
   <string name="description_video_call">ဗီဒီယို ခေါ်ဆိုမှု</string>
   <string name="description_start_voice_search">အသံဖွင့်ရှာဖွေမှု စရန်</string>
   <string name="voicemail">အသံစာပို့စနစ်</string>
@@ -69,25 +57,16 @@
   <string name="search_shortcut_add_to_contact">အဆက်အသွယ်သို့ ပေါင်းထည့်ရန်</string>
   <string name="search_shortcut_send_sms_message">စာတို ပို့ရန်</string>
   <string name="search_shortcut_make_video_call">ဗီဒီယို ဖုန်းခေါ်ရန်</string>
-  <string name="select_all">အားလုံးကို ရွေးချယ်ပါ</string>
   <string name="call_log_action_video_call">ဗီဒီယို ခေါ်ဆိုမှု</string>
   <string name="call_log_action_send_message">စာ တစ်စောင် ပို့ပါ</string>
   <string name="call_log_action_details">ဖုန်းခေါ်မှု အသေးစိတ်အချက်အလက်</string>
   <string name="call_log_action_share_voicemail">... သို့ ပို့ပါ</string>
   <string name="call_log_action_call">^1 အား ခေါ်ပါ</string>
-  <string name="description_incoming_missed_call">^1၊ ^2၊ ^3၊ ^4 မှ ခေါ်ဆိုမှု လွတ်သွား၏။</string>
-  <string name="description_incoming_answered_call">^1၊ ^2၊ ^3၊ ^4 မှ ခ​ေါ်ဆိုမှုအား ဖြေထား၏။</string>
-  <string name="description_unread_voicemail">^1၊ ^2၊ ^3၊ ^4ထံမှ အသံစာကို ဖတ်ပါ။</string>
-  <string name="description_read_voicemail">^1၊ ^2၊ ^3၊ ^4ထံမှ အသံစာ။</string>
-  <string name="description_outgoing_call">^1၊ ^2၊ ^3၊ ^4 အား ခေါ်ခြင်း။</string>
   <string name="call_log_via_number">%1$s မှတစ်ဆင့်</string>
   <string name="call_log_via_number_phone_account">%1$s %2$s မှတစ်ဆင့်</string>
   <string name="description_call_action">^1 အားခေါ်ရန်</string>
   <string name="description_video_call_action">^1 ကိုဗီဒီယိုခေါ်ဆိုမည်။</string>
   <string name="description_voicemail_action">^1ထံမှ အသံစာကို နားထောင်ရန်</string>
-  <string name="description_create_new_contact_action">^1 အတွက် အဆက်အသွယ် ဖန်တီးမည်</string>
-  <string name="description_add_to_existing_contact_action">^1 အားလက်ရှိ အဆက်အသွယ်သို့ ပေါင်းထည့်မည်</string>
-  <string name="description_details_action">^1၏ ခေါ်ဆိုမှု အသေးစိတ်များ</string>
   <string name="call_log_header_today">ယနေ့</string>
   <string name="call_log_header_yesterday">မနေ့က</string>
   <string name="call_log_header_other">ပိုဟောင်းသော</string>
@@ -113,9 +92,7 @@
   <string name="permission_no_calllog">ခေါ်ဆိုမှုမှတ်တမ်းကို ကြည့်ရန်၊ ဖုန်းခွင့်ပြုချက်ကို ဖွင့်ပါ။</string>
   <string name="toast_cannot_write_system_settings">ဖုန်း အက်ပ်ဆီတွင် စနစ် ဆက်တင်များသို့ ရေးသားခွင့် မရှိပါ။</string>
   <string name="blocked_number_call_log_label">ပိတ်ဆို့ထား</string>
-  <string name="call_log_action_block_report_number">စပမ်းကို ပိတ်ဆို့ပါ/သတင်းပို့ပါ</string>
   <string name="call_log_action_block_number">နံပါတ်ကို ပိတ်ဆို့ရန်</string>
-  <string name="call_log_action_remove_spam">စပမ်း မဟုတ်ပါ</string>
   <string name="call_log_action_unblock_number">နံပါတ်ကို ဖွင့်မည်</string>
   <string name="spam_number_call_log_label">စပမ်း</string>
 </resources>

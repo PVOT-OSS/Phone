@@ -10,7 +10,6 @@
   <string name="contact_menu_voice_call">Panggilan Suara</string>
   <string name="contact_menu_video_call">Video Call</string>
   <string name="contact_menu_message">Pesan</string>
-  <string name="contact_menu_remove">Hapus</string>
   <string name="contact_menu_contact_info">Info kontak</string>
   <string name="suggested_contact_bottom_sheet_add_favorite_option">Tambahkan favorit</string>
   <string name="speed_dial_contacts_permission_description">Untuk mengaktifkan panggilan cepat, aktifkan izin Kontak.</string>

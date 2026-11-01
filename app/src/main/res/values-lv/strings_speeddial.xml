@@ -10,7 +10,6 @@
   <string name="contact_menu_voice_call">Balss zvans</string>
   <string name="contact_menu_video_call">Videozvans</string>
   <string name="contact_menu_message">Īsziņa</string>
-  <string name="contact_menu_remove">Noņemt</string>
   <string name="contact_menu_contact_info">Kontaktinf.</string>
   <string name="suggested_contact_bottom_sheet_add_favorite_option">Pievienot izlasei</string>
   <string name="speed_dial_contacts_permission_description">Lai iespējotu ātros zvanus, ieslēdziet atļauju Kontaktpersonas.</string>

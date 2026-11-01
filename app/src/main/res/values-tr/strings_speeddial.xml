@@ -10,7 +10,6 @@
   <string name="contact_menu_voice_call">Sesli Çağrı</string>
   <string name="contact_menu_video_call">Görüntülü Çağrı</string>
   <string name="contact_menu_message">Mesaj</string>
-  <string name="contact_menu_remove">Kaldır</string>
   <string name="contact_menu_contact_info">Kişi bilgisi</string>
   <string name="suggested_contact_bottom_sheet_add_favorite_option">Favori olarak ekle</string>
   <string name="speed_dial_contacts_permission_description">Hızlı aramayı etkinleştirmek için Kişiler iznini etkinleştirin.</string>

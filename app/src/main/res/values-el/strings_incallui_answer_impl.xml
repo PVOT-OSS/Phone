@@ -17,5 +17,4 @@
   <string name="a11y_description_incoming_call_answer_and_release">Απάντηση και τερματισμός κλήσης σε εξέλιξη</string>
   <string name="call_incoming_video_is_off">Το βίντεο είναι ανενεργό</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Σύρετε με δύο δάχτυλα, προς τα επάνω για απάντηση και προς τα κάτω για απόρριψη.</string>
-  <string name="call_incoming_important">Σημαντικό</string>
 </resources>

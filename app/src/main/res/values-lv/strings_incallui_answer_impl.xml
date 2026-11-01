@@ -17,5 +17,4 @@
   <string name="a11y_description_incoming_call_answer_and_release">Atbildiet un beidziet notiekošo zvanu</string>
   <string name="call_incoming_video_is_off">Video ir izslēgts</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Ar diviem pirkstiem velciet augšup, lai atbildētu. Ar diviem pirkstiem velciet lejup, lai noraidītu.</string>
-  <string name="call_incoming_important">Svarīgs</string>
 </resources>

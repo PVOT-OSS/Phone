@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">የድምጽ መልዕክትን ለማዘጋጀት፣ ወደ ምናሌ &gt; ቅንብሮች ይሂዱ።</string>
   <string name="add_2sec_pause">2 ሴኮንድ ፋታ አክል</string>
   <string name="add_wait">ቆይታ አክል</string>
-  <string name="dialer_useDtmfDialpad">ባለ ንኪ-ድምጽ የቁልፍ ሰሌዳ ይጠቀሙ</string>
-  <string name="dialer_returnToInCallScreen">በመካሄድ ላይ ወዳለው ጥሪ ተመለስ</string>
-  <string name="dialer_addAnotherCall">ጥሪ አክል</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">ከSIM ካርድ ላይ በመጫን ላይ…</string>

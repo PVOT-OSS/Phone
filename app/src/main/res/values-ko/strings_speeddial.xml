@@ -10,7 +10,6 @@
   <string name="contact_menu_voice_call">음성 통화</string>
   <string name="contact_menu_video_call">화상 통화</string>
   <string name="contact_menu_message">메시지</string>
-  <string name="contact_menu_remove">삭제</string>
   <string name="contact_menu_contact_info">연락처 정보</string>
   <string name="suggested_contact_bottom_sheet_add_favorite_option">즐겨찾기에 추가</string>
   <string name="speed_dial_contacts_permission_description">단축번호를 사용하려면 주소록 권한을 사용하도록 설정하세요.</string>

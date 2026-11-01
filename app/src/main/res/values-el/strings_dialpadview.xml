@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">Για τη ρύθμιση του αυτόματου τηλεφωνητή, μεταβείτε στο στοιχείο Μενού &gt; Ρυθμίσεις.</string>
   <string name="add_2sec_pause">Προσθήκη παύσης 2 δευτερολέπτων</string>
   <string name="add_wait">Προσθήκη αναμονής</string>
-  <string name="dialer_useDtmfDialpad">Χρησιμοποιήστε το πληκτρολόγιο αφής ηχητικών τόνων</string>
-  <string name="dialer_returnToInCallScreen">Επιστροφή στην κλήση που βρίσκεται σε εξέλιξη</string>
-  <string name="dialer_addAnotherCall">Προσθήκη κλήσης</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">Φόρτωση από κάρτα SIM…</string>

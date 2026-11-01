@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">Gå til Menu &gt; Indstillinger for at konfigurere telefonsvareren.</string>
   <string name="add_2sec_pause">Tilføj pause på 2 sek.</string>
   <string name="add_wait">Tilføj ventetid</string>
-  <string name="dialer_useDtmfDialpad">Brug trykknaptastatur</string>
-  <string name="dialer_returnToInCallScreen">Vend tilbage til igangværende opkald</string>
-  <string name="dialer_addAnotherCall">Tilføj opkald</string>
   <string name="imei">IMEI-nummer</string>
   <string name="meid">MEID-nummer</string>
   <string name="simContacts_emptyLoading">Der indlæses fra SIM-kortet…</string>

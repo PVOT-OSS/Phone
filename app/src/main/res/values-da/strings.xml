@@ -5,11 +5,8 @@
   <string name="action_copy_number_text">Kopiér nummeret</string>
   <string name="action_edit_number_before_call">Rediger nummeret før opkald</string>
   <string name="call_log_delete_all">Ryd opkaldshistorik</string>
-  <string name="call_log_trash_voicemail">Slet talemeddelelsen</string>
-  <string name="snackbar_voicemail_deleted">Talebeskeden blev slettet</string>
   <string name="clearCallLogConfirmation_title">Vil du rydde opkaldshistorikken?</string>
   <string name="clearCallLogConfirmation">Dette vil slette alle opkald fra din historik</string>
-  <string name="clearCallLogProgress_title">Opkaldshistorik ryddes...</string>
   <string name="notification_missedCallTitle">Ubesvarede opkald</string>
   <string name="notification_missedWorkCallTitle">Ubesvaret arbejdsopkald</string>
   <string name="notification_missedCallsTitle">Ubesvarede opkald</string>
@@ -29,18 +26,9 @@
   <string name="voicemail_fetching_content">Telefonsvarerbesked indlæses...</string>
   <string name="voicemail_fetching_timout">Telefonsvarerbesked kan ikke indlæses</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
-  <string name="description_playback_speakerphone">Slå medhør til eller fra</string>
-  <string name="description_playback_seek">Søg efter afspilningsposition</string>
   <string name="action_menu_call_history_description">Opkaldshistorik</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">Flere valgmuligheder</string>
   <string name="dialer_settings_label">Indstillinger</string>
-  <string name="description_entering_bulk_action_mode">Massehandlingstilstanden startes</string>
-  <string name="description_leaving_bulk_action_mode">Massehandlingstilstanden blev afsluttet</string>
-  <string name="description_selecting_bulk_action_mode">Valgt %1$s</string>
-  <string name="description_unselecting_bulk_action_mode">Fravalgt %1$s</string>
-  <string name="description_contact_details">Kontaktoplysninger for %1$s</string>
-  <string name="description_spam_contact_details">Kontaktoplysninger om formodet spammer %1$s</string>
-  <string name="description_num_calls">%1$s opkald.</string>
   <string name="description_video_call">Videoopkald.</string>
   <string name="description_start_voice_search">Start talesøgning</string>
   <string name="voicemail">Telefonsvarer</string>
@@ -69,25 +57,16 @@
   <string name="search_shortcut_add_to_contact">Føj til en kontaktperson</string>
   <string name="search_shortcut_send_sms_message">Send sms</string>
   <string name="search_shortcut_make_video_call">Foretag videoopkald</string>
-  <string name="select_all">Vælg alt</string>
   <string name="call_log_action_video_call">Videoopkald</string>
   <string name="call_log_action_send_message">Send en sms-besked</string>
   <string name="call_log_action_details">Opkaldsinfo</string>
   <string name="call_log_action_share_voicemail">Send til…</string>
   <string name="call_log_action_call">Ring til ^1</string>
-  <string name="description_incoming_missed_call">Mistet opkald fra ^1, ^2, ^3, ^4.</string>
-  <string name="description_incoming_answered_call">Besvaret opkald fra ^1, ^2, ^3, ^4.</string>
-  <string name="description_unread_voicemail">Ulæst talebesked fra ^1, ^2, ^3, ^4.</string>
-  <string name="description_read_voicemail">Talebesked fra ^1, ^2, ^3, ^4.</string>
-  <string name="description_outgoing_call">Ring til ^1, ^2, ^3, ^4.</string>
   <string name="call_log_via_number">via %1$s</string>
   <string name="call_log_via_number_phone_account">%1$s via %2$s</string>
   <string name="description_call_action">Ring til ^1</string>
   <string name="description_video_call_action">Videoopkald ^1.</string>
   <string name="description_voicemail_action">Lyt til indtalt besked fra ^1</string>
-  <string name="description_create_new_contact_action">Opret en kontaktperson for ^1</string>
-  <string name="description_add_to_existing_contact_action">Føj ^1 til en eksisterende kontaktperson</string>
-  <string name="description_details_action">Opkaldsoplysninger for ^1</string>
   <string name="call_log_header_today">I dag</string>
   <string name="call_log_header_yesterday">I går</string>
   <string name="call_log_header_other">Ældre</string>
@@ -113,9 +92,7 @@
   <string name="permission_no_calllog">Slå tilladelsen Telefon til for at se din opkaldsliste.</string>
   <string name="toast_cannot_write_system_settings">Opkaldsappen har ikke tilladelse til at ændre systemindstillinger.</string>
   <string name="blocked_number_call_log_label">Blokeret</string>
-  <string name="call_log_action_block_report_number">Bloker/rapportér spam</string>
   <string name="call_log_action_block_number">Bloker nummer</string>
-  <string name="call_log_action_remove_spam">Ikke spam</string>
   <string name="call_log_action_unblock_number">Fjern blokering af nummer</string>
   <string name="spam_number_call_log_label">Spam</string>
 </resources>

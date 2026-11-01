@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">వాయిస్ మెయిల్ సెటప్ చేయడానికి, మెను &gt; సెట్టింగ్‌లకు వెళ్లండి.</string>
   <string name="add_2sec_pause">2-సెకన్ల పాజ్‌ను జోడించండి</string>
   <string name="add_wait">నిరీక్షణ సమయాన్ని జోడించండి</string>
-  <string name="dialer_useDtmfDialpad">టచ్ టోన్ కీప్యాడ్‌ను ఉపయోగించండి</string>
-  <string name="dialer_returnToInCallScreen">ప్రస్తుతం నడుస్తున్న కాల్‌కు తిరిగి వెళ్లండి</string>
-  <string name="dialer_addAnotherCall">కాల్ జోడించండి</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">సిమ్ కార్డు నుండి లోడ్ చేస్తోంది…</string>

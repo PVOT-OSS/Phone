@@ -5,11 +5,8 @@
   <string name="action_copy_number_text">ቁጥር ቅዳ</string>
   <string name="action_edit_number_before_call">ከመደወል በፊት ቁጥር አርትዕ</string>
   <string name="call_log_delete_all">የጥሪ ታሪክን አጽዳ</string>
-  <string name="call_log_trash_voicemail">የድምፅ መልዕክት ሰርዝ</string>
-  <string name="snackbar_voicemail_deleted">የድምጽ ፖስታ ተፈልጎ ተገኝቷል</string>
   <string name="clearCallLogConfirmation_title">የጥሪ ታሪክ ይጽዳ?</string>
   <string name="clearCallLogConfirmation">ይሄ ሁሉንም ጥሪዎች ከታሪክዎ ይሰርዛቸዋል</string>
-  <string name="clearCallLogProgress_title">የጥሪ ታሪክን በማጽዳት ላይ…</string>
   <string name="notification_missedCallTitle">ያመለጠጥሪ</string>
   <string name="notification_missedWorkCallTitle">ያመለጠ የሥራ ጥሪ</string>
   <string name="notification_missedCallsTitle">ያመለጡ ጥሪዎች</string>
@@ -29,18 +26,9 @@
   <string name="voicemail_fetching_content">የድምጽ መልዕክትን በመጫን ላይ…</string>
   <string name="voicemail_fetching_timout">የድምጽ መልዕክትን መጫን አልተቻለም</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
-  <string name="description_playback_speakerphone">የስልክ ድምጽ ማጉያን ያብሩ ወይም ያጥፉ</string>
-  <string name="description_playback_seek">የመልሶ ማጫወት ቦታ ይፈልጉ</string>
   <string name="action_menu_call_history_description">የጥሪ ታሪክ</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">ተጨማሪ አማራጮች</string>
   <string name="dialer_settings_label">ቅንብሮች</string>
-  <string name="description_entering_bulk_action_mode">ወደ የጅምላ እርምጃ ሁነታ በመግባት ላይ</string>
-  <string name="description_leaving_bulk_action_mode">ከጅምላ እርምጃ ሁነታ ለቀው ወጥተዋል</string>
-  <string name="description_selecting_bulk_action_mode">%1$s ተመርጧል</string>
-  <string name="description_unselecting_bulk_action_mode">%1$s አልተመረጠም</string>
-  <string name="description_contact_details">የ%1$s እውቂያ ዝርዝሮች</string>
-  <string name="description_spam_contact_details">የተጠረጠረው አይፈለጌ ጥሪ አድራጊ ማግኛ አድራሻ%1$s</string>
-  <string name="description_num_calls">%1$s ጥሪዎች።</string>
   <string name="description_video_call">የቪዲዮ ጥሪ።</string>
   <string name="description_start_voice_search">በድምፅ ፍለጋ ይጀምሩ</string>
   <string name="voicemail">የድምፅ መልዕክት  </string>
@@ -69,25 +57,16 @@
   <string name="search_shortcut_add_to_contact">ወደ እውቂያ አክል</string>
   <string name="search_shortcut_send_sms_message">ኤስኤምኤስ ላክ</string>
   <string name="search_shortcut_make_video_call">የቪዲዮ ጥሪ አድርግ</string>
-  <string name="select_all">ሁሉንም ምረጥ</string>
   <string name="call_log_action_video_call">የቪዲዮ ጥሪ</string>
   <string name="call_log_action_send_message">መልዕክት ላክ</string>
   <string name="call_log_action_details">የጥሪ ዝርዝሮች</string>
   <string name="call_log_action_share_voicemail">ላክ ወደ…</string>
   <string name="call_log_action_call">^1 ይደውሉ</string>
-  <string name="description_incoming_missed_call">ከ^1፣ ^2፣ ^3፣ ^4 ያመለጠ ጥሪ።</string>
-  <string name="description_incoming_answered_call">ከ^1፣ ^2፣ ^3፣ ^4 መልስ የተሰጠው ጥሪ።</string>
-  <string name="description_unread_voicemail">ያልተነበበ የድምጽ ፖስታ ከ^1፣ ^2፣ ^3፣ ^4።</string>
-  <string name="description_read_voicemail">የድምጽ ፖስታ ከ^1፣ ^2፣ ^3፣ ^4።</string>
-  <string name="description_outgoing_call">ወደ ^1፣ ^2፣ ^3፣ ^4 ደውል።</string>
   <string name="call_log_via_number">በ %1$s በኩል</string>
   <string name="call_log_via_number_phone_account">%1$s በ %2$s በኩል</string>
   <string name="description_call_action">ወደ ^1 ይደውሉ</string>
   <string name="description_video_call_action">ቪዲዮ ጥሪ ^1።</string>
   <string name="description_voicemail_action">የ^1ን የድምጽ መልዕክት ያዳምጡ</string>
-  <string name="description_create_new_contact_action">ለ^1 እውቂያ ፍጠር</string>
-  <string name="description_add_to_existing_contact_action">^1ን ወደ አሁን ያለ እውቂያ አክል</string>
-  <string name="description_details_action">የ^1 የጥሪ ዝርዝሮች</string>
   <string name="call_log_header_today">ዛሬ</string>
   <string name="call_log_header_yesterday">ትላንት</string>
   <string name="call_log_header_other">የቆየ</string>
@@ -113,9 +92,7 @@
   <string name="permission_no_calllog">የጥሪ ምዝግብ ማስታወአሽዎን ለማየት የስልክ ፍቃዱን ያብሩ።</string>
   <string name="toast_cannot_write_system_settings">የስልክ መተግበሪያ ወደ የስርዓት ቅንብሮች የመጻፍ ፍቃድ የለውም።</string>
   <string name="blocked_number_call_log_label">ታግዷል</string>
-  <string name="call_log_action_block_report_number">አይፈለጌ መልእክትን አግድ/ሪፖርት አድርግ</string>
   <string name="call_log_action_block_number">ቁጥርን አግድ</string>
-  <string name="call_log_action_remove_spam">አይፈለጌ መልዕክት አይደለም</string>
   <string name="call_log_action_unblock_number">ቁጥርን አታግድ</string>
   <string name="spam_number_call_log_label">አይፈለጌ መልዕክት</string>
 </resources>

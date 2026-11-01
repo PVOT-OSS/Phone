@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">Välj Meny &gt; Inställningar om du vill konfigurera röstbrevlådan.</string>
   <string name="add_2sec_pause">Lägg till en paus på 2 sek.</string>
   <string name="add_wait">Lägg till väntetid</string>
-  <string name="dialer_useDtmfDialpad">Använd tonvalstelefon</string>
-  <string name="dialer_returnToInCallScreen">Återvänd till pågående samtal</string>
-  <string name="dialer_addAnotherCall">Lägg till samtal</string>
   <string name="imei">IMEI-kod</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">Läser in från SIM-kort …</string>

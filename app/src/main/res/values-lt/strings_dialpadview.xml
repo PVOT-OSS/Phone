@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">Jei norite nustatyti balso paštą, eikite į meniu &gt; „Nustatymai“.</string>
   <string name="add_2sec_pause">Pridėti 2 sek. pauzę</string>
   <string name="add_wait">Pridėti laukimą</string>
-  <string name="dialer_useDtmfDialpad">Naudoti jutiklinę tonų klaviatūrą</string>
-  <string name="dialer_returnToInCallScreen">Grįžti prie vykdomo skambučio</string>
-  <string name="dialer_addAnotherCall">Pridėti skambutį</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">Įkeliama iš SIM kortelės...</string>

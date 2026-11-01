@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">Pokud chcete nastavit hlasovou schránku, přejděte na nabídku &gt; Nastavení.</string>
   <string name="add_2sec_pause">Přidat pauzu 2 s</string>
   <string name="add_wait">Přidat čekání</string>
-  <string name="dialer_useDtmfDialpad">Použít dotykovou tónovou klávesnici</string>
-  <string name="dialer_returnToInCallScreen">Vrátit se k probíhajícímu hovoru</string>
-  <string name="dialer_addAnotherCall">Přidat hovor</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">Načítání ze SIM karty…</string>

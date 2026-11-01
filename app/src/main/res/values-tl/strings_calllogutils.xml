@@ -33,8 +33,4 @@
   <string name="description_via_number_phone_account">sa %1$s, sa pamamagitan ng %2$s</string>
   <string name="voicemail_string">Voicemail</string>
   <string name="just_now">Ngayon lang</string>
-  <string name="new_call_log_carrier_video">Video call sa carrier</string>
-  <string name="new_call_log_unknown">Hindi alam</string>
-  <string name="new_call_log_secondary_blocked">Naka-block</string>
-  <string name="new_call_log_secondary_spam">Spam</string>
 </resources>

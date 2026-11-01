@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">صوتی میل سیٹ کرنے کے لئے، مینو &gt; ترتیبات میں جائیں۔</string>
   <string name="add_2sec_pause">2 سیکنڈ کا توقف شامل کریں</string>
   <string name="add_wait">انتظار شامل کریں</string>
-  <string name="dialer_useDtmfDialpad">ٹچ ٹون کی پیڈ استعمال کریں</string>
-  <string name="dialer_returnToInCallScreen">جاری کال پر واپس لوٹیں</string>
-  <string name="dialer_addAnotherCall">کال شامل کریں</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">‏SIM کارڈ سے لوڈ ہو رہا ہے…</string>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">ຂໍ້ຄວາມສຽງ</string>
   <string name="voicemail_notifications_preference_title">ການແຈ້ງເຕືອນ</string>
   <string name="voicemail_change_greeting_preference_title">ຄຳທັກທາຍຂໍ້ຄວາມສຽງ</string>
   <string name="change_greeting_text">ແຕະເພື່ອບັນທຶກ</string>

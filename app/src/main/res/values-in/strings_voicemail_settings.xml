@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">Pesan Suara</string>
   <string name="voicemail_notifications_preference_title">Notifikasi</string>
   <string name="voicemail_change_greeting_preference_title">Salam untuk pesan suara</string>
   <string name="change_greeting_text">Tap untuk Merekam</string>

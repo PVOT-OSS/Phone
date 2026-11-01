@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">Hjälplinjer</string>
-    <string name="helplines_loading">Laddar\u2026</string>
     <string name="helplines_empty">Inga journummer hittades.\nSätt in ett SIM-kort och försök igen</string>
     <string name="helplines_help">Hjälp</string>
     <string name="helplines_help_title">De här är säkra att ringa</string>

@@ -23,22 +23,8 @@
     <string name="call_stats_blocked">توسۇلغان: <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_percent"><xliff:g id="percent">%d</xliff:g>%%</string>
     <string name="call_stats_header_total">جەمئىي: <xliff:g id="call_count">%1$s</xliff:g>, <xliff:g id="duration">%2$s</xliff:g></string>
-    <string name="call_stats_header_total_callsonly">جەمئىي: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">باشلاش چېسلاسى</string>
-    <string name="call_stats_filter_to">ئاخىرلىشىش چېسلاسى</string>
-    <string name="call_stats_filter_picker_title">سۈزگۈچ دائىرىسى</string>
-    <string name="date_quick_selection">تېز تاللاش</string>
-    <string name="date_qs_currentmonth">نۆۋەتتىكى ئاي</string>
-    <string name="date_qs_currentquarter">نۆۋەتتىكى پەسىل</string>
-    <string name="date_qs_currentyear">نۆۋەتتىكى يىل</string>
-    <string name="date_qs_lastweek">ئالدىنقى ھەپتە</string>
-    <string name="date_qs_lastmonth">ئالدىنقى ئاي</string>
-    <string name="date_qs_lastquarter">ئالدىنقى پەسىل</string>
-    <string name="date_qs_lastyear">ئۆتكەن يىل</string>
     <string name="call_stats_date_filter">تەڭشەلگەن ۋاقىت دائىرىسى</string>
     <string name="call_stats_reset_filter">ۋاقىت دائىرىسىنى ئەسلىگە قايتۇر</string>
-    <string name="call_stats_sort_by_duration">سۆزلىشىش ۋاقتى بويىچە تەرتىپلە</string>
-    <string name="call_stats_sort_by_count">چاقىرىش قېتىم سانى بويىچە تەرتىپلە</string>
     <string name="call_stats_title_for_number">بۇ نومۇر</string>
     <string name="call_stats_title_of_total">جەمئىي</string>
     <string name="call_stats_title_durations">سۆزلەشكەن ۋاقىت</string>

@@ -117,10 +117,5 @@
   <string name="send_and_call_button">SAADA JA HELISTA</string>
   <string name="call_subject_limit">%1$s/%2$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">Vahekaart %1$s.</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="one"> Vahekaart %1$s. %2$d lugemata üksus. </item>
-    <item quantity="other"> Vahekaart %1$s. %2$d lugemata üksust. </item>
-  </plurals>
   <string name="description_search_video_call">Videokõne</string>
 </resources>

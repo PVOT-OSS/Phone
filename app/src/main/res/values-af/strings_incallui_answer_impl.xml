@@ -17,5 +17,4 @@
   <string name="a11y_description_incoming_call_answer_and_release">Antwoord en beëindig die voortgesette oproep</string>
   <string name="call_incoming_video_is_off">Video is af</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Swiep op met twee vingers om te antwoord. Swiep af met twee vingers om af te wys.</string>
-  <string name="call_incoming_important">Belangrik</string>
 </resources>

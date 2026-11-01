@@ -17,5 +17,4 @@
   <string name="a11y_description_incoming_call_answer_and_release">ຮັບສາຍ ແລະ ວາງສາຍທີ່ກຳລັງໂທອອກ</string>
   <string name="call_incoming_video_is_off">ວິດີໂອປິດຢູ່</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">ປັດສອງນິ້ວຂຶ້ນເພື່ອຮັບສາຍ. ປັດສອງນິ້ວລົງເພື່ອປະຕິເສດ.</string>
-  <string name="call_incoming_important">ສຳຄັນ</string>
 </resources>

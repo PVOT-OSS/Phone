@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">หากต้องการตั้งค่าข้อความเสียง ให้ไปที่เมนู &gt; การตั้งค่า</string>
   <string name="add_2sec_pause">เพิ่มช่วงคั่น 2 วินาที</string>
   <string name="add_wait">เพิ่มการรอ</string>
-  <string name="dialer_useDtmfDialpad">ใช้ปุ่มกดแบบมีเสียง</string>
-  <string name="dialer_returnToInCallScreen">กลับไปคุยสายต่อ</string>
-  <string name="dialer_addAnotherCall">เพิ่มการโทร</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">กำลังโหลดจากซิมการ์ด…</string>

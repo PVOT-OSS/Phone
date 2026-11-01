@@ -117,10 +117,5 @@
   <string name="send_and_call_button">पाठवा आणि कॉल करा</string>
   <string name="call_subject_limit">%1$s / %2$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">%1$s टॅब.</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="one"> %1$s टॅब. %2$d न वाचलेला आयटम. </item>
-    <item quantity="other"> %1$s टॅब. %2$d न वाचलेले आयटम. </item>
-  </plurals>
   <string name="description_search_video_call">व्हिडिओ कॉल</string>
 </resources>

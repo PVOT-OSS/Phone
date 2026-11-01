@@ -33,8 +33,4 @@
   <string name="description_via_number_phone_account">%2$s kullanılarak %1$s hesabında</string>
   <string name="voicemail_string">Sesli mesaj</string>
   <string name="just_now">Az önce</string>
-  <string name="new_call_log_carrier_video">Operatör görüntülü görüşmesi</string>
-  <string name="new_call_log_unknown">Bilinmeyen</string>
-  <string name="new_call_log_secondary_blocked">Engellenmiş</string>
-  <string name="new_call_log_secondary_spam">Spam</string>
 </resources>

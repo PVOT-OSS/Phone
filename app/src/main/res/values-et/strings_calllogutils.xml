@@ -33,8 +33,4 @@
   <string name="description_via_number_phone_account">kontol %1$s, numbri %2$s kaudu</string>
   <string name="voicemail_string">Kõnepost</string>
   <string name="just_now">Äsja</string>
-  <string name="new_call_log_carrier_video">Operaatori video</string>
-  <string name="new_call_log_unknown">Tundmatu</string>
-  <string name="new_call_log_secondary_blocked">Blokeeritud</string>
-  <string name="new_call_log_secondary_spam">Rämpskõned</string>
 </resources>

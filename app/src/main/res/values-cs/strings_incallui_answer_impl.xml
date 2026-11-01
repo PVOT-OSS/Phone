@@ -17,5 +17,4 @@
   <string name="a11y_description_incoming_call_answer_and_release">Přijmout hovor a ukončit probíhající hovor</string>
   <string name="call_incoming_video_is_off">Video je vypnuté</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Přejetím dvěma prsty nahoru hovor přijmete. Přejetím dvěma prsty dolů jej odmítnete.</string>
-  <string name="call_incoming_important">Důležité</string>
 </resources>

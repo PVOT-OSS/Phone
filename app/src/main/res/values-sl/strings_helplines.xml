@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">Tel. št. za pomoč</string>
-    <string name="helplines_loading">Nalaganje \u2026</string>
     <string name="helplines_empty">Ni najdenih tel. št. za pomoč.\nVstavite kartico SIM in poskusite znova</string>
     <string name="helplines_help">Pomoč</string>
     <string name="helplines_help_title">Te so varne za klic</string>

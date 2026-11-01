@@ -33,8 +33,4 @@
   <string name="description_via_number_phone_account">%1$s, %2$s арқылы</string>
   <string name="voicemail_string">Дауыстық хабар</string>
   <string name="just_now">Қазір ғана</string>
-  <string name="new_call_log_carrier_video">Оператор бейне қоңырауы</string>
-  <string name="new_call_log_unknown">Белгісіз</string>
-  <string name="new_call_log_secondary_blocked">Бөгелді</string>
-  <string name="new_call_log_secondary_spam">Спам</string>
 </resources>

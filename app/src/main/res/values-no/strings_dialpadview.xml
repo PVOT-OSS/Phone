@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">For å konfigurere talepostfunksjonen, gå til Meny &gt; Innstillinger.</string>
   <string name="add_2sec_pause">Legg til pause på 2 sek.</string>
   <string name="add_wait">Legg til Vent</string>
-  <string name="dialer_useDtmfDialpad">Bruk tonetastatur</string>
-  <string name="dialer_returnToInCallScreen">Gå tilbake til aktiv samtale</string>
-  <string name="dialer_addAnotherCall">Nytt anrop</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">Henter fra SIM-kort …</string>

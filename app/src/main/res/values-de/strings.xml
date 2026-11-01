@@ -5,11 +5,8 @@
   <string name="action_copy_number_text">Nummer kopieren</string>
   <string name="action_edit_number_before_call">Nummer vor Anruf bearbeiten</string>
   <string name="call_log_delete_all">Anrufliste löschen</string>
-  <string name="call_log_trash_voicemail">Mailboxnachricht löschen</string>
-  <string name="snackbar_voicemail_deleted">Mailbox gelöscht</string>
   <string name="clearCallLogConfirmation_title">Anrufliste löschen?</string>
   <string name="clearCallLogConfirmation">Alle Anrufe werden aus deinem Verlauf gelöscht.</string>
-  <string name="clearCallLogProgress_title">Anrufliste wird gelöscht…</string>
   <string name="notification_missedCallTitle">Entgangener Anruf</string>
   <string name="notification_missedWorkCallTitle">Verpasster geschäftlicher Anruf</string>
   <string name="notification_missedCallsTitle">Entgangene Anrufe</string>
@@ -29,18 +26,9 @@
   <string name="voicemail_fetching_content">Mailboxnachricht wird geladen…</string>
   <string name="voicemail_fetching_timout">Laden der Mailboxnachricht nicht möglich</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
-  <string name="description_playback_speakerphone">Freisprechfunktion aktivieren oder deaktivieren</string>
-  <string name="description_playback_seek">Wiedergabeposition suchen</string>
   <string name="action_menu_call_history_description">Anrufliste</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">Mehr Optionen</string>
   <string name="dialer_settings_label">Einstellungen</string>
-  <string name="description_entering_bulk_action_mode">Es wird in den Modus für Bulk-Aktionen gewechselt</string>
-  <string name="description_leaving_bulk_action_mode">Der Modus für Bulk-Aktionen wurde verlassen</string>
-  <string name="description_selecting_bulk_action_mode">%1$s ausgewählt</string>
-  <string name="description_unselecting_bulk_action_mode">Auswahl für %1$s aufgehoben</string>
-  <string name="description_contact_details">Kontaktdetails für %1$s</string>
-  <string name="description_spam_contact_details">Kontaktdetails für möglichen Spamanrufer %1$s</string>
-  <string name="description_num_calls">%1$s Anrufe</string>
   <string name="description_video_call">Videoanruf</string>
   <string name="description_start_voice_search">Sprachsuche starten</string>
   <string name="voicemail">Mailbox</string>
@@ -69,25 +57,16 @@
   <string name="search_shortcut_add_to_contact">Zu Kontakt hinzufügen</string>
   <string name="search_shortcut_send_sms_message">SMS senden</string>
   <string name="search_shortcut_make_video_call">Videoanruf starten</string>
-  <string name="select_all">Alle auswählen</string>
   <string name="call_log_action_video_call">Videoanruf</string>
   <string name="call_log_action_send_message">SMS senden</string>
   <string name="call_log_action_details">Anrufdetails</string>
   <string name="call_log_action_share_voicemail">Senden an…</string>
   <string name="call_log_action_call">^1 anrufen</string>
-  <string name="description_incoming_missed_call">Anruf von ^1, ^2, ^3, ^4 verpasst</string>
-  <string name="description_incoming_answered_call">Anruf von ^1, ^2, ^3, ^4 angenommen</string>
-  <string name="description_unread_voicemail">Ungelesene Mailboxnachricht von ^1, ^2, ^3, ^4.</string>
-  <string name="description_read_voicemail">Mailboxnachricht von ^1, ^2, ^3, ^4.</string>
-  <string name="description_outgoing_call">Ausgehender Anruf an ^1, ^2, ^3, ^4</string>
   <string name="call_log_via_number">über %1$s</string>
   <string name="call_log_via_number_phone_account">%1$s über %2$s</string>
   <string name="description_call_action">^1 anrufen</string>
   <string name="description_video_call_action">^1 über Videoanruf anrufen</string>
   <string name="description_voicemail_action">Mailboxnachricht von ^1 anhören</string>
-  <string name="description_create_new_contact_action">Kontakt für ^1 erstellen</string>
-  <string name="description_add_to_existing_contact_action">^1 zu vorhandenem Kontakt hinzufügen</string>
-  <string name="description_details_action">Anrufdetails für ^1</string>
   <string name="call_log_header_today">Heute</string>
   <string name="call_log_header_yesterday">Gestern</string>
   <string name="call_log_header_other">Ältere</string>
@@ -113,9 +92,7 @@
   <string name="permission_no_calllog">Aktiviere die Berechtigung \"Telefon\", um dein Anrufprotokoll abzurufen.</string>
   <string name="toast_cannot_write_system_settings">Die App \"Telefon\" ist nicht berechtigt, die Systemeinstellungen zu überschreiben.</string>
   <string name="blocked_number_call_log_label">Blockiert</string>
-  <string name="call_log_action_block_report_number">Blockieren/Spam melden</string>
   <string name="call_log_action_block_number">Nummer blockieren</string>
-  <string name="call_log_action_remove_spam">Kein Spam</string>
   <string name="call_log_action_unblock_number">Blockierung der Nummer aufheben</string>
   <string name="spam_number_call_log_label">Spam</string>
 </resources>

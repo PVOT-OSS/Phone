@@ -117,11 +117,5 @@
   <string name="send_and_call_button">POŠALJI I POZOVI</string>
   <string name="call_subject_limit">%1$s/%2$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">Kartica %1$s.</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="one"> Kartica %1$s. %2$d nepročitana stavka. </item>
-    <item quantity="few"> Kartica %1$s. %2$d nepročitane stavke. </item>
-    <item quantity="other"> Kartica %1$s. %2$d nepročitanih stavki. </item>
-  </plurals>
   <string name="description_search_video_call">Video poziv</string>
 </resources>

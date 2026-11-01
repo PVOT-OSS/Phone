@@ -5,11 +5,8 @@
   <string name="action_copy_number_text">Kopioi numero</string>
   <string name="action_edit_number_before_call">Muokkaa numeroa ennen puhelua</string>
   <string name="call_log_delete_all">Tyhjennä soittohistoria</string>
-  <string name="call_log_trash_voicemail">Poista vastaajaviesti</string>
-  <string name="snackbar_voicemail_deleted">Viesti poistettiin.</string>
   <string name="clearCallLogConfirmation_title">Tyhjennetäänkö soittohistoria?</string>
   <string name="clearCallLogConfirmation">Kaikki soittohistorian tiedot poistetaan</string>
-  <string name="clearCallLogProgress_title">Tyhjennetään soittohistoriaa…</string>
   <string name="notification_missedCallTitle">Vastaamatta jäänyt puhelu</string>
   <string name="notification_missedWorkCallTitle">Vastaamaton työpuhelu</string>
   <string name="notification_missedCallsTitle">Vastaamattomat puhelut</string>
@@ -29,18 +26,9 @@
   <string name="voicemail_fetching_content">Ladataan puhelinvastaajaa…</string>
   <string name="voicemail_fetching_timout">Puhelinvastaajan lataaminen epäonnistui</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
-  <string name="description_playback_speakerphone">Ota kaiutin käyttöön tai poista käytöstä</string>
-  <string name="description_playback_seek">Toisto-osoitin</string>
   <string name="action_menu_call_history_description">Soittohistoria</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">Lisää vaihtoehtoja</string>
   <string name="dialer_settings_label">Asetukset</string>
-  <string name="description_entering_bulk_action_mode">Siirrytään joukkotoimintotilaan.</string>
-  <string name="description_leaving_bulk_action_mode">Poistuttiin joukkotoimintotilasta.</string>
-  <string name="description_selecting_bulk_action_mode">%1$s valittiin.</string>
-  <string name="description_unselecting_bulk_action_mode">%1$s ei ole enää valittuna.</string>
-  <string name="description_contact_details">Yhteystiedot: %1$s</string>
-  <string name="description_spam_contact_details">Mahdollisen häirikkösoittajan yhteystiedot: %1$s</string>
-  <string name="description_num_calls">%1$s puhelua.</string>
   <string name="description_video_call">Videopuhelu.</string>
   <string name="description_start_voice_search">Aloita puhehaku</string>
   <string name="voicemail">Vastaaja</string>
@@ -69,25 +57,16 @@
   <string name="search_shortcut_add_to_contact">Lisää yhteystietoihin</string>
   <string name="search_shortcut_send_sms_message">Lähetä tekstiviesti</string>
   <string name="search_shortcut_make_video_call">Soita videopuhelu</string>
-  <string name="select_all">Valitse kaikki</string>
   <string name="call_log_action_video_call">Videopuhelu</string>
   <string name="call_log_action_send_message">Lähetä viesti</string>
   <string name="call_log_action_details">Puhelun tiedot</string>
   <string name="call_log_action_share_voicemail">Vastaanottaja: …</string>
   <string name="call_log_action_call">Soita: ^1</string>
-  <string name="description_incoming_missed_call">Vastaamaton puhelu soittajalta ^1, ^2, ^3, ^4.</string>
-  <string name="description_incoming_answered_call">Vastattu puhelu soittajalta ^1, ^2, ^3, ^4.</string>
-  <string name="description_unread_voicemail">Lukematon vastaajaviesti: ^1, ^2, ^3, ^4.</string>
-  <string name="description_read_voicemail">Vastaajaviesti: ^1, ^2, ^3, ^4.</string>
-  <string name="description_outgoing_call">Soita vastaanottajalle ^1, ^2, ^3, ^4.</string>
   <string name="call_log_via_number">numerosta %1$s</string>
   <string name="call_log_via_number_phone_account">%1$s numerosta %2$s</string>
   <string name="description_call_action">Soita: ^1</string>
   <string name="description_video_call_action">Soita videopuhelu: ^1.</string>
   <string name="description_voicemail_action">Kuuntele vastaajaviesti: ^1</string>
-  <string name="description_create_new_contact_action">Luo kontakti: ^1.</string>
-  <string name="description_add_to_existing_contact_action">Lisää ^1 olemassa olevaan kontaktiin.</string>
-  <string name="description_details_action">Yhteystiedon ^1 puhelutiedot</string>
   <string name="call_log_header_today">Tänään</string>
   <string name="call_log_header_yesterday">Eilen</string>
   <string name="call_log_header_other">Vanhempi</string>
@@ -113,9 +92,7 @@
   <string name="permission_no_calllog">Jos haluat katsella puhelulokiasi, ota Puhelin-käyttöoikeus käyttöön.</string>
   <string name="toast_cannot_write_system_settings">Puhelinsovelluksella ei ole oikeutta muokata järjestelmän asetuksia.</string>
   <string name="blocked_number_call_log_label">Estetty</string>
-  <string name="call_log_action_block_report_number">Estä / ilmoita häiriköinnistä</string>
   <string name="call_log_action_block_number">Estä numero</string>
-  <string name="call_log_action_remove_spam">Ei ole häirikkösoittaja</string>
   <string name="call_log_action_unblock_number">Poista numeron esto</string>
   <string name="spam_number_call_log_label">Roskaposti</string>
 </resources>

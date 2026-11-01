@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">वॉइसमेल सेट अप करने के लिए, मेनू &gt; सेटिंग पर जाएं.</string>
   <string name="add_2sec_pause">2-सेकंड का विराम जोड़ें</string>
   <string name="add_wait">प्रतीक्षा का समय बढ़ाएं</string>
-  <string name="dialer_useDtmfDialpad">टच-टोन कीपैड का उपयोग करें</string>
-  <string name="dialer_returnToInCallScreen">कॉल पर लौटने का कार्य प्रगति पर</string>
-  <string name="dialer_addAnotherCall">कॉल जोड़ें</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">SIM कार्ड से लोड हो रहा है…</string>

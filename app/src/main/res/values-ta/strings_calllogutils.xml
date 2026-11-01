@@ -33,8 +33,4 @@
   <string name="description_via_number_phone_account">%1$s இல் %2$s மூலம்</string>
   <string name="voicemail_string">குரலஞ்சல்</string>
   <string name="just_now">சற்றுமுன்</string>
-  <string name="new_call_log_carrier_video">தொலைத்தொடர்பு நிறுவன வீடியோ</string>
-  <string name="new_call_log_unknown">தெரியாத எண்கள்</string>
-  <string name="new_call_log_secondary_blocked">தடுக்கப்பட்டது</string>
-  <string name="new_call_log_secondary_spam">ஸ்பேம்</string>
 </resources>

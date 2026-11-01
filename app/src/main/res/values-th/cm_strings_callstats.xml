@@ -23,22 +23,8 @@
     <string name="call_stats_blocked">บล็อค: <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_percent"><xliff:g id="percent">%d</xliff:g>%%</string>
     <string name="call_stats_header_total">ทั้งหมด: <xliff:g id="call_count">%1$s</xliff:g>, <xliff:g id="duration">%2$s</xliff:g></string>
-    <string name="call_stats_header_total_callsonly">ทั้งหมด: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">วันที่เริ่มต้น</string>
-    <string name="call_stats_filter_to">วันที่สิ้นสุด</string>
-    <string name="call_stats_filter_picker_title">ขอบเขตตัวกรอง</string>
-    <string name="date_quick_selection">เลือกแบบรวดเร็ว</string>
-    <string name="date_qs_currentmonth">เดือนนี้</string>
-    <string name="date_qs_currentquarter">ไตรมาสปัจจุบัน</string>
-    <string name="date_qs_currentyear">ปีนี้</string>
-    <string name="date_qs_lastweek">สัปดาห์ที่แล้ว</string>
-    <string name="date_qs_lastmonth">เดือนที่แล้ว</string>
-    <string name="date_qs_lastquarter">ไตรมาสล่าสุด</string>
-    <string name="date_qs_lastyear">ปีที่แล้ว</string>
     <string name="call_stats_date_filter">ปรับขอบเขตเวลา</string>
     <string name="call_stats_reset_filter">รีเซ็ตขอบเขตเวลา</string>
-    <string name="call_stats_sort_by_duration">เรียงตามระยะเวลาการโทร</string>
-    <string name="call_stats_sort_by_count">เรียงตามจำนวนครั้งการโทร</string>
     <string name="call_stats_title_for_number">หมายเลขนี้</string>
     <string name="call_stats_title_of_total">จากทั้งหมด</string>
     <string name="call_stats_title_durations">ระยะเวลาการโทร</string>

@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">Para configurar el buzón de voz, ve a Menú &gt; Ajustes.</string>
   <string name="add_2sec_pause">Añadir pausa de 2 segundos</string>
   <string name="add_wait">Añadir espera</string>
-  <string name="dialer_useDtmfDialpad">Usar teclado de marcación por tonos</string>
-  <string name="dialer_returnToInCallScreen">Volver a la llamada en curso</string>
-  <string name="dialer_addAnotherCall">Añadir llamada</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">Cargando el número de teléfono de la tarjeta SIM…</string>

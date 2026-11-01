@@ -23,22 +23,8 @@
     <string name="call_stats_blocked">Blocadis: <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_percent"><xliff:g id="percent">%d</xliff:g>%%</string>
     <string name="call_stats_header_total">Totâl: <xliff:g id="call_count">%1$s</xliff:g>, <xliff:g id="duration">%2$s</xliff:g></string>
-    <string name="call_stats_header_total_callsonly">Totâl: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Date di inizi</string>
-    <string name="call_stats_filter_to">Date di fin</string>
-    <string name="call_stats_filter_picker_title">Dade di filtrâ</string>
-    <string name="date_quick_selection">Selezion rapide</string>
-    <string name="date_qs_currentmonth">Chest mês</string>
-    <string name="date_qs_currentquarter">Chest trimestri</string>
-    <string name="date_qs_currentyear">Chest an</string>
-    <string name="date_qs_lastweek">Ultime setemane</string>
-    <string name="date_qs_lastmonth">Ultin mês</string>
-    <string name="date_qs_lastquarter">Ultin trimestri</string>
-    <string name="date_qs_lastyear">Ultin an</string>
     <string name="call_stats_date_filter">Juste la dade temporâl</string>
     <string name="call_stats_reset_filter">Azere dade temporâl</string>
-    <string name="call_stats_sort_by_duration">Ordene par durade</string>
-    <string name="call_stats_sort_by_count">Ordene par numar di clamadis</string>
     <string name="call_stats_title_for_number">Chest numar</string>
     <string name="call_stats_title_of_total">In totâl</string>
     <string name="call_stats_title_durations">Duradis des clamadis</string>

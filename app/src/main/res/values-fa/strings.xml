@@ -5,11 +5,8 @@
   <string name="action_copy_number_text">کپی کردن شماره</string>
   <string name="action_edit_number_before_call">ویرایش شماره قبل از تماس</string>
   <string name="call_log_delete_all">پاک کردن سابقه تماس</string>
-  <string name="call_log_trash_voicemail">حذف پست صوتی</string>
-  <string name="snackbar_voicemail_deleted">پست صوتی حذف شد</string>
   <string name="clearCallLogConfirmation_title">سابقه تماس پاک شود؟</string>
   <string name="clearCallLogConfirmation">این کار همه تماس‌ها را از سابقه شما حذف می‌کند</string>
-  <string name="clearCallLogProgress_title">در حال پاک کردن سابقه تماس...</string>
   <string name="notification_missedCallTitle">تماس بی پاسخ</string>
   <string name="notification_missedWorkCallTitle">تماس کاری ازدست‌رفته</string>
   <string name="notification_missedCallsTitle">تماس‌های بی‌پاسخ</string>
@@ -29,18 +26,9 @@
   <string name="voicemail_fetching_content">در حال بارگیری پست صوتی...</string>
   <string name="voicemail_fetching_timout">پست صوتی بارگیری نشد</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
-  <string name="description_playback_speakerphone">روشن یا خاموش کردن بلندگوی تلفن</string>
-  <string name="description_playback_seek">جستجوی موقعیت بازپخش</string>
   <string name="action_menu_call_history_description">سابقه تماس</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">گزینه‌های بیشتر</string>
   <string name="dialer_settings_label">تنظیمات</string>
-  <string name="description_entering_bulk_action_mode">درحال ورود به حالت اقدام انبوه</string>
-  <string name="description_leaving_bulk_action_mode">خروج از حالت اقدام انبوه</string>
-  <string name="description_selecting_bulk_action_mode">%1$s انتخاب شد</string>
-  <string name="description_unselecting_bulk_action_mode">%1$s از حالت انتخاب خارج شد</string>
-  <string name="description_contact_details">جزئیات تماس برای %1$s</string>
-  <string name="description_spam_contact_details">جزئیات تماس برای تماس‌گیرندگان هرزنامه پشتیبانی شده %1$s</string>
-  <string name="description_num_calls">%1$s تماس.</string>
   <string name="description_video_call">تماس ویدئویی.</string>
   <string name="description_start_voice_search">شروع جستجوی گفتاری</string>
   <string name="voicemail">پست صوتی</string>
@@ -69,25 +57,16 @@
   <string name="search_shortcut_add_to_contact">افزودن به مخاطب</string>
   <string name="search_shortcut_send_sms_message">ارسال پیامک</string>
   <string name="search_shortcut_make_video_call">برقراری تماس ویدئویی</string>
-  <string name="select_all">انتخاب همه</string>
   <string name="call_log_action_video_call">تماس ویدئویی</string>
   <string name="call_log_action_send_message">ارسال پیام</string>
   <string name="call_log_action_details">جزئیات تماس</string>
   <string name="call_log_action_share_voicemail">ارسال به...</string>
   <string name="call_log_action_call">تماس با ^1</string>
-  <string name="description_incoming_missed_call">تماس از دست رفته از ^1، ‏^2، ‏^3، ‏^4.</string>
-  <string name="description_incoming_answered_call">تماس پاسخ داده شده از ^1، ‏^2، ‏^3، ‏^4.</string>
-  <string name="description_unread_voicemail">پست صوتی خوانده نشده از ^1،‏ ^2،‏ ^3،‏ ^4.</string>
-  <string name="description_read_voicemail">پست صوتی از ^1،‏ ^2،‏ ^3،‏ ^4.</string>
-  <string name="description_outgoing_call">تماس با ^1، ‏^2، ‏^3، ‏^4.</string>
   <string name="call_log_via_number">از طریق %1$s</string>
   <string name="call_log_via_number_phone_account">%1$s از طریق %2$s</string>
   <string name="description_call_action">تماس با ^1</string>
   <string name="description_video_call_action">تماس ویدئویی با ^1.</string>
   <string name="description_voicemail_action">گوش دادن به پست صوتی از ^1</string>
-  <string name="description_create_new_contact_action">ایجاد مخاطب برای ^1</string>
-  <string name="description_add_to_existing_contact_action">افزودن ^1 به مخاطب موجود</string>
-  <string name="description_details_action">جزئیات تماس برای ^1</string>
   <string name="call_log_header_today">امروز</string>
   <string name="call_log_header_yesterday">دیروز</string>
   <string name="call_log_header_other">قدیمی‌تر</string>
@@ -113,9 +92,7 @@
   <string name="permission_no_calllog">برای دیدن گزارش تماستان، مجوز «تلفن» را روشن کنید.</string>
   <string name="toast_cannot_write_system_settings">برنامه تلفن اجازه نوشتن در تنظیمات سیستم را ندارد.</string>
   <string name="blocked_number_call_log_label">مسدود شده</string>
-  <string name="call_log_action_block_report_number">مسدود کردن/گزارش هرزنامه</string>
   <string name="call_log_action_block_number">مسدود کردن شماره</string>
-  <string name="call_log_action_remove_spam">هرزنامه نیست</string>
   <string name="call_log_action_unblock_number">رفع انسداد شماره</string>
   <string name="spam_number_call_log_label">هرزنامه</string>
 </resources>

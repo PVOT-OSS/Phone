@@ -5,11 +5,8 @@
   <string name="action_copy_number_text">Скопировать номер</string>
   <string name="action_edit_number_before_call">Изменить номер и позвонить</string>
   <string name="call_log_delete_all">Очистить журнал звонков</string>
-  <string name="call_log_trash_voicemail">Удалить голосовое сообщение</string>
-  <string name="snackbar_voicemail_deleted">Сообщение удалено</string>
   <string name="clearCallLogConfirmation_title">Очистить журнал звонков?</string>
   <string name="clearCallLogConfirmation">Журнал звонков будет удален.</string>
-  <string name="clearCallLogProgress_title">Очистка журнала звонков…</string>
   <string name="notification_missedCallTitle">Пропущенный вызов</string>
   <string name="notification_missedWorkCallTitle">Пропущенный звонок (работа)</string>
   <string name="notification_missedCallsTitle">Пропущенные вызовы</string>
@@ -31,18 +28,9 @@
   <string name="voicemail_fetching_content">Загрузка сообщений…</string>
   <string name="voicemail_fetching_timout">Не удалось загрузить голосовую почту</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
-  <string name="description_playback_speakerphone">Включить или отключить громкую связь</string>
-  <string name="description_playback_seek">Выбрать позицию для воспроизведения</string>
   <string name="action_menu_call_history_description">Журнал звонков</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">Ещё</string>
   <string name="dialer_settings_label">Настройки</string>
-  <string name="description_entering_bulk_action_mode">Вы вошли в режим массового действия</string>
-  <string name="description_leaving_bulk_action_mode">Вы вышли из режима массового действия</string>
-  <string name="description_selecting_bulk_action_mode">Выбран объект %1$s</string>
-  <string name="description_unselecting_bulk_action_mode">Выбор объекта %1$s отменен</string>
-  <string name="description_contact_details">Сведения о контакте %1$s</string>
-  <string name="description_spam_contact_details">Сведения о контакте %1$s (подозрение на спам)</string>
-  <string name="description_num_calls">Вызовов: %1$s.</string>
   <string name="description_video_call">Видеовстреча</string>
   <string name="description_start_voice_search">Начать голосовой поиск</string>
   <string name="voicemail">Голосовая почта</string>
@@ -73,25 +61,16 @@
   <string name="search_shortcut_add_to_contact">Добавить к контакту</string>
   <string name="search_shortcut_send_sms_message">Отправить SMS</string>
   <string name="search_shortcut_make_video_call">Начать видеовстречу</string>
-  <string name="select_all">Выбрать все</string>
   <string name="call_log_action_video_call">Видеовстреча</string>
   <string name="call_log_action_send_message">Отправить сообщение</string>
   <string name="call_log_action_details">Сведения о вызове</string>
   <string name="call_log_action_share_voicemail">Отправить</string>
   <string name="call_log_action_call">Позвонить: ^1</string>
-  <string name="description_incoming_missed_call">Пропущен вызов от контакта ^1. ^2, ^3, ^4.</string>
-  <string name="description_incoming_answered_call">Принят вызов от контакта ^1. ^2, ^3, ^4.</string>
-  <string name="description_unread_voicemail">Непрослушанное сообщение от контакта ^1, ^2, ^3, ^4.</string>
-  <string name="description_read_voicemail">Голосовая почта от контакта ^1, ^2, ^3, ^4.</string>
-  <string name="description_outgoing_call">Вызов контакту ^1. ^2, ^3, ^4.</string>
   <string name="call_log_via_number">Номер: %1$s</string>
   <string name="call_log_via_number_phone_account">%1$s. Номер: %2$s.</string>
   <string name="description_call_action">Позвонить: ^1</string>
   <string name="description_video_call_action">Видеовстреча: ^1</string>
   <string name="description_voicemail_action">Прослушать сообщение от контакта ^1.</string>
-  <string name="description_create_new_contact_action">Добавить контакт: ^1</string>
-  <string name="description_add_to_existing_contact_action">Добавить \"^1\" к контакту</string>
-  <string name="description_details_action">^1 – сведения о вызове</string>
   <string name="call_log_header_today">Сегодня</string>
   <string name="call_log_header_yesterday">Вчера</string>
   <string name="call_log_header_other">Предыдущие записи</string>
@@ -117,9 +96,7 @@
   <string name="permission_no_calllog">Чтобы открыть список вызовов, предоставьте приложению разрешение \"Телефон\".</string>
   <string name="toast_cannot_write_system_settings">У приложения \"Телефон\" нет разрешения на изменение системных настроек.</string>
   <string name="blocked_number_call_log_label">Заблокировано</string>
-  <string name="call_log_action_block_report_number">Заблокировать/сообщить о спаме</string>
   <string name="call_log_action_block_number">Заблокировать номер</string>
-  <string name="call_log_action_remove_spam">Не спам</string>
   <string name="call_log_action_unblock_number">Разблокировать номер</string>
   <string name="spam_number_call_log_label">Спам</string>
 </resources>

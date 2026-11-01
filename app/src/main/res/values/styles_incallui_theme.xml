@@ -31,7 +31,7 @@
     <item name="bottomSheetDialogTheme">@style/TransparentBottomSheetDialogTheme</item>
   </style>
 
-  <style name="Theme.InCallScreen.ManageConference" parent="Dialer.ThemeBase.ActionBar">
+  <style name="Theme.InCallScreen.ManageConference" parent="Dialer.ThemeBase.NoActionBar">
   </style>
 
   <style name="InCallDialpad" parent="Dialpad.Themed">

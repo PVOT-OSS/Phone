@@ -33,8 +33,4 @@
   <string name="description_via_number_phone_account">στον λογαριασμό %1$s, μέσω %2$s</string>
   <string name="voicemail_string">Αυτόματος τηλεφωνητής</string>
   <string name="just_now">Μόλις τώρα</string>
-  <string name="new_call_log_carrier_video">Βιντεοκλ. μέσω εταιρ. κινητής</string>
-  <string name="new_call_log_unknown">Άγνωστος</string>
-  <string name="new_call_log_secondary_blocked">Αποκλεισμένοι</string>
-  <string name="new_call_log_secondary_spam">Ανεπιθύμητα μηνύματα</string>
 </resources>

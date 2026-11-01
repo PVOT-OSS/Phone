@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">Yardım xətti</string>
-    <string name="helplines_loading">Yüklənir\u2026</string>
     <string name="helplines_empty">Kömək xətti tapılmadı.\nBir SIM kart taxıb yenidən sınayın</string>
     <string name="helplines_help">Kömək</string>
     <string name="helplines_help_title">Bunlara zəng etmək güvənlidir</string>

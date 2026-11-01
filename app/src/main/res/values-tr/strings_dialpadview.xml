@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">Sesli mesajı yapılandırmak için Menü &gt; Ayarlar\'a gidin.</string>
   <string name="add_2sec_pause">2 saniyelik duraklama ekle</string>
   <string name="add_wait">Bekleme ekle</string>
-  <string name="dialer_useDtmfDialpad">Telefon tuş takımını kullan</string>
-  <string name="dialer_returnToInCallScreen">Devam eden çağrıya dön</string>
-  <string name="dialer_addAnotherCall">Çağrı ekle</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">SIM karttan yükleniyor…</string>

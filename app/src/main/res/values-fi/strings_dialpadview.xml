@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">Määritä puhelinvastaajan asetukset kohdassa Valikko &gt; Asetukset.</string>
   <string name="add_2sec_pause">Lisää 2 sekunnin tauko</string>
   <string name="add_wait">Lisää tauko</string>
-  <string name="dialer_useDtmfDialpad">Käytä näppäimistöä</string>
-  <string name="dialer_returnToInCallScreen">Palaa meneillään olevaan puheluun</string>
-  <string name="dialer_addAnotherCall">Lisää puhelu</string>
   <string name="imei">IMEI-koodi</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">Ladataan SIM-kortilta…</string>

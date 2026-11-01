@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">Hjálparlínur</string>
-    <string name="helplines_loading">Hleður\u2026</string>
     <string name="helplines_empty">Engar hjálparlínur fundust.\nSettu inn SIM-kort og prófaðu aftur</string>
     <string name="helplines_help">Hjálp</string>
     <string name="helplines_help_title">Það er öruggt að hringja í þessi númer</string>

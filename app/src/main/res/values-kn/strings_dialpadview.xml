@@ -10,9 +10,6 @@
   <string name="dialog_voicemail_not_ready_message">ಧ್ವನಿಮೇಲ್‌ ಹೊಂದಿಸಲು, ಮೆನು &gt; ಸೆಟ್ಟಿಂಗ್‌ಗಳುಗೆ ಹೋಗಿ.</string>
   <string name="add_2sec_pause">2-ಸೆ ವಿರಾಮವನ್ನು ಸೇರಿಸಿ</string>
   <string name="add_wait">ನಿರೀಕ್ಷೆಯನ್ನು ಸೇರಿಸಿ</string>
-  <string name="dialer_useDtmfDialpad">ಟಚ್ ಟೋನ್ ಕೀಪ್ಯಾಡ್ ಬಳಸಿ</string>
-  <string name="dialer_returnToInCallScreen">ಪ್ರತ್ಯತ್ತರ ಕರೆಯು ಪ್ರಗತಿಯಲ್ಲಿದೆ</string>
-  <string name="dialer_addAnotherCall">ಕರೆಯನ್ನು ಸೇರಿಸಿ</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">ಸಿಮ್‌ ಕಾರ್ಡ್‌ನಿಂದ ಲೋಡ್‌ ಮಾಡಲಾಗುತ್ತಿದೆ…</string>

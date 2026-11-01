@@ -33,8 +33,4 @@
   <string name="description_via_number_phone_account">%2$s vasitəsilə %1$s hesabında</string>
   <string name="voicemail_string">Səsli e-məktub</string>
   <string name="just_now">İndicə</string>
-  <string name="new_call_log_carrier_video">Operator video</string>
-  <string name="new_call_log_unknown">Naməlum</string>
-  <string name="new_call_log_secondary_blocked">Blok edilib</string>
-  <string name="new_call_log_secondary_spam">Spam</string>
 </resources>

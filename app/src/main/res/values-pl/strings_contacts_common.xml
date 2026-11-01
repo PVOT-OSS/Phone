@@ -117,12 +117,5 @@
   <string name="send_and_call_button">WYŚLIJ I ZADZWOŃ</string>
   <string name="call_subject_limit">%1$s / %2$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">Karta %1$s.</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="one"> Karta %1$s. %2$d nieprzeczytany element. </item>
-    <item quantity="few"> Karta %1$s. %2$d nieprzeczytane elementy. </item>
-    <item quantity="many"> Karta %1$s. %2$d nieprzeczytanych elementów. </item>
-    <item quantity="other"> Karta %1$s. %2$d nieprzeczytanego elementu. </item>
-  </plurals>
   <string name="description_search_video_call">Rozmowa wideo</string>
 </resources>
