@@ -21,6 +21,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.core.splashscreen.SplashScreen;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -57,6 +58,21 @@ public class MainActivity extends TransactionSafeActivity
 
     activePeer = new OldMainActivityPeer(this);
     activePeer.onActivityCreate(savedInstanceState);
+    getOnBackPressedDispatcher()
+        .addCallback(
+            this,
+            new OnBackPressedCallback(true) {
+              @Override
+              public void handleOnBackPressed() {
+                if (activePeer.onBackPressed()) {
+                  return;
+                }
+                // Nothing of ours to close: let the system handle it.
+                setEnabled(false);
+                getOnBackPressedDispatcher().onBackPressed();
+                setEnabled(true);
+              }
+            });
 
     showBlockReportSpamDialogReceiver =
         new ShowBlockReportSpamDialogReceiver(getSupportFragmentManager());
@@ -124,14 +140,6 @@ public class MainActivity extends TransactionSafeActivity
   protected void onSaveInstanceState(@NonNull Bundle bundle) {
     super.onSaveInstanceState(bundle);
     activePeer.onSaveInstanceState(bundle);
-  }
-
-  @Override
-  public void onBackPressed() {
-    if (activePeer.onBackPressed()) {
-      return;
-    }
-    super.onBackPressed();
   }
 
   @Override

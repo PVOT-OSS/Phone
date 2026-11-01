@@ -19,6 +19,7 @@ package org.prauga.phone.incallui;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 
 import org.prauga.phone.dialer.R;
@@ -37,7 +38,16 @@ public class ManageConferenceActivity extends BaseActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     InCallPresenter.getInstance().setManageConferenceActivity(this);
-
+    getOnBackPressedDispatcher()
+        .addCallback(
+            this,
+            new OnBackPressedCallback(true) {
+              @Override
+              public void handleOnBackPressed() {
+                InCallPresenter.getInstance().bringToForeground(false);
+                finish();
+              }
+            });
 
     setContentView(R.layout.activity_manage_conference);
     Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.manageConferencePanel);
@@ -58,11 +68,6 @@ public class ManageConferenceActivity extends BaseActivity {
     }
   }
 
-  @Override
-  public void onBackPressed() {
-    InCallPresenter.getInstance().bringToForeground(false);
-    finish();
-  }
 
   @Override
   protected void onStart() {

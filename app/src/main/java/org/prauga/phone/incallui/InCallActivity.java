@@ -43,6 +43,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.ColorInt;
 import androidx.annotation.FloatRange;
 import androidx.annotation.IntDef;
@@ -176,6 +177,21 @@ public class InCallActivity extends TransactionSafeFragmentActivity
   protected void onCreate(Bundle bundle) {
     Trace.beginSection("InCallActivity.onCreate");
     super.onCreate(bundle);
+    getOnBackPressedDispatcher()
+        .addCallback(
+            this,
+            new OnBackPressedCallback(true) {
+              @Override
+              public void handleOnBackPressed() {
+                if (handleBackPressed()) {
+                  return;
+                }
+                // Nothing special to do. Fall back to the default behavior.
+                setEnabled(false);
+                getOnBackPressedDispatcher().onBackPressed();
+                setEnabled(true);
+              }
+            });
 
     preferredAccountWorkerResultListener =
         DialerExecutorComponent.get(this)
@@ -624,40 +640,38 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     }
   }
 
-  @Override
-  public void onBackPressed() {
+  /** Handles a press of back; true when it was consumed, false to let the system handle it. */
+  private boolean handleBackPressed() {
     LogUtil.enterBlock("InCallActivity.onBackPressed");
 
     if (!isVisible) {
-      return;
+      return true;
     }
 
     if (!getCallCardFragmentVisible()) {
-      return;
+      return true;
     }
 
     DialpadFragment dialpadFragment = getDialpadFragment();
     if (dialpadFragment != null && dialpadFragment.isVisible()) {
       showDialpadFragment(false /* show */, true /* animate */);
-      return;
+      return true;
     }
 
     if (CallList.getInstance().getIncomingCall() != null) {
       LogUtil.i(
           "InCallActivity.onBackPressed",
           "Ignore the press of the back key when an incoming call is ringing");
-      return;
+      return true;
     }
-
-    // Nothing special to do. Fall back to the default behavior.
-    super.onBackPressed();
+    return false;
   }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     LogUtil.i("InCallActivity.onOptionsItemSelected", "item: " + item);
     if (item.getItemId() == android.R.id.home) {
-      onBackPressed();
+      getOnBackPressedDispatcher().onBackPressed();
       return true;
     }
     return super.onOptionsItemSelected(item);
