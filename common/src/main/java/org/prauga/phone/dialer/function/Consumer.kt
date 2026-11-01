@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
-package org.prauga.phone.dialer.function;
 
-/** Functional interface for supplying generic values. */
-public interface Supplier<T> {
+package org.prauga.phone.dialer.function
 
-  /** Supplies a value. */
-  T get();
+/** Functional interface for consuming generic values. */
+fun interface Consumer<T> {
+
+    /** Consumes a value. */
+    fun accept(value: T)
 }

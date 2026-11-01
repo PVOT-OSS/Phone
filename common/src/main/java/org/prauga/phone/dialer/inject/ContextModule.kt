@@ -14,11 +14,15 @@
  * limitations under the License
  */
 
-package org.prauga.phone.dialer.function;
+package org.prauga.phone.dialer.inject
 
-/** Functional interface for consuming generic values. */
-public interface Consumer<T> {
+import android.content.Context
+import dagger.Module
+import dagger.Provides
 
-  /** Consumes a value. */
-  void accept(T value);
+/** Provides the singleton application context object. */
+@Module
+class ContextModule(private val context: Context) {
+
+    @Provides @ApplicationContext fun provideContext(): Context = context
 }
