@@ -14,7 +14,7 @@ import androidx.compose.ui.test.performClick
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
 import com.prauga.pvot.coreui.UiState
-import com.prauga.pvot.designsystem.theme.PvotAppTheme
+import org.prauga.phone.dialer.ui.SolidGlassTheme
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -84,7 +84,7 @@ class HelplinesTest {
 
     private fun show(state: UiState<List<HelplineItem>>, showHelp: Boolean = false, onCall: (String) -> Unit = {}) {
         compose.setContent {
-            PvotAppTheme { HelplinesScreen(state = state, showHelpAtStart = showHelp, onBack = {}, onCall = onCall) }
+            SolidGlassTheme { HelplinesScreen(state = state, showHelpAtStart = showHelp, onBack = {}, onCall = onCall) }
         }
     }
 

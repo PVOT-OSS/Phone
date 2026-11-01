@@ -224,7 +224,7 @@
             android:excludeFromRecents="true"
             android:exported="true"
             android:label="@string/helplines_name"
-            android:theme="@style/Dialer.ThemeBase.NoActionBar">
+            android:theme="@style/Theme.Pvot">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -386,7 +386,7 @@
 
         <activity
             android:name="org.prauga.phone.dialer.rtt.RttTranscriptActivity"
-            android:theme="@style/Dialer.ThemeBase.NoActionBar" />
+            android:theme="@style/Theme.Pvot" />
 
         <service
             android:name="org.prauga.phone.dialer.shortcuts.PeriodicJobService"

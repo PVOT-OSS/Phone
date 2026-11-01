@@ -17,7 +17,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.prauga.phone.dialer.glidephotomanager.PhotoInfo
-import org.prauga.phone.dialer.ui.PhoneScreenTheme
+import org.prauga.phone.dialer.ui.SolidGlassTheme
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
@@ -50,7 +50,7 @@ class RttTranscriptScreenTest {
     fun bothSidesAreShownAndBackLeaves() {
         var back = false
         compose.setContent {
-            PhoneScreenTheme {
+            SolidGlassTheme {
                 RttTranscriptScreen("Ada Lovelace", PhotoInfo.newBuilder().setName("Ada Lovelace").build(), conversation) { back = true }
             }
         }
@@ -61,12 +61,18 @@ class RttTranscriptScreenTest {
     }
 
     @Test
-    fun screenshotDark() {
+    fun screenshotDark() = screenshot("rtt_transcript_dark")
+
+    @Test
+    @Config(qualifiers = "+notnight")
+    fun screenshotLight() = screenshot("rtt_transcript_light")
+
+    private fun screenshot(name: String) {
         compose.setContent {
-            PhoneScreenTheme {
+            SolidGlassTheme {
                 RttTranscriptScreen("Ada Lovelace", PhotoInfo.newBuilder().setName("Ada Lovelace").build(), conversation) {}
             }
         }
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/rtt/rtt_transcript_dark.png")
+        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/rtt/$name.png")
     }
 }

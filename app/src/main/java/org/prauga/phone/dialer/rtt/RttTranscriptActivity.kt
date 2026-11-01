@@ -25,6 +25,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.core.net.toUri
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,8 +40,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import com.prauga.pvot.designsystem.components.PvotScreen
-import com.prauga.pvot.designsystem.components.list.PvotLetterTileDefaults
+import com.prauga.pvot.designsystem.components.list.PvotAvatarDefaults
 import com.prauga.pvot.designsystem.navigation.PvotTopBar
+import com.prauga.pvot.designsystem.navigation.rememberPvotTopBarCompact
 import com.prauga.pvot.designsystem.platform.enablePvotEdgeToEdge
 import com.prauga.pvot.designsystem.platform.setPvotContent
 import com.prauga.pvot.designsystem.theme.PvotShapes
@@ -50,8 +53,10 @@ import org.prauga.phone.dialer.common.Assert
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.glidephotomanager.PhotoInfo
 import org.prauga.phone.dialer.protos.ProtoParsers
-import org.prauga.phone.dialer.ui.ContactAvatar
+import org.prauga.phone.dialer.ui.PhoneBackground
+import org.prauga.phone.dialer.ui.PhoneScaffold
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
+import org.prauga.phone.dialer.ui.QuickContactAvatar
 import org.prauga.phone.dialer.ui.TestTags
 
 /** Shows the saved text of an RTT call, opened from call details. */
@@ -123,11 +128,15 @@ internal fun firstPositionToShowTimestamp(messages: List<RttTranscriptMessage>):
 fun RttTranscriptScreen(title: String, photoInfo: PhotoInfo, messages: List<RttTranscriptMessage>, onBack: () -> Unit) {
     val context = LocalContext.current
     val fullDateAt = firstPositionToShowTimestamp(messages)
-    Column(Modifier.fillMaxSize()) {
-        PvotTopBar(title = title, onBack = onBack)
+    val listState = rememberLazyListState()
+    PhoneScaffold(
+        background = PhoneBackground.Live,
+        topBar = { PvotTopBar(title = title, onBack = onBack, compact = rememberPvotTopBarCompact(listState)) },
+    ) { padding ->
         PvotScreen(
             modifier = Modifier.fillMaxSize().testTag(TestTags.RTT_TRANSCRIPT),
-            contentPadding = PaddingValues(horizontal = PvotSpacing.L),
+            state = listState,
+            contentPadding = PaddingValues(start = PvotSpacing.L, end = PvotSpacing.L, top = padding.calculateTopPadding()),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start,
         ) {
@@ -165,11 +174,13 @@ private fun TranscriptMessage(message: RttTranscriptMessage, photoInfo: PhotoInf
                 if (sameGroup) {
                     Spacer(Modifier.size(AvatarSize))
                 } else {
-                    ContactAvatar(
+                    QuickContactAvatar(
                         name = photoInfo.name,
-                        photoUri = photoInfo.photoUri.takeIf { it.isNotEmpty() },
-                        colorKey = photoInfo.lookupUri.ifEmpty { photoInfo.formattedNumber },
+                        contactUri = null,
+                        photoId = photoInfo.photoId,
+                        photoUri = photoInfo.photoUri.takeIf { it.isNotEmpty() }?.toUri(),
                         size = AvatarSize,
+                        colorKey = photoInfo.lookupUri.ifEmpty { photoInfo.formattedNumber },
                     )
                 }
             }
@@ -178,7 +189,7 @@ private fun TranscriptMessage(message: RttTranscriptMessage, photoInfo: PhotoInf
                 style = MaterialTheme.typography.bodyLarge,
                 color = if (remote) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onPrimaryContainer,
                 modifier = Modifier
-                    .widthIn(max = 280.dp)
+                    .widthIn(max = BubbleMaxWidth)
                     .background(
                         if (remote) MaterialTheme.colorScheme.surfaceContainerHigh else MaterialTheme.colorScheme.primaryContainer,
                         PvotShapes.Card,
@@ -200,4 +211,7 @@ private fun TranscriptMessage(message: RttTranscriptMessage, photoInfo: PhotoInf
     }
 }
 
-private val AvatarSize = PvotLetterTileDefaults.Size * 0.75f
+private val AvatarSize = PvotAvatarDefaults.Small * 0.75f
+
+/** The widest a bubble gets, so long messages wrap well short of the other side. */
+private val BubbleMaxWidth = 280.dp

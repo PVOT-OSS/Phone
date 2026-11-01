@@ -14,6 +14,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,11 +26,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -40,6 +41,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -47,6 +49,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.edit
@@ -57,20 +60,25 @@ import com.prauga.pvot.designsystem.components.PvotBottomSheet
 import com.prauga.pvot.designsystem.components.PvotDialog
 import com.prauga.pvot.designsystem.components.PvotDialogAction
 import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
+import com.prauga.pvot.designsystem.components.PvotCard
 import com.prauga.pvot.designsystem.components.PvotScreen
 import com.prauga.pvot.designsystem.components.PvotScreenDefaults
 import com.prauga.pvot.designsystem.components.list.PvotListRow
 import com.prauga.pvot.designsystem.navigation.PvotTopBar
 import com.prauga.pvot.designsystem.navigation.PvotTopBarAction
+import com.prauga.pvot.designsystem.navigation.rememberPvotTopBarCompact
 import com.prauga.pvot.designsystem.platform.enablePvotEdgeToEdge
 import com.prauga.pvot.designsystem.platform.setPvotContent
-import com.prauga.pvot.designsystem.theme.PvotAppTheme
+import com.prauga.pvot.designsystem.theme.PvotShapes
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.calllog.IntentProvider
 import org.prauga.phone.dialer.helplines.utils.HelplineUtils
+import org.prauga.phone.dialer.ui.PhoneBackground
+import org.prauga.phone.dialer.ui.PhoneScaffold
+import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.TestTags
 
 /**
@@ -87,7 +95,7 @@ class HelplineActivity : ComponentActivity() {
         if (firstLaunch) prefs.edit { putBoolean(KEY_FIRST_LAUNCH, true) }
 
         setPvotContent {
-            PvotAppTheme {
+            PhoneScreenTheme {
                 val state by produceState<UiState<List<HelplineItem>>>(UiState.Loading) {
                     value = UiState.Success(withContext(Dispatchers.Default) {
                         HelplineLoader.load(resources, getSystemService(SubscriptionManager::class.java))
@@ -134,11 +142,16 @@ internal fun HelplinesScreen(
     var details by rememberSaveable { mutableStateOf<String?>(null) }
     var website by rememberSaveable { mutableStateOf<String?>(null) }
 
-    Scaffold(
+    val listState = rememberLazyListState()
+    PhoneScaffold(
+        background = PhoneBackground.Live,
         modifier = Modifier.semantics { testTagsAsResourceId = true },
-        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
-            PvotTopBar(title = stringResource(R.string.helplines_name), onBack = onBack) {
+            PvotTopBar(
+                title = stringResource(R.string.helplines_name),
+                onBack = onBack,
+                compact = rememberPvotTopBarCompact(listState),
+            ) {
                 PvotTopBarAction(
                     icon = painterResource(R.drawable.ic_info_circle),
                     contentDescription = stringResource(R.string.helplines_help),
@@ -147,7 +160,7 @@ internal fun HelplinesScreen(
             }
         },
     ) { padding ->
-        Box(Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()), contentAlignment = Alignment.Center) {
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             when (state) {
                 is UiState.Loading -> PvotLoadingContent()
                 is UiState.Error -> PvotEmptyContent(stringResource(R.string.helplines_empty))
@@ -157,7 +170,7 @@ internal fun HelplinesScreen(
                         modifier = Modifier.padding(PvotSpacing.L),
                     )
                 } else {
-                    HelplineList(state.data, onOpen = { details = it.name }, onCall = onCall)
+                    HelplineList(state.data, listState, padding.calculateTopPadding(), onOpen = { details = it.name }, onCall = onCall)
                 }
             }
         }
@@ -203,34 +216,48 @@ internal fun HelplinesScreen(
 }
 
 @Composable
-private fun HelplineList(helplines: List<HelplineItem>, onOpen: (HelplineItem) -> Unit, onCall: (String) -> Unit) {
+private fun HelplineList(
+    helplines: List<HelplineItem>,
+    listState: LazyListState,
+    topPadding: Dp,
+    onOpen: (HelplineItem) -> Unit,
+    onCall: (String) -> Unit,
+) {
     val resources = LocalContext.current.resources
     PvotScreen(
         modifier = Modifier.fillMaxSize().testTag(TestTags.HELPLINE_LIST),
+        state = listState,
         contentPadding = PaddingValues(
             start = PvotScreenDefaults.HorizontalPadding,
             end = PvotScreenDefaults.HorizontalPadding,
-            top = PvotSpacing.S,
+            top = topPadding + PvotSpacing.S,
             bottom = PvotScreenDefaults.BottomSpacing + WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding(),
         ),
     ) {
-        items(helplines, key = { it.name + it.item.number }) { helpline ->
-            val number = helpline.item.number
-            PvotListRow(
-                title = helpline.displayName(),
-                supportingText = listOfNotNull(
-                    HelplineUtils.getCategories(resources, helpline).takeIf { it.isNotEmpty() },
-                    HelplineUtils.getLanguages(resources, helpline).takeIf { it.isNotEmpty() },
-                ).joinToString("\n").ifEmpty { null },
-                onClick = { onOpen(helpline) },
-                trailing = if (number.isNullOrEmpty()) null else {
-                    {
-                        IconButton(onClick = { onCall(number) }, modifier = Modifier.testTag(TestTags.helplineCall(number))) {
-                            Icon(painterResource(R.drawable.ic_phone), contentDescription = stringResource(R.string.call))
-                        }
+        // A short list, one solid card, so the rows read over the live background.
+        item(key = "helplines") {
+            PvotCard(Modifier.fillMaxWidth()) {
+                Column(Modifier.padding(vertical = PvotSpacing.XS)) {
+                    for (helpline in helplines) {
+                        val number = helpline.item.number
+                        PvotListRow(
+                            title = helpline.displayName(),
+                            supportingText = listOfNotNull(
+                                HelplineUtils.getCategories(resources, helpline).takeIf { it.isNotEmpty() },
+                                HelplineUtils.getLanguages(resources, helpline).takeIf { it.isNotEmpty() },
+                            ).joinToString("\n").ifEmpty { null },
+                            onClick = { onOpen(helpline) },
+                            trailing = if (number.isNullOrEmpty()) null else {
+                                {
+                                    IconButton(onClick = { onCall(number) }, modifier = Modifier.testTag(TestTags.helplineCall(number))) {
+                                        Icon(painterResource(R.drawable.ic_phone), contentDescription = stringResource(R.string.call))
+                                    }
+                                }
+                            },
+                        )
                     }
-                },
-            )
+                }
+            }
         }
     }
 }
@@ -262,12 +289,19 @@ private fun DetailRow(label: Int, value: String?, onClick: (() -> Unit)? = null)
     )
 }
 
-/** A website opened without cookies or cache, with Do Not Track, and forgotten when closed. */
+/**
+ * A website opened without cookies or cache, with Do Not Track, and forgotten when closed, on a
+ * solid panel so the page reads as its own surface.
+ */
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 private fun PrivateWebView(url: String) {
     AndroidView(
-        modifier = Modifier.fillMaxWidth().height(420.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(WebsitePanelHeight)
+            .clip(PvotShapes.Card)
+            .background(MaterialTheme.colorScheme.surface),
         factory = { context ->
             CookieManager.getInstance().setAcceptCookie(false)
             WebView(context).apply {
@@ -280,6 +314,9 @@ private fun PrivateWebView(url: String) {
         onRelease = { it.clearHistory() },
     )
 }
+
+/** Tall enough to read a page in, short enough that the dialog's title and button still fit. */
+private val WebsitePanelHeight = 360.dp
 
 @Composable
 private fun HelplineItem.displayName(): String = name.ifEmpty { stringResource(R.string.unknown_helpline_name) }
