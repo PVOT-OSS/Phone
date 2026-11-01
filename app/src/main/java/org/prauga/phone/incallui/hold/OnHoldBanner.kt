@@ -27,6 +27,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.prauga.pvot.designsystem.components.pvotGlassSurface
+import com.prauga.pvot.designsystem.effects.LocalPvotGlassBackdrop
+import com.prauga.pvot.designsystem.effects.PvotGlassDefaults
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.ui.TestTags
@@ -35,7 +38,10 @@ import org.prauga.phone.incallui.incall.protocol.SecondaryInfo
 /** Size of the circle holding the on-hold icon at the capsule's start. */
 private val HoldIconCircle = 32.dp
 
-/** A slim capsule for the call on hold: who it is and that they are on hold. */
+/**
+ * A slim capsule for the call on hold: who it is and that they are on hold. Glass over the
+ * screen's backdrop when there is one, solid otherwise.
+ */
 @Composable
 fun OnHoldBanner(info: SecondaryInfo, modifier: Modifier = Modifier) {
     val name = if (info.nameIsNumber()) {
@@ -43,10 +49,16 @@ fun OnHoldBanner(info: SecondaryInfo, modifier: Modifier = Modifier) {
     } else {
         info.name().orEmpty()
     }
+    val backdrop = LocalPvotGlassBackdrop.current
+    val surface = if (backdrop != null) {
+        Modifier.pvotGlassSurface(backdrop, PvotGlassDefaults.CapsuleRadius, role = null)
+    } else {
+        Modifier.background(MaterialTheme.colorScheme.surfaceContainerHigh, CircleShape)
+    }
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surfaceContainerHigh, CircleShape)
+            .then(surface)
             .padding(start = PvotSpacing.XS, end = PvotSpacing.L, top = PvotSpacing.XS, bottom = PvotSpacing.XS)
             .testTag(TestTags.ON_HOLD_BANNER),
         verticalAlignment = Alignment.CenterVertically,
@@ -74,7 +86,8 @@ fun OnHoldBanner(info: SecondaryInfo, modifier: Modifier = Modifier) {
         Text(
             text = stringResource(R.string.incall_on_hold),
             style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            // Full contrast: over glass the background takes the screen's colour.
+            color = MaterialTheme.colorScheme.onSurface,
         )
     }
 }

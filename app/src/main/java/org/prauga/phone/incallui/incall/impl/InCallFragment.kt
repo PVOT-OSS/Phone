@@ -29,6 +29,18 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInWindow
+import androidx.compose.ui.platform.LocalView
+import com.prauga.pvot.designsystem.effects.LocalPvotGlassBackdrop
+import com.prauga.pvot.designsystem.effects.pvotGlassBackdrop
+import com.prauga.pvot.designsystem.effects.rememberPvotGlassBackdrop
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -415,18 +427,22 @@ object InCallScreenHost {
         bottom: @Composable () -> Unit,
         overDialpad: @Composable () -> Unit = {},
     ): View {
-        fun compose(content: @Composable () -> Unit) = ComposeView(context).apply {
+        fun compose(glass: Boolean = true, content: @Composable () -> Unit) = ComposeView(context).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent { PhoneScreenTheme(fillBackground = false) { content() } }
+            setContent {
+                PhoneScreenTheme(fillBackground = false) {
+                    if (glass) WindowBackdrop(content) else content()
+                }
+            }
         }
         val column = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
-            addView(compose(top), LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f))
+            addView(compose(content = top), LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f))
             addView(
                 FrameLayout(context).apply { id = R.id.incall_location_holder },
                 LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT),
             )
-            addView(compose(bottom), LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+            addView(compose(content = bottom), LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
         }
         return FrameLayout(context).apply {
             addView(column, FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
@@ -440,7 +456,8 @@ object InCallScreenHost {
             )
             // Wraps its content, so it only takes touches where it draws.
             addView(
-                compose(overDialpad),
+                // Over the dialpad, not the window background, so it has nothing to be glass over.
+                compose(glass = false, content = overDialpad),
                 FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -448,5 +465,32 @@ object InCallScreenHost {
                 ),
             )
         }
+    }
+}
+
+/**
+ * Records the window's background behind [content] as a glass backdrop, so the call's capsules
+ * frost what is really behind them. The call's background is the window's, drawn by the activity,
+ * so each part draws its own slice of it into the backdrop.
+ */
+@Composable
+private fun WindowBackdrop(content: @Composable () -> Unit) {
+    val backdrop = rememberPvotGlassBackdrop()
+    val root = LocalView.current.rootView
+    var inWindow by remember { mutableStateOf(Offset.Zero) }
+    Box(Modifier.onGloballyPositioned { inWindow = it.positionInWindow() }) {
+        Box(
+            Modifier
+                .matchParentSize()
+                .pvotGlassBackdrop(backdrop)
+                .drawBehind {
+                    val background = root.background ?: return@drawBehind
+                    drawIntoCanvas { canvas ->
+                        canvas.translate(-inWindow.x, -inWindow.y)
+                        background.draw(canvas.nativeCanvas)
+                    }
+                },
+        )
+        CompositionLocalProvider(LocalPvotGlassBackdrop provides backdrop) { content() }
     }
 }
