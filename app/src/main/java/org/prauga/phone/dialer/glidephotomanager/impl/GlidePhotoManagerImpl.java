@@ -20,6 +20,10 @@ package org.prauga.phone.dialer.glidephotomanager.impl;
 import android.content.ContentUris;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.request.RequestOptions;
 import android.net.Uri;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Data;
@@ -33,9 +37,6 @@ import androidx.annotation.Nullable;
 
 import org.prauga.phone.dialer.R;
 import org.prauga.phone.dialer.common.Assert;
-import org.prauga.phone.dialer.glide.GlideApp;
-import org.prauga.phone.dialer.glide.GlideRequest;
-import org.prauga.phone.dialer.glide.GlideRequests;
 import org.prauga.phone.dialer.glidephotomanager.GlidePhotoManager;
 import org.prauga.phone.dialer.glidephotomanager.PhotoInfo;
 import org.prauga.phone.dialer.i18n.DialerBidiFormatter;
@@ -82,15 +83,14 @@ public class GlidePhotoManagerImpl implements GlidePhotoManager {
             // and a phone number. We use DialerBidiFormatter to wrap the phone number with TTS
             // span.
             DialerBidiFormatter.format(photoInfo.getName())));
-    GlideRequest<Drawable> request = buildRequest(GlideApp.with(imageView), photoInfo);
-    request.into(imageView);
+    buildRequest(Glide.with(imageView), photoInfo).into(imageView);
   }
 
-  private GlideRequest<Drawable> buildRequest(GlideRequests requestManager, PhotoInfo photoInfo) {
+  private RequestBuilder<Drawable> buildRequest(RequestManager requestManager, PhotoInfo photoInfo) {
     // Warning: Glide ignores extra attributes on BitmapDrawable such as tint and draw the bitmap
     // directly so be sure not to set tint in the XML of any drawable referenced below.
 
-    GlideRequest<Drawable> request;
+    RequestBuilder<Drawable> request;
     boolean circleCrop = true; // Photos are cropped to a circle by default.
 
     if (photoInfo.getIsBlocked()) {
@@ -114,15 +114,16 @@ public class GlidePhotoManagerImpl implements GlidePhotoManager {
     }
 
     LetterTileDrawable defaultDrawable = getDefaultDrawable(photoInfo);
-    request
-        .placeholder(defaultDrawable) // when the photo is still loading.
-        .fallback(defaultDrawable); // when there's nothing to load.
+    RequestOptions options =
+        new RequestOptions()
+            .placeholder(defaultDrawable) // when the photo is still loading.
+            .fallback(defaultDrawable); // when there's nothing to load.
 
     if (circleCrop) {
-      request.circleCrop();
+      options = options.circleCrop();
     }
 
-    return request;
+    return request.apply(options);
   }
 
   /**
