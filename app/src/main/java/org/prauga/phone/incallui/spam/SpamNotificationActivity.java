@@ -26,9 +26,10 @@ import android.provider.ContactsContract;
 import android.telephony.PhoneNumberUtils;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
+
+import com.prauga.pvot.designsystem.components.PvotDialogActionStyle;
 
 import org.prauga.phone.dialer.R;
 import org.prauga.phone.dialer.blocking.FilteredNumberAsyncQueryHandler;
@@ -37,7 +38,11 @@ import org.prauga.phone.dialer.location.GeoUtil;
 import org.prauga.phone.dialer.logging.ContactLookupResult;
 import org.prauga.phone.dialer.notification.DialerNotificationManager;
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper;
+import org.prauga.phone.dialer.ui.PvotAlertDialog;
+import org.prauga.phone.dialer.ui.PvotAlertDialog.Action;
 import org.prauga.phone.incallui.call.DialerCall;
+
+import java.util.Arrays;
 
 /** Creates the after call notification dialogs. */
 public class SpamNotificationActivity extends FragmentActivity {
@@ -282,28 +287,38 @@ public class SpamNotificationActivity extends FragmentActivity {
           ContactLookupResult.Type.forNumber(
               getArguments().getInt(CALL_INFO_CONTACT_LOOKUP_RESULT_TYPE, 0));
 
-      return new AlertDialog.Builder(getActivity())
-          .setCancelable(false)
-          .setTitle(getString(R.string.spam_notification_title,
-                  getFormattedNumber(number, applicationContext)))
-          .setNeutralButton(getString(R.string.spam_notification_action_dismiss),
-                  (dialog, which) -> dismiss())
-          .setPositiveButton(getString(R.string.spam_notification_block_spam_action_text),
-                  (dialog, which) -> {
-                    dismissed = true;
-                    dismiss();
-                    spamNotificationActivity.maybeShowBlockReportSpamDialog(
-                        number, contactLookupResultType);
-                    spamNotificationActivity.maybeShowSpamBlockingPromoAndFinish();
-                  })
-          .setNegativeButton(getString(R.string.spam_notification_was_not_spam_action_text),
-                  (dialog, which) -> {
-                    dismissed = true;
-                    dismiss();
-                    spamNotificationActivity.maybeShowNotSpamDialog(number,
-                            contactLookupResultType);
-                  })
-          .create();
+      PvotAlertDialog dialog =
+          new PvotAlertDialog(
+              getActivity(),
+              getString(
+                  R.string.spam_notification_title, getFormattedNumber(number, applicationContext)),
+              null,
+              Arrays.asList(
+                  new Action(
+                      getString(R.string.spam_notification_block_spam_action_text),
+                      PvotDialogActionStyle.Primary,
+                      () -> {
+                        dismissed = true;
+                        dismiss();
+                        spamNotificationActivity.maybeShowBlockReportSpamDialog(
+                            number, contactLookupResultType);
+                        spamNotificationActivity.maybeShowSpamBlockingPromoAndFinish();
+                      }),
+                  new Action(
+                      getString(R.string.spam_notification_was_not_spam_action_text),
+                      PvotDialogActionStyle.Neutral,
+                      () -> {
+                        dismissed = true;
+                        dismiss();
+                        spamNotificationActivity.maybeShowNotSpamDialog(
+                            number, contactLookupResultType);
+                      }),
+                  new Action(
+                      getString(R.string.spam_notification_action_dismiss),
+                      PvotDialogActionStyle.Neutral,
+                      this::dismiss)));
+      dialog.setCancelable(false);
+      return dialog;
     }
   }
 
@@ -352,31 +367,36 @@ public class SpamNotificationActivity extends FragmentActivity {
       final ContactLookupResult.Type contactLookupResultType =
           ContactLookupResult.Type.forNumber(
               getArguments().getInt(CALL_INFO_CONTACT_LOOKUP_RESULT_TYPE, 0));
-      return new AlertDialog.Builder(getActivity())
-          .setTitle(
-              getString(R.string.non_spam_notification_title, getFormattedNumber(number, context)))
-          .setCancelable(false)
-          .setMessage(getString(R.string.spam_notification_non_spam_call_expanded_text))
-          .setNeutralButton(
-              getString(R.string.spam_notification_action_dismiss),
-                  (dialog, which) -> dismiss())
-          .setPositiveButton(
-              getString(R.string.spam_notification_dialog_add_contact_action_text),
-                  (dialog, which) -> {
-                    dismissed = true;
-                    dismiss();
-                    startActivity(createInsertContactsIntent(number));
-                  })
-          .setNegativeButton(
-                  getString(R.string.spam_notification_dialog_block_report_spam_action_text),
-                  (dialog, which) -> {
-                    dismissed = true;
-                    dismiss();
-                    spamNotificationActivity.maybeShowBlockReportSpamDialog(
-                        number, contactLookupResultType);
-                    spamNotificationActivity.maybeShowSpamBlockingPromoAndFinish();
-                  })
-          .create();
+      PvotAlertDialog dialog =
+          new PvotAlertDialog(
+              getActivity(),
+              getString(R.string.non_spam_notification_title, getFormattedNumber(number, context)),
+              getString(R.string.spam_notification_non_spam_call_expanded_text),
+              Arrays.asList(
+                  new Action(
+                      getString(R.string.spam_notification_dialog_add_contact_action_text),
+                      PvotDialogActionStyle.Primary,
+                      () -> {
+                        dismissed = true;
+                        dismiss();
+                        startActivity(createInsertContactsIntent(number));
+                      }),
+                  new Action(
+                      getString(R.string.spam_notification_dialog_block_report_spam_action_text),
+                      PvotDialogActionStyle.Neutral,
+                      () -> {
+                        dismissed = true;
+                        dismiss();
+                        spamNotificationActivity.maybeShowBlockReportSpamDialog(
+                            number, contactLookupResultType);
+                        spamNotificationActivity.maybeShowSpamBlockingPromoAndFinish();
+                      }),
+                  new Action(
+                      getString(R.string.spam_notification_action_dismiss),
+                      PvotDialogActionStyle.Neutral,
+                      this::dismiss)));
+      dialog.setCancelable(false);
+      return dialog;
     }
   }
 

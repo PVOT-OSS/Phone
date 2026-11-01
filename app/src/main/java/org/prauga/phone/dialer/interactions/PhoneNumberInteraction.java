@@ -17,9 +17,7 @@
 package org.prauga.phone.dialer.interactions;
 
 import android.Manifest.permission;
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,13 +32,6 @@ import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.RawContacts;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.ListAdapter;
-import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.IntDef;
@@ -441,32 +432,6 @@ public class PhoneNumberInteraction implements Loader.OnLoadCompleteListener<Cur
     }
   }
 
-  /** A list adapter that populates the list of contact's phone numbers. */
-  private static class PhoneItemAdapter extends ArrayAdapter<PhoneItem> {
-
-    private final int interactionType;
-
-    PhoneItemAdapter(Context context, List<PhoneItem> list, int interactionType) {
-      super(context, R.layout.phone_disambig_item, android.R.id.text2, list);
-      this.interactionType = interactionType;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-      final View view = super.getView(position, convertView, parent);
-
-      final PhoneItem item = getItem(position);
-      Assert.isNotNull(item, "Null item at position: %d", position);
-      final TextView typeView = (TextView) view.findViewById(android.R.id.text1);
-      CharSequence value =
-          ContactDisplayUtils.getLabelForCallOrSms(
-              (int) item.type, item.label, interactionType, getContext());
-
-      typeView.setText(value);
-      return view;
-    }
-  }
-
   /**
    * {@link DialogFragment} used for displaying a dialog with a list of phone numbers of which one
    * will be chosen to make a call or initiate an sms message.
@@ -480,14 +445,13 @@ public class PhoneNumberInteraction implements Loader.OnLoadCompleteListener<Cur
    */
   @SuppressWarnings("WeakerAccess") // Made public to let the system reach this class
   public static class PhoneDisambiguationDialogFragment extends DialogFragment
-      implements DialogInterface.OnClickListener, DialogInterface.OnDismissListener {
+      implements DialogInterface.OnDismissListener {
 
     private static final String ARG_PHONE_LIST = "phoneList";
     private static final String ARG_INTERACTION_TYPE = "interactionType";
     private static final String ARG_IS_VIDEO_CALL = "is_video_call";
 
     private int interactionType;
-    private ListAdapter phonesAdapter;
     private List<PhoneItem> phoneList;
     private CallSpecificAppData callSpecificAppData;
     private boolean isVideoCall;
@@ -522,31 +486,32 @@ public class PhoneNumberInteraction implements Loader.OnLoadCompleteListener<Cur
       isVideoCall = getArguments().getBoolean(ARG_IS_VIDEO_CALL);
       callSpecificAppData = CallIntentParser.getCallSpecificAppData(getArguments());
 
-      phonesAdapter = new PhoneItemAdapter(activity, phoneList, interactionType);
-      final LayoutInflater inflater = activity.getLayoutInflater();
-      @SuppressLint("InflateParams") // Allowed since dialog view is not available yet
-      final View setPrimaryView = inflater.inflate(R.layout.set_primary_checkbox, null);
-      return new AlertDialog.Builder(activity)
-          .setAdapter(phonesAdapter, this)
-          .setTitle(
+      List<PhoneDisambiguationDialog.Choice> choices = new ArrayList<>();
+      for (PhoneItem item : phoneList) {
+        choices.add(
+            new PhoneDisambiguationDialog.Choice(
+                ContactDisplayUtils.getLabelForCallOrSms(
+                    (int) item.type, item.label, interactionType, activity),
+                item.phoneNumber));
+      }
+      return PhoneDisambiguationDialog.create(
+          activity,
+          getString(
               interactionType == ContactDisplayUtils.INTERACTION_SMS
                   ? R.string.sms_disambig_title
-                  : R.string.call_disambig_title)
-          .setView(setPrimaryView)
-          .create();
+                  : R.string.call_disambig_title),
+          choices,
+          this::onPhoneChosen);
     }
 
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
+    private void onPhoneChosen(int which, boolean setPrimary) {
       final Activity activity = getActivity();
       if (activity == null) {
         return;
       }
-      final AlertDialog alertDialog = (AlertDialog) dialog;
       if (phoneList.size() > which && which >= 0) {
         final PhoneItem phoneItem = phoneList.get(which);
-        final CheckBox checkBox = (CheckBox) alertDialog.findViewById(R.id.setPrimary);
-        if (checkBox.isChecked()) {
+        if (setPrimary) {
           // Request to mark the data as primary in the background.
           final Intent serviceIntent =
               ContactUpdateService.createSetSuperPrimaryIntent(activity, phoneItem.id);
@@ -556,7 +521,7 @@ public class PhoneNumberInteraction implements Loader.OnLoadCompleteListener<Cur
         PhoneNumberInteraction.performAction(
             activity, phoneItem.phoneNumber, interactionType, isVideoCall, callSpecificAppData);
       } else {
-        dialog.dismiss();
+        dismiss();
       }
     }
 
