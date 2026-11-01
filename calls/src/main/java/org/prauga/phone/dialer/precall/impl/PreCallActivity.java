@@ -22,10 +22,10 @@ import android.os.Bundle;
 import android.view.WindowManager.LayoutParams;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 /** A transparent activity to host dialogs for {@link PreCallCoordinatorImpl} */
-public class PreCallActivity extends AppCompatActivity {
+public class PreCallActivity extends FragmentActivity {
 
   private PreCallCoordinatorImpl preCallCoordinator;
 
