@@ -96,6 +96,10 @@ class SpeedDialFragment : Fragment() {
         override fun setDefaultChannel(item: SpeedDialUiItem, channel: Channel) =
             viewModel.setDefaultChannel(item, channel)
 
+        override fun openAppMenu() {
+            FragmentUtils.getParent(this@SpeedDialFragment, HostInterface::class.java)?.openAppMenu()
+        }
+
         override fun turnOnPermission() {
             val denied = PermissionsUtil.getPermissionsCurrentlyDenied(
                 requireContext(), PermissionsUtil.allContactsGroupPermissionsUsedInDialer)
@@ -149,9 +153,12 @@ class SpeedDialFragment : Fragment() {
     }
 
     /** What the favorites tab needs from the screen that hosts it. */
-    fun interface HostInterface {
+    interface HostInterface {
         /** Whether there are frequent contacts, which the toolbar can clear. */
         fun setHasFrequents(hasFrequents: Boolean)
+
+        /** Opens the app menu, from the avatar in the quick dial header. */
+        fun openAppMenu()
     }
 
     companion object {

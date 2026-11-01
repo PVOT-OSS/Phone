@@ -58,6 +58,7 @@ import org.prauga.phone.dialer.callstats.CallStatsListViewModel.Companion.ALL
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper
 import org.prauga.phone.dialer.ui.QuickContactAvatar
 import org.prauga.phone.dialer.ui.TestTags
+import org.prauga.phone.dialer.ui.fullWidthRow
 
 /** What the statistics do when the user acts. */
 interface CallStatsActions {
@@ -209,7 +210,7 @@ private fun StatsList(
             Column {
                 PvotListRow(
                     title = (if (hasName) details.displayName else details.displayNumber).orEmpty(),
-                    modifier = Modifier.testTag(TestTags.callStatsRow(details.number.orEmpty())),
+                    modifier = Modifier.fullWidthRow().testTag(TestTags.callStatsRow(details.number.orEmpty())),
                     supportingText = if (hasName) details.displayNumber else details.geocode?.takeIf { !details.isVoicemailNumber },
                     leading = {
                         // The row opens the statistics, so the picture does not open Quick Contact.

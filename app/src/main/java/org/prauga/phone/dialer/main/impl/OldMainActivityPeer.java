@@ -213,6 +213,7 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
         });
 
     MainToolbar toolbar = activity.findViewById(R.id.toolbar);
+    bottomNav.addOnTabSelectedListener(new TabTitleListener(toolbar));
 
     bottomNavTabListener =
         new MainBottomNavBarBottomNavTabListener(
@@ -883,6 +884,41 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
     @Override
     public void setHasFrequents(boolean hasFrequents) {
       toolbar.showClearFrequents(hasFrequents);
+    }
+
+    @Override
+    public void openAppMenu() {
+      toolbar.openMenu();
+    }
+  }
+
+  /** Shows the selected tab's name as the toolbar's large title. */
+  private static final class TabTitleListener implements OnBottomNavTabSelectedListener {
+
+    private final MainToolbar toolbar;
+
+    TabTitleListener(MainToolbar toolbar) {
+      this.toolbar = toolbar;
+    }
+
+    @Override
+    public void onDialpadSelected() {
+      toolbar.setTitle(R.string.tab_title_dialpad);
+    }
+
+    @Override
+    public void onCallLogSelected() {
+      toolbar.setTitle(R.string.tab_title_call_history);
+    }
+
+    @Override
+    public void onContactsSelected() {
+      toolbar.setTitle(R.string.tab_all_contacts);
+    }
+
+    @Override
+    public void onVoicemailSelected() {
+      toolbar.setTitle(R.string.tab_title_voicemail);
     }
   }
 

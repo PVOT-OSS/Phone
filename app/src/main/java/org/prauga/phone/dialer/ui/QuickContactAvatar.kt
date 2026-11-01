@@ -68,19 +68,25 @@ fun QuickContactAvatar(
     }
     val painter = photo?.let { remember(it) { BitmapPainter(it) } }
     val tileKey = colorKey ?: remember(contactUri, name) { contactUri?.let(UriUtils::getLookupKeyFromUri) ?: name }
+    val tapModifier = modifier
+        .clip(CircleShape)
+        .then(
+            if (contactUri != null) {
+                Modifier.clickable {
+                    QuickContact.showQuickContact(context, null as Rect?, contactUri, null, Phone.CONTENT_ITEM_TYPE)
+                }
+            } else {
+                Modifier
+            },
+        )
+    if (painter == null && name.none(Char::isLetter)) {
+        // A number has no initial: show the same person tile as the lists do.
+        ContactAvatar(name = name, photoUri = null, modifier = tapModifier, colorKey = tileKey, size = size)
+        return
+    }
     PvotAvatar(
         name = name,
-        modifier = modifier
-            .clip(CircleShape)
-            .then(
-                if (contactUri != null) {
-                    Modifier.clickable {
-                        QuickContact.showQuickContact(context, null as Rect?, contactUri, null, Phone.CONTENT_ITEM_TYPE)
-                    }
-                } else {
-                    Modifier
-                },
-            ),
+        modifier = tapModifier,
         painter = painter,
         colorKey = tileKey,
         size = size,

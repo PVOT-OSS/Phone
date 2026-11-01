@@ -108,9 +108,8 @@ object TestTags {
     fun dialpadKey(number: String) = "dialpad_key_$number"
 
     /** The main toolbar: the collapsed search bar, its buttons and the expanded field. */
-    const val SEARCH_BAR = "search_bar"
+    const val APP_MENU = "app_menu"
     const val SEARCH_VOICE = "search_voice"
-    const val SEARCH_MENU = "search_menu"
     const val SEARCH_BACK = "search_back"
     const val SEARCH_FIELD = "search_field"
 
@@ -145,6 +144,8 @@ object TestTags {
     const val CONTACT_GRID = "contact_grid"
     const val CONTACT_GRID_NAME = "contact_grid_name"
     const val CONTACT_GRID_BOTTOM = "contact_grid_bottom"
+    const val INCALL_CAPSULE = "incall_capsule"
+    const val INCALL_MORE = "incall_more"
     const val INCALL_END_CALL = "incall_end_call"
 
     /** A slot of the in-call button grid, from 0. */

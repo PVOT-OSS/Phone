@@ -22,6 +22,7 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.ui.TestTags
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -69,10 +70,10 @@ class MainToolbarTest {
     }
 
     @Test
-    fun tappingTheBarStartsSearch() {
+    fun theHeaderShowsTheSelectedTabsTitle() {
         show()
-        compose.onNodeWithTag(TestTags.SEARCH_BAR).performClick()
-        assertThat(events).containsExactly("bar")
+        compose.runOnUiThread { toolbar.setTitle(R.string.tab_title_call_history) }
+        compose.onNodeWithText("Recents").assertExists()
     }
 
     @Test
@@ -122,8 +123,9 @@ class MainToolbarTest {
     }
 
     @Test
-    fun aVoiceResultExpandsTheSearch() {
+    fun aVoiceResultFillsTheSearch() {
         show()
+        compose.runOnUiThread { toolbar.expand(false, Optional.empty(), false) }
         compose.onNodeWithTag(TestTags.SEARCH_VOICE).performClick()
         compose.runOnUiThread { voiceCallback!!.setResult("carol") }
         assertThat(toolbar.isExpanded()).isTrue()
@@ -131,14 +133,14 @@ class MainToolbarTest {
     }
 
     @Test
-    fun theMenuOffersClearFrequentsOnlyWithFrequents() {
+    fun theAvatarOpensTheMenuWhichOffersClearFrequentsOnlyWithFrequents() {
         show()
-        compose.onNodeWithTag(TestTags.SEARCH_MENU).performClick()
+        compose.onNodeWithTag(TestTags.APP_MENU).performClick()
         compose.onNodeWithText("Clear frequents").assertDoesNotExist()
         compose.onNodeWithText("Settings").performClick()
 
         compose.runOnUiThread { toolbar.showClearFrequents(true) }
-        compose.onNodeWithTag(TestTags.SEARCH_MENU).performClick()
+        compose.onNodeWithTag(TestTags.APP_MENU).performClick()
         compose.onNodeWithText("Clear frequents").performClick()
         assertThat(events).containsExactly("menu SETTINGS", "menu CLEAR_FREQUENTS").inOrder()
     }
@@ -146,7 +148,7 @@ class MainToolbarTest {
     @Test
     fun screenshotCollapsedDark() {
         show()
-        compose.onRoot().captureRoboImage("src/test/screenshots/toolbar/search_bar_dark.png")
+        compose.onRoot().captureRoboImage("src/test/screenshots/toolbar/tab_header_dark.png")
     }
 
     @Test

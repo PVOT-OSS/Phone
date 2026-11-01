@@ -59,6 +59,7 @@ import com.prauga.pvot.designsystem.components.PvotDialog
 import com.prauga.pvot.designsystem.components.PvotDialogAction
 import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
 import com.prauga.pvot.designsystem.components.PvotTabRow
+import com.prauga.pvot.designsystem.components.PvotTabRowDefaults
 import com.prauga.pvot.designsystem.navigation.PvotTopBar
 import com.prauga.pvot.designsystem.navigation.PvotTopBarAction
 import com.prauga.pvot.designsystem.platform.enablePvotEdgeToEdge
@@ -290,9 +291,10 @@ internal fun CallLogTopBar(
             selectedIndex = tab,
             onSelect = onTabSelected,
             scrollable = true,
+            // Each tab pads its label, so this lines the first label up with the screen padding.
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = PvotSpacing.S)
+                .padding(horizontal = PvotSpacing.L - PvotTabRowDefaults.TabHorizontalPadding)
                 .testTag(TestTags.CALL_HISTORY_TABS),
         )
     }

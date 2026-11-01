@@ -40,13 +40,13 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -87,6 +87,7 @@ import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper
 import org.prauga.phone.dialer.speeddial.database.SpeedDialEntry.Channel
 import org.prauga.phone.dialer.speeddial.loader.SpeedDialUiItem
 import org.prauga.phone.dialer.ui.ContactAvatar
+import org.prauga.phone.dialer.ui.TabHeader
 import org.prauga.phone.dialer.ui.TestTags
 
 /** What the favorites tab does when the user acts. */
@@ -101,11 +102,15 @@ interface SpeedDialActions {
     fun move(from: Int, to: Int)
     fun setDefaultChannel(item: SpeedDialUiItem, channel: Channel)
     fun turnOnPermission()
+
+    /** Opens the app menu, from the avatar beside the quick dial title. */
+    fun openAppMenu()
 }
 
 private val FavoriteAvatarSize = 72.dp
 private val SuggestionAvatarSize = 56.dp
-private val TileWidth = 80.dp
+/** As wide as a favorite's avatar, so the tiles' edges line up with the margins. */
+private val TileWidth = FavoriteAvatarSize
 
 /** Side margin of the quick dial rows, wider than the screen padding so the tiles sit inset. */
 private val QuickDialMargin = PvotSpacing.L + PvotSpacing.S
@@ -121,12 +126,13 @@ fun SpeedDialScreen(
     modifier: Modifier = Modifier,
     listState: LazyListState = rememberLazyListState(),
 ) {
-    Box(modifier.fillMaxSize()) {
+    Column(modifier.fillMaxSize()) {
+        TabHeader(title = stringResource(R.string.quick_dial_header), onOpenMenu = actions::openAppMenu)
         when (state) {
             SpeedDialUiState.Loading -> Unit
             SpeedDialUiState.NeedsPermission -> PvotEmptyContent(
                 message = stringResource(R.string.speed_dial_contacts_permission_description),
-                modifier = Modifier.align(Alignment.TopCenter).padding(PvotSpacing.L),
+                modifier = Modifier.fillMaxWidth().padding(PvotSpacing.L),
                 icon = { Icon(painterResource(R.drawable.ic_star), contentDescription = null) },
                 actionLabel = stringResource(R.string.speed_dial_turn_on_contacts_permission),
                 onAction = actions::turnOnPermission,
@@ -155,11 +161,7 @@ private fun QuickDial(state: SpeedDialUiState.Loaded, actions: SpeedDialActions,
     dragState.favoriteKeys = state.favorites.map(::favoriteKey)
 
     Box(Modifier.fillMaxWidth()) {
-        Column(Modifier.fillMaxWidth().padding(top = PvotSpacing.M)) {
-            PvotSectionHeader(
-                title = stringResource(R.string.quick_dial_header),
-                modifier = Modifier.padding(horizontal = QuickDialMargin),
-            )
+        Column(Modifier.fillMaxWidth()) {
             LazyRow(
                 state = listState,
                 modifier = Modifier
@@ -167,7 +169,7 @@ private fun QuickDial(state: SpeedDialUiState.Loaded, actions: SpeedDialActions,
                     .testTag(TestTags.SPEED_DIAL_GRID)
                     .onGloballyPositioned { dragState.rowBounds = it.boundsInRoot() },
                 contentPadding = PaddingValues(horizontal = QuickDialMargin),
-                horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S),
+                horizontalArrangement = Arrangement.spacedBy(PvotSpacing.M),
             ) {
                 itemsIndexed(state.favorites, key = { _, item -> favoriteKey(item) }) { _, item ->
                     val key = favoriteKey(item)
@@ -206,12 +208,12 @@ private fun QuickDial(state: SpeedDialUiState.Loaded, actions: SpeedDialActions,
             if (state.suggestions.isNotEmpty()) {
                 PvotSectionHeader(
                     title = stringResource(R.string.suggestions_header),
-                    modifier = Modifier.padding(start = QuickDialMargin, end = QuickDialMargin, top = PvotSpacing.S),
+                    modifier = Modifier.padding(start = QuickDialMargin, end = QuickDialMargin, top = PvotSpacing.M),
                 )
                 LazyRow(
                     modifier = Modifier.fillMaxWidth(),
                     contentPadding = PaddingValues(horizontal = QuickDialMargin),
-                    horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S),
+                    horizontalArrangement = Arrangement.spacedBy(PvotSpacing.M),
                 ) {
                     itemsIndexed(
                         state.suggestions,

@@ -32,9 +32,10 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_below="@+id/toolbar"
-      android:layout_above="@+id/bottom_nav_bar">
+      android:layout_alignParentBottom="true">
 
-    <!-- Holds SpeedDial, Call Log, Contacts, Voicemail and Search fragments -->
+    <!-- Holds SpeedDial, Call Log, Contacts, Voicemail and Search fragments. They reach the
+         bottom and scroll under the dock, leaving room for it at the end of their lists. -->
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"

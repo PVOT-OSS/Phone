@@ -70,6 +70,7 @@ class SpeedDialScreenTest {
             events += "default ${item.name()} ${channel.number()}"
         }
         override fun turnOnPermission() { events += "permission" }
+        override fun openAppMenu() { events += "menu" }
     }
 
     private val actions = RecordingActions()
@@ -158,6 +159,13 @@ class SpeedDialScreenTest {
         show()
         compose.onNodeWithTag(TestTags.SPEED_DIAL_ADD).performClick()
         assertThat(actions.events).containsExactly("add")
+    }
+
+    @Test
+    fun theAvatarOpensTheAppMenu() {
+        show()
+        compose.onNodeWithTag(TestTags.APP_MENU).performClick()
+        assertThat(actions.events).containsExactly("menu")
     }
 
     @Test

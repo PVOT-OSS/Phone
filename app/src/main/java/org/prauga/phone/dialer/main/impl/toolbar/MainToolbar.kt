@@ -25,15 +25,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -41,29 +40,28 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextOverflow
 import com.prauga.pvot.designsystem.components.PvotBottomSheet
-import com.prauga.pvot.designsystem.components.PvotCard
 import com.prauga.pvot.designsystem.components.PvotSheetItem
 import com.prauga.pvot.designsystem.components.textfield.PvotTextField
 import com.prauga.pvot.designsystem.motion.PvotDurations
-import com.prauga.pvot.designsystem.theme.PvotShapes
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
+import org.prauga.phone.dialer.ui.TabHeader
+import org.prauga.phone.dialer.ui.TabHeaderDefaults
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.util.ViewUtil
 import java.util.Optional
 
 /**
- * The main screen's toolbar: a search bar that expands into a search field, with voice search and
- * the options menu. [org.prauga.phone.dialer.main.impl.MainSearchController] drives it.
+ * The main screen's toolbar: the selected tab's large title with the avatar that opens the app
+ * menu, which expands into the search field, with voice search, when search opens.
+ * [org.prauga.phone.dialer.main.impl.MainSearchController] drives it.
  */
 class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     AbstractComposeView(context, attrs) {
@@ -78,6 +76,7 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
     private var menuOpen by mutableStateOf(false)
 
     private var hintRes by mutableIntStateOf(R.string.dialer_hint_find_contact)
+    private var titleRes by mutableIntStateOf(R.string.main_activity_label)
 
     /** Counts requests to focus the field and show the keyboard; each change asks once. */
     private var focusRequests by mutableIntStateOf(0)
@@ -170,6 +169,16 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         clearFrequentsVisible = show
     }
 
+    /** Shows [title], the selected tab's name, as the large title. */
+    fun setTitle(@StringRes title: Int) {
+        titleRes = title
+    }
+
+    /** Opens the app menu, as the avatar does; for the dialpad tab, which has its own header. */
+    fun openMenu() {
+        menuOpen = true
+    }
+
     private fun updateQuery(query: String) {
         queryText = query
         listener?.onSearchQueryUpdated(query)
@@ -183,7 +192,11 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
     private fun onVoiceSearch() {
         listener?.onVoiceButtonClicked { result ->
-            if (!result.isNullOrEmpty()) expand(true, Optional.of(result), true)
+            when {
+                result.isNullOrEmpty() -> Unit
+                expanded -> updateQuery(result)
+                else -> expand(true, Optional.of(result), true)
+            }
         }
     }
 
@@ -193,8 +206,7 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(dimensionResource(R.dimen.expanded_search_bar_height))
-                    .padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.XS),
+                    .height(TabHeaderDefaults.Height),
                 contentAlignment = Alignment.Center,
             ) {
                 AnimatedContent(
@@ -208,42 +220,14 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                     },
                     label = "searchBar",
                 ) { isExpanded ->
-                    if (isExpanded) SearchField() else SearchBar()
+                    if (isExpanded) {
+                        SearchField()
+                    } else {
+                        TabHeader(title = stringResource(titleRes), onOpenMenu = { menuOpen = true })
+                    }
                 }
             }
             if (menuOpen) OptionsMenu()
-        }
-    }
-
-    @Composable
-    private fun SearchBar() {
-        PvotCard(
-            modifier = Modifier.fillMaxSize().testTag(TestTags.SEARCH_BAR),
-            onClick = { listener?.onSearchBarClicked() },
-            shape = PvotShapes.Pill,
-        ) {
-            Row(Modifier.fillMaxSize().padding(horizontal = PvotSpacing.XS), verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_search),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = PvotSpacing.M),
-                )
-                Text(
-                    text = stringResource(hintRes),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.weight(1f),
-                )
-                IconButton(onClick = ::onVoiceSearch, modifier = Modifier.testTag(TestTags.SEARCH_VOICE)) {
-                    Icon(painterResource(R.drawable.ic_microphone), stringResource(R.string.description_start_voice_search))
-                }
-                IconButton(onClick = { menuOpen = true }, modifier = Modifier.testTag(TestTags.SEARCH_MENU)) {
-                    Icon(painterResource(R.drawable.ic_dots_vertical), stringResource(R.string.action_menu_overflow_description))
-                }
-            }
         }
     }
 
@@ -257,7 +241,10 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 keyboard?.show()
             }
         }
-        Row(Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            modifier = Modifier.fillMaxSize().padding(horizontal = PvotSpacing.S, vertical = PvotSpacing.XS),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
             IconButton(onClick = ::onBack, modifier = Modifier.testTag(TestTags.SEARCH_BACK)) {
                 Icon(painterResource(R.drawable.ic_arrow_left), stringResource(R.string.action_menu_back_from_search))
             }
@@ -268,13 +255,17 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 placeholder = stringResource(hintRes),
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Search),
-                trailingIcon = if (queryText.isNotEmpty()) {
-                    {
+                trailingIcon = {
+                    if (queryText.isNotEmpty()) {
                         IconButton(onClick = { updateQuery("") }) {
                             Icon(painterResource(R.drawable.ic_x), stringResource(R.string.description_clear_search))
                         }
+                    } else {
+                        IconButton(onClick = ::onVoiceSearch, modifier = Modifier.testTag(TestTags.SEARCH_VOICE)) {
+                            Icon(painterResource(R.drawable.ic_microphone), stringResource(R.string.description_start_voice_search))
+                        }
                     }
-                } else null,
+                },
             )
         }
     }

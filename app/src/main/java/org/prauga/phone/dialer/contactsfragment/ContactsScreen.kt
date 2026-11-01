@@ -31,7 +31,6 @@ import com.prauga.pvot.coreui.PvotEmptyContent
 import com.prauga.pvot.coreui.PvotLoadingContent
 import com.prauga.pvot.coreui.PvotSectionHeader
 import com.prauga.pvot.designsystem.components.PvotScreen
-import com.prauga.pvot.designsystem.components.button.PvotFabDefaults
 import com.prauga.pvot.designsystem.components.list.PvotFastScrollSection
 import com.prauga.pvot.designsystem.components.list.PvotFastScroller
 import com.prauga.pvot.designsystem.components.list.PvotLetterTileDefaults
@@ -39,7 +38,9 @@ import com.prauga.pvot.designsystem.components.list.PvotListRow
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.ui.ContactAvatar
+import org.prauga.phone.dialer.ui.dockClearance
 import org.prauga.phone.dialer.ui.TestTags
+import org.prauga.phone.dialer.ui.fullWidthRow
 
 /** What the contacts tab does when the user taps something. */
 interface ContactsActions {
@@ -95,10 +96,10 @@ private fun ContactsList(
         PvotScreen(
             modifier = Modifier.fillMaxSize().testTag(TestTags.CONTACTS_LIST),
             state = listState,
-            // The bottom clears the dialpad button that floats over the list.
+            // The bottom clears the dock that floats over the list.
             contentPadding = PaddingValues(
                 top = PvotSpacing.S,
-                bottom = PvotFabDefaults.Size + PvotSpacing.L * 2,
+                bottom = dockClearance(),
             ),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start,
@@ -107,7 +108,7 @@ private fun ContactsList(
                 item(key = "add_contact") {
                     PvotListRow(
                         title = stringResource(R.string.all_contacts_empty_add_contact_action),
-                        modifier = Modifier.testTag(TestTags.CONTACTS_ADD),
+                        modifier = Modifier.fullWidthRow().testTag(TestTags.CONTACTS_ADD),
                         leading = { AddContactTile() },
                         onClick = actions::onAddContact,
                     )
@@ -126,7 +127,7 @@ private fun ContactsList(
                 items(section.contacts, key = { it.id }, contentType = { "contact" }) { contact ->
                     PvotListRow(
                         title = contact.name,
-                        modifier = Modifier.testTag(TestTags.contactRow(contact.id)),
+                        modifier = Modifier.fullWidthRow().testTag(TestTags.contactRow(contact.id)),
                         leading = {
                             ContactAvatar(
                                 name = contact.name,

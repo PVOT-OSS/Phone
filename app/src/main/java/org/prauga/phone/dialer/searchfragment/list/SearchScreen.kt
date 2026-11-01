@@ -49,6 +49,7 @@ import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.ui.ContactAvatar
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.TestTags
+import org.prauga.phone.dialer.ui.fullWidthRow
 
 /** What the search results do when the user acts. */
 interface SearchActions {
@@ -128,7 +129,7 @@ private fun NumberRow(row: SearchRow.Number, actions: SearchActions) {
                 color = if (row.name == null) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface,
             )
         },
-        modifier = Modifier.testTag(TestTags.searchRow(row.key)),
+        modifier = Modifier.fullWidthRow().testTag(TestTags.searchRow(row.key)),
         supportingText = if (row.name != null) {
             { Text(text = row.details, maxLines = 1, overflow = TextOverflow.Ellipsis) }
         } else null,
@@ -179,7 +180,7 @@ private fun ActionRow(row: SearchRow.Action, actions: SearchActions) {
     }
     PvotListRow(
         title = label,
-        modifier = Modifier.testTag(TestTags.searchAction(row.action)),
+        modifier = Modifier.fullWidthRow().testTag(TestTags.searchAction(row.action)),
         leading = {
             Box(
                 modifier = Modifier
