@@ -135,6 +135,16 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
         sendRemoteRttRequest()
     }
 
+    /** The far end turns RTT off; the call carries on as a voice call. */
+    fun stopRttFromFarEnd() = FakeCarrier.onMain {
+        rttStream = null
+        connectionProperties = connectionProperties and PROPERTY_IS_RTT.inv()
+        sendRttSessionRemotelyTerminated()
+    }
+
+    /** Whether the call still has RTT on, as the network sees it. */
+    val isRtt: Boolean get() = connectionProperties and PROPERTY_IS_RTT != 0
+
     /** The far end types [text] over RTT. */
     fun typeRtt(text: String) = checkNotNull(rttStream) { "RTT is off" }.write(text)
 
