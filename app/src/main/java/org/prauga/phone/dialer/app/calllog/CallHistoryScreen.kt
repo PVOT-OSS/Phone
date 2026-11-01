@@ -23,6 +23,8 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -57,6 +59,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.prauga.pvot.coreui.PvotEmptyContent
 import com.prauga.pvot.coreui.PvotLoadingContent
@@ -132,6 +135,7 @@ fun CallHistoryScreen(
     showEmptyAction: Boolean,
     actions: CallHistoryActions,
     modifier: Modifier = Modifier,
+    topPadding: Dp = 0.dp,
     @DrawableRes emptyIcon: Int = R.drawable.ic_history,
     header: (@Composable () -> Unit)? = null,
     fullScreen: (@Composable () -> Unit)? = null,
@@ -140,13 +144,15 @@ fun CallHistoryScreen(
     listState: LazyListState = rememberLazyListState(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
 ) {
+    // Only the list scrolls under a bar over the screen; the other states start below it.
+    val belowBar = Modifier.padding(top = topPadding)
     Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         when {
-            fullScreen != null -> fullScreen()
-            state is CallHistoryUiState.Loading -> PvotLoadingContent()
+            fullScreen != null -> Box(belowBar) { fullScreen() }
+            state is CallHistoryUiState.Loading -> PvotLoadingContent(belowBar)
             state is CallHistoryUiState.NeedsPermission -> PvotEmptyContent(
                 message = stringResource(R.string.permission_no_calllog),
-                modifier = Modifier.padding(PvotSpacing.L),
+                modifier = belowBar.padding(PvotSpacing.L),
                 icon = { Icon(painterResource(emptyIcon), contentDescription = null) },
                 actionLabel = stringResource(R.string.permission_single_turn_on),
                 onAction = actions::turnOnPermission,
@@ -155,7 +161,7 @@ fun CallHistoryScreen(
                 val loaded = state as? CallHistoryUiState.Loaded
                 val visible = loaded?.groups.orEmpty().filter { group -> group.callIds.none { it in pendingDeletes } }
                 if (visible.isEmpty()) {
-                    Column(Modifier.fillMaxSize()) {
+                    Column(belowBar.fillMaxSize()) {
                         header?.invoke()
                         Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
                             EmptyHistory(emptyMessage, emptyIcon, showEmptyAction, actions)
@@ -172,6 +178,7 @@ fun CallHistoryScreen(
                         selectable = selectable,
                         listState = listState,
                         snackbarHostState = snackbarHostState,
+                        topPadding = topPadding,
                     )
                 }
             }
@@ -207,6 +214,7 @@ private fun HistoryList(
     selectable: Boolean,
     listState: LazyListState,
     snackbarHostState: SnackbarHostState,
+    topPadding: Dp,
 ) {
     var expandedRowId by rememberSaveable { mutableStateOf<Long?>(null) }
     var selected by rememberSaveable { mutableStateOf(emptySet<Long>()) }
@@ -241,6 +249,7 @@ private fun HistoryList(
 
     Column(Modifier.fillMaxSize()) {
         if (selecting) {
+            Spacer(Modifier.height(topPadding))
             SelectionBar(
                 count = selection.size,
                 allSelected = selection.size == groups.size,
@@ -252,7 +261,10 @@ private fun HistoryList(
             modifier = Modifier.weight(1f).fillMaxWidth().testTag(TestTags.CALL_HISTORY_LIST),
             state = listState,
             // The bottom clears the dialpad button that floats over the list.
-            contentPadding = PaddingValues(top = PvotSpacing.S, bottom = PvotFabDefaults.Size + PvotSpacing.L * 2),
+            contentPadding = PaddingValues(
+                top = (if (selecting) 0.dp else topPadding) + PvotSpacing.S,
+                bottom = PvotFabDefaults.Size + PvotSpacing.L * 2,
+            ),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start,
         ) {

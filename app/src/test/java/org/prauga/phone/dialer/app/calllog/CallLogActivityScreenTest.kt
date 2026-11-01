@@ -33,7 +33,6 @@ import org.prauga.phone.dialer.callstats.CallStatsFilter
 import org.prauga.phone.dialer.callstats.CallStatsListScreen
 import org.prauga.phone.dialer.callstats.CallStatsUiState
 import org.prauga.phone.dialer.phonenumbercache.ContactInfo
-import org.prauga.phone.dialer.ui.PhoneBackground
 import org.prauga.phone.dialer.ui.PhoneScaffold
 import org.prauga.phone.dialer.ui.SolidGlassTheme
 import org.prauga.phone.dialer.ui.TestTags
@@ -56,7 +55,6 @@ class CallLogActivityScreenTest {
             SolidGlassTheme {
                 var tab by remember { mutableIntStateOf(startTab) }
                 PhoneScaffold(
-                    background = PhoneBackground.Live,
                     topBar = {
                         CallLogTopBar(
                             tab = tab,

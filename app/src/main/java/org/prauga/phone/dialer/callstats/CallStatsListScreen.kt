@@ -35,6 +35,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.style.TextOverflow
 import java.util.Locale
 import com.prauga.pvot.coreui.PvotEmptyContent
@@ -80,10 +82,13 @@ fun CallStatsListScreen(
     prepare: (CallStatsEntry) -> CallStatsDetails,
     actions: CallStatsActions,
     modifier: Modifier = Modifier,
+    topPadding: Dp = 0.dp,
 ) {
     var menuFor by remember { mutableStateOf<CallStatsDetails?>(null) }
-    Column(modifier.fillMaxSize()) {
-        if (state !is CallStatsUiState.NeedsPermission) StatsControls(filter, actions)
+    // With calls, the controls are the list's first item and scroll under a bar over the screen;
+    // otherwise they and the message start below it.
+    Column(modifier.fillMaxSize().padding(top = if (state is CallStatsUiState.Loaded) 0.dp else topPadding)) {
+        if (state !is CallStatsUiState.NeedsPermission && state !is CallStatsUiState.Loaded) StatsControls(filter, actions)
         Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
             when (state) {
                 CallStatsUiState.Loading -> PvotLoadingContent()
@@ -99,7 +104,7 @@ fun CallStatsListScreen(
                     modifier = Modifier.padding(PvotSpacing.L),
                     icon = { Icon(painterResource(R.drawable.ic_history), contentDescription = null) },
                 )
-                is CallStatsUiState.Loaded -> StatsList(state, filter, prepare, actions) { menuFor = it }
+                is CallStatsUiState.Loaded -> StatsList(state, filter, prepare, actions, topPadding) { menuFor = it }
             }
         }
     }
@@ -174,6 +179,7 @@ private fun StatsList(
     filter: CallStatsFilter,
     prepare: (CallStatsEntry) -> CallStatsDetails,
     actions: CallStatsActions,
+    topPadding: Dp,
     onLongPress: (CallStatsDetails) -> Unit,
 ) {
     val context = LocalContext.current
@@ -181,10 +187,11 @@ private fun StatsList(
     val first = state.entries.first().details
     PvotScreen(
         modifier = Modifier.fillMaxSize().testTag(TestTags.CALL_STATS_LIST),
-        contentPadding = PaddingValues(bottom = PvotSpacing.L),
+        contentPadding = PaddingValues(top = topPadding, bottom = PvotSpacing.L),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start,
     ) {
+        item(key = "controls") { StatsControls(filter, actions) }
         item(key = "total") {
             val count = CallStatsFormat.callCount(context, state.total.getRequestedCount(ALL).toLong())
             val duration = CallStatsFormat.duration(context, state.total.getRequestedDuration(ALL), false)

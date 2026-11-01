@@ -5,12 +5,14 @@
 
 package org.prauga.phone.dialer.app.settings
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -22,13 +24,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.prauga.pvot.designsystem.components.PvotCard
 import com.prauga.pvot.designsystem.components.PvotGlassCard
 import com.prauga.pvot.designsystem.components.PvotGlassCardDefaults
-import com.prauga.pvot.designsystem.components.background.PvotBackgroundDefaults
-import com.prauga.pvot.designsystem.components.background.PvotBackgroundMotion
-import com.prauga.pvot.designsystem.components.background.PvotLiveBackground
+import com.prauga.pvot.designsystem.components.list.PvotLetterTile
 import com.prauga.pvot.designsystem.components.list.PvotListRowDefaults
 import com.prauga.pvot.designsystem.components.list.PvotSwitchRow
 import com.prauga.pvot.designsystem.components.slider.PvotSlider
@@ -38,6 +37,7 @@ import com.prauga.pvot.designsystem.effects.PvotGlassMaterial
 import com.prauga.pvot.designsystem.effects.pvotGlassBackdrop
 import com.prauga.pvot.designsystem.effects.rememberPvotGlassBackdrop
 import com.prauga.pvot.designsystem.theme.PvotShapes
+import com.prauga.pvot.designsystem.theme.PvotSpacing
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.settings.ui.SettingsComposeFragment
 import org.prauga.phone.dialer.app.settings.ui.SettingsGroup
@@ -112,9 +112,6 @@ fun AppearanceSettingsList() {
     }
 }
 
-/** Height of the appearance preview. */
-private val PreviewHeight = 140.dp
-
 /** How much of the preview's width its card takes. */
 private const val PreviewCardWidthFraction = 0.7f
 
@@ -127,15 +124,11 @@ private fun GlassPreview() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(PreviewHeight)
             .clip(PvotShapes.Card)
             .testTag(TestTags.APPEARANCE_GLASS_PREVIEW),
     ) {
-        // With the glass solid there is nothing to refract, so the preview holds still.
-        PvotLiveBackground(
-            Modifier.fillMaxSize().pvotGlassBackdrop(backdrop),
-            motion = if (intensity > PvotGlassDefaults.SolidIntensity) PvotBackgroundDefaults.motion() else PvotBackgroundMotion.Still,
-        )
+        // Glass sits over the content that scrolls under it, so the preview's card sits over rows.
+        PreviewRows(Modifier.fillMaxWidth().pvotGlassBackdrop(backdrop))
         val cardModifier = Modifier.align(Alignment.Center).fillMaxWidth(PreviewCardWidthFraction)
         // Both cards pad their text the same and share a corner, so the text holds still when the
         // glass is switched on or off.
@@ -153,6 +146,37 @@ private fun GlassPreview() {
         }
     }
 }
+
+/** Stand-in list rows for the preview's glass to refract: a letter tile and two lines each. */
+@Composable
+private fun PreviewRows(modifier: Modifier) {
+    val line = MaterialTheme.colorScheme.surfaceContainerHighest
+    Column(
+        modifier = modifier
+            .background(MaterialTheme.colorScheme.surfaceContainerLow)
+            .padding(PvotSpacing.L),
+        verticalArrangement = Arrangement.spacedBy(PvotSpacing.M),
+    ) {
+        PreviewRowNames.forEachIndexed { index, name ->
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                PvotLetterTile(name = name, colorKey = index)
+                Column(
+                    modifier = Modifier.padding(start = PvotSpacing.M),
+                    verticalArrangement = Arrangement.spacedBy(PvotSpacing.XS),
+                ) {
+                    Box(Modifier.fillMaxWidth(PreviewTitleFraction).height(PvotSpacing.M).background(line, PvotShapes.Pill))
+                    Box(Modifier.fillMaxWidth(PreviewSubtitleFraction).height(PvotSpacing.S).background(line, PvotShapes.Pill))
+                }
+            }
+        }
+    }
+}
+
+/** Initials of the preview's stand-in rows; not shown as text. */
+private val PreviewRowNames = listOf("A", "M", "S")
+
+private const val PreviewTitleFraction = 0.6f
+private const val PreviewSubtitleFraction = 0.4f
 
 @Composable
 private fun PreviewText(label: String) {

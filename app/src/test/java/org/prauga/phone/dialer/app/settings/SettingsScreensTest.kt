@@ -123,7 +123,7 @@ class SettingsScreensTest {
         val chrome = SettingsChrome()
         compose.setContent {
             SettingsTheme {
-                // Solid glass holds the live background still, so the test clock can go idle.
+                // Robolectric cannot run the glass shaders, so the test draws the glass solid.
                 CompositionLocalProvider(
                     LocalPvotGlassReduced provides false,
                     LocalPvotGlassIntensity provides PvotGlassDefaults.SolidIntensity,

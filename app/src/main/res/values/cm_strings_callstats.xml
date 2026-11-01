@@ -37,4 +37,10 @@
 
     <!-- Text displayed when there are no call log entries in the selected time range. -->
     <string name="recent_calls_no_items_in_range">Your call log does not contain any calls in the selected time range.</string>
+    <!-- The date range dialog's heading while no start date is picked. -->
+    <string name="call_stats_range_start">Start date</string>
+    <!-- The date range dialog's heading while no end date is picked. -->
+    <string name="call_stats_range_end">End date</string>
+    <!-- The date range dialog's heading: the start date, a dash, the end date. -->
+    <string name="call_stats_range_heading"><xliff:g id="start">%1$s</xliff:g> – <xliff:g id="end">%2$s</xliff:g></string>
 </resources>

@@ -5,6 +5,7 @@
 
 package org.prauga.phone.dialer.callstats
 
+import androidx.compose.foundation.layout.Box
 import android.content.Intent
 import android.os.Bundle
 import android.provider.CallLog.Calls
@@ -52,10 +53,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.core.content.IntentCompat
 import com.prauga.pvot.designsystem.components.PvotCard
-import com.prauga.pvot.designsystem.components.PvotGlassCard
 import com.prauga.pvot.designsystem.components.list.PvotAvatarDefaults
-import com.prauga.pvot.designsystem.effects.PvotGlassDefaults
-import com.prauga.pvot.designsystem.effects.PvotGlassMaterial
 import com.prauga.pvot.designsystem.components.PvotScreen
 import com.prauga.pvot.designsystem.components.PvotScreenDefaults
 import com.prauga.pvot.designsystem.components.button.PvotButton
@@ -78,7 +76,6 @@ import org.prauga.phone.dialer.lettertile.LetterTileDrawable
 import org.prauga.phone.dialer.location.GeoUtil
 import org.prauga.phone.dialer.phonenumbercache.ContactInfoHelper
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper
-import org.prauga.phone.dialer.ui.PhoneBackground
 import org.prauga.phone.dialer.ui.PhoneScaffold
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.QuickContactAvatar
@@ -197,7 +194,6 @@ internal fun CallStatsDetailScreen(
     val context = LocalContext.current
     val listState = rememberLazyListState()
     PhoneScaffold(
-        background = PhoneBackground.Live,
         modifier = Modifier.semantics { testTagsAsResourceId = true },
         topBar = {
             PvotTopBar(
@@ -218,46 +214,45 @@ internal fun CallStatsDetailScreen(
             ),
         ) {
             item(key = "header") {
-                PvotGlassCard(
-                    modifier = Modifier.fillMaxWidth(),
-                    style = PvotGlassDefaults.materialStyle(PvotGlassMaterial.Regular),
-                    contentPadding = PaddingValues(PvotSpacing.L),
-                ) {
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(PvotSpacing.XS),
-                    ) {
-                        avatar(PvotAvatarDefaults.Hero)
-                        Text(header.title, style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.onSurface,
-                            textAlign = TextAlign.Center, modifier = Modifier.padding(top = PvotSpacing.S))
-                        header.subtitle?.let {
-                            Text(it, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                textAlign = TextAlign.Center)
-                        }
-                        dateRange?.let {
-                            Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
-                        }
-                    }
-                    if (header.canCall || header.canEditBeforeCall) {
-                        FlowRow(
-                            modifier = Modifier.fillMaxWidth().padding(top = PvotSpacing.L),
-                            horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S, Alignment.CenterHorizontally),
-                            verticalArrangement = Arrangement.spacedBy(PvotSpacing.S),
+                // Solid: nothing scrolls under the header, so glass here would only be its tint.
+                PvotCard(modifier = Modifier.fillMaxWidth()) {
+                    Box(Modifier.padding(PvotSpacing.L)) {
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(PvotSpacing.XS),
                         ) {
-                            if (header.canCall) {
-                                PvotButton(text = stringResource(R.string.call), onClick = onCall,
-                                    icon = painterResource(R.drawable.ic_phone), modifier = Modifier.testTag(TestTags.CALL_STATS_CALL))
-                                if (callWithIntent != null) {
-                                    PvotButton(text = stringResource(R.string.pre_call_select_phone_account), style = PvotButtonStyle.Tonal,
-                                        onClick = { context.startActivity(callWithIntent) })
+                            avatar(PvotAvatarDefaults.Hero)
+                            Text(header.title, style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.onSurface,
+                                textAlign = TextAlign.Center, modifier = Modifier.padding(top = PvotSpacing.S))
+                            header.subtitle?.let {
+                                Text(it, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    textAlign = TextAlign.Center)
+                            }
+                            dateRange?.let {
+                                Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+                            }
+                        }
+                        if (header.canCall || header.canEditBeforeCall) {
+                            FlowRow(
+                                modifier = Modifier.fillMaxWidth().padding(top = PvotSpacing.L),
+                                horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S, Alignment.CenterHorizontally),
+                                verticalArrangement = Arrangement.spacedBy(PvotSpacing.S),
+                            ) {
+                                if (header.canCall) {
+                                    PvotButton(text = stringResource(R.string.call), onClick = onCall,
+                                        icon = painterResource(R.drawable.ic_phone), modifier = Modifier.testTag(TestTags.CALL_STATS_CALL))
+                                    if (callWithIntent != null) {
+                                        PvotButton(text = stringResource(R.string.pre_call_select_phone_account), style = PvotButtonStyle.Tonal,
+                                            onClick = { context.startActivity(callWithIntent) })
+                                    }
                                 }
-                            }
-                            if (header.canEditBeforeCall) {
-                                PvotButton(text = stringResource(R.string.call_details_edit_number), style = PvotButtonStyle.Tonal, onClick = onEditNumber)
-                            }
-                            if (header.canCall) {
-                                PvotButton(text = stringResource(R.string.call_details_copy_number), style = PvotButtonStyle.Text, onClick = onCopy)
+                                if (header.canEditBeforeCall) {
+                                    PvotButton(text = stringResource(R.string.call_details_edit_number), style = PvotButtonStyle.Tonal, onClick = onEditNumber)
+                                }
+                                if (header.canCall) {
+                                    PvotButton(text = stringResource(R.string.call_details_copy_number), style = PvotButtonStyle.Tonal, onClick = onCopy)
+                                }
                             }
                         }
                     }

@@ -76,7 +76,6 @@ import kotlinx.coroutines.withContext
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.calllog.IntentProvider
 import org.prauga.phone.dialer.helplines.utils.HelplineUtils
-import org.prauga.phone.dialer.ui.PhoneBackground
 import org.prauga.phone.dialer.ui.PhoneScaffold
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.TestTags
@@ -144,7 +143,6 @@ internal fun HelplinesScreen(
 
     val listState = rememberLazyListState()
     PhoneScaffold(
-        background = PhoneBackground.Live,
         modifier = Modifier.semantics { testTagsAsResourceId = true },
         topBar = {
             PvotTopBar(
@@ -234,7 +232,7 @@ private fun HelplineList(
             bottom = PvotScreenDefaults.BottomSpacing + WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding(),
         ),
     ) {
-        // A short list, one solid card, so the rows read over the live background.
+        // A short list, one solid card, grouped like the settings rows.
         item(key = "helplines") {
             PvotCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(vertical = PvotSpacing.XS)) {

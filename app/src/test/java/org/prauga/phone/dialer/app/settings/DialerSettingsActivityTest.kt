@@ -42,7 +42,7 @@ class DialerSettingsActivityTest {
 
     @Before
     fun launch() {
-        // Solid glass holds the live background still, so the test clock can go idle.
+        // Robolectric cannot run the glass shaders, so the test draws the glass solid.
         AppearanceSettings.prefs(context).edit().clear().commit()
         AppearanceSettings.setGlass(context, false)
         scenario = ActivityScenario.launch(DialerSettingsActivity::class.java)

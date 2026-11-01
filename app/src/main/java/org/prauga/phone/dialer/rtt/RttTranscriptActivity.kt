@@ -53,7 +53,6 @@ import org.prauga.phone.dialer.common.Assert
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.glidephotomanager.PhotoInfo
 import org.prauga.phone.dialer.protos.ProtoParsers
-import org.prauga.phone.dialer.ui.PhoneBackground
 import org.prauga.phone.dialer.ui.PhoneScaffold
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.QuickContactAvatar
@@ -130,7 +129,6 @@ fun RttTranscriptScreen(title: String, photoInfo: PhotoInfo, messages: List<RttT
     val fullDateAt = firstPositionToShowTimestamp(messages)
     val listState = rememberLazyListState()
     PhoneScaffold(
-        background = PhoneBackground.Live,
         topBar = { PvotTopBar(title = title, onBack = onBack, compact = rememberPvotTopBarCompact(listState)) },
     ) { padding ->
         PvotScreen(

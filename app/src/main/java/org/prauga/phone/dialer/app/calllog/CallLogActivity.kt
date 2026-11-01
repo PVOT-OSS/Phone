@@ -17,11 +17,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DateRangePicker
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,11 +36,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
+import com.prauga.pvot.designsystem.navigation.PvotTopBarDefaults
+import com.prauga.pvot.designsystem.effects.PvotGlassDefaults
+import com.prauga.pvot.designsystem.effects.PvotGlassMaterial
+import com.prauga.pvot.designsystem.effects.LocalPvotGlassBackdrop
+import com.prauga.pvot.designsystem.components.pvotGlassSurface
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -69,7 +80,6 @@ import org.prauga.phone.dialer.callstats.CallStatsListViewModel
 import org.prauga.phone.dialer.contacts.ContactsComponent
 import org.prauga.phone.dialer.database.CallLogQueryHandler
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper
-import org.prauga.phone.dialer.ui.PhoneBackground
 import org.prauga.phone.dialer.ui.PhoneScaffold
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.TestTags
@@ -163,7 +173,6 @@ private fun CallLogContent(
     val allState by allCalls.state.collectAsStateWithLifecycle()
 
     PhoneScaffold(
-        background = PhoneBackground.Live,
         topBar = {
             CallLogTopBar(
                 tab = tab,
@@ -177,7 +186,9 @@ private fun CallLogContent(
             )
         },
     ) { padding ->
-        val modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding())
+        // The lists scroll under the glass bar, so it frosts the calls as they pass.
+        val modifier = Modifier.fillMaxSize()
+        val topPadding = padding.calculateTopPadding()
         when (tab) {
             CallLogActivity.TAB_ALL -> CallHistoryRoute(
                 viewModel = allCalls,
@@ -186,6 +197,7 @@ private fun CallLogContent(
                 onShowDialpad = {},
                 onMissedCallRead = {},
                 modifier = modifier,
+                topPadding = topPadding,
             )
             CallLogActivity.TAB_MISSED -> CallHistoryRoute(
                 viewModel = missedCalls,
@@ -194,8 +206,9 @@ private fun CallLogContent(
                 onShowDialpad = {},
                 onMissedCallRead = {},
                 modifier = modifier,
+                topPadding = topPadding,
             )
-            else -> CallStatsRoute(stats, modifier)
+            else -> CallStatsRoute(stats, modifier, topPadding)
         }
     }
 
@@ -218,8 +231,8 @@ private fun CallLogContent(
 }
 
 /**
- * The call history's top bar: a glass bar with back and Clear, and the All / Missed / Stats
- * choice under it.
+ * The call history's top bar: back, Clear and the All / Missed / Stats choice on one glass pane,
+ * so the calls scrolling under show frosted behind both.
  */
 @Composable
 internal fun CallLogTopBar(
@@ -229,12 +242,26 @@ internal fun CallLogTopBar(
     onBack: () -> Unit,
     onClear: () -> Unit,
 ) {
-    Column(Modifier.fillMaxWidth()) {
-        // Compact from the start, so the tabs sit right under the bar on every tab.
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .pvotGlassSurface(
+                backdrop = LocalPvotGlassBackdrop.current,
+                cornerRadius = 0.dp,
+                // Thick: the tabs' short labels have to read over rows of text passing under them.
+                style = PvotGlassDefaults.materialStyle(PvotGlassMaterial.Thick),
+                rim = false,
+                role = null,
+            ),
+    ) {
+        // Compact from the start, so the tabs sit right under the bar on every tab. The pane is the
+        // glass, so the bar itself draws none.
         PvotTopBar(
             title = stringResource(R.string.call_log_activity_title),
             onBack = onBack,
             compact = true,
+            backdrop = null,
+            colors = PvotTopBarDefaults.glassColors(),
             actions = {
                 if (canClear) {
                     PvotTopBarAction(
@@ -278,6 +305,8 @@ internal fun CallStatsRangeDialog(
         initialSelectedStartDateMillis = initialStartUtcDay,
         initialSelectedEndDateMillis = initialEndUtcDay,
     )
+    val dateFormatter = remember { DatePickerDefaults.dateFormatter() }
+    val locale = LocalConfiguration.current.locales[0]
     PvotDialog(
         visible = visible,
         onDismissRequest = onDismiss,
@@ -291,6 +320,25 @@ internal fun CallStatsRangeDialog(
                     .testTag(TestTags.CALL_STATS_RANGE_PICKER),
                 // The dialog is the surface; a second fill would draw a box inside it.
                 colors = DatePickerDefaults.colors(containerColor = Color.Transparent),
+                // The picker's own title and heading are sized and indented for a full screen and
+                // wrap in a dialog. The heading alone says what to pick, at the dialog's indent, so
+                // a whole month and both actions fit.
+                title = null,
+                headline = {
+                    val start = pickerState.selectedStartDateMillis?.let { dateFormatter.formatDate(it, locale) }
+                    val end = pickerState.selectedEndDateMillis?.let { dateFormatter.formatDate(it, locale) }
+                    Text(
+                        text = stringResource(
+                            R.string.call_stats_range_heading,
+                            start ?: stringResource(R.string.call_stats_range_start),
+                            end ?: stringResource(R.string.call_stats_range_end),
+                        ),
+                        style = MaterialTheme.typography.titleMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.padding(RangePickerHeadlinePadding),
+                    )
+                },
             )
         },
     ) {
@@ -307,7 +355,10 @@ internal fun CallStatsRangeDialog(
 }
 
 /** Tall enough for a month of the picker; the dialog keeps its actions under it. */
-private val RangePickerHeight = 360.dp
+private val RangePickerHeight = 384.dp
+
+/** The dialog's indent for the picked range. */
+private val RangePickerHeadlinePadding = PaddingValues(start = 24.dp, end = 12.dp, top = 16.dp, bottom = 12.dp)
 
 /** The padding inside a Pvot dialog's card, which the picker spans so a week fits across. */
 private val DialogContentPadding = PvotSpacing.L * 1.5f
@@ -321,7 +372,7 @@ private fun Modifier.bleedToDialogEdges(): Modifier = layout { measurable, const
 }
 
 @Composable
-private fun CallStatsRoute(viewModel: CallStatsListViewModel, modifier: Modifier) {
+private fun CallStatsRoute(viewModel: CallStatsListViewModel, modifier: Modifier, topPadding: Dp) {
     val context = LocalContext.current
     val state by viewModel.state.collectAsStateWithLifecycle()
     val filter by viewModel.filter.collectAsStateWithLifecycle()
@@ -379,6 +430,7 @@ private fun CallStatsRoute(viewModel: CallStatsListViewModel, modifier: Modifier
         },
         actions = actions,
         modifier = modifier,
+        topPadding = topPadding,
     )
 
     if (pickingRange) {

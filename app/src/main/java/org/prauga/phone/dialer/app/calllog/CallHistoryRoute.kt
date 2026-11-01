@@ -20,6 +20,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.prauga.phone.contacts.common.dialog.CallSubjectDialog
@@ -56,6 +58,7 @@ fun CallHistoryRoute(
     onShowDialpad: () -> Unit,
     onMissedCallRead: () -> Unit,
     modifier: Modifier = Modifier,
+    topPadding: Dp = 0.dp,
     voicemail: VoicemailParts? = null,
     onSelectionModeChanged: (enabled: Boolean, exit: () -> Unit) -> Unit = { _, _ -> },
 ) {
@@ -109,6 +112,7 @@ fun CallHistoryRoute(
         showEmptyAction = showEmptyAction,
         actions = actions,
         modifier = modifier,
+        topPadding = topPadding,
         emptyIcon = if (voicemail != null) R.drawable.ic_call_voicemail else R.drawable.ic_history,
         header = statusMessage?.takeUnless { it.isModal }?.let { message -> { VoicemailStatusCard(message) } },
         fullScreen = statusMessage?.takeIf { it.isModal }?.let { message -> { VoicemailTermsScreen(message) } },

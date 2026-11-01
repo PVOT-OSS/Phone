@@ -13,8 +13,7 @@ import com.prauga.pvot.designsystem.effects.PvotGlassDefaults
 
 /**
  * [PhoneScreenTheme] with the glass solid, for tests of screens on [PhoneScaffold]. Robolectric
- * cannot run the glass shaders, and a solid glass keeps the live background still, so the test
- * clock can go idle.
+ * cannot run the glass shaders, so the screenshots show the solid surfaces.
  */
 @Composable
 fun SolidGlassTheme(content: @Composable () -> Unit) {

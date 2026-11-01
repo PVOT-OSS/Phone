@@ -10,29 +10,20 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import com.prauga.pvot.designsystem.components.PvotScreenScaffold
-import com.prauga.pvot.designsystem.components.background.PvotBackgroundDefaults
-import com.prauga.pvot.designsystem.components.background.PvotBackgroundMotion
-import com.prauga.pvot.designsystem.components.background.PvotGradientBackground
-import com.prauga.pvot.designsystem.components.background.PvotLiveBackground
 import com.prauga.pvot.designsystem.components.background.PvotPhotoBackground
 import com.prauga.pvot.designsystem.effects.LocalPvotGlassBackdrop
 import com.prauga.pvot.designsystem.effects.PvotGlassBackdrop
-import com.prauga.pvot.designsystem.effects.PvotGlassDefaults
 import com.prauga.pvot.designsystem.effects.rememberPvotGlassBackdrop
 
-/** What a [PhoneScaffold] draws under its content, for the glass over it to refract. */
+/** What a [PhoneScaffold] draws over the theme background, under the content. */
 sealed interface PhoneBackground {
-    /** The app's background with a slow drift of color; still while the glass is solid. */
-    data object Live : PhoneBackground
-
-    /** A still gradient of [colors], for a screen that must not move, such as a call. */
-    data class Static(val colors: List<Color>) : PhoneBackground
+    /** Nothing: the plain theme background, with the glass refracting the content under it. */
+    data object Plain : PhoneBackground
 
     /** A photo blurred once and dimmed, for a screen about it, such as a call with a contact's picture. */
-    data class Photo(val blurred: ImageBitmap?, val fallback: List<Color>) : PhoneBackground
+    data class Photo(val blurred: ImageBitmap?) : PhoneBackground
 }
 
 /**
@@ -40,10 +31,8 @@ sealed interface PhoneBackground {
  * the bars, floating action, snackbars and overlays as glass over it. Thin over
  * [PvotScreenScaffold], which hands its backdrop to the chrome through [LocalPvotGlassBackdrop].
  *
- * With the glass solid (the Appearance setting, battery saver, animations off) the live background
- * holds still: there is nothing to refract, and a drifting background would only cost frames.
- *
- * @param background What fills the screen under the content
+ * @param background What draws over the theme background under the content; plain unless a
+ *     screen is about a photo
  * @param topBar The bar at the top, over the content
  * @param navBar The bar at the bottom, over the content
  * @param fab The floating action above the nav bar's end
@@ -53,7 +42,7 @@ sealed interface PhoneBackground {
  */
 @Composable
 fun PhoneScaffold(
-    background: PhoneBackground = PhoneBackground.Live,
+    background: PhoneBackground = PhoneBackground.Plain,
     modifier: Modifier = Modifier,
     backdrop: PvotGlassBackdrop = rememberPvotGlassBackdrop(),
     topBar: @Composable () -> Unit = {},
@@ -78,17 +67,8 @@ fun PhoneScaffold(
 
 @Composable
 private fun PhoneBackgroundContent(background: PhoneBackground) {
-    val solid = PvotGlassDefaults.currentIntensity() <= PvotGlassDefaults.SolidIntensity
     when (background) {
-        PhoneBackground.Live -> PvotLiveBackground(
-            Modifier.fillMaxSize(),
-            motion = if (solid) PvotBackgroundMotion.Still else PvotBackgroundDefaults.motion(),
-        )
-        is PhoneBackground.Static -> PvotGradientBackground(Modifier.fillMaxSize(), colors = background.colors)
-        is PhoneBackground.Photo -> PvotPhotoBackground(
-            image = background.blurred,
-            modifier = Modifier.fillMaxSize(),
-            fallback = { PvotGradientBackground(Modifier.fillMaxSize(), colors = background.fallback) },
-        )
+        PhoneBackground.Plain -> Unit
+        is PhoneBackground.Photo -> PvotPhotoBackground(image = background.blurred, modifier = Modifier.fillMaxSize())
     }
 }

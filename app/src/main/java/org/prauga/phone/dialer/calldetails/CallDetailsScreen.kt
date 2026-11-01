@@ -5,6 +5,7 @@
 
 package org.prauga.phone.dialer.calldetails
 
+import androidx.compose.foundation.layout.Box
 import android.content.Intent
 import android.provider.CallLog.Calls
 import androidx.compose.foundation.layout.Arrangement
@@ -44,7 +45,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.prauga.pvot.designsystem.components.PvotBottomSheet
 import com.prauga.pvot.designsystem.components.PvotCard
-import com.prauga.pvot.designsystem.components.PvotGlassCard
 import com.prauga.pvot.designsystem.components.PvotScreen
 import com.prauga.pvot.designsystem.components.PvotScreenDefaults
 import com.prauga.pvot.designsystem.components.PvotSheetItem
@@ -54,8 +54,6 @@ import com.prauga.pvot.designsystem.components.button.PvotButtonStyle
 import com.prauga.pvot.designsystem.components.list.PvotAvatarDefaults
 import com.prauga.pvot.designsystem.components.list.PvotListRow
 import com.prauga.pvot.designsystem.components.list.PvotListRowDefaults
-import com.prauga.pvot.designsystem.effects.PvotGlassDefaults
-import com.prauga.pvot.designsystem.effects.PvotGlassMaterial
 import com.prauga.pvot.designsystem.navigation.PvotTopBar
 import com.prauga.pvot.designsystem.navigation.rememberPvotTopBarCompact
 import com.prauga.pvot.designsystem.theme.PvotSpacing
@@ -65,7 +63,6 @@ import org.prauga.phone.dialer.calllogutils.CallLogDates
 import org.prauga.phone.dialer.calllogutils.CallLogDurations
 import org.prauga.phone.dialer.calllogutils.CallTypeHelper
 import org.prauga.phone.dialer.calllogutils.CallbackActionHelper.CallbackAction
-import org.prauga.phone.dialer.ui.PhoneBackground
 import org.prauga.phone.dialer.ui.PhoneScaffold
 import org.prauga.phone.dialer.ui.TestTags
 
@@ -100,7 +97,6 @@ internal fun CallDetailsScreen(
     var recordingsToPick by remember { mutableStateOf<List<CallRecording>?>(null) }
     val listState = rememberLazyListState()
     PhoneScaffold(
-        background = PhoneBackground.Live,
         modifier = Modifier.semantics { testTagsAsResourceId = true },
         topBar = {
             PvotTopBar(
@@ -170,70 +166,69 @@ private fun Hero(
 ) {
     val context = LocalContext.current
     val header = ui.header
-    PvotGlassCard(
-        modifier = Modifier.fillMaxWidth(),
-        style = PvotGlassDefaults.materialStyle(PvotGlassMaterial.Regular),
-        contentPadding = PaddingValues(PvotSpacing.L),
-    ) {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(PvotSpacing.XS),
-        ) {
-            avatar(PvotAvatarDefaults.Hero)
-            Text(
-                text = header.title,
-                style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.colorScheme.onSurface,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(top = PvotSpacing.S),
-            )
-            header.subtitle?.let {
-                Text(it, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center)
-            }
-            header.network?.let {
-                // The SIM's own highlight color, as the system shows it.
-                Text(it, style = MaterialTheme.typography.bodySmall,
-                    color = header.networkColor?.let(::Color) ?: MaterialTheme.colorScheme.onSurfaceVariant)
-            }
-            if (header.usedAssistedDialing) {
+    // Solid: nothing scrolls under the header, so glass here would only be its tint.
+    PvotCard(modifier = Modifier.fillMaxWidth()) {
+        Box(Modifier.padding(PvotSpacing.L)) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(PvotSpacing.XS),
+            ) {
+                avatar(PvotAvatarDefaults.Hero)
                 Text(
-                    text = if (assistedDialingCountryCode != null && assistedDialingCountryCode > 0) {
-                        stringResource(R.string.assisted_dialing_country_code_entry, assistedDialingCountryCode.toString())
-                    } else {
-                        stringResource(R.string.assisted_dialing_country_code_entry_failure)
-                    },
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.primary,
+                    text = header.title,
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = PvotSpacing.S),
                 )
-            }
-            if (header.callbackAction != CallbackAction.NONE) {
-                FlowRow(
-                    modifier = Modifier.padding(top = PvotSpacing.M),
-                    horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S, Alignment.CenterHorizontally),
-                    verticalArrangement = Arrangement.spacedBy(PvotSpacing.S),
-                ) {
-                    val video = header.callbackAction == CallbackAction.IMS_VIDEO
-                    PvotButton(
-                        text = stringResource(if (video) R.string.video_call else R.string.call),
-                        icon = painterResource(if (video) R.drawable.ic_video else R.drawable.ic_phone),
-                        onClick = { actions.callBack(video) },
-                        modifier = Modifier.testTag(TestTags.CALL_DETAILS_CALL_BACK),
+                header.subtitle?.let {
+                    Text(it, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center)
+                }
+                header.network?.let {
+                    // The SIM's own highlight color, as the system shows it.
+                    Text(it, style = MaterialTheme.typography.bodySmall,
+                        color = header.networkColor?.let(::Color) ?: MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                if (header.usedAssistedDialing) {
+                    Text(
+                        text = if (assistedDialingCountryCode != null && assistedDialingCountryCode > 0) {
+                            stringResource(R.string.assisted_dialing_country_code_entry, assistedDialingCountryCode.toString())
+                        } else {
+                            stringResource(R.string.assisted_dialing_country_code_entry_failure)
+                        },
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.primary,
+                        textAlign = TextAlign.Center,
                     )
-                    if (ui.canMessage) {
+                }
+                if (header.callbackAction != CallbackAction.NONE) {
+                    FlowRow(
+                        modifier = Modifier.padding(top = PvotSpacing.M),
+                        horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S, Alignment.CenterHorizontally),
+                        verticalArrangement = Arrangement.spacedBy(PvotSpacing.S),
+                    ) {
+                        val video = header.callbackAction == CallbackAction.IMS_VIDEO
                         PvotButton(
-                            text = stringResource(R.string.call_details_message),
-                            icon = painterResource(R.drawable.ic_message),
-                            style = PvotButtonStyle.Tonal,
-                            onClick = actions::message,
-                            modifier = Modifier.testTag(TestTags.CALL_DETAILS_MESSAGE),
+                            text = stringResource(if (video) R.string.video_call else R.string.call),
+                            icon = painterResource(if (video) R.drawable.ic_video else R.drawable.ic_phone),
+                            onClick = { actions.callBack(video) },
+                            modifier = Modifier.testTag(TestTags.CALL_DETAILS_CALL_BACK),
                         )
-                    }
-                    if (!video && callWithIntent != null) {
-                        PvotButton(stringResource(R.string.pre_call_select_phone_account), style = PvotButtonStyle.Tonal,
-                            onClick = { context.startActivity(callWithIntent) })
+                        if (ui.canMessage) {
+                            PvotButton(
+                                text = stringResource(R.string.call_details_message),
+                                icon = painterResource(R.drawable.ic_message),
+                                style = PvotButtonStyle.Tonal,
+                                onClick = actions::message,
+                                modifier = Modifier.testTag(TestTags.CALL_DETAILS_MESSAGE),
+                            )
+                        }
+                        if (!video && callWithIntent != null) {
+                            PvotButton(stringResource(R.string.pre_call_select_phone_account), style = PvotButtonStyle.Tonal,
+                                onClick = { context.startActivity(callWithIntent) })
+                        }
                     }
                 }
             }

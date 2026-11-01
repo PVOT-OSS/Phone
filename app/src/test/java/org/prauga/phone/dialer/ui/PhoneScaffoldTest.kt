@@ -82,9 +82,9 @@ class PhoneScaffoldTest {
     }
 
     @Test
-    fun aStaticBackgroundDrawsTheScreen() {
+    fun aPhotoBackgroundWithoutAPhotoDrawsTheScreen() {
         show {
-            PhoneScaffold(background = PhoneBackground.Static(emptyList())) {
+            PhoneScaffold(background = PhoneBackground.Photo(blurred = null)) {
                 Text("Hello", Modifier.testTag("content"))
             }
         }
