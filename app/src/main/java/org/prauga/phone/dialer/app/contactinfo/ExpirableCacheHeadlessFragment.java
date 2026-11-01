@@ -34,7 +34,7 @@ import org.prauga.phone.dialer.util.ExpirableCache;
 public class ExpirableCacheHeadlessFragment extends Fragment {
 
   private static final String FRAGMENT_TAG = "ExpirableCacheHeadlessFragment";
-  private static final int CONTACT_INFO_CACHE_SIZE = 100;
+  public static final int CONTACT_INFO_CACHE_SIZE = 100;
 
   private final ExpirableCache<NumberWithCountryIso, ContactInfo> retainedCache =
       ExpirableCache.create(CONTACT_INFO_CACHE_SIZE);

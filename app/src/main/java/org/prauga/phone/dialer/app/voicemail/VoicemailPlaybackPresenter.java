@@ -45,9 +45,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import org.prauga.phone.dialer.R;
-import org.prauga.phone.dialer.app.calllog.CallLogAdapter;
-import org.prauga.phone.dialer.app.calllog.CallLogFragment;
-import org.prauga.phone.dialer.app.calllog.CallLogListItemViewHolder;
 import org.prauga.phone.dialer.common.Assert;
 import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.common.concurrent.AsyncTaskExecutor;
@@ -73,6 +70,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.function.Consumer;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -82,9 +80,9 @@ import javax.annotation.concurrent.ThreadSafe;
 /**
  * Contains the controlling logic for a voicemail playback in the call log. It is closely coupled to
  * assumptions about the behaviors and lifecycle of the call log, in particular in the {@link
- * CallLogFragment} and {@link CallLogAdapter}.
+ * org.prauga.phone.dialer.app.calllog.VoicemailFragment}.
  *
- * <p>This controls a single {@link org.prauga.phone.dialer.app.voicemail.VoicemailPlaybackLayout}. A
+ * <p>This controls a single {@link VoicemailPlaybackState}. A
  * single instance can be reused for different such layouts, using {@link #setPlaybackView}. This is
  * to facilitate reuse across different voicemail call log entries.
  *
@@ -149,8 +147,7 @@ public class VoicemailPlaybackPresenter
 
   private PowerManager.WakeLock proximityWakeLock;
   private final VoicemailAudioManager voicemailAudioManager;
-  private OnVoicemailDeletedListener onVoicemailDeletedListener;
-  private View shareVoicemailButtonView;
+  @Nullable private Consumer<Boolean> shareButtonVisibility;
 
   private DialerExecutor<Pair<Context, Uri>> shareVoicemailExecutor;
 
@@ -262,12 +259,12 @@ public class VoicemailPlaybackPresenter
       long rowId,
       Uri voicemailUri,
       final boolean startPlayingImmediately,
-      View shareVoicemailButtonView) {
+      @Nullable Consumer<Boolean> shareButtonVisibility) {
     this.rowId = rowId;
     this.view = view;
     this.view.setPresenter(this, voicemailUri);
     this.view.onSpeakerphoneOn(isSpeakerphoneOn);
-    this.shareVoicemailButtonView = shareVoicemailButtonView;
+    this.shareButtonVisibility = shareButtonVisibility;
     showShareVoicemailButton(false);
 
     // Handles cases where the same entry is binded again when scrolling in list, or where
@@ -776,30 +773,8 @@ public class VoicemailPlaybackPresenter
     setSpeakerphoneOn(!isSpeakerphoneOn);
   }
 
-  public void setOnVoicemailDeletedListener(OnVoicemailDeletedListener listener) {
-    onVoicemailDeletedListener = listener;
-  }
-
   public int getMediaPlayerPosition() {
     return isPrepared && mediaPlayer != null ? mediaPlayer.getCurrentPosition() : 0;
-  }
-
-  void onVoicemailDeleted(CallLogListItemViewHolder viewHolder) {
-    if (onVoicemailDeletedListener != null) {
-      onVoicemailDeletedListener.onVoicemailDeleted(viewHolder, voicemailUri);
-    }
-  }
-
-  void onVoicemailDeleteUndo(int adapterPosition) {
-    if (onVoicemailDeletedListener != null) {
-      onVoicemailDeletedListener.onVoicemailDeleteUndo(rowId, adapterPosition, voicemailUri);
-    }
-  }
-
-  void onVoicemailDeletedInDatabase() {
-    if (onVoicemailDeletedListener != null) {
-      onVoicemailDeletedListener.onVoicemailDeletedInDatabase(rowId, voicemailUri);
-    }
   }
 
   /**
@@ -832,9 +807,9 @@ public class VoicemailPlaybackPresenter
     if (context == null) {
       return;
     }
-    if (shareVoicemailButtonView != null) {
+    if (shareButtonVisibility != null) {
       LogUtil.d("VoicemailPlaybackPresenter.showShareVoicemailButton", "show: %b", show);
-      shareVoicemailButtonView.setVisibility(show ? View.VISIBLE : View.GONE);
+      shareButtonVisibility.accept(show);
     }
   }
 
@@ -991,15 +966,6 @@ public class VoicemailPlaybackPresenter
     void setPresenter(VoicemailPlaybackPresenter presenter, Uri voicemailUri);
 
     void resetSeekBar();
-  }
-
-  public interface OnVoicemailDeletedListener {
-
-    void onVoicemailDeleted(CallLogListItemViewHolder viewHolder, Uri uri);
-
-    void onVoicemailDeleteUndo(long rowId, int adaptorPosition, Uri uri);
-
-    void onVoicemailDeletedInDatabase(long rowId, Uri uri);
   }
 
   protected interface OnContentCheckedListener {
