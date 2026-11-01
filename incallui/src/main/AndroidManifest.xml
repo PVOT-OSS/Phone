@@ -3,4 +3,11 @@
   SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
   SPDX-License-Identifier: Apache-2.0
 -->
-<manifest />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <!-- What this module's code needs; the app declares them too. -->
+  <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+  <uses-permission android:name="android.permission.CAMERA" />
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+  <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+  <uses-permission android:name="android.permission.VIBRATE" />
+</manifest>
