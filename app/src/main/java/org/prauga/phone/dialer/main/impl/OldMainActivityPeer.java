@@ -229,7 +229,7 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
             activity, activity.getContentResolver(), bottomNav, toolbar, bottomNavTabListener);
     bottomNav.addOnTabSelectedListener(callLogFragmentListener);
 
-    searchController = getNewMainSearchController(bottomNav, toolbar, snackbarContainer);
+    searchController = getNewMainSearchController(bottomNav, toolbar);
     toolbar.setSearchBarListener(searchController);
     // The dialpad is the dialpad tab's keypad: it opens with the tab and closes when another
     // tab is chosen.
@@ -474,11 +474,8 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
   }
 
   public MainSearchController getNewMainSearchController(
-      MainNavBarState bottomNavBar,
-      MainToolbar mainToolbar,
-      View fragmentContainer) {
-    return new MainSearchController(
-        activity, bottomNavBar, mainToolbar, fragmentContainer);
+      MainNavBarState bottomNavBar, MainToolbar mainToolbar) {
+    return new MainSearchController(activity, bottomNavBar, mainToolbar);
   }
 
   public MainOnDialpadQueryChangedListener getNewOnDialpadQueryChangedListener(

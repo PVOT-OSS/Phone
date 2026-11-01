@@ -85,7 +85,6 @@ public class MainSearchController implements SearchBarListener {
   private final MainToolbar toolbar;
 
   /** View located underneath the toolbar that needs to animate with it. */
-  private final View fragmentContainer;
 
   private final List<OnSearchShowListener> onSearchShowListenerList = new ArrayList<>();
 
@@ -108,12 +107,10 @@ public class MainSearchController implements SearchBarListener {
   public MainSearchController(
       TransactionSafeActivity activity,
       MainNavBarState bottomNav,
-      MainToolbar toolbar,
-      View fragmentContainer) {
+      MainToolbar toolbar) {
     this.activity = activity;
     this.bottomNav = bottomNav;
     this.toolbar = toolbar;
-    this.fragmentContainer = fragmentContainer;
 
     dialpadFragment = (DialpadFragment) activity.getSupportFragmentManager()
             .findFragmentByTag(DIALPAD_FRAGMENT_TAG);
@@ -154,7 +151,7 @@ public class MainSearchController implements SearchBarListener {
     }
 
     dialpadShowRequested = true;
-    toolbar.slideUp(animate, fragmentContainer);
+    toolbar.hideForDialpad();
     toolbar.expand(animate, Optional.empty(), /* requestFocus */ false);
 
     activity.setTitle(R.string.dialpad_activity_title);
@@ -217,7 +214,7 @@ public class MainSearchController implements SearchBarListener {
     }
 
     dialpadShowRequested = false;
-    toolbar.slideDown(animate, fragmentContainer);
+    toolbar.showAfterDialpad();
     toolbar.transferQueryFromDialpad(dialpadFragment.getQuery());
     activity.setTitle(R.string.main_activity_label);
 
@@ -255,7 +252,8 @@ public class MainSearchController implements SearchBarListener {
   /** Should be called when {@link DialpadListener#onDialpadShown()} is called. */
   public void onDialpadShown() {
     LogUtil.enterBlock("MainSearchController.onDialpadShown");
-    dialpadFragment.slideUp(true);
+    // The dialpad is part of its tab's page: it is there at once, not slid in.
+    dialpadFragment.slideUp(false);
   }
 
   /** Opens the dialpad for the dialpad tab, unless it is already open or opening. */
@@ -559,13 +557,13 @@ public class MainSearchController implements SearchBarListener {
 
   public void onSaveInstanceState(Bundle bundle) {
     bundle.putBoolean(KEY_IS_TOOLBAR_EXPANDED, toolbar.isExpanded());
-    bundle.putBoolean(KEY_IS_TOOLBAR_SLIDE_UP, toolbar.isSlideUp());
+    bundle.putBoolean(KEY_IS_TOOLBAR_SLIDE_UP, toolbar.isHiddenForDialpad());
   }
 
   public void onRestoreInstanceState(Bundle savedInstanceState) {
     boolean isSlideUp = savedInstanceState.getBoolean(KEY_IS_TOOLBAR_SLIDE_UP, false);
     if (isSlideUp) {
-      toolbar.slideUp(false, fragmentContainer);
+      toolbar.hideForDialpad();
     }
     if (savedInstanceState.getBoolean(KEY_IS_TOOLBAR_EXPANDED, false)) {
       // If the toolbar is slide up, that means the dialpad is showing. Thus we don't want to

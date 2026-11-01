@@ -5,6 +5,7 @@
 
 package org.prauga.phone.dialer.main.impl.toolbar
 
+import androidx.compose.ui.test.assertIsNotFocused
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -74,6 +75,29 @@ class MainToolbarTest {
         show()
         compose.runOnUiThread { toolbar.setTitle(R.string.tab_title_call_history) }
         compose.onNodeWithText("Recents").assertExists()
+    }
+
+    @Test
+    fun anOldFocusRequestIsNotReplayedWhenTheDialpadExpandsTheBar() {
+        show()
+        // Search opens and closes once, then the dialpad expands the bar without asking for focus.
+        compose.runOnUiThread { toolbar.expand(false, Optional.empty(), true) }
+        compose.waitForIdle()
+        compose.runOnUiThread { toolbar.collapse(false) }
+        compose.waitForIdle()
+        compose.runOnUiThread { toolbar.expand(false, Optional.empty(), false) }
+        compose.waitForIdle()
+        compose.onNode(hasSetTextAction()).assertIsNotFocused()
+    }
+
+    @Test
+    fun theDialpadTabHidesTheBarWithoutMovingIt() {
+        show()
+        compose.runOnUiThread { toolbar.hideForDialpad() }
+        assertThat(toolbar.isHiddenForDialpad()).isTrue()
+        assertThat(toolbar.translationY).isEqualTo(0f)
+        compose.runOnUiThread { toolbar.showAfterDialpad() }
+        assertThat(toolbar.isHiddenForDialpad()).isFalse()
     }
 
     @Test

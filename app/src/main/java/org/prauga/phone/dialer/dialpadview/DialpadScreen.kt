@@ -44,7 +44,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.PointerEventTimeoutCancellationException
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.ViewCompositionStrategy
@@ -307,6 +309,7 @@ private fun DialpadKey(
 @Composable
 private fun DeleteButton(enabled: Boolean, callbacks: DialpadCallbacks) {
     val description = stringResource(R.string.description_delete_button)
+    val haptics = LocalHapticFeedback.current
     Box(
         modifier = Modifier
             .size(48.dp)
@@ -320,6 +323,8 @@ private fun DeleteButton(enabled: Boolean, callbacks: DialpadCallbacks) {
                             if (waitForUpOrCancellation() != null) callbacks.onDelete()
                         }
                     } catch (_: PointerEventTimeoutCancellationException) {
+                        // Clearing the whole number is felt, as a long press is.
+                        haptics.performHapticFeedback(HapticFeedbackType.LongPress)
                         callbacks.onDeleteLongPress()
                         waitForUpOrCancellation()
                     }

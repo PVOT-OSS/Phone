@@ -49,13 +49,13 @@ import com.prauga.pvot.designsystem.components.PvotSheetItem
 import com.prauga.pvot.designsystem.components.textfield.PvotTextField
 import com.prauga.pvot.designsystem.motion.PvotDurations
 import com.prauga.pvot.designsystem.theme.PvotSpacing
+import androidx.core.view.isGone
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.TabHeader
 import org.prauga.phone.dialer.ui.TabHeaderDefaults
 import org.prauga.phone.dialer.ui.TestTags
-import org.prauga.phone.dialer.util.ViewUtil
 import java.util.Optional
 
 /**
@@ -67,7 +67,6 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
     AbstractComposeView(context, attrs) {
 
     private var listener: SearchBarListener? = null
-    private var hasGlobalLayoutListener = false
 
     private var queryText by mutableStateOf("")
     private var expanded by mutableStateOf(false)
@@ -81,46 +80,33 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
     /** Counts requests to focus the field and show the keyboard; each change asks once. */
     private var focusRequests by mutableIntStateOf(0)
 
+    /**
+     * The requests already acted on. The field is composed again each time search opens; without
+     * this an old request would focus it and bring up the keyboard, even over the dialpad.
+     */
+    private var handledFocusRequests = 0
+
     fun setSearchBarListener(listener: SearchBarListener) {
         this.listener = listener
     }
 
-    /** Slides the toolbar up and off the screen, with [container] under it. */
-    fun slideUp(animate: Boolean, container: View) {
-        if (hasGlobalLayoutListener) return
-        if (height == 0) {
-            // Not laid out yet; slide once there is a height to slide by.
-            hasGlobalLayoutListener = true
-            ViewUtil.doOnGlobalLayout(this) {
-                hasGlobalLayoutListener = false
-                slideUp(animate, container)
-            }
-            return
-        }
-        if (isSlideUp()) {
-            LogUtil.e("MainToolbar.slideUp", "Already slide up.")
-            return
-        }
-        slide(-height.toFloat(), animate, container)
+    /**
+     * Hides the toolbar for the dialpad tab, whose page has its own header. At once and without
+     * moving anything else: the tab's content stays where it is laid out.
+     */
+    fun hideForDialpad() {
+        translationY = 0f
+        visibility = View.GONE
     }
 
-    /** Slides the toolbar down and back onto the screen, with [container] under it. */
-    fun slideDown(animate: Boolean, container: View) {
-        if (translationY == 0f) {
-            LogUtil.e("MainToolbar.slideDown", "Already slide down.")
-            return
-        }
-        slide(0f, animate, container)
+    /** Shows the toolbar again once the dialpad tab is left. */
+    fun showAfterDialpad() {
+        translationY = 0f
+        visibility = View.VISIBLE
     }
 
-    private fun slide(to: Float, animate: Boolean, container: View) {
-        val duration = if (animate) SLIDE_DURATION else 0L
-        for (view in listOf(this, container)) {
-            view.animate().translationY(to).setDuration(duration).setInterpolator(SLIDE_INTERPOLATOR).start()
-        }
-    }
-
-    fun isSlideUp(): Boolean = height != 0 && translationY == -height.toFloat()
+    /** Whether the toolbar is hidden for the dialpad tab. */
+    fun isHiddenForDialpad(): Boolean = isGone
 
     /**
      * Expands the search bar into the search field and fills it with [text], if any.
@@ -236,7 +222,8 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         val focusRequester = remember { FocusRequester() }
         val keyboard = LocalSoftwareKeyboardController.current
         LaunchedEffect(focusRequests) {
-            if (focusRequests > 0) {
+            if (focusRequests > handledFocusRequests) {
+                handledFocusRequests = focusRequests
                 focusRequester.requestFocus()
                 keyboard?.show()
             }
@@ -300,10 +287,5 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 onClick = { pick(MainMenuItem.SETTINGS) },
             )
         }
-    }
-
-    private companion object {
-        const val SLIDE_DURATION = 300L
-        val SLIDE_INTERPOLATOR = android.view.animation.AccelerateDecelerateInterpolator()
     }
 }
