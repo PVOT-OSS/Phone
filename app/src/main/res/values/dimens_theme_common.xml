@@ -18,15 +18,8 @@
   <dimen name="call_log_action_icon_margin_start">16dp</dimen>
   <dimen name="call_log_action_icon_dimen">24dp</dimen>
   <dimen name="call_log_action_horizontal_padding">24dp</dimen>
-
-  <!-- Height of the call log actions section for each call log entry -->
-  <dimen name="call_log_action_height">48dp</dimen>
   <dimen name="call_log_day_group_padding_top">15dp</dimen>
   <dimen name="call_log_day_group_padding_bottom">9dp</dimen>
-
-  <!-- Height of the actionBar - this is 8dps bigger than the platform standard to give more
-  room to the search box-->
-  <dimen name="action_bar_height">56dp</dimen>
   <dimen name="tab_height">48dp</dimen>
 
   <item name="alpha_enabled" format="float" type="dimen">1.0</item>

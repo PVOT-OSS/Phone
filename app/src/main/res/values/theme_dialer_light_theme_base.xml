@@ -15,22 +15,6 @@
   ~ limitations under the License
   -->
 <resources>
-  <!-- Deprecated: ActionBars are clunky and Toolbar (along with Dialer.ThemeBase.NoActionBar)
-      should be used in favor-->
-  <style name="Dialer.ThemeBase.ActionBar">
-    <!-- These are used to style all actionbars in Dialer. These aren't needed in Dialer.ThemeBase.NoActionBar -->
-    <item name="actionBarStyle">@style/DialerActionBarBaseStyle</item>
-    <item name="actionBarSize">@dimen/action_bar_height</item>
-
-    <!-- Pulled from Theme.AppCompat.Light.DarkActionbar-->
-    <item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat.Light</item>
-    <item name="actionBarWidgetTheme">@null</item>
-    <item name="actionBarTheme">@style/DialerActionBarBaseTheme</item>
-    <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
-
-    <item name="colorControlHighlight">@color/dialer_ripple_color</item>
-    <item name="android:windowLightStatusBar">true</item>
-  </style>
 
   <!-- TODO(a bug): investigate making this style's parent Dialer.ThemeBase.NoActionBar -->
   <style name="Theme.AppCompat.Translucent" parent="Theme.AppCompat.NoActionBar">
@@ -39,18 +23,5 @@
     <item name="android:colorBackgroundCacheHint">@null</item>
     <item name="android:windowIsTranslucent">true</item>
     <item name="android:windowAnimationStyle">@android:style/Animation</item>
-  </style>
-
-  <!-- Deprecated: Use Toolbar instead of ActionBar. -->
-  <!-- Used to style all Dialer's action bars. Every actionbar is awarded this for free if the parent
-     activity's theme extends from Dialer.ThemeBase.ActionBar or doesn't specify a theme. -->
-  <style name="DialerActionBarBaseStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-    <item name="android:background">?android:attr/colorPrimary</item>
-    <item name="background">?android:attr/colorPrimary</item>
-  </style>
-  <style name="DialerActionBarBaseTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar" />
-
-  <style name="Dialer.Settings.PreferenceTheme" parent="@style/PreferenceThemeOverlay">
-    <item name="switchPreferenceCompatStyle">@style/Dialer.SwitchPreferenceCompat</item>
   </style>
 </resources>
