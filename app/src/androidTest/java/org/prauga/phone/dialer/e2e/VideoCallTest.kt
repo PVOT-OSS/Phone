@@ -28,9 +28,10 @@ class VideoCallTest {
 
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
     private val deviceRule = DeviceRule()
+    private val toasts = ToastWatcher()
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
+    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule).around(toasts)
 
     @Test
     fun answerVideoCallWithVideo() {
@@ -115,6 +116,7 @@ class VideoCallTest {
         far.video.downgradeToAudio()
 
         CallTests.waitFor { if (InCall.onMain { !call.isVideoCall }) true else null }
+        toasts.waitFor(context.getString(R.string.video_call_downgraded_by_remote))
         InCall.waitForState(DialerCallState.ACTIVE)
     }
 

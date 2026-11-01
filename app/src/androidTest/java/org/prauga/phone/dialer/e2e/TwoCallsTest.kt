@@ -30,9 +30,11 @@ class TwoCallsTest {
 
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
     private val deviceRule = DeviceRule()
+    private val toasts = ToastWatcher()
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
+    val rules: RuleChain =
+        RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule).around(toasts)
 
     @Test
     fun answeringAWaitingCallHoldsTheFirst() {
@@ -62,6 +64,28 @@ class TwoCallsTest {
         val participant = InCall.onMain { checkNotNull(CallList.getInstance().getCallById(conference.childCallIds.first())) }
         InCall.onMain { participant.splitFromConference() }
         CallTests.waitFor { if (InCall.onMain { CallList.getInstance().allCalls.none { it.isConferenceCall } }) true else null }
+    }
+
+    @Test
+    fun heldCallEndedByTheOtherSideIsAnnounced() {
+        val (held, active) = twoCalls()
+
+        held.hangUpFromFarEnd()
+
+        toasts.waitFor(context.getString(R.string.incall_held_call_disconnected))
+        waitForState(active, Connection.STATE_ACTIVE)
+    }
+
+    @Test
+    fun failedMergeIsAnnounced() {
+        twoCalls()
+        FakeCarrier.failMerges = true
+        val active = InCall.waitForState(DialerCallState.ACTIVE)
+
+        InCall.onMain { TelecomAdapter.getInstance().merge(active.id) }
+
+        toasts.waitFor(context.getString(R.string.incall_merge_failed))
+        check(InCall.onMain { CallList.getInstance().allCalls.none { it.isConferenceCall } }) { "calls were merged" }
     }
 
     @Test

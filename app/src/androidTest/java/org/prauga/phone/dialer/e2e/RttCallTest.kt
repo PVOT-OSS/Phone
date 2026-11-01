@@ -26,9 +26,10 @@ class RttCallTest {
 
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
     private val deviceRule = DeviceRule()
+    private val toasts = ToastWatcher()
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
+    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule).around(toasts)
 
     @Test
     fun rttCallShowsTheChatAndCarriesTextBothWays() {
@@ -68,6 +69,7 @@ class RttCallTest {
         InCall.onMain { call.sendRttUpgradeRequest() }
         CallTests.waitFor { if (far.rttRequestedByUser) true else null }
         far.rejectRttRequest()
+        toasts.waitFor(context.getString(R.string.rtt_call_downgraded_toast))
 
         Thread.sleep(SETTLE_MILLIS)
         check(!InCall.onMain { call.isActiveRttCall }) { "call switched to RTT" }
@@ -112,6 +114,7 @@ class RttCallTest {
         val (call, far) = answeredRttCall()
 
         far.stopRttFromFarEnd()
+        toasts.waitFor(context.getString(R.string.rtt_call_downgraded_toast))
 
         CallTests.waitFor { if (InCall.onMain { !call.isActiveRttCall }) true else null }
         CallTests.waitFor { if (deviceRule.device.findObject(By.res(context.packageName, "rtt_chat_input")) == null) true else null }
