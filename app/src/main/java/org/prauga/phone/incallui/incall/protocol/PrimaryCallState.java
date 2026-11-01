@@ -123,6 +123,9 @@ public abstract class PrimaryCallState {
   /** Whether the call uses another SIM's mobile data (Android's backup calling). */
   public abstract boolean isCrossSim();
 
+  /** Whether the network says the caller is a verified business. */
+  public abstract boolean isVerifiedBusinessCall();
+
   public static Builder builder() {
     return new AutoValue_PrimaryCallState.Builder()
         .setState(DialerCallState.IDLE)
@@ -144,6 +147,7 @@ public abstract class PrimaryCallState {
         .setSwapToSecondaryButtonState(ButtonState.NOT_SUPPORT)
         .setIsAssistedDialed(false)
         .setIsCrossSim(false)
+        .setIsVerifiedBusinessCall(false)
         .setPrimaryColor(0);
   }
 
@@ -209,6 +213,8 @@ public abstract class PrimaryCallState {
     public abstract Builder setDiagnosticMessage(@Nullable CharSequence diagnosticMessage);
 
     public abstract Builder setIsCrossSim(boolean isCrossSim);
+
+    public abstract Builder setIsVerifiedBusinessCall(boolean isVerifiedBusinessCall);
 
     abstract PrimaryCallState autoBuild();
 

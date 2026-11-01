@@ -454,6 +454,7 @@ public class CallCardPresenter
                   .setCustomLabel(null)
                   .setAssistedDialingExtras(primary.getAssistedDialingExtras())
                   .setDiagnosticMessage(primary.getDiagnosticMessage())
+                  .setIsVerifiedBusinessCall(primary.isVerifiedBusinessCall())
                   .setIsCrossSim(primary.hasProperty(Details.PROPERTY_CROSS_SIM))
                   .build());
 

@@ -160,6 +160,8 @@ public class TopRow {
   private static CharSequence getLabelForIncoming(Context context, PrimaryCallState state) {
     if (state.isVideoCall()) {
       return getLabelForIncomingVideo(context, state.sessionModificationState(), state.isWifi());
+    } else if (state.isVerifiedBusinessCall()) {
+      return context.getString(R.string.contact_grid_incoming_verified_business_call);
     } else if (state.isWifi() && !TextUtils.isEmpty(state.connectionLabel())) {
       return state.connectionLabel();
     } else if (isAccount(state)) {

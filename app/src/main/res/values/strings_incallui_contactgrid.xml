@@ -91,6 +91,9 @@
   <!-- Displayed in the answer call screen for incoming voice calls. -->
   <string name="contact_grid_incoming_work_call">Work call from</string>
 
+  <!-- Label for an incoming call the network says comes from a verified business; the business's name follows below. [CHAR LIMIT=40] -->
+  <string name="contact_grid_incoming_verified_business_call">Verified business call from</string>
+
   <!-- Displayed in the answer call screen for incoming calls via a phone account. -->
   <string name="contact_grid_incoming_via_template">Call via <xliff:g id="provider_name">%s</xliff:g> from</string>
 

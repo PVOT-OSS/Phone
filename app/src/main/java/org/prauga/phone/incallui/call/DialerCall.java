@@ -914,6 +914,12 @@ public class DialerCall implements VideoTechListener {
     return extras == null ? null : extras.getString(Call.EXTRA_ASSERTED_DISPLAY_NAME);
   }
 
+  /** Whether the network says the caller is a verified business. */
+  public boolean isVerifiedBusinessCall() {
+    Bundle extras = getDetailsExtras();
+    return extras != null && extras.getBoolean(Call.EXTRA_IS_BUSINESS_CALL);
+  }
+
   @Nullable
   private Bundle getDetailsExtras() {
     if (telecomCall == null) {
