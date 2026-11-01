@@ -12,7 +12,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -23,13 +26,16 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import com.prauga.pvot.designsystem.theme.PvotShapes
+import androidx.compose.ui.unit.dp
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.incallui.incall.protocol.SecondaryInfo
 
-/** A slim banner for the call on hold: who it is and that they are on hold. */
+/** Size of the circle holding the on-hold icon at the capsule's start. */
+private val HoldIconCircle = 32.dp
+
+/** A slim capsule for the call on hold: who it is and that they are on hold. */
 @Composable
 fun OnHoldBanner(info: SecondaryInfo, modifier: Modifier = Modifier) {
     val name = if (info.nameIsNumber()) {
@@ -40,21 +46,27 @@ fun OnHoldBanner(info: SecondaryInfo, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.secondaryContainer, PvotShapes.Card)
-            .padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.S)
+            .background(MaterialTheme.colorScheme.surfaceContainerHigh, CircleShape)
+            .padding(start = PvotSpacing.XS, end = PvotSpacing.L, top = PvotSpacing.XS, bottom = PvotSpacing.XS)
             .testTag(TestTags.ON_HOLD_BANNER),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(PvotSpacing.M),
     ) {
-        Icon(
-            painter = painterResource(if (info.isVideoCall()) R.drawable.ic_video else R.drawable.ic_player_pause),
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSecondaryContainer,
-        )
+        Box(
+            Modifier.size(HoldIconCircle).background(MaterialTheme.colorScheme.surfaceContainerHighest, CircleShape),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                painter = painterResource(if (info.isVideoCall()) R.drawable.ic_video else R.drawable.ic_player_pause),
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.size(18.dp),
+            )
+        }
         Text(
             text = name,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onSurface,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.weight(1f),
@@ -62,7 +74,7 @@ fun OnHoldBanner(info: SecondaryInfo, modifier: Modifier = Modifier) {
         Text(
             text = stringResource(R.string.incall_on_hold),
             style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 }

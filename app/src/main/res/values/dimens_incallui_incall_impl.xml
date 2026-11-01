@@ -18,6 +18,5 @@
 <resources>
 
   <bool name="incall_dialpad_allowed">false</bool>
-  <integer name="incall_num_rows">0</integer>
 
 </resources>

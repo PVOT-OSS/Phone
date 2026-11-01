@@ -18,6 +18,16 @@
 
   <string name="incall_content_description_end_call">End call</string>
 
+  <!-- Label inside the pill that ends the call [CHAR LIMIT=12] -->
+  <string name="incall_label_end">End</string>
+
+  <!-- Button in the call controls that opens a sheet with the call's other actions, such as hold
+       and add call [CHAR LIMIT=20] -->
+  <string name="incall_label_more">More</string>
+
+  <!-- Under a call action in the More sheet that is turned on, such as hold [CHAR LIMIT=12] -->
+  <string name="incall_button_on">On</string>
+
   <string name="incall_content_description_muted">Muted</string>
 
   <string name="incall_content_description_unmuted">Unmuted</string>

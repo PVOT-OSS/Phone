@@ -8,66 +8,61 @@ package org.prauga.phone.incallui.incall.impl
 import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.collection.ArraySet
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.hideFromAccessibility
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.toggleableState
-import androidx.compose.ui.state.ToggleableState
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import com.prauga.pvot.designsystem.effects.pvotPressScale
-import com.prauga.pvot.designsystem.motion.PvotDurations
+import com.prauga.pvot.designsystem.components.PvotBottomSheet
+import com.prauga.pvot.designsystem.components.PvotCapsule
+import com.prauga.pvot.designsystem.components.PvotSheetItem
+import com.prauga.pvot.designsystem.components.button.PvotIconButton
+import com.prauga.pvot.designsystem.components.button.PvotIconButtonDefaults
+import com.prauga.pvot.designsystem.components.call.PvotCallAction
+import com.prauga.pvot.designsystem.components.call.PvotCallActionButton
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.ui.TestTags
+import org.prauga.phone.incallui.incall.protocol.InCallButtonIds
 
-/** The six slots of the in-call button grid, three to a row. */
+/**
+ * The in-call buttons, one slot per button the call can offer. [place] records which button each
+ * slot holds, so [InCallControls] can put audio, mute and the keypad on the capsule and the rest in
+ * the More sheet.
+ */
 class InCallButtonSlots(context: Context) {
     val buttons: List<CheckableLabeledButton> = List(BUTTON_COUNT) { CheckableLabeledButton(context) }
+
+    /** The [InCallButtonIds] each slot holds, or [NO_BUTTON]. */
+    val ids: SnapshotStateList<Int> = mutableStateListOf<Int>().apply { repeat(BUTTON_COUNT) { add(NO_BUTTON) } }
 
     /** Hides the buttons from TalkBack while the dialpad covers them. */
     fun onDialpadVisibilityChange(isShowing: Boolean) {
         buttons.forEach { it.hiddenFromAccessibility = isShowing }
     }
 
-    /**
-     * Gives each allowed button a slot, in the order [buttonChooser] prefers, and empties the rest.
-     * Returns how many slots the grid has.
-     */
+    /** Gives each allowed button a slot, in the order [buttonChooser] prefers, and empties the rest. */
     fun place(
         buttonControllers: List<ButtonController>,
         buttonChooser: ButtonChooser?,
         voiceNetworkType: Int,
         phoneType: Int,
-        rows: Int,
-    ): Int {
+    ) {
         val allowed = ArraySet<Int>()
         val disabled = ArraySet<Int>()
         for (controller in buttonControllers) {
@@ -78,92 +73,119 @@ class InCallButtonSlots(context: Context) {
         }
         buttonControllers.forEach { it.setButton(null) }
         val chooser = buttonChooser ?: ButtonChooserFactory.newButtonChooser(voiceNetworkType, false, phoneType)
-        val slots = rows * BUTTONS_PER_ROW
-        val placement = chooser.getButtonPlacement(slots, allowed, disabled)
+        val placement = chooser.getButtonPlacement(BUTTON_COUNT, allowed, disabled)
         for (i in 0 until BUTTON_COUNT) {
             if (i >= placement.size) {
                 buttons[i].setVisibility(android.view.View.INVISIBLE)
+                ids[i] = NO_BUTTON
                 continue
             }
+            ids[i] = placement[i]
             buttonControllers.first { it.inCallButtonId == placement[i] }.setButton(buttons[i])
         }
-        return slots
     }
 
     companion object {
-        const val BUTTON_COUNT = 6
-        const val BUTTONS_PER_ROW = 3
+        /** Room for every button a call can offer. */
+        const val BUTTON_COUNT = InCallButtonIds.BUTTON_COUNT
+        const val NO_BUTTON = -1
+
+        /** The buttons on the capsule, in order; the rest are in the More sheet. */
+        val CAPSULE_BUTTONS = listOf(InCallButtonIds.BUTTON_AUDIO, InCallButtonIds.BUTTON_MUTE, InCallButtonIds.BUTTON_DIALPAD)
     }
 }
 
-/** The in-call buttons: mute, speaker, keypad, hold and the rest, as round toggles with labels. */
+/**
+ * The call's controls: a capsule of round buttons (audio route, mute, keypad and More, which opens
+ * the call's other actions in a sheet) and the End pill under it.
+ */
 @Composable
-fun InCallButtonGrid(slots: InCallButtonSlots, rows: Int, modifier: Modifier = Modifier) {
-    Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(PvotSpacing.L)) {
-        for (row in slots.buttons.take(rows * InCallButtonSlots.BUTTONS_PER_ROW).chunked(InCallButtonSlots.BUTTONS_PER_ROW)) {
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                row.forEach { button -> InCallButton(button, Modifier.testTag(TestTags.incallButton(slots.buttons.indexOf(button)))) }
+fun InCallControls(
+    slots: InCallButtonSlots,
+    endCallEnabled: Boolean,
+    onEndCall: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var moreOpen by remember { mutableStateOf(false) }
+    val placed = slots.ids.indices.filter { slots.ids[it] != InCallButtonSlots.NO_BUTTON && slots.buttons[it].visible }
+    val onCapsule = InCallButtonSlots.CAPSULE_BUTTONS.mapNotNull { id -> placed.firstOrNull { slots.ids[it] == id } }
+    val inMore = placed - onCapsule.toSet()
+    val endDescription = stringResource(R.string.incall_content_description_end_call)
+    Column(
+        modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(PvotSpacing.L),
+    ) {
+        if (onCapsule.isNotEmpty() || inMore.isNotEmpty()) {
+            PvotCapsule(modifier = Modifier.testTag(TestTags.INCALL_CAPSULE)) {
+                for (index in onCapsule) CapsuleButton(slots, index)
+                if (inMore.isNotEmpty()) {
+                    PvotIconButton(
+                        icon = painterResource(R.drawable.ic_dots_vertical),
+                        contentDescription = stringResource(R.string.incall_label_more),
+                        onClick = { moreOpen = true },
+                        size = ControlSize,
+                        modifier = Modifier.testTag(TestTags.INCALL_MORE),
+                    )
+                }
             }
         }
-    }
-}
-
-@Composable
-private fun InCallButton(button: CheckableLabeledButton, modifier: Modifier = Modifier) {
-    if (!button.visible) {
-        Box(modifier.width(ButtonWidth).size(width = ButtonWidth, height = CircleSize))
-        return
-    }
-    val source = remember { MutableInteractionSource() }
-    val container by animateColorAsState(
-        if (button.checkedState) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceContainerHigh,
-        tween(PvotDurations.Short),
-        label = "inCallButton",
-    )
-    val content = if (button.checkedState) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
-    // The circle and its label are one target, as the old button was.
-    Column(
-        modifier = modifier
-            .width(ButtonWidth)
-            .pvotPressScale(source)
-            .clickable(interactionSource = source, indication = null, enabled = button.enabledState, role = Role.Button) {
-                button.performClick()
-            }
-            .semantics(mergeDescendants = true) {
-                contentDescription = (button.description ?: button.label).toString()
-                toggleableState = ToggleableState(button.checkedState)
-                if (button.hiddenFromAccessibility) hideFromAccessibility()
-            },
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Box(
+        PvotCallActionButton(
+            action = PvotCallAction.End,
+            icon = painterResource(R.drawable.ic_phone_off),
+            label = stringResource(R.string.incall_label_end),
+            onClick = onEndCall,
+            labelInside = true,
+            enabled = endCallEnabled,
             modifier = Modifier
-                .size(CircleSize)
-                .clip(CircleShape)
-                .background(container)
-                .alpha(if (button.enabledState) 1f else DisabledAlpha),
-            contentAlignment = Alignment.Center,
-        ) {
-            Icon(painterResource(pvotIconFor(button.iconRes)), contentDescription = null, tint = content)
-            if (button.showMoreIndicator) {
-                Box(
-                    Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(PvotSpacing.S)
-                        .size(6.dp)
-                        .background(content, CircleShape),
+                .semantics { contentDescription = endDescription }
+                .testTag(TestTags.INCALL_END_CALL),
+        )
+    }
+    if (moreOpen) {
+        PvotBottomSheet(visible = true, onDismissRequest = { moreOpen = false }) {
+            for (index in inMore) {
+                val button = slots.buttons[index]
+                PvotSheetItem(
+                    title = button.label.toString(),
+                    subtitle = if (button.checkedState) stringResource(R.string.incall_button_on) else null,
+                    onClick = {
+                        moreOpen = false
+                        button.performClick()
+                    },
+                    enabled = button.enabledState,
+                    icon = { Icon(painterResource(pvotIconFor(button.iconRes)), contentDescription = null) },
+                    modifier = Modifier.testTag(TestTags.incallButton(index)),
                 )
             }
         }
-        Text(
-            text = button.label.toString(),
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = if (button.enabledState) 1f else DisabledAlpha),
-            textAlign = TextAlign.Center,
-            maxLines = 2,
-            modifier = Modifier.padding(top = PvotSpacing.S),
-        )
     }
+}
+
+/** A button on the capsule; mute turns red while on, the others the accent. */
+@Composable
+private fun CapsuleButton(slots: InCallButtonSlots, index: Int) {
+    val button = slots.buttons[index]
+    val isMute = slots.ids[index] == InCallButtonIds.BUTTON_MUTE
+    PvotIconButton(
+        icon = painterResource(pvotIconFor(button.iconRes)),
+        contentDescription = (button.description ?: button.label).toString(),
+        onClick = button::performClick,
+        size = ControlSize,
+        checked = button.checkedState,
+        enabled = button.enabledState,
+        colors = if (isMute) {
+            PvotIconButtonDefaults.tonalColors(
+                checkedContainerColor = MaterialTheme.colorScheme.error,
+                checkedContentColor = MaterialTheme.colorScheme.onError,
+            )
+        } else {
+            PvotIconButtonDefaults.tonalColors()
+        },
+        modifier = Modifier
+            .then(if (button.hiddenFromAccessibility) Modifier.semantics { hideFromAccessibility() } else Modifier)
+            .testTag(TestTags.incallButton(index)),
+    )
 }
 
 /** The Tabler icon for an in-call button icon the controllers set. */
@@ -189,7 +211,6 @@ internal fun pvotIconFor(@DrawableRes iconRes: Int): Int = when (iconRes) {
     else -> iconRes
 }
 
-private val CircleSize = 64.dp
-private val ButtonWidth = 96.dp
-private const val DisabledAlpha = 0.38f
+/** The capsule's buttons, large enough for a hurried tap during a call. */
+private val ControlSize = PvotIconButtonDefaults.LargeSize
 

@@ -10,11 +10,13 @@ import android.telecom.CallAudioState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.ui.Alignment
+import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import androidx.compose.ui.test.assertIsOn
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.isRoot
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithTag
@@ -31,6 +33,7 @@ import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.incallui.call.state.DialerCallState
 import org.prauga.phone.incallui.contactgrid.ContactGrid
 import org.prauga.phone.incallui.contactgrid.ContactGridState
+import org.prauga.phone.incallui.incall.protocol.InCallButtonIds
 import org.prauga.phone.incallui.incall.protocol.InCallButtonUiDelegate
 import org.prauga.phone.incallui.incall.protocol.PrimaryCallState
 import org.prauga.phone.incallui.incall.protocol.PrimaryInfo
@@ -39,7 +42,7 @@ import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 import java.lang.reflect.Proxy
 
-/** The voice call screen: the button grid and the contact grid. */
+/** The voice call screen: the control capsule, the More sheet, the End pill and the contact grid. */
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(qualifiers = "en-rUS-w411dp-h891dp-night-xxhdpi")
@@ -94,37 +97,64 @@ class InCallScreenTest {
         it.isEnabled = true
     }
 
-    private fun showGrid(): Pair<InCallButtonSlots, List<ButtonController>> {
+    private var ended = 0
+
+    private fun showControls(): Pair<InCallButtonSlots, List<ButtonController>> {
         val slots = InCallButtonSlots(context)
         val controllers = controllers()
-        slots.place(controllers, null, 0, 0, rows = 2)
-        compose.setContent { PhoneScreenTheme { InCallButtonGrid(slots, rows = 2) } }
+        slots.place(controllers, null, 0, 0)
+        compose.setContent { PhoneScreenTheme { InCallControls(slots, endCallEnabled = true, onEndCall = { ended++ }) } }
         return slots to controllers
     }
 
     @Test
-    fun allowedButtonsTakeTheSlots() {
-        showGrid()
-        compose.onNodeWithText("Mute").assertExists()
-        compose.onNodeWithText("Keypad").assertExists()
+    fun theCapsuleHoldsAudioMuteAndKeypadAndMoreHoldsTheRest() {
+        val (slots, _) = showControls()
+        compose.onNode(hasTestTag(TestTags.INCALL_CAPSULE)).assertExists()
+        compose.onNodeWithTag(muteTag(slots)).assertExists()
+        compose.onNodeWithContentDescription("Keypad").assertExists()
+        compose.onNodeWithText("Hold").assertDoesNotExist()
+
+        compose.onNodeWithTag(TestTags.INCALL_MORE).performClick()
+
         compose.onNodeWithText("Hold").assertExists()
         compose.onNodeWithText("Add call").assertExists()
     }
 
     @Test
-    fun tappingMuteAsksTheDelegateAndCheckedShows() {
-        val (_, controllers) = showGrid()
-        compose.onNodeWithText("Mute").performClick()
+    fun tappingMuteAsksTheDelegateAndShowsItOn() {
+        val (slots, controllers) = showControls()
+        compose.onNodeWithTag(muteTag(slots)).performClick()
         assertThat(calls).contains("muteClicked true true")
-        compose.runOnIdle { controllers.first { it.inCallButtonId == ButtonController.MuteButtonController(delegate).inCallButtonId }.setChecked(true) }
-        compose.onNodeWithTag(TestTags.incallButton(0)).assertExists()
+        compose.runOnIdle { controllers.first { it is ButtonController.MuteButtonController }.setChecked(true) }
+        compose.onNodeWithTag(muteTag(slots)).assertIsOn()
+    }
+
+    private fun muteTag(slots: InCallButtonSlots) =
+        TestTags.incallButton(slots.ids.indexOf(InCallButtonIds.BUTTON_MUTE))
+
+    @Test
+    fun theKeypadButtonOpensTheDialpad() {
+        showControls()
+        compose.onNodeWithContentDescription("Keypad").performClick()
+        assertThat(calls).contains("showDialpadClicked true")
     }
 
     @Test
-    fun theDialpadButtonOpensTheDialpad() {
-        showGrid()
-        compose.onNodeWithText("Keypad").performClick()
-        assertThat(calls).contains("showDialpadClicked true")
+    fun anActionInMoreRunsAndClosesTheSheet() {
+        showControls()
+        compose.onNodeWithTag(TestTags.INCALL_MORE).performClick()
+        compose.onNodeWithText("Hold").performClick()
+        assertThat(calls).contains("holdClicked true")
+        compose.onNodeWithText("Add call").assertDoesNotExist()
+    }
+
+    @Test
+    fun theEndPillSaysEndAndEndsTheCall() {
+        showControls()
+        compose.onNodeWithText("End", useUnmergedTree = true).assertExists()
+        compose.onNodeWithTag(TestTags.INCALL_END_CALL).performClick()
+        assertThat(ended).isEqualTo(1)
     }
 
     private fun gridState(): ContactGridState = ContactGridState(context).apply {
@@ -147,16 +177,13 @@ class InCallScreenTest {
         val state = gridState()
         val slots = InCallButtonSlots(context)
         val controllers = controllers()
-        slots.place(controllers, null, 0, 0, rows = 2)
+        slots.place(controllers, null, 0, 0)
         controllers.first { it is ButtonController.MuteButtonController }.setChecked(true)
         compose.setContent {
             PhoneScreenTheme {
                 Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween) {
                     ContactGrid(state)
-                    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(PvotSpacing.L)) {
-                        InCallButtonGrid(slots, rows = 2)
-                        EndCallButton(enabled = true) {}
-                    }
+                    InCallControls(slots, endCallEnabled = true, onEndCall = {}, modifier = Modifier.padding(bottom = PvotSpacing.L))
                 }
             }
         }

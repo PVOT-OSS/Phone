@@ -21,38 +21,31 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.prauga.pvot.designsystem.theme.PvotSpacing
+import com.prauga.pvot.designsystem.components.call.PvotCallAction
+import com.prauga.pvot.designsystem.components.call.PvotCallActionButton
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.common.Assert
 import org.prauga.phone.dialer.common.FragmentUtils
@@ -97,7 +90,6 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
     private var onHold by mutableStateOf<SecondaryInfo?>(null)
     private var endCallEnabled by mutableStateOf(true)
     private var dialpadShowing by mutableStateOf(false)
-    private var buttonRows by mutableIntStateOf(0)
 
     private val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
         if (results.values.all { it }) inCallButtonUiDelegate.callRecordClicked(true)
@@ -128,7 +120,6 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
         val buttons = InCallButtonSlots(context)
         contactGrid = grid
         slots = buttons
-        buttonRows = resources.getInteger(R.integer.incall_num_rows)
         val telephony = context.getSystemService(TelephonyManager::class.java)
         voiceNetworkType = if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             TelephonyManager.NETWORK_TYPE_UNKNOWN
@@ -148,10 +139,8 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
                 Column(
                     Modifier.fillMaxWidth().navigationBarsPadding().padding(bottom = PvotSpacing.L),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(PvotSpacing.L),
                 ) {
-                    InCallButtonGrid(buttons, buttonRows)
-                    EndCallButton(endCallEnabled, ::onEndCall)
+                    InCallControls(buttons, endCallEnabled, ::onEndCall)
                 }
             },
             overDialpad = {
@@ -332,7 +321,7 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
     override fun updateButtonStates() {
         val buttons = slots ?: return
         if (buttonControllers.isEmpty()) return
-        buttons.place(buttonControllers, buttonChooser, voiceNetworkType, phoneType, buttonRows)
+        buttons.place(buttonControllers, buttonChooser, voiceNetworkType, phoneType)
     }
 
     override fun getInCallButtonUiFragment(): Fragment = this
@@ -399,20 +388,19 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
     }
 }
 
-/** The red button that ends the call. */
+/** The red End pill, over the dialpad while it shows. */
 @Composable
 internal fun EndCallButton(enabled: Boolean, onClick: () -> Unit) {
-    IconButton(
+    val description = stringResource(R.string.incall_content_description_end_call)
+    PvotCallActionButton(
+        action = PvotCallAction.End,
+        icon = painterResource(R.drawable.ic_phone_off),
+        label = stringResource(R.string.incall_label_end),
         onClick = onClick,
+        labelInside = true,
         enabled = enabled,
-        modifier = Modifier
-            .size(72.dp)
-            .alpha(if (enabled) 1f else 0.38f)
-            .background(MaterialTheme.colorScheme.error, CircleShape)
-            .testTag(TestTags.INCALL_END_CALL),
-    ) {
-        Icon(painterResource(R.drawable.ic_phone_off), stringResource(R.string.incall_content_description_end_call), tint = MaterialTheme.colorScheme.onError)
-    }
+        modifier = Modifier.semantics { contentDescription = description }.testTag(TestTags.INCALL_END_CALL),
+    )
 }
 
 /**
