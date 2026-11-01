@@ -5,6 +5,7 @@
 
 package org.prauga.phone.dialer.main.impl.bottomnav
 
+import org.prauga.phone.dialer.ui.PhoneTheme
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -30,7 +31,6 @@ import com.prauga.pvot.designsystem.motion.PvotDurations
 import com.prauga.pvot.designsystem.motion.PvotMotion
 import com.prauga.pvot.designsystem.navigation.PvotNavBar
 import com.prauga.pvot.designsystem.navigation.PvotTabItem
-import com.prauga.pvot.designsystem.theme.PvotAppTheme
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.ui.TestTags
@@ -54,7 +54,7 @@ object MainChrome {
     private fun ComposeView.setChromeContent(content: @Composable () -> Unit) {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
-            PvotAppTheme {
+            PhoneTheme {
                 Box(Modifier.semantics { testTagsAsResourceId = true }) { content() }
             }
         }

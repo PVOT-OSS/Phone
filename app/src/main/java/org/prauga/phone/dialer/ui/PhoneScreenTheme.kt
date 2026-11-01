@@ -6,6 +6,7 @@
 package org.prauga.phone.dialer.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -32,7 +33,7 @@ import org.prauga.phone.dialer.ui.appearance.AppearanceSettings
 @Composable
 fun PhoneScreenTheme(fillBackground: Boolean = true, content: @Composable () -> Unit) {
     val appearance by AppearanceSettings.rememberAppearance()
-    PvotAppTheme {
+    PhoneTheme {
         ProvidePvotGlassIntensity(appearance.preferredIntensity) {
             Surface(
                 modifier = (if (fillBackground) Modifier.fillMaxSize() else Modifier).semantics { testTagsAsResourceId = true },
@@ -43,3 +44,23 @@ fun PhoneScreenTheme(fillBackground: Boolean = true, content: @Composable () -> 
         }
     }
 }
+
+/**
+ * The Pvot theme with Phone's accent: the palette's secondary blue in the primary roles, so every
+ * Pvot component's accent (selection, filled buttons, toggles, links) is the secondary color.
+ */
+@Composable
+fun PhoneTheme(content: @Composable () -> Unit) {
+    PvotAppTheme {
+        MaterialTheme(colorScheme = MaterialTheme.colorScheme.withSecondaryAccent(), content = content)
+    }
+}
+
+/** This scheme with its secondary roles copied into the primary ones. */
+internal fun ColorScheme.withSecondaryAccent(): ColorScheme = copy(
+    primary = secondary,
+    onPrimary = onSecondary,
+    primaryContainer = secondaryContainer,
+    onPrimaryContainer = onSecondaryContainer,
+    surfaceTint = secondary,
+)
