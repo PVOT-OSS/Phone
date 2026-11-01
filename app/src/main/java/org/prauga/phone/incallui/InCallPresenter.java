@@ -111,6 +111,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
       Collections.newSetFromMap(new ConcurrentHashMap<>(8, 0.9f, 1));
 
   private StatusBarNotifier statusBarNotifier;
+  @Nullable private FlipToSilence flipToSilence;
   private ExternalCallNotifier externalCallNotifier;
   private InCallVibrationHandler vibrationHandler;
   private InCallDndHandler dndHandler;
@@ -598,6 +599,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
   @Override
   public void onCallListChange(CallList callList) {
     Trace.beginSection("InCallPresenter.onCallListChange");
+    updateRinging(callList);
     if (inCallActivity != null && inCallActivity.isInCallScreenAnimating()) {
       awaitingCallListUpdate = true;
       Trace.endSection();
@@ -726,6 +728,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
   @Override
   public void onIncomingCall(DialerCall call) {
     Trace.beginSection("InCallPresenter.onIncomingCall");
+    updateRinging(callList);
     InCallState newState = startOrFinishUi(InCallState.INCOMING);
     InCallState oldState = inCallState;
 
@@ -825,6 +828,22 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
   private boolean isSecretCode(@Nullable String number) {
     return number != null
         && (number.length() <= 8 || number.startsWith("*#*#") || number.endsWith("#*#*"));
+  }
+
+  /** Starts or stops what only runs while a call rings, such as flip to silence. */
+  private void updateRinging(@Nullable CallList callList) {
+    if (context == null) {
+      return;
+    }
+    boolean ringing = callList != null && callList.getIncomingCall() != null;
+    if (flipToSilence == null) {
+      flipToSilence = new FlipToSilence(context);
+    }
+    if (ringing) {
+      flipToSilence.onRinging();
+    } else {
+      flipToSilence.onRingingStopped();
+    }
   }
 
   /** Given the call list, return the state in which the in-call screen should be. */
@@ -1427,6 +1446,11 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
         externalCallList.removeExternalCallListener(externalCallNotifier);
       }
       statusBarNotifier = null;
+
+      if (flipToSilence != null) {
+        flipToSilence.onRingingStopped();
+      }
+      flipToSilence = null;
 
       if (vibrationHandler != null) {
         removeListener(vibrationHandler);
