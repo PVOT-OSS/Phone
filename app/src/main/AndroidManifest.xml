@@ -526,7 +526,6 @@
             android:label="@string/phoneAppLabel"
             android:launchMode="singleInstance"
             android:resizeableActivity="true"
-            android:screenOrientation="nosensor"
             android:taskAffinity="org.prauga.phone.incallui"
             android:theme="@style/Theme.InCallScreen"
             android:windowSoftInputMode="adjustResize" />
