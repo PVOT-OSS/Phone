@@ -14,4 +14,4 @@ root=$(cd "$here/../.." && pwd)
 "$here/setup.sh" "$serial"
 trap '"$here/setup.sh" "$serial" --restore' EXIT INT TERM
 cd "$root"
-ANDROID_SERIAL=$serial ./gradlew :app:connectedDebugAndroidTest "$@"
+ANDROID_SERIAL=$serial ./gradlew :app:connectedUserDebugAndroidTest "$@"

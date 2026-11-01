@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+  -->
+<!-- Install to /system_ext/etc/permissions/ next to the system build of Phone. Keep in step with
+     app/src/system/AndroidManifest.xml. -->
+<permissions>
+    <privapp-permissions package="org.prauga.phone">
+        <permission name="android.permission.ALLOW_ANY_CODEC_FOR_PLAYBACK" />
+        <permission name="android.permission.BROADCAST_CLOSE_SYSTEM_DIALOGS" />
+        <permission name="android.permission.CAPTURE_AUDIO_OUTPUT" />
+        <permission name="android.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS" />
+        <permission name="android.permission.CONTROL_INCALL_EXPERIENCE" />
+        <permission name="android.permission.GET_ACCOUNTS_PRIVILEGED" />
+        <permission name="android.permission.MODIFY_PHONE_STATE" />
+        <permission name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
+        <permission name="android.permission.STOP_APP_SWITCHES" />
+    </privapp-permissions>
+</permissions>

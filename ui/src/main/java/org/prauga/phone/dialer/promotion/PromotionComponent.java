@@ -20,7 +20,6 @@ package org.prauga.phone.dialer.promotion;
 import android.content.Context;
 
 import org.prauga.phone.dialer.inject.HasRootComponent;
-import org.prauga.phone.dialer.inject.IncludeInDialerRoot;
 
 import com.google.common.collect.ImmutableList;
 
@@ -40,7 +39,6 @@ public abstract class PromotionComponent {
   }
 
   /** Used to refer to the root application component. */
-  @IncludeInDialerRoot
   public interface HasComponent {
     PromotionComponent promotionComponent();
   }

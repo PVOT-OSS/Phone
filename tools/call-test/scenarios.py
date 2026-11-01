@@ -258,7 +258,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--serial", required=True)
     parser.add_argument("--adb", default="adb")
-    parser.add_argument("--apk", default=os.path.join(ROOT, "app/build/outputs/apk/debug/app-debug.apk"))
+    parser.add_argument("--apk", default=os.path.join(ROOT, "app/build/outputs/apk/user/debug/app-user-debug.apk"))
     parser.add_argument("names", nargs="*", help="scenarios to run (default: all)")
     args = parser.parse_args()
 

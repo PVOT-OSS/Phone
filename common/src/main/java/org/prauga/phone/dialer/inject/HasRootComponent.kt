@@ -14,12 +14,12 @@
  * limitations under the License
  */
 
-package org.prauga.phone.dialer.inject;
+package org.prauga.phone.dialer.inject
 
 /**
  * Used by packages to access the root component from the Application without creating a dependency
  * cycle.
  */
-public interface HasRootComponent {
-  Object component();
+interface HasRootComponent {
+    fun component(): Any
 }

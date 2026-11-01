@@ -21,7 +21,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import org.prauga.phone.dialer.inject.HasRootComponent;
-import org.prauga.phone.dialer.inject.IncludeInDialerRoot;
 
 import dagger.Subcomponent;
 
@@ -46,7 +45,6 @@ public abstract class StorageComponent {
   }
 
   /** Used to refer to the root application component. */
-  @IncludeInDialerRoot
   public interface HasComponent {
     StorageComponent storageComponent();
   }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+  -->
+<resources>
+    <!-- Recording needs CAPTURE_AUDIO_OUTPUT, which only the system build holds. This hides the
+         record button, the recording settings and recordings in call details. -->
+    <bool name="call_recording_enabled">false</bool>
+</resources>
