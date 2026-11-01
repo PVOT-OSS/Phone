@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dialpad_back">Orqaga qaytish</string>
-  <string name="description_dialpad_overflow">Boshqa parametrlar</string>
-  <string name="description_delete_button">orqaga</string>
   <string name="description_dial_button">raqam terish</string>
   <string name="dialog_voicemail_airplane_mode_message">Ovozli pochtaga qo‘ng‘iroq qilish uchun parvoz rejimidan chiqing.</string>
   <string name="dialog_voicemail_not_ready_message">Ovozli pochtani sozlab olish uchun Menyu &gt; Sozlamalarga o‘ting.</string>

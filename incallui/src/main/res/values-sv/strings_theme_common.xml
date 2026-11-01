@@ -1,0 +1,4 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="emergency_number">Larmnummer</string>
+  <string name="video_call_lte_to_wifi_handover_toast">Samtalet fortsätter med Wi‑Fi …</string>
+</resources>

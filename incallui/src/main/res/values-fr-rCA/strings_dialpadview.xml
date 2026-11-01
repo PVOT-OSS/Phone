@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="description_dialpad_back">Naviguer vers l\'arrière</string>
+  <string name="description_dialpad_overflow">Plus d\'options</string>
+  <string name="description_delete_button">retour arrière</string>
+</resources>

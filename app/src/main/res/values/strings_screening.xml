@@ -22,10 +22,4 @@
     <string name="call_announcer_headset">Only when using a headset</string>
     <string name="call_announcer_never">Never</string>
     <string name="call_announcer_footer">The caller\'s name and number will be read out loud for incoming calls.</string>
-    <!-- Spoken when a call comes in; %1$s is the caller's name or number. -->
-    <string name="call_announcer_text">Incoming call from <xliff:g id="caller" example="Alex">%1$s</xliff:g></string>
-    <!-- Spoken when a call comes in on a phone with more than one SIM; %2$s is the SIM's name. -->
-    <string name="call_announcer_text_multi_sim">Incoming call from <xliff:g id="caller" example="Alex">%1$s</xliff:g> on <xliff:g id="sim" example="SIM 1">%2$s</xliff:g></string>
-    <!-- Spoken when a suspected spam call comes in. -->
-    <string name="call_announcer_spam">Incoming spam call</string>
 </resources>

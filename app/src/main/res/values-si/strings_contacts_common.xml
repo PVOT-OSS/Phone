@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="directory_search_label">නාමාවලිය</string>
   <string name="directory_search_label_work">කාර්යාල සම්බන්ධතා නාමාවලිය</string>
   <string name="chat_aim">AIM භාවිතයෙන් කතාබස් කරන්න</string>
   <string name="chat_msn">Windows Live භාවිතයෙන් කතාබස් කරන්න</string>

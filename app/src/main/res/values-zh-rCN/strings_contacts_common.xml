@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="directory_search_label">目录</string>
   <string name="directory_search_label_work">工作目录</string>
   <string name="chat_aim">使用 AIM 聊天</string>
   <string name="chat_msn">使用 Windows Live 聊天</string>

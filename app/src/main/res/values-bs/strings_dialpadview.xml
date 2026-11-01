@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dialpad_back">Vrati se nazad</string>
-  <string name="description_dialpad_overflow">Više opcija</string>
-  <string name="description_delete_button">tipka za brisanje</string>
   <string name="description_dial_button">biranje</string>
   <string name="dialog_voicemail_airplane_mode_message">Da pozovete govornu poštu, isključite Način rada u avionu.</string>
   <string name="dialog_voicemail_not_ready_message">Da postavite govornu poštu, idite na Meni &gt; Postavke.</string>

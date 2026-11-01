@@ -16,9 +16,6 @@
   -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-  <!-- The label in section header in the contact list for a contact directory [CHAR LIMIT=128] -->
-  <string name="directory_search_label">Directory</string>
-
   <!-- The label in section header in the contact list for a work contact directory [CHAR LIMIT=128] -->
   <string name="directory_search_label_work">Work directory</string>
 

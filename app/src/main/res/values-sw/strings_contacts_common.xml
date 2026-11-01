@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="directory_search_label">Saraka</string>
   <string name="directory_search_label_work">Anwani za kazi</string>
   <string name="chat_aim">Piga gumzo kutumia AIM</string>
   <string name="chat_msn">Piga gumzo kutumia Windows Live</string>

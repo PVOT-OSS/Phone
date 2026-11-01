@@ -1,0 +1,4 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="emergency_number">Larrialdietarako zenbakia</string>
+  <string name="video_call_lte_to_wifi_handover_toast">Wi-Fi bidezko konexiora aldatzen…</string>
+</resources>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="directory_search_label">ഡയറക്‌ടറി</string>
   <string name="directory_search_label_work">ഔദ്യോഗിക ഡയറക്‌ടറി</string>
   <string name="chat_aim">AIM ഉപയോഗിച്ച് ചാറ്റുചെയ്യുക</string>
   <string name="chat_msn">Windows Live ഉപയോഗിച്ച് ചാറ്റുചെയ്യുക</string>

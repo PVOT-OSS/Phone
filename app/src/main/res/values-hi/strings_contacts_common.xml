@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="directory_search_label">निर्देशिका</string>
   <string name="directory_search_label_work">कार्य निर्देशिका</string>
   <string name="chat_aim">AIM का उपयोग करके बातचीत करें</string>
   <string name="chat_msn">Windows Live का उपयोग करके बातचीत करें</string>

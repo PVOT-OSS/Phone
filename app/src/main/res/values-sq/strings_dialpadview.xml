@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dialpad_back">Kthehu prapa</string>
-  <string name="description_dialpad_overflow">Opsione të tjera</string>
-  <string name="description_delete_button">kthim prapa</string>
   <string name="description_dial_button">formo numrin</string>
   <string name="dialog_voicemail_airplane_mode_message">Për të telefonuar postën zanore, në fillim çaktivizo modalitetin \"në aeroplan\".</string>
   <string name="dialog_voicemail_not_ready_message">Për të konfiguruar postën zanore, shko te \"Menyja\" &gt; \"Cilësimet\".</string>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+  -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Spoken when a call comes in; %1$s is the caller's name or number. -->
+    <string name="call_announcer_text">Incoming call from <xliff:g id="caller" example="Alex">%1$s</xliff:g></string>
+    <!-- Spoken when a call comes in on a phone with more than one SIM; %2$s is the SIM's name. -->
+    <string name="call_announcer_text_multi_sim">Incoming call from <xliff:g id="caller" example="Alex">%1$s</xliff:g> on <xliff:g id="sim" example="SIM 1">%2$s</xliff:g></string>
+    <!-- Spoken when a suspected spam call comes in. -->
+    <string name="call_announcer_spam">Incoming spam call</string>
+</resources>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="directory_search_label">Kataloog</string>
   <string name="directory_search_label_work">Töökontaktide kataloog</string>
   <string name="chat_aim">Vestlus AIM-i kasutades</string>
   <string name="chat_msn">Vestlus Windows Live\'i kasutades</string>

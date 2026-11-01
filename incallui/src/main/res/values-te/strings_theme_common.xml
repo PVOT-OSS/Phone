@@ -1,0 +1,4 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="emergency_number">అత్యవసర నంబర్</string>
+  <string name="video_call_lte_to_wifi_handover_toast">Wi‑Fiని ఉపయోగించి కాల్‌ను కొనసాగిస్తోంది…</string>
+</resources>

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dialpad_back">Torna indietro</string>
-  <string name="description_dialpad_overflow">Altre opzioni</string>
-  <string name="description_delete_button">backspace</string>
   <string name="description_dial_button">componi</string>
   <string name="dialog_voicemail_airplane_mode_message">Per chiamare la segreteria, disattiva la modalità aereo.</string>
   <string name="dialog_voicemail_not_ready_message">Per configurare la segreteria, seleziona Menu &gt; Impostazioni.</string>

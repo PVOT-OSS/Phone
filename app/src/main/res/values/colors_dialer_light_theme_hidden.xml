@@ -15,8 +15,5 @@
   -->
 <resources>
   <color name="dialer_theme_color_20pct">#332A56C6</color>
-  <color name="dialer_theme_color_dark">@color/dialer_background_color</color>
-  <color name="rounded_dialpad_bg_color">@android:color/system_neutral1_100</color>
   <color name="searchbar_icon_color">@android:color/system_neutral1_900</color>
-  <color name="dialer_theme_color_light">@android:color/system_accent1_600</color>
 </resources>

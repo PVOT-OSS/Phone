@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dialpad_back">အနောက်သို့ ပြန်သွားပါ</string>
-  <string name="description_dialpad_overflow">ပိုမိုရွေးချယ်စရာများ</string>
-  <string name="description_delete_button">နောက်ပြန်ဖျက်ခလုတ်</string>
   <string name="description_dial_button">ဖုန်းခေါ်ရန်</string>
   <string name="dialog_voicemail_airplane_mode_message">အသံမေးလ်ခေါ်ဆိုရန်အတွက် လေယာဉ်ပျံမုဒ်ကို ဦးစွာပိတ်ပါ။</string>
   <string name="dialog_voicemail_not_ready_message">အသံမေးလ်စနစ်ကို စီစဉ်သတ်မှတ်ရန် မီနူး &gt; ဆက်တင်များသို့ သွားပါ။</string>

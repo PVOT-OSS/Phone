@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="directory_search_label">Directory</string>
   <string name="directory_search_label_work">Directory di lavoro</string>
   <string name="chat_aim">Chatta su AIM</string>
   <string name="chat_msn">Chatta su Windows Live</string>

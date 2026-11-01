@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dialpad_back">পিছনে যান</string>
-  <string name="description_dialpad_overflow">আরও বিকল্প</string>
-  <string name="description_delete_button">ব্যাক-স্পেস</string>
   <string name="description_dial_button">ডায়াল করুন</string>
   <string name="dialog_voicemail_airplane_mode_message">ভয়েসমেলে কল করতে, সবার আগে বিমানমোড বন্ধ করুন৷</string>
   <string name="dialog_voicemail_not_ready_message">ভয়েসমেল সেট-আপ করতে, মেনু &gt; সেটিংসে যান৷</string>

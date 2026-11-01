@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="directory_search_label">Direktorijum</string>
   <string name="directory_search_label_work">Direktorijum za Work</string>
   <string name="chat_aim">Započni ćaskanje preko AIM-a</string>
   <string name="chat_msn">Započni ćaskanje preko Windows Live-a</string>

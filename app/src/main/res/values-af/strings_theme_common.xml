@@ -1,5 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="emergency_number">Noodnommer</string>
-  <string name="video_call_lte_to_wifi_handover_toast">Gaan voort met oproep deur Wi-Fi te gebruik …</string>
   <string name="call_subject_type_and_number">%1$s %2$s</string>
 </resources>

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dialpad_back">ਪਿੱਛੇ ਆਵਾਗੌਣ ਕਰੋ</string>
-  <string name="description_dialpad_overflow">ਹੋਰ ਚੋਣਾਂ</string>
-  <string name="description_delete_button">ਬੈਕਸਪੇਸ</string>
   <string name="description_dial_button">ਡਾਇਲ ਕਰੋ</string>
   <string name="dialog_voicemail_airplane_mode_message">ਵੌਇਸਮੇਲ ਨੂੰ ਕਾਲ ਕਰਨ ਲਈ, ਪਹਿਲਾਂ ਜਹਾਜ਼ ਮੋਡ ਬੰਦ ਕਰੋ।</string>
   <string name="dialog_voicemail_not_ready_message">ਵੌਇਸਮੇਲ ਸਥਾਪਤ ਕਰਨ ਲਈ, ਮੀਨੂ &gt; ਸੈਟਿੰਗਾਂ \'ਤੇ ਜਾਓ।</string>

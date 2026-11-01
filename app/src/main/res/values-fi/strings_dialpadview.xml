@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dialpad_back">Siirry takaisin</string>
-  <string name="description_dialpad_overflow">Lisää vaihtoehtoja</string>
-  <string name="description_delete_button">askelpalautin</string>
   <string name="description_dial_button">soita</string>
   <string name="dialog_voicemail_airplane_mode_message">Poista lentokonetila käytöstä ennen vastaajaan soittamista.</string>
   <string name="dialog_voicemail_not_ready_message">Määritä puhelinvastaajan asetukset kohdassa Valikko &gt; Asetukset.</string>

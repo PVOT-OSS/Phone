@@ -1,0 +1,4 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="emergency_number">Број за итни случаи</string>
+  <string name="video_call_lte_to_wifi_handover_toast">Повикот ќе продолжи преку Wi‑Fi…</string>
+</resources>

@@ -16,17 +16,6 @@
   -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-  <!-- String describing the back button in the dialpad. -->
-  <string name="description_dialpad_back">Navigate back</string>
-
-  <!-- String describing the overflow menu button in the dialpad. -->
-  <string name="description_dialpad_overflow">More options</string>
-
-  <!-- String describing the Delete/Backspace ImageButton.
-       Used by AccessibilityService to announce the purpose of the button.
-  -->
-  <string name="description_delete_button">backspace</string>
-
   <!-- String describing the Dial ImageButton
 
          Used by AccessibilityService to announce the purpose of the button.

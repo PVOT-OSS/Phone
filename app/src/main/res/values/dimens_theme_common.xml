@@ -22,9 +22,6 @@
   <dimen name="call_log_day_group_padding_bottom">9dp</dimen>
   <dimen name="tab_height">48dp</dimen>
 
-  <item name="alpha_enabled" format="float" type="dimen">1.0</item>
-  <item name="alpha_hiden" format="float" type="dimen">0.54</item>
-
   <!-- Minimum a11y height and width required for all touch targets. -->
   <dimen name="dialer_touch_target_min_size">48dp</dimen>
 

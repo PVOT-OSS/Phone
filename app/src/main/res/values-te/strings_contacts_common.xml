@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="directory_search_label">డైరెక్టరీ</string>
   <string name="directory_search_label_work">కార్యాలయ డైరెక్టరీ</string>
   <string name="chat_aim">AIMని ఉపయోగించి చాట్ చేయండి</string>
   <string name="chat_msn">Windows Liveని ఉపయోగించి చాట్ చేయండి</string>

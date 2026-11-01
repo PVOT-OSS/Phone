@@ -1,5 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="emergency_number">કટોકટીનો નંબર</string>
-  <string name="video_call_lte_to_wifi_handover_toast">વાઇ-ફાઇનો ઉપયોગ કરીને કૉલ ચાલુ રાખી રહ્યાં છીએ…</string>
   <string name="call_subject_type_and_number">%1$s %2$s</string>
 </resources>

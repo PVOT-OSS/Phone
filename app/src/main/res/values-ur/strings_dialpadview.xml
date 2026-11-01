@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dialpad_back">پیچھے کو نیویگیٹ کریں</string>
-  <string name="description_dialpad_overflow">مزید اختیارات</string>
-  <string name="description_delete_button">بیک اسپیس</string>
   <string name="description_dial_button">ڈائل کریں</string>
   <string name="dialog_voicemail_airplane_mode_message">صوتی میل کو کال کرنے کیلئے، پہلے ہوائی جہاز طرز آف کریں۔</string>
   <string name="dialog_voicemail_not_ready_message">صوتی میل سیٹ کرنے کے لئے، مینو &gt; ترتیبات میں جائیں۔</string>

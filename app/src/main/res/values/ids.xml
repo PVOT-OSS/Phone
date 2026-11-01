@@ -25,6 +25,4 @@
   <item name="context_menu_delete" type="id"/>
   <item name="settings_header_sounds_and_vibration" type="id"/>
   <item name="block_id" type="id"/>
-  <item name="number_prompt_field" type="id"/>
-  <item name="number_prompt_pick_contact" type="id"/>
 </resources>
