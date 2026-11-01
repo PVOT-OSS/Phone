@@ -852,7 +852,9 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
     }
 
     private void setCurrentTab(@TabIndex int tabIndex) {
-      if (currentTab == TabIndex.CALL_LOG && tabIndex != TabIndex.CALL_LOG) {
+      // Leaving the history tab only counts as having seen the missed calls after it was shown for
+      // a while, as when leaving the app.
+      if (tabIndex != TabIndex.CALL_LOG && viewedCallLogTabPastTimeThreshold()) {
         markMissedCallsAsReadAndRemoveNotification();
       }
       currentTab = tabIndex;
