@@ -202,6 +202,7 @@ public class DialerCall implements VideoTechListener {
   }
 
   private RttTranscript rttTranscript;
+  private boolean rttStoppedByUser;
 
   private final Call.Callback telecomCallCallback =
       new Call.Callback() {
@@ -287,13 +288,25 @@ public class DialerCall implements VideoTechListener {
         @Override
         public void onRttInitiationFailure(Call call, int reason) {
           LogUtil.v("TelecomCallCallback.onRttInitiationFailure", "reason=%d", reason);
-          Toast.makeText(context, R.string.rtt_call_not_available_toast, Toast.LENGTH_LONG).show();
+          // Turned down by the other side, the call carries on as a voice call; any other failure
+          // means RTT could not start.
+          Toast.makeText(
+                  context,
+                  reason == Connection.RttModifyStatus.SESSION_MODIFY_REQUEST_REJECTED_BY_REMOTE
+                      ? R.string.rtt_call_downgraded_toast
+                      : R.string.rtt_call_started_as_rtt_failed,
+                  Toast.LENGTH_LONG)
+              .show();
           update();
         }
 
         @Override
         public void onRttStatusChanged(Call call, boolean enabled, RttCall rttCall) {
           LogUtil.v("TelecomCallCallback.onRttStatusChanged", "enabled=%b", enabled);
+          if (!enabled && !rttStoppedByUser) {
+            Toast.makeText(context, R.string.rtt_call_downgraded_toast, Toast.LENGTH_LONG).show();
+          }
+          rttStoppedByUser = false;
           update();
         }
 
@@ -1064,6 +1077,7 @@ public class DialerCall implements VideoTechListener {
 
   /** Turns RTT off, carrying on as a voice call. */
   public void stopRtt() {
+    rttStoppedByUser = true;
     getTelecomCall().stopRtt();
   }
 

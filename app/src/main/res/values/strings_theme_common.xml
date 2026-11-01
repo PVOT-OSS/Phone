@@ -35,8 +35,10 @@
   <!-- Displayed when handover from WiFi to Lte occurs during a video call -->
   <string name="video_call_lte_to_wifi_handover_toast">Continuing call using Wi\u2011Fi\u2026</string>
 
-  <!-- Displayed when RTT upgrade request failed -->
-  <string name="rtt_call_not_available_toast">RTT not available for this call</string>
+  <!-- Toast shown when an RTT call turns into a voice call, for example because the other side turned RTT down. -->
+  <string name="rtt_call_downgraded_toast">Your RTT call has changed to a voice-only call</string>
+  <!-- Toast shown when RTT could not be started for a call. -->
+  <string name="rtt_call_started_as_rtt_failed">RTT was unable to start</string>
   <!-- RTT call menu item that turns the RTT call into a voice call. [CHAR LIMIT=30] -->
   <string name="rtt_button_downgrade">Switch to voice</string>
 
