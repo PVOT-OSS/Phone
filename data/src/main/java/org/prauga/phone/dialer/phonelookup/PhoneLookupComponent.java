@@ -19,7 +19,6 @@ package org.prauga.phone.dialer.phonelookup;
 import android.content.Context;
 
 import org.prauga.phone.dialer.inject.HasRootComponent;
-import org.prauga.phone.dialer.inject.IncludeInDialerRoot;
 import org.prauga.phone.dialer.phonelookup.composite.CompositePhoneLookup;
 
 import dagger.Subcomponent;
@@ -36,7 +35,6 @@ public abstract class PhoneLookupComponent {
   }
 
   /** Used to refer to the root application component. */
-  @IncludeInDialerRoot
   public interface HasComponent {
     PhoneLookupComponent phoneLookupComponent();
   }
