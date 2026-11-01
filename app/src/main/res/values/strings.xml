@@ -60,6 +60,12 @@
   <string name="notification_missedWorkCallTitle">Missed work call</string>
   <!-- Missed call notification label, used when there are two or more missed calls -->
   <string name="notification_missedCallsTitle">Missed calls</string>
+  <!-- Missed call notification text when the phone was on Do Not Disturb. [CHAR LIMIT=60] -->
+  <string name="notification_missedCall_dnd">Missed call \u2022 On Do Not Disturb</string>
+  <!-- Missed call notification text when the phone was on silent. [CHAR LIMIT=60] -->
+  <string name="notification_missedCall_silent">Missed call \u2022 On Silent mode</string>
+  <!-- The phone's user in the missed call notification's conversation; not normally shown. -->
+  <string name="notification_missedCall_self">You</string>
   <!-- Missed call notification message used when there are multiple missed calls -->
   <string name="notification_missedCallsMsg"><xliff:g id="num_missed_calls">%d</xliff:g> missed calls</string>
   <!-- Message for "call back" Action, which is displayed in the missed call notificaiton.
