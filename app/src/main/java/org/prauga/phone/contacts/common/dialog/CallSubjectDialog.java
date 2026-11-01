@@ -53,6 +53,7 @@ import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.contactphoto.ContactPhotoManager;
 import org.prauga.phone.dialer.lettertile.LetterTileDrawable;
 import org.prauga.phone.dialer.precall.PreCall;
+import org.prauga.phone.dialer.telecom.TelecomUtil;
 import org.prauga.phone.dialer.util.ViewUtil;
 
 import java.nio.charset.Charset;
@@ -506,7 +507,7 @@ public class CallSubjectDialog extends AppCompatActivity {
     }
 
     TelecomManager telecomManager = (TelecomManager) getSystemService(Context.TELECOM_SERVICE);
-    final PhoneAccount account = telecomManager.getPhoneAccount(mPhoneAccountHandle);
+    final PhoneAccount account = TelecomUtil.getPhoneAccount(this, mPhoneAccountHandle);
     if (account == null) {
       return;
     }

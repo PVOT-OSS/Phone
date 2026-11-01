@@ -145,8 +145,19 @@ public abstract class TelecomUtil {
     return null;
   }
 
+  /**
+   * The phone account for {@code handle}, or null when there is none or the app may not see it:
+   * outside the default phone app role, Telecom needs READ_PHONE_NUMBERS, which the user may not
+   * have granted yet.
+   */
+  @Nullable
   public static PhoneAccount getPhoneAccount(Context context, PhoneAccountHandle handle) {
-    return getTelecomManager(context).getPhoneAccount(handle);
+    try {
+      return getTelecomManager(context).getPhoneAccount(handle);
+    } catch (SecurityException e) {
+      LogUtil.w(TAG, "TelecomManager.getPhoneAccount called without permission.");
+      return null;
+    }
   }
 
   public static List<PhoneAccountHandle> getCallCapablePhoneAccounts(Context context) {
@@ -164,7 +175,7 @@ public abstract class TelecomUtil {
         TelecomUtil.getCallCapablePhoneAccounts(context);
     for (PhoneAccountHandle accountHandle : accountHandles) {
       PhoneAccount account = TelecomUtil.getPhoneAccount(context, accountHandle);
-      if (account.hasCapabilities(PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION)) {
+      if (account != null && account.hasCapabilities(PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION)) {
         subscriptionAccountHandles.add(accountHandle);
       }
     }
@@ -312,7 +323,7 @@ public abstract class TelecomUtil {
     }
     TelecomManager telecomManager = context.getSystemService(TelecomManager.class);
     for (PhoneAccountHandle phoneAccountHandle : telecomManager.getCallCapablePhoneAccounts()) {
-      PhoneAccount phoneAccount = telecomManager.getPhoneAccount(phoneAccountHandle);
+      PhoneAccount phoneAccount = getPhoneAccount(context, phoneAccountHandle);
       if (phoneAccount == null) {
         continue;
       }
