@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Hou aan</string>
   <string name="notification_incoming_call">Inkomende oproep</string>
   <string name="notification_incoming_video_call">Inkomende video-oproep</string>
-  <string name="notification_incoming_call_mutli_sim">Inkomende oproep via %1$s</string>
   <string name="notification_incoming_work_call">Inkomende werkoproep</string>
   <string name="notification_incoming_spam_call">Inkomende verdagte strooipos-oproep</string>
   <string name="notification_requesting_video_call">Inkomende videoversoek</string>

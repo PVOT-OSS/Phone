@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Podržaný hovor</string>
   <string name="notification_incoming_call">Prichádzajúci hovor</string>
   <string name="notification_incoming_video_call">Prichádzajúci videohovor</string>
-  <string name="notification_incoming_call_mutli_sim">Prichádzajúci hovor cez %1$s</string>
   <string name="notification_incoming_work_call">Prichádzajúci pracovný hovor</string>
   <string name="notification_incoming_spam_call">Prichádzajúci hovor, pri ktorom je podozrenie, že ide o spam</string>
   <string name="notification_requesting_video_call">Prichádzajúca žiadosť o video</string>

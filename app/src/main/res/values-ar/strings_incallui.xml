@@ -15,7 +15,6 @@
   <string name="notification_on_hold">معلقة</string>
   <string name="notification_incoming_call">مكالمة واردة</string>
   <string name="notification_incoming_video_call">مكالمة فيديو واردة</string>
-  <string name="notification_incoming_call_mutli_sim">مكالمة واردة عبر %1$s</string>
   <string name="notification_incoming_work_call">مكالمة عمل واردة</string>
   <string name="notification_incoming_spam_call">مكالمة واردة يشتبه في كونها غير مرغوب فيها</string>
   <string name="notification_requesting_video_call">طلب فيديو وارد</string>

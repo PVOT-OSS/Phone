@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Zain</string>
   <string name="notification_incoming_call">Sarrerako deia</string>
   <string name="notification_incoming_video_call">Sarrerako bideo-deia</string>
-  <string name="notification_incoming_call_mutli_sim">%1$s bidezko sarrerako deia</string>
   <string name="notification_incoming_work_call">Laneko dei bat jaso da</string>
   <string name="notification_incoming_spam_call">Ustezko spam-deia jaso duzu</string>
   <string name="notification_requesting_video_call">Sarrerako bideo-eskaera</string>

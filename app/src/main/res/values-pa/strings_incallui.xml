@@ -15,7 +15,6 @@
   <string name="notification_on_hold">ਹੋਲਡ ਤੇ</string>
   <string name="notification_incoming_call">ਇਨਕਮਿੰਗ ਕਾਲ</string>
   <string name="notification_incoming_video_call">ਇਨਕਮਿੰਗ ਵੀਡੀਓ ਕਾਲ</string>
-  <string name="notification_incoming_call_mutli_sim">%1$s ਰਾਹੀਂ ਇਨਕਮਿੰਗ ਕਾਲ</string>
   <string name="notification_incoming_work_call">ਕੰਮ ਸਬੰਧਿਤ ਆ ਰਹੀ ਕਾਲ</string>
   <string name="notification_incoming_spam_call">ਸ਼ੱਕੀ ਸਪੈਮ ਕਾਲ ਆ ਰਹੀ ਹੈ</string>
   <string name="notification_requesting_video_call">ਇਨਕਮਿੰਗ ਵੀਡੀਓ ਬੇਨਤੀ</string>

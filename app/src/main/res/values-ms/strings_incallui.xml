@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Ditunda</string>
   <string name="notification_incoming_call">Panggilan masuk</string>
   <string name="notification_incoming_video_call">Panggilan video masuk</string>
-  <string name="notification_incoming_call_mutli_sim">Panggilan masuk melalui %1$s</string>
   <string name="notification_incoming_work_call">Panggilan masuk daripada tempat kerja</string>
   <string name="notification_incoming_spam_call">Disyaki panggilan spam masuk</string>
   <string name="notification_requesting_video_call">Permintaan video masuk</string>

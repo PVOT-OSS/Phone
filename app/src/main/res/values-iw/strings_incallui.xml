@@ -15,7 +15,6 @@
   <string name="notification_on_hold">בהמתנה</string>
   <string name="notification_incoming_call">שיחה נכנסת</string>
   <string name="notification_incoming_video_call">שיחת וידאו נכנסת</string>
-  <string name="notification_incoming_call_mutli_sim">שיחה נכנסת באמצעות %1$s</string>
   <string name="notification_incoming_work_call">שיחת עבודה נכנסת</string>
   <string name="notification_incoming_spam_call">השיחה הנכנסת חשודה כספאם</string>
   <string name="notification_requesting_video_call">בקשת וידאו נכנסת</string>

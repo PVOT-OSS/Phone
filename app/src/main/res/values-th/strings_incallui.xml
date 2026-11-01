@@ -15,7 +15,6 @@
   <string name="notification_on_hold">พักสาย</string>
   <string name="notification_incoming_call">สายเรียกเข้า</string>
   <string name="notification_incoming_video_call"> Hangouts วิดีโอเรียกเข้า</string>
-  <string name="notification_incoming_call_mutli_sim">สายเรียกเข้าผ่าน %1$s</string>
   <string name="notification_incoming_work_call">มีสายเรียกเข้าจากที่ทำงาน</string>
   <string name="notification_incoming_spam_call">สายเรียกเข้าที่สงสัยว่าเป็นสแปม</string>
   <string name="notification_requesting_video_call">คำขอโทรเข้าเป็นวิดีโอ</string>

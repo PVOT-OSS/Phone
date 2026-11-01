@@ -15,7 +15,6 @@
   <string name="notification_on_hold">În așteptare</string>
   <string name="notification_incoming_call">Apel de intrare</string>
   <string name="notification_incoming_video_call">Apel video primit</string>
-  <string name="notification_incoming_call_mutli_sim">Apel primit prin %1$s</string>
   <string name="notification_incoming_work_call">Apel de serviciu primit</string>
   <string name="notification_incoming_spam_call">Un apel primit posibil spam</string>
   <string name="notification_requesting_video_call">Solicitare de trecere la apel video</string>

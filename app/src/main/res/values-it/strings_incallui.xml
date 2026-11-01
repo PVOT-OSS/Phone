@@ -15,7 +15,6 @@
   <string name="notification_on_hold">In attesa</string>
   <string name="notification_incoming_call">Chiamata in arrivo</string>
   <string name="notification_incoming_video_call">Videochiamata in arrivo</string>
-  <string name="notification_incoming_call_mutli_sim">Chiamata in arrivo tramite %1$s</string>
   <string name="notification_incoming_work_call">Chiamata di lavoro in arrivo</string>
   <string name="notification_incoming_spam_call">Chiamata di presunto spam in arrivo</string>
   <string name="notification_requesting_video_call">Richiesta video in arrivo</string>

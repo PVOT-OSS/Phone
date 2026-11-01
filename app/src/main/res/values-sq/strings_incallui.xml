@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Në pritje</string>
   <string name="notification_incoming_call">Telefonatë hyrëse</string>
   <string name="notification_incoming_video_call">Telefonatë me video hyrëse</string>
-  <string name="notification_incoming_call_mutli_sim">Telefonatë hyrëse nëpërmjet %1$s</string>
   <string name="notification_incoming_work_call">Telefonatë pune hyrëse</string>
   <string name="notification_incoming_spam_call">Telefonatë e dyshuar si e padëshiruar</string>
   <string name="notification_requesting_video_call">Kërkesë për video hyrëse</string>

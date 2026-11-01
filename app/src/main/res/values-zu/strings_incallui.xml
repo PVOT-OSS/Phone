@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Ibambile</string>
   <string name="notification_incoming_call">Ikholi engenayo</string>
   <string name="notification_incoming_video_call">Ikholi yevidiyo engenayo</string>
-  <string name="notification_incoming_call_mutli_sim">Ikholi engenayo nge-%1$s</string>
   <string name="notification_incoming_work_call">Ikholi engenayo yomsebenzi</string>
   <string name="notification_incoming_spam_call">Ikholi engenayo osolisayo kagaxekile</string>
   <string name="notification_requesting_video_call">Isicelo sevidiyo engenayo</string>

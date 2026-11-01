@@ -15,7 +15,6 @@
   <string name="notification_on_hold">In de wacht</string>
   <string name="notification_incoming_call">Inkomende oproep</string>
   <string name="notification_incoming_video_call">Binnenkomend videogesprek</string>
-  <string name="notification_incoming_call_mutli_sim">Inkomende oproep via %1$s</string>
   <string name="notification_incoming_work_call">Inkomende zakelijke oproep</string>
   <string name="notification_incoming_spam_call">Inkomende vermoedelijke spamoproep</string>
   <string name="notification_requesting_video_call">Binnenkomend videoverzoek</string>

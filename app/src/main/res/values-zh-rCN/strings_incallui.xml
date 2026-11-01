@@ -15,7 +15,6 @@
   <string name="notification_on_hold">保持</string>
   <string name="notification_incoming_call">来电</string>
   <string name="notification_incoming_video_call">有视频通话来电</string>
-  <string name="notification_incoming_call_mutli_sim">通过 %1$s 接到的来电</string>
   <string name="notification_incoming_work_call">工作来电</string>
   <string name="notification_incoming_spam_call">有疑似骚扰来电</string>
   <string name="notification_requesting_video_call">收到视频通话邀请</string>

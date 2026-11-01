@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Вызов на удержании</string>
   <string name="notification_incoming_call">Входящий вызов</string>
   <string name="notification_incoming_video_call">Входящий видеовызов</string>
-  <string name="notification_incoming_call_mutli_sim">Входящий вызов, SIM-карта %1$s</string>
   <string name="notification_incoming_work_call">Входящий звонок (работа)</string>
   <string name="notification_incoming_spam_call">Входящий вызов: подозрение на спам</string>
   <string name="notification_requesting_video_call">Входящий видеовызов</string>

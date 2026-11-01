@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Хүлээлгэнд</string>
   <string name="notification_incoming_call">Ирж буй дуудлага</string>
   <string name="notification_incoming_video_call">Ирж буй видео дуудлага</string>
-  <string name="notification_incoming_call_mutli_sim">%1$s-р ирж буй дуудлага</string>
   <string name="notification_incoming_work_call">Ирж буй албаны дуудлага</string>
   <string name="notification_incoming_spam_call">Орж ирсэн сэжигтэй спам дуудлага</string>
   <string name="notification_requesting_video_call">Ирж буй видео хүсэлт</string>

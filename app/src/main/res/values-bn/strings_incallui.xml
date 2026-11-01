@@ -15,7 +15,6 @@
   <string name="notification_on_hold">সাময়িকভাবে স্থগিত রাখা হয়েছে</string>
   <string name="notification_incoming_call">ইনকামিং কল</string>
   <string name="notification_incoming_video_call">ইনকামিং ভিডিও কল</string>
-  <string name="notification_incoming_call_mutli_sim">%1$s এ কল আসছে</string>
   <string name="notification_incoming_work_call">আগত কাজের কল</string>
   <string name="notification_incoming_spam_call">আগত সন্দেহভাজন স্প্যাম কল</string>
   <string name="notification_requesting_video_call">আগত ভিডিও অনুরোধ</string>

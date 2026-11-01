@@ -703,40 +703,73 @@ public class StatusBarNotifier
     }
 
 
-    String message = getOngoingCallNotificationMessage(isWorkCall);
-    String wifiBrand = getWifiBrand(isWorkCall);
-
-    // TODO(a bug): Potentially apply this template logic everywhere.
-    if (call.hasProperty(Details.PROPERTY_WIFI)) {
-      message = context.getString(R.string.notification_ongoing_call_wifi_template, wifiBrand);
-    }
-
+    CallStatus.Phase phase;
     if (isIncomingOrWaiting) {
-      if (call.isSpam()) {
-        message = context.getString(R.string.notification_incoming_spam_call);
-      } else if (call.hasProperty(Details.PROPERTY_WIFI)) {
-        message = context.getString(R.string.notification_incoming_call_wifi_template, wifiBrand);
-      } else if (call.getAccountHandle() != null && hasMultiplePhoneAccounts(call)) {
-        return getMultiSimIncomingText(call);
-      } else if (call.isVideoCall()) {
-        message = context.getString(R.string.notification_incoming_video_call);
-      } else {
-        message = getIncomingCallNotificationMessage(isWorkCall);
-      }
+      phase = CallStatus.Phase.RINGING;
     } else if (call.getState() == DialerCallState.ONHOLD) {
-      message = context.getString(R.string.notification_on_hold);
+      phase = CallStatus.Phase.ON_HOLD;
     } else if (DialerCallState.isDialing(call.getState())) {
-      message = context.getString(R.string.notification_dialing);
-    } else if (call.isVideoCall()) {
-      message = context.getString(call.getVideoTech().isPaused()
-              ? R.string.notification_ongoing_paused_video_call
-              : R.string.notification_ongoing_video_call);
-    } else if (call.getVideoTech().getSessionModificationState()
-        == SessionModificationState.RECEIVED_UPGRADE_TO_VIDEO_REQUEST) {
-      message = context.getString(R.string.notification_requesting_video_call);
+      phase = CallStatus.Phase.DIALING;
+    } else {
+      phase = CallStatus.Phase.IN_CALL;
     }
+    CallStatus status =
+        CallStatus.of(
+            phase,
+            call.isSpam(),
+            call.isActiveRttCall(),
+            call.isVideoCall(),
+            call.getVideoTech().isPaused(),
+            call.getVideoTech().getSessionModificationState()
+                == SessionModificationState.RECEIVED_UPGRADE_TO_VIDEO_REQUEST,
+            call.hasProperty(Details.PROPERTY_WIFI),
+            isWorkCall);
+    String message = getStatusText(status, isWorkCall);
 
+    // With more than one way to call, say which one this call uses.
+    if (call.getAccountHandle() != null && hasMultiplePhoneAccounts(call)) {
+      PhoneAccount phoneAccount =
+          context.getSystemService(TelecomManager.class).getPhoneAccount(call.getAccountHandle());
+      if (phoneAccount != null && !TextUtils.isEmpty(phoneAccount.getLabel())) {
+        return context.getString(
+            R.string.notification_status_via_account, message, phoneAccount.getLabel());
+      }
+    }
     return message;
+  }
+
+  private String getStatusText(CallStatus status, boolean isWorkCall) {
+    switch (status) {
+      case SUSPECTED_SPAM:
+        return context.getString(R.string.notification_incoming_spam_call);
+      case INCOMING_RTT:
+        return context.getString(R.string.notification_incoming_rtt_call);
+      case INCOMING_VIDEO:
+        return context.getString(R.string.notification_incoming_video_call);
+      case INCOMING_WIFI:
+        return context.getString(
+            R.string.notification_incoming_call_wifi_template, getWifiBrand(isWorkCall));
+      case INCOMING_WORK:
+      case INCOMING:
+        return getIncomingCallNotificationMessage(isWorkCall);
+      case ON_HOLD:
+        return context.getString(R.string.notification_on_hold);
+      case CALLING:
+        return context.getString(R.string.notification_dialing);
+      case VIDEO_REQUEST:
+        return context.getString(R.string.notification_requesting_video_call);
+      case ONGOING_VIDEO_PAUSED:
+        return context.getString(R.string.notification_ongoing_paused_video_call);
+      case ONGOING_VIDEO:
+        return context.getString(R.string.notification_ongoing_video_call);
+      case ONGOING_WIFI:
+        return context.getString(
+            R.string.notification_ongoing_call_wifi_template, getWifiBrand(isWorkCall));
+      case ONGOING_WORK:
+      case ONGOING:
+      default:
+        return getOngoingCallNotificationMessage(isWorkCall);
+    }
   }
 
   private String getOngoingCallNotificationMessage(boolean isWorkCall) {
@@ -767,27 +800,6 @@ public class StatusBarNotifier
     } else {
       return context.getString(R.string.notification_call_wifi_brand);
     }
-  }
-
-  private CharSequence getMultiSimIncomingText(DialerCall call) {
-    PhoneAccount phoneAccount =
-        context.getSystemService(TelecomManager.class).getPhoneAccount(call.getAccountHandle());
-    if (phoneAccount == null) {
-      return context.getString(R.string.notification_incoming_call);
-    }
-    SpannableString string =
-        new SpannableString(
-            context.getString(
-                R.string.notification_incoming_call_mutli_sim, phoneAccount.getLabel()));
-    int accountStart = string.toString().lastIndexOf(phoneAccount.getLabel().toString());
-    int accountEnd = accountStart + phoneAccount.getLabel().length();
-
-    string.setSpan(
-        new ForegroundColorSpan(phoneAccount.getHighlightColor()),
-        accountStart,
-        accountEnd,
-        Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-    return string;
   }
 
   /** Gets the most relevant call to display in the notification. */

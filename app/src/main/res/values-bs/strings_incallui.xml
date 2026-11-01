@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Na čekanju</string>
   <string name="notification_incoming_call">Dolazni poziv</string>
   <string name="notification_incoming_video_call">Dolazni video poziv</string>
-  <string name="notification_incoming_call_mutli_sim">Dolazni poziv sa SIM kartice %1$s</string>
   <string name="notification_incoming_work_call">Dolazni poslovni poziv</string>
   <string name="notification_incoming_spam_call">Mogući neželjeni dolazni poziv</string>
   <string name="notification_requesting_video_call">Zahtjev za dolazni video poziv</string>

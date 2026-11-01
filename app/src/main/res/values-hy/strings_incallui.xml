@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Սպասում</string>
   <string name="notification_incoming_call">Մուտքային զանգ</string>
   <string name="notification_incoming_video_call">Մուտքային տեսազանգ</string>
-  <string name="notification_incoming_call_mutli_sim">Մուտքային զանգ (%1$s)</string>
   <string name="notification_incoming_work_call">Մուտքային աշխատանքային զանգ</string>
   <string name="notification_incoming_spam_call">Մուտքային զանգը հավանաբար սպամ է</string>
   <string name="notification_requesting_video_call">Մուտքային տեսազանգի հայցում</string>

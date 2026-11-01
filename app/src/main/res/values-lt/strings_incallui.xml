@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Sulaikyta</string>
   <string name="notification_incoming_call">Gaunamasis skambutis</string>
   <string name="notification_incoming_video_call">Gaunamas vaizdo skambutis</string>
-  <string name="notification_incoming_call_mutli_sim">Gaunamasis skambutis per „%1$s“</string>
   <string name="notification_incoming_work_call">Gaunamasis darbo skambutis</string>
   <string name="notification_incoming_spam_call">Gaunamasis įtartinas šlamšto skambutis</string>
   <string name="notification_requesting_video_call">Gaunama vaizdo skambučio užklausa</string>
