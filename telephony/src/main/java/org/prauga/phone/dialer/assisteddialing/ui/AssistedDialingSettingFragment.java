@@ -25,7 +25,7 @@ import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
-import org.prauga.phone.dialer.R;
+import org.prauga.phone.telephony.R;
 import org.prauga.phone.dialer.assisteddialing.AssistedDialingMediator;
 import org.prauga.phone.dialer.assisteddialing.ConcreteCreator;
 import org.prauga.phone.dialer.assisteddialing.CountryCodeProvider;

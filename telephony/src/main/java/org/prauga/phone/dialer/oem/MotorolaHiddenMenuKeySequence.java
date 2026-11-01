@@ -25,7 +25,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
-import org.prauga.phone.dialer.R;
+import org.prauga.phone.telephony.R;
 import org.prauga.phone.dialer.common.LogUtil;
 
 import java.util.ArrayList;

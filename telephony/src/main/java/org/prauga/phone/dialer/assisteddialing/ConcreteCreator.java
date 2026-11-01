@@ -22,7 +22,7 @@ import android.os.UserManager;
 import android.telephony.TelephonyManager;
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
-import org.prauga.phone.dialer.R;
+import org.prauga.phone.telephony.R;
 import org.prauga.phone.dialer.common.LogUtil;
 
 /**

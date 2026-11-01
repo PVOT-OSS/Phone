@@ -28,7 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
-import org.prauga.phone.dialer.R;
+import org.prauga.phone.telephony.R;
 import org.prauga.phone.dialer.common.Assert;
 import org.prauga.phone.dialer.common.LogUtil;
 

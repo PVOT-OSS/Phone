@@ -21,7 +21,7 @@ import android.content.res.Resources;
 import android.provider.CallLog.Calls;
 import android.telephony.TelephonyManager;
 
-import org.prauga.phone.dialer.R;
+import org.prauga.phone.telephony.R;
 import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.common.PackageUtils;
 
