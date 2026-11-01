@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 The Android Open Source Project
+ * Copyright (C) 2017 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -11,23 +11,14 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.
+ * limitations under the License
  */
-package org.prauga.phone.dialer.spannable;
 
-import android.text.TextPaint;
-import android.text.style.URLSpan;
+package org.prauga.phone.dialer.function
 
-/** Version of {@link URLSpan} which doesn't underline links. */
-final class UrlSpanWithoutUnderline extends URLSpan {
+/** Functional interface for supplying generic values. */
+fun interface Supplier<T> {
 
-  UrlSpanWithoutUnderline(String url) {
-    super(url);
-  }
-
-  @Override
-  public void updateDrawState(TextPaint ds) {
-    super.updateDrawState(ds);
-    ds.setUnderlineText(false);
-  }
+    /** Supplies a value. */
+    fun get(): T
 }

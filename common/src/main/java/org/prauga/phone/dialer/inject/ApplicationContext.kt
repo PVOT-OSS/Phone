@@ -14,28 +14,9 @@
  * limitations under the License
  */
 
-package org.prauga.phone.dialer.inject;
+package org.prauga.phone.dialer.inject
 
-import android.content.Context;
+import javax.inject.Qualifier
 
-import androidx.annotation.NonNull;
-
-import dagger.Module;
-import dagger.Provides;
-
-/** Provides the singleton application context object. */
-@Module
-public final class ContextModule {
-
-  @NonNull private final Context context;
-
-  public ContextModule(@NonNull Context appContext) {
-    this.context = appContext;
-  }
-
-  @Provides
-  @ApplicationContext
-  Context provideContext() {
-    return context;
-  }
-}
+/** Annotation for retrieving the application context. */
+@Qualifier @Retention(AnnotationRetention.BINARY) annotation class ApplicationContext

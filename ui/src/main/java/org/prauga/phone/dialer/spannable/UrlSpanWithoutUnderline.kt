@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 The Android Open Source Project
+ * Copyright (C) 2018 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-package org.prauga.phone.dialer.common;
+package org.prauga.phone.dialer.spannable
 
-import android.content.Context;
+import android.text.TextPaint
+import android.text.style.URLSpan
 
-/** Utility for dp to px conversion */
-public class DpUtil {
+/** Version of [URLSpan] which doesn't underline links. */
+internal class UrlSpanWithoutUnderline(url: String) : URLSpan(url) {
 
-  public static float pxToDp(Context context, float px) {
-    return px / context.getResources().getDisplayMetrics().density;
-  }
-
-  public static float dpToPx(Context context, float dp) {
-    return dp * context.getResources().getDisplayMetrics().density;
-  }
+    override fun updateDrawState(ds: TextPaint) {
+        super.updateDrawState(ds)
+        ds.isUnderlineText = false
+    }
 }
