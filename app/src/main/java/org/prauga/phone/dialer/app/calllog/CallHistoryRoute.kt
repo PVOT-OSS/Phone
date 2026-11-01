@@ -132,7 +132,7 @@ fun CallHistoryRoute(
         header = statusMessage?.takeUnless { it.isModal }?.let { message -> { VoicemailStatusCard(message) } },
         fullScreen = statusMessage?.takeIf { it.isModal }?.let { message -> { VoicemailTermsScreen(message) } },
         voicemailPlayback = voicemail?.playbackState,
-        selectable = voicemail != null,
+        selectable = true,
     )
 }
 

@@ -17,7 +17,7 @@ interface CallLogListener {
     fun updateTabUnreadCounts()
 
     /**
-     * Voicemails are being selected, or not any more; the main screen hides its bars meanwhile and
+     * Calls or voicemails are being selected, or not any more; the main screen hides its bars meanwhile and
      * may end the selection with [exitSelection], for example when the dialpad opens.
      */
     fun onSelectionModeChanged(enabled: Boolean, exitSelection: Runnable)

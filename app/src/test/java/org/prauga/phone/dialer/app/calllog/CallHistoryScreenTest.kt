@@ -9,9 +9,14 @@ import android.provider.CallLog.Calls
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.test.hasAnyAncestor
+import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.isRoot
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.longClick
 import androidx.compose.ui.test.onFirst
+import androidx.compose.ui.test.onLast
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -78,6 +83,7 @@ class CallHistoryScreenTest {
                 emptyMessage = R.string.call_log_all_empty,
                 showEmptyAction = showEmptyAction,
                 actions = actions,
+                selectable = true,
             )
         }
     }
@@ -98,6 +104,29 @@ class CallHistoryScreenTest {
         compose.onNodeWithTag(TestTags.callHistoryAction(10, "DETAILS")).performClick()
 
         assertThat(actions.events).containsExactly("opened 10", "DETAILS 10").inOrder()
+    }
+
+    @Test
+    fun anOpenRowsLabelsRunTheirActionsToo() {
+        show()
+        compose.onNodeWithTag(TestTags.callHistoryRow(10)).performClick()
+        compose.onNode(hasText("Call details") and hasAnyAncestor(hasTestTag(TestTags.callHistoryActions(10)))).performClick()
+        assertThat(actions.events).containsExactly("opened 10", "DETAILS 10").inOrder()
+    }
+
+    @Test
+    fun longPressSelectsCallsAndDeletesThemTogether() {
+        show()
+        compose.onNodeWithTag(TestTags.callHistoryRow(10)).performTouchInput { longClick() }
+        compose.onNodeWithTag(TestTags.CALL_HISTORY_SELECTION).assertExists()
+        compose.onNodeWithTag(TestTags.callHistoryRow(20)).performClick()
+        compose.onNodeWithText("2 selected").assertExists()
+
+        compose.onNode(hasText("Delete") and hasAnyAncestor(hasTestTag(TestTags.CALL_HISTORY_SELECTION))).performClick()
+        compose.onNodeWithText("Delete these 2 calls from your history?").assertExists()
+        compose.onAllNodes(hasText("Delete")).onLast().performClick()
+
+        assertThat(actions.events).containsExactly("selecting true", "deleteSelected [10, 20]", "selecting false").inOrder()
     }
 
     @Test

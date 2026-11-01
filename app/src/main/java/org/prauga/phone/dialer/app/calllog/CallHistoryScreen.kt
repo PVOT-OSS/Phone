@@ -9,27 +9,30 @@ import android.provider.CallLog.Calls
 import android.text.TextUtils
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListState
@@ -43,22 +46,26 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.hideFromAccessibility
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -73,19 +80,20 @@ import com.prauga.pvot.designsystem.components.PvotScreen
 import com.prauga.pvot.designsystem.components.PvotSnackbarHost
 import com.prauga.pvot.designsystem.components.button.PvotButton
 import com.prauga.pvot.designsystem.components.button.PvotButtonStyle
-import com.prauga.pvot.designsystem.components.list.PvotLetterTileDefaults
 import com.prauga.pvot.designsystem.components.button.PvotIconButton
 import com.prauga.pvot.designsystem.components.button.PvotIconButtonDefaults
+import com.prauga.pvot.designsystem.components.list.PvotLetterTileDefaults
 import com.prauga.pvot.designsystem.components.list.PvotListRow
 import com.prauga.pvot.designsystem.components.list.PvotSwipeRow
 import com.prauga.pvot.designsystem.components.list.PvotSwipeRowDefaults
 import com.prauga.pvot.designsystem.motion.PvotDurations
 import com.prauga.pvot.designsystem.motion.PvotMotion
+import com.prauga.pvot.designsystem.theme.PvotShapes
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import kotlinx.coroutines.launch
 import org.prauga.phone.dialer.R
-import org.prauga.phone.dialer.compat.telephony.TelephonyManagerCompat
 import org.prauga.phone.dialer.app.voicemail.VoicemailPlaybackState
+import org.prauga.phone.dialer.compat.telephony.TelephonyManagerCompat
 import org.prauga.phone.dialer.ui.ContactAvatar
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.ui.fullWidthRow
@@ -245,6 +253,8 @@ private fun HistoryList(
             actions.selectionModeChanged(next.isNotEmpty()) { selected = emptySet() }
         }
     }
+    // Back ends the selection before it leaves the screen.
+    BackHandler(enabled = selecting) { select(emptySet()) }
 
     fun toggle(row: CallLogRowUi) {
         val group = row.group
@@ -285,7 +295,7 @@ private fun HistoryList(
                     val row = resolve(group, index, group.number in blockedNumbers)
                     val expanded = expandedRowId == group.rowId && !selecting
                     val onClick: () -> Unit = { if (selecting) select(selection.toggled(group.rowId)) else toggle(row) }
-                    val onLongClick: (() -> Unit)? = if (selectable && group.voicemailUri != null) {
+                    val onLongClick: (() -> Unit)? = if (selectable) {
                         { select(selection + group.rowId) }
                     } else null
                     val onPlay: () -> Unit = {
@@ -410,7 +420,11 @@ private fun HistoryList(
         PvotDialog(
             visible = true,
             onDismissRequest = { confirmDeleteSelected = false },
-            title = pluralStringResource(R.plurals.delete_voicemails_confirmation_dialog_title, selection.size),
+            title = if (voicemailPlayback != null) {
+                pluralStringResource(R.plurals.delete_voicemails_confirmation_dialog_title, selection.size)
+            } else {
+                pluralStringResource(R.plurals.delete_calls_confirmation_dialog_title, selection.size, selection.size)
+            },
             destructive = true,
         ) {
             PvotDialogAction(
@@ -484,9 +498,21 @@ private fun HistoryRow(
 ) {
     val canSwipeCall = row.primaryAction == PrimaryAction.CALL || row.primaryAction == PrimaryAction.VIDEO_CALL ||
         row.primaryAction == PrimaryAction.CALL_VOICEMAIL
-    Column {
+    // The open row is a card: the row on top, its actions under it.
+    val cardColor by animateColorAsState(
+        if (expanded) MaterialTheme.colorScheme.surfaceContainer else MaterialTheme.colorScheme.background,
+        tween(PvotDurations.Medium, easing = PvotMotion.Settle),
+        label = "openRowCard",
+    )
+    Column(
+        Modifier
+            .fullWidthRow()
+            .padding(vertical = if (expanded) PvotSpacing.XS else 0.dp)
+            .clip(PvotShapes.Card)
+            .background(cardColor),
+    ) {
         PvotSwipeRow(
-            modifier = Modifier.fullWidthRow(),
+            containerColor = cardColor,
             startAction = if (canSwipeCall) {
                 PvotSwipeRowDefaults.action(
                     label = stringResource(R.string.call),
@@ -533,7 +559,7 @@ private fun HistoryRow(
                 trailing = { PrimaryButton(row, onPlay, actions) },
                 onClick = onClick,
                 onLongClick = onLongClick,
-                selected = expanded || isSelected,
+                selected = isSelected,
             )
         }
         AnimatedVisibility(
@@ -541,27 +567,69 @@ private fun HistoryRow(
             enter = expandVertically(tween(PvotDurations.Medium, easing = PvotMotion.Settle)) + fadeIn(tween(PvotDurations.Medium)),
             exit = shrinkVertically(tween(PvotDurations.Short)) + fadeOut(tween(PvotDurations.Short)),
         ) {
-            Column(Modifier.padding(start = PvotSpacing.L, end = PvotSpacing.L, bottom = PvotSpacing.M)) {
-                FlowRow(
-                    modifier = Modifier.fillMaxWidth().testTag(TestTags.callHistoryActions(row.group.rowId)),
-                    horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S),
-                    verticalArrangement = Arrangement.spacedBy(PvotSpacing.S),
-                ) {
-                    for (action in row.actions) {
-                        val (label, icon) = labelAndIcon(action, row)
-                        PvotButton(
-                            text = label,
-                            onClick = { onRowAction(action) },
-                            modifier = Modifier.testTag(TestTags.callHistoryAction(row.group.rowId, action.name)),
-                            style = PvotButtonStyle.Tonal,
-                            icon = painterResource(icon),
-                        )
-                    }
-                }
-            }
+            RowActions(row, onRowAction)
         }
     }
 }
+
+/**
+ * The open row's actions: round buttons with their labels under them, up to four to a line in
+ * equal columns, below a gap that keeps them clear of the row.
+ */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun RowActions(row: CallLogRowUi, onRowAction: (RowAction) -> Unit) {
+    // A few actions share the card's width; more wrap, four to a line.
+    val perLine = row.actions.size.coerceIn(1, ActionsPerLine)
+    FlowRow(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = PvotSpacing.S, end = PvotSpacing.S, top = PvotSpacing.S, bottom = PvotSpacing.L)
+            .testTag(TestTags.callHistoryActions(row.group.rowId)),
+        maxItemsInEachRow = perLine,
+        verticalArrangement = Arrangement.spacedBy(PvotSpacing.L),
+    ) {
+        for (action in row.actions) {
+            val (label, icon) = labelAndIcon(action, row)
+            val destructive = action == RowAction.DELETE || action == RowAction.BLOCK
+            Column(
+                Modifier.weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(PvotSpacing.S),
+            ) {
+                PvotIconButton(
+                    icon = painterResource(icon),
+                    contentDescription = label,
+                    onClick = { onRowAction(action) },
+                    colors = if (destructive) {
+                        PvotIconButtonDefaults.tonalColors().copy(contentColor = MaterialTheme.colorScheme.error)
+                    } else {
+                        PvotIconButtonDefaults.tonalColors()
+                    },
+                    modifier = Modifier.testTag(TestTags.callHistoryAction(row.group.rowId, action.name)),
+                )
+                Text(
+                    text = label,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = if (destructive) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    // The button says this to TalkBack; the label is a bigger target for the finger.
+                    modifier = Modifier
+                        .padding(horizontal = PvotSpacing.XS)
+                        .semantics { hideFromAccessibility() }
+                        .clickable(interactionSource = null, indication = null) { onRowAction(action) },
+                )
+            }
+        }
+        // A short last line keeps its buttons under the columns above.
+        repeat((perLine - row.actions.size % perLine) % perLine) { Spacer(Modifier.weight(1f)) }
+    }
+}
+
+/** The most columns of the open row's actions. */
+private const val ActionsPerLine = 4
 
 /** A check in place of a selected row's avatar. */
 @Composable

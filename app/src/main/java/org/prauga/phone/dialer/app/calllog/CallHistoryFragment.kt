@@ -94,6 +94,11 @@ class CallHistoryFragment : Fragment() {
                                 FragmentUtils.getParent(this@CallHistoryFragment, CallLogListener::class.java)
                                     ?.updateTabUnreadCounts()
                             },
+                            // The main screen hides the dock and title while calls are selected.
+                            onSelectionModeChanged = { enabled, exit ->
+                                FragmentUtils.getParent(this@CallHistoryFragment, CallLogListener::class.java)
+                                    ?.onSelectionModeChanged(enabled, exit)
+                            },
                         )
                     }
                 }
