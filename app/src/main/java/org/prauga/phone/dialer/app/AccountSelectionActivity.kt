@@ -29,6 +29,7 @@ import com.prauga.pvot.designsystem.platform.setPvotContent
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.callintent.CallInitiationType
 import org.prauga.phone.dialer.callintent.CallIntentBuilder
+import org.prauga.phone.dialer.telecom.TelecomUtil
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.util.CallUtil
@@ -47,7 +48,7 @@ class AccountSelectionActivity : ComponentActivity() {
         }
         val initiationType = CallInitiationType.Type.entries[intent.getIntExtra(EXTRA_TYPE, 0)]
         val telecom = getSystemService(TelecomManager::class.java)
-        val accounts = handles.mapNotNull { handle -> telecom.getPhoneAccount(handle)?.let { CallingAccount.of(this, it) } }
+        val accounts = handles.mapNotNull { handle -> TelecomUtil.getPhoneAccount(this, handle)?.let { CallingAccount.of(this, it) } }
 
         setPvotContent {
             // Not filled: the window is see-through, and the sheet draws its own scrim over the app below.

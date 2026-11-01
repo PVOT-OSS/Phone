@@ -2,7 +2,6 @@
 <resources>
   <string name="call_incoming_swipe_to_answer">التمرير للأعلى للرد</string>
   <string name="call_incoming_swipe_to_reject">التمرير للأسفل للرفض</string>
-  <string name="call_incoming_will_disconnect">إنهاء مكالمة الفيديو في حالة الرد على هذه المكالمة</string>
   <string name="call_incoming_decline">رفض</string>
   <string name="call_incoming_answer">رد</string>
 </resources>

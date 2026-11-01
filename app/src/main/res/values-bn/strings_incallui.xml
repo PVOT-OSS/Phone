@@ -15,7 +15,6 @@
   <string name="notification_on_hold">সাময়িকভাবে স্থগিত রাখা হয়েছে</string>
   <string name="notification_incoming_call">ইনকামিং কল</string>
   <string name="notification_incoming_video_call">ইনকামিং ভিডিও কল</string>
-  <string name="notification_incoming_call_mutli_sim">%1$s এ কল আসছে</string>
   <string name="notification_incoming_work_call">আগত কাজের কল</string>
   <string name="notification_incoming_spam_call">আগত সন্দেহভাজন স্প্যাম কল</string>
   <string name="notification_requesting_video_call">আগত ভিডিও অনুরোধ</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">ভিডিও</string>
   <string name="notification_action_accept">স্বীকার করুন</string>
   <string name="notification_action_dismiss">প্রত্যাখ্যান</string>
-  <string name="notification_action_speaker_on">স্পিকার চালু করুন</string>
-  <string name="notification_action_speaker_off">স্পিকার বন্ধ করুন</string>
   <string name="notification_external_call">অন্য ডিভাইসে চালু থাকা কল</string>
   <string name="notification_external_video_call">অন্য ডিভাইসে চালু থাকা ভিডিও কল</string>
   <string name="notification_take_call">কলটি নিন</string>

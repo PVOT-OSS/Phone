@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Hou aan</string>
   <string name="notification_incoming_call">Inkomende oproep</string>
   <string name="notification_incoming_video_call">Inkomende video-oproep</string>
-  <string name="notification_incoming_call_mutli_sim">Inkomende oproep via %1$s</string>
   <string name="notification_incoming_work_call">Inkomende werkoproep</string>
   <string name="notification_incoming_spam_call">Inkomende verdagte strooipos-oproep</string>
   <string name="notification_requesting_video_call">Inkomende videoversoek</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Video</string>
   <string name="notification_action_accept">Aanvaar</string>
   <string name="notification_action_dismiss">Wys af</string>
-  <string name="notification_action_speaker_on">Skakel luidspreker aan</string>
-  <string name="notification_action_speaker_off">Skakel luidspreker af</string>
   <string name="notification_external_call">Voortgesette oproep op \'n ander toestel</string>
   <string name="notification_external_video_call">Voortgesette video-oproep on \'n ander toestel</string>
   <string name="notification_take_call">Neem oproep</string>

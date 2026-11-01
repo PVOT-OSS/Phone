@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Ditangguhkan</string>
   <string name="notification_incoming_call">Panggilan masuk</string>
   <string name="notification_incoming_video_call">Video call masuk</string>
-  <string name="notification_incoming_call_mutli_sim">Panggilan masuk via %1$s</string>
   <string name="notification_incoming_work_call">Panggilan telepon kerja yang masuk</string>
   <string name="notification_incoming_spam_call">Panggilan masuk yang diduga spam</string>
   <string name="notification_requesting_video_call">Permintaan video masuk</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Video</string>
   <string name="notification_action_accept">Terima</string>
   <string name="notification_action_dismiss">Tolak</string>
-  <string name="notification_action_speaker_on">Turn on  speaker</string>
-  <string name="notification_action_speaker_off">Nonaktifkan speaker</string>
   <string name="notification_external_call">Panggilan yang berlangsung di perangkat lain</string>
   <string name="notification_external_video_call">Video call yang berlangsung di perangkat lain</string>
   <string name="notification_take_call">Panggil</string>

@@ -219,6 +219,7 @@ private fun HistoryList(
     var expandedRowId by rememberSaveable { mutableStateOf<Long?>(null) }
     var selected by rememberSaveable { mutableStateOf(emptySet<Long>()) }
     var confirmBlock by remember { mutableStateOf<CallLogRowUi?>(null) }
+    var confirmDelete by remember { mutableStateOf<CallLogRowUi?>(null) }
     var confirmUnblock by remember { mutableStateOf<CallLogRowUi?>(null) }
     var confirmDeleteSelected by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
@@ -313,6 +314,8 @@ private fun HistoryList(
                             openRowContent = openRowContent,
                             onBlock = { confirmBlock = row },
                             onUnblock = { confirmUnblock = row },
+                            // The Delete button removes every call in the row, so it asks first.
+                            onAskDelete = { confirmDelete = row },
                         )
                     }
                 }
@@ -320,6 +323,28 @@ private fun HistoryList(
         }
     }
 
+    confirmDelete?.let { row ->
+        PvotDialog(
+            visible = true,
+            onDismissRequest = { confirmDelete = null },
+            title = stringResource(R.string.call_log_delete_entry_title),
+            destructive = true,
+        ) {
+            PvotDialogAction(
+                label = stringResource(R.string.delete),
+                onClick = {
+                    confirmDelete = null
+                    if (expandedRowId == row.group.rowId) {
+                        expandedRowId = null
+                        actions.closed(row)
+                    }
+                    actions.deleteSelected(listOf(row.group))
+                },
+                style = PvotDialogActionStyle.Destructive,
+            )
+            PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = { confirmDelete = null })
+        }
+    }
     confirmBlock?.let { row ->
         PvotDialog(
             visible = true,
@@ -427,6 +452,7 @@ private fun HistoryRow(
     openRowContent: (@Composable (CallLogRowUi) -> Unit)?,
     onBlock: () -> Unit,
     onUnblock: () -> Unit,
+    onAskDelete: () -> Unit,
 ) {
     val canSwipeCall = row.primaryAction == PrimaryAction.CALL || row.primaryAction == PrimaryAction.VIDEO_CALL ||
         row.primaryAction == PrimaryAction.CALL_VOICEMAIL
@@ -505,7 +531,7 @@ private fun HistoryRow(
                                 when (action) {
                                     RowAction.BLOCK -> onBlock()
                                     RowAction.UNBLOCK -> onUnblock()
-                                    RowAction.DELETE -> onDelete()
+                                    RowAction.DELETE -> onAskDelete()
                                     else -> actions.rowAction(row, action)
                                 }
                             },

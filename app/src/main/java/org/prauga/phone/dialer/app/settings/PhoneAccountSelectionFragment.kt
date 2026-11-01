@@ -21,6 +21,7 @@ import com.prauga.pvot.designsystem.components.list.PvotPreferenceRow
 import org.prauga.phone.dialer.app.settings.ui.SettingsComposeFragment
 import org.prauga.phone.dialer.app.settings.ui.SettingsGroup
 import org.prauga.phone.dialer.app.settings.ui.SettingsList
+import org.prauga.phone.dialer.telecom.TelecomUtil
 import org.prauga.phone.dialer.ui.TestTags
 
 /**
@@ -49,7 +50,7 @@ class PhoneAccountSelectionFragment : SettingsComposeFragment() {
     private fun loadSimAccounts(): List<SimAccount> {
         val telecomManager = requireContext().getSystemService(TelecomManager::class.java)
         return telecomManager.callCapablePhoneAccounts.mapNotNull { handle ->
-            telecomManager.getPhoneAccount(handle)
+            TelecomUtil.getPhoneAccount(requireContext(), handle)
                 ?.takeIf { it.hasCapabilities(PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION) }
                 ?.let { SimAccount(handle, it.label.toString(), it.shortDescription?.toString()) }
         }

@@ -55,6 +55,7 @@ import org.prauga.phone.dialer.app.settings.ui.SettingsTheme
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.compat.telephony.TelephonyManagerCompat
 import org.prauga.phone.dialer.screening.ScreeningSettingsFragment
+import org.prauga.phone.dialer.telecom.TelecomUtil
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.util.PermissionsUtil
 import org.prauga.phone.dialer.voicemail.settings.VoicemailSettingsFragment
@@ -339,7 +340,7 @@ class DialerSettingsActivity :
             val telecomManager = context.getSystemService(TelecomManager::class.java)
             var result: PhoneAccountHandle? = null
             for (handle in telecomManager.callCapablePhoneAccounts) {
-                val account = telecomManager.getPhoneAccount(handle) ?: continue
+                val account = TelecomUtil.getPhoneAccount(context, handle) ?: continue
                 if (account.hasCapabilities(PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION)) {
                     LogUtil.i("DialerSettingsActivity.soleSimAccount", "$handle is a SIM account")
                     if (result != null) return null

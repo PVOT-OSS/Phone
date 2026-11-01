@@ -15,7 +15,6 @@
   <string name="notification_on_hold">હોલ્ડ પર</string>
   <string name="notification_incoming_call">ઇનકમિંગ કૉલ</string>
   <string name="notification_incoming_video_call">ઇન્કમિંગ વિડિઓ કૉલ</string>
-  <string name="notification_incoming_call_mutli_sim">%1$s મારફતે ઇનકમિંગ કૉલ</string>
   <string name="notification_incoming_work_call">ઇનકમિંગ કાર્ય કૉલ</string>
   <string name="notification_incoming_spam_call">ઇનકમિંગ શંકાસ્પદ સ્પામ કૉલ</string>
   <string name="notification_requesting_video_call">આવનાર વિડિઓ વિનંતી</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">વિડિઓ</string>
   <string name="notification_action_accept">સ્વીકારો</string>
   <string name="notification_action_dismiss">નકારો</string>
-  <string name="notification_action_speaker_on">સ્પીકર ચાલુ કરો</string>
-  <string name="notification_action_speaker_off">સ્પીકર બંધ કરો</string>
   <string name="notification_external_call">અન્ય ઉપકરણ પર ચાલી રહેલ કૉલ</string>
   <string name="notification_external_video_call">અન્ય ઉપકરણ પર ચાલી રહેલ વિડિઓ કૉલ</string>
   <string name="notification_take_call">કૉલ લો</string>

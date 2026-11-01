@@ -27,8 +27,11 @@ import static org.prauga.phone.incallui.NotificationBroadcastReceiver.ACTION_ANS
 import static org.prauga.phone.incallui.NotificationBroadcastReceiver.ACTION_DECLINE_INCOMING_CALL;
 import static org.prauga.phone.incallui.NotificationBroadcastReceiver.ACTION_DECLINE_VIDEO_UPGRADE_REQUEST;
 import static org.prauga.phone.incallui.NotificationBroadcastReceiver.ACTION_HANG_UP_ONGOING_CALL;
+import static org.prauga.phone.incallui.NotificationBroadcastReceiver.ACTION_MUTE;
 import static org.prauga.phone.incallui.NotificationBroadcastReceiver.ACTION_TURN_OFF_SPEAKER;
 import static org.prauga.phone.incallui.NotificationBroadcastReceiver.ACTION_TURN_ON_SPEAKER;
+import static org.prauga.phone.incallui.NotificationBroadcastReceiver.ACTION_UNHOLD;
+import static org.prauga.phone.incallui.NotificationBroadcastReceiver.ACTION_UNMUTE;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -98,6 +101,7 @@ import java.util.Objects;
 /** This class adds Notifications to the status bar for the in-call experience. */
 public class StatusBarNotifier
     implements InCallPresenter.InCallStateListener,
+        InCallPresenter.IncomingCallListener,
         ContactInfoCacheCallback {
 
   private static final int NOTIFICATION_ID = 1;
@@ -177,6 +181,16 @@ public class StatusBarNotifier
   @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
   public void onStateChange(InCallState oldState, InCallState newState, CallList callList) {
     LogUtil.d("StatusBarNotifier.onStateChange", "%s->%s", oldState, newState);
+    updateNotification();
+  }
+
+  /**
+   * A new call is ringing. The presenter doesn't always report a state change for it, for example
+   * when it rings while the app is still bound from a call that just ended.
+   */
+  @Override
+  @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
+  public void onIncomingCall(InCallState oldState, InCallState newState, DialerCall call) {
     updateNotification();
   }
 
@@ -339,6 +353,8 @@ public class StatusBarNotifier
         configureFullScreenIntent(builder, createLaunchPendingIntent(true /* isFullScreen */));
         // Set the notification category and bump the priority for incoming calls
         builder.setCategory(Notification.CATEGORY_CALL);
+        // noinspection deprecation
+        builder.setPriority(Notification.PRIORITY_MAX);
         if (currentNotification != NOTIFICATION_INCOMING_CALL) {
           LogUtil.i(
               "StatusBarNotifier.buildAndSendNotification",
@@ -375,7 +391,9 @@ public class StatusBarNotifier
       addDismissUpgradeRequestAction(builder);
       addAcceptUpgradeRequestAction(builder);
     } else {
-      createIncomingCallNotification(call, callState, callAudioState, builder);
+      Person person =
+          CallNotificationStyle.person(contentTitle, getPersonUri(contactInfo, call));
+      createIncomingCallNotification(call, callState, callAudioState, builder, person);
     }
 
     addPersonReference(builder, contactInfo, call);
@@ -413,15 +431,51 @@ public class StatusBarNotifier
   }
 
   private void createIncomingCallNotification(
-      DialerCall call, int state, CallAudioState callAudioState, Notification.Builder builder) {
+      DialerCall call,
+      int state,
+      CallAudioState callAudioState,
+      Notification.Builder builder,
+      @Nullable Person person) {
     setNotificationWhen(call, state, builder);
 
     // Add hang up option for any active calls (active | onhold), outgoing calls (dialing).
-    if (state == DialerCallState.ACTIVE
-        || state == DialerCallState.ONHOLD
-        || DialerCallState.isDialing(state)) {
+    boolean isOngoing =
+        state == DialerCallState.ACTIVE
+            || state == DialerCallState.ONHOLD
+            || DialerCallState.isDialing(state);
+    if (isOngoing && person != null) {
+      builder.setStyle(
+          withVerification(
+              call,
+              CallNotificationStyle.ongoing(
+                  person,
+                  createNotificationPendingIntent(context, ACTION_HANG_UP_ONGOING_CALL),
+                  call.isVideoCall())));
+    } else if (isOngoing) {
       addHangupAction(builder);
+    }
+    if (isOngoing) {
       addSpeakerAction(builder, callAudioState);
+      addMuteAction(builder, callAudioState);
+      if (state == DialerCallState.ONHOLD) {
+        addUnholdAction(builder);
+      }
+    } else if (person != null
+        && (state == DialerCallState.INCOMING || state == DialerCallState.CALL_WAITING)) {
+      PendingIntent answer =
+          createNotificationPendingIntent(
+              context,
+              call.isVideoCall()
+                  ? ACTION_ANSWER_VIDEO_INCOMING_CALL
+                  : ACTION_ANSWER_VOICE_INCOMING_CALL);
+      builder.setStyle(
+          withVerification(
+              call,
+              CallNotificationStyle.incoming(
+                  person,
+                  createNotificationPendingIntent(context, ACTION_DECLINE_INCOMING_CALL),
+                  answer,
+                  call.isVideoCall())));
     } else if (state == DialerCallState.INCOMING || state == DialerCallState.CALL_WAITING) {
       addDismissAction(builder);
       if (call.isVideoCall()) {
@@ -430,6 +484,13 @@ public class StatusBarNotifier
         addAnswerAction(builder);
       }
     }
+  }
+
+  private Notification.CallStyle withVerification(DialerCall call, Notification.CallStyle style) {
+    if (call.isCallerVerified()) {
+      return CallNotificationStyle.markVerified(context, style);
+    }
+    return style;
   }
 
   /**
@@ -553,15 +614,20 @@ public class StatusBarNotifier
     // Query {@link Contacts#CONTENT_LOOKUP_URI} directly with work lookup key is not allowed.
     // So, do not pass {@link Contacts#CONTENT_LOOKUP_URI} to NotificationManager to avoid
     // NotificationManager using it.
-    String uri = null;
-    if (contactInfo.lookupUri != null && contactInfo.userType != ContactsUtils.USER_TYPE_WORK) {
-      uri = contactInfo.lookupUri.toString();
-    } else if (!TextUtils.isEmpty(call.getNumber())) {
-      uri = Uri.fromParts(PhoneAccount.SCHEME_TEL, call.getNumber(), null).toString();
-    }
+    String uri = getPersonUri(contactInfo, call);
     if (uri != null) {
       builder.addPerson(new Person.Builder().setUri(uri).build());
     }
+  }
+
+  @Nullable
+  private static String getPersonUri(ContactCacheEntry contactInfo, DialerCall call) {
+    if (contactInfo.lookupUri != null && contactInfo.userType != ContactsUtils.USER_TYPE_WORK) {
+      return contactInfo.lookupUri.toString();
+    } else if (!TextUtils.isEmpty(call.getNumber())) {
+      return Uri.fromParts(PhoneAccount.SCHEME_TEL, call.getNumber(), null).toString();
+    }
+    return null;
   }
 
   /** Gets a large icon from the contact info object to display in the notification. */
@@ -634,6 +700,8 @@ public class StatusBarNotifier
       return R.drawable.quantum_ic_videocam_vd_white_24;
     } else if (call.hasProperty(Details.PROPERTY_HAS_CDMA_VOICE_PRIVACY)) {
       return R.drawable.quantum_ic_phone_locked_vd_theme_24;
+    } else if (call.hasProperty(Details.PROPERTY_WIFI)) {
+      return R.drawable.ic_wifi_calling;
     }
     return R.drawable.on_going_call;
   }
@@ -659,40 +727,73 @@ public class StatusBarNotifier
     }
 
 
-    String message = getOngoingCallNotificationMessage(isWorkCall);
-    String wifiBrand = getWifiBrand(isWorkCall);
-
-    // TODO(a bug): Potentially apply this template logic everywhere.
-    if (call.hasProperty(Details.PROPERTY_WIFI)) {
-      message = context.getString(R.string.notification_ongoing_call_wifi_template, wifiBrand);
-    }
-
+    CallStatus.Phase phase;
     if (isIncomingOrWaiting) {
-      if (call.isSpam()) {
-        message = context.getString(R.string.notification_incoming_spam_call);
-      } else if (call.hasProperty(Details.PROPERTY_WIFI)) {
-        message = context.getString(R.string.notification_incoming_call_wifi_template, wifiBrand);
-      } else if (call.getAccountHandle() != null && hasMultiplePhoneAccounts(call)) {
-        return getMultiSimIncomingText(call);
-      } else if (call.isVideoCall()) {
-        message = context.getString(R.string.notification_incoming_video_call);
-      } else {
-        message = getIncomingCallNotificationMessage(isWorkCall);
-      }
+      phase = CallStatus.Phase.RINGING;
     } else if (call.getState() == DialerCallState.ONHOLD) {
-      message = context.getString(R.string.notification_on_hold);
+      phase = CallStatus.Phase.ON_HOLD;
     } else if (DialerCallState.isDialing(call.getState())) {
-      message = context.getString(R.string.notification_dialing);
-    } else if (call.isVideoCall()) {
-      message = context.getString(call.getVideoTech().isPaused()
-              ? R.string.notification_ongoing_paused_video_call
-              : R.string.notification_ongoing_video_call);
-    } else if (call.getVideoTech().getSessionModificationState()
-        == SessionModificationState.RECEIVED_UPGRADE_TO_VIDEO_REQUEST) {
-      message = context.getString(R.string.notification_requesting_video_call);
+      phase = CallStatus.Phase.DIALING;
+    } else {
+      phase = CallStatus.Phase.IN_CALL;
     }
+    CallStatus status =
+        CallStatus.of(
+            phase,
+            call.isSpam(),
+            call.isActiveRttCall(),
+            call.isVideoCall(),
+            call.getVideoTech().isPaused(),
+            call.getVideoTech().getSessionModificationState()
+                == SessionModificationState.RECEIVED_UPGRADE_TO_VIDEO_REQUEST,
+            call.hasProperty(Details.PROPERTY_WIFI),
+            isWorkCall);
+    String message = getStatusText(status, isWorkCall);
 
+    // With more than one way to call, say which one this call uses.
+    if (call.getAccountHandle() != null && hasMultiplePhoneAccounts(call)) {
+      PhoneAccount phoneAccount =
+          context.getSystemService(TelecomManager.class).getPhoneAccount(call.getAccountHandle());
+      if (phoneAccount != null && !TextUtils.isEmpty(phoneAccount.getLabel())) {
+        return context.getString(
+            R.string.notification_status_via_account, message, phoneAccount.getLabel());
+      }
+    }
     return message;
+  }
+
+  private String getStatusText(CallStatus status, boolean isWorkCall) {
+    switch (status) {
+      case SUSPECTED_SPAM:
+        return context.getString(R.string.notification_incoming_spam_call);
+      case INCOMING_RTT:
+        return context.getString(R.string.notification_incoming_rtt_call);
+      case INCOMING_VIDEO:
+        return context.getString(R.string.notification_incoming_video_call);
+      case INCOMING_WIFI:
+        return context.getString(
+            R.string.notification_incoming_call_wifi_template, getWifiBrand(isWorkCall));
+      case INCOMING_WORK:
+      case INCOMING:
+        return getIncomingCallNotificationMessage(isWorkCall);
+      case ON_HOLD:
+        return context.getString(R.string.notification_on_hold);
+      case CALLING:
+        return context.getString(R.string.notification_dialing);
+      case VIDEO_REQUEST:
+        return context.getString(R.string.notification_requesting_video_call);
+      case ONGOING_VIDEO_PAUSED:
+        return context.getString(R.string.notification_ongoing_paused_video_call);
+      case ONGOING_VIDEO:
+        return context.getString(R.string.notification_ongoing_video_call);
+      case ONGOING_WIFI:
+        return context.getString(
+            R.string.notification_ongoing_call_wifi_template, getWifiBrand(isWorkCall));
+      case ONGOING_WORK:
+      case ONGOING:
+      default:
+        return getOngoingCallNotificationMessage(isWorkCall);
+    }
   }
 
   private String getOngoingCallNotificationMessage(boolean isWorkCall) {
@@ -723,27 +824,6 @@ public class StatusBarNotifier
     } else {
       return context.getString(R.string.notification_call_wifi_brand);
     }
-  }
-
-  private CharSequence getMultiSimIncomingText(DialerCall call) {
-    PhoneAccount phoneAccount =
-        context.getSystemService(TelecomManager.class).getPhoneAccount(call.getAccountHandle());
-    if (phoneAccount == null) {
-      return context.getString(R.string.notification_incoming_call);
-    }
-    SpannableString string =
-        new SpannableString(
-            context.getString(
-                R.string.notification_incoming_call_mutli_sim, phoneAccount.getLabel()));
-    int accountStart = string.toString().lastIndexOf(phoneAccount.getLabel().toString());
-    int accountEnd = accountStart + phoneAccount.getLabel().length();
-
-    string.setSpan(
-        new ForegroundColorSpan(phoneAccount.getHighlightColor()),
-        accountStart,
-        accountEnd,
-        Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-    return string;
   }
 
   /** Gets the most relevant call to display in the notification. */
@@ -831,6 +911,30 @@ public class StatusBarNotifier
     }
   }
 
+  private void addMuteAction(Notification.Builder builder, CallAudioState callAudioState) {
+    boolean muted = callAudioState.isMuted();
+    builder.addAction(
+        new Notification.Action.Builder(
+                Icon.createWithResource(
+                    context,
+                    muted
+                        ? R.drawable.quantum_ic_mic_vd_theme_24
+                        : R.drawable.quantum_ic_mic_off_vd_theme_24),
+                context.getText(
+                    muted ? R.string.notification_action_unmute : R.string.notification_action_mute),
+                createNotificationPendingIntent(context, muted ? ACTION_UNMUTE : ACTION_MUTE))
+            .build());
+  }
+
+  private void addUnholdAction(Notification.Builder builder) {
+    builder.addAction(
+        new Notification.Action.Builder(
+                Icon.createWithResource(context, R.drawable.quantum_ic_play_arrow_vd_theme_24),
+                context.getText(R.string.notification_action_unhold),
+                createNotificationPendingIntent(context, ACTION_UNHOLD))
+            .build());
+  }
+
   private void addSpeakerOnAction(Notification.Builder builder) {
     LogUtil.d(
         "StatusBarNotifier.addSpeakerOnAction",
@@ -840,7 +944,7 @@ public class StatusBarNotifier
     builder.addAction(
         new Notification.Action.Builder(
                 Icon.createWithResource(context, R.drawable.quantum_ic_volume_up_vd_theme_24),
-                context.getText(R.string.notification_action_speaker_on),
+                context.getText(R.string.notification_action_speaker),
                 speakerOnPendingIntent)
             .build());
   }
@@ -854,7 +958,7 @@ public class StatusBarNotifier
     builder.addAction(
         new Notification.Action.Builder(
                 Icon.createWithResource(context, R.drawable.quantum_ic_phone_in_talk_vd_theme_24),
-                context.getText(R.string.notification_action_speaker_off),
+                context.getText(R.string.notification_action_speaker),
                 speakerOffPendingIntent)
             .build());
   }

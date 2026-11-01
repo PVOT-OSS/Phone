@@ -2,7 +2,6 @@
 <resources>
   <string name="call_incoming_swipe_to_answer">Prijeđite prstom prema gore za odgovor</string>
   <string name="call_incoming_swipe_to_reject">Prijeđite prstom prema dolje za odbijanje</string>
-  <string name="call_incoming_will_disconnect">Odgovorom na ovaj poziv prekinut ćete videopoziv</string>
   <string name="call_incoming_decline">Odbij</string>
   <string name="call_incoming_answer">Odgovori</string>
 </resources>

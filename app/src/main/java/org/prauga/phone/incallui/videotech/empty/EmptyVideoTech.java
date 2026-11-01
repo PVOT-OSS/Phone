@@ -87,6 +87,9 @@ public class EmptyVideoTech implements VideoTech {
   public void declineVideoRequest() {}
 
   @Override
+  public void downgradeToAudio() {}
+
+  @Override
   public boolean isTransmitting() {
     return false;
   }

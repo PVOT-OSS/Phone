@@ -30,6 +30,7 @@ object TestTags {
     const val SPEED_DIAL_GRID = "speed_dial_grid"
     const val CALL_HISTORY_LIST = "call_history_list"
     const val CALL_HISTORY_TABS = "call_history_tabs"
+    const val RECENTS_FILTER = "recents_filter"
     const val CALL_HISTORY_SELECTION = "call_history_selection"
     const val VOICEMAIL_PLAYBACK = "voicemail_playback"
     const val VOICEMAIL_PLAY = "voicemail_play"

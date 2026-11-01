@@ -15,7 +15,6 @@
   <string name="notification_on_hold">У чаканні</string>
   <string name="notification_incoming_call">Уваходны выклік</string>
   <string name="notification_incoming_video_call">Уваходны відэавыклік</string>
-  <string name="notification_incoming_call_mutli_sim">Уваходны выклік праз %1$s</string>
   <string name="notification_incoming_work_call">Уваходны выклік па працы</string>
   <string name="notification_incoming_spam_call">Уваходны выклiк ад абанента, якога падазраваюць у спаме</string>
   <string name="notification_requesting_video_call">Запыт уваходнага відэавыкліку</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Відэа</string>
   <string name="notification_action_accept">Прыняць</string>
   <string name="notification_action_dismiss">Адхіліць</string>
-  <string name="notification_action_speaker_on">Уключыць дынамік</string>
-  <string name="notification_action_speaker_off">Выключыць дынамік</string>
   <string name="notification_external_call">Бягучы выклік на іншай прыладзе</string>
   <string name="notification_external_video_call">Бягучы відэавыклік на іншай прыладзе</string>
   <string name="notification_take_call">Прыняць выклік</string>

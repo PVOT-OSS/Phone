@@ -2,7 +2,6 @@
 <resources>
   <string name="call_incoming_swipe_to_answer">Desliza hacia arriba para responder</string>
   <string name="call_incoming_swipe_to_reject">Desliza hacia abajo para rechazar</string>
-  <string name="call_incoming_will_disconnect">Si respondes esta llamada, terminará la videollamada</string>
   <string name="call_incoming_decline">Rechazar</string>
   <string name="call_incoming_answer">Responder</string>
 </resources>

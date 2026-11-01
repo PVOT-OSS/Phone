@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Хүлээлгэнд</string>
   <string name="notification_incoming_call">Ирж буй дуудлага</string>
   <string name="notification_incoming_video_call">Ирж буй видео дуудлага</string>
-  <string name="notification_incoming_call_mutli_sim">%1$s-р ирж буй дуудлага</string>
   <string name="notification_incoming_work_call">Ирж буй албаны дуудлага</string>
   <string name="notification_incoming_spam_call">Орж ирсэн сэжигтэй спам дуудлага</string>
   <string name="notification_requesting_video_call">Ирж буй видео хүсэлт</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Видео</string>
   <string name="notification_action_accept">Зөвшөөрөх</string>
   <string name="notification_action_dismiss">Татгалзах</string>
-  <string name="notification_action_speaker_on">Чанга яригчийг асаах</string>
-  <string name="notification_action_speaker_off">Чанга яригчийг унтраах</string>
   <string name="notification_external_call">Өөр төхөөрөмж дээр хийгдэж буй дуудлага</string>
   <string name="notification_external_video_call">Өөр төхөөрөмж дээрх үргэлжилж байгаа видео дуудлага</string>
   <string name="notification_take_call">Дуудлага авах</string>

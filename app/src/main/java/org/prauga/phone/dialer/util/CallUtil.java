@@ -26,6 +26,7 @@ import android.telecom.TelecomManager;
 
 import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper;
+import org.prauga.phone.dialer.telecom.TelecomUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,13 +79,7 @@ public class CallUtil {
 
     List<PhoneAccountHandle> accountHandles = telecommMgr.getCallCapablePhoneAccounts();
     for (PhoneAccountHandle accountHandle : accountHandles) {
-      PhoneAccount account;
-      try {
-        account = telecommMgr.getPhoneAccount(accountHandle);
-      } catch (SecurityException e) {
-        // Reading an account needs READ_PHONE_NUMBERS until the app is the default phone app.
-        return VIDEO_CALLING_DISABLED;
-      }
+      PhoneAccount account = TelecomUtil.getPhoneAccount(context, accountHandle);
       if (account != null) {
         if (account.hasCapabilities(PhoneAccount.CAPABILITY_VIDEO_CALLING)) {
           int videoCapabilities = VIDEO_CALLING_ENABLED;
@@ -110,7 +105,7 @@ public class CallUtil {
     final ArrayList<PhoneAccount> accounts = new ArrayList<>();
 
     for (PhoneAccountHandle handle : tm.getCallCapablePhoneAccounts()) {
-      final PhoneAccount account = tm.getPhoneAccount(handle);
+      final PhoneAccount account = TelecomUtil.getPhoneAccount(context, handle);
       if (account != null && account.supportsUriScheme(scheme)) {
         accounts.add(account);
       }
@@ -165,7 +160,7 @@ public class CallUtil {
 
     List<PhoneAccountHandle> accountHandles = telecommMgr.getCallCapablePhoneAccounts();
     for (PhoneAccountHandle accountHandle : accountHandles) {
-      PhoneAccount account = telecommMgr.getPhoneAccount(accountHandle);
+      PhoneAccount account = TelecomUtil.getPhoneAccount(context, accountHandle);
       if (account != null && account.hasCapabilities(PhoneAccount.CAPABILITY_CALL_SUBJECT)) {
         return true;
       }

@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Naka-hold</string>
   <string name="notification_incoming_call">Papasok na tawag</string>
   <string name="notification_incoming_video_call">Papasok na video call</string>
-  <string name="notification_incoming_call_mutli_sim">Papasok na tawag sa pamamagitan ng %1$s</string>
   <string name="notification_incoming_work_call">Papasok na tawag sa trabaho</string>
   <string name="notification_incoming_spam_call">Papasok na pinaghihinalaang spam na tawag</string>
   <string name="notification_requesting_video_call">Papasok na kahilingan ng video</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Video</string>
   <string name="notification_action_accept">Tanggapin</string>
   <string name="notification_action_dismiss">Tanggihan</string>
-  <string name="notification_action_speaker_on">I-on ang speaker</string>
-  <string name="notification_action_speaker_off">I-off ang speaker</string>
   <string name="notification_external_call">Kasalukuyang tawag sa isa pang device</string>
   <string name="notification_external_video_call">May kasalukuyang isinasagawang video call sa isa pang device</string>
   <string name="notification_take_call">Sagutin ang Tawag</string>

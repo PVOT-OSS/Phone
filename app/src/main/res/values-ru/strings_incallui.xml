@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Вызов на удержании</string>
   <string name="notification_incoming_call">Входящий вызов</string>
   <string name="notification_incoming_video_call">Входящий видеовызов</string>
-  <string name="notification_incoming_call_mutli_sim">Входящий вызов, SIM-карта %1$s</string>
   <string name="notification_incoming_work_call">Входящий звонок (работа)</string>
   <string name="notification_incoming_spam_call">Входящий вызов: подозрение на спам</string>
   <string name="notification_requesting_video_call">Входящий видеовызов</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Видео</string>
   <string name="notification_action_accept">Принять</string>
   <string name="notification_action_dismiss">Отклонить</string>
-  <string name="notification_action_speaker_on">Включить динамик</string>
-  <string name="notification_action_speaker_off">Выключить динамик</string>
   <string name="notification_external_call">Вы участвуете в разговоре на другом устройстве</string>
   <string name="notification_external_video_call">Вы участвуете в видеовстрече на другом устройстве</string>
   <string name="notification_take_call">Продолжить на этом устройстве</string>

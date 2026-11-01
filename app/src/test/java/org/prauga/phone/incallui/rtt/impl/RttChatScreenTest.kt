@@ -44,6 +44,7 @@ class RttChatScreenTest {
         override fun onDialpad(show: Boolean) { events += "dialpad $show" }
         override fun onAddCall() { events += "add" }
         override fun onSwap() { events += "swap" }
+        override fun onSwitchToVoice() { events += "voice" }
         override fun onAudioRoute(route: Int) { events += "route $route" }
         override fun onScrollBack() = Unit
     }

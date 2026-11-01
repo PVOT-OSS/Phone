@@ -2,7 +2,6 @@
 <resources>
   <string name="call_incoming_swipe_to_answer">Swayiphela phezulu ukuze uphendule</string>
   <string name="call_incoming_swipe_to_reject">Swayiphela phansi ukuze unqabele</string>
-  <string name="call_incoming_will_disconnect">Ukuphendula le kholi kuzophelisa ikholi yakho yevidiyo</string>
   <string name="call_incoming_decline">Yenqaba</string>
   <string name="call_incoming_answer">Phendula</string>
 </resources>

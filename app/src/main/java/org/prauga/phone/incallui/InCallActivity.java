@@ -1139,6 +1139,12 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     fragment.show(getSupportFragmentManager(), Tags.INTERNATIONAL_CALL_ON_WIFI);
   }
 
+  /** Asks before transferring the active call to the held one. */
+  public void showCallTransferDialog() {
+    new CallTransferDialogFragment()
+        .show(getSupportFragmentManager(), CallTransferDialogFragment.TAG);
+  }
+
   public void showDialogForRttRequest(DialerCall call, int rttRequestId) {
     LogUtil.enterBlock("InCallActivity.showDialogForRttRequest");
     rttRequestDialogFragment = RttRequestDialogFragment.newInstance(call.getId(), rttRequestId);

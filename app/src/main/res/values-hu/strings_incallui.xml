@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Tartásban</string>
   <string name="notification_incoming_call">Bejövő hívás</string>
   <string name="notification_incoming_video_call">Bejövő videohívás</string>
-  <string name="notification_incoming_call_mutli_sim">Bejövő hívás a következőn: %1$s</string>
   <string name="notification_incoming_work_call">Bejövő munkahelyi hívás</string>
   <string name="notification_incoming_spam_call">Bejövő gyanús spamhívás</string>
   <string name="notification_requesting_video_call">Bejövő videokérés</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Videó</string>
   <string name="notification_action_accept">Elfogadás</string>
   <string name="notification_action_dismiss">Elutasítás</string>
-  <string name="notification_action_speaker_on">Hangszóró bekapcsolása</string>
-  <string name="notification_action_speaker_off">Hangszóró kikapcsolása</string>
   <string name="notification_external_call">Folyamatban lévő hívás egy másik eszközön</string>
   <string name="notification_external_video_call">Folyamatban lévő videohívás egy másik eszközön</string>
   <string name="notification_take_call">Hívás fogadása</string>

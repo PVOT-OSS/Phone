@@ -80,8 +80,16 @@ public abstract class TelecomUtil {
     }
   }
 
+  /**
+   * Telecom lets the default phone app silence the ringer, cancel its missed call count, run MMI
+   * codes and read the ADN uri without MODIFY_PHONE_STATE, which only system apps get.
+   */
+  private static boolean canUseDialerTelecomApis(Context context) {
+    return isDefaultDialer(context) || PermissionsUtil.hasModifyPhoneStatePermissions(context);
+  }
+
   public static void silenceRinger(Context context) {
-    if (PermissionsUtil.hasModifyPhoneStatePermissions(context)) {
+    if (canUseDialerTelecomApis(context)) {
       try {
         getTelecomManager(context).silenceRinger();
       } catch (SecurityException e) {
@@ -92,7 +100,7 @@ public abstract class TelecomUtil {
   }
 
   public static void cancelMissedCallsNotification(Context context) {
-    if (PermissionsUtil.hasModifyPhoneStatePermissions(context)) {
+    if (canUseDialerTelecomApis(context)) {
       try {
         getTelecomManager(context).cancelMissedCallsNotification();
       } catch (SecurityException e) {
@@ -102,7 +110,7 @@ public abstract class TelecomUtil {
   }
 
   public static Uri getAdnUriForPhoneAccount(Context context, PhoneAccountHandle handle) {
-    if (PermissionsUtil.hasModifyPhoneStatePermissions(context)) {
+    if (canUseDialerTelecomApis(context)) {
       try {
         return getTelecomManager(context).getAdnUriForPhoneAccount(handle);
       } catch (SecurityException e) {
@@ -114,7 +122,7 @@ public abstract class TelecomUtil {
 
   public static boolean handleMmi(
       Context context, String dialString, @Nullable PhoneAccountHandle handle) {
-    if (PermissionsUtil.hasModifyPhoneStatePermissions(context)) {
+    if (canUseDialerTelecomApis(context)) {
       try {
         if (handle == null) {
           return getTelecomManager(context).handleMmi(dialString);
@@ -138,15 +146,16 @@ public abstract class TelecomUtil {
   }
 
   /**
-   * The account for {@code handle}, or null when it is unknown or the app may not read it yet: until
-   * the app is the default phone app, Telecom wants READ_PHONE_NUMBERS.
+   * The phone account for {@code handle}, or null when there is none or the app may not see it:
+   * outside the default phone app role, Telecom needs READ_PHONE_NUMBERS, which the user may not
+   * have granted yet.
    */
   @Nullable
   public static PhoneAccount getPhoneAccount(Context context, PhoneAccountHandle handle) {
     try {
       return getTelecomManager(context).getPhoneAccount(handle);
     } catch (SecurityException e) {
-      LogUtil.w("TelecomUtil.getPhoneAccount", "may not read phone accounts");
+      LogUtil.w(TAG, "TelecomManager.getPhoneAccount called without permission.");
       return null;
     }
   }
@@ -166,7 +175,7 @@ public abstract class TelecomUtil {
         TelecomUtil.getCallCapablePhoneAccounts(context);
     for (PhoneAccountHandle accountHandle : accountHandles) {
       PhoneAccount account = TelecomUtil.getPhoneAccount(context, accountHandle);
-      if (account.hasCapabilities(PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION)) {
+      if (account != null && account.hasCapabilities(PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION)) {
         subscriptionAccountHandles.add(accountHandle);
       }
     }
@@ -314,7 +323,7 @@ public abstract class TelecomUtil {
     }
     TelecomManager telecomManager = context.getSystemService(TelecomManager.class);
     for (PhoneAccountHandle phoneAccountHandle : telecomManager.getCallCapablePhoneAccounts()) {
-      PhoneAccount phoneAccount = telecomManager.getPhoneAccount(phoneAccountHandle);
+      PhoneAccount phoneAccount = getPhoneAccount(context, phoneAccountHandle);
       if (phoneAccount == null) {
         continue;
       }

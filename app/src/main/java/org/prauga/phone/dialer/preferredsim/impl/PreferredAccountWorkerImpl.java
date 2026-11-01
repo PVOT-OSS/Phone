@@ -56,6 +56,7 @@ import org.prauga.phone.dialer.preferredsim.PreferredSimFallbackContract.Preferr
 import org.prauga.phone.dialer.preferredsim.suggestion.SimSuggestionComponent;
 import org.prauga.phone.dialer.preferredsim.suggestion.SuggestionProvider;
 import org.prauga.phone.dialer.preferredsim.suggestion.SuggestionProvider.Suggestion;
+import org.prauga.phone.dialer.telecom.TelecomUtil;
 import org.prauga.phone.dialer.util.PermissionsUtil;
 
 import com.google.common.collect.ImmutableList;
@@ -393,9 +394,7 @@ public class PreferredAccountWorkerImpl implements PreferredAccountWorker {
       return Optional.empty();
     }
     PhoneAccount phoneAccount =
-        appContext
-            .getSystemService(TelecomManager.class)
-            .getPhoneAccount(activeCall.phoneAccountHandle().get());
+        TelecomUtil.getPhoneAccount(appContext, activeCall.phoneAccountHandle().get());
     if (phoneAccount == null) {
       LogUtil.e("CallingAccountSelector.getActiveCallLabel", "phone account not found");
       return Optional.empty();

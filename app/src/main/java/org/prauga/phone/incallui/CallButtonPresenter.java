@@ -350,6 +350,25 @@ public class CallButtonPresenter
   }
 
   @Override
+  public void changeToVoiceClicked() {
+    LogUtil.enterBlock("CallButtonPresenter.changeToVoiceClicked");
+    if (call.isActiveRttCall()) {
+      call.stopRtt();
+    } else {
+      call.getVideoTech().downgradeToAudio();
+    }
+  }
+
+  @Override
+  public void transferClicked() {
+    LogUtil.enterBlock("CallButtonPresenter.transferClicked");
+    InCallActivity activity = InCallPresenter.getInstance().getActivity();
+    if (activity != null) {
+      activity.showCallTransferDialog();
+    }
+  }
+
+  @Override
   public void changeToRttClicked() {
     LogUtil.enterBlock("CallButtonPresenter.changeToRttClicked");
     call.sendRttUpgradeRequest();
@@ -524,6 +543,8 @@ public class CallButtonPresenter
     inCallButtonUi.setHold(isCallOnHold);
     inCallButtonUi.showButton(InCallButtonIds.BUTTON_MUTE, showMute);
     inCallButtonUi.showButton(InCallButtonIds.BUTTON_SWAP_SIM, showSwapSim);
+    inCallButtonUi.showButton(
+        InCallButtonIds.BUTTON_TRANSFER, CallTransfer.canTransfer(getContext(), call));
     inCallButtonUi.showButton(InCallButtonIds.BUTTON_ADD_CALL, true);
     inCallButtonUi.enableButton(InCallButtonIds.BUTTON_ADD_CALL, showAddCall);
     inCallButtonUi.showButton(InCallButtonIds.BUTTON_UPGRADE_TO_VIDEO, showUpgradeToVideo);

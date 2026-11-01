@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Zadržano</string>
   <string name="notification_incoming_call">Dohodni klic</string>
   <string name="notification_incoming_video_call">Dohodni videoklic</string>
-  <string name="notification_incoming_call_mutli_sim">Dohodni klic prek kartice SIM %1$s</string>
   <string name="notification_incoming_work_call">Dohodni delovni klic</string>
   <string name="notification_incoming_spam_call">Domnevno neželeni dohodni klic</string>
   <string name="notification_requesting_video_call">Dohodna zahteva za video</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Videoklic</string>
   <string name="notification_action_accept">Sprejmi</string>
   <string name="notification_action_dismiss">Zavrni</string>
-  <string name="notification_action_speaker_on">Vklopi zvočnik</string>
-  <string name="notification_action_speaker_off">Izklopi zvočnik</string>
   <string name="notification_external_call">Aktivni klic v drugi napravi</string>
   <string name="notification_external_video_call">Aktivni videoklic v drugi napravi</string>
   <string name="notification_take_call">Sprejmi klic</string>

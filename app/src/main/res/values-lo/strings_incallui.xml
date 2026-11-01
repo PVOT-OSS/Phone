@@ -15,7 +15,6 @@
   <string name="notification_on_hold">ພັກສາຍຊົ່ວຄາວ</string>
   <string name="notification_incoming_call">ສາຍໂທເຂົ້າ</string>
   <string name="notification_incoming_video_call">ສາຍ​ວິດີໂອ​ເຂົ້າ</string>
-  <string name="notification_incoming_call_mutli_sim">ສາຍໂທເຂົ້າຜ່ານ %1$s</string>
   <string name="notification_incoming_work_call">ສາຍໂທເຂົ້າຈາກບ່ອນເຮັດວຽກ</string>
   <string name="notification_incoming_spam_call">ມີການໂທທີ່ຄາດວ່າເປັນສະແປມໂທເຂົ້າມາ</string>
   <string name="notification_requesting_video_call">​ຄຳ​ຮ້ອງ​ຂໍ​ວິ​ດີ​ໂອ​ເຂົ້າ​ມາ</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">ວິດີໂອ</string>
   <string name="notification_action_accept">ຍອມຮັບ</string>
   <string name="notification_action_dismiss">ປະຕິເສດ</string>
-  <string name="notification_action_speaker_on">ເປີດ​ລຳໂພງ</string>
-  <string name="notification_action_speaker_off">ປິດ​ລຳໂພງ</string>
   <string name="notification_external_call">ສາຍທີ່ກຳລັງໂທອອກໃນອຸປະກອນອື່ນ</string>
   <string name="notification_external_video_call">ສາຍວິດີໂອທີ່ກຳລັງໂທອອກໃນເຄື່ອງອື່ນ</string>
   <string name="notification_take_call">ຮັບສາຍ</string>

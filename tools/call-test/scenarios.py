@@ -139,7 +139,108 @@ def outgoing_answered(device):
     assert_logged(device, number, since, OUTGOING)
 
 
-SCENARIOS = [incoming_missed, incoming_answered, incoming_declined, screening_first_time_declined, outgoing_answered]
+def app_pid(device):
+    return device.run("shell", f"pidof {PACKAGE}", check=False)
+
+
+def call_survives_app_death(device):
+    """Killing the app mid-call must not drop the call. Telecom moves it to the system dialer's UI
+    for the rest of the call; it still ends normally and is logged."""
+    number, since = fresh_number(), now_millis(device)
+    device.emu(f"gsm call {number}")
+    wait_for("ringing call", lambda: has_call(device, "INCOMING", number))
+    device.broadcast("ANSWER")
+    wait_for("active call", lambda: has_call(device, "ACTIVE", number))
+    device.shell(f"kill -9 {app_pid(device)}")
+    time.sleep(3)
+    assert "mCallState=2" in device.shell("dumpsys telephony.registry"), "call dropped when the app died"
+    device.emu(f"gsm cancel {number}")
+    assert_logged(device, number, since, INCOMING)
+
+def original_dialer(device):
+    with open(os.path.join(HERE, ".device-state", device.serial, "dialer")) as saved:
+        return saved.read().strip()
+
+
+def opens_when_not_default(device):
+    """Launching the app before it is the default phone app, without READ_PHONE_NUMBERS, must not
+    crash: Telecom refuses to share phone accounts then."""
+    role = "android.app.role.DIALER"
+    device.shell(f"cmd role add-role-holder --user {device.user} {role} {original_dialer(device)}")
+    try:
+        device.run("shell", f"pm revoke --user {device.user} {PACKAGE} android.permission.READ_PHONE_NUMBERS", check=False)
+        device.shell(f"am force-stop --user {device.user} {PACKAGE}")
+        device.shell(f"am start --user {device.user} -n {PACKAGE}/.dialer.main.impl.MainActivity")
+        wait_for("app in front", lambda: f"{PACKAGE}/" in device.shell("dumpsys window | grep mCurrentFocus"))
+        time.sleep(2)
+        assert f"{PACKAGE}/" in device.shell("dumpsys window | grep mCurrentFocus"), "app left the screen"
+    finally:
+        device.shell(f"cmd role add-role-holder --user {device.user} {role} {PACKAGE}")
+        device.run("shell", f"pm grant --user {device.user} {PACKAGE} android.permission.READ_PHONE_NUMBERS", check=False)
+        device.shell("input keyevent KEYCODE_HOME")
+
+
+def shell_output(device, command):
+    """Output of a shell command that may find nothing yet, such as a grep while polling."""
+    return device.run("shell", command, check=False)
+
+
+def rings_before_first_unlock(device):
+    """After a restart, before the first unlock, a call must ring in the app's call screen and a
+    missed call must be notified. Sets a PIN and reboots the emulator; removes the PIN after."""
+    if not device.serial.startswith("emulator-"):
+        raise AssertionError("direct boot scenario only runs on an emulator")
+    pin = "1234"
+    device.shell(f"locksettings set-pin {pin}")
+    try:
+        device.run("reboot")
+        device.run("wait-for-device")
+        wait_for("boot", lambda: shell_output(device, "getprop sys.boot_completed") == "1", timeout=180)
+        wait_for("user locked", lambda: "RUNNING_LOCKED" in shell_output(device, "dumpsys user | grep State:"), timeout=30)
+        device.shell("logcat -b crash -c")
+        number = fresh_number()
+        device.emu(f"gsm call {number}")
+        wait_for("call screen", lambda: f"{PACKAGE}/.incallui.InCallActivity" in shell_output(
+            device, "dumpsys activity activities | grep topResumedActivity"), timeout=30)
+        device.emu(f"gsm cancel {number}")
+        wait_for("missed call notification", lambda: "GroupSummary_MissedCall" in shell_output(
+            device, f"dumpsys notification | grep pkg={PACKAGE}"), timeout=30)
+    finally:
+        # Bring up the PIN pad and enter the PIN; the keyguard needs a moment between steps.
+        device.shell("input keyevent KEYCODE_WAKEUP")
+        time.sleep(1)
+        device.shell("input keyevent 82")
+        time.sleep(2)
+        device.shell(f"input text {pin}")
+        device.shell("input keyevent 66")
+        wait_for("user unlocked", lambda: "RUNNING_UNLOCKED" in shell_output(device, "dumpsys user | grep State:"), timeout=30)
+        device.shell(f"locksettings clear --old {pin}")
+        device.shell("input keyevent KEYCODE_HOME")
+
+
+SCENARIOS = [
+    incoming_missed,
+    incoming_answered,
+    incoming_declined,
+    screening_first_time_declined,
+    outgoing_answered,
+    call_survives_app_death,
+    opens_when_not_default,
+    rings_before_first_unlock,
+]
+
+
+def end_all_calls(device):
+    modem_calls = device.emu("gsm list").splitlines() if device.serial.startswith("emulator-") else []
+    for line in modem_calls:
+        match = re.search(r"(\d{3,})", line)
+        if match:
+            device.emu(f"gsm cancel {match.group(1)}")
+    for _ in range(5):
+        if "mCallState=0" in device.shell("dumpsys telephony.registry") and not device.calls():
+            break
+        device.shell("input keyevent KEYCODE_ENDCALL")
+        time.sleep(1)
 
 
 def prepare(device, apk):
@@ -177,11 +278,7 @@ def main():
                 failures += 1
                 print(f"FAIL {scenario.__name__}: {error}")
             finally:
-                for _ in range(3):
-                    if not device.calls():
-                        break
-                    device.broadcast("HANG_UP")
-                    time.sleep(0.5)
+                end_all_calls(device)
     finally:
         restore(device)
     print(f"{len(selected) - failures}/{len(selected)} passed")

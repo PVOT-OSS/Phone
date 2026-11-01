@@ -2,7 +2,6 @@
 <resources>
   <string name="call_incoming_swipe_to_answer">Жауап беру үшін жоғары сырғытыңыз</string>
   <string name="call_incoming_swipe_to_reject">Қабылдамау үшін төмен сырғытыңыз</string>
-  <string name="call_incoming_will_disconnect">Бұл қоңырауға жауап беру бейне қоңырауыңызды аяқтайды</string>
   <string name="call_incoming_decline">Қабылдамау</string>
   <string name="call_incoming_answer">Жауап беру</string>
 </resources>

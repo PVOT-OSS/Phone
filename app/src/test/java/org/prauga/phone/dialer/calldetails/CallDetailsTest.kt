@@ -9,6 +9,9 @@ import android.content.Intent
 import android.provider.CallLog.Calls
 import android.telecom.PhoneAccount
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasAnyAncestor
+import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.isDialog
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -131,6 +134,9 @@ class CallDetailsTest {
         show(map(), actions)
         compose.onNodeWithTag(TestTags.CALL_DETAILS_CALL_BACK).performClick()
         compose.onNodeWithTag(TestTags.CALL_DETAILS_DELETE).performClick()
+        // Deleting the whole history asks first.
+        assertThat(actions.calls).containsExactly("callBack video=false")
+        compose.onNode(hasText(context.getString(R.string.delete)) and hasAnyAncestor(isDialog())).performClick()
         assertThat(actions.calls).containsExactly("callBack video=false", "delete").inOrder()
     }
 
@@ -211,6 +217,7 @@ class CallDetailsTest {
         override fun copyNumber() { calls += "copy" }
         override fun editNumber() { calls += "edit" }
         override fun delete() { calls += "delete" }
+        override fun deleteCall(entry: CallDetailsEntryUi) { calls += "deleteCall" }
         override fun showTranscript(entry: CallDetailsEntryUi) { calls += "transcript ${entry.callId}" }
         override fun play(recording: CallRecording) { calls += "play ${recording.mediaId}" }
         override fun recordingTime(recording: CallRecording) = "time ${recording.mediaId}"

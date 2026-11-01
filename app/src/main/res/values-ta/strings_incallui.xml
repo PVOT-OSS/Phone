@@ -15,7 +15,6 @@
   <string name="notification_on_hold">காத்திருப்பில்</string>
   <string name="notification_incoming_call">உள்வரும் அழைப்பு</string>
   <string name="notification_incoming_video_call">உள்வரும் வீடியோ அழைப்பு</string>
-  <string name="notification_incoming_call_mutli_sim">%1$s மூலம் உள்வரும் அழைப்பு</string>
   <string name="notification_incoming_work_call">உள்வரும் அழைப்பு (பணி)</string>
   <string name="notification_incoming_spam_call">உள்வரும் சந்தேகத்திற்குரிய ஸ்பேம் அழைப்பு</string>
   <string name="notification_requesting_video_call">உள்வரும் வீடியோ கோரிக்கை</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">வீடியோ</string>
   <string name="notification_action_accept">ஏற்கிறேன்</string>
   <string name="notification_action_dismiss">நிராகரி</string>
-  <string name="notification_action_speaker_on">ஸ்பீக்கரை இயக்கு</string>
-  <string name="notification_action_speaker_off">ஸ்பீக்கரை முடக்கு</string>
   <string name="notification_external_call">மற்றொரு சாதனத்தில் செயலில் இருக்கும் அழைப்பு</string>
   <string name="notification_external_video_call">மற்றொரு சாதனத்தில் செயலில் இருக்கும் வீடியோ அழைப்பு</string>
   <string name="notification_take_call">அழைப்பை எடு</string>

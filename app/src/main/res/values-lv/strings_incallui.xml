@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Aizturēts</string>
   <string name="notification_incoming_call">Ienākošais zvans</string>
   <string name="notification_incoming_video_call">Ienākošs videozvans</string>
-  <string name="notification_incoming_call_mutli_sim">Ienākošs zvans, izmantojot: %1$s</string>
   <string name="notification_incoming_work_call">Ienākošs darba zvans</string>
   <string name="notification_incoming_spam_call">Ienākošs, iespējams, nevēlams zvans</string>
   <string name="notification_requesting_video_call">Ienākošs video pieprasījums</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Video</string>
   <string name="notification_action_accept">Pieņemt</string>
   <string name="notification_action_dismiss">Noraidīt</string>
-  <string name="notification_action_speaker_on">Ieslēgt skaļruni</string>
-  <string name="notification_action_speaker_off">Izslēgt skaļruni</string>
   <string name="notification_external_call">Notiekošs zvans citā ierīcē</string>
   <string name="notification_external_video_call">Notiekošs videozvans citā ierīcē</string>
   <string name="notification_take_call">Pārsūtīt zvanu</string>

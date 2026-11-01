@@ -2,7 +2,6 @@
 <resources>
   <string name="call_incoming_swipe_to_answer">החלק למעלה כדי לענות</string>
   <string name="call_incoming_swipe_to_reject">החלק למטה כדי לדחות</string>
-  <string name="call_incoming_will_disconnect">מענה לשיחה הזו יסיים את שיחת הווידאו</string>
   <string name="call_incoming_decline">דחה</string>
   <string name="call_incoming_answer">ענה</string>
 </resources>

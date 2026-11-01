@@ -265,6 +265,17 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
         }
     }
 
+    /** What answering will end, from Telecom's hint on the ringing call; null when nothing. */
+    private fun incomingWillDisconnectText(): CharSequence? {
+        if (!primaryInfo.answeringDisconnectsOngoingCall()) return null
+        val appName = primaryInfo.answeringDisconnectsAppName()
+        return if (appName.isNullOrEmpty()) {
+            getText(R.string.call_incoming_will_disconnect)
+        } else {
+            getString(R.string.call_incoming_will_disconnect_app, appName)
+        }
+    }
+
     private fun updateUI() {
         if (view == null) return
         updatePrimaryUI()
@@ -275,7 +286,7 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
     private fun updatePrimaryUI() {
         if (view == null) return
         contactGrid?.setPrimary(primaryInfo)
-        ui.incomingWillDisconnect = primaryInfo.answeringDisconnectsOngoingCall()
+        ui.incomingWillDisconnectText = incomingWillDisconnectText()
     }
 
     // AnswerScreen

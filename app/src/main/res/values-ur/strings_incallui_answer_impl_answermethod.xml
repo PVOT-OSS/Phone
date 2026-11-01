@@ -2,7 +2,6 @@
 <resources>
   <string name="call_incoming_swipe_to_answer">جواب دینے کیلئے اوپر سوائپ کریں</string>
   <string name="call_incoming_swipe_to_reject">رد کرنے کیلئے نیچے سوائپ کریں</string>
-  <string name="call_incoming_will_disconnect">اس کال کا جواب دینے سے آپ کی ویڈیو کال ختم ہو جائے گی</string>
   <string name="call_incoming_decline">مسترد کریں</string>
   <string name="call_incoming_answer">جواب دیں</string>
 </resources>

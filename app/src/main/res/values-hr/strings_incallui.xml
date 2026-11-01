@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Na čekanju</string>
   <string name="notification_incoming_call">Dolazni poziv</string>
   <string name="notification_incoming_video_call">Dolazni videopoziv</string>
-  <string name="notification_incoming_call_mutli_sim">Dolazni poziv putem %1$s</string>
   <string name="notification_incoming_work_call">Dolazni poslovni poziv</string>
   <string name="notification_incoming_spam_call">Mogući neželjeni dolazni poziv</string>
   <string name="notification_requesting_video_call">Dolazni zahtjev za videopoziv</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Videozapis</string>
   <string name="notification_action_accept">Prihvaćam</string>
   <string name="notification_action_dismiss">Odbijanje</string>
-  <string name="notification_action_speaker_on">Uključivanje zvučnika</string>
-  <string name="notification_action_speaker_off">Isključivanje zvučnika</string>
   <string name="notification_external_call">Poziv u tijeku na drugom uređaju</string>
   <string name="notification_external_video_call">U tijeku je videopoziv na drugom uređaju</string>
   <string name="notification_take_call">Preuzimanje poziva</string>

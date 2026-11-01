@@ -60,6 +60,7 @@ import org.prauga.phone.dialer.callintent.CallIntentBuilder
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.lettertile.LetterTileDrawable
 import org.prauga.phone.dialer.precall.PreCall
+import org.prauga.phone.dialer.telecom.TelecomUtil
 import org.prauga.phone.dialer.ui.ContactAvatar
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.TestTags
@@ -77,7 +78,7 @@ class CallSubjectDialog : ComponentActivity() {
         }
         val number = args.getString(ARG_NUMBER).orEmpty()
         val account = BundleCompat.getParcelable(args, ARG_PHONE_ACCOUNT_HANDLE, PhoneAccountHandle::class.java)
-        val limits = SubjectLimits.of(account?.let { getSystemService(TelecomManager::class.java).getPhoneAccount(it) })
+        val limits = SubjectLimits.of(account?.let { TelecomUtil.getPhoneAccount(this, it) })
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         val nameOrNumber = args.getString(ARG_NAME_OR_NUMBER).orEmpty()
         val displayNumber = args.getString(ARG_DISPLAY_NUMBER)

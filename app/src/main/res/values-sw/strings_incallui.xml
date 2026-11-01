@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Inangoja</string>
   <string name="notification_incoming_call">Unapigiwa simu</string>
   <string name="notification_incoming_video_call">Hangout ya Video inayoingia</string>
-  <string name="notification_incoming_call_mutli_sim">Simu inayoingia kupitia %1$s</string>
   <string name="notification_incoming_work_call">Simu ya kazi inayoingia</string>
   <string name="notification_incoming_spam_call">Simu inayoingia inashukiwa kuwa taka</string>
   <string name="notification_requesting_video_call">Ombi  linaloingia la video</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Video</string>
   <string name="notification_action_accept">Kubali</string>
   <string name="notification_action_dismiss">Kataa</string>
-  <string name="notification_action_speaker_on">Washa spika</string>
-  <string name="notification_action_speaker_off">Zima spika</string>
   <string name="notification_external_call">Una Hangout inayoendelea kwenye kifaa kingine</string>
   <string name="notification_external_video_call">Una simu ya video inayoendelea kwenye kifaa kingine</string>
   <string name="notification_take_call">Pokea Simu</string>

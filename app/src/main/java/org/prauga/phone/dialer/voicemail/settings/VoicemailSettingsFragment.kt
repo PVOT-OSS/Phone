@@ -191,7 +191,7 @@ class VoicemailSettingsFragment : SettingsComposeFragment(), VoicemailClient.Act
         val subscription = TelecomUtil.getSubscriptionInfo(requireContext(), phoneAccountHandle)
         if (subscription.isPresent) {
             intent.putExtra(SUB_ID_EXTRA, subscription.get().subscriptionId)
-            requireContext().getSystemService(TelecomManager::class.java).getPhoneAccount(phoneAccountHandle)
+            TelecomUtil.getPhoneAccount(requireContext(), phoneAccountHandle)
                 ?.let { intent.putExtra(SUB_LABEL_EXTRA, it.label) }
         }
         return intent

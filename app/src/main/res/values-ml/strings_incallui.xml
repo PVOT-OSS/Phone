@@ -15,7 +15,6 @@
   <string name="notification_on_hold">ഹോള്‍ഡിലാണ്</string>
   <string name="notification_incoming_call">ഇന്‍കമിംഗ് കോള്‍</string>
   <string name="notification_incoming_video_call">ഇൻകമിംഗ് വീഡിയോ കോൾ</string>
-  <string name="notification_incoming_call_mutli_sim">%1$s വഴി കോൾ വരുന്നു</string>
   <string name="notification_incoming_work_call">ഇൻകമിംഗ് ഔദ്യോഗിക കോൾ</string>
   <string name="notification_incoming_spam_call">സംശയാസ്‌പദമായ ഇൻകമിംഗ് സ്‌പാം കോൾ</string>
   <string name="notification_requesting_video_call">ഇൻകമിംഗ് വീഡിയോ അഭ്യർത്ഥന</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">വീഡിയോ</string>
   <string name="notification_action_accept">അംഗീകരിക്കുക</string>
   <string name="notification_action_dismiss">നിരസിക്കുക</string>
-  <string name="notification_action_speaker_on">സ്‌പീക്കർ ഓണാക്കുക</string>
-  <string name="notification_action_speaker_off">സ്‌പീക്കർ ഓഫാക്കുക</string>
   <string name="notification_external_call">മറ്റൊരു ഉപകരണത്തിൽ നടന്നുകൊണ്ടിരിക്കുന്ന കോൾ</string>
   <string name="notification_external_video_call">മറ്റൊരു ഉപകരണത്തിൽ നടന്നുകൊണ്ടിരിക്കുന്ന വീഡിയോ കോൾ</string>
   <string name="notification_take_call">കോൾ എടുക്കുക</string>

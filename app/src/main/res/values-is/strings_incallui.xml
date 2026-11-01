@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Í bið</string>
   <string name="notification_incoming_call">Móttekið símtal</string>
   <string name="notification_incoming_video_call">Myndsímtal berst</string>
-  <string name="notification_incoming_call_mutli_sim">Símtal berst í gegnum %1$s</string>
   <string name="notification_incoming_work_call">Vinnusímtal berst</string>
   <string name="notification_incoming_spam_call">Símtal sem berst er hugsanlega úr ruslnúmeri</string>
   <string name="notification_requesting_video_call">Myndbeiðni berst</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Myndskeið</string>
   <string name="notification_action_accept">Samþykkja</string>
   <string name="notification_action_dismiss">Hafna</string>
-  <string name="notification_action_speaker_on">Kveikja á hátalara</string>
-  <string name="notification_action_speaker_off">Slökkva á hátalara</string>
   <string name="notification_external_call">Símtal í gangi í öðru tæki</string>
   <string name="notification_external_video_call">Myndsímtal í gangi í öðru tæki</string>
   <string name="notification_take_call">Þiggja símtal</string>

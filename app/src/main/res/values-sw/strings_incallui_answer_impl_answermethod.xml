@@ -2,7 +2,6 @@
 <resources>
   <string name="call_incoming_swipe_to_answer">Telezesha kidole ili uipokee</string>
   <string name="call_incoming_swipe_to_reject">Telezesha kidole chini ili uikatae</string>
-  <string name="call_incoming_will_disconnect">Ukipokea simu hii, simu yako ya video itakatika</string>
   <string name="call_incoming_decline">Kataa</string>
   <string name="call_incoming_answer">Jibu</string>
 </resources>

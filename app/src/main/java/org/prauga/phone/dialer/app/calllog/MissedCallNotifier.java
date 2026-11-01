@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.app.BroadcastOptions;
 import android.app.Notification;
 import android.app.PendingIntent;
+import android.app.Person;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -64,6 +65,7 @@ import org.prauga.phone.dialer.notification.missedcalls.MissedCallNotificationTa
 import org.prauga.phone.dialer.phonenumbercache.ContactInfo;
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper;
 import org.prauga.phone.dialer.precall.PreCall;
+import org.prauga.phone.dialer.telecom.TelecomUtil;
 import org.prauga.phone.dialer.theme.base.ThemeComponent;
 import org.prauga.phone.dialer.util.DialerUtils;
 import org.prauga.phone.dialer.util.IntentUtil;
@@ -277,7 +279,7 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
         continue;
       }
       PhoneAccountHandle phoneAccountHandle = new PhoneAccountHandle(componentName, call.accountId);
-      PhoneAccount phoneAccount = telecomManager.getPhoneAccount(phoneAccountHandle);
+      PhoneAccount phoneAccount = TelecomUtil.getPhoneAccount(context, phoneAccountHandle);
       if (phoneAccount == null) {
         continue;
       }
@@ -321,9 +323,11 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
       expandedText = contactInfo.name;
     }
 
+    // The caller is the title; the text says the call was missed, and why when it is worth saying.
+    CharSequence missedText = getMissedCallText(call);
     if (postCallMessage != null) {
-      expandedText =
-          context.getString(R.string.post_call_notification_message, expandedText, postCallMessage);
+      missedText =
+          context.getString(R.string.post_call_notification_message, missedText, postCallMessage);
     }
 
     ContactPhotoLoader loader = new ContactPhotoLoader(context, contactInfo);
@@ -331,10 +335,32 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
     if (photoIcon != null) {
       builder.setLargeIcon(photoIcon);
     }
+
+    // Shown as a one message conversation from the caller.
+    Person.Builder caller = new Person.Builder().setName(expandedText);
+    if (contactInfo.lookupUri != null) {
+      caller.setUri(contactInfo.lookupUri.toString());
+    } else if (!TextUtils.isEmpty(call.number)) {
+      caller.setUri(Uri.fromParts(PhoneAccount.SCHEME_TEL, call.number, null).toString());
+    }
+    if (photoIcon != null) {
+      caller.setIcon(Icon.createWithBitmap(photoIcon));
+    }
+    Person callerPerson = caller.build();
+    Notification.MessagingStyle style =
+        new Notification.MessagingStyle(
+                new Person.Builder()
+                    .setName(context.getString(R.string.notification_missedCall_self))
+                    .build())
+            .addMessage(new Notification.MessagingStyle.Message(missedText, call.dateMs, callerPerson));
+
     // Create the notification suitable for display when sensitive information is showing.
     builder
-        .setContentTitle(context.getText(titleResId))
-        .setContentText(expandedText)
+        .setContentTitle(expandedText)
+        .setContentText(missedText)
+        .setStyle(style)
+        .addPerson(callerPerson)
+        .setCategory(Notification.CATEGORY_MISSED_CALL)
         // Include a public version of the notification to be shown when the missed call
         // notification is shown on the user's lock screen and they have chosen to hide
         // sensitive notification information.
@@ -367,6 +393,18 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
     return notification;
   }
 
+  private CharSequence getMissedCallText(@NonNull NewCall call) {
+    switch (MissedCallReason.of(call.missedReason)) {
+      case DO_NOT_DISTURB:
+        return context.getText(R.string.notification_missedCall_dnd);
+      case SILENT_MODE:
+        return context.getText(R.string.notification_missedCall_silent);
+      case NONE:
+      default:
+        return context.getText(R.string.notification_missedCallTitle);
+    }
+  }
+
   private Notification.Builder createNotificationBuilder() {
     return new Notification.Builder(context, NotificationChannelId.MISSED_CALL)
         .setGroup(MissedCallConstants.GROUP_KEY)
@@ -382,9 +420,9 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
     Notification.Builder builder =
         createNotificationBuilder()
             .setWhen(call.dateMs)
+            // Swiping any missed call away clears them all, as swiping the group does.
             .setDeleteIntent(
-                CallLogNotificationsService.createCancelSingleMissedCallPendingIntent(
-                    context, call.callsUri))
+                CallLogNotificationsService.createCancelAllMissedCallsPendingIntent(context))
             .setContentIntent(createCallLogPendingIntent(call.callsUri))
             .setChannelId(NotificationChannelId.MISSED_CALL);
 

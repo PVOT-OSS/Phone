@@ -12,6 +12,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.isDialog
 import androidx.compose.ui.test.isRoot
 import androidx.compose.ui.test.onLast
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -63,7 +64,10 @@ class VoicemailScreenTest {
         override fun deleteLater(group: CallLogGroup) { events += "delete ${group.rowId}"; pending = pending + group.callIds }
         override fun undoDelete(group: CallLogGroup) { events += "undo ${group.rowId}" }
         override fun commitDelete(group: CallLogGroup) { events += "commit ${group.rowId}" }
-        override fun deleteSelected(groups: List<CallLogGroup>) { events += "deleteSelected ${groups.map { it.rowId }}" }
+        override fun deleteSelected(groups: List<CallLogGroup>) {
+            events += "deleteSelected ${groups.map { it.rowId }}"
+            pending = pending + groups.flatMap { it.callIds }
+        }
         override fun selectionModeChanged(enabled: Boolean, exit: () -> Unit) { events += "selecting $enabled" }
         override fun block(row: CallLogRowUi) = Unit
         override fun unblock(row: CallLogRowUi) = Unit
@@ -107,12 +111,15 @@ class VoicemailScreenTest {
     }
 
     @Test
-    fun deleteInTheOpenRowRemovesIt() {
+    fun deleteInTheOpenRowAsksThenRemovesIt() {
         show()
         compose.onNodeWithTag(TestTags.callHistoryRow(2)).performClick()
         compose.onNodeWithTag(TestTags.callHistoryAction(2, "DELETE")).performClick()
+        // The row's calls all go, so the Delete button asks first.
+        assertThat(actions.events).doesNotContain("deleteSelected [2]")
+        compose.onNode(hasText("Delete") and hasAnyAncestor(isDialog())).performClick()
         compose.waitForIdle()
-        assertThat(actions.events).containsAtLeast("opened 2", "closed 2", "delete 2").inOrder()
+        assertThat(actions.events).containsAtLeast("opened 2", "closed 2", "deleteSelected [2]").inOrder()
         compose.onNodeWithTag(TestTags.callHistoryRow(2)).assertDoesNotExist()
     }
 

@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.hardware.camera2.CameraCharacteristics;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.os.SystemClock;
@@ -47,6 +48,7 @@ import android.widget.Toast;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import org.prauga.phone.contacts.common.compat.CallCompat;
 import org.prauga.phone.dialer.R;
@@ -202,6 +204,8 @@ public class DialerCall implements VideoTechListener {
   }
 
   private RttTranscript rttTranscript;
+  private boolean rttStoppedByUser;
+  private boolean wasOnHoldWhenDisconnected;
 
   private final Call.Callback telecomCallCallback =
       new Call.Callback() {
@@ -287,13 +291,25 @@ public class DialerCall implements VideoTechListener {
         @Override
         public void onRttInitiationFailure(Call call, int reason) {
           LogUtil.v("TelecomCallCallback.onRttInitiationFailure", "reason=%d", reason);
-          Toast.makeText(context, R.string.rtt_call_not_available_toast, Toast.LENGTH_LONG).show();
+          // Turned down by the other side, the call carries on as a voice call; any other failure
+          // means RTT could not start.
+          Toast.makeText(
+                  context,
+                  reason == Connection.RttModifyStatus.SESSION_MODIFY_REQUEST_REJECTED_BY_REMOTE
+                      ? R.string.rtt_call_downgraded_toast
+                      : R.string.rtt_call_started_as_rtt_failed,
+                  Toast.LENGTH_LONG)
+              .show();
           update();
         }
 
         @Override
         public void onRttStatusChanged(Call call, boolean enabled, RttCall rttCall) {
           LogUtil.v("TelecomCallCallback.onRttStatusChanged", "enabled=%b", enabled);
+          if (!enabled && !rttStoppedByUser) {
+            Toast.makeText(context, R.string.rtt_call_downgraded_toast, Toast.LENGTH_LONG).show();
+          }
+          rttStoppedByUser = false;
           update();
         }
 
@@ -308,6 +324,7 @@ public class DialerCall implements VideoTechListener {
               // currently conferenceable calls available or Connection Capabilities.
             case android.telecom.Connection.EVENT_CALL_MERGE_FAILED:
               isMergeInProcess = false;
+              Toast.makeText(context, R.string.incall_merge_failed, Toast.LENGTH_SHORT).show();
               update();
               break;
             case TelephonyManagerCompat.EVENT_HANDOVER_VIDEO_FROM_WIFI_TO_LTE:
@@ -810,7 +827,15 @@ public class DialerCall implements VideoTechListener {
     }
     updateCallTiming(state);
 
+    if (state == DialerCallState.DISCONNECTED && this.state == DialerCallState.ONHOLD) {
+      wasOnHoldWhenDisconnected = true;
+    }
     this.state = state;
+  }
+
+  /** Whether the call was on hold when it ended. */
+  public boolean wasOnHoldWhenDisconnected() {
+    return wasOnHoldWhenDisconnected;
   }
 
   private void updateCallTiming(int newState) {
@@ -1009,6 +1034,13 @@ public class DialerCall implements VideoTechListener {
     return getVideoTech().isTransmittingOrReceiving() || VideoProfile.isVideo(getVideoState());
   }
 
+  /** Whether the network verified the caller's number (STIR/SHAKEN). */
+  public boolean isCallerVerified() {
+    return telecomCall != null
+        && telecomCall.getDetails().getCallerNumberVerificationStatus()
+            == Connection.VERIFICATION_STATUS_PASSED;
+  }
+
   public boolean isActiveRttCall() {
     return getTelecomCall().isRttActive();
   }
@@ -1053,6 +1085,18 @@ public class DialerCall implements VideoTechListener {
 
   public void sendRttUpgradeRequest() {
     getTelecomCall().sendRttRequest();
+  }
+
+  /** Transfers this call to {@code otherCall}, which the user has already spoken to. */
+  @RequiresApi(Build.VERSION_CODES.CINNAMON_BUN)
+  public void consultativeTransfer(DialerCall otherCall) {
+    getTelecomCall().transfer(otherCall.getTelecomCall());
+  }
+
+  /** Turns RTT off, carrying on as a voice call. */
+  public void stopRtt() {
+    rttStoppedByUser = true;
+    getTelecomCall().stopRtt();
   }
 
   public void respondToRttRequest(boolean accept, int rttRequestId) {
@@ -1121,18 +1165,25 @@ public class DialerCall implements VideoTechListener {
   }
 
   /**
-   * Determines if answering this call will cause an ongoing video call to be dropped.
-   *
-   * @return {@code true} if answering this call will drop an ongoing video call, {@code false}
-   *     otherwise.
+   * Determines if answering this call will end an ongoing call, as Telecom tells the app when the
+   * ongoing call can't be held.
    */
-  public boolean answeringDisconnectsForegroundVideoCall() {
+  public boolean answeringDisconnectsOngoingCall() {
     Bundle extras = getExtras();
     if (extras == null
         || !extras.containsKey(CallCompat.Details.EXTRA_ANSWERING_DROPS_FOREGROUND_CALL)) {
       return false;
     }
     return extras.getBoolean(CallCompat.Details.EXTRA_ANSWERING_DROPS_FOREGROUND_CALL);
+  }
+
+  /** The app whose call answering this call will end, when Telecom names it. */
+  @Nullable
+  public String getAnsweringDisconnectsAppName() {
+    Bundle extras = getExtras();
+    return extras == null
+        ? null
+        : extras.getString(CallCompat.Details.EXTRA_ANSWERING_DROPS_FOREGROUND_CALL_APP_NAME);
   }
 
   private void parseCallSpecificAppData() {

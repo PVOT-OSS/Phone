@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Күтүлүүдө</string>
   <string name="notification_incoming_call">Кирүүчү чалуу</string>
   <string name="notification_incoming_video_call">Келип жаткан видео чалуу</string>
-  <string name="notification_incoming_call_mutli_sim">%1$s картасы аркылуу кириш чалуу</string>
   <string name="notification_incoming_work_call">Жумуш боюнча келип жаткан чалуу</string>
   <string name="notification_incoming_spam_call">Келип жаткан чалуу спам окшойт</string>
   <string name="notification_requesting_video_call">Келип жаткан видео сурамы</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Видео</string>
   <string name="notification_action_accept">Кабыл алуу</string>
   <string name="notification_action_dismiss">Четке кагуу</string>
-  <string name="notification_action_speaker_on">Катуу сүйлөткүчтү күйгүзүү</string>
-  <string name="notification_action_speaker_off">Катуу сүйлөткүчтү өчүрүү</string>
   <string name="notification_external_call">Башка түзмөктө сүйлөшүп жатасыз</string>
   <string name="notification_external_video_call">Башка түзмөктөгү видео чалууда да катышып жатасыз</string>
   <string name="notification_take_call">Чалууну кабыл алуу</string>

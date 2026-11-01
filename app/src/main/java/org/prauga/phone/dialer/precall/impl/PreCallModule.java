@@ -45,6 +45,7 @@ public abstract class PreCallModule {
         new PermissionCheckAction(),
         new MalformedNumberRectifier(
             ImmutableList.of(new UkRegionPrefixInInternationalFormatHandler())),
+        new BlockedNumberAction(),
         callingAccountSelector,
         new AssistedDialAction());
   }

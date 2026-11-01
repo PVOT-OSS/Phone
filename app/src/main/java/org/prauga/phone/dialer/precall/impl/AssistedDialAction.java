@@ -49,7 +49,7 @@ public class AssistedDialAction implements PreCallAction {
     }
 
     AssistedDialingMediator assistedDialingMediator =
-            ConcreteCreator.createNewAssistedDialingMediator();
+            ConcreteCreator.createNewAssistedDialingMediator(context);
 
     // Checks the platform is N+ and meets other pre-flight checks.
     if (!assistedDialingMediator.isPlatformEligible()) {

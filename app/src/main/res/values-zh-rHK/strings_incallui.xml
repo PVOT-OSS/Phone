@@ -15,7 +15,6 @@
   <string name="notification_on_hold">保留通話</string>
   <string name="notification_incoming_call">來電</string>
   <string name="notification_incoming_video_call">視像通話來電</string>
-  <string name="notification_incoming_call_mutli_sim">正待接聽經由 %1$s 的來電</string>
   <string name="notification_incoming_work_call">工作來電</string>
   <string name="notification_incoming_spam_call">疑似收到垃圾來電</string>
   <string name="notification_requesting_video_call">收到視像要求</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">影片</string>
   <string name="notification_action_accept">接受</string>
   <string name="notification_action_dismiss">拒絕</string>
-  <string name="notification_action_speaker_on">開啟揚聲器</string>
-  <string name="notification_action_speaker_off">關閉揚聲器</string>
   <string name="notification_external_call">其他裝置上有正在進行的通話</string>
   <string name="notification_external_video_call">其他裝置上有正在進行的視像通話</string>
   <string name="notification_take_call">接受通話</string>

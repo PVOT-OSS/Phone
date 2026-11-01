@@ -58,6 +58,9 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
   private static final int NUM_LOGS_TO_DISPLAY = 1000;
   /** The token for the query to fetch the old entries from the call log. */
   private static final int QUERY_CALLLOG_TOKEN = 54;
+
+  /** The filter of the newest call log query. */
+  private int latestCallTypeFilter = CALL_TYPE_ALL;
   /** The token for the query to mark all missed calls as read after seeing the call log. */
   private static final int UPDATE_MARK_MISSED_CALL_AS_READ_TOKEN = 56;
   /** The token for the query to fetch voicemail status messages. */
@@ -155,9 +158,11 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
   /** Fetches the list of calls in the call log. */
   private void fetchCalls(int token, int callType, boolean newOnly, long newerThan) {
     FetchQuery query = buildFetchQuery(context, callType, newOnly, newerThan, logLimit);
+    // Tag the query with its filter, so a result for a filter that is no longer shown is dropped.
+    latestCallTypeFilter = callType;
     startQuery(
         token,
-        null,
+        callType,
         query.uri,
         CallLogQuery.getProjection(),
         query.selection,
@@ -199,7 +204,12 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
       where.append(" AND (").append(Calls.NEW).append(" = 1)");
     }
 
-    if (callType > CALL_TYPE_ALL) {
+    if (callType == Calls.MISSED_TYPE) {
+      // Rejected calls count as missed: the user didn't talk to the caller either way.
+      where.append(" AND (").append(Calls.TYPE).append(" IN (?, ?))");
+      selectionArgs.add(Integer.toString(Calls.MISSED_TYPE));
+      selectionArgs.add(Integer.toString(Calls.REJECTED_TYPE));
+    } else if (callType > CALL_TYPE_ALL) {
       where.append(" AND (").append(Calls.TYPE).append(" = ?)");
       selectionArgs.add(Integer.toString(callType));
     } else {
@@ -287,6 +297,10 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
     }
     try {
       if (token == QUERY_CALLLOG_TOKEN) {
+        if (cookie instanceof Integer && (Integer) cookie != latestCallTypeFilter) {
+          LogUtil.i("CallLogQueryHandler.onNotNullableQueryComplete", "dropping a stale result");
+          return;
+        }
         if (updateAdapterData(cursor)) {
           cursor = null;
         }

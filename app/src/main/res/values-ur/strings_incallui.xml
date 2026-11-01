@@ -15,7 +15,6 @@
   <string name="notification_on_hold">ہولڈ پر</string>
   <string name="notification_incoming_call">آنے والی کال</string>
   <string name="notification_incoming_video_call">اِن کمنگ ویڈیو کال</string>
-  <string name="notification_incoming_call_mutli_sim">%1$s کی معرفت کال آ رہی ہے</string>
   <string name="notification_incoming_work_call">کام سے متعلق آنے والی کال</string>
   <string name="notification_incoming_spam_call">آنے والی مشتبہ سپام کال</string>
   <string name="notification_requesting_video_call">اِن کمنگ ویڈیو درخواست</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">ویڈیو</string>
   <string name="notification_action_accept">قبول کریں</string>
   <string name="notification_action_dismiss">مسترد کریں</string>
-  <string name="notification_action_speaker_on">اسپیکر آن کریں</string>
-  <string name="notification_action_speaker_off">اسپیکر آف کریں</string>
   <string name="notification_external_call">ایک اور آلے پر جاری کال</string>
   <string name="notification_external_video_call">ایک اور آلے پر جاری ویڈیو کال</string>
   <string name="notification_take_call">کال لیں</string>

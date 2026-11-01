@@ -274,6 +274,11 @@ public class RttChatFragment extends Fragment
   }
 
   @Override
+  public void onSwitchToVoice() {
+    inCallButtonUiDelegate.changeToVoiceClicked();
+  }
+
+  @Override
   public void onAudioRoute(int route) {
     inCallButtonUiDelegate.setAudioRoute(route);
   }

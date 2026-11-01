@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Em espera</string>
   <string name="notification_incoming_call">Chamada recebida</string>
   <string name="notification_incoming_video_call">Recebendo videochamada</string>
-  <string name="notification_incoming_call_mutli_sim">Chamada recebida via %1$s</string>
   <string name="notification_incoming_work_call">Chamada de trabalho recebida</string>
   <string name="notification_incoming_spam_call">Chamada recebida suspeita (spam)</string>
   <string name="notification_requesting_video_call">Recebendo solicitação de vídeo</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Vídeo</string>
   <string name="notification_action_accept">Aceitar</string>
   <string name="notification_action_dismiss">Recusar</string>
-  <string name="notification_action_speaker_on">Ativar alto-falante</string>
-  <string name="notification_action_speaker_off">Desativar alto-falante</string>
   <string name="notification_external_call">Chamada em andamento em outro dispositivo</string>
   <string name="notification_external_video_call">Videochamada em andamento em outro dispositivo</string>
   <string name="notification_take_call">Atender à chamada</string>

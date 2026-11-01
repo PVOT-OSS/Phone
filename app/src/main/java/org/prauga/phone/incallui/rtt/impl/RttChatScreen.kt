@@ -78,6 +78,9 @@ interface RttChatActions {
     fun onDialpad(show: Boolean)
     fun onAddCall()
     fun onSwap()
+
+    /** Turns the RTT call into a voice call. */
+    fun onSwitchToVoice()
     fun onAudioRoute(route: Int)
 
     /** The user scrolled back through the chat, which hides the keyboard. */
@@ -294,6 +297,11 @@ private fun OverflowMenu(state: RttChatUiState, actions: RttChatActions) {
                 onClick = { state.menuOpen = false; actions.onSwap() },
             )
         }
+        PvotSheetItem(
+            title = stringResource(R.string.rtt_button_downgrade),
+            icon = { Icon(painterResource(R.drawable.ic_phone), contentDescription = null) },
+            onClick = { state.menuOpen = false; actions.onSwitchToVoice() },
+        )
     }
 }
 

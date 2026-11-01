@@ -48,7 +48,8 @@ public class DialerUtils {
    * Prefix on a dialed number that indicates that the call should be placed through the Wireless
    * Priority Service.
    */
-  private static final String WPS_PREFIX = "*272";
+  /** WPS priority calls, also with caller ID hidden (#31#) or shown (*31#) for the call. */
+  private static final String[] WPS_PREFIXES = {"*272", "#31#*272", "*31#*272"};
 
   /**
    * Attempts to start an activity and displays a toast with the default error message if the
@@ -127,13 +128,22 @@ public class DialerUtils {
    */
   @SuppressLint("MissingPermission")
   private static boolean shouldWarnForOutgoingWps(Context context, String number) {
-    if (number != null && number.startsWith(WPS_PREFIX)) {
+    if (number != null && startsWithAny(number, WPS_PREFIXES)) {
       TelecomManager telecomManager = context.getSystemService(TelecomManager.class);
       TelephonyManager telephonyManager = context.getSystemService(TelephonyManager.class);
       boolean isOnVolte =
           telephonyManager.getVoiceNetworkType() == TelephonyManager.NETWORK_TYPE_LTE;
       boolean hasCurrentActiveCall = telecomManager.isInCall();
       return isOnVolte && hasCurrentActiveCall;
+    }
+    return false;
+  }
+
+  private static boolean startsWithAny(String number, String[] prefixes) {
+    for (String prefix : prefixes) {
+      if (number.startsWith(prefix)) {
+        return true;
+      }
     }
     return false;
   }
@@ -162,9 +172,13 @@ public class DialerUtils {
    * @return Joined char sequences.
    */
   public static CharSequence join(Iterable<CharSequence> list) {
+    return join(list, ", ");
+  }
+
+  /** Joins {@code list} with {@code separator}, keeping each item's text direction. */
+  public static CharSequence join(Iterable<CharSequence> list, CharSequence separator) {
     StringBuilder sb = new StringBuilder();
     final BidiFormatter formatter = BidiFormatter.getInstance();
-    final CharSequence separator = ", ";
 
     Iterator<CharSequence> itr = list.iterator();
     boolean firstTime = true;

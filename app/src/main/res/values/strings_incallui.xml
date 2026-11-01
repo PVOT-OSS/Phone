@@ -32,13 +32,13 @@
   <!-- Notification strings -->
   <!-- The "label" of the in-call Notification for a dialing call, used
        as the format string for a Chronometer widget. [CHAR LIMIT=60] -->
-  <string name="notification_dialing">Dialing</string>
+  <string name="notification_dialing">Calling</string>
   <!-- The "label" of the in-call Notification for an ongoing call. [CHAR LIMIT=60] -->
   <string name="notification_ongoing_call">Ongoing call</string>
   <!-- The "label" of the in-call Notification for an ongoing video call. [CHAR LIMIT=60] -->
-  <string name="notification_ongoing_video_call">Ongoing video call</string>
+  <string name="notification_ongoing_video_call">Ongoing carrier video call</string>
   <!-- The "label" of the in-call Notification for an ongoing paused video call. [CHAR LIMIT=60] -->
-  <string name="notification_ongoing_paused_video_call">Ongoing video call \u2011 video paused</string>
+  <string name="notification_ongoing_paused_video_call">Ongoing carrier video call \u2011 video paused</string>
   <!-- The "label" of the in-call Notification for an ongoing work call. [CHAR LIMIT=60] -->
   <string name="notification_ongoing_work_call">Ongoing work call</string>
 
@@ -58,17 +58,32 @@
 
   <!-- The "label" of the in-call Notification for a call that's on hold -->
   <string name="notification_on_hold">On hold</string>
+  <!-- Toast shown when the network could not merge the calls into a conference. -->
+  <string name="incall_merge_failed">Failed to merge call.</string>
+  <!-- Message shown when the call on hold was ended by the other side while the user is on another call. -->
+  <string name="incall_held_call_disconnected">Your call on hold has been disconnected</string>
+  <!-- In-call button that transfers the active call to the call on hold. [CHAR LIMIT=12] -->
+  <string name="incall_label_transfer">Transfer</string>
+  <!-- Title of the dialog confirming a call transfer. -->
+  <string name="incall_transfer_dialog_title">Transfer your call?</string>
+  <!-- Message of the dialog confirming a call transfer: the active caller is put through to the held one. -->
+  <string name="incall_transfer_dialog_message">You\'re transferring your call with <xliff:g id="active_caller" example="Alex">%1$s</xliff:g> to <xliff:g id="held_caller" example="Sam">%2$s</xliff:g>. Be sure both parties know about the transfer before completing it.</string>
+  <!-- Button confirming a call transfer. -->
+  <string name="incall_transfer_dialog_confirm">Transfer the call</string>
   <!-- The "label" of the in-call Notification for an incoming ringing call. [CHAR LIMIT=60] -->
   <string name="notification_incoming_call">Incoming call</string>
   <!-- The "label" of the in-call Notification for an incoming ringing call. [CHAR LIMIT=60] -->
-  <string name="notification_incoming_video_call">Incoming video call</string>
-  <!-- The "label" of the in-call Notification for an incoming ringing call on a device with multiple SIMs. [CHAR LIMIT=60] -->
-  <string name="notification_incoming_call_mutli_sim">Incoming call via <xliff:g id="sim_label" example="SIM 1">%1$s</xliff:g></string>
+  <string name="notification_incoming_video_call">Incoming carrier video call</string>
+  <!-- The "label" of the in-call Notification for an incoming RTT call. [CHAR LIMIT=60] -->
+  <string name="notification_incoming_rtt_call">Incoming RTT call</string>
+  <!-- The in-call Notification's label followed by the calling account it uses, on a device with
+       more than one, for example "Ongoing call via SIM 1". [CHAR LIMIT=80] -->
+  <string name="notification_status_via_account"><xliff:g id="status" example="Ongoing call">%1$s</xliff:g> via <xliff:g id="account_label" example="SIM 1">%2$s</xliff:g></string>
 
   <!-- The "label" of the in-call Notification for an incoming ringing call. [CHAR LIMIT=60] -->
   <string name="notification_incoming_work_call">Incoming work call</string>
   <!-- The "label" of the in-call Notification for an incoming ringing spam call. -->
-  <string name="notification_incoming_spam_call">Incoming suspected spam call</string>
+  <string name="notification_incoming_spam_call">Suspected spam caller</string>
   <!-- The "label" of the in-call Notification for upgrading an existing call to a video call. -->
   <string name="notification_requesting_video_call">Incoming video request</string>
   <!-- Label for the "Answer call" action. This is the displayed label for the action that answers
@@ -90,8 +105,15 @@
        scenarios such as declining an incoming call or declining a video call request.
        [CHAR LIMIT=12] -->
   <string name="notification_action_dismiss">Decline</string>
-  <string name="notification_action_speaker_on">Turn speaker on</string>
-  <string name="notification_action_speaker_off">Turn speaker off</string>
+  <!-- Label for the notification action that switches the call between the speaker and the
+       earpiece. [CHAR LIMIT=12] -->
+  <string name="notification_action_speaker">Speaker</string>
+  <!-- Label for the notification action that mutes the microphone in a call. [CHAR LIMIT=12] -->
+  <string name="notification_action_mute">Mute</string>
+  <!-- Label for the notification action that unmutes the microphone in a call. [CHAR LIMIT=12] -->
+  <string name="notification_action_unmute">Unmute</string>
+  <!-- Label for the notification action that resumes a call on hold. [CHAR LIMIT=12] -->
+  <string name="notification_action_unhold">Unhold</string>
 
   <!-- The "label" of the in-call Notification for an ongoing external call.
        External calls are a representation of a call which is in progress on the user's other

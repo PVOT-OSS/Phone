@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Parkert</string>
   <string name="notification_incoming_call">Innkommende samtale</string>
   <string name="notification_incoming_video_call">Innkommende videoanrop</string>
-  <string name="notification_incoming_call_mutli_sim">Innkommende anrop via %1$s</string>
   <string name="notification_incoming_work_call">Innkommende jobbanrop</string>
   <string name="notification_incoming_spam_call">Innkommende anrop fra en mulig useriøs oppringer</string>
   <string name="notification_requesting_video_call">Innkommende videoforespørsel</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Video</string>
   <string name="notification_action_accept">Godta</string>
   <string name="notification_action_dismiss">Avslå</string>
-  <string name="notification_action_speaker_on">Slå på høyttaleren</string>
-  <string name="notification_action_speaker_off">Slå av høyttaleren</string>
   <string name="notification_external_call">Samtale pågår på en annen enhet</string>
   <string name="notification_external_video_call">En videosamtale pågår på en annen enhet</string>
   <string name="notification_take_call">Svar på anropet</string>

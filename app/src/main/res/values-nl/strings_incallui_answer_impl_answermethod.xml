@@ -2,7 +2,6 @@
 <resources>
   <string name="call_incoming_swipe_to_answer">Veeg omhoog om te beantwoorden</string>
   <string name="call_incoming_swipe_to_reject">Veeg omlaag om te weigeren</string>
-  <string name="call_incoming_will_disconnect">Als je deze oproep beantwoordt, wordt je videogesprek beëindigd</string>
   <string name="call_incoming_decline">Weigeren</string>
   <string name="call_incoming_answer">Beantwoorden</string>
 </resources>

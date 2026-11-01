@@ -189,6 +189,15 @@ class OldCallDetailsActivity : ComponentActivity() {
             }
         }
 
+        override fun deleteCall(entry: CallDetailsEntryUi) {
+            entries = entries.toBuilder().apply {
+                val index = entriesList.indexOfFirst { it.callId == entry.callId }
+                if (index >= 0) removeEntries(index)
+            }.build()
+            ui = ui?.let { it.copy(entries = it.entries.filterNot { e -> e.callId == entry.callId }) }
+            lifecycleScope.launch { withContext(Dispatchers.IO) { deleteCalls(listOf(entry.callId.toString())) } }
+        }
+
         override fun showTranscript(entry: CallDetailsEntryUi) = startActivity(
             RttTranscriptActivity.getIntent(this@OldCallDetailsActivity, entry.callMappingId, contact.nameOrNumber, photoInfo()))
 

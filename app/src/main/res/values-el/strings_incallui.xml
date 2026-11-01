@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Σε αναμονή</string>
   <string name="notification_incoming_call">Εισερχόμενη κλήση</string>
   <string name="notification_incoming_video_call">Εισερχόμενη βιντεοκλήση</string>
-  <string name="notification_incoming_call_mutli_sim">Εισερχόμενη κλήση μέσω %1$s</string>
   <string name="notification_incoming_work_call">Εισερχόμενη κλήση εργασίας</string>
   <string name="notification_incoming_spam_call">Πιθανώς ανεπιθύμητη εισερχόμενη κλήση</string>
   <string name="notification_requesting_video_call">Αίτημα εισερχόμενου βίντεο</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Βίντεο</string>
   <string name="notification_action_accept">Αποδοχή</string>
   <string name="notification_action_dismiss">Απόρριψη</string>
-  <string name="notification_action_speaker_on">Ενεργοποίηση ηχείου</string>
-  <string name="notification_action_speaker_off">Απενεργοποίηση ηχείου</string>
   <string name="notification_external_call">Κλήση σε εξέλιξη σε άλλη συσκευή</string>
   <string name="notification_external_video_call">Τρέχουσα βιντεοκλήση σε άλλη συσκευή</string>
   <string name="notification_take_call">Λήψη κλήσης</string>

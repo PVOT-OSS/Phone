@@ -67,6 +67,10 @@ public abstract class PrimaryInfo {
 
   public abstract boolean answeringDisconnectsOngoingCall();
 
+  /** The app whose call answering will end, when Telecom names it. */
+  @Nullable
+  public abstract String answeringDisconnectsAppName();
+
   // Used for consistent LetterTile coloring.
   @Nullable
   public abstract String contactInfoLookupKey();
@@ -113,6 +117,8 @@ public abstract class PrimaryInfo {
 
     public abstract Builder setAnsweringDisconnectsOngoingCall(
         boolean answeringDisconnectsOngoingCall);
+
+    public abstract Builder setAnsweringDisconnectsAppName(@Nullable String appName);
 
     public abstract Builder setContactInfoLookupKey(String contactInfoLookupKey);
 

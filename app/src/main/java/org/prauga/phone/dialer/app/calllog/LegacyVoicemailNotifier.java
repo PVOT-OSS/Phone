@@ -145,7 +145,7 @@ public final class LegacyVoicemailNotifier {
       @NonNull Context context, PhoneAccountHandle handle, String voicemailNumber) {
     if (TelecomUtil.getCallCapablePhoneAccounts(context).size() > 1) {
       TelecomManager telecomManager = context.getSystemService(TelecomManager.class);
-      PhoneAccount phoneAccount = telecomManager.getPhoneAccount(handle);
+      PhoneAccount phoneAccount = TelecomUtil.getPhoneAccount(context, handle);
       if (phoneAccount != null) {
         return phoneAccount.getShortDescription().toString();
       }

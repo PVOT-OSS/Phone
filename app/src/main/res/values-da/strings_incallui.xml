@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Ventende</string>
   <string name="notification_incoming_call">Indgående opkald</string>
   <string name="notification_incoming_video_call">Indgående videoopkald</string>
-  <string name="notification_incoming_call_mutli_sim">Indgående opkald via %1$s</string>
   <string name="notification_incoming_work_call">Indgående opkald i forbindelse med arbejde</string>
   <string name="notification_incoming_spam_call">Indgående formodet spamopkald</string>
   <string name="notification_requesting_video_call">Indgående videoanmodning</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Video</string>
   <string name="notification_action_accept">Besvar</string>
   <string name="notification_action_dismiss">Afvis</string>
-  <string name="notification_action_speaker_on">Slå højttaler til</string>
-  <string name="notification_action_speaker_off">Slå højttaler fra</string>
   <string name="notification_external_call">Igangværende opkald på en anden enhed</string>
   <string name="notification_external_video_call">Igangværende opkald på en anden enhed</string>
   <string name="notification_take_call">Besvar opkald</string>

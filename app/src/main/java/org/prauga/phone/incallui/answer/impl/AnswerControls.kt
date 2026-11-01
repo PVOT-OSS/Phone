@@ -84,7 +84,8 @@ class AnswerUiState {
 
     /** The line above the answer control, or null for "Swipe up to answer". */
     var hint by mutableStateOf<CharSequence?>(null)
-    var incomingWillDisconnect by mutableStateOf(false)
+    /** What answering will end, said to the user; null when it ends nothing. */
+    var incomingWillDisconnectText by mutableStateOf<CharSequence?>(null)
 
     var secondary by mutableStateOf<AnswerSideAction?>(null)
     var secondaryVisible by mutableStateOf(false)
@@ -111,9 +112,9 @@ interface AnswerActions {
 @Composable
 fun AnswerControls(state: AnswerUiState, actions: AnswerActions, modifier: Modifier = Modifier) {
     Column(modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-        if (state.incomingWillDisconnect) {
+        state.incomingWillDisconnectText?.let { text ->
             Text(
-                stringResource(R.string.call_incoming_will_disconnect),
+                text.toString(),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,

@@ -189,6 +189,7 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
             ButtonController.SwapSimButtonController(delegate),
             ButtonController.UpgradeToVideoButtonController(delegate),
             UpgradeToRttButtonController(delegate),
+            ButtonController.TransferButtonController(delegate),
             ButtonController.ManageConferenceButtonController(inCallScreenDelegate),
             ButtonController.SwitchToSecondaryButtonController(inCallScreenDelegate),
             ButtonController.CallRecordButtonController(delegate),
@@ -392,6 +393,7 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
             InCallButtonIds.BUTTON_MANAGE_VOICE_CONFERENCE,
             InCallButtonIds.BUTTON_SWAP_SIM,
             InCallButtonIds.BUTTON_UPGRADE_TO_RTT,
+            InCallButtonIds.BUTTON_TRANSFER,
             InCallButtonIds.BUTTON_RECORD_CALL,
         )
     }

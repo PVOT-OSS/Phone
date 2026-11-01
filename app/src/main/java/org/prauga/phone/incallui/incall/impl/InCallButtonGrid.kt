@@ -173,6 +173,7 @@ internal fun pvotIconFor(@DrawableRes iconRes: Int): Int = when (iconRes) {
     R.drawable.ic_sim_change_white -> R.drawable.ic_device_sim
     R.drawable.quantum_ic_call_merge_vd_theme_24 -> R.drawable.ic_arrow_merge
     R.drawable.quantum_ic_dialpad_vd_theme_24 -> R.drawable.ic_dialpad
+    R.drawable.quantum_ic_forward_vd_theme_24 -> R.drawable.ic_arrow_forward_up
     R.drawable.quantum_ic_group_vd_theme_24 -> R.drawable.ic_users
     R.drawable.quantum_ic_headset_vd_theme_24 -> R.drawable.ic_headphones
     R.drawable.quantum_ic_mic_off_vd_theme_24 -> R.drawable.ic_microphone_off

@@ -79,7 +79,7 @@ class SelectPhoneAccountDialogFragment : DialogFragment() {
         val telecomManager = context.getSystemService(TelecomManager::class.java)
         val rows = options.entriesList.map { entry ->
             val handle = SelectPhoneAccountDialogOptionsUtil.getPhoneAccountHandle(entry)
-            val account = telecomManager.getPhoneAccount(handle)
+            val account = TelecomUtil.getPhoneAccount(context, handle)
             val address = account?.address?.schemeSpecificPart
             AccountRow(
                 label = account?.label?.toString().orEmpty(),

@@ -8,16 +8,24 @@ package org.prauga.phone.dialer.testing
 import android.content.ComponentName
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.telecom.PhoneAccount
 import android.telecom.PhoneAccountHandle
 import android.telecom.TelecomManager
 import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.ExecutionException
+import java.util.concurrent.FutureTask
 
 /** A pretend network for tests: a calling account whose calls go through the real Telecom stack. */
 object FakeCarrier {
 
     private const val ACCOUNT_ID = "fake_carrier"
     private val live = CopyOnWriteArrayList<FakeConnection>()
+
+    /** When true the network refuses to merge calls into a conference. */
+    @Volatile
+    var failMerges = false
 
     /** Calls currently on the fake carrier, oldest first. */
     val connections: List<FakeConnection> get() = live.toList()
@@ -40,6 +48,7 @@ object FakeCarrier {
     }
 
     fun unregister(context: Context) {
+        failMerges = false
         live.forEach { it.hangUpFromFarEnd() }
         telecom(context).unregisterPhoneAccount(accountHandle(context))
     }
@@ -52,10 +61,33 @@ object FakeCarrier {
 
     internal fun remember(connection: FakeConnection) {
         live += connection
+        updateConferenceable()
     }
 
     internal fun forget(connection: FakeConnection) {
         live -= connection
+        updateConferenceable()
+    }
+
+    private fun updateConferenceable() {
+        for (connection in live) {
+            connection.conferenceables = live.filter { it !== connection }
+        }
+    }
+
+    /**
+     * Runs a far-end action on the main thread, where Telecom calls the connection service, and
+     * waits for it. Changing calls from the test thread races with Telecom's own updates.
+     */
+    internal fun <T> onMain(block: () -> T): T {
+        if (Looper.myLooper() == Looper.getMainLooper()) return block()
+        val result = FutureTask(block)
+        Handler(Looper.getMainLooper()).post(result)
+        return try {
+            result.get()
+        } catch (e: ExecutionException) {
+            throw e.cause ?: e
+        }
     }
 
     private fun telecom(context: Context) = context.getSystemService(TelecomManager::class.java)

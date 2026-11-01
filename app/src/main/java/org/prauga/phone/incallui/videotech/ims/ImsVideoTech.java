@@ -23,9 +23,11 @@ import android.telecom.Call.Details;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.VideoProfile;
 
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.prauga.phone.dialer.R;
 import org.prauga.phone.dialer.common.Assert;
 import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.util.CallUtil;
@@ -42,6 +44,7 @@ public class ImsVideoTech implements VideoTech {
   private @SessionModificationState int sessionModificationState =
       SessionModificationState.NO_REQUEST;
   private int previousVideoState = VideoProfile.STATE_AUDIO_ONLY;
+  private boolean downgradeRequestedByUser;
   private boolean paused = false;
   private String savedCameraId;
 
@@ -151,6 +154,16 @@ public class ImsVideoTech implements VideoTech {
       LogUtil.i("ImsVideoTech.onCallStateChanged", "cancelling upgrade notification");
       setSessionModificationState(SessionModificationState.NO_REQUEST);
     }
+    // Video dropped without the user asking: the other side or the network turned it off. The
+    // session request and the new video state can arrive in either order, so this is decided on
+    // the state itself.
+    if (VideoProfile.isVideo(previousVideoState) && !VideoProfile.isVideo(newVideoState)) {
+      if (!downgradeRequestedByUser) {
+        Toast.makeText(context, R.string.video_call_downgraded_by_remote, Toast.LENGTH_LONG)
+            .show();
+      }
+      downgradeRequestedByUser = false;
+    }
     previousVideoState = newVideoState;
   }
 
@@ -204,6 +217,13 @@ public class ImsVideoTech implements VideoTech {
     call.getVideoCall()
         .sendSessionModifyResponse(new VideoProfile(call.getDetails().getVideoState()));
     setSessionModificationState(SessionModificationState.NO_REQUEST);
+  }
+
+  @Override
+  public void downgradeToAudio() {
+    LogUtil.enterBlock("ImsVideoTech.downgradeToAudio");
+    downgradeRequestedByUser = true;
+    call.getVideoCall().sendSessionModifyRequest(new VideoProfile(VideoProfile.STATE_AUDIO_ONLY));
   }
 
   @Override

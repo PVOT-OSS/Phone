@@ -2,7 +2,6 @@
 <resources>
   <string name="call_incoming_swipe_to_answer">Cavab vermək üçün sürüşdürün</string>
   <string name="call_incoming_swipe_to_reject">İmtina etmək üçün aşağı sürüşdürün</string>
-  <string name="call_incoming_will_disconnect">Bu zəngə cavab versəniz video zəng sonlandırılacaq</string>
   <string name="call_incoming_decline">Rədd edin</string>
   <string name="call_incoming_answer">Cavab</string>
 </resources>

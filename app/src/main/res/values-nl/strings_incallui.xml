@@ -15,7 +15,6 @@
   <string name="notification_on_hold">In de wacht</string>
   <string name="notification_incoming_call">Inkomende oproep</string>
   <string name="notification_incoming_video_call">Binnenkomend videogesprek</string>
-  <string name="notification_incoming_call_mutli_sim">Inkomende oproep via %1$s</string>
   <string name="notification_incoming_work_call">Inkomende zakelijke oproep</string>
   <string name="notification_incoming_spam_call">Inkomende vermoedelijke spamoproep</string>
   <string name="notification_requesting_video_call">Binnenkomend videoverzoek</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Video</string>
   <string name="notification_action_accept">Accepteren</string>
   <string name="notification_action_dismiss">Weigeren</string>
-  <string name="notification_action_speaker_on">Luidspreker inschakelen</string>
-  <string name="notification_action_speaker_off">Luidspreker uitschakelen</string>
   <string name="notification_external_call">Actief gesprek op een ander apparaat</string>
   <string name="notification_external_video_call">Actief videogesprek op een ander apparaat</string>
   <string name="notification_take_call">Gesprek beantwoorden</string>

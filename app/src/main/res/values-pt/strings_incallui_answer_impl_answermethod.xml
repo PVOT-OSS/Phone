@@ -2,7 +2,6 @@
 <resources>
   <string name="call_incoming_swipe_to_answer">Deslize para cima para atender</string>
   <string name="call_incoming_swipe_to_reject">Deslize para baixo para rejeitar</string>
-  <string name="call_incoming_will_disconnect">A videochamada será encerrada se você atender a esta chamada</string>
   <string name="call_incoming_decline">Recusar</string>
   <string name="call_incoming_answer">Atender</string>
 </resources>

@@ -41,7 +41,13 @@ public interface InCallButtonUiDelegate {
 
   void changeToVideoClicked();
 
+  /** Turns a video or RTT call into a voice call. */
+  void changeToVoiceClicked();
+
   void changeToRttClicked();
+
+  /** Asks to transfer the active call to the held one. */
+  void transferClicked();
 
   void switchCameraClicked(boolean useFrontFacingCamera);
 

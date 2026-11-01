@@ -15,7 +15,6 @@
   <string name="notification_on_hold">En espera</string>
   <string name="notification_incoming_call">Trucada entrant</string>
   <string name="notification_incoming_video_call">Videotrucada entrant</string>
-  <string name="notification_incoming_call_mutli_sim">Trucada entrant per la %1$s</string>
   <string name="notification_incoming_work_call">Trucada de feina entrant</string>
   <string name="notification_incoming_spam_call">Presumpta trucada brossa entrant</string>
   <string name="notification_requesting_video_call">Sol·licitud de vídeo entrant</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Vídeo</string>
   <string name="notification_action_accept">Accepta</string>
   <string name="notification_action_dismiss">Rebutja</string>
-  <string name="notification_action_speaker_on">Activa l\'altaveu</string>
-  <string name="notification_action_speaker_off">Desactiva l\'altaveu</string>
   <string name="notification_external_call">Trucada en curs en un altre dispositiu</string>
   <string name="notification_external_video_call">Videotrucada en curs en un altre dispositiu</string>
   <string name="notification_take_call">Accepta la trucada</string>

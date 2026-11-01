@@ -15,7 +15,6 @@
   <string name="notification_on_hold">ခဏ ကိုင်ထားစဉ်</string>
   <string name="notification_incoming_call">အဝင်ခေါ်ဆိုမှု</string>
   <string name="notification_incoming_video_call">ဝင်လာသည့် ဗီဒီယို ခေါ်ဆိုမှု</string>
-  <string name="notification_incoming_call_mutli_sim">%1$s မှတစ်ဆင့် အဝင်ခေါ်ဆိုမှု</string>
   <string name="notification_incoming_work_call">အဝင် ခေါ်ဆိုမှု</string>
   <string name="notification_incoming_spam_call">ခေါ်နေသော မသင်္ကာဖွယ်ရာ စပမ်းခေါ်ဆိုမှု</string>
   <string name="notification_requesting_video_call">အသံ ခေါ်ဆိုမှုအဖြစ် တောင်းဆိုမှု</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">ဗီဒီယို</string>
   <string name="notification_action_accept">လက်ခံရန်</string>
   <string name="notification_action_dismiss">ငြင်းပယ်ရန်</string>
-  <string name="notification_action_speaker_on">စပီကာ ဖွင့်ပါ</string>
-  <string name="notification_action_speaker_off">စပီကာ ပိတ်ပါ</string>
   <string name="notification_external_call">အခြားကိရိယာတွင် လက်ရှိခေါ်ဆိုနေမှု</string>
   <string name="notification_external_video_call">အခြားကိရိယာရှိ လက်ရှိဗီဒီယိုခေါ်ဆိုမှု</string>
   <string name="notification_take_call">ဖုန်းခေါ်ဆိုမှုလွှဲယူပါ</string>

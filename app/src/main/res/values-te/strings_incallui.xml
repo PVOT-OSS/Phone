@@ -15,7 +15,6 @@
   <string name="notification_on_hold">హోల్డ్‌లో ఉంది</string>
   <string name="notification_incoming_call">ఇన్‌కమింగ్ కాల్</string>
   <string name="notification_incoming_video_call">ఇన్‌కమింగ్ వీడియో కాల్</string>
-  <string name="notification_incoming_call_mutli_sim">%1$s ద్వారా కాల్ వస్తోంది</string>
   <string name="notification_incoming_work_call">ఇన్‌కమింగ్ కార్యాలయ కాల్</string>
   <string name="notification_incoming_spam_call">అనుమానాస్పద స్పామ్ కాల్ వస్తోంది</string>
   <string name="notification_requesting_video_call">ఇన్‌కమింగ్ వీడియో అభ్యర్థన</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">వీడియో</string>
   <string name="notification_action_accept">ఆమోదిస్తున్నాను</string>
   <string name="notification_action_dismiss">తిరస్కరించు</string>
-  <string name="notification_action_speaker_on">స్పీకర్‌ను ఆన్ చేయండి</string>
-  <string name="notification_action_speaker_off">స్పీకర్‌ను ఆఫ్ చేయండి</string>
   <string name="notification_external_call">మరో పరికరంలో కాల్ జరుగుతోంది</string>
   <string name="notification_external_video_call">మరో పరికరంలో వీడియో కాల్ జరుగుతోంది</string>
   <string name="notification_take_call">కాల్‌ను తీయి</string>

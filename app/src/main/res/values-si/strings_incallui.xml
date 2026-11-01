@@ -15,7 +15,6 @@
   <string name="notification_on_hold">රඳවා ගනිමින්</string>
   <string name="notification_incoming_call">එන ඇමතුම</string>
   <string name="notification_incoming_video_call">පැමිණෙන වීඩියෝ ඇමතුම</string>
-  <string name="notification_incoming_call_mutli_sim">%1$s හරහා එන ඇමතුම</string>
   <string name="notification_incoming_work_call">පැමිණෙන කාර්යාල ඇමතුම</string>
   <string name="notification_incoming_spam_call">එන සැකසහිත අයාචිත තැපැල් ඇමතුම</string>
   <string name="notification_requesting_video_call">පැමිණෙන වීඩියෝ ඉල්ලීම</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">වීඩියෝව</string>
   <string name="notification_action_accept">පිළිගන්න</string>
   <string name="notification_action_dismiss">ප්‍රතික්ෂේප කිරීම</string>
-  <string name="notification_action_speaker_on">ස්පීකරය ක්‍රියාත්මක කරන්න</string>
-  <string name="notification_action_speaker_off">ස්පීකරය ක්‍රියාවිරහිත කරන්න</string>
   <string name="notification_external_call">වෙනත් උපාංගයක සිදු වන ඇමතුම</string>
   <string name="notification_external_video_call">වෙනත් උපාංගයක කෙරෙමින් පවතින වීඩියෝ ඇමතුම</string>
   <string name="notification_take_call">ඇමතුම ගන්න</string>

@@ -15,7 +15,6 @@
   <string name="notification_on_hold">În așteptare</string>
   <string name="notification_incoming_call">Apel de intrare</string>
   <string name="notification_incoming_video_call">Apel video primit</string>
-  <string name="notification_incoming_call_mutli_sim">Apel primit prin %1$s</string>
   <string name="notification_incoming_work_call">Apel de serviciu primit</string>
   <string name="notification_incoming_spam_call">Un apel primit posibil spam</string>
   <string name="notification_requesting_video_call">Solicitare de trecere la apel video</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Videoclip</string>
   <string name="notification_action_accept">Acceptați</string>
   <string name="notification_action_dismiss">Respingeți</string>
-  <string name="notification_action_speaker_on">Porniți difuzorul</string>
-  <string name="notification_action_speaker_off">Opriți difuzorul</string>
   <string name="notification_external_call">Apel în curs pe alt dispozitiv</string>
   <string name="notification_external_video_call">Apel video în curs pe alt dispozitiv</string>
   <string name="notification_take_call">Preluați apelul</string>

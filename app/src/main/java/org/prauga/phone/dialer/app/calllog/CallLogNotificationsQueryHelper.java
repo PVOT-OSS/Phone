@@ -262,6 +262,8 @@ public class CallLogNotificationsQueryHelper {
     public final String accountId;
     public final String countryIso;
     public final long dateMs;
+    /** The call log's missed reason bits, {@code CallLog.Calls.MISSED_REASON}. */
+    public final long missedReason;
 
     public NewCall(
         Uri callsUri,
@@ -272,6 +274,28 @@ public class CallLogNotificationsQueryHelper {
         String accountId,
         String countryIso,
         long dateMs) {
+      this(
+          callsUri,
+          voicemailUri,
+          number,
+          numberPresentation,
+          accountComponentName,
+          accountId,
+          countryIso,
+          dateMs,
+          Calls.MISSED_REASON_NOT_MISSED);
+    }
+
+    public NewCall(
+        Uri callsUri,
+        @Nullable Uri voicemailUri,
+        String number,
+        int numberPresentation,
+        String accountComponentName,
+        String accountId,
+        String countryIso,
+        long dateMs,
+        long missedReason) {
       this.callsUri = callsUri;
       this.voicemailUri = voicemailUri;
       this.number = number;
@@ -280,6 +304,7 @@ public class CallLogNotificationsQueryHelper {
       this.accountId = accountId;
       this.countryIso = countryIso;
       this.dateMs = dateMs;
+      this.missedReason = missedReason;
     }
   }
 
@@ -297,7 +322,8 @@ public class CallLogNotificationsQueryHelper {
       Calls.PHONE_ACCOUNT_COMPONENT_NAME,
       Calls.PHONE_ACCOUNT_ID,
       Calls.COUNTRY_ISO,
-      Calls.DATE
+      Calls.DATE,
+      Calls.MISSED_REASON
     };
 
     private static final int ID_COLUMN_INDEX = 0;
@@ -308,6 +334,7 @@ public class CallLogNotificationsQueryHelper {
     private static final int PHONE_ACCOUNT_ID_COLUMN_INDEX = 5;
     private static final int COUNTRY_ISO_COLUMN_INDEX = 6;
     private static final int DATE_COLUMN_INDEX = 7;
+    private static final int MISSED_REASON_COLUMN_INDEX = 8;
 
     private final ContentResolver contentResolver;
     private final Context context;
@@ -429,7 +456,8 @@ public class CallLogNotificationsQueryHelper {
           cursor.getString(PHONE_ACCOUNT_COMPONENT_NAME_COLUMN_INDEX),
           cursor.getString(PHONE_ACCOUNT_ID_COLUMN_INDEX),
           cursor.getString(COUNTRY_ISO_COLUMN_INDEX),
-          cursor.getLong(DATE_COLUMN_INDEX));
+          cursor.getLong(DATE_COLUMN_INDEX),
+          cursor.getLong(MISSED_REASON_COLUMN_INDEX));
     }
   }
 }

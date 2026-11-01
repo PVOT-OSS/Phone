@@ -39,5 +39,8 @@ public class CallCompat {
 
     public static final String EXTRA_ANSWERING_DROPS_FOREGROUND_CALL =
         "android.telecom.extra.ANSWERING_DROPS_FG_CALL";
+
+    public static final String EXTRA_ANSWERING_DROPS_FOREGROUND_CALL_APP_NAME =
+        "android.telecom.extra.ANSWERING_DROPS_FG_CALL_APP_NAME";
   }
 }

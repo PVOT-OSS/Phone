@@ -684,6 +684,23 @@ public interface ButtonController {
     }
   }
 
+  class TransferButtonController extends SimpleNonCheckableButtonController {
+
+    public TransferButtonController(@NonNull InCallButtonUiDelegate delegate) {
+      super(
+          delegate,
+          InCallButtonIds.BUTTON_TRANSFER,
+          R.string.incall_label_transfer,
+          R.string.incall_label_transfer,
+          R.drawable.quantum_ic_forward_vd_theme_24);
+    }
+
+    @Override
+    public void onClick(View view) {
+      delegate.transferClicked();
+    }
+  }
+
   class SwapSimButtonController extends SimpleNonCheckableButtonController {
 
     public SwapSimButtonController(InCallButtonUiDelegate delegate) {

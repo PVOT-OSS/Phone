@@ -87,91 +87,32 @@ public class CallLogGroupBuilder {
     long currentTime = System.currentTimeMillis();
     cursor.moveToFirst();
 
-    // Determine the day group for the first call in the cursor.
-    final long firstDate = cursor.getLong(CallLogQuery.DATE);
-    final long firstRowId = cursor.getLong(CallLogQuery.ID);
-    int groupDayGroup = getDayGroup(firstDate, currentTime);
+    // The newest call of each row decides its day group and callback action.
+    CallLogGrouping.Call groupCall = toGroupingCall(cursor, currentTime);
+    CallLogGrouping.Call previousCall = groupCall;
+    int groupDayGroup = getDayGroup(cursor.getLong(CallLogQuery.DATE), currentTime);
+    int groupCallbackAction = callbackActionOf(cursor);
+    long firstRowId = cursor.getLong(CallLogQuery.ID);
     groupCreator.setDayGroup(firstRowId, groupDayGroup);
-
-    // Determine the callback action for the first call in the cursor.
-    String groupNumber = cursor.getString(CallLogQuery.NUMBER);
-    String groupAccountComponentName = cursor.getString(CallLogQuery.ACCOUNT_COMPONENT_NAME);
-    int groupFeatures = cursor.getInt(CallLogQuery.FEATURES);
-    int groupCallbackAction = CallbackActionHelper.getCallbackAction(groupNumber, groupFeatures);
     groupCreator.setCallbackAction(firstRowId, groupCallbackAction);
-
-    // Instantiate other group values to those of the first call in the cursor.
-    String groupAccountId = cursor.getString(CallLogQuery.ACCOUNT_ID);
-    String groupPostDialDigits = cursor.getString(CallLogQuery.POST_DIAL_DIGITS);
-    String groupViaNumbers = cursor.getString(CallLogQuery.VIA_NUMBER);
-    int groupCallType = cursor.getInt(CallLogQuery.CALL_TYPE);
     int groupSize = 1;
 
-    String number;
-    String numberPostDialDigits;
-    String numberViaNumbers;
-    int callType;
-    int callFeatures;
-    String accountComponentName;
-    String accountId;
-    int callbackAction;
-
     while (cursor.moveToNext()) {
-      // Obtain the values for the current call to group.
-      number = cursor.getString(CallLogQuery.NUMBER);
-      numberPostDialDigits = cursor.getString(CallLogQuery.POST_DIAL_DIGITS);
-      numberViaNumbers = cursor.getString(CallLogQuery.VIA_NUMBER);
-      callType = cursor.getInt(CallLogQuery.CALL_TYPE);
-      callFeatures = cursor.getInt(CallLogQuery.FEATURES);
-      accountComponentName = cursor.getString(CallLogQuery.ACCOUNT_COMPONENT_NAME);
-      accountId = cursor.getString(CallLogQuery.ACCOUNT_ID);
-      callbackAction = CallbackActionHelper.getCallbackAction(number, callFeatures);
-
-      final boolean isSameNumber = equalNumbers(groupNumber, number);
-      final boolean isSamePostDialDigits = groupPostDialDigits.equals(numberPostDialDigits);
-      final boolean isSameViaNumbers = groupViaNumbers.equals(numberViaNumbers);
-      final boolean isSameAccount =
-          isSameAccount(groupAccountComponentName, accountComponentName, groupAccountId, accountId);
-      final boolean isSameCallbackAction = (groupCallbackAction == callbackAction);
-
-      // Group calls with the following criteria:
-      // (1) Calls with the same number, account, and callback action should be in the same group;
-      // (2) Never group voice mails; and
-      // (3) Only group blocked calls with other blocked calls.
-      // (4) Only group calls that were assisted dialed with other calls that were assisted dialed.
-      if (isSameNumber
-          && isSameAccount
-          && isSamePostDialDigits
-          && isSameViaNumbers
-          && isSameCallbackAction
-          && areBothNotVoicemail(callType, groupCallType)
-          && (areBothNotBlocked(callType, groupCallType) || areBothBlocked(callType, groupCallType))
-          && meetsAssistedDialingGroupingCriteria(groupFeatures, callFeatures)) {
+      CallLogGrouping.Call call = toGroupingCall(cursor, currentTime);
+      if (CallLogGrouping.joins(previousCall, call, this::equalNumbers)) {
         // Increment the size of the group to include the current call, but do not create
         // the group until finding a call that does not match.
         groupSize++;
       } else {
-        // The call group has changed. Determine the day group for the new call group.
-        final long date = cursor.getLong(CallLogQuery.DATE);
-        groupDayGroup = getDayGroup(date, currentTime);
-
-        // Create a group for the previous group of calls, which does not include the
-        // current call.
+        // Create a group for the previous calls, which does not include the current call.
         groupCreator.addGroup(cursor.getPosition() - groupSize, groupSize);
 
         // Start a new group; it will include at least the current call.
         groupSize = 1;
-
-        // Update the group values to those of the current call.
-        groupNumber = number;
-        groupPostDialDigits = numberPostDialDigits;
-        groupViaNumbers = numberViaNumbers;
-        groupCallType = callType;
-        groupAccountComponentName = accountComponentName;
-        groupAccountId = accountId;
-        groupCallbackAction = callbackAction;
-        groupFeatures = callFeatures;
+        groupDayGroup = getDayGroup(cursor.getLong(CallLogQuery.DATE), currentTime);
+        groupCallbackAction = callbackActionOf(cursor);
       }
+      previousCall = call;
 
       // Save the callback action and the day group associated with the current call.
       final long currentCallId = cursor.getLong(CallLogQuery.ID);
@@ -181,6 +122,21 @@ public class CallLogGroupBuilder {
 
     // Create a group for the last set of calls.
     groupCreator.addGroup(count - groupSize, groupSize);
+  }
+
+  private CallLogGrouping.Call toGroupingCall(Cursor cursor, long now) {
+    return new CallLogGrouping.Call(
+        cursor.getString(CallLogQuery.NUMBER),
+        cursor.getString(CallLogQuery.POST_DIAL_DIGITS),
+        cursor.getInt(CallLogQuery.NUMBER_PRESENTATION),
+        cursor.getInt(CallLogQuery.CALL_TYPE),
+        CallLogGrouping.dayBucket(
+            DateUtils.getDayDifference(TIME_ZONE, cursor.getLong(CallLogQuery.DATE), now)));
+  }
+
+  private static int callbackActionOf(Cursor cursor) {
+    return CallbackActionHelper.getCallbackAction(
+        cursor.getString(CallLogQuery.NUMBER), cursor.getInt(CallLogQuery.FEATURES));
   }
 
   /**
@@ -204,10 +160,6 @@ public class CallLogGroupBuilder {
     return PhoneNumberUtils.compare(number1, number2);
   }
 
-  private boolean isSameAccount(String name1, String name2, String id1, String id2) {
-    return TextUtils.equals(name1, name2) && TextUtils.equals(id1, id2);
-  }
-
   /**
    * Given a call date and the current date, determine which date group the call belongs in.
    *
@@ -225,25 +177,6 @@ public class CallLogGroupBuilder {
     } else {
       return DAY_GROUP_OTHER;
     }
-  }
-
-  private boolean areBothNotVoicemail(int callType, int groupCallType) {
-    return callType != Calls.VOICEMAIL_TYPE && groupCallType != Calls.VOICEMAIL_TYPE;
-  }
-
-  private boolean areBothNotBlocked(int callType, int groupCallType) {
-    return callType != Calls.BLOCKED_TYPE && groupCallType != Calls.BLOCKED_TYPE;
-  }
-
-  private boolean areBothBlocked(int callType, int groupCallType) {
-    return callType == Calls.BLOCKED_TYPE && groupCallType == Calls.BLOCKED_TYPE;
-  }
-
-  private boolean meetsAssistedDialingGroupingCriteria(int groupFeatures, int callFeatures) {
-    int groupAssisted = (groupFeatures & TelephonyManagerCompat.FEATURES_ASSISTED_DIALING);
-    int callAssisted = (callFeatures & TelephonyManagerCompat.FEATURES_ASSISTED_DIALING);
-
-    return groupAssisted == callAssisted;
   }
 
   public interface GroupCreator {

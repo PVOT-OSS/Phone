@@ -54,6 +54,12 @@ public class MissedCallNotificationReceiver extends BroadcastReceiver {
         intent.getIntExtra(
             EXTRA_NOTIFICATION_COUNT, CallLogNotificationsService.UNKNOWN_MISSED_CALL_COUNT);
     String phoneNumber = intent.getStringExtra(EXTRA_NOTIFICATION_PHONE_NUMBER);
+    if (count == 0) {
+      // Telecom sends a count of 0 once missed calls were cancelled, which the app itself did
+      // after clearing its notifications; there is nothing to show or clear.
+      LogUtil.i("MissedCallNotificationReceiver.onReceive", "ignoring a count of 0");
+      return;
+    }
 
     PendingResult pendingResult = goAsync();
 

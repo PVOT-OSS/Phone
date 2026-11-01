@@ -2,7 +2,6 @@
 <resources>
   <string name="call_incoming_swipe_to_answer">മറുപടി നൽകാൻ മുകളിലേക്ക് സ്വൈപ്പുചെയ്യുക</string>
   <string name="call_incoming_swipe_to_reject">നിരസിക്കാൻ താഴേക്ക് സ്വൈപ്പുചെയ്യുക</string>
-  <string name="call_incoming_will_disconnect">ഈ കോൾ സ്വീകരിക്കുന്നത് നിങ്ങളുടെ വീഡിയോ കോൾ അവസാനിക്കാനിടയാക്കും</string>
   <string name="call_incoming_decline">നിരസിക്കുക</string>
   <string name="call_incoming_answer">മറുപടി നൽകുക</string>
 </resources>

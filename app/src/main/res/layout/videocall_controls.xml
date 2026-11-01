@@ -87,6 +87,13 @@
       android:layout_width="@dimen/videocall_button_size"
       android:layout_height="@dimen/videocall_button_size"
       android:layout_marginBottom="@dimen/videocall_button_spacing"/>
+    <ImageButton
+      android:id="@+id/videocall_downgrade_audio"
+      style="@style/Incall.Button.VideoCall"
+      android:layout_marginBottom="@dimen/videocall_button_spacing"
+      android:contentDescription="@string/incall_content_description_downgrade_call"
+      android:src="@drawable/quantum_ic_call_vd_theme_24"
+      android:visibility="gone"/>
   </LinearLayout>
 
   <FrameLayout

@@ -48,6 +48,16 @@
 
   <!-- Confirmation dialog for clearing the call log. [CHAR LIMIT=NONE]  -->
   <string name="clearCallLogConfirmation">This will delete all calls from your history</string>
+  <!-- Asks before deleting a call log row, which removes every call in it. -->
+  <string name="call_log_delete_entry_title">Delete this entry?</string>
+  <!-- Asks before deleting all calls with a number from its call details. -->
+  <string name="call_details_delete_all_title">Delete all history for this number?</string>
+  <!-- Asks before deleting one call from a number's call details. -->
+  <string name="call_details_delete_call_title">Delete this call?</string>
+  <!-- Call log row label for a video call, before the time. [CHAR LIMIT=20] -->
+  <string name="call_log_label_video">Video</string>
+  <!-- Call log row label for an RTT call, before the time. [CHAR LIMIT=20] -->
+  <string name="call_log_label_rtt">RTT</string>
 
   <!-- Title of the "Clearing call log" progress-dialog [CHAR LIMIT=35] -->
 
@@ -58,6 +68,14 @@
   <string name="notification_missedWorkCallTitle">Missed work call</string>
   <!-- Missed call notification label, used when there are two or more missed calls -->
   <string name="notification_missedCallsTitle">Missed calls</string>
+  <!-- Missed call notification text when the phone was on Do Not Disturb. [CHAR LIMIT=60] -->
+  <string name="notification_missedCall_dnd">Missed call \u2022 On Do Not Disturb</string>
+  <!-- Missed call notification text when the phone was on silent. [CHAR LIMIT=60] -->
+  <string name="notification_missedCall_silent">Missed call \u2022 On Silent mode</string>
+  <!-- The phone's user in the missed call notification's conversation; not normally shown. -->
+  <string name="notification_missedCall_self">You</string>
+  <!-- Call log time for a call less than a minute ago. [CHAR LIMIT=20] -->
+  <string name="call_log_time_just_now">Just now</string>
   <!-- Missed call notification message used when there are multiple missed calls -->
   <string name="notification_missedCallsMsg"><xliff:g id="num_missed_calls">%d</xliff:g> missed calls</string>
   <!-- Message for "call back" Action, which is displayed in the missed call notificaiton.

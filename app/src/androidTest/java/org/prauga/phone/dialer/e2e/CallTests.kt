@@ -11,6 +11,7 @@ import android.provider.CallLog
 import androidx.test.platform.app.InstrumentationRegistry
 import org.prauga.phone.dialer.testing.FakeCarrier
 import org.prauga.phone.dialer.testing.FakeConnection
+import org.prauga.phone.incallui.InCallPresenter
 import org.prauga.phone.incallui.call.CallList
 
 /** A row of the system call log, as tests check it. */
@@ -59,10 +60,16 @@ object CallTests {
     fun addRecentOutgoingCall(context: Context, number: String) =
         addPastCall(context, number, CallLog.Calls.OUTGOING_TYPE, DAY_MILLIS)
 
-    /** Answers the call ringing in the app's call UI, as the user would. */
+    /**
+     * Answers the call ringing in the app's call UI the way the notification's Answer button does:
+     * answer, then bring up the call screen.
+     */
     fun answerRingingCall() {
         waitFor { if (hasIncomingCall()) true else null }
-        InstrumentationRegistry.getInstrumentation().runOnMainSync { CallList.getInstance().incomingCall?.answer() }
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            CallList.getInstance().incomingCall?.answer()
+            InCallPresenter.getInstance().showInCall(false, false)
+        }
         waitFor { if (hasActiveCall()) true else null }
     }
 

@@ -25,6 +25,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -32,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
@@ -45,6 +47,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.prauga.pvot.designsystem.components.PvotBottomSheet
 import com.prauga.pvot.designsystem.components.PvotCard
+import com.prauga.pvot.designsystem.components.PvotCardDefaults
+import com.prauga.pvot.designsystem.components.PvotDialog
+import com.prauga.pvot.designsystem.components.PvotDialogAction
+import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
 import com.prauga.pvot.designsystem.components.PvotScreen
 import com.prauga.pvot.designsystem.components.PvotScreenDefaults
 import com.prauga.pvot.designsystem.components.PvotSheetItem
@@ -54,6 +60,8 @@ import com.prauga.pvot.designsystem.components.button.PvotButtonStyle
 import com.prauga.pvot.designsystem.components.list.PvotAvatarDefaults
 import com.prauga.pvot.designsystem.components.list.PvotListRow
 import com.prauga.pvot.designsystem.components.list.PvotListRowDefaults
+import com.prauga.pvot.designsystem.components.list.PvotSwipeRow
+import com.prauga.pvot.designsystem.components.list.PvotSwipeRowDefaults
 import com.prauga.pvot.designsystem.navigation.PvotTopBar
 import com.prauga.pvot.designsystem.navigation.rememberPvotTopBarCompact
 import com.prauga.pvot.designsystem.theme.PvotSpacing
@@ -74,6 +82,9 @@ internal interface CallDetailsActions {
     fun copyNumber()
     fun editNumber()
     fun delete()
+
+    /** Deletes one call; the screen asks first. */
+    fun deleteCall(entry: CallDetailsEntryUi)
     fun showTranscript(entry: CallDetailsEntryUi)
     fun play(recording: CallRecording)
     fun recordingTime(recording: CallRecording): String
@@ -95,6 +106,8 @@ internal fun CallDetailsScreen(
     avatar: @Composable (Dp) -> Unit,
 ) {
     var recordingsToPick by remember { mutableStateOf<List<CallRecording>?>(null) }
+    var askDeleteCall by remember { mutableStateOf<CallDetailsEntryUi?>(null) }
+    var askDeleteAll by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
     PhoneScaffold(
         modifier = Modifier.semantics { testTagsAsResourceId = true },
@@ -120,8 +133,25 @@ internal fun CallDetailsScreen(
             item(key = "history") {
                 PvotCard(Modifier.fillMaxWidth()) {
                     Column(Modifier.padding(vertical = PvotSpacing.XS)) {
+                        // The card's fill over the background, so a swiped row covers its gap exactly.
+                        val rowFill = MaterialTheme.colorScheme.surfaceVariant
+                            .copy(alpha = PvotCardDefaults.ContainerAlpha)
+                            .compositeOver(MaterialTheme.colorScheme.background)
                         for (entry in ui.entries) {
-                            Entry(entry, actions, onPickRecording = { recordingsToPick = it })
+                            key(entry.callId) {
+                                // Swiping a call away asks first; the last call means the whole history.
+                                PvotSwipeRow(
+                                    endAction = PvotSwipeRowDefaults.destructiveAction(
+                                        label = stringResource(R.string.delete),
+                                        icon = painterResource(R.drawable.ic_trash),
+                                        onSwipe = { askDeleteCall = entry },
+                                        removesRow = false,
+                                    ),
+                                    containerColor = rowFill,
+                                ) {
+                                    Column { Entry(entry, actions, onPickRecording = { recordingsToPick = it }) }
+                                }
+                            }
                         }
                     }
                 }
@@ -138,10 +168,47 @@ internal fun CallDetailsScreen(
                         PvotButton(stringResource(R.string.call_details_edit_number), onClick = actions::editNumber,
                             style = PvotButtonStyle.Tonal)
                     }
-                    PvotButton(stringResource(R.string.delete), onClick = actions::delete, style = PvotButtonStyle.Destructive,
+                    PvotButton(stringResource(R.string.delete), onClick = { askDeleteAll = true }, style = PvotButtonStyle.Destructive,
                         modifier = Modifier.testTag(TestTags.CALL_DETAILS_DELETE))
                 }
             }
+        }
+    }
+
+    askDeleteCall?.let { entry ->
+        val lastCall = ui.entries.size == 1
+        PvotDialog(
+            visible = true,
+            onDismissRequest = { askDeleteCall = null },
+            title = stringResource(
+                if (lastCall) R.string.call_details_delete_all_title else R.string.call_details_delete_call_title,
+            ),
+            destructive = true,
+        ) {
+            PvotDialogAction(
+                label = stringResource(R.string.delete),
+                onClick = {
+                    askDeleteCall = null
+                    if (lastCall) actions.delete() else actions.deleteCall(entry)
+                },
+                style = PvotDialogActionStyle.Destructive,
+            )
+            PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = { askDeleteCall = null })
+        }
+    }
+    if (askDeleteAll) {
+        PvotDialog(
+            visible = true,
+            onDismissRequest = { askDeleteAll = false },
+            title = stringResource(R.string.call_details_delete_all_title),
+            destructive = true,
+        ) {
+            PvotDialogAction(
+                label = stringResource(R.string.delete),
+                onClick = { askDeleteAll = false; actions.delete() },
+                style = PvotDialogActionStyle.Destructive,
+            )
+            PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = { askDeleteAll = false })
         }
     }
 

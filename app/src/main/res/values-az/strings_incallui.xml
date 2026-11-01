@@ -15,7 +15,6 @@
   <string name="notification_on_hold">Gözləmə mövqeyində</string>
   <string name="notification_incoming_call">Gələn zəng</string>
   <string name="notification_incoming_video_call">Gələn video zəng</string>
-  <string name="notification_incoming_call_mutli_sim">%1$s ilə gələn zəng</string>
   <string name="notification_incoming_work_call">Daxil olan iş çağrısı</string>
   <string name="notification_incoming_spam_call">Şübhəli spam zəngi</string>
   <string name="notification_requesting_video_call">Gələn video çağrı</string>
@@ -24,8 +23,6 @@
   <string name="notification_action_answer_video">Videolar</string>
   <string name="notification_action_accept">Qəbul edin</string>
   <string name="notification_action_dismiss">İmtina edin</string>
-  <string name="notification_action_speaker_on">Spikeri aktiv edin</string>
-  <string name="notification_action_speaker_off">Spikeri deaktiv edin</string>
   <string name="notification_external_call">Digər cihazda davam etməkdə olan zəng</string>
   <string name="notification_external_video_call">Digər cihazda davam etməkdə olan video zəng</string>
   <string name="notification_take_call">Zəngə cavab verin</string>

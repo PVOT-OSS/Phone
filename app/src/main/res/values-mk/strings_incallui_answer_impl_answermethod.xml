@@ -2,7 +2,6 @@
 <resources>
   <string name="call_incoming_swipe_to_answer">Повлечете нагоре за да одговорите</string>
   <string name="call_incoming_swipe_to_reject">Повлечете надолу за да отфрлите</string>
-  <string name="call_incoming_will_disconnect">Ако одговорите на повиков, ќе се прекине вашиот видеоповик</string>
   <string name="call_incoming_decline">Одбиј</string>
   <string name="call_incoming_answer">Одговори</string>
 </resources>
