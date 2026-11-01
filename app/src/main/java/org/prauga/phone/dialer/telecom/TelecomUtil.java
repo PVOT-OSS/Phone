@@ -80,8 +80,16 @@ public abstract class TelecomUtil {
     }
   }
 
+  /**
+   * Telecom lets the default phone app silence the ringer, cancel its missed call count, run MMI
+   * codes and read the ADN uri without MODIFY_PHONE_STATE, which only system apps get.
+   */
+  private static boolean canUseDialerTelecomApis(Context context) {
+    return isDefaultDialer(context) || PermissionsUtil.hasModifyPhoneStatePermissions(context);
+  }
+
   public static void silenceRinger(Context context) {
-    if (PermissionsUtil.hasModifyPhoneStatePermissions(context)) {
+    if (canUseDialerTelecomApis(context)) {
       try {
         getTelecomManager(context).silenceRinger();
       } catch (SecurityException e) {
@@ -92,7 +100,7 @@ public abstract class TelecomUtil {
   }
 
   public static void cancelMissedCallsNotification(Context context) {
-    if (PermissionsUtil.hasModifyPhoneStatePermissions(context)) {
+    if (canUseDialerTelecomApis(context)) {
       try {
         getTelecomManager(context).cancelMissedCallsNotification();
       } catch (SecurityException e) {
@@ -102,7 +110,7 @@ public abstract class TelecomUtil {
   }
 
   public static Uri getAdnUriForPhoneAccount(Context context, PhoneAccountHandle handle) {
-    if (PermissionsUtil.hasModifyPhoneStatePermissions(context)) {
+    if (canUseDialerTelecomApis(context)) {
       try {
         return getTelecomManager(context).getAdnUriForPhoneAccount(handle);
       } catch (SecurityException e) {
@@ -114,7 +122,7 @@ public abstract class TelecomUtil {
 
   public static boolean handleMmi(
       Context context, String dialString, @Nullable PhoneAccountHandle handle) {
-    if (PermissionsUtil.hasModifyPhoneStatePermissions(context)) {
+    if (canUseDialerTelecomApis(context)) {
       try {
         if (handle == null) {
           return getTelecomManager(context).handleMmi(dialString);
