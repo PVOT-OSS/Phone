@@ -419,9 +419,9 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
     Notification.Builder builder =
         createNotificationBuilder()
             .setWhen(call.dateMs)
+            // Swiping any missed call away clears them all, as swiping the group does.
             .setDeleteIntent(
-                CallLogNotificationsService.createCancelSingleMissedCallPendingIntent(
-                    context, call.callsUri))
+                CallLogNotificationsService.createCancelAllMissedCallsPendingIntent(context))
             .setContentIntent(createCallLogPendingIntent(call.callsUri))
             .setChannelId(NotificationChannelId.MISSED_CALL);
 
