@@ -44,6 +44,7 @@ import org.prauga.phone.dialer.dialercontact.SimDetails
 import org.prauga.phone.dialer.lettertile.LetterTileDrawable
 import org.prauga.phone.dialer.util.DialerUtils
 import org.prauga.phone.dialer.util.PermissionsUtil
+import org.prauga.phone.dialer.util.UriUtils
 
 /**
  * A call history list wired to the phone: it loads through [viewModel] while shown and turns the
@@ -321,7 +322,9 @@ enum class CallLogFilter {
     /** Whether [group] shows under this filter, given the [blockedNumbers]. */
     fun matches(group: CallLogGroup, blockedNumbers: Set<String>): Boolean = when (this) {
         ALL, MISSED -> true
-        CONTACTS -> !group.cachedInfo.lookupKey.isNullOrEmpty() || group.cachedInfo.lookupUri != null
+        // A number that is not a contact can still cache an "encoded" lookup URI, a temporary contact.
+        CONTACTS -> !group.cachedInfo.lookupKey.isNullOrEmpty() ||
+            (group.cachedInfo.lookupUri != null && !UriUtils.isEncodedContactUri(group.cachedInfo.lookupUri))
         BLOCKED -> Calls.BLOCKED_TYPE in group.callTypes || group.number in blockedNumbers
     }
 }

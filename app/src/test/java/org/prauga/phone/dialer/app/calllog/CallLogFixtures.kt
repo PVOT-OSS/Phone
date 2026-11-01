@@ -54,6 +54,7 @@ internal fun callLogGroup(
     dayGroup: Int = CallLogGroupBuilder.DAY_GROUP_TODAY,
     voicemailUri: String? = null,
     presentation: Int = Calls.PRESENTATION_ALLOWED,
+    cachedInfo: ContactInfo = ContactInfo.EMPTY,
 ) = CallLogGroup(
     rowId = rowId,
     callIds = callTypes.indices.map { rowId + it },
@@ -72,7 +73,7 @@ internal fun callLogGroup(
     voicemailUri = voicemailUri,
     isRead = isRead,
     dataUsage = null,
-    cachedInfo = ContactInfo.EMPTY,
+    cachedInfo = cachedInfo,
     dayGroup = dayGroup,
     callbackAction = CallbackAction.VOICE,
     entries = CallDetailsEntries.getDefaultInstance(),
