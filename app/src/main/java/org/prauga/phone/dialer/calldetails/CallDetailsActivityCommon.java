@@ -30,6 +30,7 @@ import androidx.annotation.CallSuper;
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresPermission;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -368,6 +369,14 @@ abstract class CallDetailsActivityCommon extends BaseActivity {
     @Override
     public void delete() {
       CallDetailsActivityCommon activity = getActivity();
+      new AlertDialog.Builder(activity)
+          .setTitle(R.string.call_details_delete_all_title)
+          .setNegativeButton(android.R.string.cancel, null)
+          .setPositiveButton(R.string.delete, (dialog, which) -> deleteAll(activity))
+          .show();
+    }
+
+    private void deleteAll(CallDetailsActivityCommon activity) {
       DialerExecutorComponent.get(activity)
           .dialerExecutorFactory()
           .createNonUiTaskBuilder(new DeleteCallsWorker(activity))
