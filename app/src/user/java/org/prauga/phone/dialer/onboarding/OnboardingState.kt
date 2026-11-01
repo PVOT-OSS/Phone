@@ -18,7 +18,8 @@ enum class PermissionGroup(
     @DrawableRes val icon: Int,
 ) {
     PHONE(
-        listOf(Manifest.permission.CALL_PHONE, Manifest.permission.READ_PHONE_STATE),
+        // READ_PHONE_NUMBERS shares the dialog: Telecom asks for it to read calling accounts.
+        listOf(Manifest.permission.CALL_PHONE, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_PHONE_NUMBERS),
         R.string.onboarding_permission_phone,
         R.string.onboarding_permission_phone_reason,
         R.drawable.ic_phone,

@@ -17,6 +17,7 @@
 
 package org.prauga.phone.dialer.main.impl;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -28,6 +29,7 @@ import org.prauga.phone.dialer.blockreportspam.ShowBlockReportSpamDialogReceiver
 import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.main.MainActivityPeer;
 import org.prauga.phone.dialer.onboarding.OnboardingRouter;
+import org.prauga.phone.dialer.util.PermissionsUtil;
 import org.prauga.phone.dialer.util.TransactionSafeActivity;
 
 /** This is the main activity for dialer. It hosts favorites, call log, search, dialpad, etc... */
@@ -75,10 +77,23 @@ public class MainActivity extends TransactionSafeActivity
     }
 
     activePeer.onActivityResume();
+    requestPhoneNumbersPermissionIfImplied();
 
     LocalBroadcastManager.getInstance(this)
         .registerReceiver(
             showBlockReportSpamDialogReceiver, ShowBlockReportSpamDialogReceiver.getIntentFilter());
+  }
+
+  /**
+   * Asks for READ_PHONE_NUMBERS once the phone permission is granted. Telecom wants it to read
+   * calling accounts until the app is the default phone app, and Android grants it without asking
+   * because it shares the phone permission's group. Older installs were granted the group without it.
+   */
+  private void requestPhoneNumbersPermissionIfImplied() {
+    if (PermissionsUtil.hasReadPhoneStatePermissions(this)
+        && !PermissionsUtil.hasPermission(this, Manifest.permission.READ_PHONE_NUMBERS)) {
+      requestPermissions(new String[] {Manifest.permission.READ_PHONE_NUMBERS}, 0);
+    }
   }
 
   @Override

@@ -78,7 +78,13 @@ public class CallUtil {
 
     List<PhoneAccountHandle> accountHandles = telecommMgr.getCallCapablePhoneAccounts();
     for (PhoneAccountHandle accountHandle : accountHandles) {
-      PhoneAccount account = telecommMgr.getPhoneAccount(accountHandle);
+      PhoneAccount account;
+      try {
+        account = telecommMgr.getPhoneAccount(accountHandle);
+      } catch (SecurityException e) {
+        // Reading an account needs READ_PHONE_NUMBERS until the app is the default phone app.
+        return VIDEO_CALLING_DISABLED;
+      }
       if (account != null) {
         if (account.hasCapabilities(PhoneAccount.CAPABILITY_VIDEO_CALLING)) {
           int videoCapabilities = VIDEO_CALLING_ENABLED;

@@ -137,8 +137,18 @@ public abstract class TelecomUtil {
     return null;
   }
 
+  /**
+   * The account for {@code handle}, or null when it is unknown or the app may not read it yet: until
+   * the app is the default phone app, Telecom wants READ_PHONE_NUMBERS.
+   */
+  @Nullable
   public static PhoneAccount getPhoneAccount(Context context, PhoneAccountHandle handle) {
-    return getTelecomManager(context).getPhoneAccount(handle);
+    try {
+      return getTelecomManager(context).getPhoneAccount(handle);
+    } catch (SecurityException e) {
+      LogUtil.w("TelecomUtil.getPhoneAccount", "may not read phone accounts");
+      return null;
+    }
   }
 
   public static List<PhoneAccountHandle> getCallCapablePhoneAccounts(Context context) {
