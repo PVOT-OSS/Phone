@@ -49,6 +49,8 @@
 
   <!-- Confirmation dialog for clearing the call log. [CHAR LIMIT=NONE]  -->
   <string name="clearCallLogConfirmation">This will delete all calls from your history</string>
+  <!-- Asks before deleting a call log row, which removes every call in it. -->
+  <string name="call_log_delete_entry_title">Delete this entry?</string>
 
   <!-- Title of the "Clearing call log" progress-dialog [CHAR LIMIT=35] -->
   <string name="clearCallLogProgress_title">Clearing call history\u2026</string>

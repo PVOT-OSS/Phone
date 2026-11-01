@@ -54,6 +54,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -336,8 +337,16 @@ public final class CallLogListItemViewHolder extends RecyclerView.ViewHolder
       blockReportListener.onReportNotSpam(
           displayNumber, number, countryIso, callType, info.sourceType);
     } else if (resId == R.id.context_menu_delete) {
-      AsyncTaskExecutors.createAsyncTaskExecutor()
-          .submit(TASK_DELETE, new DeleteCallTask(context, callIds));
+      // Deleting removes every call in the row, so ask first.
+      new AlertDialog.Builder(context)
+          .setTitle(R.string.call_log_delete_entry_title)
+          .setNegativeButton(android.R.string.cancel, null)
+          .setPositiveButton(
+              R.string.delete,
+              (dialog, which) ->
+                  AsyncTaskExecutors.createAsyncTaskExecutor()
+                      .submit(TASK_DELETE, new DeleteCallTask(context, callIds)))
+          .show();
     }
     return false;
   }
