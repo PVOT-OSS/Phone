@@ -146,3 +146,8 @@
 -keep public class * extends android.app.Fragment {
   public <init>();
 }
+
+# protobuf-lite finds message fields by name at runtime (name_, number_ ...): keep them unrenamed.
+-keepclassmembers class * extends com.google.protobuf.GeneratedMessageLite {
+    <fields>;
+}
