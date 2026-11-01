@@ -339,6 +339,8 @@ public class StatusBarNotifier
         configureFullScreenIntent(builder, createLaunchPendingIntent(true /* isFullScreen */));
         // Set the notification category and bump the priority for incoming calls
         builder.setCategory(Notification.CATEGORY_CALL);
+        // noinspection deprecation
+        builder.setPriority(Notification.PRIORITY_MAX);
         if (currentNotification != NOTIFICATION_INCOMING_CALL) {
           LogUtil.i(
               "StatusBarNotifier.buildAndSendNotification",
@@ -375,7 +377,9 @@ public class StatusBarNotifier
       addDismissUpgradeRequestAction(builder);
       addAcceptUpgradeRequestAction(builder);
     } else {
-      createIncomingCallNotification(call, callState, callAudioState, builder);
+      Person person =
+          CallNotificationStyle.person(contentTitle, getPersonUri(contactInfo, call));
+      createIncomingCallNotification(call, callState, callAudioState, builder, person);
     }
 
     addPersonReference(builder, contactInfo, call);
@@ -413,7 +417,11 @@ public class StatusBarNotifier
   }
 
   private void createIncomingCallNotification(
-      DialerCall call, int state, CallAudioState callAudioState, Notification.Builder builder) {
+      DialerCall call,
+      int state,
+      CallAudioState callAudioState,
+      Notification.Builder builder,
+      @Nullable Person person) {
     setNotificationWhen(call, state, builder);
 
     // Add hang up option for any active calls (active | onhold), outgoing calls (dialing).
@@ -422,6 +430,20 @@ public class StatusBarNotifier
         || DialerCallState.isDialing(state)) {
       addHangupAction(builder);
       addSpeakerAction(builder, callAudioState);
+    } else if (person != null
+        && (state == DialerCallState.INCOMING || state == DialerCallState.CALL_WAITING)) {
+      PendingIntent answer =
+          createNotificationPendingIntent(
+              context,
+              call.isVideoCall()
+                  ? ACTION_ANSWER_VIDEO_INCOMING_CALL
+                  : ACTION_ANSWER_VOICE_INCOMING_CALL);
+      builder.setStyle(
+          CallNotificationStyle.incoming(
+              person,
+              createNotificationPendingIntent(context, ACTION_DECLINE_INCOMING_CALL),
+              answer,
+              call.isVideoCall()));
     } else if (state == DialerCallState.INCOMING || state == DialerCallState.CALL_WAITING) {
       addDismissAction(builder);
       if (call.isVideoCall()) {
@@ -553,15 +575,20 @@ public class StatusBarNotifier
     // Query {@link Contacts#CONTENT_LOOKUP_URI} directly with work lookup key is not allowed.
     // So, do not pass {@link Contacts#CONTENT_LOOKUP_URI} to NotificationManager to avoid
     // NotificationManager using it.
-    String uri = null;
-    if (contactInfo.lookupUri != null && contactInfo.userType != ContactsUtils.USER_TYPE_WORK) {
-      uri = contactInfo.lookupUri.toString();
-    } else if (!TextUtils.isEmpty(call.getNumber())) {
-      uri = Uri.fromParts(PhoneAccount.SCHEME_TEL, call.getNumber(), null).toString();
-    }
+    String uri = getPersonUri(contactInfo, call);
     if (uri != null) {
       builder.addPerson(new Person.Builder().setUri(uri).build());
     }
+  }
+
+  @Nullable
+  private static String getPersonUri(ContactCacheEntry contactInfo, DialerCall call) {
+    if (contactInfo.lookupUri != null && contactInfo.userType != ContactsUtils.USER_TYPE_WORK) {
+      return contactInfo.lookupUri.toString();
+    } else if (!TextUtils.isEmpty(call.getNumber())) {
+      return Uri.fromParts(PhoneAccount.SCHEME_TEL, call.getNumber(), null).toString();
+    }
+    return null;
   }
 
   /** Gets a large icon from the contact info object to display in the notification. */
