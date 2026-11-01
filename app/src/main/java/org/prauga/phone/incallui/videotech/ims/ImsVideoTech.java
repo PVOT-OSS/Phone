@@ -159,13 +159,33 @@ public class ImsVideoTech implements VideoTech {
     // the state itself.
     if (VideoProfile.isVideo(previousVideoState) && !VideoProfile.isVideo(newVideoState)) {
       if (!downgradeRequestedByUser) {
-        Toast.makeText(context, R.string.video_call_downgraded_by_remote, Toast.LENGTH_LONG)
-            .show();
+        // The network's reason can arrive just after the video stops, so look a moment later.
+        new android.os.Handler(android.os.Looper.getMainLooper())
+            .postDelayed(
+                () -> Toast.makeText(context, downgradeMessage(), Toast.LENGTH_LONG).show(),
+                DOWNGRADE_REASON_DELAY_MILLIS);
       }
       downgradeRequestedByUser = false;
     }
     previousVideoState = newVideoState;
   }
+
+  /** Why video stopped, from the network's session modification cause when it gives one. */
+  private int downgradeMessage() {
+    android.os.Bundle extras = call.getDetails().getExtras();
+    int cause = extras == null ? -1 : extras.getInt(EXTRA_SESSION_MODIFICATION_CAUSE, -1);
+    return cause == CAUSE_POOR_CONNECTION || cause == CAUSE_POOR_CONNECTION_DATA
+        ? R.string.video_call_downgraded_poor_connection
+        : R.string.video_call_downgraded_by_remote;
+  }
+
+  /** Call extra the network sets with the reason a session changed. */
+  private static final String EXTRA_SESSION_MODIFICATION_CAUSE = "SessionModificationCause";
+
+  private static final int CAUSE_POOR_CONNECTION = 7;
+  private static final int CAUSE_POOR_CONNECTION_DATA = 8;
+
+  private static final long DOWNGRADE_REASON_DELAY_MILLIS = 500;
 
   @Override
   public void onRemovedFromCallList() {}
