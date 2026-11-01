@@ -157,6 +157,29 @@ def call_survives_app_death(device):
     device.emu(f"gsm cancel {number}")
     assert_logged(device, number, since, INCOMING)
 
+def original_dialer(device):
+    with open(os.path.join(HERE, ".device-state", device.serial, "dialer")) as saved:
+        return saved.read().strip()
+
+
+def opens_when_not_default(device):
+    """Launching the app before it is the default phone app, without READ_PHONE_NUMBERS, must not
+    crash: Telecom refuses to share phone accounts then."""
+    role = "android.app.role.DIALER"
+    device.shell(f"cmd role add-role-holder --user {device.user} {role} {original_dialer(device)}")
+    try:
+        device.run("shell", f"pm revoke --user {device.user} {PACKAGE} android.permission.READ_PHONE_NUMBERS", check=False)
+        device.shell(f"am force-stop --user {device.user} {PACKAGE}")
+        device.shell(f"am start --user {device.user} -n {PACKAGE}/.dialer.main.impl.MainActivity")
+        wait_for("app in front", lambda: f"{PACKAGE}/" in device.shell("dumpsys window | grep mCurrentFocus"))
+        time.sleep(2)
+        assert f"{PACKAGE}/" in device.shell("dumpsys window | grep mCurrentFocus"), "app left the screen"
+    finally:
+        device.shell(f"cmd role add-role-holder --user {device.user} {role} {PACKAGE}")
+        device.run("shell", f"pm grant --user {device.user} {PACKAGE} android.permission.READ_PHONE_NUMBERS", check=False)
+        device.shell("input keyevent KEYCODE_HOME")
+
+
 SCENARIOS = [
     incoming_missed,
     incoming_answered,
@@ -164,6 +187,7 @@ SCENARIOS = [
     screening_first_time_declined,
     outgoing_answered,
     call_survives_app_death,
+    opens_when_not_default,
 ]
 
 
