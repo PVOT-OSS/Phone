@@ -8,10 +8,14 @@ package org.prauga.phone.dialer.testing
 import android.content.ComponentName
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.telecom.PhoneAccount
 import android.telecom.PhoneAccountHandle
 import android.telecom.TelecomManager
 import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.ExecutionException
+import java.util.concurrent.FutureTask
 
 /** A pretend network for tests: a calling account whose calls go through the real Telecom stack. */
 object FakeCarrier {
@@ -63,6 +67,21 @@ object FakeCarrier {
     private fun updateConferenceable() {
         for (connection in live) {
             connection.conferenceables = live.filter { it !== connection }
+        }
+    }
+
+    /**
+     * Runs a far-end action on the main thread, where Telecom calls the connection service, and
+     * waits for it. Changing calls from the test thread races with Telecom's own updates.
+     */
+    internal fun <T> onMain(block: () -> T): T {
+        if (Looper.myLooper() == Looper.getMainLooper()) return block()
+        val result = FutureTask(block)
+        Handler(Looper.getMainLooper()).post(result)
+        return try {
+            result.get()
+        } catch (e: ExecutionException) {
+            throw e.cause ?: e
         }
     }
 

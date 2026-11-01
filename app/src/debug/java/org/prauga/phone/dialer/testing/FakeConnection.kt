@@ -101,7 +101,7 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
     }
 
     /** The far end picks up an outgoing call; digits after a wait (;) then wait for the user. */
-    fun answerFromFarEnd() {
+    fun answerFromFarEnd() = FakeCarrier.onMain {
         setActive()
         if (postDialDigits.isNotEmpty()) setPostDialWait(postDialDigits)
     }
@@ -113,7 +113,7 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
     }
 
     /** The far end agrees to the user's request to switch to RTT. */
-    fun acceptRttRequest() {
+    fun acceptRttRequest() = FakeCarrier.onMain {
         check(rttRequestedByUser) { "no RTT request" }
         rttRequestedByUser = false
         connectionProperties = connectionProperties or PROPERTY_IS_RTT
@@ -121,7 +121,7 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
     }
 
     /** The far end turns the user's request to switch to RTT down. */
-    fun rejectRttRequest() {
+    fun rejectRttRequest() = FakeCarrier.onMain {
         check(rttRequestedByUser) { "no RTT request" }
         rttRequestedByUser = false
         rttStream = null
@@ -129,7 +129,7 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
     }
 
     /** The far end asks the user to switch the call to RTT. */
-    fun requestRtt() {
+    fun requestRtt() = FakeCarrier.onMain {
         rttRequestAccepted = null
         sendRemoteRttRequest()
     }
@@ -148,10 +148,10 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
      * ringing ends as missed, as a real network reports it, and any other call as remote.
      */
     fun hangUpFromFarEnd(cause: Int = if (state == STATE_RINGING) DisconnectCause.MISSED else DisconnectCause.REMOTE) =
-        end(DisconnectCause(cause))
+        hangUpFromFarEnd(DisconnectCause(cause))
 
     /** The network ends the call with [cause], which can carry a reason and a message for the user. */
-    fun hangUpFromFarEnd(cause: DisconnectCause) = end(cause)
+    fun hangUpFromFarEnd(cause: DisconnectCause) = FakeCarrier.onMain { end(cause) }
 
     private fun end(cause: DisconnectCause) {
         setDisconnected(cause)
