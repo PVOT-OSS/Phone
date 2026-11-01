@@ -14,20 +14,16 @@
  * limitations under the License.
  */
 
-package org.prauga.phone.dialer.constants;
+package org.prauga.phone.dialer.constants
 
-/**
- * Utility to access constants
- */
-public class Constants {
-  public static final String FILE_PROVIDER_AUTHORITY = "org.prauga.phone.dialer.files";
+/** Utility to access constants */
+object Constants {
+    const val FILE_PROVIDER_AUTHORITY = "org.prauga.phone.dialer.files"
 
-  public static final String ANNOTATED_CALL_LOG_PROVIDER_AUTHORITY =
-          "org.prauga.phone.dialer.annotatedcalllog";
+    const val ANNOTATED_CALL_LOG_PROVIDER_AUTHORITY = "org.prauga.phone.dialer.annotatedcalllog"
 
-  public static final String PHONE_LOOKUP_HISTORY_PROVIDER_AUTHORITY =
-          "org.prauga.phone.dialer.phonelookuphistory";
+    const val PHONE_LOOKUP_HISTORY_PROVIDER_AUTHORITY = "org.prauga.phone.dialer.phonelookuphistory"
 
-  public static final String PREFERRED_SIM_FALLBACK_PROVIDER_AUTHORITY =
-          "org.prauga.phone.dialer.preferredsimfallback";
+    const val PREFERRED_SIM_FALLBACK_PROVIDER_AUTHORITY =
+        "org.prauga.phone.dialer.preferredsimfallback"
 }

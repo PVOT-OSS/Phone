@@ -15,22 +15,22 @@
  * limitations under the License.
  */
 
-package org.prauga.phone.dialer.constants;
+package org.prauga.phone.dialer.constants
 
 /**
  * Registry of scheduled job ids used by the dialer UID.
  *
- * <p>Any dialer jobs which use the android JobScheduler should register their IDs here, to avoid
- * the same ID accidentally being reused.
+ * Any dialer jobs which use the android JobScheduler should register their IDs here, to avoid the
+ * same ID accidentally being reused.
  *
- * <p>Do not change any existing IDs.
+ * Do not change any existing IDs.
  */
-public final class ScheduledJobIds {
-  // This job refreshes dynamic launcher shortcuts.
-  public static final int SHORTCUT_PERIODIC_JOB = 100;
+object ScheduledJobIds {
+    // This job refreshes dynamic launcher shortcuts.
+    const val SHORTCUT_PERIODIC_JOB = 100
 
-  public static final int VVM_TASK_SCHEDULER_JOB = 200;
-  public static final int VVM_STATUS_CHECK_JOB = 201;
-  public static final int VVM_DEVICE_PROVISIONED_JOB = 202;
-  public static final int VVM_NOTIFICATION_JOB = 205;
+    const val VVM_TASK_SCHEDULER_JOB = 200
+    const val VVM_STATUS_CHECK_JOB = 201
+    const val VVM_DEVICE_PROVISIONED_JOB = 202
+    const val VVM_NOTIFICATION_JOB = 205
 }
