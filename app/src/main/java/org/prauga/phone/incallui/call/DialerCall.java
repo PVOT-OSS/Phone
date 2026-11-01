@@ -205,6 +205,7 @@ public class DialerCall implements VideoTechListener {
 
   private RttTranscript rttTranscript;
   private boolean rttStoppedByUser;
+  private boolean wasOnHoldWhenDisconnected;
 
   private final Call.Callback telecomCallCallback =
       new Call.Callback() {
@@ -826,7 +827,15 @@ public class DialerCall implements VideoTechListener {
     }
     updateCallTiming(state);
 
+    if (state == DialerCallState.DISCONNECTED && this.state == DialerCallState.ONHOLD) {
+      wasOnHoldWhenDisconnected = true;
+    }
     this.state = state;
+  }
+
+  /** Whether the call was on hold when it ended. */
+  public boolean wasOnHoldWhenDisconnected() {
+    return wasOnHoldWhenDisconnected;
   }
 
   private void updateCallTiming(int newState) {

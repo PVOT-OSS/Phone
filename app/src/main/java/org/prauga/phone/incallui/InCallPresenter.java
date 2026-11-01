@@ -795,6 +795,14 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
   public void onDisconnect(DialerCall call) {
     showDialogOrToastForDisconnectedCall(call);
 
+    // A held call ended by the other side or the network while another call goes on would
+    // otherwise vanish without the user noticing.
+    if (call.wasOnHoldWhenDisconnected()
+        && call.getDisconnectCause().getCode() != DisconnectCause.LOCAL
+        && callList.hasLiveCall()) {
+      Toast.makeText(context, R.string.incall_held_call_disconnected, Toast.LENGTH_LONG).show();
+    }
+
     // We need to do the run the same code as onCallListChange.
     onCallListChange(callList);
 

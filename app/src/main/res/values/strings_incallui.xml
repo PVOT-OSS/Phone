@@ -60,6 +60,8 @@
   <string name="notification_on_hold">On hold</string>
   <!-- Toast shown when the network could not merge the calls into a conference. -->
   <string name="incall_merge_failed">Failed to merge call.</string>
+  <!-- Message shown when the call on hold was ended by the other side while the user is on another call. -->
+  <string name="incall_held_call_disconnected">Your call on hold has been disconnected</string>
   <!-- In-call button that transfers the active call to the call on hold. [CHAR LIMIT=12] -->
   <string name="incall_label_transfer">Transfer</string>
   <!-- Title of the dialog confirming a call transfer. -->
