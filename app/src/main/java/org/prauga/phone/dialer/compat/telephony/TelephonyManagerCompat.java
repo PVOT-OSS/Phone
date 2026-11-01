@@ -97,11 +97,16 @@ public class TelephonyManagerCompat {
    * Whether the phone supports TTY mode.
    *
    * @param telecomManager The TelecomManager manager instance to use for method calls.
-   * @return {@code true} if the device supports TTY mode, and {@code false} otherwise.
+   * @return {@code true} if the device supports TTY mode, and {@code false} otherwise, including
+   *     when the app may not read the phone state yet.
    */
   @SuppressLint("MissingPermission")
   public static boolean isTtyModeSupported(@Nullable TelecomManager telecomManager) {
-    return telecomManager != null && telecomManager.isTtySupported();
+    try {
+      return telecomManager != null && telecomManager.isTtySupported();
+    } catch (SecurityException e) {
+      return false;
+    }
   }
 
   /**

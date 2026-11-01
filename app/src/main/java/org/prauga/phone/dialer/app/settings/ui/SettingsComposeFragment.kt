@@ -47,7 +47,8 @@ abstract class SettingsComposeFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View = ComposeView(requireContext()).apply {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-        setContent { SettingsTheme { Content() } }
+        // Qualified: inside apply, a bare Content() is ComposeView.Content and recurses forever.
+        setContent { SettingsTheme { this@SettingsComposeFragment.Content() } }
     }
 }
 
