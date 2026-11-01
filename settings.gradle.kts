@@ -4,7 +4,6 @@
  */
 
 pluginManagement {
-    includeBuild("PvotLib/build-logic")
     repositories {
         google {
             content {
@@ -25,12 +24,16 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        // PvotLib, published with `./gradlew publishToMavenLocal` from its own checkout.
+        mavenLocal {
+            content { includeGroup("com.prauga.pvot") }
+        }
     }
 }
 
-includeBuild("PvotLib")
+// Build PvotLib from source instead of Maven local: pass -Ppvot.localPath=../PvotLib
+// (or set it in ~/.gradle/gradle.properties) to work on both at once.
+providers.gradleProperty("pvot.localPath").orNull?.let { includeBuild(it) }
 
 rootProject.name = "Phone"
 include(":app")
-include(":annotations")
-include(":processor")

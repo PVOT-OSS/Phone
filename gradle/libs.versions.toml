@@ -1,22 +1,28 @@
 [versions]
-agp = "9.5.0"
-autoCommon = "1.2.2"
-autoService = "1.1.1"
+lifecycle = "2.10.0"
+agp = "9.4.0"
 autoValue = "1.11.1"
 composeBom = "2026.02.01"
+coroutines = "1.11.0"
 dagger = "2.60.1"
 glide = "4.16.0"
 kotlin = "2.4.21"
 libphonenumber = "9.0.42"
 protobuf = "4.36.2"
 protobufPlugin = "0.10.0"
+pvot = "0.2.0-SNAPSHOT"
+robolectric = "4.17"
+roborazzi = "1.77.0"
 
 [libraries]
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 androidx-annotation = "androidx.annotation:annotation:1.11.0"
 androidx-appcompat = "androidx.appcompat:appcompat:1.8.0"
 androidx-cardview = "androidx.cardview:cardview:1.0.0"
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-collection = "androidx.collection:collection:1.7.0"
 androidx-coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:1.3.0"
@@ -28,9 +34,6 @@ androidx-preference = "androidx.preference:preference:1.2.1"
 androidx-recyclerview = "androidx.recyclerview:recyclerview:1.4.0"
 apache-mime4j-core = "org.apache.james:apache-mime4j-core:0.8.9"
 apache-mime4j-dom = "org.apache.james:apache-mime4j-dom:0.8.9"
-auto-common = { module = "com.google.auto:auto-common", version.ref = "autoCommon" }
-auto-service = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }
-auto-service-annotations = { module = "com.google.auto.service:auto-service-annotations", version.ref = "autoService" }
 auto-value = { module = "com.google.auto.value:auto-value", version.ref = "autoValue" }
 auto-value-annotations = { module = "com.google.auto.value:auto-value-annotations", version.ref = "autoValue" }
 commons-io = "commons-io:commons-io:2.13.0"
@@ -40,11 +43,17 @@ error-prone-annotations = "com.google.errorprone:error_prone_annotations:2.51.0"
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
 guava = "com.google.guava:guava:33.7.2-android"
-guava-jre = "com.google.guava:guava:33.7.2-jre"
-javapoet = "com.squareup:javapoet:1.13.0"
 javax-inject = "javax.inject:javax.inject:1"
 jsr305 = "com.google.code.findbugs:jsr305:3.0.2"
 junit = "junit:junit:4.13.2"
+kotlinx-coroutines-guava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava", version.ref = "coroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+roborazzi = { module = "io.github.takahirom.roborazzi:roborazzi", version.ref = "roborazzi" }
+roborazzi-compose = { module = "io.github.takahirom.roborazzi:roborazzi-compose", version.ref = "roborazzi" }
+truth = "com.google.truth:truth:1.4.5"
+turbine = "app.cash.turbine:turbine:1.2.1"
+androidx-test-core = "androidx.test:core:1.7.0"
 androidx-test-ext-junit = "androidx.test.ext:junit:1.3.0"
 androidx-test-rules = "androidx.test:rules:1.7.0"
 androidx-test-runner = "androidx.test:runner:1.7.0"
@@ -53,7 +62,8 @@ libphonenumber = { module = "com.googlecode.libphonenumber:libphonenumber", vers
 libphonenumber-geocoder = "com.googlecode.libphonenumber:geocoder:3.42"
 material = "com.google.android.material:material:1.14.0"
 protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }
-pvot-design-system = { group = "com.prauga.pvot", name = "design-system" }
+pvot-core-ui = { group = "com.prauga.pvot", name = "core-ui", version.ref = "pvot" }
+pvot-design-system = { group = "com.prauga.pvot", name = "design-system", version.ref = "pvot" }
 protoc = { module = "com.google.protobuf:protoc", version.ref = "protobuf" }
 volley = "com.android.volley:volley:1.2.1"
 
@@ -61,3 +71,4 @@ volley = "com.android.volley:volley:1.2.1"
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
+roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
