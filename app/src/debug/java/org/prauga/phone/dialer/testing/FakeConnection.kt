@@ -52,6 +52,7 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
             CAPABILITY_SUPPORTS_VT_LOCAL_BIDIRECTIONAL or
             CAPABILITY_SUPPORTS_VT_REMOTE_BIDIRECTIONAL
         videoProvider = video
+        connectionProperties = spec.properties
         audioModeIsVoip = false
     }
 

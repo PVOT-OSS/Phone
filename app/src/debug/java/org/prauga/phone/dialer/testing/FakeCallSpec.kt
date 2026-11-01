@@ -17,6 +17,8 @@ data class FakeCallSpec(
     val verificationStatus: Int = Connection.VERIFICATION_STATUS_NOT_VERIFIED,
     val videoState: Int = VideoProfile.STATE_AUDIO_ONLY,
     val rtt: Boolean = false,
+    /** Connection properties the network reports, such as [android.telecom.Connection.PROPERTY_WIFI]. */
+    val properties: Int = 0,
 ) {
     fun toExtras(): Bundle = Bundle().apply {
         putString(EXTRA_NUMBER, number)
@@ -24,6 +26,7 @@ data class FakeCallSpec(
         putInt(EXTRA_VERIFICATION, verificationStatus)
         putInt(EXTRA_VIDEO_STATE, videoState)
         putBoolean(EXTRA_RTT, rtt)
+        putInt(EXTRA_PROPERTIES, properties)
     }
 
     companion object {
@@ -32,6 +35,7 @@ data class FakeCallSpec(
         private const val EXTRA_VERIFICATION = "org.prauga.phone.testing.VERIFICATION"
         private const val EXTRA_VIDEO_STATE = "org.prauga.phone.testing.VIDEO_STATE"
         private const val EXTRA_RTT = "org.prauga.phone.testing.RTT"
+        private const val EXTRA_PROPERTIES = "org.prauga.phone.testing.PROPERTIES"
 
         fun fromExtras(extras: Bundle?): FakeCallSpec = FakeCallSpec(
             number = extras?.getString(EXTRA_NUMBER),
@@ -41,6 +45,7 @@ data class FakeCallSpec(
                 ?: Connection.VERIFICATION_STATUS_NOT_VERIFIED,
             videoState = extras?.getInt(EXTRA_VIDEO_STATE, VideoProfile.STATE_AUDIO_ONLY) ?: VideoProfile.STATE_AUDIO_ONLY,
             rtt = extras?.getBoolean(EXTRA_RTT) ?: false,
+            properties = extras?.getInt(EXTRA_PROPERTIES) ?: 0,
         )
     }
 }
