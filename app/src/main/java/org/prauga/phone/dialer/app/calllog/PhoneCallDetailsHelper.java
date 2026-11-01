@@ -218,9 +218,8 @@ public class PhoneCallDetailsHelper {
       // The date of this call
       descriptionItems.add(getCallDate(details));
 
-      // Create a comma separated list from the call type or location, and call date.
-
-      return DialerUtils.join(descriptionItems);
+      // The pieces go on one line separated by bullets, the time last.
+      return DialerUtils.join(descriptionItems, " \u2022 ");
     }
   }
 
@@ -261,8 +260,8 @@ public class PhoneCallDetailsHelper {
   }
 
   /**
-   * Get the call date/time of the call. For the call log this is relative to the current time. e.g.
-   * 3 minutes ago. For voicemail, see {@link #getGranularDateTime(PhoneCallDetails)}
+   * Get the call date/time of the call. For the call log see {@link CallLogTime}: "Just now", "5
+   * min ago", the time today, the weekday this week, else the date. For voicemail, see {@link #getGranularDateTime(PhoneCallDetails)}
    *
    * @param details Call details to use.
    * @return String representing when the call occurred.
@@ -272,11 +271,7 @@ public class PhoneCallDetailsHelper {
       return getGranularDateTime(details);
     }
 
-    return DateUtils.getRelativeTimeSpanString(
-        details.date,
-        getCurrentTimeMillis(),
-        DateUtils.MINUTE_IN_MILLIS,
-        DateUtils.FORMAT_ABBREV_RELATIVE);
+    return CallLogTime.format(context, details.date, getCurrentTimeMillis());
   }
 
   /**
