@@ -28,15 +28,27 @@ import org.prauga.phone.incallui.call.DialerCall
 object CallTransfer {
 
     /**
-     * Whether [call] can be transferred to the held call: the network supports it for the call and
-     * the carrier allows transferring calls.
+     * Whether [call] can be transferred: to the held call, or to a number the user enters when the
+     * network supports that; either way the carrier must allow transferring calls.
      */
     @JvmStatic
     fun canTransfer(context: Context, call: DialerCall): Boolean =
+        canTransferToHeldCall(context, call) || canTransferToNumber(context, call)
+
+    /** Whether [call] can be handed over to the held call. */
+    @JvmStatic
+    fun canTransferToHeldCall(context: Context, call: DialerCall): Boolean =
         // Telecom opened transferring calls to phone apps in Android 17.
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.CINNAMON_BUN &&
             call.can(Call.Details.CAPABILITY_TRANSFER_CONSULTATIVE) &&
             CallList.getInstance().backgroundCall != null &&
+            carrierAllowsTransfer(context, call)
+
+    /** Whether [call] can be handed over to a number without calling it first. */
+    @JvmStatic
+    fun canTransferToNumber(context: Context, call: DialerCall): Boolean =
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.CINNAMON_BUN &&
+            call.can(Call.Details.CAPABILITY_TRANSFER) &&
             carrierAllowsTransfer(context, call)
 
     private fun carrierAllowsTransfer(context: Context, call: DialerCall): Boolean {

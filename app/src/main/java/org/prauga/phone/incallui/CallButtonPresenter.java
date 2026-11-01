@@ -366,8 +366,14 @@ public class CallButtonPresenter
   public void transferClicked() {
     LogUtil.enterBlock("CallButtonPresenter.transferClicked");
     InCallActivity activity = InCallPresenter.getInstance().getActivity();
-    if (activity != null) {
+    if (activity == null || call == null) {
+      return;
+    }
+    if (CallTransfer.canTransferToHeldCall(getContext(), call)) {
       activity.showCallTransferDialog();
+    } else {
+      NumberPromptDialogFragment.show(
+          activity, NumberPromptDialogFragment.Action.TRANSFER, call.getId());
     }
   }
 
