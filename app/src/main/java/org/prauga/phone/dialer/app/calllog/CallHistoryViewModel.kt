@@ -34,6 +34,7 @@ import org.prauga.phone.dialer.location.GeoUtil
 import org.prauga.phone.dialer.phonenumbercache.CallLogQuery
 import org.prauga.phone.dialer.phonenumbercache.ContactInfoHelper
 import org.prauga.phone.dialer.util.ExpirableCache
+import org.prauga.phone.dialer.telecom.TelecomUtil
 import org.prauga.phone.dialer.util.PermissionsUtil
 
 /** What a call history list shows. */
@@ -73,7 +74,10 @@ class DefaultCallHistoryRepository(
     }
 
     override suspend fun blocked(numbers: Collection<String>): Set<String> = withContext(ioDispatcher) {
-        if (!BlockedNumberContract.canCurrentUserBlockNumbers(application)) return@withContext emptySet()
+        // Only the default phone app may read blocked numbers.
+        if (!TelecomUtil.isDefaultDialer(application) ||
+            !BlockedNumberContract.canCurrentUserBlockNumbers(application)
+        ) return@withContext emptySet()
         numbers.filterTo(mutableSetOf()) { number ->
             number.isNotEmpty() && BlockedNumberContract.isBlocked(application, number)
         }
@@ -133,11 +137,24 @@ class CallHistoryViewModel(
         override fun onChange(selfChange: Boolean) = refresh()
     }
 
+    // Each observer is registered once its permission is there: without it, registering throws.
+    private var observingCalls = false
+    private var observingContacts = false
+
     init {
         if (!PermissionsUtil.hasContactsReadPermissions(application)) contactInfoCache.disableRequestProcessing()
-        val resolver = application.contentResolver
-        resolver.registerContentObserver(CallLog.CONTENT_URI, true, observer)
-        resolver.registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, observer)
+    }
+
+    private fun observe() {
+        val application = getApplication<Application>()
+        if (!observingCalls) {
+            application.contentResolver.registerContentObserver(CallLog.CONTENT_URI, true, observer)
+            observingCalls = true
+        }
+        if (!observingContacts && PermissionsUtil.hasContactsReadPermissions(application)) {
+            application.contentResolver.registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, observer)
+            observingContacts = true
+        }
     }
 
     /** Reloads the calls, or asks for the permission when it is missing. */
@@ -147,6 +164,7 @@ class CallHistoryViewModel(
             _state.value = CallHistoryUiState.NeedsPermission
             return
         }
+        observe()
         loadJob?.cancel()
         loadJob = viewModelScope.launch {
             _state.value = try {

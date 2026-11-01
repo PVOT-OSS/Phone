@@ -118,9 +118,8 @@ class SpeedDialViewModel @JvmOverloads constructor(
         override fun onChange(selfChange: Boolean) = refresh()
     }
 
-    init {
-        application.contentResolver.registerContentObserver(Contacts.CONTENT_STREQUENT_URI, true, observer)
-    }
+    // Registered once the permission is there: without it, registering throws.
+    private var observing = false
 
     /** Reloads favorites and suggestions, or asks for the permission when it is missing. */
     fun refresh() {
@@ -132,6 +131,10 @@ class SpeedDialViewModel @JvmOverloads constructor(
             loadJob?.cancel()
             _state.value = SpeedDialUiState.NeedsPermission
             return
+        }
+        if (!observing) {
+            getApplication<Application>().contentResolver.registerContentObserver(Contacts.CONTENT_STREQUENT_URI, true, observer)
+            observing = true
         }
         update { repository.load() }
     }

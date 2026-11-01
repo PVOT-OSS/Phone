@@ -188,8 +188,12 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
     StringBuilder where = new StringBuilder();
     List<String> selectionArgs = new ArrayList<>();
 
-    // Ignore voicemails marked as deleted
-    where.append("(").append(Voicemails.DELETED).append(" = 0)");
+    // Ignore voicemails marked as deleted. Only an app with voicemail access may name that column;
+    // any other app gets no voicemails in the call log at all.
+    where.append("(1)");
+    if (TelecomUtil.hasReadWriteVoicemailPermissions(context)) {
+      where.append(" AND (").append(Voicemails.DELETED).append(" = 0)");
+    }
 
     if (newOnly) {
       where.append(" AND (").append(Calls.NEW).append(" = 1)");

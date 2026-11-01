@@ -74,9 +74,11 @@ class CallLogRowResolver(
     private val defaultAccount: PhoneAccountHandle? by lazy {
         TelecomUtil.getDefaultOutgoingPhoneAccount(context, PhoneAccount.SCHEME_TEL)
     }
+    // Only the default phone app may read or change blocked numbers.
     private val canBlockNumbers: Boolean by lazy {
         try {
-            android.provider.BlockedNumberContract.canCurrentUserBlockNumbers(context)
+            TelecomUtil.isDefaultDialer(context) &&
+                android.provider.BlockedNumberContract.canCurrentUserBlockNumbers(context)
         } catch (e: SecurityException) {
             false
         }

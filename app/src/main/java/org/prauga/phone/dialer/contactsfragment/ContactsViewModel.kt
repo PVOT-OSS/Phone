@@ -48,9 +48,8 @@ class ContactsViewModel @JvmOverloads constructor(
         override fun onChange(selfChange: Boolean) = refresh()
     }
 
-    init {
-        application.contentResolver.registerContentObserver(Contacts.CONTENT_URI, true, observer)
-    }
+    // Registered once the permission is there: without it, registering throws.
+    private var observing = false
 
     /** Reloads the contacts, or asks for the permission when it is missing. */
     fun refresh() {
@@ -58,6 +57,10 @@ class ContactsViewModel @JvmOverloads constructor(
             loadJob?.cancel()
             _state.value = ContactsUiState.NeedsPermission
             return
+        }
+        if (!observing) {
+            getApplication<Application>().contentResolver.registerContentObserver(Contacts.CONTENT_URI, true, observer)
+            observing = true
         }
         loadJob?.cancel()
         loadJob = viewModelScope.launch {
