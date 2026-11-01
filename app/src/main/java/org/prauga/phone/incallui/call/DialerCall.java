@@ -144,6 +144,7 @@ public class DialerCall implements VideoTechListener {
   private String childNumber;
   private String lastForwardedNumber;
   private boolean isCallForwarded;
+  private final DiagnosticMessages diagnosticMessages = new DiagnosticMessages();
   private String callSubject;
   @Nullable
   private PhoneAccountHandle phoneAccountHandle;
@@ -358,6 +359,12 @@ public class DialerCall implements VideoTechListener {
             case TelephonyManagerCompat.EVENT_CALL_FORWARDED:
               isCallForwarded = true;
               update();
+              break;
+            case Call.EVENT_DISPLAY_DIAGNOSTIC_MESSAGE:
+            case Call.EVENT_CLEAR_DIAGNOSTIC_MESSAGE:
+              if (diagnosticMessages.onEvent(event, extras)) {
+                update();
+              }
               break;
             default:
               break;
@@ -1391,6 +1398,12 @@ public class DialerCall implements VideoTechListener {
       // Tell the network why, so it can treat an unwanted call differently from a declined one.
       telecomCall.reject(isSpam() ? Call.REJECT_REASON_UNWANTED : Call.REJECT_REASON_DECLINED);
     }
+  }
+
+  /** The latest message the carrier wants shown during the call, or null. */
+  @Nullable
+  public CharSequence getDiagnosticMessage() {
+    return diagnosticMessages.latest();
   }
 
   /** Return the string label to represent the call provider */

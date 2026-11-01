@@ -449,6 +449,7 @@ public class CallCardPresenter
                   .setIsAssistedDialed(primary.isAssistedDialed())
                   .setCustomLabel(null)
                   .setAssistedDialingExtras(primary.getAssistedDialingExtras())
+                  .setDiagnosticMessage(primary.getDiagnosticMessage())
                   .build());
 
       InCallActivity activity =

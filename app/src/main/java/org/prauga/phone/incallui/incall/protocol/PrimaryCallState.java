@@ -116,6 +116,10 @@ public abstract class PrimaryCallState {
   @Nullable
   public abstract TransformationInfo assistedDialingExtras();
 
+  /** A message the carrier wants shown during the call, such as a warning about coverage. */
+  @Nullable
+  public abstract CharSequence diagnosticMessage();
+
   public static Builder builder() {
     return new AutoValue_PrimaryCallState.Builder()
         .setState(DialerCallState.IDLE)
@@ -197,6 +201,8 @@ public abstract class PrimaryCallState {
     public abstract Builder setCustomLabel(String customLabel);
 
     public abstract Builder setAssistedDialingExtras(TransformationInfo assistedDialingExtras);
+
+    public abstract Builder setDiagnosticMessage(@Nullable CharSequence diagnosticMessage);
 
     abstract PrimaryCallState autoBuild();
 
