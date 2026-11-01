@@ -18,7 +18,6 @@
 <resources>
   <color name="dialer_end_call_button_color">#dc362e</color>
   <color name="dialer_link_color">#2A56C6</color>
-  <color name="dialer_snackbar_action_text_color">@android:color/system_accent1_600</color>
   <color name="dialer_call_icon_color">@android:color/white</color>
 
   <!-- Colors for the notification actions -->

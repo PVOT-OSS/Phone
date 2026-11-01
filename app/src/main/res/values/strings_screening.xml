@@ -6,28 +6,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Settings entry and screen title for choosing what happens to calls from unknown callers [CHAR LIMIT=40] -->
   <string name="screening_settings_title">Unknown callers</string>
-  <!-- Note under the unknown caller settings about calls that are never screened -->
-  <string name="screening_settings_footer">Calls from your contacts, numbers you called in the last 7 days, emergency callbacks and calls that arrive while you are on another call always ring.</string>
-
-  <!-- Unknown caller category: callers who hide their number [CHAR LIMIT=40] -->
-  <string name="screening_category_private_or_hidden">Private and hidden numbers</string>
-  <!-- Explains the private and hidden numbers category -->
-  <string name="screening_category_private_or_hidden_description">Callers who hide their number.</string>
-  <!-- Unknown caller category: numbers that failed network verification [CHAR LIMIT=40] -->
-  <string name="screening_category_possibly_faked">Possibly faked numbers</string>
-  <!-- Explains the possibly faked numbers category -->
-  <string name="screening_category_possibly_faked_description">Callers whose number your network could not verify, which spammers often fake.</string>
-  <!-- Unknown caller category: numbers not in the call history [CHAR LIMIT=40] -->
-  <string name="screening_category_first_time">First-time callers</string>
-  <!-- Explains the first-time callers category -->
-  <string name="screening_category_first_time_description">Numbers that are not in your call history.</string>
-
-  <!-- What happens to a call: it rings as usual [CHAR LIMIT=30] -->
-  <string name="screening_action_ring">Ring</string>
-  <!-- What happens to a call: it arrives without sound or vibration [CHAR LIMIT=30] -->
-  <string name="screening_action_silence">Ring silently</string>
-  <!-- What happens to a call: it is declined without a notification [CHAR LIMIT=30] -->
-  <string name="screening_action_decline">Decline</string>
 
     <!-- Settings screen for how incoming calls are answered and announced. [CHAR LIMIT=40] -->
     <string name="incoming_call_settings_title">Incoming calls</string>
