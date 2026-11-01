@@ -74,6 +74,7 @@ protobuf {
 dependencies {
     implementation(project(":common"))
     implementation(project(":telephony"))
+    implementation(project(":ui"))
     implementation(project(":annotations"))
     annotationProcessor(project(":processor"))
 
