@@ -150,6 +150,9 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
     fun hangUpFromFarEnd(cause: Int = if (state == STATE_RINGING) DisconnectCause.MISSED else DisconnectCause.REMOTE) =
         end(DisconnectCause(cause))
 
+    /** The network ends the call with [cause], which can carry a reason and a message for the user. */
+    fun hangUpFromFarEnd(cause: DisconnectCause) = end(cause)
+
     private fun end(cause: DisconnectCause) {
         setDisconnected(cause)
         destroy()
