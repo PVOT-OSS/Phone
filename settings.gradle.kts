@@ -32,6 +32,7 @@ includeBuild("PvotLib")
 
 rootProject.name = "Phone"
 include(":app")
+include(":contacts")
 include(":ui")
 include(":telephony")
 include(":common")
