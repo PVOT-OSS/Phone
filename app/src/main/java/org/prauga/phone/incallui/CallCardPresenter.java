@@ -318,6 +318,10 @@ public class CallCardPresenter
   @Override
   public void onDetailsChanged(DialerCall call, Details details) {
     updatePrimaryCallState();
+    if (call.equals(primary)) {
+      // The network can name the caller after the call starts ringing; the lookup notices.
+      maybeStartSearchIfCallerNameChanged(call);
+    }
 
     if (call.can(Details.CAPABILITY_MANAGE_CONFERENCE)
         != details.can(Details.CAPABILITY_MANAGE_CONFERENCE)) {
@@ -504,6 +508,16 @@ public class CallCardPresenter
     InCallActivity activity =
         (InCallActivity) (inCallScreen.getInCallScreenFragment().getActivity());
     activity.showConferenceFragment(true);
+  }
+
+  @Nullable private String primaryCnapName;
+
+  private void maybeStartSearchIfCallerNameChanged(DialerCall call) {
+    String cnapName = call.getCnapName();
+    if (!TextUtils.equals(primaryCnapName, cnapName)) {
+      primaryCnapName = cnapName;
+      maybeStartSearch(call, true);
+    }
   }
 
   private void maybeStartSearch(DialerCall call, boolean isPrimary) {

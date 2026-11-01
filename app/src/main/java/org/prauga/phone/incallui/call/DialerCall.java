@@ -899,7 +899,38 @@ public class DialerCall implements VideoTechListener {
 
   @Nullable
   public String getCnapName() {
-    return telecomCall == null ? null : getTelecomCall().getDetails().getCallerDisplayName();
+    if (telecomCall == null) {
+      return null;
+    }
+    String name = getTelecomCall().getDetails().getCallerDisplayName();
+    // A name the network vouches for, such as a verified business's, when there's no caller name.
+    return TextUtils.isEmpty(name) ? getAssertedDisplayName() : name;
+  }
+
+  /** The caller's name as the network asserts it, or null. */
+  @Nullable
+  public String getAssertedDisplayName() {
+    Bundle extras = getDetailsExtras();
+    return extras == null ? null : extras.getString(Call.EXTRA_ASSERTED_DISPLAY_NAME);
+  }
+
+  @Nullable
+  private Bundle getDetailsExtras() {
+    if (telecomCall == null) {
+      return null;
+    }
+    Bundle extras = telecomCall.getDetails().getExtras();
+    if (extras == null) {
+      return null;
+    }
+    try {
+      // Unparcel now: extras from the network's app can fail to.
+      extras.size();
+      return extras;
+    } catch (RuntimeException e) {
+      LogUtil.e("DialerCall.getDetailsExtras", "can't read the call's extras", e);
+      return null;
+    }
   }
 
   public Bundle getIntentExtras() {
