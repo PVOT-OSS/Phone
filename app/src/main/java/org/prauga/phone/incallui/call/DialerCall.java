@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.hardware.camera2.CameraCharacteristics;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.os.SystemClock;
@@ -47,6 +48,7 @@ import android.widget.Toast;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import org.prauga.phone.contacts.common.compat.CallCompat;
 import org.prauga.phone.dialer.R;
@@ -1074,6 +1076,12 @@ public class DialerCall implements VideoTechListener {
 
   public void sendRttUpgradeRequest() {
     getTelecomCall().sendRttRequest();
+  }
+
+  /** Transfers this call to {@code otherCall}, which the user has already spoken to. */
+  @RequiresApi(Build.VERSION_CODES.CINNAMON_BUN)
+  public void consultativeTransfer(DialerCall otherCall) {
+    getTelecomCall().transfer(otherCall.getTelecomCall());
   }
 
   /** Turns RTT off, carrying on as a voice call. */

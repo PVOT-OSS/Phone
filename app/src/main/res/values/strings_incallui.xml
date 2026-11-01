@@ -60,6 +60,14 @@
   <string name="notification_on_hold">On hold</string>
   <!-- Toast shown when the network could not merge the calls into a conference. -->
   <string name="incall_merge_failed">Failed to merge call.</string>
+  <!-- In-call button that transfers the active call to the call on hold. [CHAR LIMIT=12] -->
+  <string name="incall_label_transfer">Transfer</string>
+  <!-- Title of the dialog confirming a call transfer. -->
+  <string name="incall_transfer_dialog_title">Transfer your call?</string>
+  <!-- Message of the dialog confirming a call transfer: the active caller is put through to the held one. -->
+  <string name="incall_transfer_dialog_message">You\'re transferring your call with <xliff:g id="active_caller" example="Alex">%1$s</xliff:g> to <xliff:g id="held_caller" example="Sam">%2$s</xliff:g>. Be sure both parties know about the transfer before completing it.</string>
+  <!-- Button confirming a call transfer. -->
+  <string name="incall_transfer_dialog_confirm">Transfer the call</string>
   <!-- The "label" of the in-call Notification for an incoming ringing call. [CHAR LIMIT=60] -->
   <string name="notification_incoming_call">Incoming call</string>
   <!-- The "label" of the in-call Notification for an incoming ringing call. [CHAR LIMIT=60] -->

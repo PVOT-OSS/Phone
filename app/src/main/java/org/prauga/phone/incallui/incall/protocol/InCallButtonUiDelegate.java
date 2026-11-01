@@ -46,6 +46,9 @@ public interface InCallButtonUiDelegate {
 
   void changeToRttClicked();
 
+  /** Asks to transfer the active call to the held one. */
+  void transferClicked();
+
   void switchCameraClicked(boolean useFrontFacingCamera);
 
   void toggleCameraClicked();

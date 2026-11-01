@@ -241,6 +241,9 @@ public class CallPendingActivity extends FragmentActivity
           public void changeToRttClicked() {}
 
           @Override
+          public void transferClicked() {}
+
+          @Override
           public void switchCameraClicked(boolean useFrontFacingCamera) {}
 
           @Override
