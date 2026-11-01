@@ -19,6 +19,8 @@ class DeviceRule : ExternalResource() {
     override fun before() {
         device.wakeUp()
         Shell.run("wm dismiss-keyguard")
+        // Android's one-time "Viewing full screen" hint would cover the top of the call screen.
+        Shell.run("settings put secure immersive_mode_confirmations confirmed")
         Shell.run("logcat -b crash -c")
         // Start from a quiet phone: a call from the previous test may still be ending.
         InCall.waitForNoCalls()
