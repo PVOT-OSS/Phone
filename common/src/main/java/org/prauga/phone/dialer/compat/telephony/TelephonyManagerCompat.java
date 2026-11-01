@@ -101,7 +101,13 @@ public class TelephonyManagerCompat {
    */
   @SuppressLint("MissingPermission")
   public static boolean isTtyModeSupported(@Nullable TelecomManager telecomManager) {
-    return telecomManager != null && telecomManager.isTtySupported();
+    try {
+      return telecomManager != null && telecomManager.isTtySupported();
+    } catch (SecurityException e) {
+      // Telecom needs READ_PHONE_STATE, which the user may not have granted yet.
+      LogUtil.w("TelephonyManagerCompat.isTtyModeSupported", "no phone permission");
+      return false;
+    }
   }
 
   /**
