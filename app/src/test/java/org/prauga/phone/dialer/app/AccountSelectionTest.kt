@@ -54,9 +54,15 @@ class AccountSelectionTest {
     }
 
     @Test
-    fun screenshotDark() {
+    fun screenshotDark() = screenshot("account_selection_dark")
+
+    @Test
+    @Config(qualifiers = "+notnight")
+    fun screenshotLight() = screenshot("account_selection_light")
+
+    private fun screenshot(name: String) {
         compose.setContent { PvotAppTheme { AccountSheet(accounts, onSelect = {}, onDismiss = {}) } }
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/dialogs/account_selection_dark.png")
+        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/dialogs/$name.png")
     }
 }

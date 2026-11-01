@@ -106,11 +106,17 @@ class CallSubjectDialogTest {
     }
 
     @Test
-    fun screenshotDark() {
+    fun screenshotDark() = screenshot("call_subject_dark")
+
+    @Test
+    @Config(qualifiers = "+notnight")
+    fun screenshotLight() = screenshot("call_subject_light")
+
+    private fun screenshot(name: String) {
         show(history = listOf("Running late"))
         compose.onNode(hasSetTextAction()).performTextInput("At the door")
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/dialogs/call_subject_dark.png")
+        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/dialogs/$name.png")
     }
 
     private fun show(

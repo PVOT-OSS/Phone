@@ -26,10 +26,10 @@ import com.prauga.pvot.designsystem.components.PvotBottomSheet
 import com.prauga.pvot.designsystem.components.PvotSheetItem
 import com.prauga.pvot.designsystem.platform.enablePvotEdgeToEdge
 import com.prauga.pvot.designsystem.platform.setPvotContent
-import com.prauga.pvot.designsystem.theme.PvotAppTheme
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.callintent.CallInitiationType
 import org.prauga.phone.dialer.callintent.CallIntentBuilder
+import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.util.CallUtil
 
@@ -50,7 +50,8 @@ class AccountSelectionActivity : ComponentActivity() {
         val accounts = handles.mapNotNull { handle -> telecom.getPhoneAccount(handle)?.let { CallingAccount.of(this, it) } }
 
         setPvotContent {
-            PvotAppTheme {
+            // Not filled: the window is see-through, and the sheet draws its own scrim over the app below.
+            PhoneScreenTheme(fillBackground = false) {
                 AccountSheet(accounts, onSelect = { account ->
                     startActivity(CallIntentBuilder(number, initiationType).setPhoneAccountHandle(account.handle).build())
                     finish()
@@ -95,6 +96,9 @@ internal data class CallingAccount(
     }
 }
 
+/** Size of an account's own icon at the start of its row. */
+private val AccountIconSize = 24.dp
+
 /** The sheet listing [accounts]; picking one calls [onSelect], dismissing calls [onDismiss]. */
 @Composable
 internal fun AccountSheet(accounts: List<CallingAccount>, onSelect: (CallingAccount) -> Unit, onDismiss: () -> Unit) {
@@ -106,7 +110,7 @@ internal fun AccountSheet(accounts: List<CallingAccount>, onSelect: (CallingAcco
                 onClick = { onSelect(account) },
                 modifier = Modifier.testTag(TestTags.callingAccount(account.handle.id)),
                 // The account's own icon, usually its SIM color, as the system shows it.
-                icon = account.icon?.let { bitmap -> { Image(bitmap.asImageBitmap(), contentDescription = null, Modifier.size(24.dp)) } },
+                icon = account.icon?.let { bitmap -> { Image(bitmap.asImageBitmap(), contentDescription = null, Modifier.size(AccountIconSize)) } },
             )
         }
     }

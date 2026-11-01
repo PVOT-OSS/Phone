@@ -18,9 +18,11 @@ import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.ExternalResource
 import org.junit.runner.RunWith
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.ui.TestTags
+import org.prauga.phone.dialer.ui.appearance.AppearanceSettings
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
@@ -34,7 +36,18 @@ class OnboardingActivityTest {
     private val context: Application = ApplicationProvider.getApplicationContext()
     private val roleManager = context.getSystemService(RoleManager::class.java)
 
-    @get:Rule val compose = createAndroidComposeRule<OnboardingActivity>()
+    /** Solid glass holds the live background still, so the test clock can go idle; set before launch. */
+    @get:Rule(order = 0) val solidGlass = object : ExternalResource() {
+        override fun before() {
+            AppearanceSettings.setGlass(context, false)
+        }
+
+        override fun after() {
+            AppearanceSettings.prefs(context).edit().clear().commit()
+        }
+    }
+
+    @get:Rule(order = 1) val compose = createAndroidComposeRule<OnboardingActivity>()
 
     @Test
     fun setAsDefaultRequestsTheDialerRole() {

@@ -92,7 +92,7 @@ class OnboardingScreenTest {
     }
 
     private fun show(state: OnboardingState) {
-        compose.setContent { PhoneScreenTheme { OnboardingScreen(state, actions) } }
+        compose.setContent { PhoneScreenTheme { SolidGlass { OnboardingScreen(state, actions) } } }
     }
 
     private fun scrollTo(tag: String) = compose.onNodeWithTag(TestTags.ONBOARDING)

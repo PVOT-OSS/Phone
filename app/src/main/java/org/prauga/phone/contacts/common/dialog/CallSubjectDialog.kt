@@ -13,14 +13,13 @@ import android.os.Bundle
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.telecom.PhoneAccount
 import android.telecom.PhoneAccountHandle
+import android.provider.ContactsContract.QuickContact
 import android.telecom.TelecomManager
-import android.widget.QuickContactBadge
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -38,31 +37,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.edit
 import androidx.core.os.BundleCompat
 import androidx.preference.PreferenceManager
 import com.prauga.pvot.designsystem.components.PvotDialog
 import com.prauga.pvot.designsystem.components.PvotDialogAction
 import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
+import com.prauga.pvot.designsystem.components.PvotDialogDefaults
 import com.prauga.pvot.designsystem.components.PvotSheetItem
 import com.prauga.pvot.designsystem.components.textfield.PvotTextField
 import com.prauga.pvot.designsystem.platform.enablePvotEdgeToEdge
 import com.prauga.pvot.designsystem.platform.setPvotContent
-import com.prauga.pvot.designsystem.theme.PvotAppTheme
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import java.nio.charset.Charset
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.callintent.CallInitiationType
 import org.prauga.phone.dialer.callintent.CallIntentBuilder
 import org.prauga.phone.dialer.common.LogUtil
-import org.prauga.phone.dialer.contactphoto.ContactPhotoManager
 import org.prauga.phone.dialer.lettertile.LetterTileDrawable
 import org.prauga.phone.dialer.precall.PreCall
+import org.prauga.phone.dialer.ui.ContactAvatar
+import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.TestTags
 
 /** Lets the user type a note (call subject) to send with a call, then places the call. */
@@ -85,8 +84,11 @@ class CallSubjectDialog : ComponentActivity() {
         val label = args.getString(ARG_NUMBER_LABEL)
         val contactUri = BundleCompat.getParcelable(args, ARG_CONTACT_URI, Uri::class.java)
 
+        val photoUri = BundleCompat.getParcelable(args, ARG_PHOTO_URI, Uri::class.java)
+
         setPvotContent {
-            PvotAppTheme {
+            // Not filled: the window is see-through, and the dialog draws its own scrim over the app below.
+            PhoneScreenTheme(fillBackground = false) {
                 CallSubjectContent(
                     name = nameOrNumber,
                     number = when {
@@ -105,16 +107,18 @@ class CallSubjectDialog : ComponentActivity() {
                     },
                     onDismiss = ::finish,
                     photo = if (contactUri == null) null else { modifier ->
-                        AndroidView(
-                            modifier = modifier,
-                            factory = { QuickContactBadge(it).apply { setOverlay(null); setPrioritizedMimeType(Phone.CONTENT_ITEM_TYPE) } },
-                            update = { badge ->
-                                ContactPhotoManager.getInstance(this).loadDialerThumbnailOrPhoto(
-                                    badge, contactUri, args.getLong(ARG_PHOTO_ID),
-                                    BundleCompat.getParcelable(args, ARG_PHOTO_URI, Uri::class.java), nameOrNumber,
-                                    args.getInt(ARG_CONTACT_TYPE, LetterTileDrawable.TYPE_DEFAULT),
-                                )
-                            },
+                        // Tapping the photo opens the contact's quick card, as the badge it replaces did.
+                        val view = LocalView.current
+                        ContactAvatar(
+                            name = nameOrNumber,
+                            photoUri = photoUri?.toString(),
+                            colorKey = contactUri,
+                            size = PvotDialogDefaults.IconCircleSize,
+                            modifier = modifier
+                                .clip(CircleShape)
+                                .clickable(onClickLabel = getString(R.string.description_quick_contact_for, nameOrNumber)) {
+                                    QuickContact.showQuickContact(this, view, contactUri, null, Phone.CONTENT_ITEM_TYPE)
+                                },
                         )
                     },
                 )
@@ -232,7 +236,8 @@ internal fun CallSubjectContent(
         onDismissRequest = onDismiss,
         title = name,
         message = number,
-        icon = photo?.let { { it(Modifier.size(48.dp).clip(CircleShape)) } },
+        // The photo fills the dialog's icon circle.
+        icon = photo?.let { { it(Modifier) } },
         content = {
             Column(verticalArrangement = Arrangement.spacedBy(PvotSpacing.S)) {
                 // Shown above the field: text field labels are one line, and this hint is longer.

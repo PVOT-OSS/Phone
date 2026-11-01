@@ -28,6 +28,10 @@ class OnboardingScreenshotTest {
     fun roleDark() = capture(OnboardingState(roleDenied = true), "role_dark")
 
     @Test
+    @Config(qualifiers = "+notnight")
+    fun roleLight() = capture(OnboardingState(roleDenied = true), "role_light")
+
+    @Test
     fun permissionsDark() = capture(
         OnboardingState(
             isDefaultDialer = true,
@@ -38,7 +42,7 @@ class OnboardingScreenshotTest {
     )
 
     private fun capture(state: OnboardingState, name: String) {
-        compose.setContent { PhoneScreenTheme { OnboardingScreen(state, NoActions) } }
+        compose.setContent { PhoneScreenTheme { SolidGlass { OnboardingScreen(state, NoActions) } } }
         compose.onRoot().captureRoboImage("src/test/screenshots/onboarding/$name.png")
     }
 
