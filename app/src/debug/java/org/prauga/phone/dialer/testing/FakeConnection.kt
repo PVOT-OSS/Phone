@@ -7,6 +7,8 @@ package org.prauga.phone.dialer.testing
 
 import android.net.Uri
 import android.telecom.Connection
+import android.telecom.Connection.RttModifyStatus
+import android.telecom.Connection.RttTextStream
 import android.telecom.DisconnectCause
 import android.telecom.PhoneAccount
 
@@ -18,6 +20,21 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
 
     /** The video side of the call, which the far end uses to accept, ask for or drop video. */
     val video = FakeVideoProvider(this)
+
+    private val rttReceived = StringBuilder()
+
+    /** True while the user waits for the far end to answer their request to switch to RTT. */
+    @Volatile
+    var rttRequestedByUser = false
+        private set
+
+    /** The user's answer to the far end's last RTT request, null until they answer. */
+    @Volatile
+    var rttRequestAccepted: Boolean? = null
+        private set
+
+    @Volatile
+    private var rttStream: RttTextStream? = null
 
     private val postDialDigits = spec.number?.substringAfter(';', "").orEmpty()
 
@@ -62,6 +79,23 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
         playedTones += c
     }
 
+    override fun onStartRtt(rttTextStream: RttTextStream) {
+        rttStream = rttTextStream
+        // Telecom also hands over the streams when the call turned RTT on itself; only a call
+        // that isn't RTT yet is the user asking to switch.
+        if (connectionProperties and PROPERTY_IS_RTT == 0) rttRequestedByUser = true
+    }
+
+    override fun onStopRtt() {
+        rttStream = null
+        connectionProperties = connectionProperties and PROPERTY_IS_RTT.inv()
+    }
+
+    override fun handleRttUpgradeResponse(rttTextStream: RttTextStream?) {
+        rttRequestAccepted = rttTextStream != null
+        if (rttTextStream != null) startRtt(rttTextStream)
+    }
+
     override fun onPostDialContinue(proceed: Boolean) {
         if (proceed) playedTones += postDialDigits.toList()
     }
@@ -70,6 +104,43 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
     fun answerFromFarEnd() {
         setActive()
         if (postDialDigits.isNotEmpty()) setPostDialWait(postDialDigits)
+    }
+
+    /** Starts the call with RTT on, as a network does for a call that was RTT from the start. */
+    fun startRtt(stream: RttTextStream?) {
+        stream?.let { rttStream = it }
+        connectionProperties = connectionProperties or PROPERTY_IS_RTT
+    }
+
+    /** The far end agrees to the user's request to switch to RTT. */
+    fun acceptRttRequest() {
+        check(rttRequestedByUser) { "no RTT request" }
+        rttRequestedByUser = false
+        connectionProperties = connectionProperties or PROPERTY_IS_RTT
+        sendRttInitiationSuccess()
+    }
+
+    /** The far end turns the user's request to switch to RTT down. */
+    fun rejectRttRequest() {
+        check(rttRequestedByUser) { "no RTT request" }
+        rttRequestedByUser = false
+        rttStream = null
+        sendRttInitiationFailure(RttModifyStatus.SESSION_MODIFY_REQUEST_REJECTED_BY_REMOTE)
+    }
+
+    /** The far end asks the user to switch the call to RTT. */
+    fun requestRtt() {
+        rttRequestAccepted = null
+        sendRemoteRttRequest()
+    }
+
+    /** The far end types [text] over RTT. */
+    fun typeRtt(text: String) = checkNotNull(rttStream) { "RTT is off" }.write(text)
+
+    /** Everything the user has typed over RTT so far. */
+    fun readRtt(): String {
+        rttStream?.readImmediately()?.let { rttReceived.append(it) }
+        return rttReceived.toString()
     }
 
     /**

@@ -21,6 +21,7 @@ class FakeCarrierConnectionService : ConnectionService() {
     ): Connection {
         val spec = FakeCallSpec.fromExtras(request.extras.getBundle(TelecomManager.EXTRA_INCOMING_CALL_EXTRAS))
         return FakeConnection(spec, isIncoming = true).also {
+            if (spec.rtt) it.startRtt(request.rttTextStream)
             it.setRinging()
             FakeCarrier.remember(it)
         }
@@ -30,8 +31,13 @@ class FakeCarrierConnectionService : ConnectionService() {
         connectionManagerPhoneAccount: PhoneAccountHandle?,
         request: ConnectionRequest,
     ): Connection {
-        val spec = FakeCallSpec(number = request.address?.schemeSpecificPart, videoState = request.videoState)
+        val spec = FakeCallSpec(
+            number = request.address?.schemeSpecificPart,
+            videoState = request.videoState,
+            rtt = request.isRequestingRtt,
+        )
         return FakeConnection(spec, isIncoming = false).also {
+            if (spec.rtt) it.startRtt(request.rttTextStream)
             it.setDialing()
             FakeCarrier.remember(it)
         }
