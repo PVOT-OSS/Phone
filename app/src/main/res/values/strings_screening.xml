@@ -3,7 +3,7 @@
   SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
   SPDX-License-Identifier: Apache-2.0
   -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Settings entry and screen title for choosing what happens to calls from unknown callers [CHAR LIMIT=40] -->
   <string name="screening_settings_title">Unknown callers</string>
   <!-- Note under the unknown caller settings about calls that are never screened -->
@@ -28,4 +28,24 @@
   <string name="screening_action_silence">Ring silently</string>
   <!-- What happens to a call: it is declined without a notification [CHAR LIMIT=30] -->
   <string name="screening_action_decline">Decline</string>
+
+    <!-- Settings screen for how incoming calls are answered and announced. [CHAR LIMIT=40] -->
+    <string name="incoming_call_settings_title">Incoming calls</string>
+    <!-- How the user answers or declines an incoming call. [CHAR LIMIT=40] -->
+    <string name="answer_method_settings_title">Incoming call gesture</string>
+    <string name="answer_method_swipe_entry">Swipe</string>
+    <string name="answer_method_tap_entry">Single tap</string>
+    <!-- Silences the ringer when the phone is turned face down. [CHAR LIMIT=40] -->
+    <string name="flip_to_silence_title">Flip To Silence</string>
+    <string name="flip_to_silence_summary">To silence an incoming call, place your device face down on a flat surface</string>
+    <!-- Reads the caller's name or number aloud for incoming calls. [CHAR LIMIT=40] -->
+    <string name="call_announcer_title">Caller ID announcement</string>
+    <string name="call_announcer_always">Always</string>
+    <string name="call_announcer_headset">Only when using a headset</string>
+    <string name="call_announcer_never">Never</string>
+    <string name="call_announcer_footer">The caller\'s name and number will be read out loud for incoming calls.</string>
+    <!-- Spoken when a call comes in; %1$s is the caller's name or number. -->
+    <string name="call_announcer_text">Incoming call from <xliff:g id="caller" example="Alex">%1$s</xliff:g></string>
+    <!-- Spoken when a call comes in on a phone with more than one SIM; %2$s is the SIM's name. -->
+    <string name="call_announcer_text_multi_sim">Incoming call from <xliff:g id="caller" example="Alex">%1$s</xliff:g> on <xliff:g id="sim" example="SIM 1">%2$s</xliff:g></string>
 </resources>

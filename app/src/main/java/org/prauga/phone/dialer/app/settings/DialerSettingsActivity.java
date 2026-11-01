@@ -161,6 +161,12 @@ public class DialerSettingsActivity extends BaseActivity implements
       screeningSettings.setIconSpaceReserved(false);
       getPreferenceScreen().addPreference(screeningSettings);
 
+      final Preference incomingCallSettings = new Preference(getContext());
+      incomingCallSettings.setTitle(R.string.incoming_call_settings_title);
+      incomingCallSettings.setFragment(IncomingCallSettingsFragment.class.getName());
+      incomingCallSettings.setIconSpaceReserved(false);
+      getPreferenceScreen().addPreference(incomingCallSettings);
+
       TelephonyManager telephonyManager = getContext().getSystemService(TelephonyManager.class);
       TelecomManager telecomManager = (TelecomManager) getContext().getSystemService(
               Context.TELECOM_SERVICE);

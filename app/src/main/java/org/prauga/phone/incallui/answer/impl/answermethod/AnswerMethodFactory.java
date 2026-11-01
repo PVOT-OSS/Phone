@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import org.prauga.phone.dialer.app.settings.IncomingCallSettings;
 import org.prauga.phone.incallui.util.AccessibilityUtil;
 
 /** Creates the appropriate {@link AnswerMethod} for the circumstances. */
@@ -48,6 +49,8 @@ public class AnswerMethodFactory {
   }
 
   private static boolean needTwoButton(@NonNull Activity activity) {
-    return AccessibilityUtil.isTouchExplorationEnabled(activity) || activity.isInMultiWindowMode();
+    return AccessibilityUtil.isTouchExplorationEnabled(activity)
+        || activity.isInMultiWindowMode()
+        || IncomingCallSettings.answerWithSingleTap(activity);
   }
 }
