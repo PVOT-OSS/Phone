@@ -224,7 +224,6 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
         });
 
     MainToolbar toolbar = activity.findViewById(R.id.toolbar);
-    toolbar.maybeShowSimulator(activity);
     activity.setSupportActionBar(activity.findViewById(R.id.toolbar));
 
     bottomNav = activity.findViewById(R.id.bottom_nav_bar);

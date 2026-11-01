@@ -38,9 +38,4 @@
       android:title="@string/dialer_settings_label"
       app:showAsAction="collapseActionView"/>
 
-  <item
-    android:id="@+id/menu_simulator_submenu"
-    android:title="@string/nui_simulator_submenu_label"
-    app:showAsAction="collapseActionView"
-    android:visible="false"/>
 </menu>

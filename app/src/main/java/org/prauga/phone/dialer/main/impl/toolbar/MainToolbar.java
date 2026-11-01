@@ -27,7 +27,6 @@ import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import org.prauga.phone.dialer.R;
@@ -177,7 +176,4 @@ public final class MainToolbar extends Toolbar implements PopupMenu.OnMenuItemCl
     overflowMenu.showClearFrequents(show);
   }
 
-  public void maybeShowSimulator(AppCompatActivity appCompatActivity) {
-    overflowMenu.maybeShowSimulator(appCompatActivity);
-  }
 }
