@@ -120,6 +120,9 @@ public abstract class PrimaryCallState {
   @Nullable
   public abstract CharSequence diagnosticMessage();
 
+  /** Whether the call uses another SIM's mobile data (Android's backup calling). */
+  public abstract boolean isCrossSim();
+
   public static Builder builder() {
     return new AutoValue_PrimaryCallState.Builder()
         .setState(DialerCallState.IDLE)
@@ -140,6 +143,7 @@ public abstract class PrimaryCallState {
         .setSupportsCallOnHold(true)
         .setSwapToSecondaryButtonState(ButtonState.NOT_SUPPORT)
         .setIsAssistedDialed(false)
+        .setIsCrossSim(false)
         .setPrimaryColor(0);
   }
 
@@ -203,6 +207,8 @@ public abstract class PrimaryCallState {
     public abstract Builder setAssistedDialingExtras(TransformationInfo assistedDialingExtras);
 
     public abstract Builder setDiagnosticMessage(@Nullable CharSequence diagnosticMessage);
+
+    public abstract Builder setIsCrossSim(boolean isCrossSim);
 
     abstract PrimaryCallState autoBuild();
 

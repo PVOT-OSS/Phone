@@ -123,6 +123,12 @@ public class TopRow {
       // Video calling...
       // [Wi-Fi icon] Starbucks Wi-Fi
       label = getConnectionLabel(state);
+      if (state.isCrossSim() && state.state() == DialerCallState.ACTIVE) {
+        label =
+            TextUtils.isEmpty(label)
+                ? context.getString(R.string.incall_backup_calling)
+                : context.getString(R.string.incall_backup_calling_via, label);
+      }
     }
 
     return new Info(label, icon, labelIsSingleLine);

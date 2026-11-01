@@ -450,6 +450,7 @@ public class CallCardPresenter
                   .setCustomLabel(null)
                   .setAssistedDialingExtras(primary.getAssistedDialingExtras())
                   .setDiagnosticMessage(primary.getDiagnosticMessage())
+                  .setIsCrossSim(primary.hasProperty(Details.PROPERTY_CROSS_SIM))
                   .build());
 
       InCallActivity activity =

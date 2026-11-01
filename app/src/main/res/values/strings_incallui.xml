@@ -77,6 +77,11 @@
   <string name="incall_transfer_dialog_message">You\'re transferring your call with <xliff:g id="active_caller" example="Alex">%1$s</xliff:g> to <xliff:g id="held_caller" example="Sam">%2$s</xliff:g>. Be sure both parties know about the transfer before completing it.</string>
   <!-- Button confirming a call transfer. -->
   <string name="incall_transfer_dialog_confirm">Transfer the call</string>
+
+  <!-- Call state label while the call uses another SIM's mobile data (Android's backup calling) [CHAR LIMIT=40] -->
+  <string name="incall_backup_calling">Backup calling</string>
+  <!-- Same, after the name of the SIM the call is on [CHAR LIMIT=60] -->
+  <string name="incall_backup_calling_via"><xliff:g id="sim_name" example="Work">%1$s</xliff:g> · Backup calling</string>
   <!-- The "label" of the in-call Notification for an incoming ringing call. [CHAR LIMIT=60] -->
   <string name="notification_incoming_call">Incoming call</string>
   <!-- The "label" of the in-call Notification for an incoming ringing call. [CHAR LIMIT=60] -->
