@@ -27,7 +27,7 @@ import org.prauga.phone.dialer.R;
 import org.prauga.phone.dialer.blockreportspam.ShowBlockReportSpamDialogReceiver;
 import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.main.MainActivityPeer;
-import org.prauga.phone.dialer.telecom.TelecomUtil;
+import org.prauga.phone.dialer.onboarding.OnboardingRouter;
 import org.prauga.phone.dialer.util.TransactionSafeActivity;
 
 /** This is the main activity for dialer. It hosts favorites, call log, search, dialpad, etc... */
@@ -67,8 +67,10 @@ public class MainActivity extends TransactionSafeActivity
   protected void onResume() {
     super.onResume();
 
-    if (!TelecomUtil.isDefaultDialer(this)) {
-      startActivity(new Intent(this, DefaultDialerActivity.class));
+    // The user build asks to become the default phone app over this screen, which keeps its intent.
+    Intent onboarding = OnboardingRouter.intentIfNeeded(this);
+    if (onboarding != null) {
+      startActivity(onboarding);
       return;
     }
 

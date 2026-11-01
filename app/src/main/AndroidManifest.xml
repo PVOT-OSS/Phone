@@ -337,12 +337,6 @@
         </activity>
 
         <activity
-            android:name="org.prauga.phone.dialer.main.impl.DefaultDialerActivity"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:theme="@style/MainActivityTheme" />
-
-        <activity
             android:name="org.prauga.phone.dialer.postcall.PostCallActivity"
             android:exported="false"
             android:theme="@style/Dialer.ThemeBase.NoActionBar"

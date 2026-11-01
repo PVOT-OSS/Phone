@@ -154,4 +154,13 @@ object TestTags {
 
     /** The field for writing your own reply when declining a call. */
     const val CUSTOM_SMS_INPUT = "custom_sms_input"
+
+    // First-run onboarding of the user build.
+    const val ONBOARDING = "onboarding"
+    const val ONBOARDING_PRIMARY = "onboarding_primary"
+    const val ONBOARDING_SETTINGS = "onboarding_settings"
+    const val ONBOARDING_NOT_NOW = "onboarding_not_now"
+
+    /** The onboarding row explaining the permission group [name]. */
+    fun onboardingPermission(name: String) = "onboarding_permission_$name"
 }
