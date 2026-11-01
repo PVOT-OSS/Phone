@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.provider.CallLog.Calls
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.text.format.DateUtils
-import android.widget.QuickContactBadge
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -29,7 +28,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -39,6 +37,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -48,18 +48,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.core.content.IntentCompat
 import com.prauga.pvot.designsystem.components.PvotCard
+import com.prauga.pvot.designsystem.components.PvotGlassCard
+import com.prauga.pvot.designsystem.components.list.PvotAvatarDefaults
+import com.prauga.pvot.designsystem.effects.PvotGlassDefaults
+import com.prauga.pvot.designsystem.effects.PvotGlassMaterial
 import com.prauga.pvot.designsystem.components.PvotScreen
 import com.prauga.pvot.designsystem.components.PvotScreenDefaults
 import com.prauga.pvot.designsystem.components.button.PvotButton
 import com.prauga.pvot.designsystem.components.button.PvotButtonStyle
 import com.prauga.pvot.designsystem.navigation.PvotTopBar
+import com.prauga.pvot.designsystem.navigation.rememberPvotTopBarCompact
 import com.prauga.pvot.designsystem.platform.enablePvotEdgeToEdge
 import com.prauga.pvot.designsystem.platform.setPvotContent
-import com.prauga.pvot.designsystem.theme.PvotAppTheme
 import com.prauga.pvot.designsystem.theme.PvotShapes
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import kotlinx.coroutines.Dispatchers
@@ -69,12 +73,15 @@ import org.prauga.phone.dialer.app.AccountSelectionActivity
 import org.prauga.phone.dialer.callintent.CallInitiationType
 import org.prauga.phone.dialer.callintent.CallIntentBuilder
 import org.prauga.phone.dialer.clipboard.ClipboardUtils
-import org.prauga.phone.dialer.contactphoto.ContactPhotoManager
 import org.prauga.phone.dialer.contacts.ContactsComponent
 import org.prauga.phone.dialer.lettertile.LetterTileDrawable
 import org.prauga.phone.dialer.location.GeoUtil
 import org.prauga.phone.dialer.phonenumbercache.ContactInfoHelper
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper
+import org.prauga.phone.dialer.ui.PhoneBackground
+import org.prauga.phone.dialer.ui.PhoneScaffold
+import org.prauga.phone.dialer.ui.PhoneScreenTheme
+import org.prauga.phone.dialer.ui.QuickContactAvatar
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.util.CallUtil
 
@@ -97,7 +104,7 @@ class CallStatsDetailActivity : ComponentActivity() {
         val displayOrder = ContactsComponent.get(this).contactDisplayPreferences().displayOrder
 
         setPvotContent {
-            PvotAppTheme {
+            PhoneScreenTheme {
                 // Bumped once the contact lookup has filled in name and photo.
                 var revision by remember { mutableIntStateOf(0) }
                 LaunchedEffect(Unit) {
@@ -120,28 +127,18 @@ class CallStatsDetailActivity : ComponentActivity() {
                     callWithIntent = AccountSelectionActivity.createIntent(this, details.number, CallInitiationType.Type.CALL_LOG),
                     onEditNumber = { startActivity(Intent(Intent.ACTION_DIAL, CallUtil.getCallUri(details.number))) },
                     onCopy = { ClipboardUtils.copyText(this, null, details.number, true) },
-                    photo = { modifier -> ContactPhoto(details, header, modifier) },
+                    avatar = { size ->
+                        QuickContactAvatar(
+                            name = header.nameForPhoto,
+                            contactUri = details.contactUri,
+                            photoId = details.photoId,
+                            photoUri = details.photoUri,
+                            size = size,
+                        )
+                    },
                 )
             }
         }
-    }
-
-    @Composable
-    private fun ContactPhoto(details: CallStatsDetails, header: CallStatsHeader, modifier: Modifier) {
-        AndroidView(
-            modifier = modifier,
-            factory = { context ->
-                QuickContactBadge(context).apply {
-                    setOverlay(null)
-                    setPrioritizedMimeType(Phone.CONTENT_ITEM_TYPE)
-                }
-            },
-            update = { badge ->
-                ContactPhotoManager.getInstance(this).loadDialerThumbnailOrPhoto(
-                    badge, details.contactUri, details.photoId, details.photoUri, header.nameForPhoto, header.contactType,
-                )
-            },
-        )
     }
 
     companion object {
@@ -195,44 +192,57 @@ internal fun CallStatsDetailScreen(
     callWithIntent: Intent?,
     onEditNumber: () -> Unit,
     onCopy: () -> Unit,
-    photo: @Composable (Modifier) -> Unit,
+    avatar: @Composable (Dp) -> Unit,
 ) {
     val context = LocalContext.current
-    Scaffold(
+    val listState = rememberLazyListState()
+    PhoneScaffold(
+        background = PhoneBackground.Live,
         modifier = Modifier.semantics { testTagsAsResourceId = true },
-        containerColor = MaterialTheme.colorScheme.background,
-        topBar = { PvotTopBar(title = stringResource(R.string.call_stats_detail_title), onBack = onBack) },
+        topBar = {
+            PvotTopBar(
+                title = stringResource(R.string.call_stats_detail_title),
+                onBack = onBack,
+                compact = rememberPvotTopBarCompact(listState),
+            )
+        },
     ) { padding ->
         PvotScreen(
-            modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()).testTag(TestTags.CALL_STATS_DETAIL),
+            modifier = Modifier.fillMaxSize().testTag(TestTags.CALL_STATS_DETAIL),
+            state = listState,
             contentPadding = PaddingValues(
                 start = PvotScreenDefaults.HorizontalPadding,
                 end = PvotScreenDefaults.HorizontalPadding,
-                top = PvotSpacing.S,
+                top = padding.calculateTopPadding() + PvotSpacing.S,
                 bottom = PvotScreenDefaults.BottomSpacing + WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding(),
             ),
         ) {
             item(key = "header") {
-                PvotCard(Modifier.fillMaxWidth()) {
-                    Row(
-                        modifier = Modifier.padding(PvotSpacing.L),
-                        horizontalArrangement = Arrangement.spacedBy(PvotSpacing.L),
+                PvotGlassCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    style = PvotGlassDefaults.materialStyle(PvotGlassMaterial.Regular),
+                    contentPadding = PaddingValues(PvotSpacing.L),
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(PvotSpacing.XS),
                     ) {
-                        photo(Modifier.size(56.dp).clip(CircleShape))
-                        Column(Modifier.weight(1f)) {
-                            Text(header.title, style = MaterialTheme.typography.titleLarge)
-                            header.subtitle?.let {
-                                Text(it, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                            }
-                            dateRange?.let {
-                                Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
-                            }
+                        avatar(PvotAvatarDefaults.Hero)
+                        Text(header.title, style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.onSurface,
+                            textAlign = TextAlign.Center, modifier = Modifier.padding(top = PvotSpacing.S))
+                        header.subtitle?.let {
+                            Text(it, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                textAlign = TextAlign.Center)
+                        }
+                        dateRange?.let {
+                            Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
                         }
                     }
                     if (header.canCall || header.canEditBeforeCall) {
                         FlowRow(
-                            modifier = Modifier.padding(start = PvotSpacing.L, end = PvotSpacing.L, bottom = PvotSpacing.L),
-                            horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S),
+                            modifier = Modifier.fillMaxWidth().padding(top = PvotSpacing.L),
+                            horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S, Alignment.CenterHorizontally),
                             verticalArrangement = Arrangement.spacedBy(PvotSpacing.S),
                         ) {
                             if (header.canCall) {
@@ -305,7 +315,7 @@ private fun StatsSection(
             }
             for ((line, amount) in lines) {
                 Row(horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S)) {
-                    Spacer(Modifier.size(PvotSpacing.M).clip(CircleShape).background(colorFor(line.type)).align(androidx.compose.ui.Alignment.CenterVertically))
+                    Spacer(Modifier.size(PvotSpacing.M).clip(CircleShape).background(colorFor(line.type)).align(Alignment.CenterVertically))
                     Text(stringResource(labelFor(line.type), amount), Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
                     line.percent?.let {
                         Text(stringResource(R.string.call_stats_percent, it), style = MaterialTheme.typography.bodyMedium,

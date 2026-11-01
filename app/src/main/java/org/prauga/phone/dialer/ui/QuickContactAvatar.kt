@@ -43,6 +43,7 @@ import org.prauga.phone.dialer.util.UriUtils
  * @param contactUri The contact's lookup URI, or null for a number that is not a contact
  * @param photoId The contact's thumbnail row, or 0
  * @param photoUri The contact's (or a directory's) photo, preferred over [photoId]
+ * @param colorKey What picks the tile's color; by default the contact's lookup key, else [name]
  */
 @Composable
 fun QuickContactAvatar(
@@ -52,6 +53,7 @@ fun QuickContactAvatar(
     photoUri: Uri?,
     size: Dp,
     modifier: Modifier = Modifier,
+    colorKey: Any? = null,
 ) {
     val context = LocalContext.current
     val sizePx = with(LocalDensity.current) { size.roundToPx() }
@@ -65,7 +67,7 @@ fun QuickContactAvatar(
         }
     }
     val painter = photo?.let { remember(it) { BitmapPainter(it) } }
-    val colorKey = remember(contactUri, name) { contactUri?.let(UriUtils::getLookupKeyFromUri) ?: name }
+    val tileKey = colorKey ?: remember(contactUri, name) { contactUri?.let(UriUtils::getLookupKeyFromUri) ?: name }
     PvotAvatar(
         name = name,
         modifier = modifier
@@ -80,9 +82,10 @@ fun QuickContactAvatar(
                 },
             ),
         painter = painter,
-        colorKey = colorKey,
+        colorKey = tileKey,
         size = size,
-        contentDescription = stringResource(R.string.description_quick_contact_for, name),
+        // Only a picture that opens Quick Contact is announced; otherwise it is decoration.
+        contentDescription = if (contactUri != null) stringResource(R.string.description_quick_contact_for, name) else null,
     )
 }
 

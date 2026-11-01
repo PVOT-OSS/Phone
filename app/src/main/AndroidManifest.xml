@@ -91,7 +91,7 @@
             android:exported="true"
             android:label="@string/call_stats_detail_title"
             android:screenOrientation="portrait"
-            android:theme="@style/Dialer.ThemeBase.NoActionBar"
+            android:theme="@style/Theme.Pvot"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -111,7 +111,7 @@
         <activity
             android:name="org.prauga.phone.dialer.app.calllog.CallLogActivity"
             android:label="@string/call_log_activity_title"
-            android:theme="@style/Dialer.ThemeBase.NoActionBar" />
+            android:theme="@style/Theme.Pvot" />
 
         <activity
             android:name="org.prauga.phone.dialer.app.AccountSelectionActivity"

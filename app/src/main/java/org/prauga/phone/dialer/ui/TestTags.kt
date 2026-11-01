@@ -38,6 +38,7 @@ object TestTags {
     const val CALL_STATS_LIST = "call_stats_list"
     const val CALL_STATS_SORT = "call_stats_sort"
     const val CALL_STATS_RANGE = "call_stats_range"
+    const val CALL_STATS_RANGE_PICKER = "call_stats_range_picker"
     const val SPEED_DIAL_ADD = "speed_dial_add"
     const val SPEED_DIAL_REMOVE_TARGET = "speed_dial_remove_target"
     const val SPEED_DIAL_MENU_REMOVE = "speed_dial_menu_remove"

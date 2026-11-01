@@ -6,7 +6,6 @@
 package org.prauga.phone.dialer.callstats
 
 import android.provider.CallLog.Calls
-import androidx.compose.foundation.layout.Box
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -15,11 +14,12 @@ import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.google.common.truth.Truth.assertThat
-import com.prauga.pvot.designsystem.theme.PvotAppTheme
+import com.prauga.pvot.designsystem.components.list.PvotAvatar
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.prauga.phone.dialer.lettertile.LetterTileDrawable
+import org.prauga.phone.dialer.ui.SolidGlassTheme
 import org.prauga.phone.dialer.ui.TestTags
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -93,9 +93,15 @@ class CallStatsDetailTest {
     }
 
     @Test
-    fun screenshotDark() {
+    fun screenshotDark() = screenshot("detail_dark")
+
+    @Test
+    @Config(qualifiers = "+notnight")
+    fun screenshotLight() = screenshot("detail_light")
+
+    private fun screenshot(name: String) {
         show(header(canCall = true), dateRange = "Oct 1 – 31, 2026")
-        compose.onRoot().captureRoboImage("src/test/screenshots/callstats/detail_dark.png")
+        compose.onRoot().captureRoboImage("src/test/screenshots/callstats/$name.png")
     }
 
     private fun header(canCall: Boolean) = CallStatsHeader(
@@ -105,11 +111,11 @@ class CallStatsDetailTest {
 
     private fun show(header: CallStatsHeader, dateRange: String? = null, onCall: () -> Unit = {}) {
         compose.setContent {
-            PvotAppTheme {
+            SolidGlassTheme {
                 CallStatsDetailScreen(
                     header = header, summary = CallStatsSummary(number, total), dateRange = dateRange,
                     onBack = {}, onCall = onCall, callWithIntent = null, onEditNumber = {}, onCopy = {},
-                    photo = { Box(it) },
+                    avatar = { PvotAvatar(name = header.nameForPhoto, size = it) },
                 )
             }
         }

@@ -17,8 +17,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DateRangePicker
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberDateRangePickerState
@@ -30,10 +31,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -44,8 +48,6 @@ import com.prauga.pvot.designsystem.components.PvotDialog
 import com.prauga.pvot.designsystem.components.PvotDialogAction
 import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
 import com.prauga.pvot.designsystem.components.PvotSegmentedControl
-import com.prauga.pvot.designsystem.components.button.PvotButton
-import com.prauga.pvot.designsystem.components.button.PvotButtonStyle
 import com.prauga.pvot.designsystem.navigation.PvotTopBar
 import com.prauga.pvot.designsystem.navigation.PvotTopBarAction
 import com.prauga.pvot.designsystem.platform.enablePvotEdgeToEdge
@@ -67,6 +69,8 @@ import org.prauga.phone.dialer.callstats.CallStatsListViewModel
 import org.prauga.phone.dialer.contacts.ContactsComponent
 import org.prauga.phone.dialer.database.CallLogQueryHandler
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper
+import org.prauga.phone.dialer.ui.PhoneBackground
+import org.prauga.phone.dialer.ui.PhoneScaffold
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.util.CallUtil
@@ -158,36 +162,22 @@ private fun CallLogContent(
     })
     val allState by allCalls.state.collectAsStateWithLifecycle()
 
-    Column(Modifier.fillMaxSize()) {
-        PvotTopBar(
-            title = stringResource(R.string.call_log_activity_title),
-            onBack = onBack,
-            actions = {
-                if (tab == CallLogActivity.TAB_ALL && allState is CallHistoryUiState.Loaded) {
-                    PvotTopBarAction(
-                        icon = painterResource(R.drawable.ic_trash),
-                        contentDescription = stringResource(R.string.call_log_delete_all),
-                        onClick = { confirmClear = true },
-                    )
-                }
-            },
-        )
-        PvotSegmentedControl(
-            options = listOf(
-                stringResource(R.string.call_log_all_title),
-                stringResource(R.string.call_log_missed_title),
-                stringResource(R.string.call_log_stats_title),
-            ),
-            selectedIndex = tab,
-            onSelect = {
-                tab = it
-                onTabSelected(it)
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.S)
-                .testTag(TestTags.CALL_HISTORY_TABS),
-        )
+    PhoneScaffold(
+        background = PhoneBackground.Live,
+        topBar = {
+            CallLogTopBar(
+                tab = tab,
+                onTabSelected = {
+                    tab = it
+                    onTabSelected(it)
+                },
+                canClear = tab == CallLogActivity.TAB_ALL && allState is CallHistoryUiState.Loaded,
+                onBack = onBack,
+                onClear = { confirmClear = true },
+            )
+        },
+    ) { padding ->
+        val modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding())
         when (tab) {
             CallLogActivity.TAB_ALL -> CallHistoryRoute(
                 viewModel = allCalls,
@@ -195,7 +185,7 @@ private fun CallLogContent(
                 showEmptyAction = showsEmptyAction(CallLogQueryHandler.CALL_TYPE_ALL, isCallLogActivity = true),
                 onShowDialpad = {},
                 onMissedCallRead = {},
-                modifier = Modifier.weight(1f),
+                modifier = modifier,
             )
             CallLogActivity.TAB_MISSED -> CallHistoryRoute(
                 viewModel = missedCalls,
@@ -203,9 +193,9 @@ private fun CallLogContent(
                 showEmptyAction = false,
                 onShowDialpad = {},
                 onMissedCallRead = {},
-                modifier = Modifier.weight(1f),
+                modifier = modifier,
             )
-            else -> CallStatsRoute(stats, Modifier.weight(1f))
+            else -> CallStatsRoute(stats, modifier)
         }
     }
 
@@ -227,7 +217,109 @@ private fun CallLogContent(
     }
 }
 
+/**
+ * The call history's top bar: a glass bar with back and Clear, and the All / Missed / Stats
+ * choice under it.
+ */
+@Composable
+internal fun CallLogTopBar(
+    tab: Int,
+    onTabSelected: (Int) -> Unit,
+    canClear: Boolean,
+    onBack: () -> Unit,
+    onClear: () -> Unit,
+) {
+    Column(Modifier.fillMaxWidth()) {
+        // Compact from the start, so the tabs sit right under the bar on every tab.
+        PvotTopBar(
+            title = stringResource(R.string.call_log_activity_title),
+            onBack = onBack,
+            compact = true,
+            actions = {
+                if (canClear) {
+                    PvotTopBarAction(
+                        icon = painterResource(R.drawable.ic_trash),
+                        contentDescription = stringResource(R.string.call_log_delete_all),
+                        onClick = onClear,
+                    )
+                }
+            },
+        )
+        PvotSegmentedControl(
+            options = listOf(
+                stringResource(R.string.call_log_all_title),
+                stringResource(R.string.call_log_missed_title),
+                stringResource(R.string.call_log_stats_title),
+            ),
+            selectedIndex = tab,
+            onSelect = onTabSelected,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.S)
+                .testTag(TestTags.CALL_HISTORY_TABS),
+        )
+    }
+}
+
+/**
+ * Picks the statistics' time range: Material's date range picker, the one Material component
+ * kept, in a Pvot dialog. Days come back as the picker's UTC midnights.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun CallStatsRangeDialog(
+    visible: Boolean,
+    initialStartUtcDay: Long?,
+    initialEndUtcDay: Long?,
+    onDismiss: () -> Unit,
+    onPick: (startUtcDay: Long, endUtcDay: Long) -> Unit,
+) {
+    val pickerState = rememberDateRangePickerState(
+        initialSelectedStartDateMillis = initialStartUtcDay,
+        initialSelectedEndDateMillis = initialEndUtcDay,
+    )
+    PvotDialog(
+        visible = visible,
+        onDismissRequest = onDismiss,
+        title = null,
+        content = {
+            DateRangePicker(
+                state = pickerState,
+                modifier = Modifier
+                    .bleedToDialogEdges()
+                    .height(RangePickerHeight)
+                    .testTag(TestTags.CALL_STATS_RANGE_PICKER),
+                // The dialog is the surface; a second fill would draw a box inside it.
+                colors = DatePickerDefaults.colors(containerColor = Color.Transparent),
+            )
+        },
+    ) {
+        PvotDialogAction(
+            label = stringResource(android.R.string.ok),
+            style = PvotDialogActionStyle.Primary,
+            onClick = {
+                val start = pickerState.selectedStartDateMillis
+                if (start != null) onPick(start, pickerState.selectedEndDateMillis ?: start) else onDismiss()
+            },
+        )
+        PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = onDismiss)
+    }
+}
+
+/** Tall enough for a month of the picker; the dialog keeps its actions under it. */
+private val RangePickerHeight = 360.dp
+
+/** The padding inside a Pvot dialog's card, which the picker spans so a week fits across. */
+private val DialogContentPadding = PvotSpacing.L * 1.5f
+
+/** Lays the content out across the dialog's own padding, out to the card's edges. */
+private fun Modifier.bleedToDialogEdges(): Modifier = layout { measurable, constraints ->
+    val bleed = DialogContentPadding.roundToPx()
+    val width = constraints.maxWidth + bleed * 2
+    val placeable = measurable.measure(constraints.copy(minWidth = width, maxWidth = width))
+    layout(constraints.maxWidth, placeable.height) { placeable.place(-bleed, 0) }
+}
+
 @Composable
 private fun CallStatsRoute(viewModel: CallStatsListViewModel, modifier: Modifier) {
     val context = LocalContext.current
@@ -290,36 +382,16 @@ private fun CallStatsRoute(viewModel: CallStatsListViewModel, modifier: Modifier
     )
 
     if (pickingRange) {
-        val pickerState = rememberDateRangePickerState(
-            initialSelectedStartDateMillis = filter.from.takeIf { it != -1L }?.let(::localToUtcDay),
-            initialSelectedEndDateMillis = filter.to.takeIf { it != -1L }?.let(::localToUtcDay),
+        CallStatsRangeDialog(
+            visible = true,
+            initialStartUtcDay = filter.from.takeIf { it != -1L }?.let(::localToUtcDay),
+            initialEndUtcDay = filter.to.takeIf { it != -1L }?.let(::localToUtcDay),
+            onDismiss = { pickingRange = false },
+            onPick = { start, end ->
+                viewModel.setRange(startOfLocalDay(start), startOfLocalDay(end) + DAY_MILLIS - 1)
+                pickingRange = false
+            },
         )
-        DatePickerDialog(
-            onDismissRequest = { pickingRange = false },
-            confirmButton = {
-                PvotButton(
-                    text = stringResource(android.R.string.ok),
-                    onClick = {
-                        val start = pickerState.selectedStartDateMillis
-                        if (start != null) {
-                            val end = pickerState.selectedEndDateMillis ?: start
-                            viewModel.setRange(startOfLocalDay(start), startOfLocalDay(end) + DAY_MILLIS - 1)
-                        }
-                        pickingRange = false
-                    },
-                    style = PvotButtonStyle.Text,
-                )
-            },
-            dismissButton = {
-                PvotButton(
-                    text = stringResource(android.R.string.cancel),
-                    onClick = { pickingRange = false },
-                    style = PvotButtonStyle.Text,
-                )
-            },
-        ) {
-            DateRangePicker(state = pickerState, modifier = Modifier.weight(1f))
-        }
     }
 }
 

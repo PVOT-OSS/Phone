@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -37,7 +36,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import java.util.Locale
 import com.prauga.pvot.coreui.PvotEmptyContent
 import com.prauga.pvot.coreui.PvotLoadingContent
@@ -48,12 +46,14 @@ import com.prauga.pvot.designsystem.components.PvotSheetItem
 import com.prauga.pvot.designsystem.components.button.PvotButton
 import com.prauga.pvot.designsystem.components.button.PvotButtonStyle
 import com.prauga.pvot.designsystem.components.list.PvotListRow
+import com.prauga.pvot.designsystem.components.list.PvotAvatarDefaults
 import com.prauga.pvot.designsystem.components.list.PvotListRowDefaults
+import com.prauga.pvot.designsystem.theme.PvotShapes
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.callstats.CallStatsListViewModel.Companion.ALL
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper
-import org.prauga.phone.dialer.ui.ContactAvatar
+import org.prauga.phone.dialer.ui.QuickContactAvatar
 import org.prauga.phone.dialer.ui.TestTags
 
 /** What the statistics do when the user acts. */
@@ -204,9 +204,13 @@ private fun StatsList(
                     modifier = Modifier.testTag(TestTags.callStatsRow(details.number.orEmpty())),
                     supportingText = if (hasName) details.displayNumber else details.geocode?.takeIf { !details.isVoicemailNumber },
                     leading = {
-                        ContactAvatar(
+                        // The row opens the statistics, so the picture does not open Quick Contact.
+                        QuickContactAvatar(
                             name = details.displayName ?: details.displayNumber.orEmpty(),
-                            photoUri = details.photoUri?.toString(),
+                            contactUri = null,
+                            photoId = details.photoId,
+                            photoUri = details.photoUri,
+                            size = PvotAvatarDefaults.Small,
                             colorKey = details.number.orEmpty(),
                         )
                     },
@@ -244,8 +248,8 @@ private fun ShareBar(details: CallStatsDetails, first: CallStatsDetails, byDurat
             .fillMaxWidth()
             // Lines up with the row's text, after its avatar.
             .padding(start = PvotSpacing.L * 2 + PvotListRowDefaults.LeadingSize, end = PvotSpacing.L, bottom = PvotSpacing.S)
-            .height(6.dp)
-            .clip(RoundedCornerShape(3.dp))
+            .height(PvotSpacing.S)
+            .clip(PvotShapes.Pill)
             .background(MaterialTheme.colorScheme.surfaceContainerHigh),
     ) {
         for ((type, fraction) in parts) {
