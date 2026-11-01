@@ -67,6 +67,11 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
 
     override fun onReject() = end(DisconnectCause(DisconnectCause.REJECTED))
 
+    /** What the user's side sent along when placing this call, such as a note or urgency. */
+    @Volatile
+    var requestExtras: Bundle? = null
+        internal set
+
     /** Why the user declined the call, when they gave a reason. */
     @Volatile
     var rejectReason: Int? = null

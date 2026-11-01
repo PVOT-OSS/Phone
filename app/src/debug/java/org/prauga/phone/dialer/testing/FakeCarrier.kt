@@ -33,14 +33,18 @@ object FakeCarrier {
     fun accountHandle(context: Context) =
         PhoneAccountHandle(ComponentName(context, FakeCarrierConnectionService::class.java), ACCOUNT_ID)
 
-    /** Registers the account; it still has to be enabled, for example with the telecom shell command. */
-    fun register(context: Context) {
+    /**
+     * Registers the account; it still has to be enabled, for example with the telecom shell command.
+     * With [callComposer] the account supports call composer: urgent calls, notes and pictures.
+     */
+    fun register(context: Context, callComposer: Boolean = false) {
         val account = PhoneAccount.builder(accountHandle(context), "Fake carrier")
             .setCapabilities(
                 PhoneAccount.CAPABILITY_CALL_PROVIDER or
                     PhoneAccount.CAPABILITY_VIDEO_CALLING or
                     PhoneAccount.CAPABILITY_SUPPORTS_VIDEO_CALLING or
-                    PhoneAccount.CAPABILITY_RTT,
+                    PhoneAccount.CAPABILITY_RTT or
+                    (if (callComposer) PhoneAccount.CAPABILITY_CALL_COMPOSER else 0),
             )
             .addSupportedUriScheme(PhoneAccount.SCHEME_TEL)
             .build()
