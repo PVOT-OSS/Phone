@@ -75,6 +75,7 @@ import org.prauga.phone.incallui.location.EmergencyLocationFragment;
 import org.prauga.phone.incallui.videotech.utils.SessionModificationState;
 
 import java.lang.ref.WeakReference;
+import java.util.Objects;
 
 /**
  * Controller for the Call Card Fragment. This class listens for changes to InCallState and passes
@@ -100,6 +101,8 @@ public class CallCardPresenter
   private final Handler handler = new Handler(Looper.getMainLooper());
 
   private DialerCall primary;
+  /** What the primary call's caller sent with call composer, as last shown. */
+  @Nullable private MultimediaData composerData;
   private String primaryNumber;
   private DialerCall secondary;
   private String secondaryNumber;
@@ -321,6 +324,10 @@ public class CallCardPresenter
     if (call.equals(primary)) {
       // The network can name the caller after the call starts ringing; the lookup notices.
       maybeStartSearchIfCallerNameChanged(call);
+    }
+    if (call.equals(primary) && !Objects.equals(composerData, ComposerData.of(context, call))) {
+      // The caller's picture arrives once downloaded, after the call starts ringing.
+      updatePrimaryDisplayInfo();
     }
 
     if (call.can(Details.CAPABILITY_MANAGE_CONFERENCE)
@@ -634,6 +641,8 @@ public class CallCardPresenter
 
       String name = getNameForCall(primaryContactInfo);
       String number;
+      composerData = ComposerData.of(context, primary);
+      multimediaData = composerData;
 
       boolean isChildNumberShown = !TextUtils.isEmpty(primary.getChildNumber());
       boolean isForwardedNumberShown = !TextUtils.isEmpty(primary.getLastForwardedNumber());

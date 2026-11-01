@@ -615,8 +615,10 @@ public class DialerCall implements VideoTechListener {
       if (phoneAccountHandle != null) {
         PhoneAccount phoneAccount = telecomManager.getPhoneAccount(phoneAccountHandle);
         if (phoneAccount != null) {
+          // Call composer carries a subject too.
           isCallSubjectSupported =
-              phoneAccount.hasCapabilities(PhoneAccount.CAPABILITY_CALL_SUBJECT);
+              phoneAccount.hasCapabilities(PhoneAccount.CAPABILITY_CALL_SUBJECT)
+                  || phoneAccount.hasCapabilities(PhoneAccount.CAPABILITY_CALL_COMPOSER);
           if (phoneAccount.hasCapabilities(PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION)) {
             cacheCarrierConfiguration(phoneAccountHandle);
           }
@@ -918,6 +920,21 @@ public class DialerCall implements VideoTechListener {
   public boolean isVerifiedBusinessCall() {
     Bundle extras = getDetailsExtras();
     return extras != null && extras.getBoolean(Call.EXTRA_IS_BUSINESS_CALL);
+  }
+
+  /** Whether the caller marked the call as urgent with call composer. */
+  public boolean isUrgent() {
+    Bundle extras = getDetailsExtras();
+    return extras != null
+        && extras.getInt(TelecomManager.EXTRA_PRIORITY, TelecomManager.PRIORITY_NORMAL)
+            == TelecomManager.PRIORITY_URGENT;
+  }
+
+  /** The picture the caller sent with call composer, once it has been downloaded, or null. */
+  @Nullable
+  public Uri getComposerPictureUri() {
+    Bundle extras = getDetailsExtras();
+    return extras == null ? null : extras.getParcelable(TelecomManager.EXTRA_PICTURE_URI, Uri.class);
   }
 
   @Nullable
