@@ -452,6 +452,7 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     if (!InCallPresenter.getInstance().isReadyForTearDown()) {
       updateTaskDescription();
     }
+    EmergencySatellite.showPending(this);
 
     // If there is a pending request to show or hide the dialpad, handle that now.
     if (showDialpadRequest != DIALPAD_REQUEST_NONE) {

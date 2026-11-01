@@ -69,6 +69,7 @@ import org.prauga.phone.dialer.telecom.TelecomCallUtil;
 import org.prauga.phone.dialer.telecom.TelecomUtil;
 import org.prauga.phone.dialer.util.PermissionsUtil;
 import org.prauga.phone.incallui.audiomode.AudioModeProvider;
+import org.prauga.phone.incallui.EmergencySatellite;
 import org.prauga.phone.incallui.call.state.DialerCallState;
 import org.prauga.phone.incallui.rtt.protocol.RttChatMessage;
 import org.prauga.phone.incallui.videotech.VideoTech;
@@ -359,6 +360,10 @@ public class DialerCall implements VideoTechListener {
             case TelephonyManagerCompat.EVENT_CALL_FORWARDED:
               isCallForwarded = true;
               update();
+              break;
+            case TelephonyManager.EVENT_DISPLAY_EMERGENCY_MESSAGE:
+              // No mobile network for an emergency call: offer satellite messaging.
+              EmergencySatellite.onEvent(getId(), extras);
               break;
             case Call.EVENT_DISPLAY_DIAGNOSTIC_MESSAGE:
             case Call.EVENT_CLEAR_DIAGNOSTIC_MESSAGE:
