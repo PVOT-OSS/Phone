@@ -184,6 +184,7 @@ class DialerSettingsActivity : BaseActivity(), PreferenceFragmentCompat.OnPrefer
     }
 
     internal companion object {
+        const val KEY_APPEARANCE = "appearance"
         const val KEY_DISPLAY_OPTIONS = "display_options"
         const val KEY_SOUNDS = "sounds_and_vibration"
         const val KEY_QUICK_RESPONSES = "quick_responses"
@@ -205,6 +206,8 @@ class DialerSettingsActivity : BaseActivity(), PreferenceFragmentCompat.OnPrefer
                 add(Entry(KEY_DISPLAY_OPTIONS, R.string.display_options_title,
                     Target.Screen(DisplayOptionsSettingsFragment::class.java.name)))
             }
+            add(Entry(KEY_APPEARANCE, R.string.appearance_settings_label,
+                Target.Screen(AppearanceSettingsFragment::class.java.name)))
             add(Entry(KEY_SOUNDS, R.string.sounds_and_vibration_title,
                 Target.Screen(SoundSettingsFragment::class.java.name)))
             add(Entry(KEY_QUICK_RESPONSES, R.string.respond_via_sms_setting_title,

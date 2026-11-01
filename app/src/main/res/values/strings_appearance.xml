@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+  -->
+<resources>
+    <!-- Settings row that opens the appearance screen. -->
+    <string name="appearance_settings_label">Appearance</string>
+    <!-- Heading of the glass section of the appearance screen. -->
+    <string name="appearance_glass_title">Glass</string>
+    <!-- Switch that turns the glass effects on or off. -->
+    <string name="appearance_glass_effects">Glass effects</string>
+    <!-- Summary under the glass effects switch. -->
+    <string name="appearance_glass_effects_summary">Bars, sheets and controls show what is behind them</string>
+    <!-- Label of the slider that sets how much glass. -->
+    <string name="appearance_glass_amount">Amount of glass</string>
+    <!-- Text on the preview card under the slider. -->
+    <string name="appearance_glass_preview">Glass over your calls</string>
+    <!-- Note shown while battery saver keeps the glass solid. -->
+    <string name="appearance_glass_reduced">Solid while Battery Saver is on</string>
+    <!-- Note shown while the system\'s animations are off, which keeps the glass solid. -->
+    <string name="appearance_glass_animations_off">Solid while animations are off in the system settings</string>
+
+    <string name="appearance_glass_key" translatable="false">appearance_glass</string>
+    <string name="appearance_glass_intensity_key" translatable="false">appearance_glass_intensity</string>
+</resources>

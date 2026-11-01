@@ -8,6 +8,9 @@ package org.prauga.phone.dialer.ui
 /** Compose test tags, exposed as resource ids so UiAutomator tests can find them with `By.res`. */
 object TestTags {
     const val SETTINGS_LIST = "settings_list"
+    const val APPEARANCE_GLASS_SWITCH = "appearance_glass_switch"
+    const val APPEARANCE_GLASS_SLIDER = "appearance_glass_slider"
+    const val APPEARANCE_GLASS_PREVIEW = "appearance_glass_preview"
     const val SETTINGS_TOP_BAR = "settings_top_bar"
     const val HELPLINE_LIST = "helpline_list"
     const val CALL_STATS_DETAIL = "call_stats_detail"
