@@ -5,6 +5,7 @@
 
 package org.prauga.phone.dialer.app.settings
 
+import android.app.UiModeManager
 import android.content.Context
 import android.os.UserManager
 import androidx.appcompat.app.AppCompatDelegate
@@ -14,10 +15,28 @@ import org.prauga.phone.common.R
 /** The app's display options: its theme and whether the call screen stays in portrait. */
 object DisplayOptions {
 
-    /** Applies the chosen theme (light, dark or the system's) to the whole app. */
+    /**
+     * Applies the chosen theme (light, dark or the system's) to the whole app: to the AppCompat
+     * screens and, through the platform's per-app night mode, to the Compose ones.
+     */
     @JvmStatic
     fun applyTheme(context: Context) {
-        AppCompatDelegate.setDefaultNightMode(nightModeOf(themeValue(context)))
+        applyTheme(context, themeValue(context))
+    }
+
+    /** Applies the theme preference [value] to the whole app. */
+    @JvmStatic
+    fun applyTheme(context: Context, value: String?) {
+        AppCompatDelegate.setDefaultNightMode(nightModeOf(value))
+        context
+            .getSystemService(UiModeManager::class.java)
+            ?.setApplicationNightMode(
+                when (value) {
+                    THEME_LIGHT -> UiModeManager.MODE_NIGHT_NO
+                    THEME_DARK -> UiModeManager.MODE_NIGHT_YES
+                    else -> UiModeManager.MODE_NIGHT_AUTO
+                }
+            )
     }
 
     /** The AppCompat night mode for a theme preference value. */
