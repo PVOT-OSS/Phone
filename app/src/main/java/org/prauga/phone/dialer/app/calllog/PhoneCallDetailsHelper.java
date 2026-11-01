@@ -236,6 +236,10 @@ public class PhoneCallDetailsHelper {
       return resources.getString(R.string.spam_number_call_log_label);
     } else if (details.isBlocked) {
       return resources.getString(R.string.blocked_number_call_log_label);
+    } else if ((details.features & Calls.FEATURES_VIDEO) == Calls.FEATURES_VIDEO) {
+      return resources.getString(R.string.call_log_label_video);
+    } else if ((details.features & Calls.FEATURES_RTT) == Calls.FEATURES_RTT) {
+      return resources.getString(R.string.call_log_label_rtt);
     }
 
     CharSequence numberFormattedLabel = null;
