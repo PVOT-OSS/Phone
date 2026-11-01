@@ -24,7 +24,6 @@ import android.util.ArrayMap;
 
 import androidx.annotation.Nullable;
 
-import org.prauga.phone.dialer.app.calllog.CallLogAdapter;
 import org.prauga.phone.dialer.calllogutils.PhoneAccountUtils;
 import org.prauga.phone.dialer.telecom.TelecomUtil;
 import org.prauga.phone.dialer.util.CallUtil;
@@ -40,7 +39,7 @@ import javax.annotation.concurrent.ThreadSafe;
  * cache is to reduce the number of cross-process requests to TelecomManager, which can negatively
  * affect performance.
  *
- * <p>This is designed with the specific use case of the {@link CallLogAdapter} in mind.
+ * <p>This is designed with the specific use case of the call history list in mind.
  */
 @ThreadSafe
 public class CallLogCache {

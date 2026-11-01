@@ -25,8 +25,6 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.POST_PROMOTED_NOTIFICATIONS" />
@@ -36,9 +34,7 @@
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS_PRIVILEGED" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -47,39 +43,21 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
     <uses-permission android:name="com.android.voicemail.permission.ADD_VOICEMAIL" />
     <uses-permission android:name="com.android.voicemail.permission.WRITE_VOICEMAIL" />
     <uses-permission android:name="com.android.voicemail.permission.READ_VOICEMAIL" />
-    <uses-permission android:name="android.permission.ALLOW_ANY_CODEC_FOR_PLAYBACK" />
-    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
-    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
 
-    <uses-permission android:name="android.permission.CONTROL_INCALL_EXPERIENCE" />
-    <!-- We use this to disable the status bar buttons of home, back and recent
-    during an incoming call. By doing so this allows us to not show the user
-    is viewing the activity in full screen alert, on a fresh system/factory
-    reset state of the app. -->
-    <uses-permission android:name="android.permission.STATUS_BAR" />
     <uses-permission android:name="android.permission.CAMERA" />
-
-    <!-- This tells the activity manager to not delay any of our activity
-     start requests, even if they happen immediately after the user
-     presses home. -->
-    <uses-permission android:name="android.permission.STOP_APP_SWITCHES" />
 
     <!-- Used for sending PendingIntents to dynamically registered receivers -->
     <permission
@@ -90,24 +68,12 @@
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_PHONE_CALL" />
 
-    <uses-permission android:name="lineageos.permission.WRITE_SETTINGS" />
-
-    <!-- This is used for querying Cequint caller id. -->
-    <uses-permission android:name="com.cequint.ecid.CALLER_ID_LOOKUP" />
-
-    <!-- This is used by MotorolaInCallUiNotifier to send broadcasts. -->
-    <uses-permission android:name="com.motorola.incallui.permission.INCOMING_CALL_VISIBILITY_CHANGED" />
-
     <!-- Required when the "Enable Do Not Disturb during call" setting is enabled -->
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
-
-    <!-- Required to close the notification shade -->
-    <uses-permission android:name="android.permission.BROADCAST_CLOSE_SYSTEM_DIALOGS" />
 
     <application
         android:name="org.prauga.phone.dialer.binary.aosp.AospDialerApplication"
@@ -121,14 +87,14 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:usesCleartextTraffic="false"
-        android:enableOnBackInvokedCallback="false">
+        android:enableOnBackInvokedCallback="true">
 
         <activity
             android:name=".callstats.CallStatsDetailActivity"
             android:exported="true"
             android:label="@string/call_stats_detail_title"
             android:screenOrientation="portrait"
-            android:theme="@style/Dialer.ThemeBase.NoActionBar"
+            android:theme="@style/Theme.Pvot"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -136,14 +102,10 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name="org.prauga.phone.dialer.callrecord.impl.CallRecorderService"
-            android:process="org.prauga.phone.incallui" />
-
         <activity
             android:name="org.prauga.phone.contacts.common.dialog.CallSubjectDialog"
             android:exported="true"
-            android:theme="@style/Theme.CallSubjectDialogTheme"
+            android:theme="@style/Theme.Pvot.Transparent"
             android:windowSoftInputMode="stateVisible|adjustResize" />
 
         <!-- Broadcast receiver that passively listens to location updates -->
@@ -152,19 +114,19 @@
         <activity
             android:name="org.prauga.phone.dialer.app.calllog.CallLogActivity"
             android:label="@string/call_log_activity_title"
-            android:theme="@style/DialtactsTheme" />
+            android:theme="@style/Theme.Pvot" />
 
         <activity
             android:name="org.prauga.phone.dialer.app.AccountSelectionActivity"
             android:exported="false"
-            android:theme="@style/TransparentTheme" />
+            android:theme="@style/Theme.Pvot.Transparent" />
 
         <activity
             android:name="org.prauga.phone.dialer.app.settings.DialerSettingsActivity"
             android:exported="true"
             android:label="@string/dialer_settings_label"
             android:parentActivityName="org.prauga.phone.dialer.main.impl.MainActivity"
-            android:theme="@style/SettingsStyle">
+            android:theme="@style/Theme.Pvot">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -268,9 +230,8 @@
         <activity
             android:name="org.prauga.phone.dialer.calldetails.OldCallDetailsActivity"
             android:exported="false"
-            android:label="@string/call_details" />
-
-
+            android:label="@string/call_details"
+            android:theme="@style/Theme.Pvot.Legacy" />
 
         <activity
             android:name="org.prauga.phone.dialer.helplines.HelplineActivity"
@@ -278,7 +239,7 @@
             android:excludeFromRecents="true"
             android:exported="true"
             android:label="@string/helplines_name"
-            android:theme="@style/Dialer.ThemeBase.ActionBar">
+            android:theme="@style/Theme.Pvot">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -316,7 +277,7 @@
             android:label="@string/main_activity_label"
             android:launchMode="singleTask"
             android:resizeableActivity="true"
-            android:theme="@style/LaunchTheme"
+            android:theme="@style/Theme.Pvot.Splash"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing">
 
             <intent-filter>
@@ -398,16 +359,9 @@
         </activity>
 
         <activity
-            android:name="org.prauga.phone.dialer.main.impl.DefaultDialerActivity"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:theme="@style/MainActivityTheme" />
-
-
-        <activity
             android:name="org.prauga.phone.dialer.postcall.PostCallActivity"
             android:exported="false"
-            android:theme="@style/Dialer.ThemeBase.NoActionBar"
+            android:theme="@style/Theme.Pvot.Transparent"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
@@ -416,7 +370,7 @@
             android:exported="true"
             android:noHistory="true"
             android:permission="android.permission.CALL_PHONE"
-            android:theme="@style/Theme.PreCall.DialogHolder">
+            android:theme="@style/Theme.Pvot.Transparent">
             <intent-filter>
                 <action android:name="org.prauga.phone.dialer.LAUNCH_PRE_CALL" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -434,7 +388,7 @@
             android:excludeFromRecents="true"
             android:exported="false"
             android:noHistory="true"
-            android:theme="@style/Theme.PreCall.DialogHolder"></activity>
+            android:theme="@style/Theme.Pvot.Transparent"></activity>
 
         <provider
             android:name="org.prauga.phone.dialer.preferredsim.impl.PreferredSimFallbackProvider"
@@ -451,7 +405,9 @@
             android:name="org.prauga.phone.dialer.PREFERRED_SIM_FALLBACK_AUTHORITY"
             android:value="org.prauga.phone.dialer.preferredsimfallback" />
 
-        <activity android:name="org.prauga.phone.dialer.rtt.RttTranscriptActivity" />
+        <activity
+            android:name="org.prauga.phone.dialer.rtt.RttTranscriptActivity"
+            android:theme="@style/Theme.Pvot" />
 
         <service
             android:name="org.prauga.phone.dialer.shortcuts.PeriodicJobService"
@@ -744,16 +700,6 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name="org.prauga.phone.voicemail.impl.CarrierVvmPackageInstalledReceiver"
-            android:exported="true"
-            android:permission="android.permission.BIND_VISUAL_VOICEMAIL_SERVICE">
-            <intent-filter>
-                <!-- system dialer only broadcast -->
-                <action android:name="com.android.internal.telephony.CARRIER_VVM_PACKAGE_INSTALLED" />
             </intent-filter>
         </receiver>
 

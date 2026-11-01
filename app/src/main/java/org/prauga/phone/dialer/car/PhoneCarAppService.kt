@@ -113,27 +113,9 @@ private class PhoneCarScreen(carContext: CarContext) : Screen(carContext) {
             )
             .apply {
                 setHeaderAction(Action.APP_ICON)
-                addTab(
-                    tab(
-                        TAB_FAVORITES,
-                        R.string.tab_title_speed_dial,
-                        R.drawable.quantum_ic_star_vd_theme_24,
-                    )
-                )
-                addTab(
-                    tab(
-                        TAB_RECENTS,
-                        R.string.tab_title_call_history,
-                        R.drawable.quantum_ic_history_vd_theme_24,
-                    )
-                )
-                addTab(
-                    tab(
-                        TAB_CONTACTS,
-                        R.string.tab_all_contacts,
-                        R.drawable.quantum_ic_people_vd_theme_24,
-                    )
-                )
+                addTab(tab(TAB_FAVORITES, R.string.quick_dial_header, R.drawable.ic_star))
+                addTab(tab(TAB_RECENTS, R.string.tab_title_call_history, R.drawable.ic_history))
+                addTab(tab(TAB_CONTACTS, R.string.tab_all_contacts, R.drawable.ic_users))
                 setActiveTabContentId(activeTab)
                 setTabContents(TabContents.Builder(content).build())
             }

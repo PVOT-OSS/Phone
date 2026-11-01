@@ -6,18 +6,19 @@
 package org.prauga.phone.dialer.precall.impl
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Context
 import android.provider.BlockedNumberContract
 import android.telecom.PhoneAccount
 import android.telephony.PhoneNumberUtils
 import android.text.BidiFormatter
 import android.text.TextDirectionHeuristics
+import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
 import org.prauga.phone.calls.R
 import org.prauga.phone.dialer.callintent.CallIntentBuilder
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.precall.PreCallAction
 import org.prauga.phone.dialer.precall.PreCallCoordinator
+import org.prauga.phone.dialer.ui.PvotAlertDialog
 
 /**
  * Asks before calling a number the user blocked, as a reminder that they won't get that number's
@@ -31,7 +32,7 @@ import org.prauga.phone.dialer.precall.PreCallCoordinator
 @SuppressLint("ThreadConstraint", "WrongThread")
 class BlockedNumberAction : PreCallAction {
 
-    private var dialog: AlertDialog? = null
+    private var dialog: PvotAlertDialog? = null
 
     override fun requiresUi(context: Context, builder: CallIntentBuilder): Boolean =
         isBlocked(context, builder)
@@ -52,25 +53,39 @@ class BlockedNumberAction : PreCallAction {
         val pending = coordinator.startPendingAction()
         var answered = false
         dialog =
-            AlertDialog.Builder(activity)
-                .setTitle(activity.getString(R.string.calling_blocked_number_title, number))
-                .setMessage(activity.getString(R.string.calling_blocked_number_message, number))
-                .setPositiveButton(R.string.calling_blocked_number_call) { _, _ ->
-                    answered = true
-                    pending.finish()
-                }
-                .setNegativeButton(android.R.string.cancel) { _, _ ->
-                    answered = true
-                    coordinator.abortCall()
-                    pending.finish()
-                }
-                .setOnCancelListener {
-                    if (!answered) {
-                        coordinator.abortCall()
-                        pending.finish()
+            PvotAlertDialog(
+                    activity,
+                    activity.getString(R.string.calling_blocked_number_title, number),
+                    activity.getString(R.string.calling_blocked_number_message, number),
+                    listOf(
+                        PvotAlertDialog.Action(
+                            activity.getString(R.string.calling_blocked_number_call),
+                            PvotDialogActionStyle.Primary,
+                            {
+                                answered = true
+                                pending.finish()
+                            },
+                        ),
+                        PvotAlertDialog.Action(
+                            activity.getString(android.R.string.cancel),
+                            onClick = {
+                                answered = true
+                                coordinator.abortCall()
+                                pending.finish()
+                            },
+                            cancels = true,
+                        ),
+                    ),
+                )
+                .apply {
+                    setOnCancelListener {
+                        if (!answered) {
+                            coordinator.abortCall()
+                            pending.finish()
+                        }
                     }
+                    show()
                 }
-                .show()
     }
 
     override fun onDiscard() {
