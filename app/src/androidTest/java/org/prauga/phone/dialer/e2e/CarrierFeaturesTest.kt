@@ -6,10 +6,16 @@
 package org.prauga.phone.dialer.e2e
 
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.telecom.Call
 import android.telecom.Connection
 import android.telecom.DisconnectCause
+import android.telephony.TelephonyManager
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
@@ -27,11 +33,14 @@ import org.prauga.phone.dialer.testing.FakeCallSpec
 import org.prauga.phone.dialer.testing.FakeCarrier
 import org.prauga.phone.dialer.testing.FakeConference
 import org.prauga.phone.dialer.testing.FakeConnection
+import org.prauga.phone.incallui.EmergencySatellite
 import org.prauga.phone.incallui.InCallPresenter
 import org.prauga.phone.incallui.NumberPromptDialogFragment
 import org.prauga.phone.incallui.call.CallList
 import org.prauga.phone.incallui.call.TelecomAdapter
 import org.prauga.phone.incallui.call.state.DialerCallState
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 
 /** Calling features the network offers through Telecom: decline reasons, forwarding, transfer, … */
 @RunWith(AndroidJUnit4::class)
@@ -129,6 +138,41 @@ class CarrierFeaturesTest {
     }
 
     @Test
+    fun noNetworkOffersSatelliteMessaging() {
+        val opened = CountDownLatch(1)
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) = opened.countDown()
+        }
+        context.registerReceiver(receiver, IntentFilter(ACTION_SATELLITE_APP), Context.RECEIVER_NOT_EXPORTED)
+        try {
+            connectedCall(FakeCallSpec(CallTests.freshNumber()))
+            val call = InCall.waitForState(DialerCallState.ACTIVE)
+            val app = PendingIntent.getBroadcast(
+                context,
+                0,
+                Intent(ACTION_SATELLITE_APP).setPackage(context.packageName),
+                PendingIntent.FLAG_IMMUTABLE,
+            )
+
+            // Telecom passes this event on only for emergency calls, and faking one isn't safe on a
+            // real phone: hand it to the app the way the call does.
+            val extras = Bundle().apply {
+                putParcelable(TelephonyManager.EXTRA_EMERGENCY_CALL_TO_SATELLITE_LAUNCH_INTENT, app)
+                putInt(TelephonyManager.EXTRA_EMERGENCY_CALL_TO_SATELLITE_HANDOVER_TYPE, 1)
+            }
+            InCall.onMain { EmergencySatellite.onEvent(call.id, extras) }
+
+            showsText(context.getString(R.string.emergency_satellite_title))
+            checkNotNull(deviceRule.device.wait(Until.findObject(By.res("android", "button1")), CallTests.TIMEOUT_MILLIS)) {
+                "no satellite button"
+            }.click()
+            check(opened.await(CallTests.TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)) { "satellite app not opened" }
+        } finally {
+            context.unregisterReceiver(receiver)
+        }
+    }
+
+    @Test
     fun callMovedToAnotherDeviceSaysSo() {
         val far = connectedCall(FakeCallSpec(CallTests.freshNumber()))
         InCall.onMain { InCallPresenter.getInstance().showInCall(false, false) }
@@ -206,6 +250,7 @@ class CarrierFeaturesTest {
     private companion object {
         const val TARGET = "+15550123456"
         const val MESSAGE = "Weak signal: your call may drop"
+        const val ACTION_SATELLITE_APP = "org.prauga.phone.testing.SATELLITE_APP"
         const val KEY_ALLOW_TRANSFER = "carrier_allow_transfer_ims_call_bool"
     }
 }
