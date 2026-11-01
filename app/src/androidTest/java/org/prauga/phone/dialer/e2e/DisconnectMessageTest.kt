@@ -16,6 +16,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiObject2
 import androidx.test.uiautomator.Until
+import java.util.regex.Pattern
 import org.junit.Assert.assertNull
 import org.junit.Rule
 import org.junit.Test
@@ -134,15 +135,15 @@ class DisconnectMessageTest {
      * A dialog button; its label is compared ignoring case, as buttons may be shown in capitals.
      */
     private fun findButton(id: String, label: String): UiObject2 {
+        // An AlertDialog's button by its id, or a Compose dialog's by its label in any case.
+        val byLabel = By.text(Pattern.compile(Pattern.quote(label), Pattern.CASE_INSENSITIVE))
         val button =
-            checkNotNull(
-                deviceRule.device.wait(
-                    Until.findObject(By.res("android", id)),
-                    CallTests.TIMEOUT_MILLIS,
-                )
-            ) {
-                "button \"$label\" not shown"
-            }
+            deviceRule.device.wait(Until.findObject(By.res("android", id)), SHORT_WAIT_MILLIS)
+                ?: checkNotNull(
+                    deviceRule.device.wait(Until.findObject(byLabel), CallTests.TIMEOUT_MILLIS)
+                ) {
+                    "button \"$label\" not shown"
+                }
         check(button.text.equals(label, ignoreCase = true)) {
             "button says \"${button.text}\", expected \"$label\""
         }
@@ -150,6 +151,7 @@ class DisconnectMessageTest {
     }
 
     private companion object {
+        const val SHORT_WAIT_MILLIS = 1_000L
         const val POSITIVE = "button1"
         const val NETWORK_MESSAGE = "Not registered on network."
         const val RESTRICTED_MESSAGE = "Outgoing calls are restricted by FDN."

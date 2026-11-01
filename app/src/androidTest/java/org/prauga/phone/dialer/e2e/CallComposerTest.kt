@@ -23,6 +23,7 @@ import org.prauga.phone.contacts.common.dialog.CallSubjectDialog
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.testing.FakeCallSpec
 import org.prauga.phone.dialer.testing.FakeCarrier
+import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.incallui.InCallPresenter
 import org.prauga.phone.incallui.call.CallList
 import org.prauga.phone.incallui.call.state.DialerCallState
@@ -98,7 +99,7 @@ class CallComposerTest {
         showsText(context.getString(R.string.call_composer_urgent)).click()
         checkNotNull(
                 deviceRule.device.wait(
-                    Until.findObject(By.res(context.packageName, "call_subject")),
+                    Until.findObject(By.res(context.packageName, TestTags.CALL_SUBJECT_FIELD)),
                     CallTests.TIMEOUT_MILLIS,
                 )
             )
