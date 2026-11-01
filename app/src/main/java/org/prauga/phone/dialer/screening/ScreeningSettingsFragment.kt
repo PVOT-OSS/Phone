@@ -56,6 +56,7 @@ internal fun ScreeningSettingsList(settings: ScreeningSettings) {
                                 settings.setAction(category, it)
                             },
                             testTag = ScreeningSettings.keyFor(category),
+                            icon = R.drawable.ic_user,
                         )
                     }
                 }

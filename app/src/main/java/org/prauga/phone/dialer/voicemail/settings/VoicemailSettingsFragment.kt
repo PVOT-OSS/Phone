@@ -26,11 +26,13 @@ import com.prauga.pvot.designsystem.components.PvotDialog
 import com.prauga.pvot.designsystem.components.PvotDialogAction
 import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
 import com.prauga.pvot.designsystem.components.list.PvotPreferenceRow
+import com.prauga.pvot.designsystem.components.list.PvotRowIconStyle
 import com.prauga.pvot.designsystem.components.list.PvotSwitchRow
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.settings.ui.SettingsComposeFragment
 import org.prauga.phone.dialer.app.settings.ui.SettingsGroup
 import org.prauga.phone.dialer.app.settings.ui.SettingsList
+import org.prauga.phone.dialer.app.settings.ui.settingsIcon
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.notification.NotificationChannelManager
 import org.prauga.phone.dialer.telecom.TelecomUtil
@@ -66,6 +68,8 @@ class VoicemailSettingsFragment : SettingsComposeFragment(), VoicemailClient.Act
                             title = stringResource(R.string.voicemail_notifications_preference_title),
                             onClick = { start(notificationSettingsIntent()) },
                             modifier = Modifier.testTag(TestTags.settingsRow("voicemail_notifications")),
+                            icon = settingsIcon(R.drawable.ic_bell),
+                            iconStyle = PvotRowIconStyle.Plain,
                         )
                     }
                     if (state.carrierSupport) {
@@ -78,6 +82,8 @@ class VoicemailSettingsFragment : SettingsComposeFragment(), VoicemailClient.Act
                                     if (on) setEnabled(true) else confirmDisable = true
                                 },
                                 modifier = Modifier.testTag(TestTags.settingsRow("visual_voicemail")),
+                                icon = settingsIcon(R.drawable.ic_call_voicemail),
+                                iconStyle = PvotRowIconStyle.Plain,
                             )
                         }
                         if (state.archiveAvailable) {
@@ -90,6 +96,8 @@ class VoicemailSettingsFragment : SettingsComposeFragment(), VoicemailClient.Act
                                         refresh()
                                     },
                                     modifier = Modifier.testTag(TestTags.settingsRow("auto_archive")),
+                                    icon = settingsIcon(R.drawable.ic_history),
+                                    iconStyle = PvotRowIconStyle.Plain,
                                 )
                             }
                         }
@@ -110,6 +118,8 @@ class VoicemailSettingsFragment : SettingsComposeFragment(), VoicemailClient.Act
                                         .putExtra(VoicemailClient.PARAM_PHONE_ACCOUNT_HANDLE, phoneAccountHandle))
                                 },
                                 modifier = Modifier.testTag(TestTags.settingsRow("change_pin")),
+                                icon = settingsIcon(R.drawable.ic_dialpad),
+                                iconStyle = PvotRowIconStyle.Plain,
                             )
                         }
                     }
@@ -118,6 +128,8 @@ class VoicemailSettingsFragment : SettingsComposeFragment(), VoicemailClient.Act
                             title = stringResource(R.string.voicemail_advanced_settings_title),
                             onClick = { start(advancedSettingsIntent()) },
                             modifier = Modifier.testTag(TestTags.settingsRow("voicemail_advanced")),
+                            icon = settingsIcon(R.drawable.ic_adjustments),
+                            iconStyle = PvotRowIconStyle.Plain,
                         )
                     }
                 }

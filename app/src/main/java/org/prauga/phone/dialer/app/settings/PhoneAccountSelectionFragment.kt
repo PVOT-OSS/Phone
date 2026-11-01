@@ -18,9 +18,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import com.prauga.pvot.designsystem.components.list.PvotPreferenceRow
+import com.prauga.pvot.designsystem.components.list.PvotRowIconStyle
+import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.settings.ui.SettingsComposeFragment
 import org.prauga.phone.dialer.app.settings.ui.SettingsGroup
 import org.prauga.phone.dialer.app.settings.ui.SettingsList
+import org.prauga.phone.dialer.app.settings.ui.settingsIcon
 import org.prauga.phone.dialer.telecom.TelecomUtil
 import org.prauga.phone.dialer.ui.TestTags
 
@@ -99,6 +102,8 @@ internal fun PhoneAccountList(
                                 summary = account.description,
                                 onClick = { onOpen(account.handle) },
                                 modifier = Modifier.testTag(TestTags.settingsRow("account_${account.handle.id}")),
+                                icon = settingsIcon(R.drawable.ic_device_sim),
+                                iconStyle = PvotRowIconStyle.Plain,
                             )
                         }
                     }

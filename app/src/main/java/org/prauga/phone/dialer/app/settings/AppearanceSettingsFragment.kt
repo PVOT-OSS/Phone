@@ -63,7 +63,7 @@ fun AppearanceSettingsList() {
     val max = PvotGlassDefaults.maxIntensity()
     SettingsList {
         item(key = "glass") {
-            SettingsGroup(title = stringResource(R.string.appearance_glass_title)) {
+            SettingsGroup(title = stringResource(R.string.appearance_glass_title), dividers = false) {
                 PvotSwitchRow(
                     title = stringResource(R.string.appearance_glass_effects),
                     checked = appearance.glass,

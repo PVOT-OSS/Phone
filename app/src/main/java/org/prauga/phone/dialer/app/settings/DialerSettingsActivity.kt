@@ -19,6 +19,7 @@ import android.telecom.TelecomManager
 import android.telephony.TelephonyManager
 import android.widget.Toast
 import android.view.View
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
@@ -42,6 +43,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.prauga.pvot.designsystem.components.list.PvotPreferenceRow
+import com.prauga.pvot.designsystem.components.list.PvotRowChevron
+import com.prauga.pvot.designsystem.components.list.PvotRowIconStyle
 import com.prauga.pvot.designsystem.platform.enablePvotEdgeToEdge
 import com.prauga.pvot.designsystem.platform.setPvotContent
 import org.prauga.phone.dialer.R
@@ -52,6 +55,7 @@ import org.prauga.phone.dialer.app.settings.ui.SettingsGroup
 import org.prauga.phone.dialer.app.settings.ui.SettingsList
 import org.prauga.phone.dialer.app.settings.ui.SettingsScaffold
 import org.prauga.phone.dialer.app.settings.ui.SettingsTheme
+import org.prauga.phone.dialer.app.settings.ui.settingsIcon
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.compat.telephony.TelephonyManagerCompat
 import org.prauga.phone.dialer.screening.ScreeningSettingsFragment
@@ -238,7 +242,7 @@ class DialerSettingsActivity :
     }
 
     /** A row of the top-level list. */
-    internal data class Entry(val key: String, val titleRes: Int, val target: Target)
+    internal data class Entry(val key: String, val titleRes: Int, val target: Target, @DrawableRes val icon: Int = R.drawable.ic_settings)
 
     /** Where a row leads: another settings screen here, or another app's activity. */
     internal sealed interface Target {
@@ -267,16 +271,16 @@ class DialerSettingsActivity :
                 resources.getBoolean(R.bool.config_sort_order_user_changeable)
             ) {
                 add(Entry(KEY_DISPLAY_OPTIONS, R.string.display_options_title,
-                    Target.Screen(DisplayOptionsSettingsFragment::class.java.name)))
+                    Target.Screen(DisplayOptionsSettingsFragment::class.java.name), R.drawable.ic_list))
             }
             add(Entry(KEY_APPEARANCE, R.string.appearance_settings_label,
-                Target.Screen(AppearanceSettingsFragment::class.java.name)))
+                Target.Screen(AppearanceSettingsFragment::class.java.name), R.drawable.ic_palette))
             add(Entry(KEY_SOUNDS, R.string.sounds_and_vibration_title,
-                Target.Screen(SoundSettingsFragment::class.java.name)))
+                Target.Screen(SoundSettingsFragment::class.java.name), R.drawable.ic_volume))
             add(Entry(KEY_QUICK_RESPONSES, R.string.respond_via_sms_setting_title,
-                Target.Activity(Intent(TelecomManager.ACTION_SHOW_RESPOND_VIA_SMS_SETTINGS))))
+                Target.Activity(Intent(TelecomManager.ACTION_SHOW_RESPOND_VIA_SMS_SETTINGS)), R.drawable.ic_message_circle))
             add(Entry(KEY_SCREENING, R.string.screening_settings_title,
-                Target.Screen(ScreeningSettingsFragment::class.java.name)))
+                Target.Screen(ScreeningSettingsFragment::class.java.name), R.drawable.ic_user))
 
             val telephonyManager = context.getSystemService(TelephonyManager::class.java)
             val telecomManager = context.getSystemService(TelecomManager::class.java)
@@ -285,21 +289,21 @@ class DialerSettingsActivity :
             val isPrimaryUser = context.getSystemService(UserManager::class.java).isSystemUser
             if (isPrimaryUser && TelephonyManagerCompat.getPhoneCount(telephonyManager) <= 1) {
                 add(Entry(KEY_CALL_SETTINGS, R.string.call_settings_label, Target.Activity(
-                    Intent(TelecomManager.ACTION_SHOW_CALL_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))))
+                    Intent(TelecomManager.ACTION_SHOW_CALL_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)), R.drawable.ic_phone))
             } else {
                 add(Entry(KEY_CALLING_ACCOUNTS, R.string.phone_account_settings_label, Target.Activity(
-                    Intent(TelecomManager.ACTION_CHANGE_PHONE_ACCOUNTS).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))))
+                    Intent(TelecomManager.ACTION_CHANGE_PHONE_ACCOUNTS).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)), R.drawable.ic_device_sim))
             }
             if (BlockedNumberContract.canCurrentUserBlockNumbers(context)) {
                 add(Entry(KEY_BLOCKED_NUMBERS, R.string.manage_blocked_numbers_label,
-                    Target.Activity(telecomManager.createManageBlockedNumbersIntent())))
+                    Target.Activity(telecomManager.createManageBlockedNumbersIntent()), R.drawable.ic_ban))
             }
             voicemailEntry(context, isPrimaryUser)?.let(::add)
             if (isPrimaryUser && (TelephonyManagerCompat.isTtyModeSupported(telecomManager) ||
                     TelephonyManagerCompat.isHearingAidCompatibilitySupported(telephonyManager))
             ) {
                 add(Entry(KEY_ACCESSIBILITY, R.string.accessibility_settings_title,
-                    Target.Activity(Intent(TelecomManager.ACTION_SHOW_CALL_ACCESSIBILITY_SETTINGS))))
+                    Target.Activity(Intent(TelecomManager.ACTION_SHOW_CALL_ACCESSIBILITY_SETTINGS)), R.drawable.ic_eye))
             }
         }
 
@@ -328,7 +332,7 @@ class DialerSettingsActivity :
                     putParcelable(VoicemailClient.PARAM_PHONE_ACCOUNT_HANDLE, soleAccount)
                 })
             }
-            return Entry(KEY_VOICEMAIL, R.string.voicemail_settings_label, target)
+            return Entry(KEY_VOICEMAIL, R.string.voicemail_settings_label, target, R.drawable.ic_call_voicemail)
         }
 
         /**
@@ -384,7 +388,9 @@ internal fun SettingsRootList(
                             title = entryTitle,
                             onClick = { onOpen(entry, entryTitle) },
                             modifier = Modifier.testTag(TestTags.settingsRow(entry.key)),
-                            showChevron = entry.target is DialerSettingsActivity.Target.Screen,
+                            icon = settingsIcon(entry.icon),
+                            iconStyle = PvotRowIconStyle.Plain,
+                            chevron = PvotRowChevron.Arrow,
                         )
                     }
                 }

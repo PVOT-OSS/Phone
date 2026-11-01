@@ -40,6 +40,7 @@ import com.prauga.pvot.designsystem.components.PvotDialog
 import com.prauga.pvot.designsystem.components.PvotDialogAction
 import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
 import com.prauga.pvot.designsystem.components.list.PvotPreferenceRow
+import com.prauga.pvot.designsystem.components.list.PvotRowIconStyle
 import com.prauga.pvot.designsystem.components.list.PvotSwitchRow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -49,6 +50,7 @@ import org.prauga.phone.dialer.app.settings.ui.ChoiceRow
 import org.prauga.phone.dialer.app.settings.ui.SettingsComposeFragment
 import org.prauga.phone.dialer.app.settings.ui.SettingsList
 import org.prauga.phone.dialer.app.settings.ui.SettingsGroup
+import org.prauga.phone.dialer.app.settings.ui.settingsIcon
 import org.prauga.phone.dialer.callrecord.impl.CallRecorderService
 import org.prauga.phone.dialer.ui.TestTags
 
@@ -220,6 +222,8 @@ internal fun SoundSettingsList(model: SoundSettingsModel) {
                     value = model.ringtoneName,
                     onClick = { picker.launch(model.ringtonePickerIntent(ringtoneTitle)) },
                     modifier = Modifier.testTag(TestTags.settingsRow("ringtone")),
+                    icon = settingsIcon(R.drawable.ic_bell),
+                    iconStyle = PvotRowIconStyle.Plain,
                 )
                 if (model.hasVibrator) {
                     PvotSwitchRow(
@@ -227,6 +231,8 @@ internal fun SoundSettingsList(model: SoundSettingsModel) {
                         checked = model.vibrateWhenRinging,
                         onCheckedChange = model::changeVibrateWhenRinging,
                         modifier = Modifier.testTag(TestTags.settingsRow("vibrate_when_ringing")),
+                        icon = settingsIcon(R.drawable.ic_wave_sine),
+                        iconStyle = PvotRowIconStyle.Plain,
                     )
                 }
                 PvotSwitchRow(
@@ -234,6 +240,8 @@ internal fun SoundSettingsList(model: SoundSettingsModel) {
                     checked = model.dialpadTones,
                     onCheckedChange = model::changeDialpadTones,
                     modifier = Modifier.testTag(TestTags.settingsRow("dialpad_tones")),
+                    icon = settingsIcon(R.drawable.ic_dialpad),
+                    iconStyle = PvotRowIconStyle.Plain,
                 )
                 if (model.showDtmfToneLength) {
                     val labels = stringArrayResource(R.array.dtmf_tone_length_entries)
@@ -243,6 +251,7 @@ internal fun SoundSettingsList(model: SoundSettingsModel) {
                         selected = model.dtmfToneLength,
                         onSelect = model::changeDtmfToneLength,
                         testTag = "dtmf_tone_length",
+                        icon = R.drawable.ic_adjustments,
                     )
                 }
             }
@@ -266,6 +275,8 @@ internal fun SoundSettingsList(model: SoundSettingsModel) {
                         }
                     },
                     modifier = Modifier.testTag(TestTags.settingsRow(SoundSettingsModel.KEY_ENABLE_DND)),
+                    icon = settingsIcon(R.drawable.ic_bell),
+                    iconStyle = PvotRowIconStyle.Plain,
                 )
                 if (model.hasVibrator) {
                     for ((keyName, title, summary) in inCallVibrations) {
@@ -285,6 +296,7 @@ internal fun SoundSettingsList(model: SoundSettingsModel) {
                         default = R.string.call_recording_format_default,
                         entries = R.array.call_recording_encoder_entries,
                         values = R.array.call_recording_encoder_values,
+                        icon = R.drawable.ic_player_record,
                     )
                 }
             }
@@ -322,5 +334,7 @@ private fun DeviceSwitchRow(prefs: SharedPreferences, key: String, title: String
             prefs.edit { putBoolean(key, it) }
         },
         modifier = Modifier.testTag(TestTags.settingsRow(key)),
+        icon = settingsIcon(R.drawable.ic_wave_sine),
+        iconStyle = PvotRowIconStyle.Plain,
     )
 }

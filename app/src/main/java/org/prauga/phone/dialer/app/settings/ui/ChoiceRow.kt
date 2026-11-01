@@ -5,6 +5,7 @@
 
 package org.prauga.phone.dialer.app.settings.ui
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,6 +34,7 @@ import com.prauga.pvot.designsystem.components.PvotDialog
 import com.prauga.pvot.designsystem.components.PvotDialogAction
 import com.prauga.pvot.designsystem.components.list.PvotListRowDefaults
 import com.prauga.pvot.designsystem.components.list.PvotPreferenceRow
+import com.prauga.pvot.designsystem.components.list.PvotRowIconStyle
 import com.prauga.pvot.designsystem.theme.PvotShapes
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import org.prauga.phone.dialer.ui.TestTags
@@ -54,6 +56,7 @@ fun <T> ChoiceRow(
     modifier: Modifier = Modifier,
     summary: String? = null,
     testTag: String = title,
+    @DrawableRes icon: Int? = null,
 ) {
     var open by rememberSaveable { mutableStateOf(false) }
     val current = choices.firstOrNull { it.value == selected }
@@ -63,6 +66,8 @@ fun <T> ChoiceRow(
         modifier = modifier.testTag(TestTags.settingsRow(testTag)),
         summary = summary,
         value = current?.label,
+        icon = settingsIcon(icon),
+        iconStyle = PvotRowIconStyle.Plain,
         showChevron = false,
     )
     // A window dialog for now; it moves to PvotLib's in-window glass dialog once that exists.

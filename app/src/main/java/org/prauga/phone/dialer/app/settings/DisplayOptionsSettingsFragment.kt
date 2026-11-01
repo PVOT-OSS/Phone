@@ -7,6 +7,7 @@ package org.prauga.phone.dialer.app.settings
 
 import android.content.SharedPreferences
 import androidx.annotation.ArrayRes
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -48,6 +49,7 @@ internal fun DisplayOptionsList(prefs: SharedPreferences) {
                     default = R.string.display_options_sort_by_given_name_value,
                     entries = R.array.contact_sort_order_entries,
                     values = R.array.contact_sort_order_values,
+                    icon = R.drawable.ic_arrows_exchange,
                 )
                 StringChoiceRow(
                     prefs = prefs,
@@ -56,6 +58,7 @@ internal fun DisplayOptionsList(prefs: SharedPreferences) {
                     default = R.string.display_options_view_given_name_first_value,
                     entries = R.array.contact_display_order_entries,
                     values = R.array.contact_display_order_values,
+                    icon = R.drawable.ic_typography,
                 )
             }
         }
@@ -71,6 +74,7 @@ internal fun StringChoiceRow(
     @StringRes default: Int,
     @ArrayRes entries: Int,
     @ArrayRes values: Int,
+    @DrawableRes icon: Int? = null,
 ) {
     val keyName = stringResource(key)
     val defaultValue = stringResource(default)
@@ -85,5 +89,6 @@ internal fun StringChoiceRow(
             prefs.edit { putString(keyName, it) }
         },
         testTag = keyName,
+        icon = icon,
     )
 }
