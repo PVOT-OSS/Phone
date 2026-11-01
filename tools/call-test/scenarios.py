@@ -168,7 +168,8 @@ SCENARIOS = [
 
 
 def end_all_calls(device):
-    for line in device.emu("gsm list").splitlines():
+    modem_calls = device.emu("gsm list").splitlines() if device.serial.startswith("emulator-") else []
+    for line in modem_calls:
         match = re.search(r"(\d{3,})", line)
         if match:
             device.emu(f"gsm cancel {match.group(1)}")
