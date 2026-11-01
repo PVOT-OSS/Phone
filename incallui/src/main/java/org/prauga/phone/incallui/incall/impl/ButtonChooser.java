@@ -40,7 +40,7 @@ import javax.annotation.concurrent.Immutable;
  * list until it becomes the proper size.
  */
 @Immutable
-final class ButtonChooser {
+public final class ButtonChooser {
 
   private final MappedButtonConfig config;
 

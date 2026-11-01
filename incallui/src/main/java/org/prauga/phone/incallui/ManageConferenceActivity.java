@@ -18,8 +18,8 @@
 package org.prauga.phone.incallui;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 
 import org.prauga.phone.incallui.R;
@@ -38,11 +38,18 @@ public class ManageConferenceActivity extends BaseActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     InCallPresenter.getInstance().setManageConferenceActivity(this);
-
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getOnBackPressedDispatcher()
+        .addCallback(
+            this,
+            new OnBackPressedCallback(true) {
+              @Override
+              public void handleOnBackPressed() {
+                InCallPresenter.getInstance().bringToForeground(false);
+                finish();
+              }
+            });
 
     setContentView(R.layout.activity_manage_conference);
-    setupInsets(findViewById(R.id.manageConferencePanel));
     Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.manageConferencePanel);
     if (fragment == null) {
       fragment = new ConferenceManagerFragment();
@@ -61,21 +68,6 @@ public class ManageConferenceActivity extends BaseActivity {
     }
   }
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    final int itemId = item.getItemId();
-    if (itemId == android.R.id.home) {
-      onBackPressed();
-      return true;
-    }
-    return super.onOptionsItemSelected(item);
-  }
-
-  @Override
-  public void onBackPressed() {
-    InCallPresenter.getInstance().bringToForeground(false);
-    finish();
-  }
 
   @Override
   protected void onStart() {

@@ -16,10 +16,8 @@
 
 package org.prauga.phone.incallui.disconnectdialog;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.telecom.DisconnectCause;
 import android.util.Pair;
@@ -29,6 +27,7 @@ import androidx.annotation.NonNull;
 import org.prauga.phone.incallui.R;
 import org.prauga.phone.dialer.common.Assert;
 import org.prauga.phone.dialer.common.LogUtil;
+import org.prauga.phone.incallui.InCallDialogs;
 import org.prauga.phone.incallui.call.DialerCall;
 
 /** Prompts the user to enable Wi-Fi calling. */
@@ -60,13 +59,7 @@ public class EnableWifiCallingPrompt implements DisconnectDialog {
     DisconnectCause cause = call.getDisconnectCause();
     CharSequence message = cause.getDescription();
     Dialog dialog =
-        new AlertDialog.Builder(context)
-            .setMessage(message)
-            .setPositiveButton(
-                R.string.incall_enable_wifi_calling_button,
-                (OnClickListener) (dialog1, which) -> openWifiCallingSettings(context))
-            .setNegativeButton(android.R.string.cancel, null)
-            .create();
+        InCallDialogs.enableWifiCalling(context, message, () -> openWifiCallingSettings(context));
     return new Pair<>(dialog, message);
   }
 

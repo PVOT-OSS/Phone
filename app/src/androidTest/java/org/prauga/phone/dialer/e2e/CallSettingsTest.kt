@@ -25,6 +25,7 @@ import org.prauga.phone.dialer.app.settings.DisplayOptions
 import org.prauga.phone.dialer.app.settings.IncomingCallSettings
 import org.prauga.phone.dialer.testing.FakeCallSpec
 import org.prauga.phone.dialer.testing.FakeCarrier
+import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.incallui.InCallPresenter
 import org.prauga.phone.incallui.call.state.DialerCallState
 
@@ -123,7 +124,7 @@ class CallSettingsTest {
         assertNotNull(
             "answer button not shown",
             deviceRule.device.wait(
-                Until.findObject(By.res(context.packageName, "two_button_answer_button")),
+                Until.findObject(By.res(context.packageName, TestTags.ANSWER_ACCEPT)),
                 CallTests.TIMEOUT_MILLIS,
             ),
         )

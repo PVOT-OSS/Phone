@@ -15,8 +15,9 @@ import android.telecom.Call
 import android.telephony.CarrierConfigManager
 import android.telephony.SubscriptionManager
 import android.telephony.TelephonyManager
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
+import org.prauga.phone.dialer.ui.PvotAlertDialog
 import org.prauga.phone.incallui.call.CallList
 import org.prauga.phone.incallui.call.DialerCall
 
@@ -99,22 +100,29 @@ class CallTransferDialogFragment : DialogFragment() {
                 active?.let(::nameOf) ?: unknown,
                 held?.let(::nameOf) ?: unknown,
             )
-        return AlertDialog.Builder(requireContext())
-            .setTitle(R.string.incall_transfer_dialog_title)
-            .setMessage(message)
-            .setPositiveButton(R.string.incall_transfer_dialog_confirm) { _, _ ->
-                val from = CallList.getInstance().activeCall
-                val to = CallList.getInstance().backgroundCall
-                if (
-                    from != null &&
-                        to != null &&
-                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.CINNAMON_BUN
-                ) {
-                    from.consultativeTransfer(to)
-                }
-            }
-            .setNegativeButton(android.R.string.cancel, null)
-            .create()
+        return PvotAlertDialog(
+            requireContext(),
+            getString(R.string.incall_transfer_dialog_title),
+            message,
+            listOf(
+                PvotAlertDialog.Action(
+                    getString(R.string.incall_transfer_dialog_confirm),
+                    PvotDialogActionStyle.Primary,
+                    {
+                        val from = CallList.getInstance().activeCall
+                        val to = CallList.getInstance().backgroundCall
+                        if (
+                            from != null &&
+                                to != null &&
+                                Build.VERSION.SDK_INT >= Build.VERSION_CODES.CINNAMON_BUN
+                        ) {
+                            from.consultativeTransfer(to)
+                        }
+                    },
+                ),
+                PvotAlertDialog.Action(getString(android.R.string.cancel), cancels = true),
+            ),
+        )
     }
 
     private fun nameOf(call: DialerCall): String? =

@@ -47,6 +47,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.prauga.phone.incallui.R;
+import org.prauga.phone.incallui.speakerbuttonlogic.SpeakerButtonInfo;
 import org.prauga.phone.dialer.common.Assert;
 import org.prauga.phone.dialer.common.FragmentUtils;
 import org.prauga.phone.dialer.common.LogUtil;
@@ -57,7 +58,6 @@ import org.prauga.phone.dialer.rtt.RttTranscriptMessage;
 import org.prauga.phone.dialer.util.DrawableConverter;
 import org.prauga.phone.incallui.audioroute.AudioRouteSelectorDialogFragment.AudioRouteSelectorPresenter;
 import org.prauga.phone.incallui.call.state.DialerCallState;
-import org.prauga.phone.incallui.hold.OnHoldFragment;
 import org.prauga.phone.incallui.incall.protocol.ContactPhotoType;
 import org.prauga.phone.incallui.incall.protocol.InCallButtonIds;
 import org.prauga.phone.incallui.incall.protocol.InCallButtonUi;
@@ -69,7 +69,6 @@ import org.prauga.phone.incallui.incall.protocol.InCallScreenDelegateFactory;
 import org.prauga.phone.incallui.incall.protocol.PrimaryCallState;
 import org.prauga.phone.incallui.incall.protocol.PrimaryInfo;
 import org.prauga.phone.incallui.incall.protocol.SecondaryInfo;
-import org.prauga.phone.incallui.rtt.impl.RttChatAdapter.MessageListener;
 import org.prauga.phone.incallui.rtt.protocol.Constants;
 import org.prauga.phone.incallui.rtt.protocol.RttCallScreen;
 import org.prauga.phone.incallui.rtt.protocol.RttCallScreenDelegate;
@@ -81,7 +80,7 @@ import java.util.List;
 public class RttChatFragment extends Fragment
     implements OnEditorActionListener,
         TextWatcher,
-        MessageListener,
+        RttChatActions,
         RttCallScreen,
         InCallScreen,
         InCallButtonUi,
@@ -89,27 +88,18 @@ public class RttChatFragment extends Fragment
 
   private static final String ARG_CALL_ID = "call_id";
 
-  private RecyclerView recyclerView;
-  private RttChatAdapter adapter;
   private EditText editText;
-  private ImageButton submitButton;
+  private final RttChatMessages messages = new RttChatMessages();
+  private final RttChatUiState uiState = new RttChatUiState();
   private boolean isClearingInput;
 
   private InCallScreenDelegate inCallScreenDelegate;
   private RttCallScreenDelegate rttCallScreenDelegate;
   private InCallButtonUiDelegate inCallButtonUiDelegate;
-  private View endCallButton;
-  private TextView nameTextView;
-  private Chronometer chronometer;
   private boolean isTimerStarted;
-  private RttOverflowMenu overflowMenu;
   private SecondaryInfo savedSecondaryInfo;
-  private TextView statusBanner;
   private PrimaryInfo primaryInfo = PrimaryInfo.empty();
   private PrimaryCallState primaryCallState = PrimaryCallState.empty();
-  private boolean isUserScrolling;
-  private boolean shouldAutoScrolling;
-  private AudioSelectMenu audioSelectMenu;
 
   /**
    * Create a new instance of RttChatFragment.
@@ -157,33 +147,22 @@ public class RttChatFragment extends Fragment
 
   @Override
   public List<RttTranscriptMessage> getRttTranscriptMessageList() {
-    return adapter.getRttTranscriptMessageList();
+    return messages.getRttTranscriptMessageList();
   }
 
   @Nullable
   @Override
   public View onCreateView(
       LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.frag_rtt_chat, container, false);
-    view.setSystemUiVisibility(
-        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
-    editText = view.findViewById(R.id.rtt_chat_input);
+    editText = RttChatHost.createInput(requireContext());
     editText.setOnEditorActionListener(this);
     editText.addTextChangedListener(this);
-
     editText.setOnKeyListener(
         (v, keyCode, event) -> {
-          // This is only triggered when input method doesn't handle delete key, which usually means
-          // the current input box is empty.
-          // On non-English keyboard delete key could be passed here so we still need to check if
-          // the input box is empty.
           if (keyCode == KeyEvent.KEYCODE_DEL
               && event.getAction() == KeyEvent.ACTION_DOWN
               && TextUtils.isEmpty(editText.getText())) {
-            String lastMessage = adapter.retrieveLastLocalMessage();
+            String lastMessage = messages.retrieveLastLocalMessage();
             if (lastMessage != null) {
               resumeInput(lastMessage);
               rttCallScreenDelegate.onLocalMessage("\b");
@@ -193,73 +172,14 @@ public class RttChatFragment extends Fragment
           }
           return false;
         });
-    recyclerView = view.findViewById(R.id.rtt_recycler_view);
-    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-    layoutManager.setStackFromEnd(true);
-    recyclerView.setLayoutManager(layoutManager);
-    recyclerView.setHasFixedSize(false);
-    adapter = new RttChatAdapter(getContext(), this);
-    recyclerView.setAdapter(adapter);
-    recyclerView.addOnScrollListener(
-        new RecyclerView.OnScrollListener() {
-          @Override
-          public void onScrollStateChanged(RecyclerView recyclerView, int i) {
-            if (i == RecyclerView.SCROLL_STATE_DRAGGING) {
-              isUserScrolling = true;
-            } else if (i == RecyclerView.SCROLL_STATE_IDLE) {
-              isUserScrolling = false;
-              // Auto scrolling for new messages should be resumed if it's scrolled to bottom.
-              shouldAutoScrolling = !recyclerView.canScrollVertically(1);
-            }
-          }
-
-          @Override
-          public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            if (dy < 0 && isUserScrolling) {
-              UiUtil.hideKeyboardFrom(getContext(), editText);
-            }
-          }
-        });
-
-    submitButton = view.findViewById(R.id.rtt_chat_submit_button);
-    submitButton.setOnClickListener(
-        v -> {
-          adapter.submitLocalMessage();
-          resumeInput("");
-          rttCallScreenDelegate.onLocalMessage(Constants.BUBBLE_BREAKER);
-          // Auto scrolling for new messages should be resumed since user has submit current
-          // message.
-          shouldAutoScrolling = true;
-        });
-    submitButton.setEnabled(false);
-    endCallButton = view.findViewById(R.id.rtt_end_call_button);
-    endCallButton.setOnClickListener(
-        v -> {
-          LogUtil.i("RttChatFragment.onClick", "end call button clicked");
-          inCallButtonUiDelegate.onEndCallClicked();
-        });
-
-    overflowMenu = new RttOverflowMenu(getContext(), inCallButtonUiDelegate, inCallScreenDelegate);
-    view.findViewById(R.id.rtt_overflow_button)
-        .setOnClickListener(
-            v -> {
-              // Hide keyboard when opening overflow menu. This is alternative solution since hiding
-              // keyboard after the menu is open or dialpad is shown doesn't work.
-              UiUtil.hideKeyboardFrom(getContext(), editText);
-              overflowMenu.showAtLocation(v, Gravity.TOP | Gravity.RIGHT, 0, 0);
-            });
-
-    nameTextView = view.findViewById(R.id.rtt_name_or_number);
-    chronometer = view.findViewById(R.id.rtt_timer);
-    statusBanner = view.findViewById(R.id.rtt_status_banner);
-    return view;
+    return RttChatHost.createView(requireContext(), uiState, messages, editText, this);
   }
 
   @Override
   public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
     if (actionId == EditorInfo.IME_ACTION_SEND) {
       if (!TextUtils.isEmpty(editText.getText())) {
-        submitButton.performClick();
+        onSubmit();
       }
       return true;
     }
@@ -274,16 +194,16 @@ public class RttChatFragment extends Fragment
     if (isClearingInput) {
       return;
     }
-    String messageToAppend = adapter.computeChangeOfLocalMessage(s.toString());
+    String messageToAppend = messages.computeChangeOfLocalMessage(s.toString());
     if (!TextUtils.isEmpty(messageToAppend)) {
-      adapter.addLocalMessage(messageToAppend);
+      messages.addLocalMessage(messageToAppend);
       rttCallScreenDelegate.onLocalMessage(messageToAppend);
     }
   }
 
   @Override
   public void onRemoteMessage(String message) {
-    adapter.addRemoteMessage(message);
+    messages.addRemoteMessage(message);
   }
 
   @Override
@@ -296,34 +216,81 @@ public class RttChatFragment extends Fragment
 
   @Override
   public void afterTextChanged(Editable s) {
-    if (TextUtils.isEmpty(s)) {
-      submitButton.setEnabled(false);
+    uiState.setSubmitEnabled(!TextUtils.isEmpty(s));
+  }
+
+  @Override
+  public void onSubmit() {
+    messages.submitLocalMessage();
+    resumeInput("");
+    rttCallScreenDelegate.onLocalMessage(Constants.BUBBLE_BREAKER);
+  }
+
+  @Override
+  public void onEndCall() {
+    LogUtil.i("RttChatFragment.onEndCall", "end call button clicked");
+    inCallButtonUiDelegate.onEndCallClicked();
+  }
+
+  @Override
+  public void onMenuOpen() {
+    UiUtil.hideKeyboardFrom(getContext(), editText);
+    uiState.setMenuOpen(true);
+  }
+
+  @Override
+  public void onMute(boolean muted) {
+    inCallButtonUiDelegate.muteClicked(muted, true);
+  }
+
+  @Override
+  public void onSpeaker() {
+    CallAudioState audioState = uiState.getAudioState();
+    if (audioState == null || new SpeakerButtonInfo(audioState).nonBluetoothMode) {
+      inCallButtonUiDelegate.toggleSpeakerphone();
     } else {
-      submitButton.setEnabled(true);
+      inCallButtonUiDelegate.showAudioRouteSelector();
     }
   }
 
   @Override
-  public void onUpdateLocalMessage(int position) {
-    if (position < 0) {
-      return;
-    }
-    recyclerView.smoothScrollToPosition(position);
+  public void onDialpad(boolean show) {
+    inCallButtonUiDelegate.showDialpadClicked(show);
   }
 
   @Override
-  public void onUpdateRemoteMessage(int position) {
-    if (position < 0) {
-      return;
+  public void onAddCall() {
+    inCallButtonUiDelegate.addCallClicked();
+  }
+
+  @Override
+  public void onSwap() {
+    if (uiState.getSwapEnabled()) {
+      inCallButtonUiDelegate.swapClicked();
     }
-    if (shouldAutoScrolling) {
-      recyclerView.smoothScrollToPosition(position);
+    if (uiState.getSwitchToSecondaryEnabled()) {
+      inCallScreenDelegate.onSecondaryInfoClicked();
     }
+  }
+
+  @Override
+  public void onSwitchToVoice() {
+    inCallButtonUiDelegate.changeToVoiceClicked();
+  }
+
+  @Override
+  public void onAudioRoute(int route) {
+    inCallButtonUiDelegate.setAudioRoute(route);
+  }
+
+  @Override
+  public void onScrollBack() {
+    UiUtil.hideKeyboardFrom(getContext(), editText);
   }
 
   @Override
   public void onRestoreRttChat(RttTranscript rttTranscript) {
-    String unfinishedLocalMessage = adapter.onRestoreRttChat(rttTranscript);
+    String unfinishedLocalMessage = messages.onRestoreRttChat(rttTranscript);
     if (unfinishedLocalMessage != null) {
       resumeInput(unfinishedLocalMessage);
     }
@@ -349,27 +316,18 @@ public class RttChatFragment extends Fragment
     LogUtil.enterBlock("RttChatFragment.onStop");
     super.onStop();
     isClearingInput = true;
-    if (overflowMenu.isShowing()) {
-      overflowMenu.dismiss();
-    }
+    uiState.setMenuOpen(false);
+    uiState.setAudioMenuOpen(false);
     onRttScreenStop();
   }
 
   @Override
   public void onRttScreenStart() {
     rttCallScreenDelegate.onRttCallScreenUiReady();
-    Activity activity = getActivity();
-    Window window = getActivity().getWindow();
-    window.setStatusBarColor(activity.getColor(R.color.rtt_status_bar_color));
-    window.setNavigationBarColor(activity.getColor(R.color.rtt_navigation_bar_color));
   }
 
   @Override
   public void onRttScreenStop() {
-    Activity activity = getActivity();
-    Window window = getActivity().getWindow();
-    window.setStatusBarColor(activity.getColor(android.R.color.transparent));
-    window.setNavigationBarColor(activity.getColor(android.R.color.transparent));
     rttCallScreenDelegate.onRttCallScreenUiUnready();
   }
 
@@ -386,35 +344,18 @@ public class RttChatFragment extends Fragment
   @Override
   public void setPrimary(@NonNull PrimaryInfo primaryInfo) {
     LogUtil.i("RttChatFragment.setPrimary", primaryInfo.toString());
-    nameTextView.setText(primaryInfo.name());
-    updateAvatar(primaryInfo);
+    uiState.setName(primaryInfo.name() == null ? "" : primaryInfo.name());
+    uiState.setPhotoUri(
+        primaryInfo.photoType() == ContactPhotoType.CONTACT && primaryInfo.photoUri() != null
+            ? primaryInfo.photoUri().toString()
+            : null);
+    uiState.setColorKey(
+        primaryInfo.contactInfoLookupKey() != null
+            ? primaryInfo.contactInfoLookupKey()
+            : uiState.getName());
     this.primaryInfo = primaryInfo;
   }
 
-  private void updateAvatar(PrimaryInfo primaryInfo) {
-    boolean hasPhoto =
-        primaryInfo.photo() != null && primaryInfo.photoType() == ContactPhotoType.CONTACT;
-    // Contact has a photo, don't render a letter tile.
-    if (hasPhoto) {
-      int avatarSize = getResources().getDimensionPixelSize(R.dimen.rtt_avatar_size);
-      adapter.setAvatarDrawable(
-          DrawableConverter.getRoundedDrawable(
-              getContext(), primaryInfo.photo(), avatarSize, avatarSize));
-    } else {
-      LetterTileDrawable letterTile = new LetterTileDrawable(getResources());
-      letterTile.setCanonicalDialerLetterTileDetails(
-          primaryInfo.name(),
-          primaryInfo.contactInfoLookupKey(),
-          LetterTileDrawable.SHAPE_CIRCLE,
-          LetterTileDrawable.getContactTypeFromPrimitives(
-              primaryCallState.isVoiceMailNumber(),
-              primaryInfo.isSpam(),
-              primaryCallState.isBusinessNumber(),
-              primaryInfo.numberPresentation(),
-              primaryCallState.isConference()));
-      adapter.setAvatarDrawable(letterTile);
-    }
-  }
 
   @Override
   public void onAttach(Context context) {
@@ -432,20 +373,8 @@ public class RttChatFragment extends Fragment
       return;
     }
     savedSecondaryInfo = null;
-    FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-    Fragment oldBanner = getChildFragmentManager().findFragmentById(R.id.rtt_on_hold_banner);
-    if (secondaryInfo.shouldShow()) {
-      OnHoldFragment onHoldFragment = OnHoldFragment.newInstance(secondaryInfo);
-      onHoldFragment.setPadTopInset(false);
-      transaction.replace(R.id.rtt_on_hold_banner, onHoldFragment);
-    } else {
-      if (oldBanner != null) {
-        transaction.remove(oldBanner);
-      }
-    }
-    transaction.setCustomAnimations(R.anim.abc_slide_in_top, R.anim.abc_slide_out_top);
-    transaction.commitNowAllowingStateLoss();
-    overflowMenu.enableSwitchToSecondaryButton(secondaryInfo.shouldShow());
+    uiState.setSecondary(secondaryInfo.shouldShow() ? secondaryInfo : null);
+    uiState.setSwitchToSecondaryEnabled(secondaryInfo.shouldShow());
   }
 
   @Override
@@ -453,21 +382,15 @@ public class RttChatFragment extends Fragment
     LogUtil.i("RttChatFragment.setCallState", primaryCallState.toString());
     this.primaryCallState = primaryCallState;
     if (!isTimerStarted && primaryCallState.state() == DialerCallState.ACTIVE) {
-      LogUtil.i(
-          "RttChatFragment.setCallState", "starting timer with base: %d", chronometer.getBase());
-      chronometer.setBase(
-          primaryCallState.connectTimeMillis()
-              - System.currentTimeMillis()
-              + SystemClock.elapsedRealtime());
-      chronometer.start();
+      LogUtil.i("RttChatFragment.setCallState", "starting timer");
+      uiState.setConnectTimeMillis(primaryCallState.connectTimeMillis());
       isTimerStarted = true;
-      editText.setVisibility(View.VISIBLE);
-      submitButton.setVisibility(View.VISIBLE);
+      uiState.setInputVisible(true);
       editText.setFocusableInTouchMode(true);
       if (editText.requestFocus()) {
         UiUtil.showKeyboardFrom(getContext(), editText);
       }
-      adapter.showAdvisory();
+      messages.showAdvisory();
     }
     if (primaryCallState.state() == DialerCallState.DIALING) {
       showWaitingForJoinBanner();
@@ -480,12 +403,11 @@ public class RttChatFragment extends Fragment
   }
 
   private void showWaitingForJoinBanner() {
-    statusBanner.setText(getString(R.string.rtt_status_banner_text, primaryInfo.name()));
-    statusBanner.setVisibility(View.VISIBLE);
+    uiState.setStatusBanner(getString(R.string.rtt_status_banner_text, primaryInfo.name()));
   }
 
   private void hideWaitingForJoinBanner() {
-    statusBanner.setVisibility(View.GONE);
+    uiState.setStatusBanner(null);
   }
 
   @Override
@@ -510,7 +432,7 @@ public class RttChatFragment extends Fragment
 
   @Override
   public void onInCallScreenDialpadVisibilityChange(boolean isShowing) {
-    overflowMenu.setDialpadButtonChecked(isShowing);
+    uiState.setDialpadShowing(isShowing);
   }
 
   @Override
@@ -534,7 +456,7 @@ public class RttChatFragment extends Fragment
   @Override
   public void showButton(int buttonId, boolean show) {
     if (buttonId == InCallButtonIds.BUTTON_SWAP) {
-      overflowMenu.enableSwapCallButton(show);
+      uiState.setSwapEnabled(show);
     }
   }
 
@@ -556,11 +478,8 @@ public class RttChatFragment extends Fragment
   @Override
   public void setAudioState(CallAudioState audioState) {
     LogUtil.i("RttChatFragment.setAudioState", "audioState: " + audioState);
-    overflowMenu.setMuteButtonChecked(audioState.isMuted());
-    overflowMenu.setAudioState(audioState);
-    if (audioSelectMenu != null) {
-      audioSelectMenu.setAudioState(audioState);
-    }
+    uiState.setMuted(audioState.isMuted());
+    uiState.setAudioState(audioState);
   }
 
   @Override
@@ -573,12 +492,7 @@ public class RttChatFragment extends Fragment
 
   @Override
   public void showAudioRouteSelector() {
-    audioSelectMenu =
-        new AudioSelectMenu(
-            getContext(),
-            inCallButtonUiDelegate,
-            () -> overflowMenu.showAtLocation(getView(), Gravity.TOP | Gravity.RIGHT, 0, 0));
-    audioSelectMenu.showAtLocation(getView(), Gravity.TOP | Gravity.RIGHT, 0, 0);
+    uiState.setAudioMenuOpen(true);
   }
 
   @Override

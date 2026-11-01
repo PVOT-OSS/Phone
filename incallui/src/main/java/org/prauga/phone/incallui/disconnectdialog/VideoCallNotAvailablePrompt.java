@@ -16,7 +16,6 @@
 
 package org.prauga.phone.incallui.disconnectdialog;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.telecom.DisconnectCause;
@@ -30,6 +29,7 @@ import org.prauga.phone.dialer.callintent.CallInitiationType;
 import org.prauga.phone.dialer.callintent.CallIntentBuilder;
 import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.precall.PreCall;
+import org.prauga.phone.incallui.InCallDialogs;
 import org.prauga.phone.incallui.call.DialerCall;
 
 /** Prompt user to make voice call if video call is not currently available. */
@@ -54,15 +54,8 @@ public class VideoCallNotAvailablePrompt implements DisconnectDialog {
     CharSequence title = context.getString(R.string.video_call_not_available_title);
 
     Dialog dialog =
-        new AlertDialog.Builder(context)
-            .setTitle(title)
-            .setMessage(context.getString(R.string.video_call_not_available_message))
-            .setPositiveButton(
-                R.string.voice_call,
-                (dialog1, which) ->
-                    makeVoiceCall(context, call.getNumber(), call.getAccountHandle()))
-            .setNegativeButton(android.R.string.cancel, null)
-            .create();
+        InCallDialogs.videoCallNotAvailable(
+            context, () -> makeVoiceCall(context, call.getNumber(), call.getAccountHandle()));
     return new Pair<>(dialog, title);
   }
 
