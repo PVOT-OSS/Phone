@@ -33,7 +33,6 @@ import org.prauga.phone.dialer.app.calllog.calllogcache.CallLogCache;
 import org.prauga.phone.dialer.calllogutils.PhoneCallDetails;
 import org.prauga.phone.dialer.compat.telephony.TelephonyManagerCompat;
 import org.prauga.phone.dialer.logging.ContactSource;
-import org.prauga.phone.dialer.oem.MotorolaUtils;
 import org.prauga.phone.dialer.phonenumbercache.CachedNumberLookupService;
 import org.prauga.phone.dialer.phonenumbercache.PhoneNumberCache;
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper;
@@ -109,17 +108,15 @@ public class PhoneCallDetailsHelper {
       }
     }
 
-    // Show the video icon if the call had video enabled.
-    views.callTypeIcons.setShowVideo(
-        (details.features & Calls.FEATURES_VIDEO) == Calls.FEATURES_VIDEO);
+    // Call quality badges. Video and RTT calls say so in the row's text instead.
+    views.callTypeIcons.setShowVideo(false);
     views.callTypeIcons.setShowHd(
         (details.features & Calls.FEATURES_HD_CALL) == Calls.FEATURES_HD_CALL);
-    views.callTypeIcons.setShowWifi(
-        MotorolaUtils.shouldShowWifiIconInCallLog(context, details.features));
+    views.callTypeIcons.setShowWifi((details.features & Calls.FEATURES_WIFI) == Calls.FEATURES_WIFI);
     views.callTypeIcons.setShowAssistedDialed(
         (details.features & TelephonyManagerCompat.FEATURES_ASSISTED_DIALING)
             == TelephonyManagerCompat.FEATURES_ASSISTED_DIALING);
-    views.callTypeIcons.setShowRtt((details.features & Calls.FEATURES_RTT) == Calls.FEATURES_RTT);
+    views.callTypeIcons.setShowRtt(false);
     views.callTypeIcons.requestLayout();
     views.callTypeIcons.setVisibility(View.VISIBLE);
 

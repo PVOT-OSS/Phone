@@ -209,13 +209,12 @@ public class CallTypeIconsView extends View {
     if (showVideo) {
       left = addDrawable(canvas, resources.videoCall, left) + resources.iconMargin;
     }
-    // If showing HD call icon, draw it scaled appropriately.
-    if (showHd) {
-      left = addDrawable(canvas, resources.hdCall, left) + resources.iconMargin;
-    }
-    // If showing HD call icon, draw it scaled appropriately.
+    // Call quality badges in a fixed order: Wi-Fi, then HD, then assisted dialing.
     if (showWifi) {
       left = addDrawable(canvas, resources.wifiCall, left) + resources.iconMargin;
+    }
+    if (showHd) {
+      left = addDrawable(canvas, resources.hdCall, left) + resources.iconMargin;
     }
     // If showing assisted dial call icon, draw it scaled appropriately.
     if (showAssistedDialed) {
