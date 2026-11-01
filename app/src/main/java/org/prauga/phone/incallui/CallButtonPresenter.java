@@ -350,6 +350,12 @@ public class CallButtonPresenter
   }
 
   @Override
+  public void changeToVoiceClicked() {
+    LogUtil.enterBlock("CallButtonPresenter.changeToVoiceClicked");
+    call.getVideoTech().downgradeToAudio();
+  }
+
+  @Override
   public void changeToRttClicked() {
     LogUtil.enterBlock("CallButtonPresenter.changeToRttClicked");
     call.sendRttUpgradeRequest();

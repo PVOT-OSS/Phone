@@ -67,6 +67,9 @@ public interface VideoTech {
 
   void declineVideoRequest();
 
+  /** Asks to carry on as a voice call, dropping video on both sides. */
+  void downgradeToAudio();
+
   boolean isTransmitting();
 
   void stopTransmission();

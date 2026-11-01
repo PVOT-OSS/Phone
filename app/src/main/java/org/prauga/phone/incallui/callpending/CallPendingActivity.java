@@ -235,6 +235,9 @@ public class CallPendingActivity extends FragmentActivity
           public void changeToVideoClicked() {}
 
           @Override
+          public void changeToVoiceClicked() {}
+
+          @Override
           public void changeToRttClicked() {}
 
           @Override

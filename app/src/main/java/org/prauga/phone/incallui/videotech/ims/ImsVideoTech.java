@@ -207,6 +207,12 @@ public class ImsVideoTech implements VideoTech {
   }
 
   @Override
+  public void downgradeToAudio() {
+    LogUtil.enterBlock("ImsVideoTech.downgradeToAudio");
+    call.getVideoCall().sendSessionModifyRequest(new VideoProfile(VideoProfile.STATE_AUDIO_ONLY));
+  }
+
+  @Override
   public boolean isTransmitting() {
     return VideoProfile.isTransmissionEnabled(call.getDetails().getVideoState());
   }
