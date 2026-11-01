@@ -599,6 +599,10 @@ public class DialerCall implements VideoTechListener {
     if (!Objects.equals(handle, newHandle)) {
       handle = newHandle;
       updateEmergencyCallState();
+    } else if (!isEmergencyCall
+        && hasProperty(Details.PROPERTY_NETWORK_IDENTIFIED_EMERGENCY_CALL)) {
+      // The network only says so once the call is placed.
+      updateEmergencyCallState();
     }
 
     TelecomManager telecomManager = context.getSystemService(TelecomManager.class);
