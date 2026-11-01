@@ -32,7 +32,7 @@ sealed interface ContactsUiState {
 }
 
 /** Loads the contacts tab, and reloads it when contacts change. */
-class ContactsViewModel(
+class ContactsViewModel @JvmOverloads constructor(
     application: Application,
     private val hasPermission: () -> Boolean = { PermissionsUtil.hasContactsReadPermissions(application) },
     private val loadContacts: () -> List<ContactSection> = { ContactsQuery.load(application) },

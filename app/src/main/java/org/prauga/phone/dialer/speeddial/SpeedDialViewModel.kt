@@ -97,7 +97,7 @@ class DefaultSpeedDialRepository(
 }
 
 /** Loads favorites and suggestions, and keeps the user's changes to them. */
-class SpeedDialViewModel(
+class SpeedDialViewModel @JvmOverloads constructor(
     application: Application,
     private val repository: SpeedDialRepository = DefaultSpeedDialRepository(application),
     private val hasPermission: () -> Boolean = { PermissionsUtil.hasContactsReadPermissions(application) },
