@@ -8,7 +8,6 @@ package org.prauga.phone.dialer.calldetails
 import android.content.Intent
 import android.provider.CallLog.Calls
 import android.telecom.PhoneAccount
-import androidx.compose.foundation.layout.Box
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -18,7 +17,7 @@ import androidx.compose.ui.test.performClick
 import androidx.test.core.app.ApplicationProvider
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.google.common.truth.Truth.assertThat
-import com.prauga.pvot.designsystem.theme.PvotAppTheme
+import com.prauga.pvot.designsystem.components.list.PvotAvatar
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,6 +27,8 @@ import org.prauga.phone.dialer.calllogutils.CallbackActionHelper.CallbackAction
 import org.prauga.phone.dialer.compat.telephony.TelephonyManagerCompat
 import org.prauga.phone.dialer.dialercontact.DialerContact
 import org.prauga.phone.dialer.dialercontact.SimDetails
+import org.prauga.phone.dialer.lettertile.LetterTileDrawable
+import org.prauga.phone.dialer.ui.SolidGlassTheme
 import org.prauga.phone.dialer.ui.TestTags
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -155,16 +156,49 @@ class CallDetailsTest {
     }
 
     @Test
-    fun screenshotDark() {
+    fun messageIsOfferedForANumberThatCanBeCalledBack() {
+        assertThat(map().canMessage).isTrue()
+        assertThat(map(callback = CallbackAction.NONE).canMessage).isFalse()
+        assertThat(map(emergency = true).canMessage).isFalse()
+        val voicemail = contact.toBuilder().setContactType(LetterTileDrawable.TYPE_VOICEMAIL).build()
+        assertThat(map(contact = voicemail).canMessage).isFalse()
+    }
+
+    @Test
+    fun messageReachesTheActivity() {
+        val actions = RecordingActions()
+        show(map(), actions)
+        compose.onNodeWithTag(TestTags.CALL_DETAILS_MESSAGE).performClick()
+        assertThat(actions.calls).containsExactly("message")
+    }
+
+    @Test
+    fun theHeroShowsTheNameAndNumber() {
+        show(map())
+        compose.onNodeWithText("Alex Doe").assertIsDisplayed()
+        compose.onNodeWithText("Mobile +1 555-123-4567").assertIsDisplayed()
+    }
+
+    @Test
+    fun screenshotDark() = screenshot("call_details_dark")
+
+    @Test
+    @Config(qualifiers = "+notnight")
+    fun screenshotLight() = screenshot("call_details_light")
+
+    private fun screenshot(name: String) {
         show(map(recordings = mapOf(1L to listOf(recording(10))), transcripts = setOf("m3")))
-        compose.onRoot().captureRoboImage("src/test/screenshots/calldetails/call_details_dark.png")
+        compose.onRoot().captureRoboImage("src/test/screenshots/calldetails/$name.png")
     }
 
     private fun recording(mediaId: Long) = CallRecording("+15551234567", 0, "rec$mediaId.m4a", mediaId, mediaId)
 
     private fun show(ui: CallDetailsUi, actions: CallDetailsActions = RecordingActions(), callWith: Intent? = null) {
         compose.setContent {
-            PvotAppTheme { CallDetailsScreen(ui, assistedDialingCountryCode = null, callWithIntent = callWith, actions = actions, photo = { Box(it) }) }
+            SolidGlassTheme {
+                CallDetailsScreen(ui, assistedDialingCountryCode = null, callWithIntent = callWith, actions = actions,
+                    avatar = { PvotAvatar(name = "Alex Doe", size = it) })
+            }
         }
     }
 
@@ -173,6 +207,7 @@ class CallDetailsTest {
         val calls = mutableListOf<String>()
         override fun back() { calls += "back" }
         override fun callBack(video: Boolean) { calls += "callBack video=$video" }
+        override fun message() { calls += "message" }
         override fun copyNumber() { calls += "copy" }
         override fun editNumber() { calls += "edit" }
         override fun delete() { calls += "delete" }

@@ -21,6 +21,9 @@
   <!-- Option displayed in context menu to copy long pressed phone number. [CHAR LIMIT=48] -->
   <string name="call_details_copy_number">Copy number</string>
 
+  <!-- Label for the button that writes a text message to the number. [CHAR LIMIT=24] -->
+  <string name="call_details_message">Message</string>
+
   <!-- Label for action to edit a number before calling it. [CHAR LIMIT=48] -->
   <string name="call_details_edit_number">Edit number before call</string>
 

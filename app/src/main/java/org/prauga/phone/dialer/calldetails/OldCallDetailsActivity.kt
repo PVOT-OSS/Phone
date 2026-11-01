@@ -13,22 +13,21 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.CallLog.Calls
-import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.provider.MediaStore
 import android.text.format.DateFormat
 import android.webkit.MimeTypeMap
-import android.widget.QuickContactBadge
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.lifecycleScope
 import com.google.i18n.phonenumbers.NumberParseException
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.prauga.pvot.designsystem.platform.enablePvotEdgeToEdge
 import com.prauga.pvot.designsystem.platform.setPvotContent
-import com.prauga.pvot.designsystem.theme.PvotAppTheme
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -46,7 +45,6 @@ import org.prauga.phone.dialer.callrecord.CallRecordingDataStore
 import org.prauga.phone.dialer.callrecord.impl.CallRecorderService
 import org.prauga.phone.dialer.clipboard.ClipboardUtils
 import org.prauga.phone.dialer.common.LogUtil
-import org.prauga.phone.dialer.contactphoto.ContactPhotoManager
 import org.prauga.phone.dialer.dialercontact.DialerContact
 import org.prauga.phone.dialer.glidephotomanager.PhotoInfo
 import org.prauga.phone.dialer.lettertile.LetterTileDrawable
@@ -56,8 +54,12 @@ import org.prauga.phone.dialer.precall.PreCall
 import org.prauga.phone.dialer.protos.ProtoParsers
 import org.prauga.phone.dialer.rtt.RttTranscriptActivity
 import org.prauga.phone.dialer.rtt.RttTranscriptUtil
+import org.prauga.phone.dialer.ui.PhoneScreenTheme
+import org.prauga.phone.dialer.ui.QuickContactAvatar
+import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.util.CallUtil
 import org.prauga.phone.dialer.util.DialerUtils
+import org.prauga.phone.dialer.util.IntentUtil
 
 /** The calls with one number, opened from the call history, with call back, copy, edit and delete. */
 class OldCallDetailsActivity : ComponentActivity() {
@@ -73,28 +75,22 @@ class OldCallDetailsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         handleIntent(intent)
         setPvotContent {
-            PvotAppTheme {
-                val ui = ui ?: return@PvotAppTheme
+            PhoneScreenTheme {
+                val ui = ui ?: return@PhoneScreenTheme
                 CallDetailsScreen(
                     ui = ui,
                     assistedDialingCountryCode = assistedDialingCountryCode,
                     callWithIntent = AccountSelectionActivity.createIntent(
                         this, contact.number, CallInitiationType.Type.CALL_DETAILS),
                     actions = actions,
-                    photo = { modifier ->
-                        androidx.compose.ui.viewinterop.AndroidView(
-                            modifier = modifier,
-                            factory = { QuickContactBadge(it).apply { setOverlay(null); setPrioritizedMimeType(Phone.CONTENT_ITEM_TYPE) } },
-                            update = { badge ->
-                                ContactPhotoManager.getInstance(this).loadDialerThumbnailOrPhoto(
-                                    badge,
-                                    contact.contactUri.ifEmpty { null }?.let(Uri::parse),
-                                    contact.photoId,
-                                    contact.photoUri.ifEmpty { null }?.let(Uri::parse),
-                                    contact.nameOrNumber,
-                                    contact.contactType,
-                                )
-                            },
+                    avatar = { size ->
+                        QuickContactAvatar(
+                            name = contact.nameOrNumber,
+                            contactUri = contact.contactUri.ifEmpty { null }?.let(Uri::parse),
+                            photoId = contact.photoId,
+                            photoUri = contact.photoUri.ifEmpty { null }?.let(Uri::parse),
+                            size = size,
+                            modifier = Modifier.testTag(TestTags.CALL_DETAILS_AVATAR),
                         )
                     },
                 )
@@ -176,6 +172,9 @@ class OldCallDetailsActivity : ComponentActivity() {
             }
             PreCall.start(this@OldCallDetailsActivity, builder)
         }
+
+        override fun message() = DialerUtils.startActivityWithErrorToast(
+            this@OldCallDetailsActivity, IntentUtil.getSendSmsIntent(contact.number))
 
         override fun copyNumber() = ClipboardUtils.copyText(this@OldCallDetailsActivity, null, contact.number, true)
 

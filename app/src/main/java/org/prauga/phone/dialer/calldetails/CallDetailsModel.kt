@@ -12,6 +12,7 @@ import org.prauga.phone.dialer.callrecord.CallRecording
 import org.prauga.phone.dialer.calllogutils.CallTypeHelper
 import org.prauga.phone.dialer.compat.telephony.TelephonyManagerCompat
 import org.prauga.phone.dialer.dialercontact.DialerContact
+import org.prauga.phone.dialer.lettertile.LetterTileDrawable
 
 /** Who the call details are for, and how to call them back. */
 internal data class CallDetailsHeader(
@@ -53,6 +54,8 @@ internal data class CallDetailsUi(
     val entries: List<CallDetailsEntryUi>,
     /** Copy and "edit before call" need a number. */
     val hasNumber: Boolean,
+    /** Whether a text message can go to the number: one that can be called back, not an emergency or voicemail number. */
+    val canMessage: Boolean = false,
 )
 
 /** Builds [CallDetailsUi] from the call log data the call history passes in. */
@@ -104,6 +107,8 @@ internal object CallDetailsMapper {
                 )
             },
             hasNumber = contact.number.isNotEmpty(),
+            canMessage = contact.number.isNotEmpty() && callbackAction != CallbackAction.NONE && !isEmergencyNumber &&
+                contact.contactType != LetterTileDrawable.TYPE_VOICEMAIL,
         )
     }
 

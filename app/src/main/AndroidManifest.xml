@@ -216,7 +216,7 @@
             android:name="org.prauga.phone.dialer.calldetails.OldCallDetailsActivity"
             android:exported="false"
             android:label="@string/call_details"
-            android:theme="@style/Dialer.ThemeBase.NoActionBar" />
+            android:theme="@style/Theme.Pvot.Legacy" />
 
         <activity
             android:name="org.prauga.phone.dialer.helplines.HelplineActivity"

@@ -11,29 +11,25 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -43,19 +39,25 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.prauga.pvot.designsystem.components.PvotBottomSheet
 import com.prauga.pvot.designsystem.components.PvotCard
+import com.prauga.pvot.designsystem.components.PvotGlassCard
 import com.prauga.pvot.designsystem.components.PvotScreen
 import com.prauga.pvot.designsystem.components.PvotScreenDefaults
 import com.prauga.pvot.designsystem.components.PvotSheetItem
 import com.prauga.pvot.designsystem.components.button.PvotButton
 import com.prauga.pvot.designsystem.components.button.PvotButtonDefaults
 import com.prauga.pvot.designsystem.components.button.PvotButtonStyle
+import com.prauga.pvot.designsystem.components.list.PvotAvatarDefaults
 import com.prauga.pvot.designsystem.components.list.PvotListRow
 import com.prauga.pvot.designsystem.components.list.PvotListRowDefaults
-import androidx.compose.foundation.layout.calculateStartPadding
+import com.prauga.pvot.designsystem.effects.PvotGlassDefaults
+import com.prauga.pvot.designsystem.effects.PvotGlassMaterial
 import com.prauga.pvot.designsystem.navigation.PvotTopBar
+import com.prauga.pvot.designsystem.navigation.rememberPvotTopBarCompact
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.callrecord.CallRecording
@@ -63,12 +65,15 @@ import org.prauga.phone.dialer.calllogutils.CallLogDates
 import org.prauga.phone.dialer.calllogutils.CallLogDurations
 import org.prauga.phone.dialer.calllogutils.CallTypeHelper
 import org.prauga.phone.dialer.calllogutils.CallbackActionHelper.CallbackAction
+import org.prauga.phone.dialer.ui.PhoneBackground
+import org.prauga.phone.dialer.ui.PhoneScaffold
 import org.prauga.phone.dialer.ui.TestTags
 
 /** What the call details screen can ask its activity to do. */
 internal interface CallDetailsActions {
     fun back()
     fun callBack(video: Boolean)
+    fun message()
     fun copyNumber()
     fun editNumber()
     fun delete()
@@ -77,7 +82,12 @@ internal interface CallDetailsActions {
     fun recordingTime(recording: CallRecording): String
 }
 
-/** The call details: who, call back, each call, then copy, edit and delete. */
+/**
+ * The call details: who and how to reach them on a card of glass, each call, then copy, edit and
+ * delete. The top bar turns to glass once the list scrolls under it.
+ *
+ * @param avatar The contact's picture at the size given; it opens Quick Contact when tapped
+ */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal fun CallDetailsScreen(
@@ -85,24 +95,32 @@ internal fun CallDetailsScreen(
     assistedDialingCountryCode: Int?,
     callWithIntent: Intent?,
     actions: CallDetailsActions,
-    photo: @Composable (Modifier) -> Unit,
+    avatar: @Composable (Dp) -> Unit,
 ) {
     var recordingsToPick by remember { mutableStateOf<List<CallRecording>?>(null) }
-    Scaffold(
+    val listState = rememberLazyListState()
+    PhoneScaffold(
+        background = PhoneBackground.Live,
         modifier = Modifier.semantics { testTagsAsResourceId = true },
-        containerColor = MaterialTheme.colorScheme.background,
-        topBar = { PvotTopBar(title = stringResource(R.string.call_details), onBack = actions::back) },
+        topBar = {
+            PvotTopBar(
+                title = stringResource(R.string.call_details),
+                onBack = actions::back,
+                compact = rememberPvotTopBarCompact(listState),
+            )
+        },
     ) { padding ->
         PvotScreen(
-            modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()).testTag(TestTags.CALL_DETAILS),
+            modifier = Modifier.fillMaxSize().testTag(TestTags.CALL_DETAILS),
+            state = listState,
             contentPadding = PaddingValues(
                 start = PvotScreenDefaults.HorizontalPadding,
                 end = PvotScreenDefaults.HorizontalPadding,
-                top = PvotSpacing.S,
+                top = padding.calculateTopPadding() + PvotSpacing.S,
                 bottom = PvotScreenDefaults.BottomSpacing + WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding(),
             ),
         ) {
-            item(key = "header") { Header(ui.header, assistedDialingCountryCode, callWithIntent, actions, photo) }
+            item(key = "header") { Hero(ui, assistedDialingCountryCode, callWithIntent, actions, avatar) }
             item(key = "history") {
                 PvotCard(Modifier.fillMaxWidth()) {
                     Column(Modifier.padding(vertical = PvotSpacing.XS)) {
@@ -141,56 +159,82 @@ internal fun CallDetailsScreen(
     }
 }
 
+/** Who the calls were with, large on a card of glass, and the ways to reach them. */
 @Composable
-private fun Header(
-    header: CallDetailsHeader,
+private fun Hero(
+    ui: CallDetailsUi,
     assistedDialingCountryCode: Int?,
     callWithIntent: Intent?,
     actions: CallDetailsActions,
-    photo: @Composable (Modifier) -> Unit,
+    avatar: @Composable (Dp) -> Unit,
 ) {
     val context = LocalContext.current
-    PvotCard(Modifier.fillMaxWidth()) {
-        Row(Modifier.padding(PvotSpacing.L), horizontalArrangement = Arrangement.spacedBy(PvotSpacing.L)) {
-            photo(Modifier.size(56.dp).clip(CircleShape))
-            Column(Modifier.weight(1f)) {
-                Text(header.title, style = MaterialTheme.typography.titleLarge)
-                header.subtitle?.let {
-                    Text(it, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-                header.network?.let {
-                    // The SIM's own highlight color, as the system shows it.
-                    Text(it, style = MaterialTheme.typography.bodySmall,
-                        color = header.networkColor?.let(::Color) ?: MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-                if (header.usedAssistedDialing) {
-                    Text(
-                        text = if (assistedDialingCountryCode != null && assistedDialingCountryCode > 0) {
-                            stringResource(R.string.assisted_dialing_country_code_entry, assistedDialingCountryCode.toString())
-                        } else {
-                            stringResource(R.string.assisted_dialing_country_code_entry_failure)
-                        },
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                }
+    val header = ui.header
+    PvotGlassCard(
+        modifier = Modifier.fillMaxWidth(),
+        style = PvotGlassDefaults.materialStyle(PvotGlassMaterial.Regular),
+        contentPadding = PaddingValues(PvotSpacing.L),
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(PvotSpacing.XS),
+        ) {
+            avatar(PvotAvatarDefaults.Hero)
+            Text(
+                text = header.title,
+                style = MaterialTheme.typography.headlineSmall,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(top = PvotSpacing.S),
+            )
+            header.subtitle?.let {
+                Text(it, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center)
             }
-        }
-        if (header.callbackAction != CallbackAction.NONE) {
-            Row(
-                modifier = Modifier.padding(start = PvotSpacing.L, end = PvotSpacing.L, bottom = PvotSpacing.L),
-                horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S),
-            ) {
-                val video = header.callbackAction == CallbackAction.IMS_VIDEO
-                PvotButton(
-                    text = stringResource(if (video) R.string.video_call else R.string.call),
-                    icon = painterResource(if (video) R.drawable.ic_video else R.drawable.ic_phone),
-                    onClick = { actions.callBack(video) },
-                    modifier = Modifier.testTag(TestTags.CALL_DETAILS_CALL_BACK),
+            header.network?.let {
+                // The SIM's own highlight color, as the system shows it.
+                Text(it, style = MaterialTheme.typography.bodySmall,
+                    color = header.networkColor?.let(::Color) ?: MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            if (header.usedAssistedDialing) {
+                Text(
+                    text = if (assistedDialingCountryCode != null && assistedDialingCountryCode > 0) {
+                        stringResource(R.string.assisted_dialing_country_code_entry, assistedDialingCountryCode.toString())
+                    } else {
+                        stringResource(R.string.assisted_dialing_country_code_entry_failure)
+                    },
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.primary,
+                    textAlign = TextAlign.Center,
                 )
-                if (!video && callWithIntent != null) {
-                    PvotButton(stringResource(R.string.pre_call_select_phone_account), style = PvotButtonStyle.Tonal,
-                        onClick = { context.startActivity(callWithIntent) })
+            }
+            if (header.callbackAction != CallbackAction.NONE) {
+                FlowRow(
+                    modifier = Modifier.padding(top = PvotSpacing.M),
+                    horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S, Alignment.CenterHorizontally),
+                    verticalArrangement = Arrangement.spacedBy(PvotSpacing.S),
+                ) {
+                    val video = header.callbackAction == CallbackAction.IMS_VIDEO
+                    PvotButton(
+                        text = stringResource(if (video) R.string.video_call else R.string.call),
+                        icon = painterResource(if (video) R.drawable.ic_video else R.drawable.ic_phone),
+                        onClick = { actions.callBack(video) },
+                        modifier = Modifier.testTag(TestTags.CALL_DETAILS_CALL_BACK),
+                    )
+                    if (ui.canMessage) {
+                        PvotButton(
+                            text = stringResource(R.string.call_details_message),
+                            icon = painterResource(R.drawable.ic_message),
+                            style = PvotButtonStyle.Tonal,
+                            onClick = actions::message,
+                            modifier = Modifier.testTag(TestTags.CALL_DETAILS_MESSAGE),
+                        )
+                    }
+                    if (!video && callWithIntent != null) {
+                        PvotButton(stringResource(R.string.pre_call_select_phone_account), style = PvotButtonStyle.Tonal,
+                            onClick = { context.startActivity(callWithIntent) })
+                    }
                 }
             }
         }
