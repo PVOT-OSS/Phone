@@ -293,7 +293,6 @@
   <string name="display_options_view_names_as">Name format</string>
   <!-- Display options: the app's colour theme. [CHAR LIMIT=30] -->
   <string name="display_options_theme">Choose theme</string>
-  <string name="display_options_theme_key" translatable="false">display_options_theme_preference</string>
   <string name="display_options_theme_light">Light</string>
   <string name="display_options_theme_dark">Dark</string>
   <string name="display_options_theme_system">System default</string>
@@ -310,7 +309,6 @@
   <!-- Display options: keep the voice call screen from rotating. [CHAR LIMIT=40] -->
   <string name="display_options_force_portrait">Keep portrait mode on calls</string>
   <string name="display_options_force_portrait_summary">Prevents accidental auto-rotation when on a call</string>
-  <string name="display_options_force_portrait_key" translatable="false">force_portrait_mode_key</string>
 
   <!-- An allowable value for the "view names as" contact display option  -->
   <string name="display_options_view_given_name_first">First name first</string>

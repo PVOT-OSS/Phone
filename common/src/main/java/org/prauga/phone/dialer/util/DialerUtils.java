@@ -35,7 +35,7 @@ import android.widget.Toast;
 import androidx.annotation.AttrRes;
 import androidx.annotation.ColorInt;
 
-import org.prauga.phone.dialer.R;
+import org.prauga.phone.common.R;
 import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.telecom.TelecomUtil;
 

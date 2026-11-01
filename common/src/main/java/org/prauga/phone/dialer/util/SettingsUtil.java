@@ -29,7 +29,7 @@ import android.text.TextUtils;
 
 import androidx.preference.PreferenceManager;
 
-import org.prauga.phone.dialer.R;
+import org.prauga.phone.common.R;
 
 public class SettingsUtil {
 

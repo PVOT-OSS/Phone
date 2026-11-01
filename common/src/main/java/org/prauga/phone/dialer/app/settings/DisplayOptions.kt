@@ -9,7 +9,7 @@ import android.content.Context
 import android.os.UserManager
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
-import org.prauga.phone.dialer.R
+import org.prauga.phone.common.R
 
 /** The app's display options: its theme and whether the call screen stays in portrait. */
 object DisplayOptions {

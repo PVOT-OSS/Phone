@@ -45,7 +45,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import org.prauga.phone.dialer.R;
+import org.prauga.phone.common.R;
 import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.storage.StorageComponent;
 

@@ -23,7 +23,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import org.prauga.phone.dialer.R;
+import org.prauga.phone.common.R;
 
 /** Copies provided label and text to the clipboard and optionally shows a "text copied" toast. */
 public final class ClipboardUtils {
