@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+-->
+<!-- Android 11 and older: back up the app's settings only. -->
+<full-backup-content>
+  <include domain="sharedpref" path="." />
+</full-backup-content>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+-->
+<!-- Backs up the app's settings only. Call history, contacts and voicemail live in Android's own
+     storage; the app's databases are caches it rebuilds. -->
+<data-extraction-rules>
+  <cloud-backup>
+    <include domain="sharedpref" path="." />
+  </cloud-backup>
+  <device-transfer>
+    <include domain="sharedpref" path="." />
+  </device-transfer>
+</data-extraction-rules>

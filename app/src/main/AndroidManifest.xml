@@ -111,6 +111,9 @@
 
     <application
         android:name="org.prauga.phone.dialer.binary.aosp.AospDialerApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/backup_rules"
+        android:fullBackupContent="@xml/full_backup_content"
         android:appCategory="social"
         android:extractNativeLibs="false"
         android:hardwareAccelerated="true"
