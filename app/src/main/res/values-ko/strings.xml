@@ -27,7 +27,6 @@
   <string name="voicemail_fetching_timout">음성사서함을 로드할 수 없습니다.</string>
   <string name="call_log_item_count_and_date">%2$s에 통화 %1$d통</string>
   <string name="action_menu_call_history_description">통화 기록</string>
-  <string msgid="2295659037509008453" name="action_menu_overflow_description">옵션 더보기</string>
   <string name="dialer_settings_label">설정</string>
   <string name="description_start_voice_search">음성 검색 시작</string>
   <string name="voicemail">음성사서함</string>

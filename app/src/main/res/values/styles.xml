@@ -24,13 +24,4 @@
 
 
 
-
-  <!-- Style for the 'primary' button in a view. Unlike the DialerFlatButtonStyle, this button -->
-  <!-- is not colored white, to draw more attention to it. -->
-  <style name="DialerPrimaryFlatButtonStyle" parent="@android:style/Widget.Material.Button">
-    <item name="android:background">@drawable/selectable_primary_flat_button</item>
-    <item name="android:paddingEnd">@dimen/button_horizontal_padding</item>
-    <item name="android:paddingStart">@dimen/button_horizontal_padding</item>
-    <item name="android:textColor">@android:color/white</item>
-  </style>
 </resources>

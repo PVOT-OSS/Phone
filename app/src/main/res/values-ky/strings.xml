@@ -27,7 +27,6 @@
   <string name="voicemail_fetching_timout">Үн почтасы жүктөлгөн жок</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
   <string name="action_menu_call_history_description">Чалуулар таржымалы</string>
-  <string msgid="2295659037509008453" name="action_menu_overflow_description">Көбүрөөк мүмкүнчүлүктөр</string>
   <string name="dialer_settings_label">Жөндөөлөр</string>
   <string name="description_start_voice_search">Үн менен издеп баштоо</string>
   <string name="voicemail">Үн почтасы</string>

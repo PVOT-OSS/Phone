@@ -15,10 +15,6 @@
   -->
 
 <resources>
-  <!-- Text dimensions for dialpad keys -->
-  <dimen name="dialpad_digits_text_min_size">24sp</dimen>
-
-  <!-- Top/Bottom padding around the ILD rate display box. -->
 
   <!-- Length of dialpad's shadows in dialer. -->
 </resources>

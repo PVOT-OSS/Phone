@@ -27,7 +27,6 @@
   <string name="voicemail_fetching_timout">ಧ್ವನಿಮೇಲ್‌ ಲೋಡ್‌ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
   <string name="action_menu_call_history_description">ಕರೆ ಇತಿಹಾಸ</string>
-  <string msgid="2295659037509008453" name="action_menu_overflow_description">ಇನ್ನಷ್ಟು ಆಯ್ಕೆಗಳು</string>
   <string name="dialer_settings_label">ಸೆಟ್ಟಿಂಗ್‌ಗಳು</string>
   <string name="description_start_voice_search">ಧ್ವನಿ ಹುಡುಕಾಟ ಪ್ರಾರಂಭಿಸಿ</string>
   <string name="voicemail">ಧ್ವನಿಮೇಲ್</string>

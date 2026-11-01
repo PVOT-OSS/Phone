@@ -1,0 +1,4 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="emergency_number">Nambari ya dharura</string>
+  <string name="video_call_lte_to_wifi_handover_toast">Inaendelea kupiga simu ya video kupitia Wi‑Fi…</string>
+</resources>

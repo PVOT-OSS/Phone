@@ -27,7 +27,6 @@
   <string name="voicemail_fetching_timout">无法加载语音邮件</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
   <string name="action_menu_call_history_description">通话记录</string>
-  <string msgid="2295659037509008453" name="action_menu_overflow_description">更多选项</string>
   <string name="dialer_settings_label">设置</string>
   <string name="description_start_voice_search">开始语音搜索</string>
   <string name="voicemail">语音信箱</string>

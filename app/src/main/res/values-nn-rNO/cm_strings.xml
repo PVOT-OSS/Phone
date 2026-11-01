@@ -28,7 +28,6 @@
     <string name="deny">Avslå</string>
     <string name="call_recording_category_title">Samtaleopptak</string>
     <string name="call_recording_format">Lydformat</string>
-    <string name="call_via">Ring med</string>
     <string name="call_via_dialog_title">Ring med \u2026</string>
     <string name="call_log_stats_title">Statistikk</string>
     <string name="action_menu_helplines">Hjelpelinjer</string>

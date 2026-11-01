@@ -27,7 +27,6 @@
   <string name="voicemail_fetching_timout">صوتی میل لوڈ نہیں کیا جا سکا</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
   <string name="action_menu_call_history_description">کال کی سرگزشت</string>
-  <string msgid="2295659037509008453" name="action_menu_overflow_description">مزید اختیارات</string>
   <string name="dialer_settings_label">ترتیبات</string>
   <string name="description_start_voice_search">صوتی تلاش شروع کریں</string>
   <string name="voicemail">صوتی میل</string>

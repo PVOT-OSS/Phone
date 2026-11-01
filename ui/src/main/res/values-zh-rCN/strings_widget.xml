@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="custom_message_hint">自行撰写信息</string>
+  <string name="toolbar_close">关闭</string>
+</resources>

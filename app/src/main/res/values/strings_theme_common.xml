@@ -15,32 +15,9 @@
   -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- String used to display calls from unknown numbers in the call log -->
-  <string name="unknown">Unknown</string>
-
-  <!-- String to identify an unknown/restricted callers. ex. "Unknown 1", "Restricted 2", ect. -->
-  <string name="unknown_counter">
-    <xliff:g id="unknown">%1$s</xliff:g> <xliff:g id="id">%2$d</xliff:g>
-  </string>
-
-  <!-- String used to display calls from pay phone in the call log -->
-  <string name="payphone">Payphone</string>
-
-  <!-- String used to display calls from emergency numbers in the call log and incallui -->
-  <string name="emergency_number">Emergency number</string>
 
   <!-- Label shown on the 'positive' button for the dialog. Indicates that the call will proceed -->
   <string name="call">Call</string>
-
-  <!-- Displayed when handover from WiFi to Lte occurs during a video call -->
-  <string name="video_call_lte_to_wifi_handover_toast">Continuing call using Wi\u2011Fi\u2026</string>
-
-  <!-- Toast shown when an RTT call turns into a voice call, for example because the other side turned RTT down. -->
-  <string name="rtt_call_downgraded_toast">Your RTT call has changed to a voice-only call</string>
-  <!-- Toast shown when RTT could not be started for a call. -->
-  <string name="rtt_call_started_as_rtt_failed">RTT was unable to start</string>
-  <!-- RTT call menu item that turns the RTT call into a voice call. [CHAR LIMIT=30] -->
-  <string name="rtt_button_downgrade">Switch to voice</string>
 
   <!-- String used to build a phone number type and phone number string.
      Example: Mobile 650-555-1212  -->

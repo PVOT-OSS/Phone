@@ -21,7 +21,4 @@
 
   <!-- If true, an option is shown in Display Options UI to choose a name display order -->
   <bool name="config_display_order_user_changeable">false</bool>
-
-  <!-- If true, the order of name fields in the editor is primary (i.e. given name first) -->
-  <bool name="config_editor_field_order_primary">false</bool>
 </resources>

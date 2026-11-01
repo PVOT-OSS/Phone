@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+-->
+<!-- Ids the ui module's code uses that its layouts don't create. -->
+<resources>
+  <item name="deleteButton" type="id"/>
+  <item name="dialpad_key_horizontal_placeholder" type="id"/>
+  <item name="dialpad_key_icon_or_letters_layout" type="id"/>
+  <item name="dialpad_key_layout" type="id"/>
+  <item name="dialpad_key_letters" type="id"/>
+  <item name="dialpad_key_number" type="id"/>
+  <item name="dialpad_key_secondary_letters" type="id"/>
+  <item name="dialpad_overflow" type="id"/>
+  <item name="digits" type="id"/>
+  <item name="digits_hint" type="id"/>
+  <item name="eight" type="id"/>
+  <item name="five" type="id"/>
+  <item name="four" type="id"/>
+  <item name="ild_country" type="id"/>
+  <item name="ild_rate" type="id"/>
+  <item name="nine" type="id"/>
+  <item name="one" type="id"/>
+  <item name="pound" type="id"/>
+  <item name="rate_container" type="id"/>
+  <item name="seven" type="id"/>
+  <item name="six" type="id"/>
+  <item name="star" type="id"/>
+  <item name="three" type="id"/>
+  <item name="two" type="id"/>
+  <item name="zero" type="id"/>
+</resources>

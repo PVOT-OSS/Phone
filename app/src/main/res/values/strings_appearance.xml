@@ -21,6 +21,4 @@
     <!-- Note shown while the system\'s animations are off, which keeps the glass solid. -->
     <string name="appearance_glass_animations_off">Solid while animations are off in the system settings</string>
 
-    <string name="appearance_glass_key" translatable="false">appearance_glass</string>
-    <string name="appearance_glass_intensity_key" translatable="false">appearance_glass_intensity</string>
 </resources>

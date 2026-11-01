@@ -37,3 +37,11 @@ providers.gradleProperty("pvot.localPath").orNull?.let { includeBuild(it) }
 
 rootProject.name = "Phone"
 include(":app")
+include(":common")
+include(":telephony")
+include(":ui")
+include(":contacts")
+include(":data")
+include(":voicemail")
+include(":calls")
+include(":incallui")

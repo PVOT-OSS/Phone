@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="description_image_button_plus">กดปุ่มเครื่องหมายบวก</string>
+  <string name="description_voicemail_button">เรียกใช้ข้อความเสียง</string>
+  <string name="add_2sec_pause">เพิ่มช่วงคั่น 2 วินาที</string>
+  <string name="add_wait">เพิ่มการรอ</string>
+  <string name="description_delete_button">ลบถอยหลัง</string>
+  <string name="description_dialpad_overflow">ตัวเลือกเพิ่มเติม</string>
+</resources>

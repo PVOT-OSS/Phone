@@ -20,23 +20,11 @@
        Right now the drawable has implicit 32dip minimal height, which is confusing.
        This value is for making the hidden configuration explicit in xml. -->
 
-  <!-- contact browser list margins -->
-  <dimen name="contact_browser_list_item_photo_size">40dp</dimen>
-
   <!-- Height of the floating action button -->
   <!-- Z translation of the floating action button -->
   <!-- Bottom margin of the floating action button -->
-
-  <!-- Height of the selection indicator of a tab. -->
-  <dimen name="tab_selected_underline_height">2dp</dimen>
+  <dimen name="floating_action_button_margin_bottom">16dp</dimen>
   <!-- Size of text in tabs. -->
-
-  <!-- Padding used around the periphery of the call subject dialog, as well as in between the
-       items. -->
-  <!-- Padding used between lines of text in the call subject dialog. -->
-  <!-- Size of the contact photo in the call subject dialog. -->
-  <!-- Margin above the edit text in the call subject dialog. -->
-  <!-- Size of primary text in the call subject dialog. -->
-  <!-- Size of secondary text in the call subject dialog. -->
-  <!-- Row padding for call subject history items. -->
+  <dimen name="tab_text_size">14sp</dimen>
+  <dimen name="tab_elevation">0dp</dimen>
 </resources>

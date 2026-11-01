@@ -28,7 +28,6 @@
   <string name="voicemail_fetching_timout">Učitavanje govorne pošte nije uspelo</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
   <string name="action_menu_call_history_description">Istorija poziva</string>
-  <string msgid="2295659037509008453" name="action_menu_overflow_description">Još opcija</string>
   <string name="dialer_settings_label">Podešavanja</string>
   <string name="description_start_voice_search">Pokretanje glasovne pretrage</string>
   <string name="voicemail">Govorna pošta</string>

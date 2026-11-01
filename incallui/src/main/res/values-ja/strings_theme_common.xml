@@ -1,0 +1,4 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="emergency_number">緊急通報番号</string>
+  <string name="video_call_lte_to_wifi_handover_toast">Wi‑Fi を使用して通話を継続しています…</string>
+</resources>

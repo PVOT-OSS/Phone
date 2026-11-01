@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="custom_message_hint">Напиши приспособена порака</string>
-  <string name="toolbar_close">Затвори</string>
   <string name="all_contacts_empty">Сè уште немате контакти</string>
   <string name="all_contacts_empty_add_contact_action">Создајте нов контакт</string>
   <string name="permission_single_turn_on">Вклучи</string>

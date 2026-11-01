@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="custom_message_hint">Skrifa sérsniðin skilaboð</string>
-  <string name="toolbar_close">Loka</string>
   <string name="all_contacts_empty">Þú ert ekki með neina tengiliði enn sem komið er</string>
   <string name="all_contacts_empty_add_contact_action">Búa til nýjan tengilið</string>
   <string name="permission_single_turn_on">Kveikja</string>

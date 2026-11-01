@@ -27,7 +27,6 @@
   <string name="voicemail_fetching_timout">ვერ ხორციელდება ხმოვანი ფოსტის ჩატვირთვა</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s-ში</string>
   <string name="action_menu_call_history_description">ზარების ისტორია</string>
-  <string msgid="2295659037509008453" name="action_menu_overflow_description">სხვა პარამეტრები</string>
   <string name="dialer_settings_label">პარამეტრები</string>
   <string name="description_start_voice_search">ხმოვანი ძიების დაწყება</string>
   <string name="voicemail">ხმოვანი ფოსტა</string>

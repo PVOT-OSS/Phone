@@ -15,7 +15,6 @@
   ~ limitations under the License
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <dimen name="button_horizontal_padding">16dp</dimen>
 
   <!-- Select All/Multi Select -->
 
@@ -25,6 +24,5 @@
   <dimen name="contact_photo_size">48dp</dimen>
 
 
-
-  <dimen name="touch_target_min_size">48dp</dimen>
+  <dimen name="voicemail_playback_top_padding">12dp</dimen>
 </resources>

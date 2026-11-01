@@ -89,7 +89,6 @@ android {
     }
 
     buildFeatures {
-        aidl = true
         buildConfig = true
         compose = true
     }
@@ -97,6 +96,8 @@ android {
     packaging {
         resources {
             excludes += "META-INF/DEPENDENCIES"
+            // Libraries ship their .proto files for each other's imports; the app doesn't need them.
+            excludes += "org/prauga/**/*.proto"
         }
     }
 
@@ -180,6 +181,14 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui.tooling.preview)
     debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(project(":common"))
+    implementation(project(":telephony"))
+    implementation(project(":ui"))
+    implementation(project(":contacts"))
+    implementation(project(":data"))
+    implementation(project(":voicemail"))
+    implementation(project(":calls"))
+    implementation(project(":incallui"))
 
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.appcompat)
@@ -193,9 +202,6 @@ dependencies {
     implementation(libs.androidx.localbroadcastmanager)
     implementation(libs.androidx.preference)
     implementation(libs.androidx.recyclerview)
-    implementation(libs.apache.mime4j.core)
-    implementation(libs.apache.mime4j.dom)
-    implementation(libs.commons.io)
     implementation(libs.dagger)
     implementation(libs.error.prone.annotations)
     implementation(libs.glide)
@@ -211,7 +217,6 @@ dependencies {
     implementation(libs.protobuf.javalite)
     implementation(libs.pvot.core.ui)
     implementation(libs.pvot.design.system)
-    implementation(libs.volley)
     compileOnly(libs.auto.value.annotations)
 
     testImplementation(libs.junit)

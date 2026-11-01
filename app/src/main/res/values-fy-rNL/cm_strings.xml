@@ -28,7 +28,6 @@
     <string name="deny">Wegerje</string>
     <string name="call_recording_category_title">Petearopname</string>
     <string name="call_recording_format">Audioformaat</string>
-    <string name="call_via">Belje fia</string>
     <string name="call_via_dialog_title">Belje fia\u2026</string>
     <string name="call_log_stats_title">Statistiken</string>
 </resources>

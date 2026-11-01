@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="description_image_button_plus">belblok-plus</string>
+  <string name="description_voicemail_button">bel stemboodskapdiens</string>
+  <string name="add_2sec_pause">Voeg 2-sek.-pouse by</string>
+  <string name="add_wait">Voeg wagtyd by</string>
+  <string name="description_delete_button">backspace</string>
+  <string name="description_dialpad_overflow">Meer opsies</string>
+</resources>

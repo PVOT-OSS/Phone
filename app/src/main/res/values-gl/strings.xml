@@ -27,7 +27,6 @@
   <string name="voicemail_fetching_timout">Non se puido cargar o correo de voz</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
   <string name="action_menu_call_history_description">Historial de chamadas</string>
-  <string msgid="2295659037509008453" name="action_menu_overflow_description">Máis opcións</string>
   <string name="dialer_settings_label">Configuración</string>
   <string name="description_start_voice_search">Iniciar busca por voz</string>
   <string name="voicemail">Correo de voz</string>

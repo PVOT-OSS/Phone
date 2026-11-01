@@ -16,13 +16,6 @@
 
 <resources>
 
-
-
-
-
-
-
-
   <style name="DeviceIdBody">
     <item name="android:textColor">?android:attr/textColorPrimary</item>
     <item name="android:textSize">16sp</item>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+-->
+<!-- Ids the data module's code uses that its layouts don't create. -->
+<resources>
+  <item name="filter_account_spinner" type="id"/>
+  <item name="filter_status_spinner" type="id"/>
+</resources>

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="custom_message_hint">Write a custom message</string>
-  <string name="toolbar_close">Close</string>
   <string name="all_contacts_empty">You don\'t have any contacts yet</string>
   <string name="all_contacts_empty_add_contact_action">Create new contact</string>
   <string name="permission_single_turn_on">Turn on</string>

@@ -1,0 +1,4 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="emergency_number">Número d\'emergència</string>
+  <string name="video_call_lte_to_wifi_handover_toast">S\'està continuant la trucada mitjançant la Wi‑Fi…</string>
+</resources>

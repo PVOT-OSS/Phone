@@ -31,7 +31,6 @@
   <string name="voicemail_fetching_timout">تعذر تحميل البريد الصوتي</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
   <string name="action_menu_call_history_description">سجل المكالمات</string>
-  <string msgid="2295659037509008453" name="action_menu_overflow_description">مزيد من الخيارات</string>
   <string name="dialer_settings_label">الإعدادات</string>
   <string name="description_start_voice_search">بدء البحث الصوتي</string>
   <string name="voicemail">البريد الصوتي</string>

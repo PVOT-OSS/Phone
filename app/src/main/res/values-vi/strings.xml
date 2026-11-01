@@ -27,7 +27,6 @@
   <string name="voicemail_fetching_timout">Không thể tải thư thoại</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
   <string name="action_menu_call_history_description">Nhật ký cuộc gọi</string>
-  <string msgid="2295659037509008453" name="action_menu_overflow_description">Tùy chọn khác</string>
   <string name="dialer_settings_label">Cài đặt</string>
   <string name="description_start_voice_search">Bắt đầu tìm kiếm bằng giọng nói</string>
   <string name="voicemail">Thư thoại</string>

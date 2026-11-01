@@ -4,8 +4,6 @@
   SPDX-License-Identifier: Apache-2.0
   -->
 <resources>
-    <!-- Button that shows the notes sent with recent calls, to reuse one. -->
-    <string name="call_subject_recent">Recent notes</string>
     <!-- Spoken for the button that opens more actions for a speed dial contact. -->
     <string name="speed_dial_more_options">More options</string>
     <!-- Snackbar after a call history row is swiped away; Undo brings it back. -->

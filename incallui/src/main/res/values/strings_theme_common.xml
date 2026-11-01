@@ -1,0 +1,36 @@
+<!--
+  ~ Copyright (C) 2016 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License
+  -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+  <!-- String to identify an unknown/restricted callers. ex. "Unknown 1", "Restricted 2", ect. -->
+  <string name="unknown_counter">
+    <xliff:g id="unknown">%1$s</xliff:g> <xliff:g id="id">%2$d</xliff:g>
+  </string>
+
+  <!-- String used to display calls from emergency numbers in the call log and incallui -->
+  <string name="emergency_number">Emergency number</string>
+
+  <!-- Displayed when handover from WiFi to Lte occurs during a video call -->
+  <string name="video_call_lte_to_wifi_handover_toast">Continuing call using Wi\u2011Fi\u2026</string>
+
+  <!-- Toast shown when an RTT call turns into a voice call, for example because the other side turned RTT down. -->
+  <string name="rtt_call_downgraded_toast">Your RTT call has changed to a voice-only call</string>
+  <!-- Toast shown when RTT could not be started for a call. -->
+  <string name="rtt_call_started_as_rtt_failed">RTT was unable to start</string>
+  <!-- RTT call menu item that turns the RTT call into a voice call. [CHAR LIMIT=30] -->
+  <string name="rtt_button_downgrade">Switch to voice</string>
+</resources>

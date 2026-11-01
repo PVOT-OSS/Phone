@@ -27,7 +27,6 @@
   <string name="voicemail_fetching_timout">Sesli mesaj yüklenemedi</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
   <string name="action_menu_call_history_description">Çağrı geçmişi</string>
-  <string msgid="2295659037509008453" name="action_menu_overflow_description">Diğer seçenekler</string>
   <string name="dialer_settings_label">Ayarlar</string>
   <string name="description_start_voice_search">Sesli arama başlat</string>
   <string name="voicemail">Sesli Mesaj</string>

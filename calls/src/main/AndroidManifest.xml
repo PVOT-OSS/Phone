@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <!-- What this module's code needs; the app declares them too. -->
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+</manifest>

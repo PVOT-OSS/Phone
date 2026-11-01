@@ -27,7 +27,6 @@
   <string name="voicemail_fetching_timout">Couldn\'t load voicemail</string>
   <string name="call_log_item_count_and_date">(%1$d) %2$s</string>
   <string name="action_menu_call_history_description">Call history</string>
-  <string msgid="2295659037509008453" name="action_menu_overflow_description">More options</string>
   <string name="dialer_settings_label">Settings</string>
   <string name="description_start_voice_search">Start voice search</string>
   <string name="voicemail">Voicemail</string>
