@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Video</string>
   <string name="notification_action_accept">Accepteren</string>
   <string name="notification_action_dismiss">Weigeren</string>
-  <string name="notification_action_speaker_on">Luidspreker inschakelen</string>
-  <string name="notification_action_speaker_off">Luidspreker uitschakelen</string>
   <string name="notification_external_call">Actief gesprek op een ander apparaat</string>
   <string name="notification_external_video_call">Actief videogesprek op een ander apparaat</string>
   <string name="notification_take_call">Gesprek beantwoorden</string>

@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Video</string>
   <string name="notification_action_accept">Hyväksy</string>
   <string name="notification_action_dismiss">Hylkää</string>
-  <string name="notification_action_speaker_on">Ota kaiutin käyttöön</string>
-  <string name="notification_action_speaker_off">Poista kaiutin käytöstä</string>
   <string name="notification_external_call">Puhelu on kesken toisella laitteella.</string>
   <string name="notification_external_video_call">Videopuhelu on kesken toisella laitteella.</string>
   <string name="notification_take_call">Vastaa puheluun</string>

@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Βίντεο</string>
   <string name="notification_action_accept">Αποδοχή</string>
   <string name="notification_action_dismiss">Απόρριψη</string>
-  <string name="notification_action_speaker_on">Ενεργοποίηση ηχείου</string>
-  <string name="notification_action_speaker_off">Απενεργοποίηση ηχείου</string>
   <string name="notification_external_call">Κλήση σε εξέλιξη σε άλλη συσκευή</string>
   <string name="notification_external_video_call">Τρέχουσα βιντεοκλήση σε άλλη συσκευή</string>
   <string name="notification_take_call">Λήψη κλήσης</string>

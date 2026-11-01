@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Video</string>
   <string name="notification_action_accept">Roziman</string>
   <string name="notification_action_dismiss">Rad etish</string>
-  <string name="notification_action_speaker_on">Karnayni yoqish</string>
-  <string name="notification_action_speaker_off">Karnayni o‘chirib qo‘yish</string>
   <string name="notification_external_call">Boshqa qurilmada hozir qo‘ng‘iroq amalga oshirilmoqda.</string>
   <string name="notification_external_video_call">Boshqa qurilmada hozir video qo‘ng‘iroq amalga oshirilmoqda.</string>
   <string name="notification_take_call">Qo‘ng‘iroqni qabul qilish</string>

@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Відэа</string>
   <string name="notification_action_accept">Прыняць</string>
   <string name="notification_action_dismiss">Адхіліць</string>
-  <string name="notification_action_speaker_on">Уключыць дынамік</string>
-  <string name="notification_action_speaker_off">Выключыць дынамік</string>
   <string name="notification_external_call">Бягучы выклік на іншай прыладзе</string>
   <string name="notification_external_video_call">Бягучы відэавыклік на іншай прыладзе</string>
   <string name="notification_take_call">Прыняць выклік</string>

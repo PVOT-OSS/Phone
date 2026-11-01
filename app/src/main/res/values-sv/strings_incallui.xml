@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Video</string>
   <string name="notification_action_accept">Godkänn</string>
   <string name="notification_action_dismiss">Avvisa</string>
-  <string name="notification_action_speaker_on">Slå på högtalaren</string>
-  <string name="notification_action_speaker_off">Stäng av högtalaren</string>
   <string name="notification_external_call">Pågående samtal på en annan enhet</string>
   <string name="notification_external_video_call">Pågående videosamtal på en annan enhet</string>
   <string name="notification_take_call">Svara på samtal</string>

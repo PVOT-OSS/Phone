@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Videoklic</string>
   <string name="notification_action_accept">Sprejmi</string>
   <string name="notification_action_dismiss">Zavrni</string>
-  <string name="notification_action_speaker_on">Vklopi zvočnik</string>
-  <string name="notification_action_speaker_off">Izklopi zvočnik</string>
   <string name="notification_external_call">Aktivni klic v drugi napravi</string>
   <string name="notification_external_video_call">Aktivni videoklic v drugi napravi</string>
   <string name="notification_take_call">Sprejmi klic</string>

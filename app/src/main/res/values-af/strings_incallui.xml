@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Video</string>
   <string name="notification_action_accept">Aanvaar</string>
   <string name="notification_action_dismiss">Wys af</string>
-  <string name="notification_action_speaker_on">Skakel luidspreker aan</string>
-  <string name="notification_action_speaker_off">Skakel luidspreker af</string>
   <string name="notification_external_call">Voortgesette oproep op \'n ander toestel</string>
   <string name="notification_external_video_call">Voortgesette video-oproep on \'n ander toestel</string>
   <string name="notification_take_call">Neem oproep</string>

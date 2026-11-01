@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Vaizdo skam.</string>
   <string name="notification_action_accept">Atsiliepti</string>
   <string name="notification_action_dismiss">Atmesti</string>
-  <string name="notification_action_speaker_on">Įjungti garsiakalbį</string>
-  <string name="notification_action_speaker_off">Išjungti garsiakalbį</string>
   <string name="notification_external_call">Kitame įrenginyje vykstantis skambutis</string>
   <string name="notification_external_video_call">Kitame įrenginyje vykstantis vaizdo skambutis</string>
   <string name="notification_take_call">Atlikti skambutį</string>

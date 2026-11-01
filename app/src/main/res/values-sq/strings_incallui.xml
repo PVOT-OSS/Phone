@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Video</string>
   <string name="notification_action_accept">Prano</string>
   <string name="notification_action_dismiss">Refuzo</string>
-  <string name="notification_action_speaker_on">Aktivizo altoparlantin</string>
-  <string name="notification_action_speaker_off">Çaktivizo altoparlantin</string>
   <string name="notification_external_call">Telefonatë në vazhdim në një pajisje tjetër</string>
   <string name="notification_external_video_call">Telefonatë në vazhdim në një pajisje tjetër</string>
   <string name="notification_take_call">Prano telefonatën</string>

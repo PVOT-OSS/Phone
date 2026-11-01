@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">فيديو</string>
   <string name="notification_action_accept">قبول</string>
   <string name="notification_action_dismiss">رفض</string>
-  <string name="notification_action_speaker_on">تشغيل مكبِّر الصوت</string>
-  <string name="notification_action_speaker_off">إيقاف مكبِّر الصوت</string>
   <string name="notification_external_call">مكالمة جارية على جهاز آخر</string>
   <string name="notification_external_video_call">مكالمة فيديو جارية على جهاز آخر</string>
   <string name="notification_take_call">الرد على مكالمة</string>

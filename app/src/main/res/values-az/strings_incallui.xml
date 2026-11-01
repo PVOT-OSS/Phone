@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Videolar</string>
   <string name="notification_action_accept">Qəbul edin</string>
   <string name="notification_action_dismiss">İmtina edin</string>
-  <string name="notification_action_speaker_on">Spikeri aktiv edin</string>
-  <string name="notification_action_speaker_off">Spikeri deaktiv edin</string>
   <string name="notification_external_call">Digər cihazda davam etməkdə olan zəng</string>
   <string name="notification_external_video_call">Digər cihazda davam etməkdə olan video zəng</string>
   <string name="notification_take_call">Zəngə cavab verin</string>

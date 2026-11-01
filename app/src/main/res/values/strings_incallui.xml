@@ -90,8 +90,15 @@
        scenarios such as declining an incoming call or declining a video call request.
        [CHAR LIMIT=12] -->
   <string name="notification_action_dismiss">Decline</string>
-  <string name="notification_action_speaker_on">Turn speaker on</string>
-  <string name="notification_action_speaker_off">Turn speaker off</string>
+  <!-- Label for the notification action that switches the call between the speaker and the
+       earpiece. [CHAR LIMIT=12] -->
+  <string name="notification_action_speaker">Speaker</string>
+  <!-- Label for the notification action that mutes the microphone in a call. [CHAR LIMIT=12] -->
+  <string name="notification_action_mute">Mute</string>
+  <!-- Label for the notification action that unmutes the microphone in a call. [CHAR LIMIT=12] -->
+  <string name="notification_action_unmute">Unmute</string>
+  <!-- Label for the notification action that resumes a call on hold. [CHAR LIMIT=12] -->
+  <string name="notification_action_unhold">Unhold</string>
 
   <!-- The "label" of the in-call Notification for an ongoing external call.
        External calls are a representation of a call which is in progress on the user's other

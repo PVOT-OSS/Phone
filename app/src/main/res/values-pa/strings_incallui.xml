@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">ਵੀਡੀਓ</string>
   <string name="notification_action_accept">ਸਵੀਕਾਰ ਕਰੋ</string>
   <string name="notification_action_dismiss">ਅਸਵੀਕਾਰ ਕਰੋ</string>
-  <string name="notification_action_speaker_on">ਸਪੀਕਰ ਚਾਲੂ ਕਰੋ</string>
-  <string name="notification_action_speaker_off">ਸਪੀਕਰ ਬੰਦ ਕਰੋ</string>
   <string name="notification_external_call">ਕਿਸੇ ਹੋਰ ਡੀਵਾਈਸ \'ਤੇ ਜਾਰੀ ਕਾਲ</string>
   <string name="notification_external_video_call">ਕਿਸੇ ਹੋਰ ਡੀਵਾਈਸ \'ਤੇ ਜਾਰੀ ਵੀਡੀਓ ਕਾਲ</string>
   <string name="notification_take_call">ਕਾਲ ਲਓ</string>

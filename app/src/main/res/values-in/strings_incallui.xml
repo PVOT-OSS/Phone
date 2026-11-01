@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Video</string>
   <string name="notification_action_accept">Terima</string>
   <string name="notification_action_dismiss">Tolak</string>
-  <string name="notification_action_speaker_on">Turn on  speaker</string>
-  <string name="notification_action_speaker_off">Nonaktifkan speaker</string>
   <string name="notification_external_call">Panggilan yang berlangsung di perangkat lain</string>
   <string name="notification_external_video_call">Video call yang berlangsung di perangkat lain</string>
   <string name="notification_take_call">Panggil</string>

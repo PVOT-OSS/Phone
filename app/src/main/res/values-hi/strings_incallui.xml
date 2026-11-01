@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">वीडियो</string>
   <string name="notification_action_accept">स्वीकार करें</string>
   <string name="notification_action_dismiss">अस्वीकार करें</string>
-  <string name="notification_action_speaker_on">स्पीकर चालू करें</string>
-  <string name="notification_action_speaker_off">स्पीकर बंद करें</string>
   <string name="notification_external_call">दूसरे डिवाइस पर चल रहा कॉल</string>
   <string name="notification_external_video_call">दूसरे डिवाइस पर चल रहा वीडियो कॉल</string>
   <string name="notification_take_call">कॉल लें</string>

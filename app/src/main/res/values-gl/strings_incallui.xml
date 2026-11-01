@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Vídeo</string>
   <string name="notification_action_accept">Aceptar</string>
   <string name="notification_action_dismiss">Rexeitar</string>
-  <string name="notification_action_speaker_on">Activa o altofalante</string>
-  <string name="notification_action_speaker_off">Desactiva o altofalante</string>
   <string name="notification_external_call">Chamada en curso noutro dispositivo</string>
   <string name="notification_external_video_call">Videochamada en curso noutro dispositivo</string>
   <string name="notification_take_call">Responder á chamada</string>

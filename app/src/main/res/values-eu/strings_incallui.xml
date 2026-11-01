@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Bideoa</string>
   <string name="notification_action_accept">Onartu</string>
   <string name="notification_action_dismiss">Baztertu</string>
-  <string name="notification_action_speaker_on">Aktibatu bozgorailua</string>
-  <string name="notification_action_speaker_off">Desaktibatu bozgorailua</string>
   <string name="notification_external_call">Dei bat abian da beste gailu batean</string>
   <string name="notification_external_video_call">Bideo-dei bat abian da beste gailu batean</string>
   <string name="notification_take_call">Erantzun deiari</string>

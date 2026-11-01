@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">วิดีโอ</string>
   <string name="notification_action_accept">ยอมรับ</string>
   <string name="notification_action_dismiss">ปฏิเสธ</string>
-  <string name="notification_action_speaker_on">เปิดลำโพง</string>
-  <string name="notification_action_speaker_off">ปิดลำโพง</string>
   <string name="notification_external_call">กำลังใช้สายบนอุปกรณ์อื่น</string>
   <string name="notification_external_video_call">มีการโทร Hangouts วิดีโอบนอุปกรณ์อื่น</string>
   <string name="notification_take_call">รับสาย</string>

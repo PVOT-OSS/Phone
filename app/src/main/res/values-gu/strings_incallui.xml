@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">વિડિઓ</string>
   <string name="notification_action_accept">સ્વીકારો</string>
   <string name="notification_action_dismiss">નકારો</string>
-  <string name="notification_action_speaker_on">સ્પીકર ચાલુ કરો</string>
-  <string name="notification_action_speaker_off">સ્પીકર બંધ કરો</string>
   <string name="notification_external_call">અન્ય ઉપકરણ પર ચાલી રહેલ કૉલ</string>
   <string name="notification_external_video_call">અન્ય ઉપકરણ પર ચાલી રહેલ વિડિઓ કૉલ</string>
   <string name="notification_take_call">કૉલ લો</string>

@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">ವೀಡಿಯೊ</string>
   <string name="notification_action_accept">ಸಮ್ಮತಿಸು</string>
   <string name="notification_action_dismiss">ನಿರಾಕರಿಸಿ</string>
-  <string name="notification_action_speaker_on">ಸ್ಪೀಕರ್ ಆನ್ ಮಾಡಿ</string>
-  <string name="notification_action_speaker_off">ಸ್ಪೀಕರ್ ಆಫ್ ಮಾಡಿ</string>
   <string name="notification_external_call">ಮತ್ತೊಂದು ಸಾಧನದಲ್ಲಿ ಚಾಲ್ತಿಯಲ್ಲಿರುವ ಕರೆ</string>
   <string name="notification_external_video_call">ಮತ್ತೊಂದು ಸಾಧನದಲ್ಲಿ ಚಾಲ್ತಿಯಲ್ಲಿರುವ ವೀಡಿಯೊ ಕರೆ</string>
   <string name="notification_take_call">ಕರೆ ತೆಗೆದುಕೊಳ್ಳಿ</string>

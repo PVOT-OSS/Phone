@@ -27,8 +27,11 @@ import static org.prauga.phone.incallui.NotificationBroadcastReceiver.ACTION_ANS
 import static org.prauga.phone.incallui.NotificationBroadcastReceiver.ACTION_DECLINE_INCOMING_CALL;
 import static org.prauga.phone.incallui.NotificationBroadcastReceiver.ACTION_DECLINE_VIDEO_UPGRADE_REQUEST;
 import static org.prauga.phone.incallui.NotificationBroadcastReceiver.ACTION_HANG_UP_ONGOING_CALL;
+import static org.prauga.phone.incallui.NotificationBroadcastReceiver.ACTION_MUTE;
 import static org.prauga.phone.incallui.NotificationBroadcastReceiver.ACTION_TURN_OFF_SPEAKER;
 import static org.prauga.phone.incallui.NotificationBroadcastReceiver.ACTION_TURN_ON_SPEAKER;
+import static org.prauga.phone.incallui.NotificationBroadcastReceiver.ACTION_UNHOLD;
+import static org.prauga.phone.incallui.NotificationBroadcastReceiver.ACTION_UNMUTE;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -435,10 +438,15 @@ public class StatusBarNotifier
               person,
               createNotificationPendingIntent(context, ACTION_HANG_UP_ONGOING_CALL),
               call.isVideoCall()));
-      addSpeakerAction(builder, callAudioState);
     } else if (isOngoing) {
       addHangupAction(builder);
+    }
+    if (isOngoing) {
       addSpeakerAction(builder, callAudioState);
+      addMuteAction(builder, callAudioState);
+      if (state == DialerCallState.ONHOLD) {
+        addUnholdAction(builder);
+      }
     } else if (person != null
         && (state == DialerCallState.INCOMING || state == DialerCallState.CALL_WAITING)) {
       PendingIntent answer =
@@ -867,6 +875,30 @@ public class StatusBarNotifier
     }
   }
 
+  private void addMuteAction(Notification.Builder builder, CallAudioState callAudioState) {
+    boolean muted = callAudioState.isMuted();
+    builder.addAction(
+        new Notification.Action.Builder(
+                Icon.createWithResource(
+                    context,
+                    muted
+                        ? R.drawable.quantum_ic_mic_vd_theme_24
+                        : R.drawable.quantum_ic_mic_off_vd_theme_24),
+                context.getText(
+                    muted ? R.string.notification_action_unmute : R.string.notification_action_mute),
+                createNotificationPendingIntent(context, muted ? ACTION_UNMUTE : ACTION_MUTE))
+            .build());
+  }
+
+  private void addUnholdAction(Notification.Builder builder) {
+    builder.addAction(
+        new Notification.Action.Builder(
+                Icon.createWithResource(context, R.drawable.quantum_ic_play_arrow_vd_theme_24),
+                context.getText(R.string.notification_action_unhold),
+                createNotificationPendingIntent(context, ACTION_UNHOLD))
+            .build());
+  }
+
   private void addSpeakerOnAction(Notification.Builder builder) {
     LogUtil.d(
         "StatusBarNotifier.addSpeakerOnAction",
@@ -876,7 +908,7 @@ public class StatusBarNotifier
     builder.addAction(
         new Notification.Action.Builder(
                 Icon.createWithResource(context, R.drawable.quantum_ic_volume_up_vd_theme_24),
-                context.getText(R.string.notification_action_speaker_on),
+                context.getText(R.string.notification_action_speaker),
                 speakerOnPendingIntent)
             .build());
   }
@@ -890,7 +922,7 @@ public class StatusBarNotifier
     builder.addAction(
         new Notification.Action.Builder(
                 Icon.createWithResource(context, R.drawable.quantum_ic_phone_in_talk_vd_theme_24),
-                context.getText(R.string.notification_action_speaker_off),
+                context.getText(R.string.notification_action_speaker),
                 speakerOffPendingIntent)
             .build());
   }

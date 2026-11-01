@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">ビデオ</string>
   <string name="notification_action_accept">同意する</string>
   <string name="notification_action_dismiss">拒否</string>
-  <string name="notification_action_speaker_on">スピーカーを ON にする</string>
-  <string name="notification_action_speaker_off">スピーカーを OFF にする</string>
   <string name="notification_external_call">別の端末で通話中</string>
   <string name="notification_external_video_call">別の端末でビデオハングアウト中</string>
   <string name="notification_take_call">通話を引き継ぐ</string>

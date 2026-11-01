@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Տեսազանգ</string>
   <string name="notification_action_accept">Ընդունել</string>
   <string name="notification_action_dismiss">Մերժել</string>
-  <string name="notification_action_speaker_on">Միացնել բարձրախոսը</string>
-  <string name="notification_action_speaker_off">Անջատել բարձրախոսը</string>
   <string name="notification_external_call">Ընթացիկ զանգ այլ սարքում</string>
   <string name="notification_external_video_call">Ընթացիկ տեսազանգ այլ սարքում</string>
   <string name="notification_take_call">Ընդունել զանգը</string>

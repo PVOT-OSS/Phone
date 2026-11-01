@@ -64,6 +64,10 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
   public static final String ACTION_TURN_OFF_SPEAKER =
       "org.prauga.phone.incallui.ACTION_TURN_OFF_SPEAKER";
 
+  public static final String ACTION_MUTE = "org.prauga.phone.incallui.ACTION_MUTE";
+  public static final String ACTION_UNMUTE = "org.prauga.phone.incallui.ACTION_UNMUTE";
+  public static final String ACTION_UNHOLD = "org.prauga.phone.incallui.ACTION_UNHOLD";
+
   public static final String ACTION_PULL_EXTERNAL_CALL =
       "org.prauga.phone.incallui.ACTION_PULL_EXTERNAL_CALL";
 
@@ -97,6 +101,15 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
       TelecomAdapter.getInstance().setAudioRoute(CallAudioState.ROUTE_SPEAKER);
     } else if (action.equals(ACTION_TURN_OFF_SPEAKER)) {
       TelecomAdapter.getInstance().setAudioRoute(CallAudioState.ROUTE_WIRED_OR_EARPIECE);
+    } else if (action.equals(ACTION_MUTE)) {
+      TelecomAdapter.getInstance().mute(true);
+    } else if (action.equals(ACTION_UNMUTE)) {
+      TelecomAdapter.getInstance().mute(false);
+    } else if (action.equals(ACTION_UNHOLD)) {
+      DialerCall heldCall = CallList.getInstance().getBackgroundCall();
+      if (heldCall != null) {
+        heldCall.unhold();
+      }
     }
   }
 

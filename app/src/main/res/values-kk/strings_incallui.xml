@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Бейне</string>
   <string name="notification_action_accept">Қабылдау</string>
   <string name="notification_action_dismiss">Қабылдамау</string>
-  <string name="notification_action_speaker_on">Динамикті қосу</string>
-  <string name="notification_action_speaker_off">Динамикті өшіру</string>
   <string name="notification_external_call">Қоңырау басқа құрылғыдан шалынуда</string>
   <string name="notification_external_video_call">Басқа құрылғыда бейне қоңырау шалынуда</string>
   <string name="notification_take_call">Қоңырауды бері бұру</string>

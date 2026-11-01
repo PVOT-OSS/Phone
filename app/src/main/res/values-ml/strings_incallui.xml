@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">വീഡിയോ</string>
   <string name="notification_action_accept">അംഗീകരിക്കുക</string>
   <string name="notification_action_dismiss">നിരസിക്കുക</string>
-  <string name="notification_action_speaker_on">സ്‌പീക്കർ ഓണാക്കുക</string>
-  <string name="notification_action_speaker_off">സ്‌പീക്കർ ഓഫാക്കുക</string>
   <string name="notification_external_call">മറ്റൊരു ഉപകരണത്തിൽ നടന്നുകൊണ്ടിരിക്കുന്ന കോൾ</string>
   <string name="notification_external_video_call">മറ്റൊരു ഉപകരണത്തിൽ നടന്നുകൊണ്ടിരിക്കുന്ന വീഡിയോ കോൾ</string>
   <string name="notification_take_call">കോൾ എടുക്കുക</string>

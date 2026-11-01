@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Ividiyo</string>
   <string name="notification_action_accept">Yamukela</string>
   <string name="notification_action_dismiss">Yenqaba</string>
-  <string name="notification_action_speaker_on">Vula isipikha</string>
-  <string name="notification_action_speaker_off">Vala isipikha</string>
   <string name="notification_external_call">Ikholi eqhubekayo kwenye idivayisi</string>
   <string name="notification_external_video_call">Ikholi yevidiyo eqhubekayo kwenye idivayisi</string>
   <string name="notification_take_call">Thatha ikholi</string>

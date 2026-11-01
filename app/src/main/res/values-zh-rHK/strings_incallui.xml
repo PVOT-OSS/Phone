@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">影片</string>
   <string name="notification_action_accept">接受</string>
   <string name="notification_action_dismiss">拒絕</string>
-  <string name="notification_action_speaker_on">開啟揚聲器</string>
-  <string name="notification_action_speaker_off">關閉揚聲器</string>
   <string name="notification_external_call">其他裝置上有正在進行的通話</string>
   <string name="notification_external_video_call">其他裝置上有正在進行的視像通話</string>
   <string name="notification_take_call">接受通話</string>

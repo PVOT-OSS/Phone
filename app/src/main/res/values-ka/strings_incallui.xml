@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">ვიდეო</string>
   <string name="notification_action_accept">მიღება</string>
   <string name="notification_action_dismiss">უარყოფა</string>
-  <string name="notification_action_speaker_on">სპიკერის ჩართვა</string>
-  <string name="notification_action_speaker_off">სპიკერის გამორთვა</string>
   <string name="notification_external_call">სხვა მოწყობილობაზე მიმდინარე ზარი</string>
   <string name="notification_external_video_call">მიმდინარე ვიდეო ზარი სხვა მოწყობილობაზე</string>
   <string name="notification_take_call">ზარის მიღება</string>

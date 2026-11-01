@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Video</string>
   <string name="notification_action_accept">Prijať</string>
   <string name="notification_action_dismiss">Odmietnuť</string>
-  <string name="notification_action_speaker_on">Zapnúť reproduktor</string>
-  <string name="notification_action_speaker_off">Vypnúť reproduktor</string>
   <string name="notification_external_call">Prebiehajúci hovor v inom zariadení</string>
   <string name="notification_external_video_call">Prebiehajúci videohovor v inom zariadení</string>
   <string name="notification_take_call">Prevziať hovor</string>

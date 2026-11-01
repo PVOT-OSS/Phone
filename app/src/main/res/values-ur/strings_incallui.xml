@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">ویڈیو</string>
   <string name="notification_action_accept">قبول کریں</string>
   <string name="notification_action_dismiss">مسترد کریں</string>
-  <string name="notification_action_speaker_on">اسپیکر آن کریں</string>
-  <string name="notification_action_speaker_off">اسپیکر آف کریں</string>
   <string name="notification_external_call">ایک اور آلے پر جاری کال</string>
   <string name="notification_external_video_call">ایک اور آلے پر جاری ویڈیو کال</string>
   <string name="notification_take_call">کال لیں</string>

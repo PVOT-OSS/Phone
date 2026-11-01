@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">వీడియో</string>
   <string name="notification_action_accept">ఆమోదిస్తున్నాను</string>
   <string name="notification_action_dismiss">తిరస్కరించు</string>
-  <string name="notification_action_speaker_on">స్పీకర్‌ను ఆన్ చేయండి</string>
-  <string name="notification_action_speaker_off">స్పీకర్‌ను ఆఫ్ చేయండి</string>
   <string name="notification_external_call">మరో పరికరంలో కాల్ జరుగుతోంది</string>
   <string name="notification_external_video_call">మరో పరికరంలో వీడియో కాల్ జరుగుతోంది</string>
   <string name="notification_take_call">కాల్‌ను తీయి</string>

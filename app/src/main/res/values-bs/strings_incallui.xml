@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Video poziv</string>
   <string name="notification_action_accept">Prihvati</string>
   <string name="notification_action_dismiss">Odbij</string>
-  <string name="notification_action_speaker_on">Uključi zvučnik</string>
-  <string name="notification_action_speaker_off">Isključi zvučnik</string>
   <string name="notification_external_call">Poziv u toku na drugom uređaju</string>
   <string name="notification_external_video_call">Video poziv je u toku na drugom uređaju</string>
   <string name="notification_take_call">Primi poziv</string>

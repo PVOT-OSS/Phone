@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">ວິດີໂອ</string>
   <string name="notification_action_accept">ຍອມຮັບ</string>
   <string name="notification_action_dismiss">ປະຕິເສດ</string>
-  <string name="notification_action_speaker_on">ເປີດ​ລຳໂພງ</string>
-  <string name="notification_action_speaker_off">ປິດ​ລຳໂພງ</string>
   <string name="notification_external_call">ສາຍທີ່ກຳລັງໂທອອກໃນອຸປະກອນອື່ນ</string>
   <string name="notification_external_video_call">ສາຍວິດີໂອທີ່ກຳລັງໂທອອກໃນເຄື່ອງອື່ນ</string>
   <string name="notification_take_call">ຮັບສາຍ</string>

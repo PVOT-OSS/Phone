@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">វីដេអូ</string>
   <string name="notification_action_accept">ព្រម​ទទួល</string>
   <string name="notification_action_dismiss">បដិសេធ</string>
-  <string name="notification_action_speaker_on">បើកឧបករណ៍បំពងសំំឡេង</string>
-  <string name="notification_action_speaker_off">បិទឧបករណ៍បំពងសំំឡេង</string>
   <string name="notification_external_call">ការ​ហៅ​កំពុង​ដំណើរការ​លើ​ឧបករណ៍​ផ្សេង</string>
   <string name="notification_external_video_call">ការ​ហៅ​ជាវីដេអូ​កំពុង​ដំណើរការ​នៅលើឧបករណ៍ផ្សេងទៀត</string>
   <string name="notification_take_call">ទទួលយកការហៅ</string>

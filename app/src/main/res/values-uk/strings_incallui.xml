@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Відео</string>
   <string name="notification_action_accept">Приймаю</string>
   <string name="notification_action_dismiss">Відхилити</string>
-  <string name="notification_action_speaker_on">Увімкнути динамік</string>
-  <string name="notification_action_speaker_off">Вимкнути динамік</string>
   <string name="notification_external_call">Поточний виклик на іншому пристрої</string>
   <string name="notification_external_video_call">Поточний відеодзвінок на іншому пристрої</string>
   <string name="notification_take_call">Прийняти дзвінок</string>

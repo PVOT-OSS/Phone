@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Video</string>
   <string name="notification_action_accept">Besvar</string>
   <string name="notification_action_dismiss">Afvis</string>
-  <string name="notification_action_speaker_on">Slå højttaler til</string>
-  <string name="notification_action_speaker_off">Slå højttaler fra</string>
   <string name="notification_external_call">Igangværende opkald på en anden enhed</string>
   <string name="notification_external_video_call">Igangværende opkald på en anden enhed</string>
   <string name="notification_take_call">Besvar opkald</string>

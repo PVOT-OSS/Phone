@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Видео</string>
   <string name="notification_action_accept">Принять</string>
   <string name="notification_action_dismiss">Отклонить</string>
-  <string name="notification_action_speaker_on">Включить динамик</string>
-  <string name="notification_action_speaker_off">Выключить динамик</string>
   <string name="notification_external_call">Вы участвуете в разговоре на другом устройстве</string>
   <string name="notification_external_video_call">Вы участвуете в видеовстрече на другом устройстве</string>
   <string name="notification_take_call">Продолжить на этом устройстве</string>

@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">סרטון</string>
   <string name="notification_action_accept">קבל</string>
   <string name="notification_action_dismiss">דחה</string>
-  <string name="notification_action_speaker_on">הפעלת הרמקול</string>
-  <string name="notification_action_speaker_off">השבתת הרמקול</string>
   <string name="notification_external_call">באחד מהמכשירים האחרים מתבצעת שיחה</string>
   <string name="notification_external_video_call">באחד מהמכשירים האחרים מתבצעת שיחת וידאו</string>
   <string name="notification_take_call">קבל את השיחה</string>

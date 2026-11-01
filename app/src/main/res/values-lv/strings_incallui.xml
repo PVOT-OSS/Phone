@@ -24,8 +24,6 @@
   <string name="notification_action_answer_video">Video</string>
   <string name="notification_action_accept">Pieņemt</string>
   <string name="notification_action_dismiss">Noraidīt</string>
-  <string name="notification_action_speaker_on">Ieslēgt skaļruni</string>
-  <string name="notification_action_speaker_off">Izslēgt skaļruni</string>
   <string name="notification_external_call">Notiekošs zvans citā ierīcē</string>
   <string name="notification_external_video_call">Notiekošs videozvans citā ierīcē</string>
   <string name="notification_take_call">Pārsūtīt zvanu</string>
