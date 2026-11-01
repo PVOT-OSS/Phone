@@ -62,6 +62,13 @@
   <string name="incall_merge_failed">Failed to merge call.</string>
   <!-- Message shown when the call on hold was ended by the other side while the user is on another call. -->
   <string name="incall_held_call_disconnected">Your call on hold has been disconnected</string>
+  <!-- Emergency call: the phone's location, shown so the user can read it to the operator. -->
+  <string name="emergency_location_loading">Finding your location\u2026</string>
+  <string name="emergency_location_title">You are here</string>
+  <string name="emergency_location_plus_code">Plus code: <xliff:g id="plus_code" example="7JCMXJQG+5W">%1$s</xliff:g></string>
+  <string name="emergency_location_coordinates" translatable="false">%1$f, %2$f</string>
+  <string name="emergency_location_error">Error, could not retrieve your location</string>
+  <string name="emergency_location_battery_too_low">Low battery. Can\'t show location.</string>
   <!-- In-call button that transfers the active call to the call on hold. [CHAR LIMIT=12] -->
   <string name="incall_label_transfer">Transfer</string>
   <!-- Title of the dialog confirming a call transfer. -->

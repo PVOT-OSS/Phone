@@ -71,6 +71,7 @@ import org.prauga.phone.incallui.incall.protocol.PrimaryCallState;
 import org.prauga.phone.incallui.incall.protocol.PrimaryCallState.ButtonState;
 import org.prauga.phone.incallui.incall.protocol.PrimaryInfo;
 import org.prauga.phone.incallui.incall.protocol.SecondaryInfo;
+import org.prauga.phone.incallui.location.EmergencyLocationFragment;
 import org.prauga.phone.incallui.videotech.utils.SessionModificationState;
 
 import java.lang.ref.WeakReference;
@@ -667,7 +668,9 @@ public class CallCardPresenter
     }
 
     if (isInCallScreenReady) {
-      inCallScreen.showLocationUi(null);
+      // During an emergency call, show where the phone is so the user can tell the operator.
+      inCallScreen.showLocationUi(
+          primary != null && primary.isEmergencyCall() ? new EmergencyLocationFragment() : null);
     } else {
       LogUtil.i("CallCardPresenter.updatePrimaryDisplayInfo", "UI not ready, not showing location");
     }

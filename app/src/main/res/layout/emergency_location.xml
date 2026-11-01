@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+-->
+<!-- Where the phone is, shown on the call screen during an emergency call. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="24dp"
+    android:background="@drawable/emergency_location_background"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+  <TextView
+      android:id="@+id/emergency_location_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/emergency_location_loading"
+      android:textAppearance="?android:attr/textAppearanceMedium"
+      android:textColor="?android:attr/textColorPrimary" />
+
+  <TextView
+      android:id="@+id/emergency_location_address"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="4dp"
+      android:textColor="?android:attr/textColorPrimary"
+      android:visibility="gone" />
+
+  <TextView
+      android:id="@+id/emergency_location_plus_code"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="4dp"
+      android:textColor="?android:attr/textColorSecondary"
+      android:textIsSelectable="true"
+      android:visibility="gone" />
+
+  <TextView
+      android:id="@+id/emergency_location_coordinates"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textColor="?android:attr/textColorSecondary"
+      android:textIsSelectable="true"
+      android:visibility="gone" />
+</LinearLayout>
