@@ -59,6 +59,19 @@ class CallNotificationTest {
     }
 
     @Test
+    fun callRingingRightAfterAnotherEndsGetsItsNotification() {
+        FakeCarrier.ring(context, FakeCallSpec(CallTests.freshNumber()))
+        CallTests.waitForRinging().hangUpFromFarEnd()
+        InCall.waitForNoCalls()
+
+        // Telecom still has the app bound from the first call when the second one rings.
+        FakeCarrier.ring(context, FakeCallSpec(CallTests.freshNumber()))
+        CallTests.waitForRinging()
+
+        callNotification(NotificationChannelId.INCOMING_CALL) { it.callType == CALL_TYPE_INCOMING }
+    }
+
+    @Test
     fun ringingVideoCallIsMarkedAsVideo() {
         FakeCarrier.ring(context, FakeCallSpec(CallTests.freshNumber(), videoState = VideoProfile.STATE_BIDIRECTIONAL))
         CallTests.waitForRinging()
