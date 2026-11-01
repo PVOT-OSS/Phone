@@ -15,6 +15,7 @@ protobufPlugin = "0.10.0"
 androidx-annotation = "androidx.annotation:annotation:1.11.0"
 androidx-appcompat = "androidx.appcompat:appcompat:1.8.0"
 androidx-cardview = "androidx.cardview:cardview:1.0.0"
+androidx-car-app = "androidx.car.app:app:1.7.0"
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }

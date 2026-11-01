@@ -96,6 +96,7 @@ dependencies {
     implementation(libs.libphonenumber)
     implementation(libs.libphonenumber.geocoder)
     implementation(libs.material)
+    implementation(libs.androidx.car.app)
     implementation(libs.protobuf.javalite)
     implementation(libs.pvot.design.system)
     implementation(libs.volley)

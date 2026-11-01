@@ -61,6 +61,10 @@
   <string name="call_log_label_rtt">RTT</string>
   <!-- Search section header for numbers from the call history that aren't contacts. [CHAR LIMIT=40] -->
   <string name="call_log_search_result_header">Not in your contacts</string>
+  <!-- Android Auto: shown when a list of people to call is empty. -->
+  <string name="car_no_entries">Nothing here yet</string>
+  <!-- Android Auto: shown when a call can't be placed. -->
+  <string name="car_cannot_call">Can\'t place the call. Open Phone on your phone.</string>
 
   <!-- Title of the "Clearing call log" progress-dialog [CHAR LIMIT=35] -->
   <string name="clearCallLogProgress_title">Clearing call history\u2026</string>
