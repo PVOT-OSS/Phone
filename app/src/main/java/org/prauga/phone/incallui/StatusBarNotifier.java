@@ -101,6 +101,7 @@ import java.util.Objects;
 /** This class adds Notifications to the status bar for the in-call experience. */
 public class StatusBarNotifier
     implements InCallPresenter.InCallStateListener,
+        InCallPresenter.IncomingCallListener,
         ContactInfoCacheCallback {
 
   private static final int NOTIFICATION_ID = 1;
@@ -180,6 +181,16 @@ public class StatusBarNotifier
   @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
   public void onStateChange(InCallState oldState, InCallState newState, CallList callList) {
     LogUtil.d("StatusBarNotifier.onStateChange", "%s->%s", oldState, newState);
+    updateNotification();
+  }
+
+  /**
+   * A new call is ringing. The presenter doesn't always report a state change for it, for example
+   * when it rings while the app is still bound from a call that just ended.
+   */
+  @Override
+  @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
+  public void onIncomingCall(InCallState oldState, InCallState newState, DialerCall call) {
     updateNotification();
   }
 

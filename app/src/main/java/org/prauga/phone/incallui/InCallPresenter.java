@@ -307,6 +307,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
     this.statusBarNotifier = statusBarNotifier;
     this.externalCallNotifier = externalCallNotifier;
     addListener(this.statusBarNotifier);
+    addIncomingCallListener(this.statusBarNotifier);
 
     vibrationHandler = new InCallVibrationHandler(context);
     addListener(vibrationHandler);
@@ -1411,6 +1412,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
 
       if (statusBarNotifier != null) {
         removeListener(statusBarNotifier);
+        removeIncomingCallListener(statusBarNotifier);
       }
 
       if (externalCallNotifier != null && externalCallList != null) {
