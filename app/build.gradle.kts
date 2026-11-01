@@ -70,6 +70,7 @@ protobuf {
 }
 
 dependencies {
+    implementation(project(":common"))
     implementation(project(":annotations"))
     annotationProcessor(project(":processor"))
 

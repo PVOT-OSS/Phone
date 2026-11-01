@@ -32,5 +32,6 @@ includeBuild("PvotLib")
 
 rootProject.name = "Phone"
 include(":app")
+include(":common")
 include(":annotations")
 include(":processor")
