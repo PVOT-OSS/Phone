@@ -51,4 +51,12 @@ public interface AnswerScreenDelegate {
   boolean isActionTimeout();
 
   InCallUiLock acquireInCallUiLock(String tag);
+
+  /** Whether the network lets this ringing call be forwarded to another number. */
+  default boolean canForwardCall() {
+    return false;
+  }
+
+  /** The user chose to forward the ringing call: asks where to. */
+  default void onForwardCall() {}
 }

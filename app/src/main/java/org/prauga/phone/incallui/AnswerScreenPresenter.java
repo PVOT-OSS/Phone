@@ -177,6 +177,20 @@ public class AnswerScreenPresenter
   }
 
   @Override
+  public boolean canForwardCall() {
+    return call.can(android.telecom.Call.Details.CAPABILITY_SUPPORT_DEFLECT);
+  }
+
+  @Override
+  public void onForwardCall() {
+    InCallActivity activity = (InCallActivity) answerScreen.getAnswerScreenFragment().getActivity();
+    if (activity != null) {
+      NumberPromptDialogFragment.show(
+          activity, NumberPromptDialogFragment.Action.FORWARD, call.getId());
+    }
+  }
+
+  @Override
   public void onCannedTextResponsesLoaded(DialerCall call) {
     if (isSmsResponseAllowed(call)) {
       answerScreen.setTextResponses(call.getCannedSmsResponses());

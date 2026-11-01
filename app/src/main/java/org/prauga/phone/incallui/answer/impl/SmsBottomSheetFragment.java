@@ -49,13 +49,20 @@ import java.util.List;
 public class SmsBottomSheetFragment extends BottomSheetDialogFragment {
 
   private static final String ARG_OPTIONS = "options";
+  private static final String ARG_CAN_FORWARD = "can_forward";
 
   private InCallUiLock inCallUiLock;
 
-  public static SmsBottomSheetFragment newInstance(@Nullable ArrayList<CharSequence> options) {
+  /**
+   * @param options text replies, or null when the call can't be answered with a text
+   * @param canForward whether to offer forwarding the call to another number
+   */
+  public static SmsBottomSheetFragment newInstance(
+      @Nullable ArrayList<CharSequence> options, boolean canForward) {
     SmsBottomSheetFragment fragment = new SmsBottomSheetFragment();
     Bundle args = new Bundle();
     args.putCharSequenceArrayList(ARG_OPTIONS, options);
+    args.putBoolean(ARG_CAN_FORWARD, canForward);
     fragment.setArguments(args);
     return fragment;
   }
@@ -71,8 +78,18 @@ public class SmsBottomSheetFragment extends BottomSheetDialogFragment {
       for (CharSequence item : items) {
         layout.addView(newTextViewItem(item));
       }
+      layout.addView(newTextViewItem(null));
     }
-    layout.addView(newTextViewItem(null));
+    if (getArguments().getBoolean(ARG_CAN_FORWARD)) {
+      TextView forward = newTextViewItem(getString(R.string.call_incoming_forward));
+      forward.setOnClickListener(
+          v -> {
+            FragmentUtils.getParentUnsafe(SmsBottomSheetFragment.this, SmsSheetHolder.class)
+                .forwardSelected();
+            dismiss();
+          });
+      layout.addView(forward);
+    }
     layout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
     return layout;
   }
@@ -144,5 +161,8 @@ public class SmsBottomSheetFragment extends BottomSheetDialogFragment {
     void smsSelected(@Nullable CharSequence text);
 
     void smsDismissed();
+
+    /** The user chose to forward the call to another number. */
+    void forwardSelected();
   }
 }

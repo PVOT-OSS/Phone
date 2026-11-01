@@ -1404,6 +1404,25 @@ public class DialerCall implements VideoTechListener {
     }
   }
 
+  /** Sends this ringing call to [number] instead of answering it. */
+  public void deflect(Uri number) {
+    LogUtil.i("DialerCall.deflect", "");
+    telecomCall.deflect(number);
+  }
+
+  /** Hands this call over to [number] without first calling them. */
+  @RequiresApi(Build.VERSION_CODES.CINNAMON_BUN)
+  public void transfer(Uri number) {
+    LogUtil.i("DialerCall.transfer", "");
+    telecomCall.transfer(number, false /* isConfirmationRequired */);
+  }
+
+  /** Adds [number] to this conference call, hosted by the network. */
+  public void addConferenceParticipant(Uri number) {
+    LogUtil.i("DialerCall.addConferenceParticipant", "");
+    telecomCall.addConferenceParticipants(java.util.Collections.singletonList(number));
+  }
+
   /** The latest message the carrier wants shown during the call, or null. */
   @Nullable
   public CharSequence getDiagnosticMessage() {

@@ -385,7 +385,7 @@ public class AnswerFragment extends Fragment
     } else if (textResponses == null) {
       LogUtil.i("AnswerFragment.setTextResponses", "no text responses, hiding secondary button");
       this.textResponses = null;
-      secondaryButton.setVisibility(View.INVISIBLE);
+      secondaryButton.setVisibility(canForwardCall() ? View.VISIBLE : View.INVISIBLE);
     } else if (getActivity().isInMultiWindowMode()) {
       LogUtil.i("AnswerFragment.setTextResponses", "in multiwindow, hiding secondary button");
       this.textResponses = null;
@@ -412,6 +412,9 @@ public class AnswerFragment extends Fragment
     if (isVideoUpgradeRequest()) {
       secondaryButton.setVisibility(View.INVISIBLE);
     } else if (isVideoCall()) {
+      secondaryButton.setVisibility(View.VISIBLE);
+    } else if (canForwardCall()) {
+      // The sheet behind it offers forwarding even when no text reply can be sent.
       secondaryButton.setVisibility(View.VISIBLE);
     }
 
@@ -968,7 +971,7 @@ public class AnswerFragment extends Fragment
       return;
     }
 
-    textResponsesFragment = SmsBottomSheetFragment.newInstance(textResponses);
+    textResponsesFragment = SmsBottomSheetFragment.newInstance(textResponses, canForwardCall());
     textResponsesFragment.show(getChildFragmentManager(), null);
     secondaryButton
         .animate()
@@ -984,6 +987,17 @@ public class AnswerFragment extends Fragment
   @Override
   public InCallUiLock acquireInCallUiLock(String tag) {
     return answerScreenDelegate.acquireInCallUiLock(tag);
+  }
+
+  private boolean canForwardCall() {
+    return answerScreenDelegate != null && answerScreenDelegate.canForwardCall();
+  }
+
+  @Override
+  public void forwardSelected() {
+    LogUtil.i("AnswerFragment.forwardSelected", null);
+    textResponsesFragment = null;
+    answerScreenDelegate.onForwardCall();
   }
 
   @Override
