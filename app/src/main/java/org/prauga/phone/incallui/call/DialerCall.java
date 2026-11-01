@@ -771,7 +771,7 @@ public class DialerCall implements VideoTechListener {
   }
 
   public void blockCall() {
-    telecomCall.reject(false, null);
+    telecomCall.reject(Call.REJECT_REASON_UNWANTED);
     setState(DialerCallState.BLOCKED);
   }
 
@@ -1385,7 +1385,12 @@ public class DialerCall implements VideoTechListener {
 
   public void reject(boolean rejectWithMessage, String message) {
     LogUtil.i("DialerCall.reject", "");
-    telecomCall.reject(rejectWithMessage, message);
+    if (rejectWithMessage) {
+      telecomCall.reject(true, message);
+    } else {
+      // Tell the network why, so it can treat an unwanted call differently from a declined one.
+      telecomCall.reject(isSpam() ? Call.REJECT_REASON_UNWANTED : Call.REJECT_REASON_DECLINED);
+    }
   }
 
   /** Return the string label to represent the call provider */
