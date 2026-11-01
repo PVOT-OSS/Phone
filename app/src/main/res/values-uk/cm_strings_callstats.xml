@@ -31,18 +31,4 @@
     <string name="call_stats_title_count">Кількість викликів</string>
     <string name="call_stats_title_average_duration">Середня тривалість виклику</string>
     <string name="recent_calls_no_items_in_range">Журнал викликів не містить записів за вказаний період.</string>
-    <string name="call_stats_header_total_callsonly">Загалом: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Початкова дата</string>
-    <string name="call_stats_filter_to">Кінцева дата</string>
-    <string name="call_stats_filter_picker_title">Діапазон вибору</string>
-    <string name="date_quick_selection">Швидкий вибір</string>
-    <string name="date_qs_currentmonth">Поточний місяць</string>
-    <string name="date_qs_currentquarter">Поточний квартал</string>
-    <string name="date_qs_currentyear">Поточний рік</string>
-    <string name="date_qs_lastweek">Минулий тиждень</string>
-    <string name="date_qs_lastmonth">Минулий місяць</string>
-    <string name="date_qs_lastquarter">Минулий квартал</string>
-    <string name="date_qs_lastyear">Минулий рік</string>
-    <string name="call_stats_sort_by_duration">Впорядкувати за тривалістю викликів</string>
-    <string name="call_stats_sort_by_count">Впорядкувати за кількістю викликів</string>
 </resources>

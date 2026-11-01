@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Aby umożliwić szybkie wybieranie, włącz uprawnienia Kontakty.</string>
   <string name="speed_dial_turn_on_contacts_permission">Włącz</string>
   <string name="speed_dial_remove_favorites">Usuń z ulubionych</string>
-    <string name="favorites_header">Ulubione</string>
-    <string name="contact_menu_remove">Usuń</string>
-    <string name="speed_dial_no_contacts_description">Nie dodano jeszcze nic do ulubionych</string>
-    <string name="speed_dial_no_contacts_action_text">Dodaj do ulubionych</string>
 </resources>

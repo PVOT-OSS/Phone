@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">விரைவு டயலை இயக்க, தொடர்புகள் அனுமதியை இயக்கவும்.</string>
   <string name="speed_dial_turn_on_contacts_permission">இயக்கு</string>
   <string name="speed_dial_remove_favorites">பிடித்தவையிலிருந்து அகற்றும்</string>
-    <string name="favorites_header">பிடித்தவை</string>
-    <string name="contact_menu_remove">அகற்று</string>
-    <string name="speed_dial_no_contacts_description">பிடித்தவர்கள் எவரையும் நீங்கள் இதுவரை சேர்க்கவில்லை</string>
-    <string name="speed_dial_no_contacts_action_text">பிடித்தவர்களில் சேர்</string>
 </resources>

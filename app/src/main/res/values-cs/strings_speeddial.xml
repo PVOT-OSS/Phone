@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Pokud chcete povolit rychlou volbu, zapněte oprávnění Kontakty.</string>
   <string name="speed_dial_turn_on_contacts_permission">Zapnout</string>
   <string name="speed_dial_remove_favorites">Odebrat z oblíbených</string>
-    <string name="favorites_header">Oblíbené</string>
-    <string name="contact_menu_remove">Odebrat</string>
-    <string name="speed_dial_no_contacts_description">Zatím jste nepřidali žádné oblíbené kontakty</string>
-    <string name="speed_dial_no_contacts_action_text">Přidat oblíbené</string>
 </resources>

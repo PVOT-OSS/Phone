@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Skakel die kontaktetoestemming aan om spoedbel te aktiveer.</string>
   <string name="speed_dial_turn_on_contacts_permission">Skakel aan</string>
   <string name="speed_dial_remove_favorites">Verwyder uit gunstelinge</string>
-    <string name="favorites_header">Gunstelinge</string>
-    <string name="contact_menu_remove">Verwyder</string>
-    <string name="speed_dial_no_contacts_description">Jy het nog nie enige gunstelinge bygevoeg nie.</string>
-    <string name="speed_dial_no_contacts_action_text">Voeg gunsteling by</string>
 </resources>

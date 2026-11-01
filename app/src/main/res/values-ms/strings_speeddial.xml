@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Untuk mendayakan dail cepat, hidupkan kebenaran Kenalan.</string>
   <string name="speed_dial_turn_on_contacts_permission">Hidupkan</string>
   <string name="speed_dial_remove_favorites">Alih keluar daripada kegemaran</string>
-    <string name="favorites_header">Kegemaran</string>
-    <string name="contact_menu_remove">Alih keluar</string>
-    <string name="speed_dial_no_contacts_description">Anda belum menambah sebarang kegemaran</string>
-    <string name="speed_dial_no_contacts_action_text">Tambahkan kegemaran</string>
 </resources>

@@ -95,31 +95,6 @@
   <string name="call_log_action_block_number">Blokiraj broj</string>
   <string name="call_log_action_unblock_number">Deblokiranje broja</string>
   <string name="spam_number_call_log_label">Neželjena pošta</string>
-    <string name="call_log_trash_voicemail">Izbriši govornu poštu</string>
-    <string name="snackbar_voicemail_deleted">Gov. pošta izbrisana</string>
-    <string name="clearCallLogProgress_title">Brisanje povijesti poziva…</string>
-    <string name="description_playback_speakerphone">Uključivanje ili isključivanje zvučnika</string>
-    <string name="description_playback_seek">Traženje položaja reprodukcije</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">Više opcija</string>
-    <string name="description_entering_bulk_action_mode">Ulazak u način skupne radnje</string>
-    <string name="description_leaving_bulk_action_mode">Napuštanje načina skupne radnje</string>
-    <string name="description_selecting_bulk_action_mode">Odabrano: %1$s</string>
-    <string name="description_unselecting_bulk_action_mode">Poništen odabir: %1$s</string>
-    <string name="description_contact_details">Pojedinosti o kontaktu %1$s</string>
-    <string name="description_spam_contact_details">Podaci za kontakt mogućeg neželjenog pozivatelja %1$s</string>
-    <string name="description_num_calls">Broj poziva: %1$s.</string>
-    <string name="description_video_call">Videopoziv.</string>
-    <string name="select_all">Odaberi sve</string>
-    <string name="description_incoming_missed_call">Propušten poziv: ^1, ^2, ^3, ^4.</string>
-    <string name="description_incoming_answered_call">Prihvaćen poziv: ^1, ^2, ^3, ^4.</string>
-    <string name="description_unread_voicemail">Nepročitana govorna pošta kontakta ^1, ^2, ^3, ^4.</string>
-    <string name="description_read_voicemail">Govorna pošta kontakta ^1, ^2, ^3, ^4.</string>
-    <string name="description_outgoing_call">Poziv: ^1, ^2, ^3, ^4.</string>
-    <string name="description_create_new_contact_action">Izrada kontakta za ^1</string>
-    <string name="description_add_to_existing_contact_action">Dodavanje kontakta ^1 postojećem kontaktu</string>
-    <string name="description_details_action">Pojedinosti o pozivu za kontakt ^1</string>
-    <string name="call_log_action_block_report_number">Blokiraj/prijavi neželjen broj</string>
-    <string name="call_log_action_remove_spam">Nije neželjeni broj</string>
   <string name="call_log_blocked_title">Blokirano</string>
   <string name="call_log_contacts_title">Kontakti</string>
 </resources>

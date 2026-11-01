@@ -9,9 +9,4 @@
   <string name="simContacts_title">SIM カードの連絡先</string>
   <string name="menu_callNumber">%s に発信</string>
   <string name="dialpad_hint_emergency_calling_not_available">Wi‑Fi 経由で緊急通報を発信することはできません</string>
-    <string name="add_2sec_pause">2 秒間の停止を追加</string>
-    <string name="add_wait">待機を追加</string>
-    <string name="dialer_useDtmfDialpad">プッシュ式キーパッドを使用</string>
-    <string name="dialer_returnToInCallScreen">通話に戻る</string>
-    <string name="dialer_addAnotherCall">通話を追加</string>
 </resources>

@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">স্পিড ডায়াল চালু করতে পরিচিতির অনুমতি দিন।</string>
   <string name="speed_dial_turn_on_contacts_permission">চালু করুন</string>
   <string name="speed_dial_remove_favorites">পছন্দসই থেকে সরান</string>
-    <string name="favorites_header">পছন্দসই</string>
-    <string name="contact_menu_remove">সরিয়ে দিন</string>
-    <string name="speed_dial_no_contacts_description">আপনি এখনও পর্যন্ত কাউকে পছন্দসই হিসেবে চিহ্নিত করেননি</string>
-    <string name="speed_dial_no_contacts_action_text">পছন্দসই হিসেবে চিহ্নিত করুন</string>
 </resources>

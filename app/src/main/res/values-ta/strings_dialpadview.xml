@@ -9,9 +9,4 @@
   <string name="simContacts_title">சிம் கார்டு தொடர்புகள்</string>
   <string name="menu_callNumber">%s எண்ணை அழை</string>
   <string name="dialpad_hint_emergency_calling_not_available">வைஃபையைப் பயன்படுத்தி அவசர அழைப்புகளைச் செய்ய முடியாது</string>
-    <string name="add_2sec_pause">2 வினாடி இடைநிறுத்தத்தைச் சேர்</string>
-    <string name="add_wait">காத்திருப்பைச் சேர்</string>
-    <string name="dialer_useDtmfDialpad">டச் டோன் விசைத்தளத்தைப் பயன்படுத்து</string>
-    <string name="dialer_returnToInCallScreen">செயலிலுள்ள அழைப்பிற்குத் திரும்பு</string>
-    <string name="dialer_addAnotherCall">அழைப்பைச் சேர்</string>
 </resources>

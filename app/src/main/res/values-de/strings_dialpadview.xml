@@ -9,9 +9,4 @@
   <string name="simContacts_title">Kontakte auf SIM-Karte</string>
   <string name="menu_callNumber">%s anrufen</string>
   <string name="dialpad_hint_emergency_calling_not_available">Notrufe über WLAN nicht möglich</string>
-    <string name="add_2sec_pause">2 Sekunden Pause hinzufügen</string>
-    <string name="add_wait">Warten hinzufügen</string>
-    <string name="dialer_useDtmfDialpad">Tonwahltasten verwenden</string>
-    <string name="dialer_returnToInCallScreen">Zurück zum aktuellen Anruf</string>
-    <string name="dialer_addAnotherCall">Anruf hinzufügen</string>
 </resources>

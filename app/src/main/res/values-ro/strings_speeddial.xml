@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Pentru a activa apelarea rapidă, activați permisiunea pentru Agendă.</string>
   <string name="speed_dial_turn_on_contacts_permission">Activați</string>
   <string name="speed_dial_remove_favorites">Eliminați din preferate</string>
-    <string name="favorites_header">Preferate</string>
-    <string name="contact_menu_remove">Eliminați</string>
-    <string name="speed_dial_no_contacts_description">Nu ați adăugat nicio persoană preferată încă.</string>
-    <string name="speed_dial_no_contacts_action_text">Adăugați la preferate</string>
 </resources>

@@ -9,9 +9,4 @@
   <string name="simContacts_title">SIM కార్డ్ పరిచయాలు</string>
   <string name="menu_callNumber">%sకు కాల్ చేయండి</string>
   <string name="dialpad_hint_emergency_calling_not_available">Wi-Fiతో అత్యవసర కాల్‌లు చేయలేరు</string>
-    <string name="add_2sec_pause">2-సెకన్ల పాజ్‌ను జోడించండి</string>
-    <string name="add_wait">నిరీక్షణ సమయాన్ని జోడించండి</string>
-    <string name="dialer_useDtmfDialpad">టచ్ టోన్ కీప్యాడ్‌ను ఉపయోగించండి</string>
-    <string name="dialer_returnToInCallScreen">ప్రస్తుతం నడుస్తున్న కాల్‌కు తిరిగి వెళ్లండి</string>
-    <string name="dialer_addAnotherCall">కాల్ జోడించండి</string>
 </resources>

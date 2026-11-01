@@ -22,15 +22,4 @@
     <item name="android:windowBackground">@android:color/transparent</item>
     <item name="android:statusBarColor">@android:color/transparent</item>
   </style>
-    <style name="AudioRouteItem">
-    <item name="android:padding">16dp</item>
-    <item name="android:background">?android:attr/selectableItemBackground</item>
-    <item name="android:drawablePadding">24dp</item>
-    <item name="android:gravity">center_vertical</item>
-    <item name="android:textAppearance">
-      @style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Large
-    </item>
-    <item name="android:textColor">?android:attr/textColorSecondary</item>
-    <item name="android:drawableTint">?android:attr/textColorSecondary</item>
-  </style>
 </resources>

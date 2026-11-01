@@ -19,5 +19,4 @@
   <string name="action_menu_back_from_search">zastavit vyhledávání</string>
   <string name="description_clear_search">Vymazat vyhledávání</string>
   <string name="description_search_video_call">Videohovor</string>
-    <string name="call_with_a_note">Volání s poznámkou</string>
 </resources>

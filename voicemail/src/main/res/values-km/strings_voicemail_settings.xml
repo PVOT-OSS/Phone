@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">បិទ​សារ​ជា​សំឡេង​ដែល​មើល​ឃើញ</string>
   <string name="confirm_disable_voicemail_dialog_message">វា​នឹង​លុប​​សារ​ជា​សំឡេង​ណាមួយ និង​ប្រតិចារឹក Google ដែល​បាន​រក្សាទុក​នៅ​ក្នុង​កម្មវិធីនេះ។ ក្រុមហ៊ុន​សេវា​ទូរសព្ទ​របស់​អ្នក​អាច​រក្សាទុក​ច្បាប់​ចម្លង​ផ្ទាល់ខ្លួន។</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">បិទ</string>
-    <string name="voicemail_settings_title">សារ​ជា​សំឡេង</string>
 </resources>

@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Slå av visuell talepost</string>
   <string name="confirm_disable_voicemail_dialog_message">Dette sletter eventuelle talemeldinger og Google-transkripsjoner som er lagret i denne appen. Det kan hende mobiloperatøren din har lagret egne kopier.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">SLÅ AV</string>
-    <string name="voicemail_settings_title">Talepost</string>
 </resources>

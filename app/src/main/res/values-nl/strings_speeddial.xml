@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Als je de snelkeuzefunctie wilt inschakelen, schakel je de machtiging voor Contacten in.</string>
   <string name="speed_dial_turn_on_contacts_permission">Inschakelen</string>
   <string name="speed_dial_remove_favorites">Verwijderen uit favorieten</string>
-    <string name="favorites_header">Favorieten</string>
-    <string name="contact_menu_remove">Verwijderen</string>
-    <string name="speed_dial_no_contacts_description">Je hebt nog geen favorieten toegevoegd</string>
-    <string name="speed_dial_no_contacts_action_text">Favoriet toevoegen</string>
 </resources>

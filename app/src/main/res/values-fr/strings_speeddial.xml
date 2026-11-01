@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Pour activer la numérotation abrégée, activez l\'autorisation Contacts.</string>
   <string name="speed_dial_turn_on_contacts_permission">Activer</string>
   <string name="speed_dial_remove_favorites">Supprimer des favoris</string>
-    <string name="favorites_header">Favoris</string>
-    <string name="contact_menu_remove">Supprimer</string>
-    <string name="speed_dial_no_contacts_description">Pour le moment, vous n\'avez ajouté aucun contact aux favoris.</string>
-    <string name="speed_dial_no_contacts_action_text">Ajouter aux favoris</string>
 </resources>

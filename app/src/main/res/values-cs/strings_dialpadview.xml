@@ -9,9 +9,4 @@
   <string name="simContacts_title">Kontakty na SIM kartě</string>
   <string name="menu_callNumber">Zavolat %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Přes Wi‑Fi nelze uskutečňovat tísňová volání</string>
-    <string name="add_2sec_pause">Přidat pauzu 2 s</string>
-    <string name="add_wait">Přidat čekání</string>
-    <string name="dialer_useDtmfDialpad">Použít dotykovou tónovou klávesnici</string>
-    <string name="dialer_returnToInCallScreen">Vrátit se k probíhajícímu hovoru</string>
-    <string name="dialer_addAnotherCall">Přidat hovor</string>
 </resources>

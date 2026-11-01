@@ -9,9 +9,4 @@
   <string name="simContacts_title">Контакти на SIM картици</string>
   <string name="menu_callNumber">Позови %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Не можете да упућујете хитне позиве преко Wi‑Fi-ја</string>
-    <string name="add_2sec_pause">Додај паузу од 2 секунде</string>
-    <string name="add_wait">Додај чекање</string>
-    <string name="dialer_useDtmfDialpad">Користи тастатуру за тонско бирање</string>
-    <string name="dialer_returnToInCallScreen">Назад у позив који је у току</string>
-    <string name="dialer_addAnotherCall">Додај позив</string>
 </resources>

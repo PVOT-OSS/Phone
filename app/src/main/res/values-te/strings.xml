@@ -93,31 +93,6 @@
   <string name="call_log_action_block_number">నంబర్‌ను బ్లాక్ చేయి</string>
   <string name="call_log_action_unblock_number">నంబర్‌ను అన్‌బ్లాక్ చేయి</string>
   <string name="spam_number_call_log_label">స్పామ్</string>
-    <string name="call_log_trash_voicemail">వాయిస్ మెయిల్‌ను తొలగించు</string>
-    <string name="snackbar_voicemail_deleted">వాయిస్‌‍మెయిల్ తొలగించింది</string>
-    <string name="clearCallLogProgress_title">కాల్ చరిత్రను క్లియర్ చేస్తోంది…</string>
-    <string name="description_playback_speakerphone">స్పీకర్‌ఫోన్‌ను స్విచ్ ఆన్ లేదా స్విచ్ ఆఫ్ చేయి</string>
-    <string name="description_playback_seek">ప్లేబ్యాక్ స్థానాన్ని కావాల్సిన చోటుకి జరపండి</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">మరిన్ని ఎంపికలు</string>
-    <string name="description_entering_bulk_action_mode">బల్క్ చర్య మోడ్‌లోకి ప్రవేశిస్తున్నారు</string>
-    <string name="description_leaving_bulk_action_mode">బల్క్ చర్య మోడ్ నుండి నిష్క్రమించారు</string>
-    <string name="description_selecting_bulk_action_mode">%1$s ఎంచుకోబడింది</string>
-    <string name="description_unselecting_bulk_action_mode">%1$s ఎంపిక తీసివేయబడింది</string>
-    <string name="description_contact_details">%1$s యొక్క సంప్రదింపు వివరాలు</string>
-    <string name="description_spam_contact_details">అనుమానాస్పద స్పామ్ కాలర్ %1$s సంప్రదింపు వివరాలు</string>
-    <string name="description_num_calls">%1$s కాల్‌లు.</string>
-    <string name="description_video_call">వీడియో కాల్.</string>
-    <string name="select_all">అన్నీ ఎంచుకోండి</string>
-    <string name="description_incoming_missed_call">^1, ^2 నుండి ^3 ^4కి మిస్డ్ కాల్ ఇచ్చారు.</string>
-    <string name="description_incoming_answered_call">^1, ^2 నుండి ^3 ^4కి చేసిన కాల్‌కి సమాధానం ఇచ్చారు.</string>
-    <string name="description_unread_voicemail">^1 నుండి చదవని వాయిస్ మెయిల్, ^2, ^3, ^4.</string>
-    <string name="description_read_voicemail">^1 నుండి వాయిస్ మెయిల్, ^2, ^3, ^4.</string>
-    <string name="description_outgoing_call">^1, ^2కి ^3 ^4 నుండి కాల్ చేసారు.</string>
-    <string name="description_create_new_contact_action">^1 కోసం పరిచయాన్ని సృష్టించండి</string>
-    <string name="description_add_to_existing_contact_action">^1ని ఇప్పటికే ఉన్న పరిచయానికి జోడించండి</string>
-    <string name="description_details_action">^1 యొక్క కాల్ వివరాలు</string>
-    <string name="call_log_action_block_report_number">బ్లాక్ చేయి/స్పామ్‌గానివేదించు</string>
-    <string name="call_log_action_remove_spam">స్పామ్ కాదు</string>
   <string name="call_log_blocked_title">బ్లాక్ చేయబడింది</string>
   <string name="call_log_contacts_title">పరిచయాలు</string>
 </resources>

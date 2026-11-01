@@ -7,9 +7,5 @@
   <string name="assisted_dialing_country_code_entry_failure">已使用輔助撥號</string>
   <string name="rtt_transcript_not_available">只有支援訊息功能的通話才能轉錄留言</string>
   <string name="rtt_transcript_link">查看轉錄內容</string>
-    <string name="call_details_report_call_id">回報號碼錯誤</string>
-    <string name="report_caller_id_dialog_title">回報不正確的號碼</string>
-    <string name="report_caller_id_failed">無法回報號碼</string>
-    <string name="report_caller_id_toast">已回報號碼</string>
   <string name="call_details_message">訊息</string>
 </resources>

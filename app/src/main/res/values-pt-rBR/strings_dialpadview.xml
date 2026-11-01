@@ -9,9 +9,4 @@
   <string name="simContacts_title">Contatos do cartão SIM</string>
   <string name="menu_callNumber">Ligar para %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Não é possível fazer chamadas de emergência por Wi‑Fi</string>
-    <string name="add_2sec_pause">Adicionar pausa de 2 segundos</string>
-    <string name="add_wait">Adicionar espera</string>
-    <string name="dialer_useDtmfDialpad">Usar teclado multifrequencial</string>
-    <string name="dialer_returnToInCallScreen">Retornar para a chamada em espera</string>
-    <string name="dialer_addAnotherCall">Nova chamada</string>
 </resources>

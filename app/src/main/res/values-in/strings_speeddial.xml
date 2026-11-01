@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Untuk mengaktifkan panggilan cepat, aktifkan izin Kontak.</string>
   <string name="speed_dial_turn_on_contacts_permission">Aktifkan</string>
   <string name="speed_dial_remove_favorites">Hapus dari favorit</string>
-    <string name="favorites_header">Favorit</string>
-    <string name="contact_menu_remove">Hapus</string>
-    <string name="speed_dial_no_contacts_description">Anda belum menambahkan favorit apa pun</string>
-    <string name="speed_dial_no_contacts_action_text">Tambahkan favorit</string>
 </resources>

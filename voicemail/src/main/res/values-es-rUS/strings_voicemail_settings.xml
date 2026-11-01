@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Desactivar el buzón de voz visual</string>
   <string name="confirm_disable_voicemail_dialog_message">Esta acción borrará todas las transcripciones de Google y los correos de voz almacenados en esta app. Es posible que tu proveedor conserve sus propias copias.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">DESACTIVAR</string>
-    <string name="voicemail_settings_title">Buzón de voz</string>
 </resources>

@@ -7,9 +7,5 @@
   <string name="assisted_dialing_country_code_entry_failure">Ondersteund bellen is gebruikt</string>
   <string name="rtt_transcript_not_available">Transcript alleen beschikbaar voor oproepen met berichten</string>
   <string name="rtt_transcript_link">Transcript weergeven</string>
-    <string name="call_details_report_call_id">Onjuist nummer melden</string>
-    <string name="report_caller_id_dialog_title">Incorrect nummer melden</string>
-    <string name="report_caller_id_failed">Kan nummer niet melden</string>
-    <string name="report_caller_id_toast">Nummer gemeld</string>
   <string name="call_details_message">Bericht</string>
 </resources>

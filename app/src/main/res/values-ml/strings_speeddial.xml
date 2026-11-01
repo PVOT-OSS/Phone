@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">സ്പീഡ് ഡയൽ പ്രവർത്തനക്ഷമാക്കുന്നതിന്, \'കോൺടാക്റ്റുകൾ\' അനുമതി ഓണാക്കുക.</string>
   <string name="speed_dial_turn_on_contacts_permission">ഓണാക്കുക</string>
   <string name="speed_dial_remove_favorites">പ്രിയപ്പെട്ടവയിൽ നിന്ന് നീക്കം ചെയ്യുക</string>
-    <string name="favorites_header">പ്രിയപ്പെട്ടവ</string>
-    <string name="contact_menu_remove">നീക്കം ചെയ്യുക</string>
-    <string name="speed_dial_no_contacts_description">നിങ്ങൾ ഇതുവരെ പ്രിയപ്പെട്ടവ ചേർത്തിട്ടില്ല</string>
-    <string name="speed_dial_no_contacts_action_text">പ്രിയപ്പെട്ടത് ചേർക്കുക</string>
 </resources>

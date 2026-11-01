@@ -7,9 +7,5 @@
   <string name="assisted_dialing_country_code_entry_failure">साहाय्यकारी डायलिंग वापरले गेले</string>
   <string name="rtt_transcript_not_available">मेसेजिंगने केलेल्‍या कॉलसाठी फक्‍त प्रतिलेखन उपलब्‍ध आहे</string>
   <string name="rtt_transcript_link">प्रतिलेखन पाहा</string>
-    <string name="call_details_report_call_id">चुकीच्या नंबरचा अहवाल द्या</string>
-    <string name="report_caller_id_dialog_title">चुकीच्या नंबरचा अहवाल द्या</string>
-    <string name="report_caller_id_failed">नंबरचा अहवाल देऊ शकलो नाही</string>
-    <string name="report_caller_id_toast">नंबरचा अहवाल दिला</string>
   <string name="call_details_message">मेसेज</string>
 </resources>

@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">အမြန်ခေါ် နံပါတ်ကွက်ကို ဖွင့်ရန်၊ အဆက်အသွယ်ခွင့်ပြုချက်ကို ဖွင့်ပါ။</string>
   <string name="speed_dial_turn_on_contacts_permission">ဖွင့်ရန်</string>
   <string name="speed_dial_remove_favorites">စိတ်ကြိုက်များမှ ဖယ်ရှားပါ</string>
-    <string name="favorites_header">အကြိုက်ဆုံးများ</string>
-    <string name="contact_menu_remove">ဖယ်ရှားရန်</string>
-    <string name="speed_dial_no_contacts_description">မည်သည့် အနှစ်သက်ဆုံးကိုမှ သင် မထည့်ရသေးပါ</string>
-    <string name="speed_dial_no_contacts_action_text">အနှစ်သက်ဆုံးသို့ ပေါင်းထည့်ရန်</string>
 </resources>

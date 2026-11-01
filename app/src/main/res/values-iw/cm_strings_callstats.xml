@@ -31,18 +31,4 @@
     <string name="call_stats_title_count">מספר שיחות</string>
     <string name="call_stats_title_average_duration">משך שיחה ממוצע</string>
     <string name="recent_calls_no_items_in_range">יומן השיחות שלך אינו מכיל שיחות בטווח הזמן שנבחר.</string>
-    <string name="call_stats_header_total_callsonly">סך הכול: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">תאריך התחלה</string>
-    <string name="call_stats_filter_to">תאריך סיום</string>
-    <string name="call_stats_filter_picker_title">טווח סינון</string>
-    <string name="date_quick_selection">בחירה מהירה</string>
-    <string name="date_qs_currentmonth">חודש נוכחי</string>
-    <string name="date_qs_currentquarter">רבעון נוכחי</string>
-    <string name="date_qs_currentyear">שנה נוכחית</string>
-    <string name="date_qs_lastweek">שבוע שעבר</string>
-    <string name="date_qs_lastmonth">חודש שעבר</string>
-    <string name="date_qs_lastquarter">רבעון שעבר</string>
-    <string name="date_qs_lastyear">שנה שעברה</string>
-    <string name="call_stats_sort_by_duration">מיון לפי משך שיחה</string>
-    <string name="call_stats_sort_by_count">מיון לפי מספר שיחות</string>
 </resources>

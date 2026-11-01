@@ -93,31 +93,6 @@
   <string name="call_log_action_block_number">ਨੰਬਰ ਨੂੰ ਬਲੌਕ ਕਰੋ</string>
   <string name="call_log_action_unblock_number">ਨੰਬਰ ਨੂੰ ਅਨਬਲੌਕ ਕਰੋ</string>
   <string name="spam_number_call_log_label">ਸਪੈਮ</string>
-    <string name="call_log_trash_voicemail">ਵੌਇਸਮੇਲ ਮਿਟਾਓ</string>
-    <string name="snackbar_voicemail_deleted">ਵੌਇਸਮੇਲ ਮਿਟਾਈ ਗਈ</string>
-    <string name="clearCallLogProgress_title">ਕਾਲ ਇਤਿਹਾਸ ਹਟਾ ਰਿਹਾ ਹੈ…</string>
-    <string name="description_playback_speakerphone">ਸਪੀਕਰਫੋਨ ਨੂੰ ਚਾਲੂ ਜਾਂ ਬੰਦ ਕਰੋ</string>
-    <string name="description_playback_seek">ਪਲੇਬੈਕ ਪੋਜੀਸ਼ਨ ਖੋਜੋ</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">ਹੋਰ ਚੋਣਾਂ</string>
-    <string name="description_entering_bulk_action_mode">ਬਲਕ ਕਾਰਵਾਈ ਮੋਡ ਵਿੱਚ ਦਾਖਲ ਹੋਇਆ ਜਾ ਰਿਹਾ ਹੈ</string>
-    <string name="description_leaving_bulk_action_mode">ਬਲਕ ਕਾਰਵਾਈ ਮੋਡ ਨੂੰ ਛੱਡਿਆ</string>
-    <string name="description_selecting_bulk_action_mode">%1$s ਨੂੰ ਚੁਣਿਆ ਗਿਆ</string>
-    <string name="description_unselecting_bulk_action_mode">%1$s ਨੂੰ ਅਣ-ਚੁਣਿਆ ਕੀਤਾ ਗਿਆ</string>
-    <string name="description_contact_details">%1$s ਲਈ ਸੰਪਰਕ ਵੇਰਵੇ</string>
-    <string name="description_spam_contact_details">ਸ਼ੱਕੀ ਸਪੈਮ ਕਾਲਰ %1$s ਲਈ ਸੰਪਰਕ ਵੇਰਵੇ</string>
-    <string name="description_num_calls">%1$s ਕਾਲਾਂ।</string>
-    <string name="description_video_call">ਵੀਡੀਓ ਕਾਲ।</string>
-    <string name="select_all">ਸਭ ਚੁਣੋ</string>
-    <string name="description_incoming_missed_call">^1, ^2, ^3, ^4 ਦੀ ਮਿਸਡ ਕਾਲ।</string>
-    <string name="description_incoming_answered_call">^1, ^2, ^3, ^4 ਦੀ ਕਾਲ ਦਾ ਜਵਾਬ ਦਿੱਤਾ।</string>
-    <string name="description_unread_voicemail">^1 , ^2 , ^3 , ^4 ਵੱਲੋਂ ਬਿਨਾਂ-ਪੜ੍ਹੀ ਵੌਇਸਮੇਲ।</string>
-    <string name="description_read_voicemail">^1, ^2, ^3, ^4 ਵੱਲੋਂ ਵੌਇਸਮੇਲ।</string>
-    <string name="description_outgoing_call">^1, ^2, ^3, ^4 ਨੂੰ ਕਾਲ ਕਰੋ।</string>
-    <string name="description_create_new_contact_action">^1 ਲਈ ਸੰਪਰਕ ਬਣਾਓ</string>
-    <string name="description_add_to_existing_contact_action">^1 ਨੂੰ ਮੌਜੂਦਾ ਸੰਪਰਕ ਵਿੱਚ ਜੋੜੋ</string>
-    <string name="description_details_action">^1 ਲਈ ਕਾਲ ਵੇਰਵੇ</string>
-    <string name="call_log_action_block_report_number">ਸਪੈਮ ਨੂੰ ਬਲੌਕ ਕਰੋ/ਰਿਪੋਰਟ ਕਰੋ</string>
-    <string name="call_log_action_remove_spam">ਸਪੈਮ ਨਹੀਂ</string>
   <string name="call_log_blocked_title">ਬਲੌਕ ਕੀਤਾ</string>
   <string name="call_log_contacts_title">ਸੰਪਰਕ</string>
 </resources>

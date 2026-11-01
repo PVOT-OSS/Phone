@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">關閉視像留言</string>
   <string name="confirm_disable_voicemail_dialog_message">這樣會刪除所有儲存在這個應用程式中的留言和 Google 轉錄內容。您的流動網絡供應商可能會保留自己的副本。</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">關閉</string>
-    <string name="voicemail_settings_title">留言</string>
 </resources>

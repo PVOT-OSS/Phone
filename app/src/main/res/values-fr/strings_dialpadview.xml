@@ -9,9 +9,4 @@
   <string name="simContacts_title">Contacts de la carte SIM</string>
   <string name="menu_callNumber">Appeler le %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Impossible de passer des appels d\'urgence via le Wi-Fi</string>
-    <string name="add_2sec_pause">Ajouter une pause de 2 s</string>
-    <string name="add_wait">Ajouter une attente</string>
-    <string name="dialer_useDtmfDialpad">Utiliser le clavier DTMF</string>
-    <string name="dialer_returnToInCallScreen">Reprendre l\'appel en cours</string>
-    <string name="dialer_addAnotherCall">Ajouter un appel</string>
 </resources>

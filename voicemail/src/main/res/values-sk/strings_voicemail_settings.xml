@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Vypnutie vizuálnej hlasovej schránky</string>
   <string name="confirm_disable_voicemail_dialog_message">Odstránite tým všetky hlasové správy a prepisy od Googlu uložené v tejto aplikácii. Váš operátor si môže uchovávať vlastné kópie.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">VYPNÚŤ</string>
-    <string name="voicemail_settings_title">Hlasová správa</string>
 </resources>

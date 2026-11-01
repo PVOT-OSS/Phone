@@ -93,31 +93,6 @@
   <string name="call_log_action_block_number">எண்ணைத் தடு</string>
   <string name="call_log_action_unblock_number">எண்ணை அனுமதி</string>
   <string name="spam_number_call_log_label">ஸ்பேம்</string>
-    <string name="call_log_trash_voicemail">குரலஞ்சலை நீக்கு</string>
-    <string name="snackbar_voicemail_deleted">குரலஞ்சல் நீக்கப்பட்டது</string>
-    <string name="clearCallLogProgress_title">அழைப்பு வரலாற்றை அழிக்கிறது…</string>
-    <string name="description_playback_speakerphone">ஸ்பீக்கர்போனை இயக்கு அல்லது முடக்கு</string>
-    <string name="description_playback_seek">பிளேபேக் நிலையைத் தேடு</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">மேலும் விருப்பங்கள்</string>
-    <string name="description_entering_bulk_action_mode">மொத்தச் செயல் பயன்முறையில் நுழைகிறீர்கள்</string>
-    <string name="description_leaving_bulk_action_mode">மொத்தச் செயல் பயன்முறையிலிருந்து வெளியேறிவிட்டீர்கள்</string>
-    <string name="description_selecting_bulk_action_mode">தேர்ந்தெடுத்த %1$s</string>
-    <string name="description_unselecting_bulk_action_mode">தேர்வுநீக்கிய %1$s</string>
-    <string name="description_contact_details">%1$s க்கான தொடர்பு விவரங்கள்</string>
-    <string name="description_spam_contact_details">சந்தேகத்திற்குரிய ஸ்பேம் அழைப்பாளர் %1$sக்கான தொடர்பு விவரங்கள்</string>
-    <string name="description_num_calls">%1$s அழைப்புகள்.</string>
-    <string name="description_video_call">வீடியோ அழைப்பு.</string>
-    <string name="select_all">அனைத்தையும் தேர்ந்தெடு</string>
-    <string name="description_incoming_missed_call">தவறிய அழைப்பு: ^1, ^2, ^3, ^4.</string>
-    <string name="description_incoming_answered_call">பேசிய அழைப்பு: ^1, ^2, ^3, ^4.</string>
-    <string name="description_unread_voicemail">படிக்காத குரலஞ்சல்: ^1, ^2, ^3, ^4.</string>
-    <string name="description_read_voicemail">குரலஞ்சல்: ^1, ^2, ^3, ^4.</string>
-    <string name="description_outgoing_call">அழைத்த அழைப்பு: ^1, ^2, ^3, ^4.</string>
-    <string name="description_create_new_contact_action">^1க்கான தொடர்பை உருவாக்கும்</string>
-    <string name="description_add_to_existing_contact_action">இருக்கும் தொடர்பில் ^1ஐச் சேர்க்கும்</string>
-    <string name="description_details_action">^1 இன் அழைப்பு விவரங்கள்</string>
-    <string name="call_log_action_block_report_number">தடு/ஸ்பேமெனப் புகாரளி</string>
-    <string name="call_log_action_remove_spam">ஸ்பேமில்லை</string>
   <string name="call_log_blocked_title">தடுக்கப்பட்டது</string>
   <string name="call_log_contacts_title">தொடர்புகள்</string>
 </resources>

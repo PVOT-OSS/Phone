@@ -64,8 +64,4 @@
 
   <!-- Text shown on a dragging target that removes the contact from favorites -->
   <string name="speed_dial_remove_favorites">Remove from favorites</string>
-    <string name="favorites_header">Favorites</string>
-    <string name="contact_menu_remove">Remove</string>
-    <string name="speed_dial_no_contacts_description">You haven\'t added any favorites yet</string>
-    <string name="speed_dial_no_contacts_action_text">Add favorite</string>
 </resources>

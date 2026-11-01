@@ -31,18 +31,4 @@
     <string name="call_stats_title_count">通話總數</string>
     <string name="call_stats_title_average_duration">平均通話時間</string>
     <string name="recent_calls_no_items_in_range">在所選擇的時間範圍內沒有任何通話記錄。</string>
-    <string name="call_stats_header_total_callsonly">總計：<xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">開始日期</string>
-    <string name="call_stats_filter_to">結束日期</string>
-    <string name="call_stats_filter_picker_title">篩選範圍</string>
-    <string name="date_quick_selection">快速選擇</string>
-    <string name="date_qs_currentmonth">本月</string>
-    <string name="date_qs_currentquarter">本季</string>
-    <string name="date_qs_currentyear">今年</string>
-    <string name="date_qs_lastweek">上週</string>
-    <string name="date_qs_lastmonth">上月</string>
-    <string name="date_qs_lastquarter">上季</string>
-    <string name="date_qs_lastyear">去年</string>
-    <string name="call_stats_sort_by_duration">按通話時間排列</string>
-    <string name="call_stats_sort_by_count">按通話次數排列</string>
 </resources>

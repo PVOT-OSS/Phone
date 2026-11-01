@@ -31,18 +31,4 @@
     <string name="call_stats_title_count">عدد المكالمات</string>
     <string name="call_stats_title_average_duration">متوسط مدة المكالمة</string>
     <string name="recent_calls_no_items_in_range">سجل مكالماتك لا يحتوي على أي مكالمات في نطاق الوقت المحدد.</string>
-    <string name="call_stats_header_total_callsonly">الإجمالي: <xliff:g id="call_count"> %s </xliff:g></string>
-    <string name="call_stats_filter_from">تاريخ البدء</string>
-    <string name="call_stats_filter_to">تاريخ الانتهاء</string>
-    <string name="call_stats_filter_picker_title">نطاق التصفية</string>
-    <string name="date_quick_selection">التحديد السريع</string>
-    <string name="date_qs_currentmonth">الشهر الحالي</string>
-    <string name="date_qs_currentquarter">ربع السنة الحالي</string>
-    <string name="date_qs_currentyear">السنة الحالية</string>
-    <string name="date_qs_lastweek">الأسبوع الماضي</string>
-    <string name="date_qs_lastmonth">الشهر الماضي</string>
-    <string name="date_qs_lastquarter">ربع السنة الأخير</string>
-    <string name="date_qs_lastyear">العام الماضي</string>
-    <string name="call_stats_sort_by_duration">ترتيب حسب مدة المكالمة</string>
-    <string name="call_stats_sort_by_count">ترتيب حسب عدد المكالمات</string>
 </resources>

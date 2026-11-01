@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">व्हिज्युअल व्हॉइसमेल बंद करा</string>
   <string name="confirm_disable_voicemail_dialog_message">हे या अ‍ॅपमध्ये स्टोअर केलेला प्रत्येक व्हॉइसमेल आणि Google प्रतिलेख हटवेल. तुमचा वाहक स्वत:साठी त्याच्या कॉपी ठेवून घेईल.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">बंद करा</string>
-    <string name="voicemail_settings_title">व्हॉइसमेल</string>
 </resources>

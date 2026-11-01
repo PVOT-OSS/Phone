@@ -33,5 +33,4 @@
     <string name="action_menu_helplines">Hulplijnen</string>
     <string name="default_dialer_text">U moet Bellen instellen als de standaard telefoon app om hem te gebruiken.</string>
     <string name="default_dialer_action">Stel in als standaard</string>
-    <string name="call_via">Bellen via</string>
 </resources>

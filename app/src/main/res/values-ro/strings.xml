@@ -95,31 +95,6 @@
   <string name="call_log_action_block_number">Blocați numărul</string>
   <string name="call_log_action_unblock_number">Deblocați numărul</string>
   <string name="spam_number_call_log_label">Spam</string>
-    <string name="call_log_trash_voicemail">Ștergeți mesajul vocal</string>
-    <string name="snackbar_voicemail_deleted">Mesaj vocal șters</string>
-    <string name="clearCallLogProgress_title">Se șterge istoricul apelurilor…</string>
-    <string name="description_playback_speakerphone">Activați sau dezactivați difuzorul</string>
-    <string name="description_playback_seek">Căutați poziția de redare</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">Mai multe opțiuni</string>
-    <string name="description_entering_bulk_action_mode">Se intră în modul acțiune în bloc</string>
-    <string name="description_leaving_bulk_action_mode">Ați ieșit din modul acțiune în bloc</string>
-    <string name="description_selecting_bulk_action_mode">S-a selectat %1$s</string>
-    <string name="description_unselecting_bulk_action_mode">S-a deselectat %1$s</string>
-    <string name="description_contact_details">Detalii de contact pentru %1$s</string>
-    <string name="description_spam_contact_details">Detalii de contact pentru apelantul suspectat de spam %1$s</string>
-    <string name="description_num_calls">%1$s (de) apeluri.</string>
-    <string name="description_video_call">Apel video.</string>
-    <string name="select_all">Selectați tot</string>
-    <string name="description_incoming_missed_call">Apel nepreluat de la ^1, ^2, ^3, ^4.</string>
-    <string name="description_incoming_answered_call">Apel preluat de la ^1, ^2, ^3, ^4.</string>
-    <string name="description_unread_voicemail">Mesaj vocal necitit de la ^1, ^2, ^3, ^4.</string>
-    <string name="description_read_voicemail">Mesaj vocal de la ^1, ^2, ^3, ^4.</string>
-    <string name="description_outgoing_call">Apel către ^1, ^2, ^3, ^4.</string>
-    <string name="description_create_new_contact_action">Creați o persoană de contact pentru ^1</string>
-    <string name="description_add_to_existing_contact_action">Adăugați ^1 la o persoană de contact existentă</string>
-    <string name="description_details_action">Detaliile apelului pentru ^1</string>
-    <string name="call_log_action_block_report_number">Blocați/raportați ca spam</string>
-    <string name="call_log_action_remove_spam">Nu este spam</string>
   <string name="call_log_blocked_title">Blocat</string>
   <string name="call_log_contacts_title">Agendă</string>
 </resources>

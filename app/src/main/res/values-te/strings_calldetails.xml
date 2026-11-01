@@ -7,9 +7,5 @@
   <string name="assisted_dialing_country_code_entry_failure">సహాయక డయలింగ్ ఉపయోగించబడింది</string>
   <string name="rtt_transcript_not_available">లిపి మార్పు సందేశంతో కూడిన కాల్‌లకు మాత్రమే అందుబాటులో ఉంది</string>
   <string name="rtt_transcript_link">లిపి మార్పును చూడండి</string>
-    <string name="call_details_report_call_id">అనిర్దిష్టంగా ఉండే నంబర్‌ను నివేదించు</string>
-    <string name="report_caller_id_dialog_title">చెల్లని నంబర్‌ను నివేదించండి</string>
-    <string name="report_caller_id_failed">నంబర్‌ను నివేదించడం సాధ్యపడలేదు</string>
-    <string name="report_caller_id_toast">నంబర్ నివేదించబడింది</string>
   <string name="call_details_message">సందేశం</string>
 </resources>

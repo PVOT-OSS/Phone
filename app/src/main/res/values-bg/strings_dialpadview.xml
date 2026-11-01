@@ -9,9 +9,4 @@
   <string name="simContacts_title">Контакти от SIM картата</string>
   <string name="menu_callNumber">Обаждане на %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Не може да се извършват спешни обаждания през Wi-Fi</string>
-    <string name="add_2sec_pause">Добавяне на пауза от 2 сек</string>
-    <string name="add_wait">Добавяне на изчакване</string>
-    <string name="dialer_useDtmfDialpad">Използване на тонална клавиатура</string>
-    <string name="dialer_returnToInCallScreen">Назад към текущото обаждане</string>
-    <string name="dialer_addAnotherCall">Добавяне на обаждане</string>
 </resources>

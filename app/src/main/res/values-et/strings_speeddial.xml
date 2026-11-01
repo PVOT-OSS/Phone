@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Kiirvalimise lubamiseks lülitage sisse kontaktiluba.</string>
   <string name="speed_dial_turn_on_contacts_permission">Lülita sisse</string>
   <string name="speed_dial_remove_favorites">Eemalda lemmikutest</string>
-    <string name="favorites_header">Lemmikud</string>
-    <string name="contact_menu_remove">Eemalda</string>
-    <string name="speed_dial_no_contacts_description">Te ei ole veel lemmikuid lisanud</string>
-    <string name="speed_dial_no_contacts_action_text">Lisage lemmikuid</string>
 </resources>

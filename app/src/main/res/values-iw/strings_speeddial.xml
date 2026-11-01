@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">כדי להפעיל את החיוג המהיר, צריך להפעיל את ההרשאה \'אנשי קשר\'.</string>
   <string name="speed_dial_turn_on_contacts_permission">הפעלה</string>
   <string name="speed_dial_remove_favorites">הסרה מהמועדפים</string>
-    <string name="favorites_header">מועדפים</string>
-    <string name="contact_menu_remove">הסרה</string>
-    <string name="speed_dial_no_contacts_description">לא הוספת עדיין אף אחד לרשימת המועדפים</string>
-    <string name="speed_dial_no_contacts_action_text">הוספה למועדפים</string>
 </resources>

@@ -7,9 +7,5 @@
   <string name="assisted_dialing_country_code_entry_failure">გამოყენებულია აკრეფის დახმარება</string>
   <string name="rtt_transcript_not_available">ტრანსკრიპტები ხელმისაწვდომია მხოლოდ ზარებისთვის შეტყობინებებით</string>
   <string name="rtt_transcript_link">ტრანსკრიპტის ნახვა</string>
-    <string name="call_details_report_call_id">არაზუსტი ნომრის შეტყობინება</string>
-    <string name="report_caller_id_dialog_title">არასწორი ნომრის შეტყობინება</string>
-    <string name="report_caller_id_failed">ნომრის შეტყობინება ვერ მოხერხდა</string>
-    <string name="report_caller_id_toast">ნომერი შეტყობინებულია</string>
   <string name="call_details_message">შეტყობინება</string>
 </resources>

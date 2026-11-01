@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">ፈጥኖ መደወያን ለማንቃት የእውቂያዎች ፍቃዱን ያብሩ።</string>
   <string name="speed_dial_turn_on_contacts_permission">አብራ</string>
   <string name="speed_dial_remove_favorites">ከተወዳጆች አስወግድ</string>
-    <string name="favorites_header">ተወዳጆች</string>
-    <string name="contact_menu_remove">አስወግድ</string>
-    <string name="speed_dial_no_contacts_description">ገና ምንም ተወዳጆችን አላከሉም</string>
-    <string name="speed_dial_no_contacts_action_text">ተወዳጅ አክል</string>
 </resources>

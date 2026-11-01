@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Zima ujumbe wa sauti unaoonekana</string>
   <string name="confirm_disable_voicemail_dialog_message">Huenda hii ikafuta ujumbe wa sauti na nukuu za Google zilizohifadhiwa kwenye programu hii. Mtoa huduma za mtandao unaotumia anaweza kuhifadhi nakala zake.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ZIMA</string>
-    <string name="voicemail_settings_title">Ujumbe wa sauti</string>
 </resources>

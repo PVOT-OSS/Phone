@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">विज़ुअल वॉइसमेल बंद करें</string>
   <string name="confirm_disable_voicemail_dialog_message">अगर आप इसे बंद करते हैं, तो इस ऐप में मौजूद वॉइसमेल और Google ट्रांसक्रिप्ट मिटा दिए जाएंगे. आपका वाहक अपने पास उनकी कॉपी रख सकता है.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">बंद करें</string>
-    <string name="voicemail_settings_title">वॉइसमेल</string>
 </resources>

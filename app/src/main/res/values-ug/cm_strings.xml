@@ -31,7 +31,4 @@
     <string name="call_via_dialog_title">ئارقىلىق نومۇر بۇراۋاتىدۇ\u2026</string>
     <string name="call_log_stats_title">ئىستاتىستىكا</string>
     <string name="action_menu_helplines">ياردەم تېلېفونى</string>
-    <string name="call_via">ئارقىلىق نومۇر بۇرا</string>
-    <string name="default_dialer_text">نومۇر بۇرىغۇچنى كۆڭۈلدىكى تېلېفون ئەپى قىلىپ تەڭشەش كېرەك.</string>
-    <string name="default_dialer_action">كۆڭۈلدىكى قىممەتكە تەڭشە</string>
 </resources>

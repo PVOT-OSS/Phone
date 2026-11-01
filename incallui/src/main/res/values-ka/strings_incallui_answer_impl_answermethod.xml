@@ -4,7 +4,4 @@
   <string name="call_incoming_swipe_to_reject">უარყოფისთვის გადაფურცლეთ ქვემოთ</string>
   <string name="call_incoming_decline">უარყოფა</string>
   <string name="call_incoming_answer">პასუხი</string>
-    <string name="a11y_incoming_call_swipe_to_answer">პასუხის გასაცემად გადაფურცლეთ ზემოთ ორი თითით, ან ქვემოთ — ზარის უარყოფისთვის</string>
-    <string name="a11y_call_incoming_decline_description">უარყოფა</string>
-    <string name="a11y_call_incoming_answer_description">პასუხი</string>
 </resources>

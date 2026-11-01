@@ -9,9 +9,4 @@
   <string name="simContacts_title">Контакти із SIM-карти</string>
   <string name="menu_callNumber">Зателефонувати на номер %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Не можна здійснювати екстрені виклики через Wi-Fi</string>
-    <string name="add_2sec_pause">Додати 2-секундну паузу</string>
-    <string name="add_wait">Додати паузу</string>
-    <string name="dialer_useDtmfDialpad">Використовувати тональний набір</string>
-    <string name="dialer_returnToInCallScreen">Повернутися до поточного виклику</string>
-    <string name="dialer_addAnotherCall">Додати виклик</string>
 </resources>

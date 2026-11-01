@@ -9,9 +9,4 @@
   <string name="simContacts_title">സിം കാർഡ് കോൺടാക്റ്റുകൾ</string>
   <string name="menu_callNumber">വിളിക്കുക %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">വൈഫൈ വഴി എമർജൻസി കോളുകൾ ചെയ്യാനാകില്ല</string>
-    <string name="add_2sec_pause">2 സെക്കൻഡ് താൽക്കാലികമായി നിർത്തൽ ചേർക്കുക</string>
-    <string name="add_wait">കാത്തിരിക്കൽ ചേർക്കുക</string>
-    <string name="dialer_useDtmfDialpad">ടച്ച് ടോൺ കീപാഡ് ഉപയോഗിക്കുക</string>
-    <string name="dialer_returnToInCallScreen">വിളിച്ചുകൊണ്ടിരിക്കുന്ന കോളിലേക്ക് മടങ്ങുക</string>
-    <string name="dialer_addAnotherCall">കോൾ ചേർക്കുക</string>
 </resources>

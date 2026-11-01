@@ -9,9 +9,4 @@
   <string name="simContacts_title">SIM कार्डका सम्पर्क ठेगानाहरू</string>
   <string name="menu_callNumber">%s मा कल गर्नुहोस्</string>
   <string name="dialpad_hint_emergency_calling_not_available">WiFi मार्फत आपतकालीन कल गर्न सकिँदैन</string>
-    <string name="add_2sec_pause">२ सेकन्डको पज थप्नुहोस्</string>
-    <string name="add_wait">प्रतीक्षाको समय थप्नुहोस्</string>
-    <string name="dialer_useDtmfDialpad">टच टोन किप्याडको प्रयोग गर्नुहोस्</string>
-    <string name="dialer_returnToInCallScreen">जारी रहेको कलमा फर्किनुहोस्</string>
-    <string name="dialer_addAnotherCall">कल थप्नुहोस्</string>
 </resources>

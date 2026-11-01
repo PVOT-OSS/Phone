@@ -97,31 +97,6 @@
   <string name="call_log_action_block_number">חסום מספר</string>
   <string name="call_log_action_unblock_number">בטל חסימת מספר</string>
   <string name="spam_number_call_log_label">ספאם</string>
-    <string name="call_log_trash_voicemail">מחק דואר קולי</string>
-    <string name="snackbar_voicemail_deleted">דואר קולי נמחק</string>
-    <string name="clearCallLogProgress_title">מנקה היסטוריית שיחות…</string>
-    <string name="description_playback_speakerphone">הפעל או כבה את רמקול הטלפון</string>
-    <string name="description_playback_seek">חפש מיקום בהפעלה</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">אפשרויות נוספות</string>
-    <string name="description_entering_bulk_action_mode">עברת למצב של ביצוע פעולות בכמות גדולה</string>
-    <string name="description_leaving_bulk_action_mode">עזבת את המצב של ביצוע פעולות בכמות גדולה</string>
-    <string name="description_selecting_bulk_action_mode">בחרת את %1$s</string>
-    <string name="description_unselecting_bulk_action_mode">ביטלת את הבחירה של %1$s</string>
-    <string name="description_contact_details">פרטי יצירת קשר עבור %1$s</string>
-    <string name="description_spam_contact_details">פרטי התקשרות לשיחה שחשודה כספאם %1$s</string>
-    <string name="description_num_calls">%1$s שיחות.</string>
-    <string name="description_video_call">שיחת וידאו.</string>
-    <string name="select_all">בחירת הכל</string>
-    <string name="description_incoming_missed_call">שיחה לא נענתה מ-^1‏, ^2‏, ^3‏, ^4.</string>
-    <string name="description_incoming_answered_call">נענתה שיחה מ-^1‏, ^2‏, ^3‏, ^4‏.</string>
-    <string name="description_unread_voicemail">דואר קולי שלא נקרא מ-^1, ^2, ^3, ^4.</string>
-    <string name="description_read_voicemail">דואר קולי מ-^1, ^2, ^3, ^4.</string>
-    <string name="description_outgoing_call">שיחה אל ^1‏, ^2‏, ^3‏, ^4.</string>
-    <string name="description_create_new_contact_action">צור איש קשר בשביל ^1</string>
-    <string name="description_add_to_existing_contact_action">הוסף את ^1 לאיש קשר קיים</string>
-    <string name="description_details_action">פרטי שיחה עבור ^1</string>
-    <string name="call_log_action_block_report_number">חסום/דיווח על ספאם</string>
-    <string name="call_log_action_remove_spam">לא ספאם</string>
   <string name="call_log_blocked_title">חסום</string>
   <string name="call_log_contacts_title">אנשי קשר</string>
 </resources>

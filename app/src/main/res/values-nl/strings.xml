@@ -93,31 +93,6 @@
   <string name="call_log_action_block_number">Nummer blokkeren</string>
   <string name="call_log_action_unblock_number">Blokkeren van nummer opheffen</string>
   <string name="spam_number_call_log_label">Spam</string>
-    <string name="call_log_trash_voicemail">Voicemail verwijderen</string>
-    <string name="snackbar_voicemail_deleted">Voicemail verwijderd</string>
-    <string name="clearCallLogProgress_title">Oproepgeschiedenis wissen…</string>
-    <string name="description_playback_speakerphone">Luidsprekertelefoon in- of uitschakelen</string>
-    <string name="description_playback_seek">Afspeelpositie zoeken</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">Meer opties</string>
-    <string name="description_entering_bulk_action_mode">Modus voor bulkacties openen</string>
-    <string name="description_leaving_bulk_action_mode">Modus voor bulkacties verlaten</string>
-    <string name="description_selecting_bulk_action_mode">%1$s geselecteerd</string>
-    <string name="description_unselecting_bulk_action_mode">Selectie van %1$s opgeheven</string>
-    <string name="description_contact_details">Contactgegevens voor %1$s</string>
-    <string name="description_spam_contact_details">Contactgegevens voor vermoedelijke spambeller %1$s</string>
-    <string name="description_num_calls">%1$s telefoongesprekken.</string>
-    <string name="description_video_call">Videogesprek.</string>
-    <string name="select_all">Alles selecteren</string>
-    <string name="description_incoming_missed_call">Oproep gemist van ^1, ^2, ^3, ^4.</string>
-    <string name="description_incoming_answered_call">Oproep beantwoord van ^1, ^2, ^3, ^4.</string>
-    <string name="description_unread_voicemail">Ongelezen voicemail van ^1, ^2, ^3, ^4.</string>
-    <string name="description_read_voicemail">Voicemail van ^1, ^2, ^3, ^4.</string>
-    <string name="description_outgoing_call">Oproep naar ^1, ^2, ^3, ^4.</string>
-    <string name="description_create_new_contact_action">Contact maken voor ^1</string>
-    <string name="description_add_to_existing_contact_action">^1 toevoegen aan bestaand contact</string>
-    <string name="description_details_action">Oproepgegevens voor ^1</string>
-    <string name="call_log_action_block_report_number">Blokkeren/spam melden</string>
-    <string name="call_log_action_remove_spam">Geen spam</string>
   <string name="call_log_blocked_title">Geblokkeerd</string>
   <string name="call_log_contacts_title">Contacten</string>
 </resources>

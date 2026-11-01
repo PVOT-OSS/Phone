@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">השבתת הדואר הקולי הוויזואלי</string>
   <string name="confirm_disable_voicemail_dialog_message">‏כל ההודעות הקוליות והתמלולים של Google שנשמרו באפליקציה יימחקו. ייתכן שיישארו עותקים שלהם אצל הספק הסלולרי שלך.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">השבתה</string>
-    <string name="voicemail_settings_title">דואר קולי</string>
 </resources>

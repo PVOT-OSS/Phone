@@ -97,31 +97,6 @@
   <string name="call_log_action_block_number">Заблакіраваць нумар</string>
   <string name="call_log_action_unblock_number">Разблакіраваць нумар</string>
   <string name="spam_number_call_log_label">Спам</string>
-    <string name="call_log_trash_voicemail">Выдаліць галас. паведамленне</string>
-    <string name="snackbar_voicemail_deleted">Павед.галасавой пошты выдалена</string>
-    <string name="clearCallLogProgress_title">Ачыстка гісторыі выклікаў…</string>
-    <string name="description_playback_speakerphone">Уключыць ці адключыць гучную сувязь</string>
-    <string name="description_playback_seek">Шукаць становішча прайгравання</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">Дадатковыя параметры</string>
-    <string name="description_entering_bulk_action_mode">Уваход у рэжым групавога дзеяння</string>
-    <string name="description_leaving_bulk_action_mode">Выхад з рэжыму групавога дзеяння</string>
-    <string name="description_selecting_bulk_action_mode">Выбрана: %1$s</string>
-    <string name="description_unselecting_bulk_action_mode">Выбар скасаваны: %1$s</string>
-    <string name="description_contact_details">Падрабязнасці кантакту для %1$s</string>
-    <string name="description_spam_contact_details">Кантактныя даныя абанента %1$s, які падазраецца ў спамерскіх выкліках</string>
-    <string name="description_num_calls">Выклікаў: %1$s.</string>
-    <string name="description_video_call">Відэавыклік.</string>
-    <string name="select_all">Выбраць усё</string>
-    <string name="description_incoming_missed_call">Прапушчаны выклік ад ^1, ^2, ^3, ^4.</string>
-    <string name="description_incoming_answered_call">Адказаны выклік ад ^1, ^2, ^3, ^4.</string>
-    <string name="description_unread_voicemail">Непрачытанае паведамленне галасавой пошты ад ^1, ^2, ^3, ^4.</string>
-    <string name="description_read_voicemail">Паведамленне галасавой пошты ад ^1, ^2, ^3, ^4.</string>
-    <string name="description_outgoing_call">Выклік абаненту ^1, ^2, ^3, ^4.</string>
-    <string name="description_create_new_contact_action">Стварыць кантакт для ^1</string>
-    <string name="description_add_to_existing_contact_action">Дадаць ^1 да існуючага кантакту</string>
-    <string name="description_details_action">Падрабязнасці кантакту для ^1</string>
-    <string name="call_log_action_block_report_number">Заблакір./паведаміць пра спам</string>
-    <string name="call_log_action_remove_spam">Не спам</string>
   <string name="call_log_blocked_title">Заблакiравана</string>
   <string name="call_log_contacts_title">Кантакты</string>
 </resources>

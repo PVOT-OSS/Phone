@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Tắt thư thoại kèm theo hình ảnh</string>
   <string name="confirm_disable_voicemail_dialog_message">Thao tác này sẽ xóa bất kỳ thư thoại và bản ghi âm Google nào được lưu trữ trong ứng dụng này. Nhà mạng của bạn có thể giữ bản sao riêng.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">TẮT</string>
-    <string name="voicemail_settings_title">Thư thoại</string>
 </resources>

@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">برای فعال کردن شماره‌گیری سریع، مجوز «مخاطبین» را روشن کنید.</string>
   <string name="speed_dial_turn_on_contacts_permission">روشن کردن</string>
   <string name="speed_dial_remove_favorites">برداشتن از موارد دلخواه</string>
-    <string name="favorites_header">موردعلاقه‌‌‌ها</string>
-    <string name="contact_menu_remove">برداشتن</string>
-    <string name="speed_dial_no_contacts_description">هنوز مورد دلخواهی اضافه نکرده‌اید</string>
-    <string name="speed_dial_no_contacts_action_text">افزودن مورد دلخواه</string>
 </resources>

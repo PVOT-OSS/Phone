@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Para activar a marcación rápida, activa o permiso de Contactos.</string>
   <string name="speed_dial_turn_on_contacts_permission">Activar</string>
   <string name="speed_dial_remove_favorites">Quitar contacto de favoritos</string>
-    <string name="favorites_header">Favoritos</string>
-    <string name="contact_menu_remove">Quitar</string>
-    <string name="speed_dial_no_contacts_description">Aínda non engadiches ningún contacto favorito</string>
-    <string name="speed_dial_no_contacts_action_text">Engadir favorito</string>
 </resources>

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="delete">Удалить</string>
-    <string name="call_details_menu_label">Сведения о вызове</string>
 </resources>

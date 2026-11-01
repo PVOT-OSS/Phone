@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Անջատել ձայնային փոստի ցուցադրումը</string>
   <string name="confirm_disable_voicemail_dialog_message">Կջնջվեն այս հավելվածում պահված ամբողջ ձայնային փոստն ու ձայնագրությունների տեքստերը՝ տառադրված Google-ի հատուկ ծառայության միջոցով: Դրանց պատճենները հնարավոր է մնան ձեր օպերատորի մոտ:</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ԱՆՋԱՏԵԼ</string>
-    <string name="voicemail_settings_title">Ձայնային փոստ</string>
 </resources>

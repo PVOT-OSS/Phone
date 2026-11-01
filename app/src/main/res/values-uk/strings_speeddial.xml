@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Щоб активувати швидкий набір, увімкніть дозвіл \"Контакти\".</string>
   <string name="speed_dial_turn_on_contacts_permission">Увімкнути</string>
   <string name="speed_dial_remove_favorites">Видалити з вибраного</string>
-    <string name="favorites_header">Вибрані</string>
-    <string name="contact_menu_remove">Видалити</string>
-    <string name="speed_dial_no_contacts_description">У списку поки немає вибраних контактів</string>
-    <string name="speed_dial_no_contacts_action_text">Додати вибраний контакт</string>
 </resources>

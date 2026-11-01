@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Vaizdinio balso pašto išjungimas</string>
   <string name="confirm_disable_voicemail_dialog_message">Tai atlikus bus ištrinti visi balso pašto pranešimai ir „Google“ nuorašai, saugomi šioje programoje. Operatorius gali pasilikti savo kopijas.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">IŠJUNGTI</string>
-    <string name="voicemail_settings_title">Balso paštas</string>
 </resources>

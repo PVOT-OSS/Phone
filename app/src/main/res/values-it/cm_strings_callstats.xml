@@ -31,18 +31,4 @@
     <string name="call_stats_title_count">Conteggio chiamate</string>
     <string name="call_stats_title_average_duration">Durata media chiamata</string>
     <string name="recent_calls_no_items_in_range">Il registro chiamate non contiene nessuna chiamata nel periodo di tempo selezionato.</string>
-    <string name="call_stats_header_total_callsonly">Totale: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Da data</string>
-    <string name="call_stats_filter_to">A data</string>
-    <string name="call_stats_filter_picker_title">Intervallo</string>
-    <string name="date_quick_selection">Selezione rapida</string>
-    <string name="date_qs_currentmonth">Mese corrente</string>
-    <string name="date_qs_currentquarter">Trimestre corrente</string>
-    <string name="date_qs_currentyear">Anno corrente</string>
-    <string name="date_qs_lastweek">Ultima settimana</string>
-    <string name="date_qs_lastmonth">Ultimo mese</string>
-    <string name="date_qs_lastquarter">Ultimo trimestre</string>
-    <string name="date_qs_lastyear">Ultimo anno</string>
-    <string name="call_stats_sort_by_duration">Ordina per durata</string>
-    <string name="call_stats_sort_by_count">Ordina per numero</string>
 </resources>

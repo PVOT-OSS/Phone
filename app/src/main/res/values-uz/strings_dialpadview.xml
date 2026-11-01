@@ -9,9 +9,4 @@
   <string name="simContacts_title">SIM kartadagi kontaktlar</string>
   <string name="menu_callNumber">%s raqamiga qo‘ng‘iroq qilish</string>
   <string name="dialpad_hint_emergency_calling_not_available">Wi‑Fi orqali favqulodda xizmatlarga chaqiruv qilib bo‘lmaydi</string>
-    <string name="add_2sec_pause">2 soniyalik pauza qo‘shish</string>
-    <string name="add_wait">Pauza qo‘shish</string>
-    <string name="dialer_useDtmfDialpad">Tovushli klaviatura</string>
-    <string name="dialer_returnToInCallScreen">Davom etayotgan chaqiruvga qaytish</string>
-    <string name="dialer_addAnotherCall">Chaqiruv qo‘shish</string>
 </resources>

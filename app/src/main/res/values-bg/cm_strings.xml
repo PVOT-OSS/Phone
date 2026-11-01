@@ -33,5 +33,4 @@
     <string name="action_menu_helplines">Телефонни линии за помощ</string>
     <string name="default_dialer_text">За да използвате Телефон, задайте го като основно приложение за разговори.</string>
     <string name="default_dialer_action">Задаване по подразбиране</string>
-    <string name="call_via">Повикване чрез</string>
 </resources>

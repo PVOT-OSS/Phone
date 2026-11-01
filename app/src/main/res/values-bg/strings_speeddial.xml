@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">За да активирате бързото набиране, включете разрешението за Контакти.</string>
   <string name="speed_dial_turn_on_contacts_permission">Включване</string>
   <string name="speed_dial_remove_favorites">Премахване от любимите</string>
-    <string name="favorites_header">Любими</string>
-    <string name="contact_menu_remove">Премахване</string>
-    <string name="speed_dial_no_contacts_description">Още не сте добавили любими</string>
-    <string name="speed_dial_no_contacts_action_text">Добавяне като любим</string>
 </resources>

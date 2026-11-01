@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">ကြည့်ရှုစီမံနိုင်သော အသံမေးလ်ကို ပိတ်ပါ</string>
   <string name="confirm_disable_voicemail_dialog_message">ဤသည်က ဤအက်ပ်အတွင်း သိမ်းဆည်းထားသော မည်သည့်အသံမေးလ်နှင့် Google စာသားမှတ်တမ်းကိုမဆို ဖျက်ပစ်ပါမည်။ သင့်ဖုန်းကုမ္ပဏီသည် ၎င်း၏ကိုယ်ပိုင်မိတ္တူများကို သိမ်းဆည်းထားနိုင်သည်။</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ပိတ်ရန်</string>
-    <string name="voicemail_settings_title">အသံမေးလ်</string>
 </resources>

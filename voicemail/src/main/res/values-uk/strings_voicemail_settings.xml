@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Вимкнути візуальну голосову пошту</string>
   <string name="confirm_disable_voicemail_dialog_message">Буде видалено всю голосову пошту та транскрипції Google, які зберігаються в цьому додатку. Ваш оператор може зберегти для себе копії.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ВИМКНУТИ</string>
-    <string name="voicemail_settings_title">Голосова пошта</string>
 </resources>

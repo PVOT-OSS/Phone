@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">I-off ang visual na voicemail</string>
   <string name="confirm_disable_voicemail_dialog_message">Ide-delete nito ang anumang voicemail at mga transcript ng Google na naka-store sa app na ito. Maaaring magpanatili ang iyong carrier ng sarili nitong mga kopya.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">I-OFF</string>
-    <string name="voicemail_settings_title">Voicemail</string>
 </resources>

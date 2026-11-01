@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Απενεργοπ. οπτικού αυτόματου τηλεφωνητή</string>
   <string name="confirm_disable_voicemail_dialog_message">Αυτό θα διαγράψει τυχόν φωνητικά μηνύματα ή μεταγραφές Google που έχουν αποθηκευτεί εντός της εφαρμογής. Η εταιρεία κινητής τηλεφωνίας που χρησιμοποιείτε ενδέχεται να διατηρεί τα δικά της αντίγραφα.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ</string>
-    <string name="voicemail_settings_title">Αυτόματος τηλεφωνητής</string>
 </resources>

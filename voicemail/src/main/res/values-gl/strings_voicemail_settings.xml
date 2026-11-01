@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Desactivar correo de voz visual</string>
   <string name="confirm_disable_voicemail_dialog_message">Con esta acción, eliminaranse os correos de voz, así como as transcricións de Google almacenadas nesta aplicación. É posible que o teu operador garde as súas propias copias.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">DESACTIVAR</string>
-    <string name="voicemail_settings_title">Correo de voz</string>
 </resources>

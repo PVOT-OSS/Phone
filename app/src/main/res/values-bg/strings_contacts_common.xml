@@ -19,5 +19,4 @@
   <string name="action_menu_back_from_search">спиране на търсенето</string>
   <string name="description_clear_search">Изчистване на търсенето</string>
   <string name="description_search_video_call">Видеообаждане</string>
-    <string name="call_with_a_note">Обаждане, включващо бележка</string>
 </resources>

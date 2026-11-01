@@ -9,9 +9,4 @@
   <string name="simContacts_title">SIM card contacts</string>
   <string name="menu_callNumber">Call %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Can’t make emergency calls over Wi‑Fi</string>
-    <string name="add_2sec_pause">Add 2-sec pause</string>
-    <string name="add_wait">Add wait</string>
-    <string name="dialer_useDtmfDialpad">Use touch-tone keypad</string>
-    <string name="dialer_returnToInCallScreen">Return to call in progress</string>
-    <string name="dialer_addAnotherCall">Add call</string>
 </resources>

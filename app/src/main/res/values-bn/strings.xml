@@ -93,31 +93,6 @@
   <string name="call_log_action_block_number">নম্বর অবরোধ করুন</string>
   <string name="call_log_action_unblock_number">নম্বর অবরোধ মুক্ত করুন</string>
   <string name="spam_number_call_log_label">স্প্যাম</string>
-    <string name="call_log_trash_voicemail">ভয়েসমেল মুছুন</string>
-    <string name="snackbar_voicemail_deleted">ভয়েসমেল মোছা হয়েছে</string>
-    <string name="clearCallLogProgress_title">পুরোনো কলের তালিকা সাফ করা হচ্ছে…</string>
-    <string name="description_playback_speakerphone">স্পিকার চালু বা বন্ধ করুন</string>
-    <string name="description_playback_seek">প্লেব্যাক লোকেশন খুঁজুন</string>
-    <string msgid="2295659037509008453" name="action_menu_overflow_description">আরও বিকল্প</string>
-    <string name="description_entering_bulk_action_mode">বাল্ক অ্যাকশন মোডে প্রবেশ করা হচ্ছে</string>
-    <string name="description_leaving_bulk_action_mode">বাল্ক অ্যাকশন মোড ত্যাগ করুন</string>
-    <string name="description_selecting_bulk_action_mode">%1$s নির্বাচন করা হয়েছে</string>
-    <string name="description_unselecting_bulk_action_mode">%1$s অনির্বাচন করা হয়েছে</string>
-    <string name="description_contact_details">%1$s পরিচিতির বিশদ বিবরণ</string>
-    <string name="description_spam_contact_details">সন্দেহভাজন স্প্যাম কলারের পরিচিতির বিশদ বিবরণ %1$s</string>
-    <string name="description_num_calls">%1$sটি কল৷</string>
-    <string name="description_video_call">ভিডিও কল।</string>
-    <string name="select_all">সবগুলি বেছে নিন</string>
-    <string name="description_incoming_missed_call">^1, ^2, ^3, ^4 থেকে মিস হওয়া কল৷</string>
-    <string name="description_incoming_answered_call">^1, ^2, ^3, ^4 এর থেকে উত্তর দেওয়া কল৷</string>
-    <string name="description_unread_voicemail">^1 , ^2 , ^3 , ^4 এর থেকে অপঠিত ভয়েসমেল৷</string>
-    <string name="description_read_voicemail">^1 , ^2 , ^3 , ^4 এর থেকে ভয়েসমেল৷</string>
-    <string name="description_outgoing_call">^1, ^2, ^3, ^4 এ কল করুন৷</string>
-    <string name="description_create_new_contact_action">^1 এর জন্য পরিচিতি তৈরি করুন</string>
-    <string name="description_add_to_existing_contact_action">বিদ্যমান পরিচিতিতে ^1 যোগ করুন</string>
-    <string name="description_details_action">^1 এর কলের বিবরণ</string>
-    <string name="call_log_action_block_report_number">অবরুদ্ধ করুন/স্প্যাম হিসাবে অভিযোগ করুন</string>
-    <string name="call_log_action_remove_spam">স্প্যাম নয়</string>
   <string name="call_log_blocked_title">অবরুদ্ধ</string>
   <string name="call_log_contacts_title">পরিচিতিগুলি</string>
 </resources>

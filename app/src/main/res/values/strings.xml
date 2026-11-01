@@ -489,41 +489,4 @@
   <string name="call_details_composer_urgent_note">Urgent · “<xliff:g id="note" example="Running late">%1$s</xliff:g>”</string>
   <!-- Content description of the picture sent with a call [CHAR LIMIT=NONE] -->
   <string name="call_details_composer_picture">Picture sent with the call</string>
-    <string name="call_log_trash_voicemail">Delete voicemail</string>
-    <string name="clearCallLogProgress_title">Clearing call history\u2026</string>
-    <string name="description_playback_speakerphone">Switch on or off speakerphone</string>
-    <string name="description_playback_seek">Seek playback position</string>
-    <string name="description_entering_bulk_action_mode">Entering bulk action mode</string>
-    <string name="description_leaving_bulk_action_mode">Left bulk action mode</string>
-    <string name="description_selecting_bulk_action_mode">Selected <xliff:g id="nameOrNumber">%1$s</xliff:g></string>
-    <string name="description_unselecting_bulk_action_mode">Unselected <xliff:g id="nameOrNumber">%1$s</xliff:g></string>
-    <string name="description_contact_details">Contact details for <xliff:g id="nameOrNumber">%1$s</xliff:g></string>
-    <string name="description_spam_contact_details">Contact details for suspected spam caller <xliff:g id="nameOrNumber">%1$s</xliff:g></string>
-    <string name="description_num_calls"><xliff:g id="numberOfCalls">%1$s</xliff:g> calls.</string>
-    <string name="description_video_call">Video call.</string>
-    <string name="select_all">Select all</string>
-    <string name="description_incoming_missed_call">Missed call from <xliff:g example="John Smith" id="nameOrNumber">^1</xliff:g>, <xliff:g example="Mobile" id="typeOrLocation">^2</xliff:g>, <xliff:g example="2 min ago" id="timeOfCall">^3</xliff:g>, <xliff:g example="on SIM 1" id="phoneAccount">^4</xliff:g>.</string>
-    <string name="description_incoming_answered_call">Answered call from <xliff:g example="John Smith" id="nameOrNumber">^1</xliff:g>, <xliff:g example="Mobile" id="typeOrLocation">^2</xliff:g>, <xliff:g example="2 min ago" id="timeOfCall">^3</xliff:g>, <xliff:g example="on SIM 1" id="phoneAccount">^4</xliff:g>.</string>
-    <string name="description_unread_voicemail">Unread voicemail from <xliff:g example="John Smith" id="nameOrNumber">^1</xliff:g>, <xliff:g example="Mobile" id="typeOrLocation">^2</xliff:g>, <xliff:g example="2 min ago" id="timeOfCall">^3</xliff:g>, <xliff:g example="on SIM 1" id="phoneAccount">^4</xliff:g>.</string>
-    <string name="description_read_voicemail">Voicemail from <xliff:g example="John Smith" id="nameOrNumber">^1</xliff:g>, <xliff:g example="Mobile" id="typeOrLocation">^2</xliff:g>, <xliff:g example="2 min ago" id="timeOfCall">^3</xliff:g>, <xliff:g example="on SIM 1" id="phoneAccount">^4</xliff:g>.</string>
-    <string name="description_outgoing_call">Call to <xliff:g example="John Smith" id="nameOrNumber">^1</xliff:g>, <xliff:g example="Mobile" id="typeOrLocation">^2</xliff:g>, <xliff:g example="2 min ago" id="timeOfCall">^3</xliff:g>, <xliff:g example="on SIM 1" id="phoneAccount">^4</xliff:g>.</string>
-    <string name="description_create_new_contact_action">
-        Create contact for <xliff:g example="John Smith" id="nameOrNumber">^1</xliff:g>
-    </string>
-    <string name="description_add_to_existing_contact_action">
-        Add <xliff:g example="John Smith" id="nameOrNumber">^1</xliff:g> to existing contact
-    </string>
-    <string name="description_details_action">
-        Call details for <xliff:g example="John Smith" id="nameOrNumber">^1</xliff:g>
-    </string>
-    <string-array name="dtmf_tone_length_entry_values" translatable="false">
-    <item>0</item>
-    <item>1</item>
-  </string-array>
-    <string name="ringtone_preference_key" translatable="false">button_ringtone_key</string>
-    <string name="vibrate_on_preference_key" translatable="false">button_vibrate_on_ring</string>
-    <string name="play_dtmf_preference_key" translatable="false">button_play_dtmf_tone</string>
-    <string name="dtmf_tone_length_preference_key" translatable="false">button_dtmf_settings</string>
-    <string name="call_log_action_block_report_number">Block/report spam</string>
-    <string name="call_log_action_remove_spam">Not spam</string>
 </resources>

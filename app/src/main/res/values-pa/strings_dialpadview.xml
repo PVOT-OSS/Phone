@@ -9,9 +9,4 @@
   <string name="simContacts_title">ਸਿਮ ਕਾਰਡ ਸੰਪਰਕ</string>
   <string name="menu_callNumber">%s ਨੂੰ ਕਾਲ ਕਰੋ</string>
   <string name="dialpad_hint_emergency_calling_not_available">ਵਾਈ-ਫਾਈ ਰਾਹੀਂ ਸੰਕਟਕਾਲੀਨ ਕਾਲਾਂ ਨਹੀਂ ਕਰ ਸਕਦੇ</string>
-    <string name="add_2sec_pause">2-ਸਕਿੰਟ ਦਾ ਵਿਰਾਮ ਸ਼ਾਮਲ ਕਰੋ</string>
-    <string name="add_wait">ਉਡੀਕ ਦਾ ਸਮਾਂ ਸ਼ਾਮਲ ਕਰੋ</string>
-    <string name="dialer_useDtmfDialpad">ਸਪਰੱਸ਼ ਧੁਨੀ ਕੀ-ਪੈਡ ਵਰਤੋ</string>
-    <string name="dialer_returnToInCallScreen">ਜਾਰੀ ਕਾਲ \'ਤੇ ਵਾਪਸ ਜਾਓ</string>
-    <string name="dialer_addAnotherCall">ਕਾਲ ਸ਼ਾਮਲ ਕਰੋ</string>
 </resources>

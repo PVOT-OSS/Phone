@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">स्पीड डायल चालू करने के लिए, \'संपर्क\' इजाज़त चालू करें.</string>
   <string name="speed_dial_turn_on_contacts_permission">चालू करें</string>
   <string name="speed_dial_remove_favorites">पसंदीदा से हटाएं</string>
-    <string name="favorites_header">पसंदीदा</string>
-    <string name="contact_menu_remove">हटाएं</string>
-    <string name="speed_dial_no_contacts_description">आपने अभी तक कोई भी पसंदीदा संपर्क नहीं जोड़ा है.</string>
-    <string name="speed_dial_no_contacts_action_text">पसंदीदा संपर्क जोड़ें</string>
 </resources>

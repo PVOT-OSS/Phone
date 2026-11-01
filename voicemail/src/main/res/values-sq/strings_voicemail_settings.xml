@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Çaktivizo postën zanore vizuale</string>
   <string name="confirm_disable_voicemail_dialog_message">Kjo do të fshijë çdo postë zanore dhe transkriptet e Google të ruajtura në këtë aplikacion. Operatori yt celular mund të mbajë kopjet e veta.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">ÇAKTIVIZO</string>
-    <string name="voicemail_settings_title">Posta zanore</string>
 </resources>

@@ -9,9 +9,4 @@
   <string name="simContacts_title">SIM картны харилцагч</string>
   <string name="menu_callNumber">%s руу залгах</string>
   <string name="dialpad_hint_emergency_calling_not_available">WiFi-р яаралтай дуудлага хийх боломжгүй</string>
-    <string name="add_2sec_pause">2-сек зогсолт нэмэх</string>
-    <string name="add_wait">Хүлээлт нэмэх</string>
-    <string name="dialer_useDtmfDialpad">Хүрэлтээр дуугардаг товчлуур ашиглах</string>
-    <string name="dialer_returnToInCallScreen">Үргэлжилж буй дуудлага руу буцах</string>
-    <string name="dialer_addAnotherCall">Дуудлага нэмэх</string>
 </resources>

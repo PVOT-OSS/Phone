@@ -31,18 +31,4 @@
     <string name="call_stats_title_count">Oantal petearen</string>
     <string name="call_stats_title_average_duration">Gemiddelde peteardoer</string>
     <string name="recent_calls_no_items_in_range">Jo opropskiednis befettet gjin oproppen yn it selektearre tiidrek.</string>
-    <string name="call_stats_header_total_callsonly">Totaal: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Startdatum</string>
-    <string name="call_stats_filter_to">Eindatum</string>
-    <string name="call_stats_filter_picker_title">Filterberik</string>
-    <string name="date_quick_selection">Flugge seleksje</string>
-    <string name="date_qs_currentmonth">Aktuele moanne</string>
-    <string name="date_qs_currentquarter">Aktuele fearnsjier</string>
-    <string name="date_qs_currentyear">Aktuele jier</string>
-    <string name="date_qs_lastweek">Foarige wike</string>
-    <string name="date_qs_lastmonth">Foarige moanne</string>
-    <string name="date_qs_lastquarter">Foarich fearnsjier</string>
-    <string name="date_qs_lastyear">Foarich jier</string>
-    <string name="call_stats_sort_by_duration">Sortearje op peteardoer</string>
-    <string name="call_stats_sort_by_count">Sortearje op oantal petearen</string>
 </resources>

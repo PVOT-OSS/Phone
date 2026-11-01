@@ -48,8 +48,4 @@
 
   <!-- String shown when RTT transcript is available. [CHAR LIMIT=NONE] -->
   <string name="rtt_transcript_link">See transcript</string>
-    <string name="call_details_report_call_id">Report inaccurate number</string>
-    <string name="report_caller_id_dialog_title">Report incorrect number</string>
-    <string name="report_caller_id_failed">Couldn\'t report number</string>
-    <string name="report_caller_id_toast">Number reported</string>
 </resources>

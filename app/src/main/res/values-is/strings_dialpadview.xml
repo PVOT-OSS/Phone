@@ -9,9 +9,4 @@
   <string name="simContacts_title">Tengiliðir á SIM-korti</string>
   <string name="menu_callNumber">Hringja í %s</string>
   <string name="dialpad_hint_emergency_calling_not_available">Ekki er hægt að hringja neyðarsímtöl með Wi-Fi</string>
-    <string name="add_2sec_pause">Bæta við 2 sekúndna töf</string>
-    <string name="add_wait">Bæta töf við</string>
-    <string name="dialer_useDtmfDialpad">Nota snertitónatalnaborð</string>
-    <string name="dialer_returnToInCallScreen">Fara aftur í símtal í gangi</string>
-    <string name="dialer_addAnotherCall">Bæta símtali við</string>
 </resources>

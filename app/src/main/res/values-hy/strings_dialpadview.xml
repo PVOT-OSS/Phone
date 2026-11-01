@@ -9,9 +9,4 @@
   <string name="simContacts_title">SIM քարտի կոնտակտներ</string>
   <string name="menu_callNumber">Զանգել %s համարին</string>
   <string name="dialpad_hint_emergency_calling_not_available">Շտապ կանչերը հասանելի չեն Wi‑Fi-ի միջոցով</string>
-    <string name="add_2sec_pause">Ավելացնել 2 վայրկյան դադար</string>
-    <string name="add_wait">Ավելացնել սպասելաժամանակ</string>
-    <string name="dialer_useDtmfDialpad">Բացել տոնային թվաշարը</string>
-    <string name="dialer_returnToInCallScreen">Վերադառնալ ընթացիկ զանգին</string>
-    <string name="dialer_addAnotherCall">Ավելացնել զանգ</string>
 </resources>

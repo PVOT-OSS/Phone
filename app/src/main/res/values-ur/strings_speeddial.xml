@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">اسپیڈ ڈائل کو فعال کرنے کیلئے رابطوں کی اجازت آن کریں۔</string>
   <string name="speed_dial_turn_on_contacts_permission">آن کریں</string>
   <string name="speed_dial_remove_favorites">پسندیدہ سے ہٹائیں</string>
-    <string name="favorites_header">پسندیدہ</string>
-    <string name="contact_menu_remove">ہٹائیں</string>
-    <string name="speed_dial_no_contacts_description">آپ نے ابھی تک کوئی پسندیدگی شامل نہیں کی ہے</string>
-    <string name="speed_dial_no_contacts_action_text">پسندیدگی شامل کریں</string>
 </resources>

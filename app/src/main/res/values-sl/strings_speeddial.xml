@@ -14,8 +14,4 @@
   <string name="speed_dial_contacts_permission_description">Če želite omogočiti hitro klicanje, vklopite dovoljenje za stike.</string>
   <string name="speed_dial_turn_on_contacts_permission">Vklopi</string>
   <string name="speed_dial_remove_favorites">Odstrani iz priljubljenih</string>
-    <string name="favorites_header">Priljubljeno</string>
-    <string name="contact_menu_remove">Odstrani</string>
-    <string name="speed_dial_no_contacts_description">Dodali niste še nobenega priljubljenega</string>
-    <string name="speed_dial_no_contacts_action_text">Dodaj med priljubljene</string>
 </resources>

@@ -33,5 +33,4 @@
   <string name="confirm_disable_voicemail_dialog_title">Skakel visuele stemboodskap af</string>
   <string name="confirm_disable_voicemail_dialog_message">Dit sal enige stemboodskap en Google-transkripsies wat in hierdie program geberg is, uitvee. Jou diensverskaffer kan dalk sy eie kopieë hou.</string>
   <string name="confirm_disable_voicemail_accept_dialog_label">SKAKEL AF</string>
-    <string name="voicemail_settings_title">Stemboodskap</string>
 </resources>

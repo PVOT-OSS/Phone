@@ -9,9 +9,4 @@
   <string name="simContacts_title">SIM කාඩ්පත් සම්බන්ධතා</string>
   <string name="menu_callNumber">%s අමතන්න</string>
   <string name="dialpad_hint_emergency_calling_not_available">Wi-Fi හරහා හදිසි අවස්ථා ඇමතුම් කිරීමට නොහැකිය</string>
-    <string name="add_2sec_pause">තත්පර 2ක විරාමයක් එක් කරන්න</string>
-    <string name="add_wait">රැඳී සිටීම එක් කරන්න</string>
-    <string name="dialer_useDtmfDialpad">ස්පර්ශ නාද යතුරුපෑඩය භාවිත කරන්න</string>
-    <string name="dialer_returnToInCallScreen">පවතින ඇමතුමට නැවත යන්න</string>
-    <string name="dialer_addAnotherCall">ඇමතුම එක් කරන්න</string>
 </resources>
