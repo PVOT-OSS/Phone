@@ -58,6 +58,9 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
   private static final int NUM_LOGS_TO_DISPLAY = 1000;
   /** The token for the query to fetch the old entries from the call log. */
   private static final int QUERY_CALLLOG_TOKEN = 54;
+
+  /** The filter of the newest call log query. */
+  private int latestCallTypeFilter = CALL_TYPE_ALL;
   /** The token for the query to mark all missed calls as read after seeing the call log. */
   private static final int UPDATE_MARK_MISSED_CALL_AS_READ_TOKEN = 56;
   /** The token for the query to fetch voicemail status messages. */
@@ -209,9 +212,11 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
             .buildUpon()
             .appendQueryParameter(Calls.LIMIT_PARAM_KEY, Integer.toString(limit))
             .build();
+    // Tag the query with its filter, so a result for a filter that is no longer shown is dropped.
+    latestCallTypeFilter = callType;
     startQuery(
         token,
-        null,
+        callType,
         uri,
         CallLogQuery.getProjection(),
         selection,
@@ -265,6 +270,10 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
     }
     try {
       if (token == QUERY_CALLLOG_TOKEN) {
+        if (cookie instanceof Integer && (Integer) cookie != latestCallTypeFilter) {
+          LogUtil.i("CallLogQueryHandler.onNotNullableQueryComplete", "dropping a stale result");
+          return;
+        }
         if (updateAdapterData(cursor)) {
           cursor = null;
         }
