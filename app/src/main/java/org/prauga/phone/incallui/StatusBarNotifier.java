@@ -689,6 +689,8 @@ public class StatusBarNotifier
       return R.drawable.quantum_ic_videocam_vd_white_24;
     } else if (call.hasProperty(Details.PROPERTY_HAS_CDMA_VOICE_PRIVACY)) {
       return R.drawable.quantum_ic_phone_locked_vd_theme_24;
+    } else if (call.hasProperty(Details.PROPERTY_WIFI)) {
+      return R.drawable.ic_wifi_calling;
     }
     return R.drawable.on_going_call;
   }
