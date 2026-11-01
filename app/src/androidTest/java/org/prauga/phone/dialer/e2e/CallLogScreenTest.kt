@@ -15,6 +15,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
+import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.MainComponent
 import org.prauga.phone.dialer.testing.FakeCallSpec
 import org.prauga.phone.dialer.testing.FakeCarrier
@@ -42,6 +43,26 @@ class CallLogScreenTest {
         assertNotNull(
             "missed call is not listed in recents",
             deviceRule.device.wait(Until.findObject(By.textContains(number.takeLast(4))), CallTests.TIMEOUT_MILLIS),
+        )
+    }
+
+    @Test
+    fun recentCallSaysJustNow() {
+        val number = CallTests.freshNumber()
+        val since = System.currentTimeMillis()
+        FakeCarrier.ring(context, FakeCallSpec(number = number))
+        CallTests.waitForRinging().hangUpFromFarEnd()
+        InCall.waitForNoCalls()
+        CallTests.waitFor { CallTests.latestCall(context, number, since) }
+
+        context.startActivity(MainComponent.getShowCallLogIntent(context).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+
+        assertNotNull(
+            "recent call doesn't say \"Just now\"",
+            deviceRule.device.wait(
+                Until.findObject(By.textContains(context.getString(R.string.call_log_time_just_now))),
+                CallTests.TIMEOUT_MILLIS,
+            ),
         )
     }
 }
