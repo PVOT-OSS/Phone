@@ -60,6 +60,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.prauga.pvot.designsystem.theme.PvotSpacing
+import com.prauga.pvot.designsystem.theme.PvotTheme
 import kotlinx.coroutines.launch
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.ui.TestTags
@@ -127,7 +128,8 @@ fun AnswerControls(state: AnswerUiState, actions: AnswerActions, modifier: Modif
             Row(
                 Modifier.fillMaxWidth().padding(horizontal = PvotSpacing.L),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Bottom,
+                // The side buttons line up with the answer button between its two hints.
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 SideButton(state.secondary.takeIf { state.secondaryVisible }, actions::onSecondary, actions, TestTags.ANSWER_SECONDARY)
                 SwipeToAnswer(state, actions, Modifier.weight(1f))
@@ -175,6 +177,7 @@ private fun SwipeToAnswer(state: AnswerUiState, actions: AnswerActions, modifier
         done = true
         if (answer) actions.onAnswer() else actions.onReject()
     }
+    val declining = offset.value > declineThreshold / 2
     Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             text = (state.hint ?: stringResource(R.string.call_incoming_swipe_to_answer)).toString(),
@@ -188,7 +191,7 @@ private fun SwipeToAnswer(state: AnswerUiState, actions: AnswerActions, modifier
                 .padding(vertical = PvotSpacing.L)
                 .offset { IntOffset(0, (offset.value + if (dragging || done) 0f else with(density) { nudge.dp.toPx() }).roundToInt()) }
                 .size(PuckSize)
-                .background(if (offset.value > declineThreshold / 2) MaterialTheme.colorScheme.error else AnswerGreen, CircleShape)
+                .background(if (declining) MaterialTheme.colorScheme.error else PvotTheme.extendedColors.success, CircleShape)
                 .draggable(
                     state = rememberDraggableState { delta ->
                         if (done) return@rememberDraggableState
@@ -228,7 +231,12 @@ private fun SwipeToAnswer(state: AnswerUiState, actions: AnswerActions, modifier
                 .testTag(TestTags.ANSWER_PUCK),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(painterResource(state.answerIcon), contentDescription = null, tint = Color.White, modifier = Modifier.size(32.dp))
+            Icon(
+                painter = painterResource(state.answerIcon),
+                contentDescription = null,
+                tint = if (declining) MaterialTheme.colorScheme.onError else PvotTheme.extendedColors.onSuccess,
+                modifier = Modifier.size(32.dp),
+            )
         }
         Text(
             text = stringResource(R.string.call_incoming_swipe_to_reject),
@@ -247,17 +255,29 @@ private fun TwoButtons(state: AnswerUiState, actions: AnswerActions) {
         Modifier.fillMaxWidth().padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.L),
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
-        RoundAction(R.drawable.ic_phone_off, stringResource(R.string.call_incoming_decline), MaterialTheme.colorScheme.error, TestTags.ANSWER_DECLINE) {
+        RoundAction(
+            R.drawable.ic_phone_off,
+            stringResource(R.string.call_incoming_decline),
+            MaterialTheme.colorScheme.error,
+            MaterialTheme.colorScheme.onError,
+            TestTags.ANSWER_DECLINE,
+        ) {
             actions.onReject()
         }
-        RoundAction(state.answerIcon, stringResource(R.string.call_incoming_answer), AnswerGreen, TestTags.ANSWER_ACCEPT) {
+        RoundAction(
+            state.answerIcon,
+            stringResource(R.string.call_incoming_answer),
+            PvotTheme.extendedColors.success,
+            PvotTheme.extendedColors.onSuccess,
+            TestTags.ANSWER_ACCEPT,
+        ) {
             actions.onAnswer()
         }
     }
 }
 
 @Composable
-private fun RoundAction(@DrawableRes icon: Int, label: String, color: Color, tag: String, onClick: () -> Unit) {
+private fun RoundAction(@DrawableRes icon: Int, label: String, color: Color, contentColor: Color, tag: String, onClick: () -> Unit) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             Modifier
@@ -272,7 +292,7 @@ private fun RoundAction(@DrawableRes icon: Int, label: String, color: Color, tag
                 .testTag(tag),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(painterResource(icon), contentDescription = null, tint = Color.White, modifier = Modifier.size(32.dp))
+            Icon(painterResource(icon), contentDescription = null, tint = contentColor, modifier = Modifier.size(32.dp))
         }
         Text(label, style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = PvotSpacing.S))
     }
@@ -295,7 +315,6 @@ private fun SideButton(action: AnswerSideAction?, onAction: () -> Unit, actions:
     val description = stringResource(action.description)
     Box(
         modifier = Modifier
-            .padding(bottom = PvotSpacing.L)
             .offset { IntOffset(drag.x.roundToInt(), drag.y.roundToInt()) }
             .size(SideSize)
             .background(MaterialTheme.colorScheme.surfaceContainerHigh, CircleShape)
@@ -326,8 +345,6 @@ private fun SideButton(action: AnswerSideAction?, onAction: () -> Unit, actions:
     }
 }
 
-/** The answer button keeps the green people expect of it, in light and dark. */
-private val AnswerGreen = Color(0xFF1E8E3E)
 private val PuckSize = 80.dp
 private val SideSize = 56.dp
 private val SwipeDistance = 120.dp
