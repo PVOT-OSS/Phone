@@ -19,6 +19,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
+import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.callintent.CallInitiationType
 import org.prauga.phone.dialer.callintent.CallIntentBuilder
 import org.prauga.phone.dialer.precall.PreCall
@@ -47,11 +48,12 @@ class PreCallTest {
         val number = blockedNumber()
         dial(number)
 
-        val title = checkNotNull(deviceRule.device.wait(Until.findObject(By.res("android", "alertTitle")), CallTests.TIMEOUT_MILLIS)) {
+        val prefix = context.getString(R.string.calling_blocked_number_title, "\u0000").substringBefore("\u0000")
+        val title = checkNotNull(deviceRule.device.wait(Until.findObject(By.textStartsWith(prefix)), CallTests.TIMEOUT_MILLIS)) {
             "no warning shown"
         }
         check(title.text.filter(Char::isDigit).endsWith(number.takeLast(7))) { "warning names ${title.text}" }
-        checkNotNull(deviceRule.device.findObject(By.res("android", "button1"))) { "no Call button" }.click()
+        checkNotNull(deviceRule.device.findObject(By.text(context.getString(R.string.calling_blocked_number_call)))) { "no Call button" }.click()
 
         val far = CallTests.waitFor { FakeCarrier.connections.firstOrNull() }
         check(far.spec.number.orEmpty().endsWith(number.takeLast(7))) { "placed ${far.spec.number}" }
@@ -63,7 +65,7 @@ class PreCallTest {
     fun callingABlockedNumberCanBeCancelled() {
         dial(blockedNumber())
 
-        checkNotNull(deviceRule.device.wait(Until.findObject(By.res("android", "button2")), CallTests.TIMEOUT_MILLIS)) {
+        checkNotNull(deviceRule.device.wait(Until.findObject(By.text(context.getString(android.R.string.cancel))), CallTests.TIMEOUT_MILLIS)) {
             "no warning shown"
         }.click()
 

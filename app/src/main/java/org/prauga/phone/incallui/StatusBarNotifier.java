@@ -300,7 +300,7 @@ public class StatusBarNotifier
         || callState == DialerCallState.CALL_WAITING
         || isVideoUpgradeRequest) {
         notificationType =
-            InCallPresenter.getInstance().isShowingInCallUi()
+            InCallPresenter.getInstance().isShowingInCallUi() || call.isSilentRinging()
                 ? NOTIFICATION_INCOMING_CALL_QUIET
                 : NOTIFICATION_INCOMING_CALL;
     } else {

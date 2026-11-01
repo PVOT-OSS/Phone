@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">通話記錄</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">更多選項</string>
   <string name="dialer_settings_label">設定</string>
-  <string name="description_video_call">視訊通話。</string>
   <string name="description_start_voice_search">開始進行語音搜尋</string>
   <string name="voicemail">語音留言</string>
   <string name="voicemailMultiSelectDeleteConfirm">刪除</string>

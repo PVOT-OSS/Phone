@@ -21,6 +21,8 @@ object TestTags {
     const val CALL_DETAILS_MESSAGE = "call_details_message"
     const val CALL_DETAILS_AVATAR = "call_details_avatar"
     const val CALL_SUBJECT_FIELD = "call_subject_field"
+    const val NUMBER_PROMPT_FIELD = "number_prompt_field"
+    const val EMERGENCY_LOCATION = "emergency_location"
     const val CALL_SUBJECT_HISTORY = "call_subject_history"
     const val CALL_SUBJECT_SEND = "call_subject_send"
     const val MAIN_NAV_BAR = "main_nav_bar"
@@ -50,6 +52,9 @@ object TestTags {
 
     /** The history row for the call log entry [callId]. */
     fun callDetailsEntry(callId: Long) = "call_details_entry_$callId"
+
+    /** What was sent with the call log entry [callId] through call composer. */
+    fun callDetailsComposer(callId: Long) = "call_details_composer_$callId"
 
     /** The play recordings button of the call log entry [callId]. */
     fun callDetailsRecordings(callId: Long) = "call_details_recordings_$callId"

@@ -109,6 +109,11 @@ public class TopRow {
     } else if (state.state() == DialerCallState.ACTIVE && state.isRemotelyHeld()) {
       label = context.getString(R.string.incall_remotely_held);
     } else if (state.state() == DialerCallState.ACTIVE
+        && !TextUtils.isEmpty(state.diagnosticMessage())) {
+      // Weak signal, Wi-Fi lost, ... as the carrier words it.
+      label = state.diagnosticMessage();
+      labelIsSingleLine = false;
+    } else if (state.state() == DialerCallState.ACTIVE
         && shouldShowNumber(primaryInfo, false /* isIncoming */)) {
       label = spanDisplayNumber(primaryInfo.number());
     } else if (state.state() == DialerCallState.CALL_PENDING
@@ -118,6 +123,12 @@ public class TopRow {
       // Video calling...
       // [Wi-Fi icon] Starbucks Wi-Fi
       label = getConnectionLabel(state);
+      if (state.isCrossSim() && state.state() == DialerCallState.ACTIVE) {
+        label =
+            TextUtils.isEmpty(label)
+                ? context.getString(R.string.incall_backup_calling)
+                : context.getString(R.string.incall_backup_calling_via, label);
+      }
     }
 
     return new Info(label, icon, labelIsSingleLine);
@@ -149,6 +160,8 @@ public class TopRow {
   private static CharSequence getLabelForIncoming(Context context, PrimaryCallState state) {
     if (state.isVideoCall()) {
       return getLabelForIncomingVideo(context, state.sessionModificationState(), state.isWifi());
+    } else if (state.isVerifiedBusinessCall()) {
+      return context.getString(R.string.contact_grid_incoming_verified_business_call);
     } else if (state.isWifi() && !TextUtils.isEmpty(state.connectionLabel())) {
       return state.connectionLabel();
     } else if (isAccount(state)) {

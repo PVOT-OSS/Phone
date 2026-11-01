@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Historiku i telefonatave</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">Opsione të tjera</string>
   <string name="dialer_settings_label">Cilësimet</string>
-  <string name="description_video_call">Telefonatë me video.</string>
   <string name="description_start_voice_search">Nis kërkimin me zë</string>
   <string name="voicemail">Posta zanore</string>
   <string name="voicemailMultiSelectDeleteConfirm">Fshi</string>

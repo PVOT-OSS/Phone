@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">ზარების ისტორია</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">სხვა პარამეტრები</string>
   <string name="dialer_settings_label">პარამეტრები</string>
-  <string name="description_video_call">ვიდეოზარი.</string>
   <string name="description_start_voice_search">ხმოვანი ძიების დაწყება</string>
   <string name="voicemail">ხმოვანი ფოსტა</string>
   <string name="voicemailMultiSelectDeleteConfirm">წაშლა</string>

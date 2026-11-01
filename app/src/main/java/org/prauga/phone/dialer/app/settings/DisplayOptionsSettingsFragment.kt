@@ -14,19 +14,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
+import com.prauga.pvot.designsystem.components.list.PvotRowIconStyle
+import com.prauga.pvot.designsystem.components.list.PvotSwitchRow
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.settings.ui.Choice
 import org.prauga.phone.dialer.app.settings.ui.ChoiceRow
 import org.prauga.phone.dialer.app.settings.ui.SettingsComposeFragment
 import org.prauga.phone.dialer.app.settings.ui.SettingsGroup
 import org.prauga.phone.dialer.app.settings.ui.SettingsList
+import org.prauga.phone.dialer.app.settings.ui.settingsIcon
 
-/** How contacts are sorted and how their names are shown. */
+/** The app's theme, the call screen's rotation, and how contacts are sorted and named. */
 class DisplayOptionsSettingsFragment : SettingsComposeFragment() {
 
     @Composable
@@ -36,12 +41,37 @@ class DisplayOptionsSettingsFragment : SettingsComposeFragment() {
     }
 }
 
-/** How contacts are sorted and named, stored in [prefs]. */
+/** The theme, the call screen's rotation, and how contacts are sorted and named, stored in [prefs]. */
 @Composable
 internal fun DisplayOptionsList(prefs: SharedPreferences) {
+    val context = LocalContext.current
     SettingsList {
         item(key = "display_options") {
             SettingsGroup {
+                StringChoiceRow(
+                    prefs = prefs,
+                    title = R.string.display_options_theme,
+                    key = R.string.display_options_theme_key,
+                    default = R.string.display_options_theme_system_value,
+                    entries = R.array.display_options_theme_entries,
+                    values = R.array.display_options_theme_values,
+                    icon = R.drawable.ic_sun_moon,
+                    onChanged = { DisplayOptions.applyTheme(context, it) },
+                )
+                val portraitKey = stringResource(R.string.display_options_force_portrait_key)
+                var portrait by remember { mutableStateOf(prefs.getBoolean(portraitKey, false)) }
+                PvotSwitchRow(
+                    title = stringResource(R.string.display_options_force_portrait),
+                    summary = stringResource(R.string.display_options_force_portrait_summary),
+                    checked = portrait,
+                    onCheckedChange = {
+                        portrait = it
+                        prefs.edit { putBoolean(portraitKey, it) }
+                    },
+                    modifier = Modifier.testTag(portraitKey),
+                    icon = settingsIcon(R.drawable.ic_device_mobile_rotated),
+                    iconStyle = PvotRowIconStyle.Plain,
+                )
                 StringChoiceRow(
                     prefs = prefs,
                     title = R.string.display_options_sort_list_by,
@@ -75,6 +105,7 @@ internal fun StringChoiceRow(
     @ArrayRes entries: Int,
     @ArrayRes values: Int,
     @DrawableRes icon: Int? = null,
+    onChanged: (String) -> Unit = {},
 ) {
     val keyName = stringResource(key)
     val defaultValue = stringResource(default)
@@ -87,6 +118,7 @@ internal fun StringChoiceRow(
         onSelect = {
             selected = it
             prefs.edit { putString(keyName, it) }
+            onChanged(it)
         },
         testTag = keyName,
         icon = icon,

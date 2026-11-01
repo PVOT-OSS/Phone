@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Historique des appels</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">Plus d\'options</string>
   <string name="dialer_settings_label">Paramètres</string>
-  <string name="description_video_call">Appel vidéo.</string>
   <string name="description_start_voice_search">Démarrer la recherche vocale</string>
   <string name="voicemail">Messagerie vocale</string>
   <string name="voicemailMultiSelectDeleteConfirm">Supprimer</string>

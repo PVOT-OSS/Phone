@@ -31,7 +31,6 @@
   <string name="action_menu_call_history_description">Historia połączeń</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">Więcej opcji</string>
   <string name="dialer_settings_label">Ustawienia</string>
-  <string name="description_video_call">Rozmowa wideo.</string>
   <string name="description_start_voice_search">Wyszukiwanie głosowe</string>
   <string name="voicemail">Poczta głosowa</string>
   <string name="voicemailMultiSelectDeleteConfirm">Usuń</string>

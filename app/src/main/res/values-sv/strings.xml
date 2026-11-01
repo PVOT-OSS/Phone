@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Samtalshistorik</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">Fler alternativ</string>
   <string name="dialer_settings_label">Inställningar</string>
-  <string name="description_video_call">Videosamtal.</string>
   <string name="description_start_voice_search">Starta röstsökning</string>
   <string name="voicemail">Röstbrevlåda</string>
   <string name="voicemailMultiSelectDeleteConfirm">Radera</string>

@@ -130,7 +130,7 @@ private fun NumberRow(row: SearchRow.Number, actions: SearchActions) {
             )
         },
         modifier = Modifier.fullWidthRow().testTag(TestTags.searchRow(row.key)),
-        supportingText = if (row.name != null) {
+        supportingText = if (row.name != null && row.details.isNotEmpty()) {
             { Text(text = row.details, maxLines = 1, overflow = TextOverflow.Ellipsis) }
         } else null,
         leading = {

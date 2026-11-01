@@ -44,9 +44,17 @@ import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.incallui.incalluilock.InCallUiLock
 
-/** The quick replies for declining a call with a message, and "Write your own…". */
+/**
+ * The quick replies for declining a call with a message and "Write your own…", or none when the
+ * call can't be answered with a text ([replies] null); then "Forward" when [onForward] is given.
+ */
 @Composable
-fun SmsReplySheet(replies: List<CharSequence>, onPick: (CharSequence?) -> Unit, modifier: Modifier = Modifier) {
+fun SmsReplySheet(
+    replies: List<CharSequence>?,
+    onPick: (CharSequence?) -> Unit,
+    modifier: Modifier = Modifier,
+    onForward: (() -> Unit)? = null,
+) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -62,18 +70,27 @@ fun SmsReplySheet(replies: List<CharSequence>, onPick: (CharSequence?) -> Unit, 
                 .size(PvotBottomSheetDefaults.HandleWidth, PvotBottomSheetDefaults.HandleHeight)
                 .background(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f), CircleShape),
         )
-        for (reply in replies) {
+        if (replies != null) {
+            for (reply in replies) {
+                PvotSheetItem(
+                    title = reply.toString(),
+                    icon = { Icon(painterResource(R.drawable.ic_message), contentDescription = null) },
+                    onClick = { onPick(reply) },
+                )
+            }
             PvotSheetItem(
-                title = reply.toString(),
-                icon = { Icon(painterResource(R.drawable.ic_message), contentDescription = null) },
-                onClick = { onPick(reply) },
+                title = stringResource(R.string.call_incoming_message_custom),
+                icon = { Icon(painterResource(R.drawable.ic_pencil), contentDescription = null) },
+                onClick = { onPick(null) },
             )
         }
-        PvotSheetItem(
-            title = stringResource(R.string.call_incoming_message_custom),
-            icon = { Icon(painterResource(R.drawable.ic_pencil), contentDescription = null) },
-            onClick = { onPick(null) },
-        )
+        if (onForward != null) {
+            PvotSheetItem(
+                title = stringResource(R.string.call_incoming_forward),
+                icon = { Icon(painterResource(R.drawable.ic_arrow_forward_up), contentDescription = null) },
+                onClick = onForward,
+            )
+        }
     }
 }
 
@@ -96,15 +113,25 @@ class SmsBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val replies = requireArguments().getCharSequenceArrayList(ARG_OPTIONS).orEmpty()
+        val replies = requireArguments().getCharSequenceArrayList(ARG_OPTIONS)
+        val canForward = requireArguments().getBoolean(ARG_CAN_FORWARD)
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 PhoneScreenTheme(fillBackground = false) {
-                    SmsReplySheet(replies, onPick = { text ->
-                        holder().smsSelected(text)
-                        dismiss()
-                    })
+                    SmsReplySheet(
+                        replies,
+                        onPick = { text ->
+                            holder().smsSelected(text)
+                            dismiss()
+                        },
+                        onForward = if (canForward) {
+                            {
+                                holder().forwardSelected()
+                                dismiss()
+                            }
+                        } else null,
+                    )
                 }
             }
         }
@@ -131,14 +158,25 @@ class SmsBottomSheetFragment : BottomSheetDialogFragment() {
         fun smsSelected(text: CharSequence?)
 
         fun smsDismissed()
+
+        /** The user chose to forward the call to another number. */
+        fun forwardSelected()
     }
 
     companion object {
         private const val ARG_OPTIONS = "options"
+        private const val ARG_CAN_FORWARD = "can_forward"
 
+        /**
+         * @param options text replies, or null when the call can't be answered with a text
+         * @param canForward whether to offer forwarding the call to another number
+         */
         @JvmStatic
-        fun newInstance(options: ArrayList<CharSequence>?) = SmsBottomSheetFragment().apply {
-            arguments = Bundle().apply { putCharSequenceArrayList(ARG_OPTIONS, options) }
+        fun newInstance(options: ArrayList<CharSequence>?, canForward: Boolean) = SmsBottomSheetFragment().apply {
+            arguments = Bundle().apply {
+                putCharSequenceArrayList(ARG_OPTIONS, options)
+                putBoolean(ARG_CAN_FORWARD, canForward)
+            }
         }
     }
 }

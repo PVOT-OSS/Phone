@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">History ng tawag</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">Higit pang mga pagpipilian</string>
   <string name="dialer_settings_label">Mga Setting</string>
-  <string name="description_video_call">Video call.</string>
   <string name="description_start_voice_search">Simulan ang paghahanap gamit ang boses</string>
   <string name="voicemail">Voicemail</string>
   <string name="voicemailMultiSelectDeleteConfirm">I-delete</string>

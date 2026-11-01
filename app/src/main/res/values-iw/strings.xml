@@ -31,7 +31,6 @@
   <string name="action_menu_call_history_description">היסטוריית שיחות</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">אפשרויות נוספות</string>
   <string name="dialer_settings_label">הגדרות</string>
-  <string name="description_video_call">שיחת וידאו.</string>
   <string name="description_start_voice_search">התחל חיפוש קולי</string>
   <string name="voicemail">דואר קולי</string>
   <string name="voicemailMultiSelectDeleteConfirm">מחיקה</string>

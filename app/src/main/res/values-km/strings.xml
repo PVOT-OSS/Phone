@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">ប្រវត្តិហៅ</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">ជម្រើស​បន្ថែម</string>
   <string name="dialer_settings_label">ការកំណត់</string>
-  <string name="description_video_call">ការ​ហៅ​ជា​វីដេអូ​។</string>
   <string name="description_start_voice_search">ចាប់ផ្ដើម​ស្វែងរក​ជា​សំឡេង</string>
   <string name="voicemail">សារ​ជា​សំឡេង</string>
   <string name="voicemailMultiSelectDeleteConfirm">លុប</string>

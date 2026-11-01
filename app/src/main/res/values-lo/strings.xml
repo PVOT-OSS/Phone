@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">ປະຫວັດການໂທ</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">ໂຕເລືອກເພີ່ມເຕີມ</string>
   <string name="dialer_settings_label">ການ​ຕັ້ງ​ຄ່າ</string>
-  <string name="description_video_call">ການ​ໂທ​ດ້ວຍ​ວິ​ດີ​ໂອ.</string>
   <string name="description_start_voice_search">ເລີ່ມການຊອກຫາດ້ວຍສຽງ</string>
   <string name="voicemail">ຂໍ້ຄວາມສຽງ</string>
   <string name="voicemailMultiSelectDeleteConfirm">ລຶບ</string>

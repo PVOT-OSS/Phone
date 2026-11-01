@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">కాల్ చరిత్ర</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">మరిన్ని ఎంపికలు</string>
   <string name="dialer_settings_label">సెట్టింగ్‌లు</string>
-  <string name="description_video_call">వీడియో కాల్.</string>
   <string name="description_start_voice_search">వాయిస్ శోధనను ప్రారంభించండి</string>
   <string name="voicemail">వాయిస్ మెయిల్</string>
   <string name="voicemailMultiSelectDeleteConfirm">తొలగించు</string>

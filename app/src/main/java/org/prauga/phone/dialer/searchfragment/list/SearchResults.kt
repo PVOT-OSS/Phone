@@ -18,6 +18,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import org.prauga.phone.dialer.R
+import org.prauga.phone.dialer.searchfragment.calllog.CallLogSearchCursor
 import org.prauga.phone.dialer.common.cp2.DirectoryUtils
 import org.prauga.phone.dialer.searchfragment.common.Projections
 import org.prauga.phone.dialer.searchfragment.common.QueryBoldingUtil
@@ -54,7 +55,8 @@ sealed interface SearchRow {
         override val key = "location_request"
     }
 
-    enum class Kind { CONTACT, DIRECTORY, PLACE }
+    /** Where a number comes from; [CALL_LOG] is a number from the call history that isn't a contact. */
+    enum class Kind { CONTACT, DIRECTORY, PLACE, CALL_LOG }
 }
 
 /**
@@ -75,6 +77,14 @@ class SearchResults(private val context: Context) {
 
     fun setContactsCursor(cursor: SearchCursor?) {
         if (manager.setContactsCursor(cursor)) {
+            manager.setQuery(query.orEmpty())
+            rebuild()
+        }
+    }
+
+    /** Sets the numbers from the call history that aren't contacts. */
+    fun setCallLogCursor(cursor: SearchCursor?) {
+        if (manager.setCallLogCursor(cursor)) {
             manager.setQuery(query.orEmpty())
             rebuild()
         }
@@ -110,10 +120,12 @@ class SearchResults(private val context: Context) {
         rows = (0 until manager.count).map { position ->
             when (manager.getRowType(position)) {
                 SearchCursorManager.RowType.CONTACT_HEADER,
+                SearchCursorManager.RowType.CALL_LOG_HEADER,
                 SearchCursorManager.RowType.DIRECTORY_HEADER,
                 SearchCursorManager.RowType.NEARBY_PLACES_HEADER ->
                     SearchRow.Header("header_$position", manager.getCursor(position).getString(SearchCursor.HEADER_TEXT_POSITION))
                 SearchCursorManager.RowType.CONTACT_ROW -> number(manager.getCursor(position), SearchRow.Kind.CONTACT, position, query)
+                SearchCursorManager.RowType.CALL_LOG_ROW -> callLogNumber(manager.getCursor(position), position, query)
                 SearchCursorManager.RowType.DIRECTORY_ROW -> number(manager.getCursor(position), SearchRow.Kind.DIRECTORY, position, query)
                 SearchCursorManager.RowType.NEARBY_PLACES_ROW -> number(manager.getCursor(position), SearchRow.Kind.PLACE, position, query)
                 SearchCursorManager.RowType.SEARCH_ACTION ->
@@ -131,7 +143,8 @@ class SearchResults(private val context: Context) {
             // A place's label column holds its address.
             SearchRow.Kind.PLACE -> QueryBoldingUtil.getNameWithQueryBolded(query, cursor.getString(Projections.PHONE_LABEL), context)
             SearchRow.Kind.CONTACT -> QueryBoldingUtil.getNumberWithQueryBolded(query, numberWithLabel(cursor, number))
-            SearchRow.Kind.DIRECTORY -> QueryBoldingUtil.getNameWithQueryBolded(query, numberWithLabel(cursor, number), context)
+            SearchRow.Kind.DIRECTORY, SearchRow.Kind.CALL_LOG ->
+                QueryBoldingUtil.getNameWithQueryBolded(query, numberWithLabel(cursor, number), context)
         }
         return SearchRow.Number(
             key = "${kind}_${position}_$number",
@@ -149,6 +162,24 @@ class SearchResults(private val context: Context) {
             canVideoCall = kind == SearchRow.Kind.CONTACT &&
                 cursor.getInt(Projections.CARRIER_PRESENCE) and Phone.CARRIER_PRESENCE_VT_CAPABLE != 0,
             isWork = kind == SearchRow.Kind.DIRECTORY && DirectoryUtils.isLocalEnterpriseDirectoryId(cursor.directoryId),
+        )
+    }
+
+    /** A number from the call history that isn't a contact: the number, and where it is from. */
+    private fun callLogNumber(cursor: SearchCursor, position: Int, query: String): SearchRow.Number {
+        val number = cursor.getString(CallLogSearchCursor.NUMBER).orEmpty()
+        val formatted = cursor.getString(CallLogSearchCursor.FORMATTED_NUMBER).orEmpty()
+        return SearchRow.Number(
+            key = "${SearchRow.Kind.CALL_LOG}_${position}_$number",
+            kind = SearchRow.Kind.CALL_LOG,
+            position = cursor.position,
+            number = number,
+            name = QueryBoldingUtil.getNumberWithQueryBolded(query, formatted).toAnnotated(),
+            details = AnnotatedString(cursor.getString(CallLogSearchCursor.LOCATION).orEmpty()),
+            photoUri = null,
+            colorKey = formatted,
+            canVideoCall = false,
+            isWork = false,
         )
     }
 

@@ -31,7 +31,6 @@
   <string name="action_menu_call_history_description">História hovorov</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">Ďalšie možnosti</string>
   <string name="dialer_settings_label">Nastavenia</string>
-  <string name="description_video_call">Videohovor</string>
   <string name="description_start_voice_search">Spustenie hlasového vyhľadávania</string>
   <string name="voicemail">Hlasová schránka</string>
   <string name="voicemailMultiSelectDeleteConfirm">Odstrániť</string>

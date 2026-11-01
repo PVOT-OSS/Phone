@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">कलको इतिहास</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">थप विकल्पहरू</string>
   <string name="dialer_settings_label">सेटिङहरू</string>
-  <string name="description_video_call">भिडियो कल।</string>
   <string name="description_start_voice_search">आवाज खोजी सुरु गर्नुहोस्</string>
   <string name="voicemail">भ्वाइसमेल</string>
   <string name="voicemailMultiSelectDeleteConfirm">मेट्नुहोस्</string>

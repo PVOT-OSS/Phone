@@ -84,6 +84,7 @@ import com.prauga.pvot.designsystem.motion.PvotMotion
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import kotlinx.coroutines.launch
 import org.prauga.phone.dialer.R
+import org.prauga.phone.dialer.compat.telephony.TelephonyManagerCompat
 import org.prauga.phone.dialer.app.voicemail.VoicemailPlaybackState
 import org.prauga.phone.dialer.ui.ContactAvatar
 import org.prauga.phone.dialer.ui.TestTags
@@ -619,7 +620,10 @@ private fun RowDetails(row: CallLogRowUi) {
     }
 }
 
-/** Up to three call type icons, newest first, then a video icon for a video call. */
+/**
+ * Up to three call type icons, newest first, then the call's quality badges in a fixed order:
+ * Wi-Fi, HD, assisted dialing. Video and RTT calls say so in the row's text instead.
+ */
 @Composable
 private fun CallTypeIcons(group: CallLogGroup) {
     Row(
@@ -636,19 +640,31 @@ private fun CallTypeIcons(group: CallLogGroup) {
                 } else {
                     MaterialTheme.colorScheme.onSurfaceVariant
                 },
-                modifier = Modifier.size(16.dp),
+                modifier = Modifier.size(CallTypeIconSize),
             )
         }
-        if (group.features and Calls.FEATURES_VIDEO == Calls.FEATURES_VIDEO) {
+        for ((icon, description) in qualityBadges(group.features)) {
             Icon(
-                painter = painterResource(R.drawable.ic_video),
-                contentDescription = stringResource(R.string.description_video_call),
+                painter = painterResource(icon),
+                contentDescription = stringResource(description),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.size(16.dp),
+                modifier = Modifier.size(CallTypeIconSize),
             )
         }
     }
 }
+
+/** The badges for a call's [features]: icon and description, Wi-Fi first, then HD, then assisted dialing. */
+internal fun qualityBadges(features: Int): List<Pair<Int, Int>> = buildList {
+    if (features and Calls.FEATURES_WIFI == Calls.FEATURES_WIFI) add(R.drawable.ic_wifi to R.string.description_wifi_call)
+    if (features and Calls.FEATURES_HD_CALL == Calls.FEATURES_HD_CALL) add(R.drawable.ic_badge_hd to R.string.description_hd_call)
+    if (features and TelephonyManagerCompat.FEATURES_ASSISTED_DIALING == TelephonyManagerCompat.FEATURES_ASSISTED_DIALING) {
+        add(R.drawable.ic_world to R.string.description_assisted_dialing)
+    }
+}
+
+/** Size of the call type icons and badges on a row's second line. */
+private val CallTypeIconSize = 16.dp
 
 private fun callTypeIcon(type: Int): Pair<Int, Int> = when (type) {
     Calls.INCOMING_TYPE, Calls.ANSWERED_EXTERNALLY_TYPE -> R.drawable.ic_call_incoming to R.string.type_incoming

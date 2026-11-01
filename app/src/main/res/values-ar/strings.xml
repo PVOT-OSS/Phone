@@ -33,7 +33,6 @@
   <string name="action_menu_call_history_description">سجل المكالمات</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">مزيد من الخيارات</string>
   <string name="dialer_settings_label">الإعدادات</string>
-  <string name="description_video_call">مكالمة فيديو.</string>
   <string name="description_start_voice_search">بدء البحث الصوتي</string>
   <string name="voicemail">البريد الصوتي</string>
   <string name="voicemailMultiSelectDeleteConfirm">حذف</string>

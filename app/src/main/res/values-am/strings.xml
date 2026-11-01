@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">የጥሪ ታሪክ</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">ተጨማሪ አማራጮች</string>
   <string name="dialer_settings_label">ቅንብሮች</string>
-  <string name="description_video_call">የቪዲዮ ጥሪ።</string>
   <string name="description_start_voice_search">በድምፅ ፍለጋ ይጀምሩ</string>
   <string name="voicemail">የድምፅ መልዕክት  </string>
   <string name="voicemailMultiSelectDeleteConfirm">ሰርዝ</string>

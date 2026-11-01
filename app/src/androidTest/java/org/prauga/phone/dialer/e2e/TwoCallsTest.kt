@@ -123,9 +123,7 @@ class TwoCallsTest {
             openMore()
             showsText(context.getString(R.string.incall_label_transfer)).click()
             showsText(context.getString(R.string.incall_transfer_dialog_title))
-            checkNotNull(deviceRule.device.wait(Until.findObject(By.res("android", "button1")), CallTests.TIMEOUT_MILLIS)) {
-                "no transfer button in the dialog"
-            }.click()
+            showsText(context.getString(R.string.incall_transfer_dialog_confirm)).click()
 
             CallTests.waitFor { active.transferredTo?.takeIf { it === held } }
             InCall.waitForNoCalls()

@@ -46,6 +46,7 @@ import org.prauga.phone.dialer.common.FragmentUtils;
 import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.common.concurrent.ThreadUtil;
 import org.prauga.phone.dialer.precall.PreCall;
+import org.prauga.phone.dialer.searchfragment.calllog.CallLogSearchCursorLoader;
 import org.prauga.phone.dialer.searchfragment.common.RowClickListener;
 import org.prauga.phone.dialer.searchfragment.common.SearchCursor;
 import org.prauga.phone.dialer.searchfragment.cp2.SearchContactsCursorLoader;
@@ -80,6 +81,8 @@ public final class NewSearchFragment extends Fragment
   private static final int DIRECTORIES_LOADER_ID = 2;
 
   private static final int DIRECTORY_CONTACTS_LOADER_ID = 3;
+
+  private static final int CALL_LOG_LOADER_ID = 4;
 
   private static final String KEY_QUERY = "key_query";
   private static final String KEY_CALL_INITIATION_TYPE = "key_call_initiation_type";
@@ -191,6 +194,7 @@ public final class NewSearchFragment extends Fragment
 
   private void initLoaders() {
     LoaderManager.getInstance(this).initLoader(CONTACTS_LOADER_ID, null, this);
+    LoaderManager.getInstance(this).initLoader(CALL_LOG_LOADER_ID, null, this);
     loadDirectoriesCursor();
   }
 
@@ -212,6 +216,8 @@ public final class NewSearchFragment extends Fragment
       return new DirectoriesCursorLoader(getContext());
     } else if (id == DIRECTORY_CONTACTS_LOADER_ID) {
       return new DirectoryContactsCursorLoader(getContext(), query, directories);
+    } else if (id == CALL_LOG_LOADER_ID) {
+      return new CallLogSearchCursorLoader(getContext());
     } else {
       throw new IllegalStateException("Invalid loader id: " + id);
     }
@@ -228,6 +234,9 @@ public final class NewSearchFragment extends Fragment
 
     if (loader instanceof SearchContactsCursorLoader) {
       adapter.setContactsCursor((SearchCursor) cursor);
+
+    } else if (loader instanceof CallLogSearchCursorLoader) {
+      adapter.setCallLogCursor((SearchCursor) cursor);
 
     } else if (loader instanceof NearbyPlacesCursorLoader) {
       adapter.setNearbyPlacesCursor((SearchCursor) cursor);
@@ -251,6 +260,8 @@ public final class NewSearchFragment extends Fragment
     LogUtil.i("NewSearchFragment.onLoaderReset", "Loader reset: " + loader);
     if (loader instanceof SearchContactsCursorLoader) {
       adapter.setContactsCursor(null);
+    } else if (loader instanceof CallLogSearchCursorLoader) {
+      adapter.setCallLogCursor(null);
     } else if (loader instanceof NearbyPlacesCursorLoader) {
       adapter.setNearbyPlacesCursor(null);
     } else if (loader instanceof DirectoryContactsCursorLoader) {

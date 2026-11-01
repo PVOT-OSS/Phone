@@ -37,6 +37,7 @@ class FakeCarrierConnectionService : ConnectionService() {
             rtt = request.isRequestingRtt,
         )
         return FakeConnection(spec, isIncoming = false).also {
+            it.requestExtras = request.extras
             if (spec.rtt) it.startRtt(request.rttTextStream)
             it.setDialing()
             FakeCarrier.remember(it)

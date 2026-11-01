@@ -256,6 +256,7 @@ class DialerSettingsActivity :
         const val KEY_SOUNDS = "sounds_and_vibration"
         const val KEY_QUICK_RESPONSES = "quick_responses"
         const val KEY_SCREENING = "screening"
+        const val KEY_INCOMING_CALLS = "incoming_calls"
         const val KEY_CALL_SETTINGS = "call_settings"
         const val KEY_CALLING_ACCOUNTS = "calling_accounts"
         const val KEY_BLOCKED_NUMBERS = "blocked_numbers"
@@ -281,6 +282,8 @@ class DialerSettingsActivity :
                 Target.Activity(Intent(TelecomManager.ACTION_SHOW_RESPOND_VIA_SMS_SETTINGS)), R.drawable.ic_message_circle))
             add(Entry(KEY_SCREENING, R.string.screening_settings_title,
                 Target.Screen(ScreeningSettingsFragment::class.java.name), R.drawable.ic_user))
+            add(Entry(KEY_INCOMING_CALLS, R.string.incoming_call_settings_title,
+                Target.Screen(IncomingCallSettingsFragment::class.java.name), R.drawable.ic_phone_incoming))
 
             val telephonyManager = context.getSystemService(TelephonyManager::class.java)
             val telecomManager = context.getSystemService(TelecomManager::class.java)

@@ -31,7 +31,6 @@
   <string name="action_menu_call_history_description">Skambučių istorija</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">Daugiau parinkčių</string>
   <string name="dialer_settings_label">Nustatymai</string>
-  <string name="description_video_call">Vaizdo skambutis.</string>
   <string name="description_start_voice_search">Pradėti paiešką balsu</string>
   <string name="voicemail">Balso paštas</string>
   <string name="voicemailMultiSelectDeleteConfirm">Ištrinti</string>

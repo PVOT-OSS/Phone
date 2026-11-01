@@ -113,6 +113,12 @@ object CallLogGrouper {
                     .setDuration(cursor.getLong(CallLogQuery.DURATION))
                     .setFeatures(cursor.getInt(CallLogQuery.FEATURES))
                     .setCallMappingId(cursor.getLong(CallLogQuery.DATE).toString())
+                    // What was sent with the call through call composer.
+                    .setIsUrgent(cursor.getInt(CallLogQuery.PRIORITY) == Calls.PRIORITY_URGENT)
+                    .apply {
+                        cursor.getString(CallLogQuery.SUBJECT)?.let(::setSubject)
+                        cursor.getString(CallLogQuery.COMPOSER_PHOTO_URI)?.let(::setComposerPictureUri)
+                    }
                     .build(),
             )
             cursor.moveToNext()

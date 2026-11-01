@@ -43,6 +43,10 @@ public class TelecomCallUtil {
   /** Returns Whether the call handle is an emergency number. */
   public static boolean isEmergencyCall(TelephonyManager telephonyManager, @NonNull Call call) {
     Assert.isNotNull(call);
+    // The network can tell an ordinary number reached emergency services.
+    if (call.getDetails().hasProperty(Call.Details.PROPERTY_NETWORK_IDENTIFIED_EMERGENCY_CALL)) {
+      return true;
+    }
     Uri handle = call.getDetails().getHandle();
     return telephonyManager.isEmergencyNumber(handle == null ? "" : handle.getSchemeSpecificPart());
   }

@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Қоңыраулар тарихы</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">Басқа опциялар</string>
   <string name="dialer_settings_label">Параметрлер</string>
-  <string name="description_video_call">Бейне қоңырау.</string>
   <string name="description_start_voice_search">Дауыс іздеуді бастау</string>
   <string name="voicemail">Дауыстық пошта</string>
   <string name="voicemailMultiSelectDeleteConfirm">Жою</string>

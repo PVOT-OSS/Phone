@@ -64,6 +64,12 @@ import org.prauga.phone.dialer.telecom.TelecomUtil
 import org.prauga.phone.dialer.ui.ContactAvatar
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.TestTags
+import androidx.compose.foundation.layout.Row
+import androidx.compose.ui.unit.dp
+import com.prauga.pvot.designsystem.components.list.PvotSwitchRow
+import com.prauga.pvot.designsystem.components.button.PvotButton
+import com.prauga.pvot.designsystem.components.button.PvotButtonStyle
+import org.prauga.phone.dialer.ui.UriThumbnail
 
 /** Lets the user type a note (call subject) to send with a call, then places the call. */
 class CallSubjectDialog : ComponentActivity() {
@@ -86,6 +92,7 @@ class CallSubjectDialog : ComponentActivity() {
         val contactUri = BundleCompat.getParcelable(args, ARG_CONTACT_URI, Uri::class.java)
 
         val photoUri = BundleCompat.getParcelable(args, ARG_PHOTO_URI, Uri::class.java)
+        val composer = CallComposerOptions(this, account)
 
         setPvotContent {
             // Not filled: the window is see-through, and the dialog draws its own scrim over the app below.
@@ -100,12 +107,16 @@ class CallSubjectDialog : ComponentActivity() {
                     limits = limits,
                     history = remember { loadSubjectHistory(prefs) },
                     onSend = { subject ->
-                        PreCall.start(this, CallIntentBuilder(number, CallInitiationType.Type.CALL_SUBJECT_DIALOG)
+                        val builder = CallIntentBuilder(number, CallInitiationType.Type.CALL_SUBJECT_DIALOG)
                             .setPhoneAccountHandle(account)
-                            .setCallSubject(subject))
-                        saveSubjectHistory(prefs, loadSubjectHistory(prefs) + subject)
-                        finish()
+                            .setCallSubject(subject)
+                        composer.send(builder) {
+                            PreCall.start(this, builder)
+                            saveSubjectHistory(prefs, loadSubjectHistory(prefs) + subject)
+                            finish()
+                        }
                     },
+                    composer = if (composer.isSupported) { { ComposerOptionsRow(composer) } } else null,
                     onDismiss = ::finish,
                     photo = if (contactUri == null) null else { modifier ->
                         // Tapping the photo opens the contact's quick card, as the badge it replaces did.
@@ -227,6 +238,7 @@ internal fun CallSubjectContent(
     onSend: (String) -> Unit,
     onDismiss: () -> Unit,
     photo: (@Composable (Modifier) -> Unit)?,
+    composer: (@Composable () -> Unit)? = null,
 ) {
     var subject by rememberSaveable { mutableStateOf("") }
     var showHistory by rememberSaveable { mutableStateOf(false) }
@@ -268,6 +280,7 @@ internal fun CallSubjectContent(
                         })
                     }
                 }
+                composer?.invoke()
             }
         },
     ) {
@@ -281,3 +294,28 @@ internal fun CallSubjectContent(
     }
     LaunchedEffect(Unit) { runCatching { focus.requestFocus() } }
 }
+
+/** Call composer's choices under the note: mark the call urgent, and a picture to send with it. */
+@Composable
+private fun ComposerOptionsRow(options: CallComposerOptions) {
+    Column {
+        PvotSwitchRow(
+            title = stringResource(R.string.call_composer_urgent),
+            checked = options.urgent,
+            onCheckedChange = { options.urgent = it },
+        )
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(PvotSpacing.M)) {
+            options.picture?.let { picture ->
+                UriThumbnail(picture, stringResource(R.string.call_composer_picture_description), ComposerPreviewSize)
+            }
+            PvotButton(
+                text = stringResource(if (options.picture == null) R.string.call_composer_add_picture else R.string.call_composer_change_picture),
+                onClick = options::pickPicture,
+                style = PvotButtonStyle.Text,
+            )
+        }
+    }
+}
+
+/** Size of the chosen picture's preview in the note dialog. */
+private val ComposerPreviewSize = 40.dp

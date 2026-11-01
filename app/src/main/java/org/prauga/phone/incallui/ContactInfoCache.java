@@ -271,6 +271,7 @@ public class ContactInfoCache implements OnImageLoadCompleteListener {
     cce.isSipCall = isSipCall;
     cce.userType = info.userType;
     cce.originalPhoneNumber = info.phoneNumber;
+    cce.originalCnapName = info.cnapName;
     cce.shouldShowLocation = info.shouldShowGeoDescription;
     cce.isEmergencyNumber = info.isEmergencyNumber();
     cce.isVoicemailNumber = info.isVoiceMailNumber();
@@ -682,6 +683,8 @@ public class ContactInfoCache implements OnImageLoadCompleteListener {
     int queryId;
     /** The phone number without any changes to display to the user (ex: cnap...) */
     String originalPhoneNumber;
+    /** The caller name the network gave when the entry was looked up. */
+    String originalCnapName;
 
     boolean shouldShowLocation;
 
@@ -765,6 +768,11 @@ public class ContactInfoCache implements OnImageLoadCompleteListener {
       DialerCallCookieWrapper cw = (DialerCallCookieWrapper) cookie;
       if (!isWaitingForThisQuery(cw.callId, queryToken.queryId)) {
         return;
+      }
+      if (!ci.contactExists && TextUtils.isEmpty(ci.cnapName)) {
+        // The contacts lookup knows nothing of the network's name for the caller: keep it, or
+        // a caller who isn't a contact shows as a bare number.
+        ci.cnapName = cw.cnapName;
       }
       updateCallerInfoInCacheOnAnyThread(cw.callId, cw.numberPresentation, ci, true, queryToken);
     }
@@ -861,6 +869,7 @@ public class ContactInfoCache implements OnImageLoadCompleteListener {
         // Contact specific ringtone is obtained from local lookup.
         entry.contactRingtoneUri = oldEntry.contactRingtoneUri;
         entry.originalPhoneNumber = oldEntry.originalPhoneNumber;
+        entry.originalCnapName = oldEntry.originalCnapName;
       }
 
       // If no image and it's a business, switch to using the default business avatar.
@@ -898,6 +907,12 @@ public class ContactInfoCache implements OnImageLoadCompleteListener {
 
     if (!TextUtils.equals(oldPhoneNumber, newPhoneNumber)) {
       Log.d(TAG, "phone number has changed: " + oldPhoneNumber + " -> " + newPhoneNumber);
+      return true;
+    }
+
+    // The network can name the caller only after the call starts ringing.
+    if (!TextUtils.equals(cacheEntry.originalCnapName, call.getCnapName())) {
+      Log.d(TAG, "caller name from the network has changed");
       return true;
     }
 

@@ -69,6 +69,7 @@ import org.prauga.phone.dialer.telecom.TelecomCallUtil;
 import org.prauga.phone.dialer.telecom.TelecomUtil;
 import org.prauga.phone.dialer.util.PermissionsUtil;
 import org.prauga.phone.incallui.audiomode.AudioModeProvider;
+import org.prauga.phone.incallui.EmergencySatellite;
 import org.prauga.phone.incallui.call.state.DialerCallState;
 import org.prauga.phone.incallui.rtt.protocol.RttChatMessage;
 import org.prauga.phone.incallui.videotech.VideoTech;
@@ -144,6 +145,7 @@ public class DialerCall implements VideoTechListener {
   private String childNumber;
   private String lastForwardedNumber;
   private boolean isCallForwarded;
+  private final DiagnosticMessages diagnosticMessages = new DiagnosticMessages();
   private String callSubject;
   @Nullable
   private PhoneAccountHandle phoneAccountHandle;
@@ -358,6 +360,16 @@ public class DialerCall implements VideoTechListener {
             case TelephonyManagerCompat.EVENT_CALL_FORWARDED:
               isCallForwarded = true;
               update();
+              break;
+            case TelephonyManager.EVENT_DISPLAY_EMERGENCY_MESSAGE:
+              // No mobile network for an emergency call: offer satellite messaging.
+              EmergencySatellite.onEvent(getId(), extras);
+              break;
+            case Call.EVENT_DISPLAY_DIAGNOSTIC_MESSAGE:
+            case Call.EVENT_CLEAR_DIAGNOSTIC_MESSAGE:
+              if (diagnosticMessages.onEvent(event, extras)) {
+                update();
+              }
               break;
             default:
               break;
@@ -592,6 +604,10 @@ public class DialerCall implements VideoTechListener {
     if (!Objects.equals(handle, newHandle)) {
       handle = newHandle;
       updateEmergencyCallState();
+    } else if (!isEmergencyCall
+        && hasProperty(Details.PROPERTY_NETWORK_IDENTIFIED_EMERGENCY_CALL)) {
+      // The network only says so once the call is placed.
+      updateEmergencyCallState();
     }
 
     TelecomManager telecomManager = context.getSystemService(TelecomManager.class);
@@ -604,8 +620,10 @@ public class DialerCall implements VideoTechListener {
       if (phoneAccountHandle != null) {
         PhoneAccount phoneAccount = telecomManager.getPhoneAccount(phoneAccountHandle);
         if (phoneAccount != null) {
+          // Call composer carries a subject too.
           isCallSubjectSupported =
-              phoneAccount.hasCapabilities(PhoneAccount.CAPABILITY_CALL_SUBJECT);
+              phoneAccount.hasCapabilities(PhoneAccount.CAPABILITY_CALL_SUBJECT)
+                  || phoneAccount.hasCapabilities(PhoneAccount.CAPABILITY_CALL_COMPOSER);
           if (phoneAccount.hasCapabilities(PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION)) {
             cacheCarrierConfiguration(phoneAccountHandle);
           }
@@ -771,7 +789,7 @@ public class DialerCall implements VideoTechListener {
   }
 
   public void blockCall() {
-    telecomCall.reject(false, null);
+    telecomCall.reject(Call.REJECT_REASON_UNWANTED);
     setState(DialerCallState.BLOCKED);
   }
 
@@ -888,7 +906,59 @@ public class DialerCall implements VideoTechListener {
 
   @Nullable
   public String getCnapName() {
-    return telecomCall == null ? null : getTelecomCall().getDetails().getCallerDisplayName();
+    if (telecomCall == null) {
+      return null;
+    }
+    String name = getTelecomCall().getDetails().getCallerDisplayName();
+    // A name the network vouches for, such as a verified business's, when there's no caller name.
+    return TextUtils.isEmpty(name) ? getAssertedDisplayName() : name;
+  }
+
+  /** The caller's name as the network asserts it, or null. */
+  @Nullable
+  public String getAssertedDisplayName() {
+    Bundle extras = getDetailsExtras();
+    return extras == null ? null : extras.getString(Call.EXTRA_ASSERTED_DISPLAY_NAME);
+  }
+
+  /** Whether the network says the caller is a verified business. */
+  public boolean isVerifiedBusinessCall() {
+    Bundle extras = getDetailsExtras();
+    return extras != null && extras.getBoolean(Call.EXTRA_IS_BUSINESS_CALL);
+  }
+
+  /** Whether the caller marked the call as urgent with call composer. */
+  public boolean isUrgent() {
+    Bundle extras = getDetailsExtras();
+    return extras != null
+        && extras.getInt(TelecomManager.EXTRA_PRIORITY, TelecomManager.PRIORITY_NORMAL)
+            == TelecomManager.PRIORITY_URGENT;
+  }
+
+  /** The picture the caller sent with call composer, once it has been downloaded, or null. */
+  @Nullable
+  public Uri getComposerPictureUri() {
+    Bundle extras = getDetailsExtras();
+    return extras == null ? null : extras.getParcelable(TelecomManager.EXTRA_PICTURE_URI, Uri.class);
+  }
+
+  @Nullable
+  private Bundle getDetailsExtras() {
+    if (telecomCall == null) {
+      return null;
+    }
+    Bundle extras = telecomCall.getDetails().getExtras();
+    if (extras == null) {
+      return null;
+    }
+    try {
+      // Unparcel now: extras from the network's app can fail to.
+      extras.size();
+      return extras;
+    } catch (RuntimeException e) {
+      LogUtil.e("DialerCall.getDetailsExtras", "can't read the call's extras", e);
+      return null;
+    }
   }
 
   public Bundle getIntentExtras() {
@@ -1385,7 +1455,55 @@ public class DialerCall implements VideoTechListener {
 
   public void reject(boolean rejectWithMessage, String message) {
     LogUtil.i("DialerCall.reject", "");
-    telecomCall.reject(rejectWithMessage, message);
+    if (rejectWithMessage) {
+      telecomCall.reject(true, message);
+    } else {
+      // Tell the network why, so it can treat an unwanted call differently from a declined one.
+      telecomCall.reject(isSpam() ? Call.REJECT_REASON_UNWANTED : Call.REJECT_REASON_DECLINED);
+    }
+  }
+
+  /** Sends this ringing call to [number] instead of answering it. */
+  public void deflect(Uri number) {
+    LogUtil.i("DialerCall.deflect", "");
+    telecomCall.deflect(number);
+  }
+
+  /** Hands this call over to [number] without first calling them. */
+  @RequiresApi(Build.VERSION_CODES.CINNAMON_BUN)
+  public void transfer(Uri number) {
+    LogUtil.i("DialerCall.transfer", "");
+    telecomCall.transfer(number, false /* isConfirmationRequired */);
+  }
+
+  /** Adds [number] to this conference call, hosted by the network. */
+  public void addConferenceParticipant(Uri number) {
+    LogUtil.i("DialerCall.addConferenceParticipant", "");
+    telecomCall.addConferenceParticipants(java.util.Collections.singletonList(number));
+  }
+
+  /**
+   * Whether Android asked for this call to ring silently: call screening chose to, or Do Not
+   * Disturb holds it back. Such a call shouldn't take over the screen.
+   */
+  public boolean isSilentRinging() {
+    Bundle extras = telecomCall.getDetails().getExtras();
+    if (extras == null) {
+      return false;
+    }
+    try {
+      return extras.getBoolean(Call.EXTRA_SILENT_RINGING_REQUESTED)
+          || extras.getBoolean(Call.EXTRA_IS_SUPPRESSED_BY_DO_NOT_DISTURB);
+    } catch (RuntimeException e) {
+      // Extras from another app can fail to unparcel.
+      return false;
+    }
+  }
+
+  /** The latest message the carrier wants shown during the call, or null. */
+  @Nullable
+  public CharSequence getDiagnosticMessage() {
+    return diagnosticMessages.latest();
   }
 
   /** Return the string label to represent the call provider */

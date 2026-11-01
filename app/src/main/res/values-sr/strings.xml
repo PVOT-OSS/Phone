@@ -30,7 +30,6 @@
   <string name="action_menu_call_history_description">Историја позива</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">Још опција</string>
   <string name="dialer_settings_label">Подешавања</string>
-  <string name="description_video_call">Видео позив.</string>
   <string name="description_start_voice_search">Покретање гласовне претраге</string>
   <string name="voicemail">Говорна пошта</string>
   <string name="voicemailMultiSelectDeleteConfirm">Избриши</string>

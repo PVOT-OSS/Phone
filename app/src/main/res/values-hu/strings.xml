@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Híváslista</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">További beállítások</string>
   <string name="dialer_settings_label">Beállítások</string>
-  <string name="description_video_call">Videohívás.</string>
   <string name="description_start_voice_search">Hangalapú keresés indítása</string>
   <string name="voicemail">Hangposta</string>
   <string name="voicemailMultiSelectDeleteConfirm">Törlés</string>

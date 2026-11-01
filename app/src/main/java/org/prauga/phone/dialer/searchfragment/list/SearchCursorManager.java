@@ -64,7 +64,9 @@ public final class SearchCursorManager {
     SearchCursorManager.RowType.DIRECTORY_HEADER,
     SearchCursorManager.RowType.DIRECTORY_ROW,
     SearchCursorManager.RowType.SEARCH_ACTION,
-    SearchCursorManager.RowType.LOCATION_REQUEST
+    SearchCursorManager.RowType.LOCATION_REQUEST,
+    SearchCursorManager.RowType.CALL_LOG_HEADER,
+    SearchCursorManager.RowType.CALL_LOG_ROW
   })
   @interface RowType {
     int INVALID = 0;
@@ -85,6 +87,12 @@ public final class SearchCursorManager {
     int SEARCH_ACTION = 7;
     /** A row which requests location permission */
     int LOCATION_REQUEST = 8;
+
+    /** Header to mark the start of numbers from the call history that aren't contacts. */
+    int CALL_LOG_HEADER = 9;
+
+    /** A number from the call history that isn't a contact. */
+    int CALL_LOG_ROW = 10;
   }
 
   private static final LocationPermissionCursor LOCATION_PERMISSION_CURSOR =
@@ -92,6 +100,7 @@ public final class SearchCursorManager {
 
   private SearchCursor contactsCursor = null;
   private SearchCursor nearbyPlacesCursor = null;
+  private SearchCursor callLogCursor = null;
   private SearchCursor corpDirectoryCursor = null;
   private List<Integer> searchActions = new ArrayList<>();
 
@@ -104,6 +113,15 @@ public final class SearchCursorManager {
     }
 
     contactsCursor = cursor;
+    return true;
+  }
+
+  /** Returns true if the cursor changed. */
+  boolean setCallLogCursor(@Nullable SearchCursor cursor) {
+    if (cursor == callLogCursor) {
+      return false;
+    }
+    callLogCursor = cursor;
     return true;
   }
 
@@ -142,6 +160,10 @@ public final class SearchCursorManager {
       updated = contactsCursor.updateQuery(query);
     }
 
+    if (callLogCursor != null) {
+      updated |= callLogCursor.updateQuery(query);
+    }
+
     if (nearbyPlacesCursor != null) {
       updated |= nearbyPlacesCursor.updateQuery(query);
     }
@@ -173,6 +195,10 @@ public final class SearchCursorManager {
       count += contactsCursor.getCount();
     }
 
+    if (callLogCursor != null) {
+      count += callLogCursor.getCount();
+    }
+
     if (showLocationPermissionRequest) {
       count++;
     } else if (nearbyPlacesCursor != null) {
@@ -199,6 +225,10 @@ public final class SearchCursorManager {
     SearchCursor cursor = getCursor(position);
     if (cursor == contactsCursor) {
       return cursor.isHeader() ? RowType.CONTACT_HEADER : RowType.CONTACT_ROW;
+    }
+
+    if (cursor == callLogCursor) {
+      return cursor.isHeader() ? RowType.CALL_LOG_HEADER : RowType.CALL_LOG_ROW;
     }
 
     if (cursor == LOCATION_PERMISSION_CURSOR) {
@@ -239,6 +269,16 @@ public final class SearchCursorManager {
       position -= count;
     }
 
+    if (callLogCursor != null) {
+      int count = callLogCursor.getCount();
+
+      if (position - count < 0) {
+        callLogCursor.moveToPosition(position);
+        return callLogCursor;
+      }
+      position -= count;
+    }
+
     if (!showLocationPermissionRequest && nearbyPlacesCursor != null) {
       int count = nearbyPlacesCursor.getCount();
 
@@ -265,6 +305,7 @@ public final class SearchCursorManager {
   /** removes all cursors. */
   void clear() {
     contactsCursor = null;
+    callLogCursor = null;
     nearbyPlacesCursor = null;
     corpDirectoryCursor = null;
   }

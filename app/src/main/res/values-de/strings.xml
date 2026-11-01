@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Anrufliste</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">Mehr Optionen</string>
   <string name="dialer_settings_label">Einstellungen</string>
-  <string name="description_video_call">Videoanruf</string>
   <string name="description_start_voice_search">Sprachsuche starten</string>
   <string name="voicemail">Mailbox</string>
   <string name="voicemailMultiSelectDeleteConfirm">Löschen</string>

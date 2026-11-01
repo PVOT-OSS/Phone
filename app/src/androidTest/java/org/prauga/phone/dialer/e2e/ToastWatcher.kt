@@ -34,5 +34,9 @@ class ToastWatcher : ExternalResource() {
     override fun after() = automation.setOnAccessibilityEventListener(null)
 
     /** Waits for a toast saying [text]. */
-    fun waitFor(text: String) = CallTests.waitFor { shown.firstOrNull { it == text } }
+    fun waitFor(text: String) = try {
+        CallTests.waitFor { shown.firstOrNull { it == text } }
+    } catch (e: IllegalStateException) {
+        throw IllegalStateException("no toast \"$text\"; saw $shown", e)
+    }
 }

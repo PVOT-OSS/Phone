@@ -89,7 +89,18 @@ class CallLogActionsTest {
     }
 
     /** Adds [count] answered calls from a fresh number a few seconds ago, at the top of the log. */
-    private fun addCalls(count: Int, features: Int = 0): String {
+    @Test
+    fun callDetailsShowWhatWasSentWithTheCall() {
+        val number = addCalls(1) {
+            put(Calls.SUBJECT, NOTE)
+            put(Calls.PRIORITY, Calls.PRIORITY_URGENT)
+        }
+        openDetails(number)
+
+        findText(context.getString(R.string.call_details_composer_urgent_note, NOTE))
+    }
+
+    private fun addCalls(count: Int, features: Int = 0, more: ContentValues.() -> Unit = {}): String {
         val number = CallTests.freshNumber()
         numbers += number
         repeat(count) { i ->
@@ -99,6 +110,7 @@ class CallLogActionsTest {
                 put(Calls.DATE, System.currentTimeMillis() - (i + 1) * SECOND)
                 put(Calls.DURATION, 30)
                 put(Calls.FEATURES, features)
+                more()
             }
             checkNotNull(context.contentResolver.insert(Calls.CONTENT_URI, values))
         }
@@ -171,5 +183,6 @@ class CallLogActionsTest {
         const val LIST_TAG = "call_history_list"
         const val ENTRY_TAG = "call_details_entry_.*"
         const val SWIPE_PERCENT = 0.9f
+        const val NOTE = "Running late"
     }
 }

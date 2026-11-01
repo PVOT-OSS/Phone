@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Чалуулар таржымалы</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">Көбүрөөк мүмкүнчүлүктөр</string>
   <string name="dialer_settings_label">Жөндөөлөр</string>
-  <string name="description_video_call">Видео чалуу.</string>
   <string name="description_start_voice_search">Үн менен издеп баштоо</string>
   <string name="voicemail">Үн почтасы</string>
   <string name="voicemailMultiSelectDeleteConfirm">Жок кылуу</string>

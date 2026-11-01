@@ -24,6 +24,7 @@ import android.app.Dialog;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.GradientDrawable.Orientation;
@@ -59,6 +60,7 @@ import org.prauga.phone.contacts.common.widget.SelectPhoneAccountDialogFragment;
 import org.prauga.phone.dialer.R;
 import org.prauga.phone.dialer.animation.AnimUtils;
 import org.prauga.phone.dialer.animation.AnimationListenerAdapter;
+import org.prauga.phone.dialer.app.settings.DisplayOptions;
 import org.prauga.phone.dialer.common.Assert;
 import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.common.concurrent.DialerExecutorComponent;
@@ -464,6 +466,7 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     if (!InCallPresenter.getInstance().isReadyForTearDown()) {
       updateTaskDescription();
     }
+    EmergencySatellite.showPending(this);
 
     // If there is a pending request to show or hide the dialpad, handle that now.
     if (showDialpadRequest != DIALPAD_REQUEST_NONE) {
@@ -1239,8 +1242,26 @@ public class InCallActivity extends TransactionSafeFragmentActivity
       transaction.commitNow();
       Trace.endSection();
     }
+    updateOrientation();
     isInShowMainInCallFragment = false;
     Trace.endSection();
+  }
+
+  /**
+   * The voice call screen stays in portrait when the user asked for it (and before the first
+   * unlock); other screens, such as video calls, follow the device.
+   */
+  private void updateOrientation() {
+    boolean voiceScreen = didShowInCallScreen && !didShowVideoCallScreen;
+    LogUtil.i(
+        "InCallActivity.updateOrientation",
+        "voice screen: %b, keep portrait: %b",
+        voiceScreen,
+        DisplayOptions.keepCallScreenPortrait(this));
+    setRequestedOrientation(
+        voiceScreen && DisplayOptions.keepCallScreenPortrait(this)
+            ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            : ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
   }
 
   private ShouldShowUiResult getShouldShowAnswerUi() {

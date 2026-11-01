@@ -62,6 +62,13 @@
   <string name="incall_merge_failed">Failed to merge call.</string>
   <!-- Message shown when the call on hold was ended by the other side while the user is on another call. -->
   <string name="incall_held_call_disconnected">Your call on hold has been disconnected</string>
+  <!-- Emergency call: the phone's location, shown so the user can read it to the operator. -->
+  <string name="emergency_location_loading">Finding your location\u2026</string>
+  <string name="emergency_location_title">You are here</string>
+  <string name="emergency_location_plus_code">Plus code: <xliff:g id="plus_code" example="7JCMXJQG+5W">%1$s</xliff:g></string>
+  <string name="emergency_location_coordinates" translatable="false">%1$f, %2$f</string>
+  <string name="emergency_location_error">Error, could not retrieve your location</string>
+  <string name="emergency_location_battery_too_low">Low battery. Can\'t show location.</string>
   <!-- In-call button that transfers the active call to the call on hold. [CHAR LIMIT=12] -->
   <string name="incall_label_transfer">Transfer</string>
   <!-- Title of the dialog confirming a call transfer. -->
@@ -70,6 +77,45 @@
   <string name="incall_transfer_dialog_message">You\'re transferring your call with <xliff:g id="active_caller" example="Alex">%1$s</xliff:g> to <xliff:g id="held_caller" example="Sam">%2$s</xliff:g>. Be sure both parties know about the transfer before completing it.</string>
   <!-- Button confirming a call transfer. -->
   <string name="incall_transfer_dialog_confirm">Transfer the call</string>
+
+  <!-- Call state label while the call uses another SIM's mobile data (Android's backup calling) [CHAR LIMIT=40] -->
+  <string name="incall_backup_calling">Backup calling</string>
+  <!-- Same, after the name of the SIM the call is on [CHAR LIMIT=60] -->
+  <string name="incall_backup_calling_via"><xliff:g id="sim_name" example="Work">%1$s</xliff:g> · Backup calling</string>
+  <!-- Shown when a ringing call was answered on another of the user's devices [CHAR LIMIT=60] -->
+  <string name="incall_answered_elsewhere">Answered on another device</string>
+  <!-- Shown when the call was moved to another of the user's devices [CHAR LIMIT=60] -->
+  <string name="incall_call_pulled">Call moved to another device</string>
+  <!-- Title of the prompt shown when an emergency call can't find a mobile network [CHAR LIMIT=40] -->
+  <string name="emergency_satellite_title">No mobile network</string>
+  <!-- Prompt body when emergency services can be reached with satellite SOS messaging [CHAR LIMIT=NONE] -->
+  <string name="emergency_satellite_message_sos">Your call may not connect. You can text emergency services by satellite instead.</string>
+  <!-- Prompt body when 911 can be texted through the carrier's satellite messaging [CHAR LIMIT=NONE] -->
+  <string name="emergency_satellite_message_t911">Your call may not connect. You can text 911 by satellite in your messaging app instead.</string>
+  <!-- Button opening satellite SOS [CHAR LIMIT=30] -->
+  <string name="emergency_satellite_open_sos">Use Satellite SOS</string>
+  <!-- Button opening the messaging app to text 911 by satellite [CHAR LIMIT=30] -->
+  <string name="emergency_satellite_open_t911">Text 911</string>
+  <!-- Button closing the prompt and carrying on with the call [CHAR LIMIT=30] -->
+  <string name="emergency_satellite_keep_trying">Keep trying</string>
+  <!-- Item in the list of ways to deal with a ringing call: send it to another number [CHAR LIMIT=40] -->
+  <string name="call_incoming_forward">Forward to another number</string>
+  <!-- Title of the dialog asking where to forward a ringing call [CHAR LIMIT=40] -->
+  <string name="number_prompt_forward_title">Forward call to</string>
+  <!-- Button forwarding a ringing call to the number entered [CHAR LIMIT=20] -->
+  <string name="number_prompt_forward_confirm">Forward</string>
+  <!-- Title of the dialog asking who to transfer the call to [CHAR LIMIT=40] -->
+  <string name="number_prompt_transfer_title">Transfer call to</string>
+  <!-- Button transferring the call to the number entered [CHAR LIMIT=20] -->
+  <string name="number_prompt_transfer_confirm">Transfer</string>
+  <!-- Title of the dialog asking who to add to a conference call [CHAR LIMIT=40] -->
+  <string name="number_prompt_add_title">Add to call</string>
+  <!-- Button adding the number entered to the conference call [CHAR LIMIT=20] -->
+  <string name="number_prompt_add_confirm">Add</string>
+  <!-- Hint of the phone number field in those dialogs [CHAR LIMIT=30] -->
+  <string name="number_prompt_hint">Phone number</string>
+  <!-- Button picking the number from a contact instead of typing it [CHAR LIMIT=30] -->
+  <string name="number_prompt_pick_contact">Choose a contact</string>
   <!-- The "label" of the in-call Notification for an incoming ringing call. [CHAR LIMIT=60] -->
   <string name="notification_incoming_call">Incoming call</string>
   <!-- The "label" of the in-call Notification for an incoming ringing call. [CHAR LIMIT=60] -->

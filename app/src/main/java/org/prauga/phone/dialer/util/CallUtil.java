@@ -161,7 +161,10 @@ public class CallUtil {
     List<PhoneAccountHandle> accountHandles = telecommMgr.getCallCapablePhoneAccounts();
     for (PhoneAccountHandle accountHandle : accountHandles) {
       PhoneAccount account = TelecomUtil.getPhoneAccount(context, accountHandle);
-      if (account != null && account.hasCapabilities(PhoneAccount.CAPABILITY_CALL_SUBJECT)) {
+      // Call composer carries a subject too.
+      if (account != null
+          && (account.hasCapabilities(PhoneAccount.CAPABILITY_CALL_SUBJECT)
+              || account.hasCapabilities(PhoneAccount.CAPABILITY_CALL_COMPOSER))) {
         return true;
       }
     }

@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Soittohistoria</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">Lisää vaihtoehtoja</string>
   <string name="dialer_settings_label">Asetukset</string>
-  <string name="description_video_call">Videopuhelu.</string>
   <string name="description_start_voice_search">Aloita puhehaku</string>
   <string name="voicemail">Vastaaja</string>
   <string name="voicemailMultiSelectDeleteConfirm">Poista</string>

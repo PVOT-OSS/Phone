@@ -70,9 +70,11 @@ import org.prauga.phone.incallui.incall.protocol.PrimaryCallState;
 import org.prauga.phone.incallui.incall.protocol.PrimaryCallState.ButtonState;
 import org.prauga.phone.incallui.incall.protocol.PrimaryInfo;
 import org.prauga.phone.incallui.incall.protocol.SecondaryInfo;
+import org.prauga.phone.incallui.location.EmergencyLocationFragment;
 import org.prauga.phone.incallui.videotech.utils.SessionModificationState;
 
 import java.lang.ref.WeakReference;
+import java.util.Objects;
 
 /**
  * Controller for the Call Card Fragment. This class listens for changes to InCallState and passes
@@ -98,6 +100,8 @@ public class CallCardPresenter
   private final Handler handler = new Handler(Looper.getMainLooper());
 
   private DialerCall primary;
+  /** What the primary call's caller sent with call composer, as last shown. */
+  @Nullable private MultimediaData composerData;
   private String primaryNumber;
   private DialerCall secondary;
   private String secondaryNumber;
@@ -316,6 +320,14 @@ public class CallCardPresenter
   @Override
   public void onDetailsChanged(DialerCall call, Details details) {
     updatePrimaryCallState();
+    if (call.equals(primary)) {
+      // The network can name the caller after the call starts ringing; the lookup notices.
+      maybeStartSearchIfCallerNameChanged(call);
+    }
+    if (call.equals(primary) && !Objects.equals(composerData, ComposerData.of(context, call))) {
+      // The caller's picture arrives once downloaded, after the call starts ringing.
+      updatePrimaryDisplayInfo();
+    }
 
     if (call.can(Details.CAPABILITY_MANAGE_CONFERENCE)
         != details.can(Details.CAPABILITY_MANAGE_CONFERENCE)) {
@@ -445,6 +457,9 @@ public class CallCardPresenter
                   .setIsAssistedDialed(primary.isAssistedDialed())
                   .setCustomLabel(null)
                   .setAssistedDialingExtras(primary.getAssistedDialingExtras())
+                  .setDiagnosticMessage(primary.getDiagnosticMessage())
+                  .setIsVerifiedBusinessCall(primary.isVerifiedBusinessCall())
+                  .setIsCrossSim(primary.hasProperty(Details.PROPERTY_CROSS_SIM))
                   .build());
 
       InCallActivity activity =
@@ -498,6 +513,16 @@ public class CallCardPresenter
     InCallActivity activity =
         (InCallActivity) (inCallScreen.getInCallScreenFragment().getActivity());
     activity.showConferenceFragment(true);
+  }
+
+  @Nullable private String primaryCnapName;
+
+  private void maybeStartSearchIfCallerNameChanged(DialerCall call) {
+    String cnapName = call.getCnapName();
+    if (!TextUtils.equals(primaryCnapName, cnapName)) {
+      primaryCnapName = cnapName;
+      maybeStartSearch(call, true);
+    }
   }
 
   private void maybeStartSearch(DialerCall call, boolean isPrimary) {
@@ -613,6 +638,8 @@ public class CallCardPresenter
 
       String name = getNameForCall(primaryContactInfo);
       String number;
+      composerData = ComposerData.of(context, primary);
+      multimediaData = composerData;
 
       boolean isChildNumberShown = !TextUtils.isEmpty(primary.getChildNumber());
       boolean isForwardedNumberShown = !TextUtils.isEmpty(primary.getLastForwardedNumber());
@@ -664,7 +691,9 @@ public class CallCardPresenter
     }
 
     if (isInCallScreenReady) {
-      inCallScreen.showLocationUi(null);
+      // During an emergency call, show where the phone is so the user can tell the operator.
+      inCallScreen.showLocationUi(
+          primary != null && primary.isEmergencyCall() ? new EmergencyLocationFragment() : null);
     } else {
       LogUtil.i("CallCardPresenter.updatePrimaryDisplayInfo", "UI not ready, not showing location");
     }

@@ -111,6 +111,8 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
       Collections.newSetFromMap(new ConcurrentHashMap<>(8, 0.9f, 1));
 
   private StatusBarNotifier statusBarNotifier;
+  @Nullable private FlipToSilence flipToSilence;
+  @Nullable private CallerAnnouncer callerAnnouncer;
   private ExternalCallNotifier externalCallNotifier;
   private InCallVibrationHandler vibrationHandler;
   private InCallDndHandler dndHandler;
@@ -389,6 +391,8 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
     if (this.inCallActivity == null) {
       LogUtil.i(
           "InCallPresenter.unsetActivity", "No InCallActivity currently set, no need to unset.");
+      // The presenter was cleaned up while this activity was closing.
+      showInCallForHeldBackCall();
       return;
     }
     if (this.inCallActivity != inCallActivity) {
@@ -475,7 +479,21 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
     if (doAttemptCleanup) {
       attemptCleanup();
     }
+    if (inCallActivity == null) {
+      showInCallForHeldBackCall();
+    }
     Trace.endSection();
+  }
+
+  /**
+   * A call that started while the previous call screen was closing was held back until that screen
+   * was gone; by then it may be active already, which doesn't bring the screen up by itself.
+   */
+  private void showInCallForHeldBackCall() {
+    if (this.inCallActivity == null && callList != null && callList.getFirstCall() != null) {
+      LogUtil.i("InCallPresenter.showInCallForHeldBackCall", "bringing up the call screen");
+      showInCall(false /* showDialpad */, false /* newOutgoingCall */);
+    }
   }
 
   public void setManageConferenceActivity(
@@ -591,6 +609,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
   @Override
   public void onCallListChange(CallList callList) {
     Trace.beginSection("InCallPresenter.onCallListChange");
+    updateRinging(callList);
     if (inCallActivity != null && inCallActivity.isInCallScreenAnimating()) {
       awaitingCallListUpdate = true;
       Trace.endSection();
@@ -719,6 +738,7 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
   @Override
   public void onIncomingCall(DialerCall call) {
     Trace.beginSection("InCallPresenter.onIncomingCall");
+    updateRinging(callList);
     InCallState newState = startOrFinishUi(InCallState.INCOMING);
     InCallState oldState = inCallState;
 
@@ -818,6 +838,34 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
   private boolean isSecretCode(@Nullable String number) {
     return number != null
         && (number.length() <= 8 || number.startsWith("*#*#") || number.endsWith("#*#*"));
+  }
+
+  /** Starts or stops what only runs while a call rings, such as flip to silence. */
+  private void updateRinging(@Nullable CallList callList) {
+    if (context == null) {
+      return;
+    }
+    DialerCall ringingCall = callList == null ? null : callList.getIncomingCall();
+    if (flipToSilence == null) {
+      flipToSilence = new FlipToSilence(context, this::onRingerSilenced);
+    }
+    if (callerAnnouncer == null) {
+      callerAnnouncer = new CallerAnnouncer(context);
+    }
+    if (ringingCall != null) {
+      flipToSilence.onRinging();
+      callerAnnouncer.onRinging(ringingCall, callList);
+    } else {
+      flipToSilence.onRingingStopped();
+      callerAnnouncer.stop();
+    }
+  }
+
+  /** The ringer was silenced, so stop announcing the caller too. */
+  public void onRingerSilenced() {
+    if (callerAnnouncer != null) {
+      callerAnnouncer.silence();
+    }
   }
 
   /** Given the call list, return the state in which the in-call screen should be. */
@@ -1420,6 +1468,16 @@ public class InCallPresenter implements CallList.Listener, AudioModeProvider.Aud
         externalCallList.removeExternalCallListener(externalCallNotifier);
       }
       statusBarNotifier = null;
+
+      if (flipToSilence != null) {
+        flipToSilence.onRingingStopped();
+      }
+      flipToSilence = null;
+
+      if (callerAnnouncer != null) {
+        callerAnnouncer.stop();
+      }
+      callerAnnouncer = null;
 
       if (vibrationHandler != null) {
         removeListener(vibrationHandler);

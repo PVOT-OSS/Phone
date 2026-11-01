@@ -74,6 +74,7 @@ import com.prauga.pvot.designsystem.components.list.PvotSwipeRowDefaults
 import com.prauga.pvot.designsystem.navigation.PvotTopBar
 import com.prauga.pvot.designsystem.navigation.rememberPvotTopBarCompact
 import com.prauga.pvot.designsystem.theme.PvotSpacing
+import androidx.core.net.toUri
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.callrecord.CallRecording
 import org.prauga.phone.dialer.calllogutils.CallLogDates
@@ -82,6 +83,7 @@ import org.prauga.phone.dialer.calllogutils.CallTypeHelper
 import org.prauga.phone.dialer.calllogutils.CallbackActionHelper.CallbackAction
 import org.prauga.phone.dialer.ui.PhoneScaffold
 import org.prauga.phone.dialer.ui.TestTags
+import org.prauga.phone.dialer.ui.UriThumbnail
 
 /** What the call details screen can ask its activity to do. */
 internal interface CallDetailsActions {
@@ -379,14 +381,29 @@ private fun Entry(entry: CallDetailsEntryUi, actions: CallDetailsActions, onPick
         },
         trailing = duration?.let { { Text(it, style = MaterialTheme.typography.labelLarge) } },
     )
+    val direction = LocalLayoutDirection.current
+    // Where the row's title starts: row padding, then the icon and its gap.
+    val titleStart = PvotListRowDefaults.ContentPadding.calculateStartPadding(direction) +
+        PvotListRowDefaults.LeadingSize + PvotSpacing.L
+    val composer = ComposerDetails.describe(context, entry.isUrgent, entry.composerNote)
+    if (composer != null || entry.composerPicture != null) {
+        Column(
+            Modifier.padding(start = titleStart, end = PvotSpacing.L, bottom = PvotSpacing.S),
+            verticalArrangement = Arrangement.spacedBy(PvotSpacing.S),
+        ) {
+            composer?.let {
+                Text(it, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.testTag(TestTags.callDetailsComposer(entry.callId)))
+            }
+            entry.composerPicture?.let {
+                UriThumbnail(it.toUri(), stringResource(R.string.call_details_composer_picture), ComposerPictureSize)
+            }
+        }
+    }
     val recordings = entry.recordings
     if (recordings.isNotEmpty() || entry.isRtt) {
-        // Line the buttons' text up with the row title: row padding, icon and gap, less the
-        // text button's own padding.
-        val direction = LocalLayoutDirection.current
-        val textStart = PvotListRowDefaults.ContentPadding.calculateStartPadding(direction) +
-            PvotListRowDefaults.LeadingSize + PvotSpacing.L -
-            PvotButtonDefaults.TextContentPadding.calculateStartPadding(direction)
+        // Line the buttons' text up with the row title, less the text button's own padding.
+        val textStart = titleStart - PvotButtonDefaults.TextContentPadding.calculateStartPadding(direction)
         FlowRow(Modifier.padding(start = textStart, end = PvotSpacing.L, bottom = PvotSpacing.S),
             horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S)) {
             if (recordings.isNotEmpty()) {
@@ -420,3 +437,6 @@ private fun iconFor(callType: Int): Int = when (callType) {
 
 /** Size of the call type icon in its circle. */
 private val TypeIconSize = 20.dp
+
+/** Size of a picture sent with a call. */
+private val ComposerPictureSize = 120.dp

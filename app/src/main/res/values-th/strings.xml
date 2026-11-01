@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">ประวัติการโทร</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">ตัวเลือกเพิ่มเติม</string>
   <string name="dialer_settings_label">การตั้งค่า</string>
-  <string name="description_video_call"> Hangouts วิดีโอ</string>
   <string name="description_start_voice_search">เริ่มต้นการค้นหาด้วยเสียง</string>
   <string name="voicemail">ข้อความเสียง</string>
   <string name="voicemailMultiSelectDeleteConfirm">ลบ</string>

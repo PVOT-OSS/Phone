@@ -77,6 +77,9 @@
 
     <application
         android:name="org.prauga.phone.dialer.binary.aosp.AospDialerApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/backup_rules"
+        android:fullBackupContent="@xml/full_backup_content"
         android:appCategory="social"
         android:extractNativeLibs="false"
         android:hardwareAccelerated="true"
@@ -450,7 +453,6 @@
             android:label="@string/phoneAppLabel"
             android:launchMode="singleInstance"
             android:resizeableActivity="true"
-            android:screenOrientation="nosensor"
             android:taskAffinity="org.prauga.phone.incallui"
             android:theme="@style/Theme.InCallScreen"
             android:windowSoftInputMode="adjustResize" />
@@ -466,6 +468,24 @@
             android:resizeableActivity="true"
             android:taskAffinity="org.prauga.phone.incallui"
             android:theme="@style/Theme.InCallScreen.ManageConference" />
+
+        <!-- Android Auto: favourites, recent calls and contacts on the car's screen. -->
+        <service
+            android:name="org.prauga.phone.dialer.car.PhoneCarAppService"
+            android:exported="true"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="androidx.car.app.CarAppService" />
+                <category android:name="androidx.car.app.category.CALLING" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.android.gms.car.application"
+            android:resource="@xml/automotive_app_desc" />
+        <meta-data
+            android:name="androidx.car.app.minCarApiLevel"
+            android:value="1" />
 
         <service
             android:name="org.prauga.phone.incallui.InCallServiceImpl"

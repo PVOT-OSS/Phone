@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Kõneajalugu</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">Rohkem valikuid</string>
   <string name="dialer_settings_label">Seaded</string>
-  <string name="description_video_call">Videokõne.</string>
   <string name="description_start_voice_search">Häälotsingu alustamine</string>
   <string name="voicemail">Kõnepost</string>
   <string name="voicemailMultiSelectDeleteConfirm">Kustuta</string>

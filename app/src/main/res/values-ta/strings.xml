@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">அழைப்பு வரலாறு</string>
   <string msgid="2295659037509008453" name="action_menu_overflow_description">மேலும் விருப்பங்கள்</string>
   <string name="dialer_settings_label">அமைப்பு</string>
-  <string name="description_video_call">வீடியோ அழைப்பு.</string>
   <string name="description_start_voice_search">குரல் தேடலைத் தொடங்கு</string>
   <string name="voicemail">குரலஞ்சல்</string>
   <string name="voicemailMultiSelectDeleteConfirm">நீக்கு</string>

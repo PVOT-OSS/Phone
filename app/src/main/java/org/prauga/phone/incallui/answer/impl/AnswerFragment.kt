@@ -46,6 +46,7 @@ import androidx.fragment.app.Fragment
 import com.prauga.pvot.designsystem.motion.PvotMotion
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import org.prauga.phone.dialer.R
+import org.prauga.phone.dialer.app.settings.IncomingCallSettings
 import org.prauga.phone.dialer.common.Assert
 import org.prauga.phone.dialer.common.FragmentUtils
 import org.prauga.phone.dialer.common.LogUtil
@@ -118,7 +119,8 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
         val grid = ContactGridState(context).apply { isInMultiWindowMode = activity.isInMultiWindowMode }
         contactGrid = grid
         showAvatar = !isVideoCall && !isVideoUpgradeRequest
-        ui.twoButtons = AccessibilityUtil.isTouchExplorationEnabled(context) || activity.isInMultiWindowMode
+        ui.twoButtons = AccessibilityUtil.isTouchExplorationEnabled(context) || activity.isInMultiWindowMode ||
+            IncomingCallSettings.answerWithSingleTap(context)
         ui.answerIcon = when {
             isVideoCall || isVideoUpgradeRequest -> R.drawable.ic_video
             isRttCall -> R.drawable.ic_message
@@ -254,6 +256,8 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
         ui.secondaryVisible = when {
             isVideoUpgradeRequest -> false
             isVideoCall -> true
+            // The sheet behind it offers forwarding even when no text reply can be sent.
+            canForwardCall() -> true
             else -> ui.secondaryVisible
         }
         ui.answerAndRelease = ANSWER_AND_RELEASE
@@ -313,7 +317,8 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
             textResponses == null -> {
                 LogUtil.i("AnswerFragment.setTextResponses", "no text responses, hiding secondary button")
                 this.textResponses = null
-                ui.secondaryVisible = false
+                // The sheet behind it still offers forwarding when no text reply can be sent.
+                ui.secondaryVisible = canForwardCall()
             }
             requireActivity().isInMultiWindowMode -> {
                 LogUtil.i("AnswerFragment.setTextResponses", "in multiwindow, hiding secondary button")
@@ -465,7 +470,7 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
     private fun showMessageMenu() {
         LogUtil.i("AnswerFragment.showMessageMenu", "Show sms menu.")
         if (context == null || isDetached || childFragmentManager.isDestroyed) return
-        textResponsesFragment = SmsBottomSheetFragment.newInstance(textResponses).also { it.show(childFragmentManager, null) }
+        textResponsesFragment = SmsBottomSheetFragment.newInstance(textResponses, canForwardCall()).also { it.show(childFragmentManager, null) }
         TelecomUtil.silenceRinger(context)
     }
 
@@ -507,6 +512,14 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
 
     private fun showCustomSmsDialog() {
         createCustomSmsDialogFragment = CreateCustomSmsDialogFragment.newInstance().also { it.showNow(childFragmentManager, null) }
+    }
+
+    private fun canForwardCall(): Boolean = ::answerScreenDelegate.isInitialized && answerScreenDelegate.canForwardCall()
+
+    override fun forwardSelected() {
+        LogUtil.i("AnswerFragment.forwardSelected", null)
+        textResponsesFragment = null
+        answerScreenDelegate.onForwardCall()
     }
 
     override fun smsDismissed() {

@@ -15,29 +15,48 @@ import android.telecom.Call
 import android.telephony.CarrierConfigManager
 import android.telephony.SubscriptionManager
 import android.telephony.TelephonyManager
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
 import org.prauga.phone.dialer.R
+import org.prauga.phone.dialer.ui.PvotAlertDialog
 import org.prauga.phone.incallui.call.CallList
 import org.prauga.phone.incallui.call.DialerCall
 
 /**
- * Consultative transfer: the active call is handed over to the held one, so the two other people
- * end up talking to each other.
+ * Handing a call over: to the held call (consultative transfer, so the two other people end up
+ * talking to each other) or straight to a number (blind transfer); and adding people to a
+ * conference the network hosts.
  */
 object CallTransfer {
 
     /**
-     * Whether [call] can be transferred to the held call: the network supports it for the call and
-     * the carrier allows transferring calls.
+     * Whether [call] can be transferred: to the held call, or to a number the user enters when the
+     * network supports that; either way the carrier must allow transferring calls.
      */
     @JvmStatic
     fun canTransfer(context: Context, call: DialerCall): Boolean =
+        canTransferToHeldCall(context, call) || canTransferToNumber(context, call)
+
+    /** Whether [call] can be handed over to the held call. */
+    @JvmStatic
+    fun canTransferToHeldCall(context: Context, call: DialerCall): Boolean =
         // Telecom opened transferring calls to phone apps in Android 17.
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.CINNAMON_BUN &&
             call.can(Call.Details.CAPABILITY_TRANSFER_CONSULTATIVE) &&
             CallList.getInstance().backgroundCall != null &&
             carrierAllowsTransfer(context, call)
+
+    /** Whether [call] can be handed over to a number without calling it first. */
+    @JvmStatic
+    fun canTransferToNumber(context: Context, call: DialerCall): Boolean =
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.CINNAMON_BUN &&
+            call.can(Call.Details.CAPABILITY_TRANSFER) &&
+            carrierAllowsTransfer(context, call)
+
+    /** Whether people can be added straight to [call], a conference the network hosts. */
+    @JvmStatic
+    fun canAddParticipant(call: DialerCall): Boolean =
+        call.isConferenceCall && call.can(Call.Details.CAPABILITY_ADD_PARTICIPANT)
 
     private fun carrierAllowsTransfer(context: Context, call: DialerCall): Boolean {
         if (context.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
@@ -70,18 +89,21 @@ class CallTransferDialogFragment : DialogFragment() {
             active?.let(::nameOf) ?: unknown,
             held?.let(::nameOf) ?: unknown,
         )
-        return AlertDialog.Builder(requireContext())
-            .setTitle(R.string.incall_transfer_dialog_title)
-            .setMessage(message)
-            .setPositiveButton(R.string.incall_transfer_dialog_confirm) { _, _ ->
-                val from = CallList.getInstance().activeCall
-                val to = CallList.getInstance().backgroundCall
-                if (from != null && to != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.CINNAMON_BUN) {
-                    from.consultativeTransfer(to)
-                }
-            }
-            .setNegativeButton(android.R.string.cancel, null)
-            .create()
+        return PvotAlertDialog(
+            requireContext(),
+            getString(R.string.incall_transfer_dialog_title),
+            message,
+            listOf(
+                PvotAlertDialog.Action(getString(R.string.incall_transfer_dialog_confirm), PvotDialogActionStyle.Primary, {
+                    val from = CallList.getInstance().activeCall
+                    val to = CallList.getInstance().backgroundCall
+                    if (from != null && to != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.CINNAMON_BUN) {
+                        from.consultativeTransfer(to)
+                    }
+                }),
+                PvotAlertDialog.Action(getString(android.R.string.cancel), cancels = true),
+            ),
+        )
     }
 
     private fun nameOf(call: DialerCall): String? =

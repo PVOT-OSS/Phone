@@ -151,6 +151,40 @@ class SettingsScreensTest {
         assertThat(prefs.getString("screening_action_first_time", null)).isNull()
     }
 
+    @Test
+    fun choosingSingleTapMakesTheAnswerScreenUseButtons() {
+        compose.setContent { SettingsTheme { IncomingCallSettingsList(prefs, hasAccelerometer = true) } }
+        compose.onNodeWithTag(TestTags.settingsRow(IncomingCallSettings.KEY_ANSWER_GESTURE)).performClick()
+        compose.onNodeWithText(context.getString(R.string.answer_method_tap_entry)).performClick()
+        assertThat(IncomingCallSettings.answerWithSingleTap(context)).isTrue()
+    }
+
+    @Test
+    fun flipToSilenceNeedsAnAccelerometer() {
+        compose.setContent { SettingsTheme { IncomingCallSettingsList(prefs, hasAccelerometer = false) } }
+        compose.onNodeWithText(context.getString(R.string.flip_to_silence_title)).assertDoesNotExist()
+        compose.onNodeWithText(context.getString(R.string.call_announcer_title)).assertIsDisplayed()
+    }
+
+    @Test
+    fun flipToSilenceIsStored() {
+        compose.setContent { SettingsTheme { IncomingCallSettingsList(prefs, hasAccelerometer = true) } }
+        compose.onNodeWithTag(TestTags.settingsRow(IncomingCallSettings.KEY_FLIP_TO_SILENCE)).performClick()
+        assertThat(IncomingCallSettings.flipToSilence(context)).isTrue()
+    }
+
+    @Test
+    fun keepPortraitIsStored() {
+        compose.setContent { SettingsTheme { DisplayOptionsList(prefs) } }
+        compose.onNodeWithTag(context.getString(R.string.display_options_force_portrait_key)).performClick()
+        assertThat(prefs.getBoolean(context.getString(R.string.display_options_force_portrait_key), false)).isTrue()
+    }
+
+    @Test
+    fun topLevelListHasIncomingCalls() {
+        assertThat(DialerSettingsActivity.settingsEntries(context).map { it.key }).contains(DialerSettingsActivity.KEY_INCOMING_CALLS)
+    }
+
     private fun showScreening() {
         compose.setContent { SettingsTheme { ScreeningSettingsList(ScreeningSettings(prefs)) } }
     }

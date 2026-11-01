@@ -58,6 +58,12 @@
   <string name="call_log_label_video">Video</string>
   <!-- Call log row label for an RTT call, before the time. [CHAR LIMIT=20] -->
   <string name="call_log_label_rtt">RTT</string>
+  <!-- Search section header for numbers from the call history that aren't contacts. [CHAR LIMIT=40] -->
+  <string name="call_log_search_result_header">Not in your contacts</string>
+  <!-- Android Auto: shown when a list of people to call is empty. -->
+  <string name="car_no_entries">Nothing here yet</string>
+  <!-- Android Auto: shown when a call can't be placed. -->
+  <string name="car_cannot_call">Can\'t place the call. Open Phone on your phone.</string>
 
   <!-- Title of the "Clearing call log" progress-dialog [CHAR LIMIT=35] -->
 
@@ -197,13 +203,6 @@
         This is especially valuable for views without textual representation like ImageView.
   -->
 
-  <!-- String indicating a call log entry had video capabilities.
-
-  Note: AccessibilityServices use this attribute to announce what the view represents.
-        This is especially valuable for views without textual representation like ImageView.
-        [CHAR LIMIT=NONE]
-  -->
-  <string name="description_video_call">Video call.</string>
 
   <!-- String used for displaying calls to the voicemail number in the call log -->
   <string name="voicemail">Voicemail</string>
@@ -482,4 +481,12 @@
 
   <!-- Label under the name of a spam number in the call log. [CHAR LIMIT=15] -->
   <string name="spam_number_call_log_label">Spam</string>
+  <!-- Call details: the call was marked urgent with call composer [CHAR LIMIT=40] -->
+  <string name="call_details_composer_urgent">Urgent</string>
+  <!-- Call details: the note sent with the call through call composer, in quotes [CHAR LIMIT=NONE] -->
+  <string name="call_details_composer_note">“<xliff:g id="note" example="Running late">%1$s</xliff:g>”</string>
+  <!-- Call details: the call was urgent and came with a note [CHAR LIMIT=NONE] -->
+  <string name="call_details_composer_urgent_note">Urgent · “<xliff:g id="note" example="Running late">%1$s</xliff:g>”</string>
+  <!-- Content description of the picture sent with a call [CHAR LIMIT=NONE] -->
+  <string name="call_details_composer_picture">Picture sent with the call</string>
 </resources>

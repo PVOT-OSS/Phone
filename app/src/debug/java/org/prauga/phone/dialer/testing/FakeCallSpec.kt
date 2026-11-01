@@ -21,6 +21,8 @@ data class FakeCallSpec(
     val properties: Int = 0,
     /** Extras the call carries, such as Telecom's hint that answering it will end another call. */
     val extras: Bundle = Bundle(),
+    /** Capabilities on top of the usual ones, such as [android.telecom.Connection.CAPABILITY_TRANSFER]. */
+    val capabilities: Int = 0,
 ) {
     fun toExtras(): Bundle = Bundle().apply {
         putString(EXTRA_NUMBER, number)
@@ -30,6 +32,7 @@ data class FakeCallSpec(
         putBoolean(EXTRA_RTT, rtt)
         putInt(EXTRA_PROPERTIES, properties)
         putBundle(EXTRA_CALL_EXTRAS, extras)
+        putInt(EXTRA_CAPABILITIES, capabilities)
     }
 
     companion object {
@@ -40,6 +43,7 @@ data class FakeCallSpec(
         private const val EXTRA_RTT = "org.prauga.phone.testing.RTT"
         private const val EXTRA_PROPERTIES = "org.prauga.phone.testing.PROPERTIES"
         private const val EXTRA_CALL_EXTRAS = "org.prauga.phone.testing.CALL_EXTRAS"
+        private const val EXTRA_CAPABILITIES = "org.prauga.phone.testing.CAPABILITIES"
 
         fun fromExtras(extras: Bundle?): FakeCallSpec = FakeCallSpec(
             number = extras?.getString(EXTRA_NUMBER),
@@ -51,6 +55,7 @@ data class FakeCallSpec(
             rtt = extras?.getBoolean(EXTRA_RTT) ?: false,
             properties = extras?.getInt(EXTRA_PROPERTIES) ?: 0,
             extras = extras?.getBundle(EXTRA_CALL_EXTRAS) ?: Bundle(),
+            capabilities = extras?.getInt(EXTRA_CAPABILITIES) ?: 0,
         )
     }
 }

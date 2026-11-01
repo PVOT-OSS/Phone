@@ -5,6 +5,7 @@
 
 package org.prauga.phone.dialer.app.settings
 
+import android.Manifest
 import android.app.Application
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -20,6 +21,7 @@ import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.settings.ui.SettingsTheme
 import org.prauga.phone.dialer.ui.TestTags
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
 
 /** The system build offers the recording format, stored where CallRecorderService reads it. */
 @RunWith(RobolectricTestRunner::class)
@@ -30,6 +32,8 @@ class RecordingFormatTest {
     @Test
     fun choosingAFormatStoresItForTheRecorder() {
         val context: Application = ApplicationProvider.getApplicationContext()
+        // The system build is granted the permission recording needs, so it offers the setting.
+        shadowOf(context).grantPermissions(Manifest.permission.CAPTURE_AUDIO_OUTPUT)
         val model = SoundSettingsModel(context)
         model.devicePrefs.edit().clear().commit()
         val key = context.getString(R.string.call_recording_format_key)

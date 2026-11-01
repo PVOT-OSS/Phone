@@ -43,6 +43,10 @@ internal data class CallDetailsEntryUi(
     val hasRttTranscript: Boolean,
     val callMappingId: String,
     val recordings: List<CallRecording>,
+    /** What was sent with the call through call composer: urgent, a note and a picture. */
+    val isUrgent: Boolean = false,
+    val composerNote: String? = null,
+    val composerPicture: String? = null,
 ) {
     /** Missed, rejected and blocked calls had no talk time to show. */
     val showsDuration: Boolean get() = !CallTypeHelper.isMissedCallType(callType)
@@ -104,6 +108,9 @@ internal object CallDetailsMapper {
                     hasRttTranscript = entry.hasRttTranscript || entry.callMappingId in rttTranscriptIds,
                     callMappingId = entry.callMappingId,
                     recordings = recordingsFor(entry),
+                    isUrgent = entry.isUrgent,
+                    composerNote = entry.subject.takeIf { it.isNotBlank() },
+                    composerPicture = entry.composerPictureUri.takeIf { it.isNotBlank() },
                 )
             },
             hasNumber = contact.number.isNotEmpty(),

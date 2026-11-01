@@ -291,6 +291,27 @@
 
   <!-- Label of the "name format" display option [CHAR LIMIT=64]-->
   <string name="display_options_view_names_as">Name format</string>
+  <!-- Display options: the app's colour theme. [CHAR LIMIT=30] -->
+  <string name="display_options_theme">Choose theme</string>
+  <string name="display_options_theme_key" translatable="false">display_options_theme_preference</string>
+  <string name="display_options_theme_light">Light</string>
+  <string name="display_options_theme_dark">Dark</string>
+  <string name="display_options_theme_system">System default</string>
+  <string-array name="display_options_theme_entries" translatable="false">
+    <item>@string/display_options_theme_light</item>
+    <item>@string/display_options_theme_dark</item>
+    <item>@string/display_options_theme_system</item>
+  </string-array>
+  <string-array name="display_options_theme_values" translatable="false">
+    <item>1</item>
+    <item>2</item>
+    <item>-1</item>
+  </string-array>
+  <string name="display_options_theme_system_value" translatable="false">-1</string>
+  <!-- Display options: keep the voice call screen from rotating. [CHAR LIMIT=40] -->
+  <string name="display_options_force_portrait">Keep portrait mode on calls</string>
+  <string name="display_options_force_portrait_summary">Prevents accidental auto-rotation when on a call</string>
+  <string name="display_options_force_portrait_key" translatable="false">force_portrait_mode_key</string>
 
   <!-- An allowable value for the "view names as" contact display option  -->
   <string name="display_options_view_given_name_first">First name first</string>
@@ -314,6 +335,16 @@
 
   <!-- Hint text shown in the call subject dialog. [CHAR LIMIT=255] -->
   <string name="call_subject_hint">Type a note to send with call ...</string>
+  <!-- Call composer option in the "call with a note" dialog: mark the call as urgent for the person called [CHAR LIMIT=30] -->
+  <string name="call_composer_urgent">Urgent</string>
+  <!-- Call composer button in the "call with a note" dialog: choose a picture to send with the call [CHAR LIMIT=30] -->
+  <string name="call_composer_add_picture">Add picture</string>
+  <!-- Same button once a picture was chosen [CHAR LIMIT=30] -->
+  <string name="call_composer_change_picture">Change picture</string>
+  <!-- Content description of the chosen picture's thumbnail [CHAR LIMIT=NONE] -->
+  <string name="call_composer_picture_description">Picture to send with the call</string>
+  <!-- Shown when the chosen picture couldn't be sent; the call goes ahead without it [CHAR LIMIT=NONE] -->
+  <string name="call_composer_picture_failed">Couldn\'t send the picture. Calling without it.</string>
 
   <!-- Button used to start a new call with the user entered subject. [CHAR LIMIT=32] -->
   <string name="send_and_call_button">SEND &amp; CALL</string>

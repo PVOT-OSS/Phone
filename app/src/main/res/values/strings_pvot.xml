@@ -18,4 +18,10 @@
     <string name="call_stats_by_count">Count</string>
     <!-- Call statistics with no time range set. -->
     <string name="call_stats_all_time">All time</string>
+    <!-- Call log row badge: the call went over Wi-Fi. [CHAR LIMIT=NONE] -->
+    <string name="description_wifi_call">Wi-Fi call</string>
+    <!-- Call log row badge: the call was in HD voice. [CHAR LIMIT=NONE] -->
+    <string name="description_hd_call">HD call</string>
+    <!-- Call log row badge: assisted dialing added a country code. [CHAR LIMIT=NONE] -->
+    <string name="description_assisted_dialing">Assisted dialing</string>
 </resources>

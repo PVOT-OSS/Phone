@@ -122,7 +122,7 @@ class ButtonChooserFactory {
     mapping.put(InCallButtonIds.BUTTON_DIALPAD, MappingInfo.builder(1).build());
     mapping.put(InCallButtonIds.BUTTON_AUDIO, MappingInfo.builder(2).build());
     mapping.put(InCallButtonIds.BUTTON_RECORD_CALL, MappingInfo.builder(3).build());
-    // Transfer only shows with a held call to transfer to, and then goes first.
+    // Transfer goes first whenever the call can be transferred.
     mapping.put(InCallButtonIds.BUTTON_TRANSFER, MappingInfo.builder(3).setSlotOrder(-1).build());
     mapping.put(InCallButtonIds.BUTTON_MERGE, MappingInfo.builder(4).setSlotOrder(5).build());
     mapping.put(InCallButtonIds.BUTTON_ADD_CALL, MappingInfo.builder(4).build());
