@@ -349,5 +349,11 @@ private val PanelCorner = 32.dp
 /** Space between the panel and the End pill. */
 private val ControlsGap = PvotSpacing.L + PvotSpacing.S
 
+/**
+ * Space under the end call button, above the navigation bar. The button under the controls and the
+ * one over the dialpad both use it, so it stays put when the dialpad opens.
+ */
+internal val EndCallBottomGap = PvotSpacing.L + PvotSpacing.S
+
 private const val DisabledLabelAlpha = 0.38f
 
