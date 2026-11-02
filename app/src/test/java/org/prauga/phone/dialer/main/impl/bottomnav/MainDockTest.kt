@@ -24,7 +24,6 @@ import androidx.core.view.ViewCompat
 import androidx.test.core.app.ApplicationProvider
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.google.common.truth.Truth.assertThat
-import org.prauga.phone.dialer.ui.PhoneTheme
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -51,7 +50,7 @@ class MainDockTest {
 
     private fun setChrome() {
         compose.setContent {
-            PhoneTheme {
+            MainChromeTheme {
                 Column(Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.background)) {
                     MainDock(navBar, dockActions)
                 }
