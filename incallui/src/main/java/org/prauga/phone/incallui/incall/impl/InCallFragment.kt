@@ -168,7 +168,7 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
                     Modifier.fillMaxWidth()
                         .navigationBarsPadding()
                         .padding(horizontal = PvotSpacing.L)
-                        .padding(bottom = PvotSpacing.L + PvotSpacing.S),
+                        .padding(bottom = EndCallBottomGap),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     InCallControls(buttons, endCallEnabled, ::onEndCall)
@@ -178,7 +178,7 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
                 // The dialpad leaves room at its bottom for this, so the call can end while it
                 // shows.
                 if (dialpadShowing) {
-                    Box(Modifier.navigationBarsPadding().padding(bottom = PvotSpacing.L)) {
+                    Box(Modifier.navigationBarsPadding().padding(bottom = EndCallBottomGap)) {
                         EndCallButton(endCallEnabled, ::onEndCall)
                     }
                 }
