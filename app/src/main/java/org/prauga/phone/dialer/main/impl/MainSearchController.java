@@ -46,6 +46,7 @@ import org.prauga.phone.dialer.dialpadview.DialpadFragment.DialpadListener;
 import org.prauga.phone.dialer.dialpadview.DialpadFragment.OnDialpadQueryChangedListener;
 import org.prauga.phone.dialer.helplines.HelplineActivity;
 import org.prauga.phone.dialer.main.impl.bottomnav.MainNavBarState;
+import org.prauga.phone.dialer.main.impl.bottomnav.TabIndex;
 import org.prauga.phone.dialer.main.impl.toolbar.MainMenuItem;
 import org.prauga.phone.dialer.main.impl.toolbar.MainToolbar;
 import org.prauga.phone.dialer.main.impl.toolbar.SearchBarListener;
@@ -151,8 +152,9 @@ public class MainSearchController implements SearchBarListener {
     }
 
     dialpadShowRequested = true;
+    // The toolbar stays collapsed under the dialpad: expanded, it would flash its search field
+    // when the dialpad tab is left and the toolbar shows again.
     toolbar.hideForDialpad();
-    toolbar.expand(animate, Optional.empty(), /* requestFocus */ false);
 
     activity.setTitle(R.string.dialpad_activity_title);
 
@@ -180,7 +182,8 @@ public class MainSearchController implements SearchBarListener {
       // cover the quick dial even with no query. On the dialpad they follow its digits.
       onDialpadQueryChanged(dialpadFragment.getQuery());
     }
-    transaction.commit();
+    // At once, in the same frame as the toolbar hiding above, or the last tab shows without it.
+    transaction.commitNow();
 
     notifyListenersOnSearchOpen();
   }
@@ -222,6 +225,14 @@ public class MainSearchController implements SearchBarListener {
     activity.setTitle(R.string.main_activity_label);
 
     dialpadFragment.setAnimate(animate);
+    if (!animate) {
+      // Put away at once, in the same frame as the tab that replaces it.
+      dialpadFragment.slideDown(false, null);
+      if (activity.isSafeToCommitTransactions()) {
+        activity.getSupportFragmentManager().beginTransaction().hide(dialpadFragment).commitNow();
+      }
+      return;
+    }
     dialpadFragment.slideDown(
         animate,
         new AnimationListener() {
@@ -304,12 +315,15 @@ public class MainSearchController implements SearchBarListener {
       if (TextUtils.isEmpty(dialpadFragment.getQuery())) {
         closeSearch(true);
       } else {
+        // The keypad goes away and the search goes on, in the toolbar's search field.
+        toolbar.expand(/* animate=*/ false, Optional.empty(), /* requestFocus */ false);
         hideDialpad(/* animate=*/ true);
         hideBottomNav();
       }
     } else if (isSearchVisible()) {
       if (TextUtils.isEmpty(toolbar.getQuery())) {
         closeSearch(true);
+        reopenDialpadOnItsTab();
       } else {
         closeKeyboard();
       }
@@ -333,6 +347,7 @@ public class MainSearchController implements SearchBarListener {
     } else if (isSearchVisible()) {
       LogUtil.i("MainSearchController.onBackPressed", "Search is visible");
       closeSearch(true);
+      reopenDialpadOnItsTab();
       return true;
     } else {
       return false;
@@ -363,7 +378,8 @@ public class MainSearchController implements SearchBarListener {
     showBottomNav();
     updateStatusBarColor(android.R.attr.statusBarColor);
     toolbar.collapse(animate);
-    activity.getSupportFragmentManager().beginTransaction().hide(searchFragment).commit();
+    // At once, in the same frame as the next tab and the toolbar.
+    activity.getSupportFragmentManager().beginTransaction().hide(searchFragment).commitNow();
 
     // Clear the dialpad so the phone number isn't persisted between search sessions.
     if (dialpadFragment != null) {
@@ -459,6 +475,17 @@ public class MainSearchController implements SearchBarListener {
   public void onSearchBackButtonClicked() {
     LogUtil.enterBlock("MainSearchController.onSearchBackButtonClicked");
     closeSearch(true);
+    reopenDialpadOnItsTab();
+  }
+
+  /**
+   * Opens the dialpad again when search closes on the dialpad tab, as after the keypad was put
+   * away to scroll the results; otherwise the tab would show without its keypad.
+   */
+  private void reopenDialpadOnItsTab() {
+    if (bottomNav.getSelectedTab() == TabIndex.DIALPAD) {
+      showDialpad(/* animate=*/ false, /* fromNewIntent=*/ false);
+    }
   }
 
   @Override

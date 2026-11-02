@@ -1027,7 +1027,9 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
         transaction.add(R.id.fragment_container, fragment, tag);
       }
       if (activity.isSafeToCommitTransactions()) {
-        transaction.commit();
+        // At once, so the tab's content changes in the same frame as the toolbar's title and
+        // visibility, which the other tab listeners change directly.
+        transaction.commitNow();
       }
     }
 
