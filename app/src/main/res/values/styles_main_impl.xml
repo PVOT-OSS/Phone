@@ -22,6 +22,8 @@
     <item name="android:colorPrimaryDark">@color/dialer_theme_color_dark</item>
     <item name="colorPrimaryDark">@color/dialer_theme_color_dark</item>
     <item name="android:windowLightStatusBar">true</item>
+    <item name="android:windowSplashScreenBackground">@color/splash_background</item>
+    <item name="android:windowSplashScreenIconBackgroundColor">@color/splash_icon_background</item>
   </style>
 
   <!-- Activities should use this theme as their style -->
