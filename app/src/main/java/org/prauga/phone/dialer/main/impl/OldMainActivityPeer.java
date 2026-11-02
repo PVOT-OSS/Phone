@@ -44,6 +44,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LifecycleOwnerKt;
+import androidx.compose.material3.SnackbarHostState;
 
 import org.prauga.phone.dialer.R;
 import org.prauga.phone.dialer.app.MainComponent;
@@ -137,7 +139,10 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
 
   private final MainNavBarState bottomNav = new MainNavBarState();
   private MainBottomNavBarBottomNavTabListener bottomNavTabListener;
-  private View snackbarContainer;
+  /** The main screen's snackbars, drawn above the nav bar; post-call prompts show in them. */
+  private final SnackbarHostState snackbarHostState = new SnackbarHostState();
+
+  private SnackbarPrompt postCallPrompt;
   private SupportUiListener<String> getLastOutgoingCallListener;
 
   static boolean isShowTabIntent(Intent intent) {
@@ -190,11 +195,13 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
   private void initLayout(Bundle savedInstanceState) {
     onContactSelectedListener = new MainOnContactSelectedListener(activity);
 
-    snackbarContainer = activity.findViewById(R.id.coordinator_layout);
+    postCallPrompt =
+        new SnackbarPrompt(LifecycleOwnerKt.getLifecycleScope(activity), snackbarHostState);
     MainChrome.bind(
         activity.findViewById(R.id.bottom_nav_bar),
-        snackbarContainer,
+        activity.findViewById(R.id.coordinator_layout),
         bottomNav,
+        snackbarHostState,
         new MainNavBarActions() {
           @Override
           public void onDial() {
@@ -429,7 +436,7 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
       return;
     }
 
-    PostCall.promptUserForMessageIfNecessary(activity, snackbarContainer);
+    PostCall.promptUserForMessageIfNecessary(activity, postCallPrompt);
   }
 
   @Override
