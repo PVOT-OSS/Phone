@@ -19,12 +19,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.PointerEventPass
@@ -74,35 +76,46 @@ interface SearchActions {
  */
 @Composable
 fun SearchScreen(rows: List<SearchRow>, needsPermission: Boolean, actions: SearchActions, modifier: Modifier = Modifier) {
+    val listState = rememberLazyListState()
+    // New results, as when the permission is granted or the query changes, start from the first
+    // one: the list would otherwise keep the row it showed while matches arrive above it.
+    LaunchedEffect(needsPermission, rows.firstOrNull()?.key) {
+        listState.scrollToItem(0)
+    }
     Box(
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .pointerInput(actions) {
+            .pointerInput(actions, needsPermission) {
+                // Tapping the permission prompt is not the list being touched: it keeps the keypad.
+                if (needsPermission) return@pointerInput
                 // Watches the first touch without taking it from the rows.
                 awaitEachGesture {
                     awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
                     actions.listTouched()
                 }
             },
-        contentAlignment = Alignment.Center,
     ) {
-        if (needsPermission) {
-            PvotEmptyContent(
-                message = stringResource(R.string.new_permission_no_search),
-                modifier = Modifier.padding(PvotSpacing.L),
-                icon = { Icon(painterResource(R.drawable.ic_users), contentDescription = null) },
-                actionLabel = stringResource(R.string.permission_single_turn_on),
-                onAction = actions::turnOnPermission,
-            )
-            return@Box
-        }
         PvotScreen(
             modifier = Modifier.fillMaxSize().testTag(TestTags.SEARCH_LIST),
+            state = listState,
             contentPadding = PaddingValues(vertical = PvotSpacing.S),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start,
         ) {
+            if (needsPermission) {
+                // At the top, like the quick dial's prompt: on the dialpad the keypad covers the
+                // middle. The typed number's actions still follow.
+                item(key = PermissionPromptKey) {
+                    PvotEmptyContent(
+                        message = stringResource(R.string.new_permission_no_search),
+                        modifier = Modifier.fillMaxWidth().padding(PvotSpacing.L),
+                        icon = { Icon(painterResource(R.drawable.ic_users), contentDescription = null) },
+                        actionLabel = stringResource(R.string.permission_single_turn_on),
+                        onAction = actions::turnOnPermission,
+                    )
+                }
+            }
             items(rows, key = { it.key }) { row ->
                 when (row) {
                     is SearchRow.Header -> PvotSectionHeader(
@@ -226,3 +239,6 @@ object SearchScreenHost {
         }
     }
 }
+
+/** Key of the contacts permission prompt above the results. */
+private const val PermissionPromptKey = "permission_prompt"
