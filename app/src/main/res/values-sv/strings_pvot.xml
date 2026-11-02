@@ -7,4 +7,5 @@
   <string name="call_history_delete">Radera</string>
   <string name="description_assisted_dialing">Assisterad uppringning</string>
   <string name="speed_dial_more_options">Fler alternativ</string>
+  <string name="nav_bar_action_add">Lägg till</string>
 </resources>

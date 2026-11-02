@@ -7,4 +7,5 @@
   <string name="call_history_delete">ဖျက်ရန်</string>
   <string name="description_assisted_dialing">အထောက်အကူပေး ဖုန်းခေါ်ဆိုမှု</string>
   <string name="speed_dial_more_options">နောက်ထပ် ရွေးစရာများ</string>
+  <string name="nav_bar_action_add">ထည့်ရန်</string>
 </resources>

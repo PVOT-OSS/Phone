@@ -7,4 +7,5 @@
   <string name="call_history_delete">Vee uit</string>
   <string name="description_assisted_dialing">Bystandoproep</string>
   <string name="speed_dial_more_options">Nog opsies</string>
+  <string name="nav_bar_action_add">Voeg by</string>
 </resources>

@@ -7,4 +7,5 @@
   <string name="call_history_delete">Dzēst</string>
   <string name="description_assisted_dialing">Numura sastādīšanas palīdzība</string>
   <string name="speed_dial_more_options">Citas opcijas</string>
+  <string name="nav_bar_action_add">Pievienot</string>
 </resources>

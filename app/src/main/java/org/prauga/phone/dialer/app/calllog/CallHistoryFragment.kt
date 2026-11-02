@@ -39,7 +39,7 @@ import org.prauga.phone.dialer.common.FragmentUtils
 import org.prauga.phone.dialer.database.CallLogQueryHandler
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.TestTags
-import org.prauga.phone.dialer.ui.dockClearance
+import org.prauga.phone.dialer.ui.navBarClearance
 
 /** The Recents tab of the main screen: every call but voicemail, or only missed ones. */
 class CallHistoryFragment : Fragment() {
@@ -96,7 +96,7 @@ class CallHistoryFragment : Fragment() {
                                 viewModel = if (missedOnly) missedViewModel else viewModel,
                                 callType = if (missedOnly) Calls.MISSED_TYPE else callType,
                                 modifier = Modifier.weight(1f),
-                                bottomPadding = dockClearance(),
+                                bottomPadding = navBarClearance(),
                                 showEmptyAction =
                                     filter == CallLogFilter.ALL &&
                                         showsEmptyAction(callType, isCallLogActivity = false),
@@ -115,7 +115,7 @@ class CallHistoryFragment : Fragment() {
                                         )
                                         ?.updateTabUnreadCounts()
                                 },
-                                // The main screen hides the dock and title while calls are
+                                // The main screen hides the nav bar and title while calls are
                                 // selected.
                                 onSelectionModeChanged = { enabled, exit ->
                                     FragmentUtils.getParent(

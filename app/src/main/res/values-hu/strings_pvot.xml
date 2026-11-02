@@ -7,4 +7,5 @@
   <string name="call_history_delete">Törlés</string>
   <string name="description_assisted_dialing">Támogatott tárcsázás</string>
   <string name="speed_dial_more_options">További opciók</string>
+  <string name="nav_bar_action_add">Hozzáadás</string>
 </resources>

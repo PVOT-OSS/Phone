@@ -7,4 +7,5 @@
   <string name="call_history_delete">Hapus</string>
   <string name="description_assisted_dialing">Panggilan Berbantu</string>
   <string name="speed_dial_more_options">Opsi lain</string>
+  <string name="nav_bar_action_add">Tambahkan</string>
 </resources>

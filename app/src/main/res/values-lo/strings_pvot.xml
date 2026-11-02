@@ -7,4 +7,5 @@
   <string name="call_history_delete">​ລຶບ</string>
   <string name="description_assisted_dialing">ກ່ອງຂໍ້ຄວາມແບບຊ່ວຍເຫຼືອ</string>
   <string name="speed_dial_more_options">ຕົວເລືອກເພີ່ມເຕີມ</string>
+  <string name="nav_bar_action_add">ເພີ່ມ</string>
 </resources>

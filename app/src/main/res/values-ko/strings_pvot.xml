@@ -7,4 +7,5 @@
   <string name="call_history_delete">삭제</string>
   <string name="description_assisted_dialing">전화번호 도우미</string>
   <string name="speed_dial_more_options">추가 옵션</string>
+  <string name="nav_bar_action_add">추가</string>
 </resources>

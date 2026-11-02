@@ -7,4 +7,5 @@
   <string name="call_history_delete">Eyða</string>
   <string name="description_assisted_dialing">Aðstoð við hringingar</string>
   <string name="speed_dial_more_options">Fleiri valkostir</string>
+  <string name="nav_bar_action_add">Bæta við</string>
 </resources>
