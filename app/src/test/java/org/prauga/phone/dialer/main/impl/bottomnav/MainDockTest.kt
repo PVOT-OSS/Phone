@@ -27,7 +27,6 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.prauga.phone.dialer.ui.PhoneTheme
 import org.prauga.phone.dialer.ui.TestTags
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -60,7 +59,7 @@ class MainDockTest {
 
     private fun setChrome() {
         compose.setContent {
-            PhoneTheme {
+            MainChromeTheme {
                 Column(Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.background)) {
                     MainDock(navBar, dockActions)
                 }
