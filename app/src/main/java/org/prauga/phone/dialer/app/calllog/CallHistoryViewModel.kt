@@ -153,6 +153,11 @@ class CallHistoryViewModel(
 
     /** Rows deleted with a swipe, hidden until the delete is undone or committed. */
     private val _pendingDeletes = MutableStateFlow<Set<Long>>(emptySet())
+
+    /**
+     * Calls deleted from the call log that a load may still have shown, until it no longer does.
+     */
+    private val deleted = mutableSetOf<Long>()
     val pendingDeletes: StateFlow<Set<Long>> = _pendingDeletes.asStateFlow()
 
     val contactInfoCache =
@@ -209,6 +214,7 @@ class CallHistoryViewModel(
                 _state.value =
                     try {
                         val groups = repository.load(callType)
+                        forgetDeleted(groups)
                         if (groups.isEmpty()) {
                             CallHistoryUiState.Empty
                         } else {
@@ -227,6 +233,17 @@ class CallHistoryViewModel(
                         CallHistoryUiState.NeedsPermission
                     }
             }
+    }
+
+    /**
+     * Stops hiding deleted calls once a load no longer has them. Calls still waiting on undo stay
+     * hidden even when a filtered load leaves them out.
+     */
+    private fun forgetDeleted(groups: List<CallLogGroup>) {
+        val loaded = groups.flatMapTo(HashSet()) { it.callIds }
+        val gone = deleted.filterTo(HashSet()) { it !in loaded }
+        deleted -= gone
+        _pendingDeletes.value -= gone
     }
 
     /** Starts caller lookups, while the list shows. */
@@ -253,9 +270,11 @@ class CallHistoryViewModel(
 
     fun commitDelete(group: CallLogGroup) {
         if (group.callIds.none { it in _pendingDeletes.value }) return
+        // The calls stay hidden until a reload no longer has them; showing them again as soon as
+        // the delete is done would bring the row back until then.
         viewModelScope.launch {
             repository.delete(listOf(group))
-            _pendingDeletes.value -= group.callIds.toSet()
+            deleted += group.callIds
         }
     }
 
@@ -265,7 +284,7 @@ class CallHistoryViewModel(
         _pendingDeletes.value += groups.flatMap { it.callIds }
         viewModelScope.launch {
             repository.delete(groups)
-            _pendingDeletes.value -= groups.flatMap { it.callIds }.toSet()
+            deleted += groups.flatMap { it.callIds }
         }
     }
 
