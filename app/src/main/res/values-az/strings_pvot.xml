@@ -7,4 +7,5 @@
   <string name="call_history_delete">Silin</string>
   <string name="description_assisted_dialing">Dəstəkli nömrə yığımı</string>
   <string name="speed_dial_more_options">Əlavə seçimlər</string>
+  <string name="nav_bar_action_add">Əlavə edin</string>
 </resources>

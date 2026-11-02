@@ -7,4 +7,5 @@
   <string name="call_history_delete">Xóa</string>
   <string name="description_assisted_dialing">Quay số được hỗ trợ</string>
   <string name="speed_dial_more_options">Tùy chọn khác</string>
+  <string name="nav_bar_action_add">Thêm</string>
 </resources>

@@ -37,7 +37,7 @@ import org.prauga.phone.dialer.app.voicemail.VoicemailStatusMonitor
 import org.prauga.phone.dialer.common.FragmentUtils
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
-import org.prauga.phone.dialer.ui.dockClearance
+import org.prauga.phone.dialer.ui.navBarClearance
 import org.prauga.phone.dialer.voicemail.listui.error.VoicemailErrorMessageCreator
 import org.prauga.phone.dialer.voicemail.listui.error.VoicemailStatus
 import org.prauga.phone.dialer.voicemail.listui.error.VoicemailStatusWorker
@@ -84,7 +84,7 @@ class VoicemailFragment : Fragment() {
                         viewModel = viewModel,
                         callType = Calls.VOICEMAIL_TYPE,
                         showEmptyAction = false,
-                        bottomPadding = dockClearance(),
+                        bottomPadding = navBarClearance(),
                         onShowDialpad = {},
                         onMissedCallRead = { listener()?.updateTabUnreadCounts() },
                         voicemail = VoicemailParts(presenter, playbackState, statusMessage),

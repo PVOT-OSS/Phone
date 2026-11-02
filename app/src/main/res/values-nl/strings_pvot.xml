@@ -7,4 +7,5 @@
   <string name="call_history_delete">Verwijderen</string>
   <string name="description_assisted_dialing">Ondersteund bellen</string>
   <string name="speed_dial_more_options">Meer opties</string>
+  <string name="nav_bar_action_add">Toevoegen</string>
 </resources>

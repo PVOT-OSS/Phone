@@ -7,4 +7,5 @@
   <string name="call_history_delete">Изтриване</string>
   <string name="description_assisted_dialing">Подпомогнато набиране</string>
   <string name="speed_dial_more_options">Още опции</string>
+  <string name="nav_bar_action_add">Добавяне</string>
 </resources>

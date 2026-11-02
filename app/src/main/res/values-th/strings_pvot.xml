@@ -7,4 +7,5 @@
   <string name="call_history_delete">ลบ</string>
   <string name="description_assisted_dialing">ระบบช่วยโทรออก</string>
   <string name="speed_dial_more_options">ตัวเลือกเพิ่มเติม</string>
+  <string name="nav_bar_action_add">เพิ่ม</string>
 </resources>

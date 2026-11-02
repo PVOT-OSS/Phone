@@ -7,4 +7,5 @@
   <string name="call_history_delete">Ջնջել</string>
   <string name="description_assisted_dialing">Օգնություն համարհավաքման ժամանակ</string>
   <string name="speed_dial_more_options">Այլ ընտրանքներ</string>
+  <string name="nav_bar_action_add">Ավելացնել</string>
 </resources>

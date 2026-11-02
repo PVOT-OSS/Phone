@@ -12,7 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import org.prauga.phone.dialer.common.LogUtil
 
-/** State of the main screen's dock: the selected tab, the voicemail tab and unread badges. */
+/** State of the main screen's nav bar: the selected tab, the voicemail tab and unread badges. */
 class MainNavBarState {
 
     /** The selected [TabIndex], or [TabIndex.NONE] before the first selection. */

@@ -7,4 +7,5 @@
   <string name="call_history_delete">წაშლა</string>
   <string name="description_assisted_dialing">დახმარება ნომრის აკრეფაში</string>
   <string name="speed_dial_more_options">სხვა ვარიანტები</string>
+  <string name="nav_bar_action_add">დამატება</string>
 </resources>

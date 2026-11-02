@@ -7,4 +7,5 @@
   <string name="call_history_delete">Kustuta</string>
   <string name="description_assisted_dialing">Abistatud helistamine</string>
   <string name="speed_dial_more_options">Rohkem valikuid</string>
+  <string name="nav_bar_action_add">Lisa</string>
 </resources>

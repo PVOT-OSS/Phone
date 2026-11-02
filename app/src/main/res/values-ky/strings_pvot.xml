@@ -7,4 +7,5 @@
   <string name="call_history_delete">Жок кылуу</string>
   <string name="description_assisted_dialing">Жардам берилген терүү</string>
   <string name="speed_dial_more_options">Дагы параметрлер</string>
+  <string name="nav_bar_action_add">Кошуу</string>
 </resources>
