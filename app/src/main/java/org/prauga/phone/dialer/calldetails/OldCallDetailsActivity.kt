@@ -24,6 +24,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.lifecycleScope
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.ui.Alignment
+import com.prauga.pvot.designsystem.theme.PvotSpacing
+import org.prauga.phone.dialer.main.impl.SnackbarPrompt
+import org.prauga.phone.dialer.ui.PhoneSnackbarHost
 import com.google.i18n.phonenumbers.NumberParseException
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.prauga.pvot.designsystem.platform.enablePvotEdgeToEdge
@@ -69,6 +78,7 @@ class OldCallDetailsActivity : ComponentActivity() {
     private var ui by mutableStateOf<CallDetailsUi?>(null)
     private var assistedDialingCountryCode by mutableStateOf<Int?>(null)
     private val recordingStore = CallRecordingDataStore()
+    private val snackbars = SnackbarHostState()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enablePvotEdgeToEdge()
@@ -77,23 +87,30 @@ class OldCallDetailsActivity : ComponentActivity() {
         setPvotContent {
             PhoneScreenTheme {
                 val ui = ui ?: return@PhoneScreenTheme
-                CallDetailsScreen(
-                    ui = ui,
-                    assistedDialingCountryCode = assistedDialingCountryCode,
-                    callWithIntent = AccountSelectionActivity.createIntent(
-                        this, contact.number, CallInitiationType.Type.CALL_DETAILS),
-                    actions = actions,
-                    avatar = { size ->
-                        QuickContactAvatar(
-                            name = contact.nameOrNumber,
-                            contactUri = contact.contactUri.ifEmpty { null }?.let(Uri::parse),
-                            photoId = contact.photoId,
-                            photoUri = contact.photoUri.ifEmpty { null }?.let(Uri::parse),
-                            size = size,
-                            modifier = Modifier.testTag(TestTags.CALL_DETAILS_AVATAR),
-                        )
-                    },
-                )
+                Box(Modifier.fillMaxSize()) {
+                    CallDetailsScreen(
+                        ui = ui,
+                        assistedDialingCountryCode = assistedDialingCountryCode,
+                        callWithIntent = AccountSelectionActivity.createIntent(
+                            this@OldCallDetailsActivity, contact.number, CallInitiationType.Type.CALL_DETAILS),
+                        actions = actions,
+                        avatar = { size ->
+                            QuickContactAvatar(
+                                name = contact.nameOrNumber,
+                                contactUri = contact.contactUri.ifEmpty { null }?.let(Uri::parse),
+                                photoId = contact.photoId,
+                                photoUri = contact.photoUri.ifEmpty { null }?.let(Uri::parse),
+                                size = size,
+                                modifier = Modifier.testTag(TestTags.CALL_DETAILS_AVATAR),
+                            )
+                        },
+                    )
+                    // Post-call prompts, above the navigation bar.
+                    PhoneSnackbarHost(
+                        snackbars,
+                        Modifier.align(Alignment.BottomCenter).navigationBarsPadding().padding(bottom = PvotSpacing.L),
+                    )
+                }
             }
         }
     }
@@ -106,7 +123,7 @@ class OldCallDetailsActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        PostCall.promptUserForMessageIfNecessary(this, findViewById(android.R.id.content))
+        PostCall.promptUserForMessageIfNecessary(this, SnackbarPrompt(lifecycleScope, snackbars))
     }
 
     override fun onDestroy() {
