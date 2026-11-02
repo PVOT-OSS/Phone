@@ -520,6 +520,8 @@ private fun HistoryRow(
     ) {
         PvotSwipeRow(
             containerColor = cardColor,
+            thresholdFraction = SwipeThresholdFraction,
+            dragResistance = SwipeDragResistance,
             startAction = if (canSwipeCall) {
                 PvotSwipeRowDefaults.action(
                     label = stringResource(R.string.call),
@@ -637,6 +639,10 @@ private fun RowActions(row: CallLogRowUi, onRowAction: (RowAction) -> Unit) {
 
 /** The most columns of the open row's actions. */
 private const val ActionsPerLine = 4
+
+// A recents row calls or deletes when swiped, so it takes a firmer, longer swipe than the default.
+private const val SwipeThresholdFraction = 0.45f
+private const val SwipeDragResistance = 0.75f
 
 /** A check in place of a selected row's avatar. */
 @Composable
