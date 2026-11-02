@@ -24,8 +24,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.telephony.TelephonyManager;
-import android.view.View;
-import android.view.View.OnClickListener;
 
 import androidx.annotation.Nullable;
 
@@ -35,9 +33,6 @@ import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.storage.StorageComponent;
 import org.prauga.phone.dialer.util.DialerUtils;
 import org.prauga.phone.dialer.util.IntentUtil;
-
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
 
 import org.lineageos.lib.phone.SensitivePhoneNumbers;
 
@@ -50,28 +45,36 @@ public class PostCall {
   private static final String KEY_POST_CALL_MESSAGE_SENT = "post_call_message_sent";
   private static final String KEY_POST_CALL_DISCONNECT_PRESSED = "post_call_disconnect_pressed";
 
-  private static Snackbar activeSnackbar;
+  /**
+   * Shows a post-call prompt. The screen draws it as its own snackbar: Material's View snackbar
+   * needs an AppCompat theme, which Phone's screens don't have.
+   */
+  public interface Prompt {
+    /**
+     * Shows [message] with [actionLabel], running [onAction] when tapped and [onDone] once the
+     * prompt goes, either way; [longDuration] keeps it up longer.
+     */
+    void show(
+        String message,
+        String actionLabel,
+        Runnable onAction,
+        boolean longDuration,
+        @Nullable Runnable onDone);
+  }
 
-  public static void promptUserForMessageIfNecessary(Activity activity, View rootView) {
+  public static void promptUserForMessageIfNecessary(Activity activity, Prompt prompt) {
     if (isEnabled(activity)) {
       if (shouldPromptUserToViewSentMessage(activity)) {
-        promptUserToViewSentMessage(activity, rootView);
+        promptUserToViewSentMessage(activity, prompt);
       } else if (shouldPromptUserToSendMessage(activity)) {
-        promptUserToSendMessage(activity, rootView);
+        promptUserToSendMessage(activity, prompt);
       } else {
         clear(activity);
       }
     }
   }
 
-  public static void closePrompt() {
-    if (activeSnackbar != null && activeSnackbar.isShown()) {
-      activeSnackbar.dismiss();
-      activeSnackbar = null;
-    }
-  }
-
-  private static void promptUserToSendMessage(Activity activity, View rootView) {
+  private static void promptUserToSendMessage(Activity activity, Prompt prompt) {
     LogUtil.i("PostCall.promptUserToSendMessage", "returned from call, showing post call SnackBar");
     String number = Assert.isNotNull(getPhoneNumber(activity));
     String message = activity.getString(R.string.post_call_message);
@@ -82,17 +85,12 @@ public class PostCall {
 
     String actionText =activity.getString(R.string.post_call_send_message);
 
-    OnClickListener onClickListener =
-        v -> activity.startActivity(PostCallActivity.newIntent(activity, number, false));
-
-    int durationMs = 8_000;
-    activeSnackbar =
-        Snackbar.make(rootView, message, durationMs)
-            .setAction(actionText, onClickListener)
-            .setActionTextColor(
-                activity.getResources().getColor(R.color.dialer_snackbar_action_text_color,
-                        activity.getTheme()));
-    activeSnackbar.show();
+    prompt.show(
+        message,
+        actionText,
+        () -> activity.startActivity(PostCallActivity.newIntent(activity, number, false)),
+        /* longDuration= */ true,
+        /* onDone= */ null);
     StorageComponent.get(activity)
         .unencryptedSharedPrefs()
         .edit()
@@ -100,34 +98,22 @@ public class PostCall {
         .apply();
   }
 
-  private static void promptUserToViewSentMessage(Activity activity, View rootView) {
+  private static void promptUserToViewSentMessage(Activity activity, Prompt prompt) {
     LogUtil.i(
         "PostCall.promptUserToViewSentMessage",
         "returned from sending a post call message, message sent.");
     String message = activity.getString(R.string.post_call_message_sent);
     String addMessage = activity.getString(R.string.view);
     String number = Assert.isNotNull(getPhoneNumber(activity));
-    OnClickListener onClickListener =
-        v -> {
+    prompt.show(
+        message,
+        addMessage,
+        () -> {
           Intent intent = IntentUtil.getSendSmsIntent(number);
           DialerUtils.startActivityWithErrorToast(activity, intent);
-        };
-
-    activeSnackbar =
-        Snackbar.make(rootView, message, Snackbar.LENGTH_LONG)
-            .setAction(addMessage, onClickListener)
-            .setActionTextColor(
-                activity.getResources().getColor(R.color.dialer_snackbar_action_text_color,
-                        activity.getTheme()))
-            .addCallback(
-                new BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                  @Override
-                  public void onDismissed(Snackbar snackbar, int i) {
-                    super.onDismissed(snackbar, i);
-                    clear(snackbar.getContext());
-                  }
-                });
-    activeSnackbar.show();
+        },
+        /* longDuration= */ false,
+        /* onDone= */ () -> clear(activity));
     StorageComponent.get(activity)
         .unencryptedSharedPrefs()
         .edit()
@@ -163,8 +149,6 @@ public class PostCall {
   }
 
   private static void clear(Context context) {
-    activeSnackbar = null;
-
     StorageComponent.get(context)
         .unencryptedSharedPrefs()
         .edit()
