@@ -30,8 +30,8 @@ import com.prauga.pvot.designsystem.motion.PvotDurations
 import com.prauga.pvot.designsystem.motion.PvotMotion
 import com.prauga.pvot.designsystem.navigation.PvotNavBar
 import com.prauga.pvot.designsystem.navigation.PvotTabItem
-import com.prauga.pvot.designsystem.theme.PvotAppTheme
 import org.prauga.phone.dialer.R
+import org.prauga.phone.dialer.ui.PhoneTheme
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.ui.WindowBackdrop
 import org.prauga.phone.dialer.ui.appearance.AppearanceSettings
@@ -67,13 +67,13 @@ object MainChrome {
 }
 
 /**
- * The bar's theme, the one the Pvot catalog draws its bar in: the Pvot palette, not Phone's
- * secondary accent, at the glass intensity chosen in Appearance.
+ * The bar's theme: Phone's, with the palette's secondary blue as the accent like every other
+ * screen, at the glass intensity chosen in Appearance.
  */
 @Composable
 internal fun MainChromeTheme(content: @Composable () -> Unit) {
     val appearance by AppearanceSettings.rememberAppearance()
-    PvotAppTheme { ProvidePvotGlassIntensity(appearance.preferredIntensity, content = content) }
+    PhoneTheme { ProvidePvotGlassIntensity(appearance.preferredIntensity, content = content) }
 }
 
 /**
