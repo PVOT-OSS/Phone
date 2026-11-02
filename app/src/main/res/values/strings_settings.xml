@@ -8,4 +8,10 @@
     <string name="settings_section_app">General</string>
     <!-- Title of the group of settings about calls, in the settings list. -->
     <string name="settings_section_calls">Calling</string>
+    <!-- Row at the top of settings, shown while Phone is not the default phone app, that asks to make it the default. [CHAR LIMIT=40] -->
+    <string name="settings_default_phone_app_title">Set as default phone app</string>
+    <!-- Summary under the row that asks to make Phone the default phone app: what the default phone app can do. -->
+    <string name="settings_default_phone_app_summary">Show the call screen, answer and block calls, and play voicemail</string>
+    <!-- Summary under the row that asks to make Phone the default phone app, after the user turned down Android's dialog; the row then opens Android's Default apps settings. -->
+    <string name="settings_default_phone_app_denied">If Android doesn\'t ask, choose Phone in Default apps</string>
 </resources>
