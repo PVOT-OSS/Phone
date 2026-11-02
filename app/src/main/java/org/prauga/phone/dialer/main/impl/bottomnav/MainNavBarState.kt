@@ -27,6 +27,9 @@ class MainNavBarState {
     /** Whether the bar is shown; it hides while searching or selecting call log entries. */
     var isVisible by mutableStateOf(true)
 
+    /** Whether the bar is in its compact form: a list scrolled up, or back down to undo it. */
+    var isCompact by mutableStateOf(false)
+
     private val counts = mutableStateMapOf<Int, Int>()
     private val listeners = mutableListOf<OnBottomNavTabSelectedListener>()
 
@@ -43,6 +46,7 @@ class MainNavBarState {
     fun selectTab(@TabIndex tab: Int) {
         check(tab in ALL_TABS) { "Invalid tab: $tab" }
         selectedTab = tab
+        isCompact = false
         listeners.forEach { listener ->
             when (tab) {
                 TabIndex.DIALPAD -> listener.onDialpadSelected()

@@ -31,15 +31,19 @@ import org.prauga.phone.dialer.ui.appearance.AppearanceSettings
  */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun PhoneScreenTheme(fillBackground: Boolean = true, content: @Composable () -> Unit) {
+fun PhoneScreenTheme(
+    fillBackground: Boolean = true,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
+) {
     val appearance by AppearanceSettings.rememberAppearance()
     PhoneTheme {
         ProvidePvotGlassIntensity(appearance.preferredIntensity) {
             Surface(
                 modifier =
-                    (if (fillBackground) Modifier.fillMaxSize() else Modifier).semantics {
-                        testTagsAsResourceId = true
-                    },
+                    modifier
+                        .then(if (fillBackground) Modifier.fillMaxSize() else Modifier)
+                        .semantics { testTagsAsResourceId = true },
                 color =
                     if (fillBackground) MaterialTheme.colorScheme.background else Color.Transparent,
                 contentColor = MaterialTheme.colorScheme.onBackground,
