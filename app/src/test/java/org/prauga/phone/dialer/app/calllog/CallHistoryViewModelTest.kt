@@ -41,7 +41,9 @@ class CallHistoryViewModelTest {
             blockedNumbers.intersect(numbers.toSet())
 
         override suspend fun delete(groups: Collection<CallLogGroup>) {
-            deleted += groups.flatMap { it.callIds }
+            val ids = groups.flatMap { it.callIds }
+            deleted += ids
+            this.groups = this.groups.filter { group -> group.callIds.none { it in ids } }
         }
 
         override suspend fun block(number: String, countryIso: String?) {
@@ -117,7 +119,21 @@ class CallHistoryViewModelTest {
         vm.commitDelete(bea)
 
         assertThat(repository.deleted).containsExactly(20L, 21L)
+        // Still hidden until a reload no longer has the calls, or the row would come back
+        // meanwhile.
+        assertThat(vm.pendingDeletes.value).containsExactly(20L, 21L)
+        vm.refresh()
         assertThat(vm.pendingDeletes.value).isEmpty()
+        assertThat(vm.loaded.groups).containsExactly(ada)
+    }
+
+    @Test
+    fun aFilteredReloadKeepsCallsWaitingOnUndoHidden() {
+        val vm = viewModel()
+        vm.deleteLater(bea)
+        repository.groups = listOf(ada)
+        vm.refresh()
+        assertThat(vm.pendingDeletes.value).containsExactly(20L, 21L)
     }
 
     @Test
@@ -125,6 +141,7 @@ class CallHistoryViewModelTest {
         val vm = viewModel()
         vm.deleteNow(listOf(ada, bea))
         assertThat(repository.deleted).containsExactly(10L, 20L, 21L)
+        vm.refresh()
         assertThat(vm.pendingDeletes.value).isEmpty()
     }
 
