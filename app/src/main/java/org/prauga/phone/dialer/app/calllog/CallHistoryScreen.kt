@@ -76,7 +76,6 @@ import com.prauga.pvot.designsystem.components.PvotDialog
 import com.prauga.pvot.designsystem.components.PvotDialogAction
 import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
 import com.prauga.pvot.designsystem.components.PvotScreen
-import com.prauga.pvot.designsystem.components.PvotSnackbarHost
 import com.prauga.pvot.designsystem.components.button.PvotButton
 import com.prauga.pvot.designsystem.components.button.PvotButtonStyle
 import com.prauga.pvot.designsystem.components.button.PvotIconButton
@@ -94,6 +93,7 @@ import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.voicemail.VoicemailPlaybackState
 import org.prauga.phone.dialer.compat.telephony.TelephonyManagerCompat
 import org.prauga.phone.dialer.ui.ContactAvatar
+import org.prauga.phone.dialer.ui.PhoneSnackbarHost
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.ui.fullWidthRow
 
@@ -198,11 +198,11 @@ fun CallHistoryScreen(
                 }
             }
         }
-        PvotSnackbarHost(
+        PhoneSnackbarHost(
             hostState = snackbarHostState,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = bottomPadding),
+                .padding(bottom = bottomPadding + PvotSpacing.S),
         )
     }
 }
