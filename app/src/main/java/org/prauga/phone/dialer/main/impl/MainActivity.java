@@ -47,6 +47,9 @@ public class MainActivity extends TransactionSafeActivity
    */
   private ShowBlockReportSpamDialogReceiver showBlockReportSpamDialogReceiver;
 
+  /** Whether READ_PHONE_NUMBERS was asked for already, so a refusal isn't asked again on resume. */
+  private boolean askedForPhoneNumbers;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     // The splash hands over to Theme.Pvot; the peer's AppCompat theme is set over it until the
@@ -110,8 +113,10 @@ public class MainActivity extends TransactionSafeActivity
    * because it shares the phone permission's group. Older installs were granted the group without it.
    */
   private void requestPhoneNumbersPermissionIfImplied() {
-    if (PermissionsUtil.hasReadPhoneStatePermissions(this)
+    if (!askedForPhoneNumbers
+        && PermissionsUtil.hasReadPhoneStatePermissions(this)
         && !PermissionsUtil.hasPermission(this, Manifest.permission.READ_PHONE_NUMBERS)) {
+      askedForPhoneNumbers = true;
       requestPermissions(new String[] {Manifest.permission.READ_PHONE_NUMBERS}, 0);
     }
   }

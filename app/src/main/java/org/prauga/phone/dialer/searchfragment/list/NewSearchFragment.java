@@ -26,6 +26,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -88,6 +89,8 @@ public final class NewSearchFragment extends Fragment
   private static final String KEY_CALL_INITIATION_TYPE = "key_call_initiation_type";
 
   private SearchResults adapter;
+  /** The results, inside the view the fragment manager shows and hides. */
+  @Nullable private View results;
   private String query;
   // Raw query number from dialpad, which may contain special character such as "+". This is used
   // for actions to add contact or send sms.
@@ -150,6 +153,11 @@ public final class NewSearchFragment extends Fragment
     adapter.setSearchActions(getActions());
     showLocationPermission();
     SearchScreenHost.attach(view, adapter, new FragmentSearchActions());
+    // The fragment manager sets the root's visibility on every show and hide, so the results
+    // hide themselves on a child it doesn't touch.
+    results = view;
+    FrameLayout root = new FrameLayout(requireContext());
+    root.addView(view);
 
     if (!PermissionsUtil.hasContactsReadPermissions(getContext())) {
       adapter.setNeedsPermission(true);
@@ -162,7 +170,13 @@ public final class NewSearchFragment extends Fragment
           savedInstanceState.getString(KEY_QUERY),
           CallInitiationType.Type.forNumber(savedInstanceState.getInt(KEY_CALL_INITIATION_TYPE)));
     }
-    return view;
+    return root;
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    results = null;
   }
 
   @Override
@@ -176,13 +190,12 @@ public final class NewSearchFragment extends Fragment
    * dial shows through, and takes the touches, from under the empty results.
    */
   private void updateVisibility() {
-    View view = getView();
-    if (view == null) {
+    if (results == null) {
       return;
     }
     boolean idleDialpad =
         callInitiationType == CallInitiationType.Type.DIALPAD && TextUtils.isEmpty(query);
-    view.setVisibility(idleDialpad ? View.INVISIBLE : View.VISIBLE);
+    results.setVisibility(idleDialpad ? View.INVISIBLE : View.VISIBLE);
   }
 
   @Override
@@ -406,6 +419,15 @@ public final class NewSearchFragment extends Fragment
   @Override
   public void onResume() {
     super.onResume();
+    if (!PermissionsUtil.hasContactsReadPermissions(requireContext())) {
+      adapter.setNeedsPermission(true);
+      return;
+    }
+    // The permission may have been granted on another screen since the prompt was shown.
+    if (adapter.getNeedsPermission()) {
+      adapter.setNeedsPermission(false);
+      initLoaders();
+    }
     LoaderManager.getInstance(this).restartLoader(CONTACTS_LOADER_ID, null, this);
   }
 

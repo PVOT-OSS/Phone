@@ -1217,7 +1217,8 @@ public class DialpadFragment extends Fragment
 
   /** Returns the text in the dialpad */
   public String getQuery() {
-    return digits.getText().toString();
+    // Empty until the view, and with it the digits, exists.
+    return digits == null ? "" : digits.getText().toString();
   }
 
   public interface OnDialpadQueryChangedListener {
