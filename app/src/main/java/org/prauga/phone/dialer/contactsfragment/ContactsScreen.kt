@@ -39,8 +39,8 @@ import com.prauga.pvot.designsystem.theme.PvotSpacing
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.ui.ContactAvatar
 import org.prauga.phone.dialer.ui.TestTags
-import org.prauga.phone.dialer.ui.dockClearance
 import org.prauga.phone.dialer.ui.fullWidthRow
+import org.prauga.phone.dialer.ui.navBarClearance
 
 /** What the contacts tab does when the user taps something. */
 interface ContactsActions {
@@ -106,8 +106,8 @@ private fun ContactsList(
         PvotScreen(
             modifier = Modifier.fillMaxSize().testTag(TestTags.CONTACTS_LIST),
             state = listState,
-            // The bottom clears the dock that floats over the list.
-            contentPadding = PaddingValues(top = PvotSpacing.S, bottom = dockClearance()),
+            // The bottom clears the nav bar that floats over the list.
+            contentPadding = PaddingValues(top = PvotSpacing.S, bottom = navBarClearance()),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start,
         ) {

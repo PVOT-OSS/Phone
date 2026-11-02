@@ -7,4 +7,5 @@
   <string name="call_history_delete">Eliminar</string>
   <string name="description_assisted_dialing">Marcación asistida</string>
   <string name="speed_dial_more_options">Más opciones</string>
+  <string name="nav_bar_action_add">Añadir</string>
 </resources>

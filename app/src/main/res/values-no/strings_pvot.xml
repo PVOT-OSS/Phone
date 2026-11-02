@@ -7,4 +7,5 @@
   <string name="call_history_delete">Slett</string>
   <string name="description_assisted_dialing">Hjelp med å slå numre</string>
   <string name="speed_dial_more_options">Flere alternativer</string>
+  <string name="nav_bar_action_add">Legg til</string>
 </resources>

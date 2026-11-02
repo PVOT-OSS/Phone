@@ -30,10 +30,10 @@ class WindowBackdropTest {
         compose.setContent {
             WindowBackdrop {
                 seen = LocalPvotGlassBackdrop.current
-                Text("Dock")
+                Text("Nav bar")
             }
         }
-        compose.onNodeWithText("Dock").assertExists()
+        compose.onNodeWithText("Nav bar").assertExists()
         assertThat(seen).isNotNull()
     }
 
@@ -44,10 +44,10 @@ class WindowBackdropTest {
             val behind = FrameLayout(LocalContext.current)
             WindowBackdrop(behind) {
                 seen = LocalPvotGlassBackdrop.current
-                Text("Dock")
+                Text("Nav bar")
             }
         }
-        compose.onNodeWithText("Dock").assertExists()
+        compose.onNodeWithText("Nav bar").assertExists()
         assertThat(seen).isNotNull()
     }
 }

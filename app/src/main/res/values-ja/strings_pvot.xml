@@ -7,4 +7,5 @@
   <string name="call_history_delete">削除</string>
   <string name="description_assisted_dialing">ダイヤル アシスト</string>
   <string name="speed_dial_more_options">その他のオプション</string>
+  <string name="nav_bar_action_add">追加</string>
 </resources>

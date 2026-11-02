@@ -7,4 +7,5 @@
   <string name="call_history_delete">हटाएं</string>
   <string name="description_assisted_dialing">डायलिंग में सहायता</string>
   <string name="speed_dial_more_options">ज़्यादा विकल्प</string>
+  <string name="nav_bar_action_add">शामिल करें</string>
 </resources>

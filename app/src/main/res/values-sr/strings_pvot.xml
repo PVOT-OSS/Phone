@@ -7,4 +7,5 @@
   <string name="call_history_delete">Избриши</string>
   <string name="description_assisted_dialing">Потпомогнуто бирање</string>
   <string name="speed_dial_more_options">Још опција</string>
+  <string name="nav_bar_action_add">Додај</string>
 </resources>

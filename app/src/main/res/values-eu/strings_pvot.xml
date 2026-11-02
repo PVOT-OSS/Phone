@@ -7,4 +7,5 @@
   <string name="call_history_delete">Ezabatu</string>
   <string name="description_assisted_dialing">Lagundutako markatzea</string>
   <string name="speed_dial_more_options">Aukera gehiago</string>
+  <string name="nav_bar_action_add">Gehitu</string>
 </resources>

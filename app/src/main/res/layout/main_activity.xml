@@ -35,7 +35,7 @@
       android:layout_alignParentBottom="true">
 
     <!-- Holds SpeedDial, Call Log, Contacts, Voicemail and Search fragments. They reach the
-         bottom and scroll under the dock, leaving room for it at the end of their lists. -->
+         bottom and scroll under the nav bar, leaving room for it at the end of their lists. -->
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
@@ -47,14 +47,14 @@
         android:layout_height="match_parent"/>
   </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-  <!-- Dock (Compose) -->
+  <!-- Nav bar (Compose) -->
   <androidx.compose.ui.platform.ComposeView
       android:id="@+id/bottom_nav_bar"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"/>
 
-  <!-- Holds Dialpad fragment, the dialpad tab's keypad above the dock. It wraps the keypad, so
+  <!-- Holds Dialpad fragment, the dialpad tab's keypad above the nav bar. It wraps the keypad, so
        the quick dial above it takes touches. -->
   <FrameLayout
       android:id="@+id/dialpad_fragment_container"

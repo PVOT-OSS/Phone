@@ -7,4 +7,5 @@
   <string name="call_history_delete">ሰርዝ</string>
   <string name="description_assisted_dialing">የታገዘ መደወያ</string>
   <string name="speed_dial_more_options">ተጨማሪ አማራጮች</string>
+  <string name="nav_bar_action_add">አክል</string>
 </resources>
