@@ -55,7 +55,7 @@ interface OnboardingActions {
 
 /**
  * The first-run screen of the user build: become the default phone app, then allow access. Each
- * step is one card on the plain background.
+ * step is one card, centred on the plain background.
  */
 @Composable
 fun OnboardingScreen(
@@ -70,7 +70,9 @@ fun OnboardingScreen(
                     .windowInsetsPadding(WindowInsets.safeDrawing)
                     .testTag(TestTags.ONBOARDING),
             contentPadding =
-                PvotScreenDefaults.contentPadding(top = PvotSpacing.L * 3, bottom = PvotSpacing.L),
+                PvotScreenDefaults.contentPadding(top = PvotSpacing.L, bottom = PvotSpacing.L),
+            // Centred like a dialog; a step taller than the screen scrolls from the top.
+            verticalArrangement = Arrangement.Center,
         ) {
             // The activity finishes after the last step; nothing to show for the frame before it
             // does.
