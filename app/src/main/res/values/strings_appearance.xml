@@ -6,6 +6,12 @@
 <resources>
     <!-- Settings row that opens the appearance screen. -->
     <string name="appearance_settings_label">Appearance</string>
+    <!-- Heading of the colors section of the appearance screen. -->
+    <string name="appearance_colors_title">Colors</string>
+    <!-- Switch that takes the app's colors from the wallpaper (Material You) instead of Phone's own. -->
+    <string name="appearance_dynamic_color">Dynamic colors</string>
+    <!-- Summary under the dynamic colors switch. -->
+    <string name="appearance_dynamic_color_summary">Use Material You colors from your wallpaper</string>
     <!-- Heading of the glass section of the appearance screen. -->
     <string name="appearance_glass_title">Glass</string>
     <!-- Switch that turns the glass effects on or off. -->

@@ -11,6 +11,7 @@ object TestTags {
     const val APPEARANCE_GLASS_SWITCH = "appearance_glass_switch"
     const val APPEARANCE_GLASS_SLIDER = "appearance_glass_slider"
     const val APPEARANCE_GLASS_PREVIEW = "appearance_glass_preview"
+    const val APPEARANCE_DYNAMIC_COLOR_SWITCH = "appearance_dynamic_color_switch"
     const val SETTINGS_TOP_BAR = "settings_top_bar"
     const val HELPLINE_LIST = "helpline_list"
     const val CALL_STATS_DETAIL = "call_stats_detail"

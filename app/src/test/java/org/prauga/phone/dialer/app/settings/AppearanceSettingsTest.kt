@@ -100,6 +100,34 @@ class AppearanceSettingsTest {
     }
 
     @Test
+    fun dynamicColorIsOffToBeginWithAndStoredUnderItsKey() {
+        assertThat(AppearanceSettings.current(context).dynamicColor).isFalse()
+        AppearanceSettings.setDynamicColor(context, true)
+        assertThat(AppearanceSettings.prefs(context).getBoolean("appearance_dynamic_color", false))
+            .isTrue()
+        assertThat(AppearanceSettings.current(context).dynamicColor).isTrue()
+    }
+
+    @Test
+    fun theDynamicColorSwitchWritesThePreference() {
+        show()
+        compose.onNodeWithTag(TestTags.APPEARANCE_DYNAMIC_COLOR_SWITCH).assertIsOff().performClick()
+        compose.waitForIdle()
+        assertThat(AppearanceSettings.isDynamicColor(context)).isTrue()
+        compose.onNodeWithTag(TestTags.APPEARANCE_DYNAMIC_COLOR_SWITCH).assertIsOn()
+    }
+
+    @Test
+    @Config(qualifiers = "+night")
+    fun screenshotDynamicColorDark() {
+        AppearanceSettings.setDynamicColor(context, true)
+        show()
+        compose
+            .onRoot()
+            .captureRoboImage("src/test/screenshots/settings/appearance_dynamic_dark.png")
+    }
+
+    @Test
     @Config(qualifiers = "+night")
     fun screenshotDark() {
         show()
