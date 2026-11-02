@@ -65,9 +65,9 @@ import java.util.Optional;
  * <p>Components modified are:
  *
  * <ul>
- *   <li>Dock, hidden in search from the search bar; it stays under the dialpad.
+ *   <li>Nav bar, hidden in search from the search bar; it stays under the dialpad.
  *   <li>Toolbar, expanded and visible when dialpad is hidden. Otherwise, hidden off screen.
- *   <li>Dialpad, shown by the dock's dialpad tab and closed by moving to another tab.
+ *   <li>Dialpad, shown by the nav bar's dialpad tab and closed by moving to another tab.
  * </ul>
  *
  * @see #onBackPressed()
@@ -266,7 +266,7 @@ public class MainSearchController implements SearchBarListener {
     showDialpad(animate, false);
   }
 
-  /** Closes the dialpad and its search when the dock moves to another tab. */
+  /** Closes the dialpad and its search when the nav bar moves to another tab. */
   public void closeDialpadForTab() {
     if (isSearchVisible()) {
       closeSearch(false);
@@ -274,7 +274,7 @@ public class MainSearchController implements SearchBarListener {
   }
 
   /**
-   * The dock's Dial action: places a call with the dialpad's number, or fills in the last number
+   * The nav bar's Dial action: places a call with the dialpad's number, or fills in the last number
    * when there is none; opens the dialpad first if it was put away.
    */
   public void onDialAction() {
@@ -400,10 +400,10 @@ public class MainSearchController implements SearchBarListener {
   }
 
   /**
-   * Whether the dock should hide: in search from the search bar, or in the dialpad's results with
-   * the keypad put away. The open dialpad keeps the dock under it.
+   * Whether the nav bar should hide: in search from the search bar, or in the dialpad's results with
+   * the keypad put away. The open dialpad keeps the nav bar under it.
    */
-  public boolean hidesDock() {
+  public boolean hidesNavBar() {
     return isSearchVisible() && (dialpadFragment == null || dialpadFragment.isHidden());
   }
 
@@ -417,7 +417,7 @@ public class MainSearchController implements SearchBarListener {
   /**
    * Opens search in regular/search bar search mode.
    *
-   * <p>Hides the dock, expands toolbar and starts the search fragment.
+   * <p>Hides the nav bar, expands toolbar and starts the search fragment.
    */
   @Override
   public void onSearchBarClicked() {

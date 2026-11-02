@@ -38,7 +38,7 @@ import com.prauga.pvot.designsystem.components.list.PvotListRow
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.ui.ContactAvatar
-import org.prauga.phone.dialer.ui.dockClearance
+import org.prauga.phone.dialer.ui.navBarClearance
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.ui.fullWidthRow
 
@@ -96,10 +96,10 @@ private fun ContactsList(
         PvotScreen(
             modifier = Modifier.fillMaxSize().testTag(TestTags.CONTACTS_LIST),
             state = listState,
-            // The bottom clears the dock that floats over the list.
+            // The bottom clears the nav bar that floats over the list.
             contentPadding = PaddingValues(
                 top = PvotSpacing.S,
-                bottom = dockClearance(),
+                bottom = navBarClearance(),
             ),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start,

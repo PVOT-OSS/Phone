@@ -145,7 +145,7 @@ fun DialpadScreen(state: DialpadUiState, digits: EditText, callbacks: DialpadCal
         Column(panel, horizontalAlignment = Alignment.CenterHorizontally) {
             NumberRow(state, digits, callbacks)
             Spacer(Modifier.height(PvotSpacing.S))
-            // The dock's Dial pill places the call, so the keys are the last thing here.
+            // The nav bar's Dial pill places the call, so the keys are the last thing here.
             DialpadKeyGrid(onKey = callbacks::onKey, onKeyLongPress = callbacks::onKeyLongPress, keys = keys)
         }
     }

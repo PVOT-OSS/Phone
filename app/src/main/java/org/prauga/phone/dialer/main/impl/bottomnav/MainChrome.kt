@@ -36,14 +36,14 @@ import org.prauga.phone.dialer.ui.appearance.AppearanceSettings
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.ui.WindowBackdrop
 
-/** Puts the Compose dock into the main screen's view layout. */
+/** Puts the Compose nav bar into the main screen's view layout. */
 object MainChrome {
 
-    /** Binds the dock, glass over [behind], the view holding the tabs it floats over. */
+    /** Binds the nav bar, glass over [behind], the view holding the tabs it floats over. */
     @JvmStatic
-    fun bind(dockView: ComposeView, behind: View, navBar: MainNavBarState, actions: MainDockActions) {
-        dockView.setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-        dockView.setChromeContent { WindowBackdrop(behind) { MainDock(navBar, actions) } }
+    fun bind(navBarView: ComposeView, behind: View, navBar: MainNavBarState, actions: MainNavBarActions) {
+        navBarView.setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+        navBarView.setChromeContent { WindowBackdrop(behind) { MainNavBar(navBar, actions) } }
         val tabs = behind.findViewById<View>(R.id.fragment_container)
         (tabs.layoutParams as? CoordinatorLayout.LayoutParams)?.behavior = CompactOnScrollBehavior(navBar)
     }
@@ -105,7 +105,7 @@ internal class CompactOnScrollBehavior(private val navBar: MainNavBarState) : Co
 }
 
 /** What the selected tab's pill does: dial on the dialpad, search on recents, add on contacts. */
-interface MainDockActions {
+interface MainNavBarActions {
 
     /** Places a call with the dialpad's number. */
     fun onDial()
@@ -124,7 +124,7 @@ interface MainDockActions {
  * [MainNavBarState.isCompact].
  */
 @Composable
-fun MainDock(state: MainNavBarState, actions: MainDockActions, modifier: Modifier = Modifier) {
+fun MainNavBar(state: MainNavBarState, actions: MainNavBarActions, modifier: Modifier = Modifier) {
     val tabs = state.tabs
     val selected = tabs.indexOf(state.selectedTab)
     AnimatedVisibility(
@@ -150,7 +150,7 @@ fun MainDock(state: MainNavBarState, actions: MainDockActions, modifier: Modifie
     }
 }
 
-private fun runAction(@TabIndex tab: Int, actions: MainDockActions) {
+private fun runAction(@TabIndex tab: Int, actions: MainNavBarActions) {
     when (tab) {
         TabIndex.DIALPAD -> actions.onDial()
         TabIndex.CALL_LOG -> actions.onSearch()
@@ -161,9 +161,9 @@ private fun runAction(@TabIndex tab: Int, actions: MainDockActions) {
 /** What the selected [tab]'s pill reads, its action or, for voicemail, the tab's name. */
 @StringRes
 private fun actionLabel(@TabIndex tab: Int): Int = when (tab) {
-    TabIndex.DIALPAD -> R.string.dock_action_dial
-    TabIndex.CALL_LOG -> R.string.dock_action_search
-    TabIndex.CONTACTS -> R.string.dock_action_add
+    TabIndex.DIALPAD -> R.string.nav_bar_action_dial
+    TabIndex.CALL_LOG -> R.string.nav_bar_action_search
+    TabIndex.CONTACTS -> R.string.nav_bar_action_add
     else -> R.string.tab_title_voicemail
 }
 
@@ -173,14 +173,14 @@ private fun tabItem(@TabIndex tab: Int, badgeCount: Int): PvotTabItem = when (ta
         labelRes = R.string.tab_title_dialpad,
         contentDescriptionRes = R.string.tab_title_dialpad,
         expandedIconRes = R.drawable.ic_phone,
-        expandedLabelRes = R.string.dock_action_dial,
+        expandedLabelRes = R.string.nav_bar_action_dial,
     )
     TabIndex.CALL_LOG -> PvotTabItem(
         iconRes = R.drawable.ic_history,
         labelRes = R.string.tab_title_call_history,
         contentDescriptionRes = R.string.tab_title_call_history,
         expandedIconRes = R.drawable.ic_search,
-        expandedLabelRes = R.string.dock_action_search,
+        expandedLabelRes = R.string.nav_bar_action_search,
         badgeCount = badgeCount,
     )
     TabIndex.CONTACTS -> PvotTabItem(
@@ -188,7 +188,7 @@ private fun tabItem(@TabIndex tab: Int, badgeCount: Int): PvotTabItem = when (ta
         labelRes = R.string.tab_all_contacts,
         contentDescriptionRes = R.string.tab_all_contacts,
         expandedIconRes = R.drawable.ic_user_plus,
-        expandedLabelRes = R.string.dock_action_add,
+        expandedLabelRes = R.string.nav_bar_action_add,
     )
     else -> PvotTabItem(
         iconRes = R.drawable.ic_call_voicemail,

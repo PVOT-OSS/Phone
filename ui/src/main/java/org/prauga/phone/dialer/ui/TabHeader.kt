@@ -130,7 +130,7 @@ fun ProfileButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
  * scrolls up clear of it, the space round it and the navigation bar.
  */
 @Composable
-fun dockClearance(): Dp =
+fun navBarClearance(): Dp =
     LocalPvotNavBarSizes.current.barHeight + PvotSpacing.M * 2 +
         WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
 

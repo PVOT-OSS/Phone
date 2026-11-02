@@ -36,13 +36,13 @@ import org.robolectric.annotation.GraphicsMode
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(qualifiers = "en-rUS-w411dp-h891dp-night-xxhdpi")
-class MainDockTest {
+class MainNavBarTest {
 
     @get:Rule val compose = createComposeRule()
 
     private val navBar = MainNavBarState().apply { selectTab(TabIndex.DIALPAD) }
     private val actions = mutableListOf<String>()
-    private val dockActions = object : MainDockActions {
+    private val navBarActions = object : MainNavBarActions {
         override fun onDial() { actions += "dial" }
         override fun onSearch() { actions += "search" }
         override fun onAddContact() { actions += "add" }
@@ -52,7 +52,7 @@ class MainDockTest {
         compose.setContent {
             MainChromeTheme {
                 Column(Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.background)) {
-                    MainDock(navBar, dockActions)
+                    MainNavBar(navBar, navBarActions)
                 }
             }
         }
@@ -142,7 +142,7 @@ class MainDockTest {
     }
 
     @Test
-    fun dockHidesWhileSearching() {
+    fun navBarHidesWhileSearching() {
         setChrome()
         compose.onNodeWithTag(TestTags.MAIN_NAV_BAR).assertExists()
 
@@ -158,7 +158,7 @@ class MainDockTest {
         navBar.setNotificationCount(TabIndex.VOICEMAIL, 120)
         setChrome()
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/main/dock_dark.png")
+        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/main/nav_bar_dark.png")
     }
 
     @Test
@@ -167,7 +167,7 @@ class MainDockTest {
         navBar.isCompact = true
         setChrome()
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/main/dock_compact_dark.png")
+        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/main/nav_bar_compact_dark.png")
     }
 
     @Test
@@ -176,6 +176,6 @@ class MainDockTest {
         navBar.setNotificationCount(TabIndex.CALL_LOG, 3)
         setChrome()
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/main/dock_light.png")
+        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/main/nav_bar_light.png")
     }
 }

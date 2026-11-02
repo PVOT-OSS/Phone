@@ -67,7 +67,7 @@ import org.prauga.phone.dialer.dialpadview.DialpadFragment.OnDialpadQueryChanged
 import org.prauga.phone.dialer.i18n.LocaleUtils;
 import org.prauga.phone.dialer.main.MainActivityPeer;
 import org.prauga.phone.dialer.main.impl.bottomnav.MainChrome;
-import org.prauga.phone.dialer.main.impl.bottomnav.MainDockActions;
+import org.prauga.phone.dialer.main.impl.bottomnav.MainNavBarActions;
 import org.prauga.phone.dialer.main.impl.bottomnav.MainNavBarState;
 import org.prauga.phone.dialer.main.impl.bottomnav.MainNavBarState.OnBottomNavTabSelectedListener;
 import org.prauga.phone.dialer.main.impl.bottomnav.TabIndex;
@@ -195,7 +195,7 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
         activity.findViewById(R.id.bottom_nav_bar),
         snackbarContainer,
         bottomNav,
-        new MainDockActions() {
+        new MainNavBarActions() {
           @Override
           public void onDial() {
             searchController.onDialAction();
@@ -397,7 +397,7 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
     showPostCallPrompt();
 
     bottomNav.setVisible(
-        !searchController.hidesDock() && !callLogFragmentListener.isSelecting());
+        !searchController.hidesNavBar() && !callLogFragmentListener.isSelecting());
   }
 
   @Override
@@ -978,7 +978,7 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
       selectedTab = TabIndex.CONTACTS;
       Fragment fragment = fragmentManager.findFragmentByTag(CONTACTS_TAG);
       showFragment(
-          // The dock's Add action creates a contact, so the list has no row for it.
+          // The nav bar's Add action creates a contact, so the list has no row for it.
           fragment == null ? ContactsFragment.newInstance(/* showAddContact= */ false) : fragment,
           CONTACTS_TAG);
     }
