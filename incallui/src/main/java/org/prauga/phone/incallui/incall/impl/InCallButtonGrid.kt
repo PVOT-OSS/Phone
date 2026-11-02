@@ -210,7 +210,7 @@ fun EndCallButton(enabled: Boolean, onEndCall: () -> Unit, modifier: Modifier = 
         icon = painterResource(R.drawable.ic_call_end),
         label = stringResource(R.string.incall_label_end),
         onClick = onEndCall,
-        width = CellWidth * 2 + CellGap,
+        width = EndCallWidth,
         labelInside = true,
         enabled = enabled,
         modifier =
@@ -388,7 +388,6 @@ private val ControlIconSize = 28.dp
 
 /** Each column of the panel: a button and its label. */
 private val CellWidth = 88.dp
-private val CellGap = PvotSpacing.S
 private const val ColumnsPerRow = 3
 private const val MORE_CELL = -2
 
@@ -397,6 +396,8 @@ private val PanelCorner = 32.dp
 
 /** Space between the panel and the End pill. */
 private val ControlsGap = PvotSpacing.L + PvotSpacing.S
+
+private val EndCallWidth = 144.dp
 
 /**
  * Space under the end call button, above the navigation bar. The button under the controls and the
