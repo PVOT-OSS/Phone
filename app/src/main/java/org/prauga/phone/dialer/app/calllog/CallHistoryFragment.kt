@@ -20,8 +20,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.core.os.bundleOf
@@ -71,7 +73,10 @@ class CallHistoryFragment : Fragment() {
         ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                PhoneScreenTheme {
+                // Scrolls reach the main screen, which shrinks the nav bar while a list scrolls up.
+                PhoneScreenTheme(
+                    modifier = Modifier.nestedScroll(rememberNestedScrollInteropConnection())
+                ) {
                     // All, Missed, Contacts and Blocked on the Recents tab; the call history screen
                     // also has Statistics.
                     var filter by rememberSaveable { mutableStateOf(CallLogFilter.ALL) }
