@@ -64,6 +64,11 @@ class SettingsScreenshotTest {
 
     @Test @Config(qualifiers = "+night") fun rootDark() = captureRoot("root_dark")
 
+    @Test
+    @Config(qualifiers = "+night")
+    fun rootNotDefaultDark() =
+        captureRoot("root_not_default_dark", DefaultPhoneAppPrompt(denied = false) {})
+
     @Test fun displayLight() = captureDisplay("display_light")
 
     @Test @Config(qualifiers = "+night") fun displayDark() = captureDisplay("display_dark")
@@ -79,10 +84,10 @@ class SettingsScreenshotTest {
         compose.onRoot().captureRoboImage("src/test/screenshots/settings/$name.png")
     }
 
-    private fun captureRoot(name: String) {
+    private fun captureRoot(name: String, defaultApp: DefaultPhoneAppPrompt? = null) {
         val entries = DialerSettingsActivity.settingsEntries(context)
         captureScreen(name, context.getString(R.string.dialer_settings_label)) {
-            SettingsRootList(entries) { _, _ -> }
+            SettingsRootList(entries, { _, _ -> }, defaultApp)
         }
     }
 
