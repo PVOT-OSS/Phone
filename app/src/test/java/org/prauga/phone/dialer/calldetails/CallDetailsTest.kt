@@ -21,6 +21,9 @@ import androidx.test.core.app.ApplicationProvider
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.google.common.truth.Truth.assertThat
 import com.prauga.pvot.designsystem.components.list.PvotAvatar
+import java.util.TimeZone
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -46,6 +49,13 @@ class CallDetailsTest {
     @get:Rule val compose = createComposeRule()
 
     private val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+
+    // Call times show in the device's zone; pin it so the screenshots match on any machine.
+    private val zone = TimeZone.getDefault()
+
+    @Before fun pinTimeZone() = TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
+
+    @After fun restoreTimeZone() = TimeZone.setDefault(zone)
 
     private val contact =
         DialerContact.newBuilder()
