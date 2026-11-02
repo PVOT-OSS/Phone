@@ -59,6 +59,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.core.view.isGone
 import com.prauga.pvot.designsystem.components.PvotBottomSheet
 import com.prauga.pvot.designsystem.components.PvotSheetItem
+import com.prauga.pvot.designsystem.components.button.PvotIconButton
+import com.prauga.pvot.designsystem.components.button.PvotIconButtonDefaults
 import com.prauga.pvot.designsystem.components.textfield.PvotTextField
 import com.prauga.pvot.designsystem.motion.PvotDurations
 import com.prauga.pvot.designsystem.theme.PvotSpacing
@@ -84,6 +86,7 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
     private var animateChange by mutableStateOf(true)
     private var clearFrequentsVisible by mutableStateOf(false)
     private var menuOpen by mutableStateOf(false)
+    private var searchButtonShown by mutableStateOf(false)
 
     private var hintRes by mutableIntStateOf(R.string.dialer_hint_find_contact)
     private var titleRes by mutableIntStateOf(R.string.main_activity_label)
@@ -99,6 +102,13 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
     fun setSearchBarListener(listener: SearchBarListener) {
         this.listener = listener
+    }
+
+    /**
+     * Shows a search button in the collapsed header, as on the contacts tab, which opens search.
+     */
+    fun setSearchVisible(visible: Boolean) {
+        searchButtonShown = visible
     }
 
     /**
@@ -224,6 +234,18 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                         TabHeader(
                             title = stringResource(titleRes),
                             onOpenMenu = { menuOpen = true },
+                            actions = {
+                                if (searchButtonShown) {
+                                    PvotIconButton(
+                                        icon = painterResource(R.drawable.ic_search),
+                                        contentDescription =
+                                            stringResource(R.string.nav_bar_action_search),
+                                        onClick = { listener?.onSearchBarClicked() },
+                                        modifier = Modifier.testTag(TestTags.TAB_SEARCH),
+                                        colors = PvotIconButtonDefaults.plainColors(),
+                                    )
+                                }
+                            },
                         )
                     }
                 }
