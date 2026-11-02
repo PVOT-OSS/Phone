@@ -23,7 +23,8 @@ import com.prauga.pvot.designsystem.effects.PvotGlassDefaults
 import org.prauga.phone.ui.R
 
 /**
- * The user's glass preference: whether the floating layer is glass at all, and how much.
+ * The user's appearance preferences: whether the floating layer is glass at all and how much, and
+ * whether the colors come from the wallpaper.
  *
  * Stored in the default preferences beside the other settings. [preferredIntensity] is what the
  * root hands to PvotLib's `ProvidePvotGlassIntensity`, which still holds it to the device and
@@ -39,6 +40,8 @@ object AppearanceSettings {
         val glass: Boolean,
         /** Whether the system's animations are off, which also makes the glass solid. */
         val animationsOff: Boolean,
+        /** Whether the colors are the wallpaper's Material You colors rather than Phone's own. */
+        val dynamicColor: Boolean = false,
     ) {
         /** What to ask PvotLib for: solid when glass is off or animations are, else [intensity]. */
         val preferredIntensity: Float
@@ -54,6 +57,9 @@ object AppearanceSettings {
     fun isGlass(context: Context): Boolean =
         prefs(context).getBoolean(context.getString(R.string.appearance_glass_key), true)
 
+    fun isDynamicColor(context: Context): Boolean =
+        prefs(context).getBoolean(context.getString(R.string.appearance_dynamic_color_key), false)
+
     fun setIntensity(context: Context, value: Float) {
         prefs(context).edit { putFloat(context.getString(R.string.appearance_glass_intensity_key), value.coerceIn(0f, 1f)) }
     }
@@ -62,12 +68,21 @@ object AppearanceSettings {
         prefs(context).edit { putBoolean(context.getString(R.string.appearance_glass_key), enabled) }
     }
 
+    fun setDynamicColor(context: Context, enabled: Boolean) {
+        prefs(context).edit { putBoolean(context.getString(R.string.appearance_dynamic_color_key), enabled) }
+    }
+
     /** Whether the user turned animations off in the system settings. */
     fun animationsOff(context: Context): Boolean =
         Settings.Global.getFloat(context.contentResolver, Settings.Global.ANIMATOR_DURATION_SCALE, 1f) == 0f
 
     fun current(context: Context): Appearance =
-        Appearance(intensity = intensity(context), glass = isGlass(context), animationsOff = animationsOff(context))
+        Appearance(
+            intensity = intensity(context),
+            glass = isGlass(context),
+            animationsOff = animationsOff(context),
+            dynamicColor = isDynamicColor(context),
+        )
 
     /** The current [Appearance], kept up to date with the preferences and the animation setting. */
     @Composable
