@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -62,10 +63,16 @@ object TabHeaderDefaults {
 
 /**
  * A main tab's title, large, with the user's avatar at its end that opens the app menu. The title
- * starts at the screen padding, like the large titles of the other screens' top bars.
+ * starts at the screen padding, like the large titles of the other screens' top bars. [actions],
+ * such as search, sit before the avatar.
  */
 @Composable
-fun TabHeader(title: String, onOpenMenu: () -> Unit, modifier: Modifier = Modifier) {
+fun TabHeader(
+    title: String,
+    onOpenMenu: () -> Unit,
+    modifier: Modifier = Modifier,
+    actions: @Composable RowScope.() -> Unit = {},
+) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -81,6 +88,7 @@ fun TabHeader(title: String, onOpenMenu: () -> Unit, modifier: Modifier = Modifi
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.weight(1f).semantics { heading() },
         )
+        actions()
         ProfileButton(onClick = onOpenMenu)
     }
 }
