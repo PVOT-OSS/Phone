@@ -5,6 +5,8 @@
 
 package org.prauga.phone.dialer.main.impl.bottomnav
 
+import android.content.Context
+import android.view.View
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +19,9 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.ViewCompat
+import androidx.test.core.app.ApplicationProvider
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.google.common.truth.Truth.assertThat
 import org.prauga.phone.dialer.ui.PhoneTheme
@@ -28,7 +33,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
-/** The main screen's dock: tabs, badges and the selected tab's action. */
+/** The main screen's nav bar: tabs, badges, the selected tab's action and the compact form. */
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(qualifiers = "en-rUS-w411dp-h891dp-night-xxhdpi")
@@ -79,15 +84,43 @@ class MainDockTest {
         navBar.showVoicemail(true)
         setChrome()
 
-        compose.onNodeWithContentDescription("Dialpad").performClick()
+        compose.onNodeWithContentDescription("Dial").performClick()
         compose.onNodeWithContentDescription("Recents").performClick()
-        compose.onNodeWithContentDescription("Recents").performClick()
+        compose.onNodeWithContentDescription("Search").performClick()
         compose.onNodeWithContentDescription("Contacts").performClick()
-        compose.onNodeWithContentDescription("Contacts").performClick()
+        compose.onNodeWithContentDescription("Add").performClick()
         compose.onNodeWithContentDescription("Voicemail").performClick()
         compose.onNodeWithContentDescription("Voicemail").performClick()
 
         assertThat(actions).containsExactly("dial", "search", "add").inOrder()
+        assertThat(navBar.selectedTab).isEqualTo(TabIndex.VOICEMAIL)
+    }
+
+    @Test
+    fun scrollingUpShrinksTheBarAndBackDownRestoresIt() {
+        val behavior = CompactOnScrollBehavior(navBar)
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val parent = CoordinatorLayout(context)
+        val child = View(context)
+
+        behavior.onNestedPreScroll(parent, child, child, 0, 40, IntArray(2), ViewCompat.TYPE_TOUCH)
+        assertThat(navBar.isCompact).isTrue()
+
+        behavior.onNestedPreScroll(parent, child, child, 0, 2, IntArray(2), ViewCompat.TYPE_TOUCH)
+        assertThat(navBar.isCompact).isTrue()
+
+        behavior.onNestedPreScroll(parent, child, child, 0, -40, IntArray(2), ViewCompat.TYPE_TOUCH)
+        assertThat(navBar.isCompact).isFalse()
+    }
+
+    @Test
+    fun choosingATabRestoresTheCompactBar() {
+        navBar.isCompact = true
+        setChrome()
+
+        compose.onNodeWithContentDescription("Contacts").performClick()
+
+        assertThat(navBar.isCompact).isFalse()
     }
 
     @Test
@@ -127,6 +160,15 @@ class MainDockTest {
         setChrome()
         compose.waitForIdle()
         compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/main/dock_dark.png")
+    }
+
+    @Test
+    fun screenshotCompact() {
+        navBar.setNotificationCount(TabIndex.CALL_LOG, 3)
+        navBar.isCompact = true
+        setChrome()
+        compose.waitForIdle()
+        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/main/dock_compact_dark.png")
     }
 
     @Test

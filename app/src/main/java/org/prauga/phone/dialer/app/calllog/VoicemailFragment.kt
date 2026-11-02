@@ -17,6 +17,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -64,7 +67,8 @@ class VoicemailFragment : Fragment() {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
             val statusMessage by statusMonitor.message.collectAsStateWithLifecycle()
-            PhoneScreenTheme {
+            // Scrolls reach the main screen, which shrinks the nav bar while a list scrolls up.
+            PhoneScreenTheme(modifier = Modifier.nestedScroll(rememberNestedScrollInteropConnection())) {
                 CallHistoryRoute(
                     viewModel = viewModel,
                     callType = Calls.VOICEMAIL_TYPE,

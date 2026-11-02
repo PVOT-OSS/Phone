@@ -43,7 +43,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.prauga.pvot.designsystem.theme.PvotSpacing
-import com.prauga.pvot.designsystem.components.PvotDockDefaults
+import com.prauga.pvot.designsystem.navigation.LocalPvotNavBarSizes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.prauga.phone.ui.R
@@ -126,12 +126,13 @@ fun ProfileButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
 }
 
 /**
- * Bottom padding for a main tab's list: the dock floats over the tabs, so the end of the list
- * scrolls up clear of it and of the navigation bar.
+ * Bottom padding for a main tab's list: the nav bar floats over the tabs, so the end of the list
+ * scrolls up clear of it, the space round it and the navigation bar.
  */
 @Composable
 fun dockClearance(): Dp =
-    PvotDockDefaults.ContentClearance + WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+    LocalPvotNavBarSizes.current.barHeight + PvotSpacing.M * 2 +
+        WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
 
 /** The user's own name and photo, from the "Me" card in contacts. */
 @Immutable

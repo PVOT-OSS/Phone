@@ -17,6 +17,9 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -76,7 +79,8 @@ class ContactsFragment : Fragment() {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
             val state by viewModel.state.collectAsStateWithLifecycle()
-            PhoneScreenTheme {
+            // Scrolls reach the main screen, which shrinks the nav bar while a list scrolls up.
+            PhoneScreenTheme(modifier = Modifier.nestedScroll(rememberNestedScrollInteropConnection())) {
                 ContactsScreen(
                     state = state,
                     showAddContact = requireArguments().getBoolean(ARG_SHOW_ADD_CONTACT),
