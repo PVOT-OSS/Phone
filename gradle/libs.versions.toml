@@ -1,6 +1,6 @@
 [versions]
 lifecycle = "2.10.0"
-agp = "9.4.0"
+agp = "9.5.0"
 autoValue = "1.11.1"
 composeBom = "2026.02.01"
 coroutines = "1.11.0"
