@@ -231,7 +231,10 @@ class CallHistoryViewModel(
 
     /** Starts caller lookups, while the list shows. */
     fun start() {
-        if (PermissionsUtil.hasContactsReadPermissions(getApplication())) contactInfoCache.start()
+        if (!PermissionsUtil.hasContactsReadPermissions(getApplication())) return
+        // Lookups were turned off if the permission was missing when this was created.
+        contactInfoCache.enableRequestProcessing()
+        contactInfoCache.start()
     }
 
     /** Stops caller lookups, when the list is left. */

@@ -176,6 +176,9 @@ public class MainSearchController implements SearchBarListener {
     } else {
       dialpadFragment.setStartedFromNewIntent(fromNewIntent);
       transaction.show(dialpadFragment);
+      // Closing search cleared the search bar, which left the results in its mode, where they
+      // cover the quick dial even with no query. On the dialpad they follow its digits.
+      onDialpadQueryChanged(dialpadFragment.getQuery());
     }
     transaction.commit();
 
