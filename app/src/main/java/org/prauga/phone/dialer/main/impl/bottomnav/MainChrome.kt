@@ -6,6 +6,7 @@
 package org.prauga.phone.dialer.main.impl.bottomnav
 
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -19,15 +20,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
-import com.prauga.pvot.designsystem.components.PvotDock
-import com.prauga.pvot.designsystem.components.PvotDockAction
-import com.prauga.pvot.designsystem.components.PvotDockItem
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.ViewCompat
 import com.prauga.pvot.designsystem.motion.PvotDurations
 import com.prauga.pvot.designsystem.motion.PvotMotion
+import com.prauga.pvot.designsystem.navigation.PvotNavBar
+import com.prauga.pvot.designsystem.navigation.PvotTabItem
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.ui.PhoneTheme
 import org.prauga.phone.dialer.ui.TestTags
@@ -48,6 +48,9 @@ object MainChrome {
             ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
         )
         dockView.setChromeContent { WindowBackdrop(behind) { MainDock(navBar, actions) } }
+        val tabs = behind.findViewById<View>(R.id.fragment_container)
+        (tabs.layoutParams as? CoordinatorLayout.LayoutParams)?.behavior =
+            CompactOnScrollBehavior(navBar)
     }
 
     @OptIn(ExperimentalComposeUiApi::class)
@@ -55,6 +58,41 @@ object MainChrome {
         setContent {
             PhoneTheme { Box(Modifier.semantics { testTagsAsResourceId = true }) { content() } }
         }
+    }
+}
+
+/**
+ * Shrinks the bar while the tabs scroll up and restores it when they scroll back down, as the Pvot
+ * catalog does. The tabs' lists pass their scrolls to the coordinator layout holding them.
+ */
+internal class CompactOnScrollBehavior(private val navBar: MainNavBarState) :
+    CoordinatorLayout.Behavior<View>() {
+
+    override fun onStartNestedScroll(
+        coordinatorLayout: CoordinatorLayout,
+        child: View,
+        directTargetChild: View,
+        target: View,
+        axes: Int,
+        type: Int,
+    ): Boolean = axes and ViewCompat.SCROLL_AXIS_VERTICAL != 0
+
+    override fun onNestedPreScroll(
+        coordinatorLayout: CoordinatorLayout,
+        child: View,
+        target: View,
+        dx: Int,
+        dy: Int,
+        consumed: IntArray,
+        type: Int,
+    ) {
+        if (dy > ScrollThreshold) navBar.isCompact = true
+        else if (dy < -ScrollThreshold) navBar.isCompact = false
+    }
+
+    private companion object {
+        /** Pixels a scroll must move before it changes the bar, so a tap's jitter doesn't. */
+        const val ScrollThreshold = 4
     }
 }
 
@@ -72,13 +110,15 @@ interface MainDockActions {
 }
 
 /**
- * The main screen's tabs as a dock, with unread badges on recents and voicemail. The selected tab's
- * pill runs that tab's action; voicemail has none.
+ * The main screen's tabs in the Pvot nav bar, as the Pvot catalog has it, with unread badges on
+ * recents and voicemail. The selected tab's pill names its action and tapping it runs it: Dial,
+ * Search or Add; voicemail has none. The bar shrinks while a list scrolls up, see
+ * [MainNavBarState.isCompact].
  */
 @Composable
 fun MainDock(state: MainNavBarState, actions: MainDockActions, modifier: Modifier = Modifier) {
     val tabs = state.tabs
-    val items = tabs.map { tab -> dockItem(tab, state.notificationCount(tab), actions) }
+    val selected = tabs.indexOf(state.selectedTab)
     AnimatedVisibility(
         visible = state.isVisible,
         modifier = modifier,
@@ -89,56 +129,71 @@ fun MainDock(state: MainNavBarState, actions: MainDockActions, modifier: Modifie
             slideOutVertically(tween(PvotDurations.Short)) { it } +
                 fadeOut(tween(PvotDurations.Short)),
     ) {
-        PvotDock(
-            items = items,
-            selectedIndex = tabs.indexOf(state.selectedTab),
-            onSelect = { state.selectTab(tabs[it]) },
+        PvotNavBar(
+            selectedTab = selected,
+            onTabClick = { index ->
+                val tab = tabs[index]
+                if (tab == state.selectedTab) runAction(tab, actions) else state.selectTab(tab)
+                state.isCompact = false
+            },
+            tabs = tabs.map { tab -> tabItem(tab, state.notificationCount(tab)) },
             modifier = Modifier.testTag(TestTags.MAIN_NAV_BAR),
+            expandedContentDescriptionRes = tabs.getOrNull(selected)?.let(::actionLabel),
+            compact = state.isCompact,
         )
     }
 }
 
-@Composable
-private fun dockItem(@TabIndex tab: Int, badgeCount: Int, actions: MainDockActions): PvotDockItem =
+private fun runAction(@TabIndex tab: Int, actions: MainDockActions) {
+    when (tab) {
+        TabIndex.DIALPAD -> actions.onDial()
+        TabIndex.CALL_LOG -> actions.onSearch()
+        TabIndex.CONTACTS -> actions.onAddContact()
+    }
+}
+
+/** What the selected [tab]'s pill reads, its action or, for voicemail, the tab's name. */
+@StringRes
+private fun actionLabel(@TabIndex tab: Int): Int =
+    when (tab) {
+        TabIndex.DIALPAD -> R.string.dock_action_dial
+        TabIndex.CALL_LOG -> R.string.dock_action_search
+        TabIndex.CONTACTS -> R.string.dock_action_add
+        else -> R.string.tab_title_voicemail
+    }
+
+private fun tabItem(@TabIndex tab: Int, badgeCount: Int): PvotTabItem =
     when (tab) {
         TabIndex.DIALPAD ->
-            PvotDockItem(
-                icon = painterResource(R.drawable.ic_dialpad),
-                label = stringResource(R.string.tab_title_dialpad),
-                action =
-                    PvotDockAction(
-                        painterResource(R.drawable.ic_phone),
-                        stringResource(R.string.dock_action_dial),
-                        actions::onDial,
-                    ),
+            PvotTabItem(
+                iconRes = R.drawable.ic_dialpad,
+                labelRes = R.string.tab_title_dialpad,
+                contentDescriptionRes = R.string.tab_title_dialpad,
+                expandedIconRes = R.drawable.ic_phone,
+                expandedLabelRes = R.string.dock_action_dial,
             )
         TabIndex.CALL_LOG ->
-            PvotDockItem(
-                icon = painterResource(R.drawable.ic_history),
-                label = stringResource(R.string.tab_title_call_history),
-                action =
-                    PvotDockAction(
-                        painterResource(R.drawable.ic_search),
-                        stringResource(R.string.dock_action_search),
-                        actions::onSearch,
-                    ),
+            PvotTabItem(
+                iconRes = R.drawable.ic_history,
+                labelRes = R.string.tab_title_call_history,
+                contentDescriptionRes = R.string.tab_title_call_history,
+                expandedIconRes = R.drawable.ic_search,
+                expandedLabelRes = R.string.dock_action_search,
                 badgeCount = badgeCount,
             )
         TabIndex.CONTACTS ->
-            PvotDockItem(
-                icon = painterResource(R.drawable.ic_users),
-                label = stringResource(R.string.tab_all_contacts),
-                action =
-                    PvotDockAction(
-                        painterResource(R.drawable.ic_user_plus),
-                        stringResource(R.string.dock_action_add),
-                        actions::onAddContact,
-                    ),
+            PvotTabItem(
+                iconRes = R.drawable.ic_users,
+                labelRes = R.string.tab_all_contacts,
+                contentDescriptionRes = R.string.tab_all_contacts,
+                expandedIconRes = R.drawable.ic_user_plus,
+                expandedLabelRes = R.string.dock_action_add,
             )
         else ->
-            PvotDockItem(
-                icon = painterResource(R.drawable.ic_call_voicemail),
-                label = stringResource(R.string.tab_title_voicemail),
+            PvotTabItem(
+                iconRes = R.drawable.ic_call_voicemail,
+                labelRes = R.string.tab_title_voicemail,
+                contentDescriptionRes = R.string.tab_title_voicemail,
                 badgeCount = badgeCount,
             )
     }
