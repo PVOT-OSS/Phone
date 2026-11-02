@@ -25,6 +25,8 @@ import androidx.annotation.Nullable;
 
 import org.prauga.phone.contacts.common.util.MaterialColorMapUtils;
 import org.prauga.phone.contacts.common.util.MaterialColorMapUtils.MaterialPalette;
+import org.prauga.phone.dialer.ui.PhoneColors;
+import org.prauga.phone.dialer.ui.appearance.AppearanceSettings;
 import org.prauga.phone.incallui.R;
 import org.prauga.phone.incallui.call.DialerCall;
 
@@ -62,6 +64,13 @@ public class ThemeColorManager {
       backgroundColorMiddle = context.getColor(R.color.incall_background_gradient_spam_middle);
       backgroundColorBottom = context.getColor(R.color.incall_background_gradient_spam_bottom);
       backgroundColorSolid = context.getColor(R.color.incall_background_multiwindow_spam);
+    } else if (AppearanceSettings.INSTANCE.isDynamicColor(context)) {
+      // Material You colors: the call screen sits on the same background as the other screens.
+      palette = colorMap.calculatePrimaryAndSecondaryColor(NO_HIGHLIGHT_COLOR);
+      backgroundColorTop = PhoneColors.background(context);
+      backgroundColorMiddle = backgroundColorTop;
+      backgroundColorBottom = backgroundColorTop;
+      backgroundColorSolid = backgroundColorTop;
     } else {
       palette = colorMap.calculatePrimaryAndSecondaryColor(NO_HIGHLIGHT_COLOR);
       backgroundColorTop = context.getColor(R.color.incall_background_gradient_top);
