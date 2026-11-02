@@ -14,8 +14,12 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
@@ -30,7 +34,9 @@ import com.prauga.pvot.designsystem.motion.PvotDurations
 import com.prauga.pvot.designsystem.motion.PvotMotion
 import com.prauga.pvot.designsystem.navigation.PvotNavBar
 import com.prauga.pvot.designsystem.navigation.PvotTabItem
+import com.prauga.pvot.designsystem.theme.PvotSpacing
 import org.prauga.phone.dialer.R
+import org.prauga.phone.dialer.ui.PhoneSnackbarHost
 import org.prauga.phone.dialer.ui.PhoneTheme
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.ui.WindowBackdrop
@@ -39,18 +45,27 @@ import org.prauga.phone.dialer.ui.appearance.AppearanceSettings
 /** Puts the Compose nav bar into the main screen's view layout. */
 object MainChrome {
 
-    /** Binds the nav bar, glass over [behind], the view holding the tabs it floats over. */
+    /**
+     * Binds the nav bar, glass over [behind], the view holding the tabs it floats over, with the
+     * snackbars of [snackbars] just above it.
+     */
     @JvmStatic
     fun bind(
         navBarView: ComposeView,
         behind: View,
         navBar: MainNavBarState,
+        snackbars: SnackbarHostState,
         actions: MainNavBarActions,
     ) {
         navBarView.setViewCompositionStrategy(
             ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
         )
-        navBarView.setChromeContent { WindowBackdrop(behind) { MainNavBar(navBar, actions) } }
+        navBarView.setChromeContent {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                PhoneSnackbarHost(snackbars, Modifier.padding(bottom = PvotSpacing.S))
+                WindowBackdrop(behind) { MainNavBar(navBar, actions) }
+            }
+        }
         val tabs = behind.findViewById<View>(R.id.fragment_container)
         (tabs.layoutParams as? CoordinatorLayout.LayoutParams)?.behavior =
             CompactOnScrollBehavior(navBar)

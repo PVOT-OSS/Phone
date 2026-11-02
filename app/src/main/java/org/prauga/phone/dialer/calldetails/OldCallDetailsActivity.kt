@@ -30,9 +30,15 @@ import android.text.format.DateFormat
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.lifecycleScope
@@ -40,6 +46,7 @@ import com.google.i18n.phonenumbers.NumberParseException
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.prauga.pvot.designsystem.platform.enablePvotEdgeToEdge
 import com.prauga.pvot.designsystem.platform.setPvotContent
+import com.prauga.pvot.designsystem.theme.PvotSpacing
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -60,6 +67,7 @@ import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.dialercontact.DialerContact
 import org.prauga.phone.dialer.glidephotomanager.PhotoInfo
 import org.prauga.phone.dialer.lettertile.LetterTileDrawable
+import org.prauga.phone.dialer.main.impl.SnackbarPrompt
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper
 import org.prauga.phone.dialer.postcall.PostCall
 import org.prauga.phone.dialer.precall.PreCall
@@ -67,6 +75,7 @@ import org.prauga.phone.dialer.protos.ProtoParsers
 import org.prauga.phone.dialer.rtt.RttTranscriptActivity
 import org.prauga.phone.dialer.rtt.RttTranscriptUtil
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
+import org.prauga.phone.dialer.ui.PhoneSnackbarHost
 import org.prauga.phone.dialer.ui.QuickContactAvatar
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.util.CallUtil
@@ -83,6 +92,7 @@ class OldCallDetailsActivity : ComponentActivity() {
     private var ui by mutableStateOf<CallDetailsUi?>(null)
     private var assistedDialingCountryCode by mutableStateOf<Int?>(null)
     private val recordingStore = CallRecordingDataStore()
+    private val snackbars = SnackbarHostState()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enablePvotEdgeToEdge()
@@ -91,27 +101,36 @@ class OldCallDetailsActivity : ComponentActivity() {
         setPvotContent {
             PhoneScreenTheme {
                 val ui = ui ?: return@PhoneScreenTheme
-                CallDetailsScreen(
-                    ui = ui,
-                    assistedDialingCountryCode = assistedDialingCountryCode,
-                    callWithIntent =
-                        AccountSelectionActivity.createIntent(
-                            this,
-                            contact.number,
-                            CallInitiationType.Type.CALL_DETAILS,
-                        ),
-                    actions = actions,
-                    avatar = { size ->
-                        QuickContactAvatar(
-                            name = contact.nameOrNumber,
-                            contactUri = contact.contactUri.ifEmpty { null }?.let(Uri::parse),
-                            photoId = contact.photoId,
-                            photoUri = contact.photoUri.ifEmpty { null }?.let(Uri::parse),
-                            size = size,
-                            modifier = Modifier.testTag(TestTags.CALL_DETAILS_AVATAR),
-                        )
-                    },
-                )
+                Box(Modifier.fillMaxSize()) {
+                    CallDetailsScreen(
+                        ui = ui,
+                        assistedDialingCountryCode = assistedDialingCountryCode,
+                        callWithIntent =
+                            AccountSelectionActivity.createIntent(
+                                this@OldCallDetailsActivity,
+                                contact.number,
+                                CallInitiationType.Type.CALL_DETAILS,
+                            ),
+                        actions = actions,
+                        avatar = { size ->
+                            QuickContactAvatar(
+                                name = contact.nameOrNumber,
+                                contactUri = contact.contactUri.ifEmpty { null }?.let(Uri::parse),
+                                photoId = contact.photoId,
+                                photoUri = contact.photoUri.ifEmpty { null }?.let(Uri::parse),
+                                size = size,
+                                modifier = Modifier.testTag(TestTags.CALL_DETAILS_AVATAR),
+                            )
+                        },
+                    )
+                    // Post-call prompts, above the navigation bar.
+                    PhoneSnackbarHost(
+                        snackbars,
+                        Modifier.align(Alignment.BottomCenter)
+                            .navigationBarsPadding()
+                            .padding(bottom = PvotSpacing.L),
+                    )
+                }
             }
         }
     }
@@ -124,7 +143,7 @@ class OldCallDetailsActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        PostCall.promptUserForMessageIfNecessary(this, findViewById(android.R.id.content))
+        PostCall.promptUserForMessageIfNecessary(this, SnackbarPrompt(lifecycleScope, snackbars))
     }
 
     override fun onDestroy() {
