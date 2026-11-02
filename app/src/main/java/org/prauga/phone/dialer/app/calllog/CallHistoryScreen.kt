@@ -36,7 +36,6 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Checkbox
@@ -307,79 +306,94 @@ private fun HistoryList(
             horizontalAlignment = Alignment.Start,
         ) {
             if (header != null) item(key = "header") { header() }
-            itemsIndexed(groups, key = { _, group -> group.rowId }) { index, group ->
+            // How many headers each day has had so far: calls out of date order can bring a day
+            // back, and its second header needs a key of its own.
+            val dayHeaders = mutableMapOf<Int, Int>()
+            groups.forEachIndexed { index, group ->
                 val previousDay = groups.getOrNull(index - 1)?.dayGroup
-                Column(Modifier.animateItem()) {
-                    if (group.dayGroup != previousDay) DayHeader(group.dayGroup)
-                    val row = resolve(group, index, group.number in blockedNumbers)
-                    val expanded = expandedRowId == group.rowId && !selecting
-                    val onClick: () -> Unit = {
-                        if (selecting) select(selection.toggled(group.rowId)) else toggle(row)
+                // An item of its own: when the row under it goes, it stays where it is instead of
+                // moving into the next row and pushing it down.
+                if (group.dayGroup != previousDay) {
+                    val repeat = dayHeaders.merge(group.dayGroup, 1, Int::plus)!! - 1
+                    val key =
+                        if (repeat == 0) "day_${group.dayGroup}"
+                        else "day_${group.dayGroup}_$repeat"
+                    item(key = key, contentType = "day") {
+                        DayHeader(group.dayGroup, Modifier.animateItem())
                     }
-                    val onLongClick: (() -> Unit)? =
-                        if (selectable) {
-                            { select(selection + group.rowId) }
-                        } else null
-                    val onPlay: () -> Unit = {
-                        expandedRowId = group.rowId
-                        actions.opened(row, playNow = true)
-                    }
-                    val onDelete: () -> Unit = {
-                        if (expandedRowId == group.rowId) {
-                            expandedRowId = null
-                            actions.closed(row)
+                }
+                item(key = group.rowId, contentType = "row") {
+                    Column(Modifier.animateItem()) {
+                        val row = resolve(group, index, group.number in blockedNumbers)
+                        val expanded = expandedRowId == group.rowId && !selecting
+                        val onClick: () -> Unit = {
+                            if (selecting) select(selection.toggled(group.rowId)) else toggle(row)
                         }
-                        actions.deleteLater(group)
-                        scope.launch {
-                            snackbarHostState.currentSnackbarData?.dismiss()
-                            val result =
-                                snackbarHostState.showSnackbar(
-                                    message = deletedMessage,
-                                    actionLabel = undoLabel,
-                                    duration = SnackbarDuration.Short,
-                                )
-                            if (result == SnackbarResult.ActionPerformed) {
-                                actions.undoDelete(group)
-                            } else {
-                                actions.commitDelete(group)
+                        val onLongClick: (() -> Unit)? =
+                            if (selectable) {
+                                { select(selection + group.rowId) }
+                            } else null
+                        val onPlay: () -> Unit = {
+                            expandedRowId = group.rowId
+                            actions.opened(row, playNow = true)
+                        }
+                        val onDelete: () -> Unit = {
+                            if (expandedRowId == group.rowId) {
+                                expandedRowId = null
+                                actions.closed(row)
+                            }
+                            actions.deleteLater(group)
+                            scope.launch {
+                                snackbarHostState.currentSnackbarData?.dismiss()
+                                val result =
+                                    snackbarHostState.showSnackbar(
+                                        message = deletedMessage,
+                                        actionLabel = undoLabel,
+                                        duration = SnackbarDuration.Short,
+                                    )
+                                if (result == SnackbarResult.ActionPerformed) {
+                                    actions.undoDelete(group)
+                                } else {
+                                    actions.commitDelete(group)
+                                }
                             }
                         }
-                    }
-                    // The Delete button removes every call in the row, so it asks first.
-                    val onRowAction = { action: RowAction ->
-                        when (action) {
-                            RowAction.BLOCK -> confirmBlock = row
-                            RowAction.UNBLOCK -> confirmUnblock = row
-                            RowAction.DELETE -> confirmDelete = row
-                            else -> actions.rowAction(row, action)
+                        // The Delete button removes every call in the row, so it asks first.
+                        val onRowAction = { action: RowAction ->
+                            when (action) {
+                                RowAction.BLOCK -> confirmBlock = row
+                                RowAction.UNBLOCK -> confirmUnblock = row
+                                RowAction.DELETE -> confirmDelete = row
+                                else -> actions.rowAction(row, action)
+                            }
                         }
-                    }
-                    key(group.rowId) {
-                        if (voicemailPlayback != null && group.voicemailUri != null) {
-                            VoicemailCard(
-                                row = row,
-                                playback = voicemailPlayback,
-                                expanded = expanded,
-                                isSelected = group.rowId in selection,
-                                onClick = onClick,
-                                onLongClick = onLongClick,
-                                onPlay = onPlay,
-                                onDelete = onDelete,
-                                actions = actions,
-                                onRowAction = onRowAction,
-                            )
-                        } else {
-                            HistoryRow(
-                                row = row,
-                                expanded = expanded,
-                                isSelected = group.rowId in selection,
-                                onClick = onClick,
-                                onLongClick = onLongClick,
-                                onPlay = onPlay,
-                                onDelete = onDelete,
-                                actions = actions,
-                                onRowAction = onRowAction,
-                            )
+                        key(group.rowId) {
+                            if (voicemailPlayback != null && group.voicemailUri != null) {
+                                VoicemailCard(
+                                    row = row,
+                                    playback = voicemailPlayback,
+                                    expanded = expanded,
+                                    isSelected = group.rowId in selection,
+                                    onClick = onClick,
+                                    onLongClick = onLongClick,
+                                    onPlay = onPlay,
+                                    onDelete = onDelete,
+                                    actions = actions,
+                                    onRowAction = onRowAction,
+                                )
+                            } else {
+                                HistoryRow(
+                                    row = row,
+                                    expanded = expanded,
+                                    isSelected = group.rowId in selection,
+                                    onClick = onClick,
+                                    onLongClick = onLongClick,
+                                    onPlay = onPlay,
+                                    onDelete = onDelete,
+                                    actions = actions,
+                                    onRowAction = onRowAction,
+                                )
+                            }
                         }
                     }
                 }
@@ -522,7 +536,7 @@ private fun SelectionBar(
 }
 
 @Composable
-private fun DayHeader(dayGroup: Int) {
+private fun DayHeader(dayGroup: Int, modifier: Modifier = Modifier) {
     val title =
         when (dayGroup) {
             CallLogGroupBuilder.DAY_GROUP_TODAY -> R.string.call_log_header_today
@@ -532,7 +546,8 @@ private fun DayHeader(dayGroup: Int) {
     PvotSectionHeader(
         title = stringResource(title),
         modifier =
-            Modifier.fillMaxWidth()
+            modifier
+                .fillMaxWidth()
                 .padding(start = PvotSpacing.L, end = PvotSpacing.L, top = PvotSpacing.L),
     )
 }
