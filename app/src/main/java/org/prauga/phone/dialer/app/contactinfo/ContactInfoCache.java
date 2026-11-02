@@ -311,6 +311,11 @@ public class ContactInfoCache {
     requestProcessingDisabled = true;
   }
 
+  /** Allows lookups again, as when the contacts permission is granted after they were disabled. */
+  public synchronized void enableRequestProcessing() {
+    requestProcessingDisabled = false;
+  }
+
   public interface OnContactInfoChangedListener {
 
     void onContactInfoChanged();
