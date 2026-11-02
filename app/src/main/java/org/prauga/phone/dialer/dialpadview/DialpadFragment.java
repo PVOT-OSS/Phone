@@ -69,7 +69,6 @@ import org.prauga.phone.dialer.R;
 import org.prauga.phone.dialer.animation.AnimUtils;
 import org.prauga.phone.dialer.callintent.CallInitiationType;
 import org.prauga.phone.dialer.callintent.CallIntentBuilder;
-import org.prauga.phone.dialer.common.Assert;
 import org.prauga.phone.dialer.common.FragmentUtils;
 import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.common.concurrent.DialerExecutor;
@@ -1179,9 +1178,17 @@ public class DialpadFragment extends Fragment
   }
 
   /** Animate the dialpad down off the screen. */
-  public void slideDown(boolean animate, AnimationListener listener) {
-    Assert.checkArgument(isDialpadSlideUp);
+  public void slideDown(boolean animate, @Nullable AnimationListener listener) {
+    // Already down: a second call, as from a quick tab switch, has nothing to do.
+    if (!isDialpadSlideUp) {
+      return;
+    }
     isDialpadSlideUp = false;
+    if (!animate) {
+      // A zero-length animation still draws a frame from its start; none is needed.
+      getView().clearAnimation();
+      return;
+    }
     int animation;
     if (isLandscape) {
       animation = isLayoutRtl ? R.anim.dialpad_slide_out_left : R.anim.dialpad_slide_out_right;
@@ -1197,8 +1204,16 @@ public class DialpadFragment extends Fragment
 
   /** Animate the dialpad up onto the screen. */
   public void slideUp(boolean animate) {
-    Assert.checkArgument(!isDialpadSlideUp);
+    // Already up: shown again before it was put away, which needs nothing.
+    if (isDialpadSlideUp) {
+      return;
+    }
     isDialpadSlideUp = true;
+    if (!animate) {
+      // A zero-length animation would draw one frame with the keypad off screen.
+      getView().clearAnimation();
+      return;
+    }
     int animation;
     if (isLandscape) {
       animation = isLayoutRtl ? R.anim.dialpad_slide_in_left : R.anim.dialpad_slide_in_right;
