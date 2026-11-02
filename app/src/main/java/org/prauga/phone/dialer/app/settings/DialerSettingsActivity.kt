@@ -243,7 +243,7 @@ class DialerSettingsActivity :
         override fun Content() {
             val context = LocalContext.current
             val entries = remember { settingsEntries(context) }
-            SettingsRootList(entries, ::open)
+            SettingsRootList(entries, ::open, rememberDefaultPhoneAppPrompt())
         }
 
         private fun open(entry: Entry, title: String) {
@@ -296,6 +296,7 @@ class DialerSettingsActivity :
     }
 
     internal companion object {
+        const val KEY_DEFAULT_PHONE_APP = "default_phone_app"
         const val KEY_APPEARANCE = "appearance"
         const val KEY_DISPLAY_OPTIONS = "display_options"
         const val KEY_SOUNDS = "sounds_and_vibration"
@@ -521,15 +522,42 @@ private val APP_KEYS =
 
 /**
  * The top-level settings [entries] in two groups, this app's look and sound and then calls, in
- * their order; [onOpen] gets the tapped entry and its title.
+ * their order; [onOpen] gets the tapped entry and its title. [defaultApp], while Phone isn't the
+ * default phone app, goes first.
  */
 @Composable
 internal fun SettingsRootList(
     entries: List<DialerSettingsActivity.Entry>,
     onOpen: (DialerSettingsActivity.Entry, String) -> Unit,
+    defaultApp: DefaultPhoneAppPrompt? = null,
 ) {
     val (app, calls) = entries.partition { it.key in APP_KEYS }
     SettingsList {
+        if (defaultApp != null) {
+            item(key = DialerSettingsActivity.KEY_DEFAULT_PHONE_APP) {
+                SettingsGroup {
+                    PvotPreferenceRow(
+                        title = stringResource(R.string.settings_default_phone_app_title),
+                        onClick = defaultApp.onClick,
+                        modifier =
+                            Modifier.testTag(
+                                TestTags.settingsRow(DialerSettingsActivity.KEY_DEFAULT_PHONE_APP)
+                            ),
+                        summary =
+                            stringResource(
+                                if (defaultApp.denied) {
+                                    R.string.settings_default_phone_app_denied
+                                } else {
+                                    R.string.settings_default_phone_app_summary
+                                }
+                            ),
+                        icon = settingsIcon(R.drawable.ic_phone),
+                        iconStyle = PvotRowIconStyle.Plain,
+                        chevron = PvotRowChevron.Arrow,
+                    )
+                }
+            }
+        }
         for ((key, title, group) in
             listOf(
                 Triple("app", R.string.settings_section_app, app),
