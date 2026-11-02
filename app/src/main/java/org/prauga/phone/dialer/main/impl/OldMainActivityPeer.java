@@ -902,21 +902,27 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
     @Override
     public void onDialpadSelected() {
       toolbar.setTitle(R.string.tab_title_dialpad);
+      toolbar.setSearchVisible(false);
     }
 
     @Override
     public void onCallLogSelected() {
       toolbar.setTitle(R.string.tab_title_call_history);
+      // Recents searches from its nav bar pill.
+      toolbar.setSearchVisible(false);
     }
 
     @Override
     public void onContactsSelected() {
       toolbar.setTitle(R.string.tab_all_contacts);
+      // Its nav bar pill adds a contact, so search sits in the header, as in contacts apps.
+      toolbar.setSearchVisible(true);
     }
 
     @Override
     public void onVoicemailSelected() {
       toolbar.setTitle(R.string.tab_title_voicemail);
+      toolbar.setSearchVisible(false);
     }
   }
 
