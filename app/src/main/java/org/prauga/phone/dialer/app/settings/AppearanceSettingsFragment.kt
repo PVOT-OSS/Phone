@@ -46,7 +46,10 @@ import org.prauga.phone.dialer.app.settings.ui.SettingsList
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.ui.appearance.AppearanceSettings
 
-/** How the app looks: whether the bars, sheets and controls are glass, and how much. */
+/**
+ * How the app looks: Phone's own colors or the wallpaper's, and whether the bars, sheets and
+ * controls are glass, and how much.
+ */
 class AppearanceSettingsFragment : SettingsComposeFragment() {
 
     @Composable
@@ -62,6 +65,17 @@ fun AppearanceSettingsList() {
     val appearance by AppearanceSettings.rememberAppearance()
     val max = PvotGlassDefaults.maxIntensity()
     SettingsList {
+        item(key = "colors") {
+            SettingsGroup(title = stringResource(R.string.appearance_colors_title)) {
+                PvotSwitchRow(
+                    title = stringResource(R.string.appearance_dynamic_color),
+                    checked = appearance.dynamicColor,
+                    onCheckedChange = { AppearanceSettings.setDynamicColor(context, it) },
+                    modifier = Modifier.testTag(TestTags.APPEARANCE_DYNAMIC_COLOR_SWITCH),
+                    summary = stringResource(R.string.appearance_dynamic_color_summary),
+                )
+            }
+        }
         item(key = "glass") {
             SettingsGroup(
                 title = stringResource(R.string.appearance_glass_title),
