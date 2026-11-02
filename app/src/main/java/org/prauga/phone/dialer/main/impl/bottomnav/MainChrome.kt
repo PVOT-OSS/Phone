@@ -15,6 +15,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
@@ -24,14 +25,16 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
+import com.prauga.pvot.designsystem.effects.ProvidePvotGlassIntensity
 import com.prauga.pvot.designsystem.motion.PvotDurations
 import com.prauga.pvot.designsystem.motion.PvotMotion
 import com.prauga.pvot.designsystem.navigation.PvotNavBar
 import com.prauga.pvot.designsystem.navigation.PvotTabItem
+import com.prauga.pvot.designsystem.theme.PvotAppTheme
 import org.prauga.phone.dialer.R
-import org.prauga.phone.dialer.ui.PhoneTheme
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.ui.WindowBackdrop
+import org.prauga.phone.dialer.ui.appearance.AppearanceSettings
 
 /** Puts the Compose dock into the main screen's view layout. */
 object MainChrome {
@@ -56,9 +59,21 @@ object MainChrome {
     @OptIn(ExperimentalComposeUiApi::class)
     private fun ComposeView.setChromeContent(content: @Composable () -> Unit) {
         setContent {
-            PhoneTheme { Box(Modifier.semantics { testTagsAsResourceId = true }) { content() } }
+            MainChromeTheme {
+                Box(Modifier.semantics { testTagsAsResourceId = true }) { content() }
+            }
         }
     }
+}
+
+/**
+ * The bar's theme, the one the Pvot catalog draws its bar in: the Pvot palette, not Phone's
+ * secondary accent, at the glass intensity chosen in Appearance.
+ */
+@Composable
+internal fun MainChromeTheme(content: @Composable () -> Unit) {
+    val appearance by AppearanceSettings.rememberAppearance()
+    PvotAppTheme { ProvidePvotGlassIntensity(appearance.preferredIntensity, content = content) }
 }
 
 /**
