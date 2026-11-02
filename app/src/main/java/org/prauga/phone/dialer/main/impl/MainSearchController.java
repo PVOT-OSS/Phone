@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.Toast;
@@ -122,6 +123,41 @@ public class MainSearchController implements SearchBarListener {
             new ActivityResultContracts.StartActivityForResult(), result -> {
               onVoiceResults(result.getResultCode(), result.getData());
             });
+
+    // The results end at the keypad's top edge while it shows, instead of running behind it.
+    View searchContainer = activity.findViewById(R.id.search_fragment_container);
+    View dialpadContainer = activity.findViewById(R.id.dialpad_fragment_container);
+    if (searchContainer != null && dialpadContainer != null) {
+      View.OnLayoutChangeListener inset =
+          (v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) ->
+              insetSearchAboveKeypad(searchContainer, dialpadContainer);
+      searchContainer.addOnLayoutChangeListener(inset);
+      dialpadContainer.addOnLayoutChangeListener(inset);
+    }
+  }
+
+  /**
+   * Pads the bottom of [searchContainer] by as much as the open keypad in [dialpadContainer]
+   * overlaps it, so the dialpad's matches fit in the space above the keypad.
+   */
+  private static void insetSearchAboveKeypad(View searchContainer, View dialpadContainer) {
+    int inset = 0;
+    View keypad =
+        dialpadContainer instanceof ViewGroup && ((ViewGroup) dialpadContainer).getChildCount() > 0
+            ? ((ViewGroup) dialpadContainer).getChildAt(0)
+            : null;
+    if (keypad != null && keypad.getVisibility() == View.VISIBLE) {
+      int[] search = new int[2];
+      int[] dialpad = new int[2];
+      searchContainer.getLocationInWindow(search);
+      dialpadContainer.getLocationInWindow(dialpad);
+      inset = Math.max(0, search[1] + searchContainer.getHeight() - dialpad[1]);
+    }
+    if (searchContainer.getPaddingBottom() != inset) {
+      // Posted: padding requests a layout, which can't happen inside this layout pass.
+      int finalInset = inset;
+      searchContainer.post(() -> searchContainer.setPadding(0, 0, 0, finalInset));
+    }
   }
 
   /** Should be called if we're showing the dialpad because of a new ACTION_DIAL intent. */
