@@ -18,7 +18,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -119,11 +119,15 @@ object PhoneColors {
 @Composable
 private fun WindowBackground(color: Color) {
     val view = LocalView.current
-    SideEffect {
-        if (view.isInEditMode) return@SideEffect
-        val activity = view.context.findActivity() ?: return@SideEffect
-        if (activity.window.decorView != view.rootView || activity.isTranslucent()) return@SideEffect
-        activity.window.setBackgroundDrawable(ColorDrawable(color.toArgb()))
+    // Once per color: the theme attributes and the drawable are not worth a recomposition each.
+    DisposableEffect(view, color) {
+        if (!view.isInEditMode) {
+            val activity = view.context.findActivity()
+            if (activity != null && activity.window.decorView == view.rootView && !activity.isTranslucent()) {
+                activity.window.setBackgroundDrawable(ColorDrawable(color.toArgb()))
+            }
+        }
+        onDispose {}
     }
 }
 
