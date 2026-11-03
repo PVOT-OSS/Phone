@@ -43,6 +43,16 @@ object ScreeningPolicy {
         if (hasNumber && !facts.hasCallLogHistory) {
             add(CallerCategory.FIRST_TIME)
         }
+        // Contacts are exempt above, so a shown number that gets here belongs to a stranger; a
+        // hidden
+        // one is already covered by the first category.
+        if (
+            hasNumber &&
+                facts.presentation == TelecomManager.PRESENTATION_ALLOWED &&
+                !facts.isContact
+        ) {
+            add(CallerCategory.NOT_IN_CONTACTS)
+        }
     }
 
     private fun exemption(facts: IncomingCallFacts): ScreeningReason? =
