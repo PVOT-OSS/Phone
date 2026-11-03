@@ -30,7 +30,6 @@
   <string name="action_menu_call_history_description">Povijest poziva</string>
   <string name="dialer_settings_label">Postavke</string>
   <string name="description_start_voice_search">Pokretanje glasovnog pretraživanja</string>
-  <string name="voicemail">Govorna pošta</string>
   <string name="voicemailMultiSelectDeleteConfirm">Izbriši</string>
   <string name="voicemailMultiSelectDeleteCancel">Odustani</string>
   <string name="voicemailMultiSelectActionBarTitle">Odabrano: %1$s</string>

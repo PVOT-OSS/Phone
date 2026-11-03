@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">ថ្មី! អាន​សារ​ជា​​សំឡេង​របស់​អ្នក</string>
   <string name="dialer_terms_and_conditions_1.0">មើល និង​ស្ដាប់​សារ​របស់​អ្នក ដោយ​មិន​ចាំបាច់​ហៅ​សារ​ជា​សំឡេង។ ប្រតិចារឹក​នៃ​សារ​ជា​សំឡេង​របស់​អ្នក​ត្រូវ​បាន​ផ្ដល់​ដោយ​សេវាកម្ម​ប្រតិចារឹក​ឥត​គិត​ថ្លៃ​របស់ Google​ ។ អ្នក​អាច​បិទ​មុខងារ​នេះ​នៅ​ក្នុង​ការកំណត់​ពេលណា​ក៏បាន។  %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">ឥឡូវនេះ ​ប្រតិចារឹក​នៃ​សារ​ជា​សំឡេង​របស់​អ្នក ត្រូវបាន​ផ្ដល់​ដោយ​សេវាកម្ម​ប្រតិចារឹក​ឥត​គិតថ្លៃ​របស់ Google ។ អ្នក​អាច​បិទ​មុខងារ​នេះ​​នៅ​ក្នុង​ការកំណត់​ពេល​ណា​ក៏​បាន។ %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">យល់ហើយ</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">ទេ អរគុណ</string>
 </resources>

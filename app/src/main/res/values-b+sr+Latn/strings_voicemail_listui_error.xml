@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Novo! Pročitajte govornu poštu.</string>
   <string name="dialer_terms_and_conditions_1.0">Pregledajte i slušajte poruke bez pozivanja govorne pošte. Transkripte govornih poruka dobijate pomoću Google-ove besplatne usluge transkripcije. Obe opcije uvek možete da isključite u Podešavanjima. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Transkripte govornih poruka dobijate pomoću Google-ove besplatne usluge transkripcije. Ovo uvek možete da isključite u Podešavanjima. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">Važi</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Ne, hvala</string>
 </resources>

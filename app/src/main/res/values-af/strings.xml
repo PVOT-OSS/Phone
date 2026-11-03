@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Oproepgeskiedenis</string>
   <string name="dialer_settings_label">Instellings</string>
   <string name="description_start_voice_search">Begin stemsoektog</string>
-  <string name="voicemail">Stemboodskap</string>
   <string name="voicemailMultiSelectDeleteConfirm">Vee uit</string>
   <string name="voicemailMultiSelectDeleteCancel">Kanselleer</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s gekies</string>

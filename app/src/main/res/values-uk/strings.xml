@@ -31,7 +31,6 @@
   <string name="action_menu_call_history_description">Історія викликів</string>
   <string name="dialer_settings_label">Налаштування</string>
   <string name="description_start_voice_search">Розпочати голосовий пошук</string>
-  <string name="voicemail">Голосова пошта</string>
   <string name="voicemailMultiSelectDeleteConfirm">Видалити</string>
   <string name="voicemailMultiSelectDeleteCancel">Скасувати</string>
   <string name="voicemailMultiSelectActionBarTitle">Вибрано %1$s</string>

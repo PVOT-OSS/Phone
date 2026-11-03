@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Híváslista</string>
   <string name="dialer_settings_label">Beállítások</string>
   <string name="description_start_voice_search">Hangalapú keresés indítása</string>
-  <string name="voicemail">Hangposta</string>
   <string name="voicemailMultiSelectDeleteConfirm">Törlés</string>
   <string name="voicemailMultiSelectDeleteCancel">Mégse</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s kiválasztva</string>

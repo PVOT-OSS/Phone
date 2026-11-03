@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">কলের ইতিহাস</string>
   <string name="dialer_settings_label">সেটিংস</string>
   <string name="description_start_voice_search">ভয়েস সার্চ শুরু করুন</string>
-  <string name="voicemail">ভয়েসমেল</string>
   <string name="voicemailMultiSelectDeleteConfirm">মুছুন</string>
   <string name="voicemailMultiSelectDeleteCancel">বাতিল করুন</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$sটি নির্বাচিত</string>

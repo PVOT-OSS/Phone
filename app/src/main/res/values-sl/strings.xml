@@ -31,7 +31,6 @@
   <string name="action_menu_call_history_description">Zgodovina klicev</string>
   <string name="dialer_settings_label">Nastavitve</string>
   <string name="description_start_voice_search">Začni glasovno iskanje</string>
-  <string name="voicemail">Glasovna pošta</string>
   <string name="voicemailMultiSelectDeleteConfirm">Izbriši</string>
   <string name="voicemailMultiSelectDeleteCancel">Prekliči</string>
   <string name="voicemailMultiSelectActionBarTitle">Št. izbranih: %1$s</string>

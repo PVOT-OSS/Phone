@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">ປະຫວັດການໂທ</string>
   <string name="dialer_settings_label">ການ​ຕັ້ງ​ຄ່າ</string>
   <string name="description_start_voice_search">ເລີ່ມການຊອກຫາດ້ວຍສຽງ</string>
-  <string name="voicemail">ຂໍ້ຄວາມສຽງ</string>
   <string name="voicemailMultiSelectDeleteConfirm">ລຶບ</string>
   <string name="voicemailMultiSelectDeleteCancel">ຍົກເລີກ</string>
   <string name="voicemailMultiSelectActionBarTitle">ເລືອກ %1$s ລາຍການແລ້ວ</string>

@@ -96,9 +96,4 @@
   <string name="send_and_call_button">ENVIAR Y LLAMAR</string>
   <string name="call_subject_limit">%1$s/%2$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">Pestaña %1$s.</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="one"> Pestaña %1$s. %2$d elemento no leído. </item>
-    <item quantity="other"> Pestaña %1$s. %2$d elementos no leídos. </item>
-  </plurals>
 </resources>

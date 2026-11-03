@@ -31,7 +31,6 @@
   <string name="action_menu_call_history_description">Skambučių istorija</string>
   <string name="dialer_settings_label">Nustatymai</string>
   <string name="description_start_voice_search">Pradėti paiešką balsu</string>
-  <string name="voicemail">Balso paštas</string>
   <string name="voicemailMultiSelectDeleteConfirm">Ištrinti</string>
   <string name="voicemailMultiSelectDeleteCancel">Atšaukti</string>
   <string name="voicemailMultiSelectActionBarTitle">Pasirinkta: %1$s</string>

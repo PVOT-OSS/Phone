@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">통화 기록</string>
   <string name="dialer_settings_label">설정</string>
   <string name="description_start_voice_search">음성 검색 시작</string>
-  <string name="voicemail">음성사서함</string>
   <string name="voicemailMultiSelectDeleteConfirm">삭제</string>
   <string name="voicemailMultiSelectDeleteCancel">취소</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s개 선택됨</string>

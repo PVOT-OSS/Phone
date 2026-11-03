@@ -32,5 +32,4 @@
   <string name="description_via_number">%1$s നമ്പർ വഴി</string>
   <string name="description_via_number_phone_account">%2$s നമ്പർ വഴി, %1$s അക്കൗണ്ടിൽ</string>
   <string name="voicemail_string">വോയ്‌സ്‌മെയിൽ</string>
-  <string name="just_now">ഇപ്പോൾ</string>
 </resources>

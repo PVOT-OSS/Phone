@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Novinka! Čtěte si hlasové zprávy</string>
   <string name="dialer_terms_and_conditions_1.0">Čtěte a poslouchejte své zprávy, aniž byste museli volat do hlasové schránky. Přepisy hlasových zpráv poskytuje bezplatná přepisovací služba od Googlu. Obě funkce můžete kdykoli vypnout v nastavení. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Přepisy hlasových zpráv poskytuje bezplatná přepisovací služba od Googlu. Tuto funkci můžete kdykoli vypnout v nastavení. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">OK, rozumím</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Ne, díky</string>
 </resources>

@@ -32,5 +32,4 @@
   <string name="description_via_number">%1$s से</string>
   <string name="description_via_number_phone_account">%1$s पर, %2$s से</string>
   <string name="voicemail_string">वॉइसमेल</string>
-  <string name="just_now">अभी-अभी</string>
 </resources>

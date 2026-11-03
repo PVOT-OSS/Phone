@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">ใหม่! อ่านข้อความเสียง</string>
   <string name="dialer_terms_and_conditions_1.0">ดูและฟังข้อความได้โดยไม่ต้องโทรไปฟังข้อความเสียงเอง บริการถอดเสียงฟรีของ Google ถอดเสียงข้อความให้คุณแล้ว โดยเลือกปิดฟีเจอร์นี้ในการตั้งค่าได้ทุกเมื่อ %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">บริการถอดเสียงฟรีของ Google ถอดเสียงข้อความให้คุณแล้ว โดยเลือกปิดฟีเจอร์นี้ในการตั้งค่าได้ทุกเมื่อ %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">รับทราบ</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">ไม่เป็นไร</string>
 </resources>

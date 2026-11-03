@@ -31,7 +31,6 @@
   <string name="action_menu_call_history_description">Historia połączeń</string>
   <string name="dialer_settings_label">Ustawienia</string>
   <string name="description_start_voice_search">Wyszukiwanie głosowe</string>
-  <string name="voicemail">Poczta głosowa</string>
   <string name="voicemailMultiSelectDeleteConfirm">Usuń</string>
   <string name="voicemailMultiSelectDeleteCancel">Anuluj</string>
   <string name="voicemailMultiSelectActionBarTitle">Wybrane: %1$s</string>

@@ -32,5 +32,4 @@
   <string name="description_via_number">ازطریق %1$s</string>
   <string name="description_via_number_phone_account">در %1$s، ازطریق %2$s</string>
   <string name="voicemail_string">پست صوتی</string>
-  <string name="just_now">لحظاتی پیش</string>
 </resources>

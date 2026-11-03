@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">工作目錄</string>
-  <string name="chat_aim">使用 AIM 進行即時通訊</string>
-  <string name="chat_msn">使用 Windows Live 進行即時通訊</string>
-  <string name="chat_yahoo">使用 Yahoo 進行即時通訊</string>
-  <string name="chat_skype">使用 Skype 進行即時通訊</string>
-  <string name="chat_qq">使用 QQ 進行即時通訊</string>
-  <string name="chat_gtalk">使用 Google Talk 進行即時通訊</string>
-  <string name="chat_icq">使用 ICQ 進行即時通訊</string>
-  <string name="chat_jabber">使用 Jabber 進行即時通訊</string>
   <string name="display_options_sort_list_by">排序方式</string>
   <string name="display_options_sort_by_given_name">名字</string>
   <string name="display_options_sort_by_family_name">姓氏</string>

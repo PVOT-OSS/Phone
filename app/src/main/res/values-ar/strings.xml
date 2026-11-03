@@ -33,7 +33,6 @@
   <string name="action_menu_call_history_description">سجل المكالمات</string>
   <string name="dialer_settings_label">الإعدادات</string>
   <string name="description_start_voice_search">بدء البحث الصوتي</string>
-  <string name="voicemail">البريد الصوتي</string>
   <string name="voicemailMultiSelectDeleteConfirm">حذف</string>
   <string name="voicemailMultiSelectDeleteCancel">إلغاء</string>
   <string name="voicemailMultiSelectActionBarTitle">تم تحديد %1$s</string>

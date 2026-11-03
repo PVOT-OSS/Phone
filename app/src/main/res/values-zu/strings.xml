@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Umlando wekholi</string>
   <string name="dialer_settings_label">Izilungiselelo</string>
   <string name="description_start_voice_search">Qalisa ukusesha ngezwi</string>
-  <string name="voicemail">Ivoyisimeyili</string>
   <string name="voicemailMultiSelectDeleteConfirm">Susa</string>
   <string name="voicemailMultiSelectDeleteCancel">Khansela</string>
   <string name="voicemailMultiSelectActionBarTitle">Engu-%1$s ekhethiwe</string>

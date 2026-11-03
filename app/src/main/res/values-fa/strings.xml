@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">سابقه تماس</string>
   <string name="dialer_settings_label">تنظیمات</string>
   <string name="description_start_voice_search">شروع جستجوی گفتاری</string>
-  <string name="voicemail">پست صوتی</string>
   <string name="voicemailMultiSelectDeleteConfirm">حذف</string>
   <string name="voicemailMultiSelectDeleteCancel">لغو</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s مورد انتخاب شد</string>

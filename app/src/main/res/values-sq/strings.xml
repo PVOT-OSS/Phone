@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Historiku i telefonatave</string>
   <string name="dialer_settings_label">Cilësimet</string>
   <string name="description_start_voice_search">Nis kërkimin me zë</string>
-  <string name="voicemail">Posta zanore</string>
   <string name="voicemailMultiSelectDeleteConfirm">Fshi</string>
   <string name="voicemailMultiSelectDeleteCancel">Anulo</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s të zgjedhura</string>

@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Çağrı geçmişi</string>
   <string name="dialer_settings_label">Ayarlar</string>
   <string name="description_start_voice_search">Sesli arama başlat</string>
-  <string name="voicemail">Sesli Mesaj</string>
   <string name="voicemailMultiSelectDeleteConfirm">Sil</string>
   <string name="voicemailMultiSelectDeleteCancel">İptal</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s öğe seçildi</string>

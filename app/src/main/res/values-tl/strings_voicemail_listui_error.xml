@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Bago! Basahin ang iyong voicemail</string>
   <string name="dialer_terms_and_conditions_1.0">Tingnan at pakinggan ang iyong mga mensahe, nang hindi tinatawagan ang voicemail. Ang mga transcript ng iyong voicemail ay ibinibigay ng libreng serbisyo ng transkripsyon ng Google. Maaari mong i-off ang alinman sa mga ito sa Mga Setting anumang oras. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Ang mga transcript ng iyong voicemail ay ibinibigay na ngayon ng libreng serbisyo ng transkripsyon ng Google. Maaari mo itong i-off sa Mga Setting anumang oras. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">Ok</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Hindi, Salamat na Lang</string>
 </resources>

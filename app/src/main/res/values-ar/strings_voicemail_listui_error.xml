@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">جديد! قراءة البريد الصوتي</string>
   <string name="dialer_terms_and_conditions_1.0">‏اطلع على رسائلك واستمع إليها بدون الحاجة إلى الاتصال بالبريد الصوتي. يتم تحويل بريدك الصوتي إلى نص بواسطة خدمة تحويل الصوت إلى نص المجانية من Google. يمكنك إيقاف الخدمة في أي وقت في \"الإعدادات\". %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">‏يتم تحويل بريدك الصوتي إلى نص بواسطة خدمة تحويل الصوت إلى نص المجانية من Google. يمكنك إيقاف هذه الخدمة في أي وقت في \"الإعدادات\". %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">حسنًا</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">لا، شكرًا</string>
 </resources>

@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Baharu! Baca mel suara anda</string>
   <string name="dialer_terms_and_conditions_1.0">Lihat dan dengar mesej anda tanpa memanggil mel suara. Transkrip mel suara anda disediakan oleh perkhidmatan transkripsi percuma Google. Anda boleh mematikan mana-mana pilihan ini dalam Tetapan pada bila-bila masa. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Transkrip mel suara anda kini disediakan oleh perkhidmatan transkripsi percuma Google. Anda boleh mematikan pilihan ini pada bila-bila masa dalam Tetapan. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">OK</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Tidak Perlu</string>
 </resources>

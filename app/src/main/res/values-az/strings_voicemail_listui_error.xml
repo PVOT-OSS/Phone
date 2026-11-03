@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Yenilik! Səsli e-poçtu oxuyun</string>
   <string name="dialer_terms_and_conditions_1.0">Səsli e-poçtda zəng etmədən mesajlara baxın və qulaq asın. İndi səsli e-poçtun transkripsiyası Google\'un ödənişsiz transkripsiya xidməti tərəfindən təmin edilir. Bunu istənilən zaman Ayarlardan deaktiv edə bilərsiniz. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">İndi səsli e-poçtun transkripsiyası Google\'un ödənişsiz transkripsiya xidməti tərəfindən təmin edilir. Bu funksiyanı istənilən zaman Ayarlardan deaktiv edə bilərsiniz. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">Ok, anladım</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Xeyr, Təşəkkür</string>
 </resources>

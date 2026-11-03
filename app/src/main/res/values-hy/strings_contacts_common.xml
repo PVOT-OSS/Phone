@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Աշխատանքային գրացուցակ</string>
-  <string name="chat_aim">Զրույց AIM-ով</string>
-  <string name="chat_msn">Զրույց Windows Live-ով</string>
-  <string name="chat_yahoo">Զրուցել Yahoo-ով</string>
-  <string name="chat_skype">Զրույց Skype-ով</string>
-  <string name="chat_qq">Զրույց QQ-ով</string>
-  <string name="chat_gtalk">Զրույց Google Talk-ով</string>
-  <string name="chat_icq">Զրուցել ICQ-ով</string>
-  <string name="chat_jabber">Զրուցել Jabber-ով</string>
   <string name="display_options_sort_list_by">Դասավորել ըստ</string>
   <string name="display_options_sort_by_given_name">Անվան</string>
   <string name="display_options_sort_by_family_name">Ազգանվան</string>

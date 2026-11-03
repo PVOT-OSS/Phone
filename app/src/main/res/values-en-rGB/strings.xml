@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Call history</string>
   <string name="dialer_settings_label">Settings</string>
   <string name="description_start_voice_search">Start voice search</string>
-  <string name="voicemail">Voicemail</string>
   <string name="voicemailMultiSelectDeleteConfirm">Delete</string>
   <string name="voicemailMultiSelectDeleteCancel">Cancel</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s selected</string>

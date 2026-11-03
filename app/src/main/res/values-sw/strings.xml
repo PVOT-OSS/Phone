@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Rekodi ya simu zilizopigwa</string>
   <string name="dialer_settings_label">Mipangilio</string>
   <string name="description_start_voice_search">Anza kutafuta kwa kutamka</string>
-  <string name="voicemail">Ujumbe wa sauti</string>
   <string name="voicemailMultiSelectDeleteConfirm">Futa</string>
   <string name="voicemailMultiSelectDeleteCancel">Ghairi</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s zimechaguliwa</string>

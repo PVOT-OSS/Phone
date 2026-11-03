@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Directory sa trabaho</string>
-  <string name="chat_aim">Makipag-chat gamit ang AIM</string>
-  <string name="chat_msn">Makipag-chat gamit ang Windows Live</string>
-  <string name="chat_yahoo">Makipag-chat gamit ang Yahoo</string>
-  <string name="chat_skype">Makipag-chat gamit ang Skype</string>
-  <string name="chat_qq">Makipag-chat gamit ang QQ</string>
-  <string name="chat_gtalk">Makipag-chat gamit ang Google Talk</string>
-  <string name="chat_icq">Makipag-chat gamit ang ICQ</string>
-  <string name="chat_jabber">Makipag-chat gamit ang Jabber</string>
   <string name="display_options_sort_list_by">Uriin ayon sa</string>
   <string name="display_options_sort_by_given_name">Pangalan</string>
   <string name="display_options_sort_by_family_name">Apelyido</string>

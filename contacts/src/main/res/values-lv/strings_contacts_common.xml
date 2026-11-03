@@ -96,10 +96,4 @@
   <string name="send_and_call_button">SŪTĪT UN ZVANĪT</string>
   <string name="call_subject_limit">%1$s no %2$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">Cilne “%1$s”</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="zero"> Cilne “%1$s”. %2$d nelasīti vienumi. </item>
-    <item quantity="one"> Cilne “%1$s”. %2$d nelasīts vienums. </item>
-    <item quantity="other"> Cilne “%1$s”. %2$d nelasīti vienumi. </item>
-  </plurals>
 </resources>

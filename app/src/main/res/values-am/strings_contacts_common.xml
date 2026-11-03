@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">የሥራ ስልክ ማውጫ</string>
-  <string name="chat_aim">AIMን በመጠቀም ይወያዩ</string>
-  <string name="chat_msn">Windows Liveን በመጠቀም ይወያዩ</string>
-  <string name="chat_yahoo">Yahooን በመጠቀም ይወያዩ</string>
-  <string name="chat_skype">Skypeን በመጠቀም ይወያዩ</string>
-  <string name="chat_qq">QQን በመጠቀም ይወያዩ</string>
-  <string name="chat_gtalk">Google Talkን በመጠቀም ይወያዩ</string>
-  <string name="chat_icq">ICQን በመጠቀም ይወያዩ</string>
-  <string name="chat_jabber">Jabberን በመጠቀም 271448</string>
   <string name="display_options_sort_list_by">ደርድር በ</string>
   <string name="display_options_sort_by_given_name">የመጀመሪያ ስም</string>
   <string name="display_options_sort_by_family_name">የመጨረሻ ስም</string>

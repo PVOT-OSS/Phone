@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Opkaldshistorik</string>
   <string name="dialer_settings_label">Indstillinger</string>
   <string name="description_start_voice_search">Start talesøgning</string>
-  <string name="voicemail">Telefonsvarer</string>
   <string name="voicemailMultiSelectDeleteConfirm">Slet</string>
   <string name="voicemailMultiSelectDeleteCancel">Annuller</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s er valgt</string>

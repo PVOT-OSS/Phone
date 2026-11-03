@@ -19,16 +19,6 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
 
-    <!-- The call screens: shown over the lock screen, with no window animation between the
-         call activity's own screens and no wallpaper, since the screen draws its own background. -->
-    <style name="Theme.Pvot.InCall">
-        <item name="android:windowBackground">@color/pvot_incall_window_background</item>
-        <item name="android:colorBackground">@color/pvot_incall_window_background</item>
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="android:windowLightNavigationBar">false</item>
-        <item name="android:windowAnimationStyle">@null</item>
-        <item name="android:windowShowWallpaper">false</item>
-    </style>
 
     <!-- The launcher's splash, handing over to Theme.Pvot once the first screen is up. -->
     <style name="Theme.Pvot.Splash" parent="Theme.SplashScreen">

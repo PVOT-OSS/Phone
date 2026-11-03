@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">કૉલ ઇતિહાસ</string>
   <string name="dialer_settings_label">સેટિંગ્સ</string>
   <string name="description_start_voice_search">વૉઇસ શોધ શરૂ કરો</string>
-  <string name="voicemail">વૉઇસમેઇલ</string>
   <string name="voicemailMultiSelectDeleteConfirm">કાઢી નાખો</string>
   <string name="voicemailMultiSelectDeleteCancel">રદ કરો</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s પસંદ કરી</string>

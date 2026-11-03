@@ -36,5 +36,4 @@
   <string name="description_via_number">דרך %1$s</string>
   <string name="description_via_number_phone_account">בחשבון %1$s, דרך %2$s</string>
   <string name="voicemail_string">דואר קולי</string>
-  <string name="just_now">הרגע</string>
 </resources>

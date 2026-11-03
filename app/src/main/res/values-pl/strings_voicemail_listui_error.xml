@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Nowość! Przeczytaj pocztę głosową</string>
   <string name="dialer_terms_and_conditions_1.0">Sprawdź i odsłuchaj wiadomości bez dzwonienia na pocztę głosową. Zapisy wiadomości głosowych są udostępniane przez bezpłatną usługę transkrypcji Google. W każdej chwili możesz wyłączyć tę funkcję w ustawieniach. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Zapisy wiadomości głosowych są udostępniane przez bezpłatną usługę transkrypcji Google. W każdej chwili możesz wyłączyć tę funkcję w ustawieniach. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">OK</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Nie, dziękuję</string>
 </resources>

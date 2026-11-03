@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">కొత్తది! మీ వాయిస్ మెయిల్‌ని చదవండి</string>
   <string name="dialer_terms_and_conditions_1.0">వాయిస్‌మెయిల్‌కి కాల్ చేయాల్సిన అవసరం లేకుండానే మీ సందేశాలను చూడండి మరియు వినండి. Google యొక్క ఉచిత లిపి మార్పు సేవ ద్వారా మీ వాయిస్‌మెయిల్ లిపి మార్పులు అందించబడతాయి. మీరు ఏ సమయంలోనైనా సెట్టింగులలో దీనిని ఆఫ్ చేయవచ్చు. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">ఇప్పుడు Google యొక్క ఉచిత లిపి మార్పు సేవ ద్వారా మీ వాయిస్‌మెయిల్ లిపి మార్పులు అందించబడతాయి. మీరు ఏ సమయంలోనైనా సెట్టింగులలో దీనిని ఆఫ్ చేయవచ్చు. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">సరే, అర్థమైంది</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">వద్దు, ధన్యవాదాలు</string>
 </resources>

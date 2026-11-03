@@ -30,7 +30,6 @@
   <string name="action_menu_call_history_description">Istoricul apelurilor</string>
   <string name="dialer_settings_label">Setări</string>
   <string name="description_start_voice_search">Începeți căutarea vocală</string>
-  <string name="voicemail">Mesagerie vocală</string>
   <string name="voicemailMultiSelectDeleteConfirm">Ștergeți</string>
   <string name="voicemailMultiSelectDeleteCancel">Anulați</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s selectate</string>

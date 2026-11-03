@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Cronologia chiamate</string>
   <string name="dialer_settings_label">Impostazioni</string>
   <string name="description_start_voice_search">Avvia la ricerca vocale</string>
-  <string name="voicemail">Segreteria</string>
   <string name="voicemailMultiSelectDeleteConfirm">Elimina</string>
   <string name="voicemailMultiSelectDeleteCancel">Annulla</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s selezionate</string>

@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Sejarah panggilan</string>
   <string name="dialer_settings_label">Tetapan</string>
   <string name="description_start_voice_search">Mulakan carian suara</string>
-  <string name="voicemail">Mel suara</string>
   <string name="voicemailMultiSelectDeleteConfirm">Padam</string>
   <string name="voicemailMultiSelectDeleteCancel">Batal</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s dipilih</string>

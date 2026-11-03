@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">ခေါ်ဆိုမှုမှတ်တမ်း</string>
   <string name="dialer_settings_label">ဆက်တင်များ</string>
   <string name="description_start_voice_search">အသံဖွင့်ရှာဖွေမှု စရန်</string>
-  <string name="voicemail">အသံစာပို့စနစ်</string>
   <string name="voicemailMultiSelectDeleteConfirm">ဖျက်ပါ</string>
   <string name="voicemailMultiSelectDeleteCancel">မလုပ်တော့</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s ကို ရွေးချယ်ထားသည်</string>

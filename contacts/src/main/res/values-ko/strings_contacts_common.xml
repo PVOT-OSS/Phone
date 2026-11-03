@@ -96,9 +96,4 @@
   <string name="send_and_call_button">보내기 및 전화 걸기</string>
   <string name="call_subject_limit">%1$s/%2$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">%1$s 탭</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="one"> %1$s 탭. 읽지 않은 항목 %2$d개 </item>
-    <item quantity="other"> %1$s 탭. 읽지 않은 항목 %2$d개 </item>
-  </plurals>
 </resources>

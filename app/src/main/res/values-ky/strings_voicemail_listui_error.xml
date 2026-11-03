@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Жаңы! Үн почтаңызды окуңуз</string>
   <string name="dialer_terms_and_conditions_1.0">Үн почтасына чалып отурбастан, үн почтаңызды көрүп, уга аласыз. Үн почтаңыздын стенограммасын Google’дун акысыз транскрипция кызматы камсыз кылат. Аларды каалаган убакта Жөндөөлөргө өтүп, өчүрүп салсаңыз болот. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Үн почтаңыздын стенограммаларын Google’дун акысыз транскрипция кызматы камсыз кылат. Аны каалаган убакта Жөндөөлөргө өтүп, өчүрүп койсоңуз болот. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">Жарайт, түшүндүм</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Жок, рахмат</string>
 </resources>

@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">የጥሪ ታሪክ</string>
   <string name="dialer_settings_label">ቅንብሮች</string>
   <string name="description_start_voice_search">በድምፅ ፍለጋ ይጀምሩ</string>
-  <string name="voicemail">የድምፅ መልዕክት  </string>
   <string name="voicemailMultiSelectDeleteConfirm">ሰርዝ</string>
   <string name="voicemailMultiSelectDeleteCancel">ይቅር</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s ተመርጠዋል</string>

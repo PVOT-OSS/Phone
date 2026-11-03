@@ -36,5 +36,4 @@
   <string name="description_via_number">prek številke %1$s</string>
   <string name="description_via_number_phone_account">v računu %1$s, prek številke %2$s</string>
   <string name="voicemail_string">Odzivnik</string>
-  <string name="just_now">Pravkar</string>
 </resources>

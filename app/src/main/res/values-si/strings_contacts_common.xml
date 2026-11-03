@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">කාර්යාල සම්බන්ධතා නාමාවලිය</string>
-  <string name="chat_aim">AIM භාවිතයෙන් කතාබස් කරන්න</string>
-  <string name="chat_msn">Windows Live භාවිතයෙන් කතාබස් කරන්න</string>
-  <string name="chat_yahoo">Yahoo භාවිතයෙන් කතාබස් කරන්න</string>
-  <string name="chat_skype">Skype භාවිතයෙන් කතාබස් කරන්න</string>
-  <string name="chat_qq">QQ භාවිතයෙන් කතාබස් කරන්න</string>
-  <string name="chat_gtalk">Google Talk භාවිතයෙන් කතාබස් කරන්න</string>
-  <string name="chat_icq">ICQ භාවිතයෙන් කතාබස් කරන්න</string>
-  <string name="chat_jabber">Jabber භාවිතයෙන් කතාබස් කරන්න</string>
   <string name="display_options_sort_list_by">අනුපිළිවෙලට සකසා ඇත්තේ</string>
   <string name="display_options_sort_by_given_name">පළමු නම</string>
   <string name="display_options_sort_by_family_name">අවසාන නම</string>

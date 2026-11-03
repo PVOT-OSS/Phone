@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Símtalaferill</string>
   <string name="dialer_settings_label">Stillingar</string>
   <string name="description_start_voice_search">Hefja raddleit</string>
-  <string name="voicemail">Talhólf</string>
   <string name="voicemailMultiSelectDeleteConfirm">Eyða</string>
   <string name="voicemailMultiSelectDeleteCancel">Hætta við</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s valin</string>

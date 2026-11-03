@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">નવું! તમારો વૉઇસમેઇલ વાંચો</string>
   <string name="dialer_terms_and_conditions_1.0">વૉઇસમેઇલને કૉલ કર્યા વિના તમારા સંદેશા જુઓ અને સાંભળો. Googleની મફત ટ્રાન્સક્રિપ્શન સેવા તમારા વૉઇસમેઇલની ટ્રાન્સક્રિપ્ટ પ્રદાન કરે છે. તમે ગમે ત્યારે સેટિંગમાં બંધ કરી શકો છો. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Googleની મફત ટ્રાન્સક્રિપ્શન સેવા હવે તમારા વૉઇસમેઇલની ટ્રાન્સક્રિપ્ટ પ્રદાન કરે છે. તમે ગમે ત્યારે આને સેટિંગમાં બંધ કરી શકો છો. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">ઓકે, સમજાઈ ગયું</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">ના, આભાર</string>
 </resources>

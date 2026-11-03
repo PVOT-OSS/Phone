@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Directorul de serviciu</string>
-  <string name="chat_aim">Conversați prin AIM</string>
-  <string name="chat_msn">Conversați prin Windows Live</string>
-  <string name="chat_yahoo">Conversați prin Yahoo</string>
-  <string name="chat_skype">Conversați prin Skype</string>
-  <string name="chat_qq">Conversați prin QQ</string>
-  <string name="chat_gtalk">Conversați prin Google Talk</string>
-  <string name="chat_icq">Conversați prin ICQ</string>
-  <string name="chat_jabber">Conversați prin Jabber</string>
   <string name="display_options_sort_list_by">Sortați după</string>
   <string name="display_options_sort_by_given_name">Prenume</string>
   <string name="display_options_sort_by_family_name">Nume</string>

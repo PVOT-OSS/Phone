@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">История на обажданията</string>
   <string name="dialer_settings_label">Настройки</string>
   <string name="description_start_voice_search">Стартиране на гласово търсене</string>
-  <string name="voicemail">Гласова поща</string>
   <string name="voicemailMultiSelectDeleteConfirm">Изтриване</string>
   <string name="voicemailMultiSelectDeleteCancel">Отказ</string>
   <string name="voicemailMultiSelectActionBarTitle">Избрахте %1$s</string>

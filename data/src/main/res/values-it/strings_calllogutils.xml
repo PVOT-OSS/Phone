@@ -32,5 +32,4 @@
   <string name="description_via_number">tramite %1$s</string>
   <string name="description_via_number_phone_account">su %1$s, tramite %2$s</string>
   <string name="voicemail_string">Messaggi vocali</string>
-  <string name="just_now">Adesso</string>
 </resources>
