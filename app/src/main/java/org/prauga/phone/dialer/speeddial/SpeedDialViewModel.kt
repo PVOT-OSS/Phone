@@ -111,6 +111,9 @@ class SpeedDialViewModel @JvmOverloads constructor(
 
     private var loadJob: Job? = null
 
+    /** The last position save, which a reload waits for so it cannot show the old order. */
+    private var saveJob: Job? = null
+
     /** Set when a change already produced fresh items, so the next resume need not reload. */
     private var skipNextRefresh = false
 
@@ -172,25 +175,37 @@ class SpeedDialViewModel @JvmOverloads constructor(
         val loaded = _state.value as? SpeedDialUiState.Loaded ?: return
         if (!hasPermission()) return
         val items = loaded.all
-        viewModelScope.launch {
-            repository.savePositions(items)
-            onSaved(items)
+        saveJob = viewModelScope.launch {
+            try {
+                repository.savePositions(items)
+                onSaved(items)
+            } catch (e: Exception) {
+                LogUtil.e("SpeedDialViewModel.savePositions", "could not save the order", e)
+            }
         }
     }
 
-    /** Remembers [channel] as the one to call when [item] is tapped. */
+    /** Remembers [channel] as the one to call when [item] is tapped, and shows it on the item. */
     fun setDefaultChannel(item: SpeedDialUiItem, channel: Channel) {
-        viewModelScope.launch { repository.setDefaultChannel(item, channel) }
+        update {
+            repository.setDefaultChannel(item, channel)
+            repository.load()
+        }
     }
 
     private fun update(block: suspend () -> List<SpeedDialUiItem>) {
         loadJob?.cancel()
         loadJob = viewModelScope.launch {
+            saveJob?.join()
             _state.value = try {
                 stateOf(block())
             } catch (e: SecurityException) {
                 LogUtil.e("SpeedDialViewModel.update", "permission revoked while loading", e)
                 SpeedDialUiState.NeedsPermission
+            } catch (e: Exception) {
+                LogUtil.e("SpeedDialViewModel.update", "could not load favorites", e)
+                // What is on screen stays; a first load that fails shows the empty state.
+                if (_state.value is SpeedDialUiState.Loading) SpeedDialUiState.Empty else _state.value
             }
         }
     }

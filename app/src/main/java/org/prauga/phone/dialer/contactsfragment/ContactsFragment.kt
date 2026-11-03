@@ -40,9 +40,9 @@ class ContactsFragment : Fragment() {
 
     private val permissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
-            val granted = results.entries.firstOrNull()?.takeIf { it.value } ?: return@registerForActivityResult
+            if (results[READ_CONTACTS] != true) return@registerForActivityResult
             // Tells this and every other screen that waits for the permission to reload.
-            PermissionsUtil.notifyPermissionGranted(requireContext(), granted.key)
+            PermissionsUtil.notifyPermissionGranted(requireContext(), READ_CONTACTS)
         }
 
     /** Reloads when the contacts permission is granted from another screen. */

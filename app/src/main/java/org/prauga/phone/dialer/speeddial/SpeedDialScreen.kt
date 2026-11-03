@@ -32,7 +32,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
@@ -171,9 +171,11 @@ private fun QuickDial(state: SpeedDialUiState.Loaded, actions: SpeedDialActions,
                 contentPadding = PaddingValues(horizontal = QuickDialMargin),
                 horizontalArrangement = Arrangement.spacedBy(PvotSpacing.M),
             ) {
-                itemsIndexed(state.favorites, key = { _, item -> favoriteKey(item) }) { _, item ->
+                items(state.favorites, key = ::favoriteKey) { item ->
                     val key = favoriteKey(item)
                     val dragging = dragState.draggingKey == key
+                    // The gesture handler keeps its first callbacks, so they read the latest item here.
+                    val current by rememberUpdatedState(item)
                     FavoriteTile(
                         item = item,
                         lifted = dragging,
@@ -194,8 +196,8 @@ private fun QuickDial(state: SpeedDialUiState.Loaded, actions: SpeedDialActions,
                                 key = key,
                                 state = dragState,
                                 interactionSource = source,
-                                onTap = { onFavoriteTap(item, actions) { chooserFor = item } },
-                                onLongPress = { menuFor = item },
+                                onTap = { onFavoriteTap(current, currentActions) { chooserFor = current } },
+                                onLongPress = { menuFor = current },
                                 onLift = { haptics.performHapticFeedback(HapticFeedbackType.LongPress) },
                             )
                         },
@@ -215,10 +217,7 @@ private fun QuickDial(state: SpeedDialUiState.Loaded, actions: SpeedDialActions,
                     contentPadding = PaddingValues(horizontal = QuickDialMargin),
                     horizontalArrangement = Arrangement.spacedBy(PvotSpacing.M),
                 ) {
-                    itemsIndexed(
-                        state.suggestions,
-                        key = { index, item -> "suggestion_${index}_${item.contactId()}" },
-                    ) { _, item ->
+                    items(state.suggestions, key = { "suggestion_${it.contactId()}" }) { item ->
                         SuggestionTile(
                             item = item,
                             onClick = { item.defaultChannel()?.let { actions.call(it) } },

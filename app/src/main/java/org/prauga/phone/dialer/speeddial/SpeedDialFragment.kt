@@ -43,7 +43,7 @@ class SpeedDialFragment : Fragment() {
 
     private val permissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
-            if (results.values.firstOrNull() == true) {
+            if (results[READ_CONTACTS] == true) {
                 PermissionsUtil.notifyPermissionGranted(requireContext(), READ_CONTACTS)
                 viewModel.refresh()
             }
