@@ -12,8 +12,8 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.VoicemailContract
 import android.telecom.PhoneAccountHandle
-import android.telephony.PhoneStateListener
 import android.telephony.ServiceState
+import android.telephony.TelephonyCallback
 import android.telephony.TelephonyManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -39,7 +39,7 @@ class VoicemailStatusMonitor(private val context: Context) :
 
     private val messageCreator = VoicemailErrorMessageCreator()
     private val queryHandler = CallLogQueryHandler(context, context.contentResolver, this)
-    private val serviceListeners = mutableMapOf<PhoneAccountHandle, PhoneStateListener>()
+    private val serviceListeners = mutableMapOf<PhoneAccountHandle, TelephonyCallback>()
     private var isForeground = false
     private var statusInvalidated = true
 
@@ -76,9 +76,7 @@ class VoicemailStatusMonitor(private val context: Context) :
     fun destroy() {
         context.contentResolver.unregisterContentObserver(statusObserver)
         val telephonyManager = context.getSystemService(TelephonyManager::class.java)
-        serviceListeners.values.forEach {
-            telephonyManager.listen(it, PhoneStateListener.LISTEN_NONE)
-        }
+        serviceListeners.values.forEach(telephonyManager::unregisterTelephonyCallback)
         serviceListeners.clear()
     }
 
@@ -121,12 +119,10 @@ class VoicemailStatusMonitor(private val context: Context) :
                 .getSystemService(TelephonyManager::class.java)
                 .createForPhoneAccountHandle(handle) ?: return
         val listener =
-            object : PhoneStateListener() {
-                @Deprecated("Deprecated in Java")
+            object : TelephonyCallback(), TelephonyCallback.ServiceStateListener {
                 override fun onServiceStateChanged(serviceState: ServiceState) = fetchStatus()
             }
-        @Suppress("DEPRECATION")
-        telephonyManager.listen(listener, PhoneStateListener.LISTEN_SERVICE_STATE)
+        telephonyManager.registerTelephonyCallback(context.mainExecutor, listener)
         serviceListeners[handle] = listener
     }
 }
