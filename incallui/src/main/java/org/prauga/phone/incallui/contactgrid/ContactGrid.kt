@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -178,12 +179,14 @@ private fun BottomLine(info: BottomRow.Info, connectTimeMillis: Long?) {
         if (info.isSpamIconVisible) Icon(painterResource(R.drawable.ic_alert_triangle), null, tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(16.dp))
         if (info.isWorkIconVisible) Icon(painterResource(R.drawable.ic_briefcase), null, tint = color, modifier = Modifier.size(16.dp))
         if (info.isHdIconVisible || info.isHdAttemptingIconVisible) {
-            Text("HD", style = MaterialTheme.typography.labelSmall, color = if (info.isHdIconVisible) MaterialTheme.colorScheme.primary else color)
+            Text(stringResource(R.string.incall_hd_badge), style = MaterialTheme.typography.labelSmall, color = if (info.isHdIconVisible) MaterialTheme.colorScheme.primary else color)
         }
         if (info.isForwardIconVisible) Icon(painterResource(R.drawable.ic_arrow_forward_up), null, tint = color, modifier = Modifier.size(16.dp))
         val label = info.label?.toString().orEmpty()
         val text = when {
-            info.isTimerVisible && info.isForwardIconVisible -> listOfNotNull(label.takeIf { it.isNotEmpty() }, elapsed).joinToString(" • ")
+            info.isTimerVisible && info.isForwardIconVisible && label.isNotEmpty() ->
+                stringResource(R.string.incall_label_and_timer, label, elapsed.orEmpty())
+            info.isTimerVisible && info.isForwardIconVisible -> elapsed.orEmpty()
             info.isTimerVisible -> elapsed.orEmpty()
             else -> label
         }
