@@ -30,6 +30,8 @@ import androidx.car.app.model.TabTemplate
 import androidx.car.app.model.Template
 import androidx.car.app.validation.HostValidator
 import androidx.core.graphics.drawable.IconCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import java.util.concurrent.Executors
 import org.prauga.phone.dialer.R
 
@@ -60,9 +62,18 @@ private class PhoneCarScreen(carContext: CarContext) : Screen(carContext) {
     private var entries: List<CarEntry>? = null
     private val loader = Executors.newSingleThreadExecutor()
 
+    /** The tab a load is running for, so a redraw while it runs does not start another. */
+    private var loadingTab: String? = null
+
+    init {
+        lifecycle.addObserver(
+            LifecycleEventObserver { _, event -> if (event == Lifecycle.Event.ON_DESTROY) loader.shutdownNow() },
+        )
+    }
+
     override fun onGetTemplate(): Template {
         val list = entries
-        if (list == null) load(activeTab)
+        if (list == null && loadingTab != activeTab) load(activeTab)
         val content = ListTemplate.Builder().apply {
             if (list == null) {
                 setLoading(true)
@@ -117,6 +128,7 @@ private class PhoneCarScreen(carContext: CarContext) : Screen(carContext) {
         .build()
 
     private fun load(tab: String) {
+        loadingTab = tab
         loader.execute {
             val loaded = runCatching {
                 when (tab) {
@@ -126,6 +138,7 @@ private class PhoneCarScreen(carContext: CarContext) : Screen(carContext) {
                 }
             }.getOrDefault(emptyList())
             carContext.mainExecutor.execute {
+                if (loadingTab == tab) loadingTab = null
                 if (tab == activeTab) {
                     entries = loaded
                     invalidate()
