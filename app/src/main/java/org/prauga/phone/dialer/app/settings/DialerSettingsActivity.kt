@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -47,6 +48,7 @@ import com.prauga.pvot.designsystem.components.list.PvotRowChevron
 import com.prauga.pvot.designsystem.components.list.PvotRowIconStyle
 import com.prauga.pvot.designsystem.platform.enablePvotEdgeToEdge
 import com.prauga.pvot.designsystem.platform.setPvotContent
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.settings.ui.SettingsChrome
 import org.prauga.phone.dialer.app.settings.ui.SettingsChromeHost
@@ -166,7 +168,8 @@ class DialerSettingsActivity :
         val current = manager.findFragmentById(R.id.settings_content)
         when {
             current == null -> {
-                val requested = intent.data?.schemeSpecificPart
+                // The URI comes from any app, so only the dialer's own settings screens open from it.
+                val requested = intent.data?.schemeSpecificPart?.takeIf(::isSettingsScreen)
                 val fragment = requested?.let { instantiate(it) } ?: PrefsFragment()
                 manager.beginTransaction().replace(R.id.settings_content, fragment).commitNow()
             }
@@ -199,6 +202,9 @@ class DialerSettingsActivity :
         setTitle(title)
     }
 
+    private fun isSettingsScreen(fragmentClass: String): Boolean =
+        SETTINGS_PACKAGES.any { fragmentClass.startsWith(it) && '.' !in fragmentClass.removePrefix(it) }
+
     private fun instantiate(fragmentClass: String): Fragment? = try {
         supportFragmentManager.fragmentFactory.instantiate(classLoader, fragmentClass)
     } catch (e: Exception) {
@@ -212,7 +218,13 @@ class DialerSettingsActivity :
         @Composable
         override fun Content() {
             val context = LocalContext.current
-            val entries = remember { settingsEntries(context) }
+            // Built again on each return: becoming the default phone app adds rows.
+            var resumes by remember { mutableIntStateOf(0) }
+            LifecycleResumeEffect(Unit) {
+                resumes++
+                onPauseOrDispose {}
+            }
+            val entries = remember(resumes) { settingsEntries(context) }
             SettingsRootList(entries, ::open, rememberDefaultPhoneAppPrompt())
         }
 
@@ -261,6 +273,13 @@ class DialerSettingsActivity :
         const val KEY_CALL_SETTINGS = "call_settings"
         const val KEY_CALLING_ACCOUNTS = "calling_accounts"
         const val KEY_BLOCKED_NUMBERS = "blocked_numbers"
+
+        /** Where the settings screens live; a `header:` URI may name a class in these only. */
+        private val SETTINGS_PACKAGES = listOf(
+            "org.prauga.phone.dialer.app.settings.",
+            "org.prauga.phone.dialer.screening.",
+            "org.prauga.phone.dialer.voicemail.settings.",
+        )
         const val KEY_VOICEMAIL = "voicemail"
         const val KEY_ACCESSIBILITY = "accessibility"
 
