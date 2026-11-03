@@ -82,7 +82,12 @@ class InCallDialogsTest {
     @Test
     fun theInternationalCallDialogReportsTheWarningChoice() {
         val dialog = show {
-            InCallDialogs.internationalCallOnWifi(compose.activity, true, { events += "continue $it" }, { events += "stop $it" })
+            InCallDialogs.internationalCallOnWifi(
+                compose.activity,
+                true,
+                { events += "continue $it" },
+                { events += "stop $it" },
+            )
         }
         compose.onNodeWithText("Show warning every time").performClick()
         compose.onNodeWithText("Cancel").performClick()
@@ -100,12 +105,18 @@ class InCallDialogsTest {
     @Test
     fun screenshotVideoCallNotAvailableDark() {
         show { InCallDialogs.videoCallNotAvailable(compose.activity) {} }
-        compose.onAllNodes(isRoot()).onLast().captureRoboImage("src/test/screenshots/incall/video_call_not_available_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onLast()
+            .captureRoboImage("src/test/screenshots/incall/video_call_not_available_dark.png")
     }
 
     @Test
     fun screenshotInternationalCallDark() {
         show { InCallDialogs.internationalCallOnWifi(compose.activity, false, {}, {}) }
-        compose.onAllNodes(isRoot()).onLast().captureRoboImage("src/test/screenshots/incall/international_call_on_wifi_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onLast()
+            .captureRoboImage("src/test/screenshots/incall/international_call_on_wifi_dark.png")
     }
 }

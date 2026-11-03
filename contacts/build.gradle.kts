@@ -13,9 +13,7 @@ plugins {
 
 android {
     namespace = "org.prauga.phone.contacts"
-    compileSdk {
-        version = release(37) { minorApiLevel = 1 }
-    }
+    compileSdk { version = release(37) { minorApiLevel = 1 } }
     // Resources keep the names the app always gave them.
     resourcePrefix = null
 
@@ -30,9 +28,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
 
-    buildFeatures {
-        compose = true
-    }
+    buildFeatures { compose = true }
 
     testOptions {
         unitTests {

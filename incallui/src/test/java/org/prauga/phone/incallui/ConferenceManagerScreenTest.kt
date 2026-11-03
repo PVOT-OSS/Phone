@@ -31,19 +31,40 @@ class ConferenceManagerScreenTest {
 
     private val events = mutableListOf<String>()
 
-    private val ada = ConferenceParticipant("1", "Ada Lovelace", "+15550100", null, "ada", onHold = false, canSeparate = true, canDisconnect = true)
-    private val bob = ConferenceParticipant("2", null, "+15550199", null, "bob", onHold = true, canSeparate = false, canDisconnect = true)
+    private val ada =
+        ConferenceParticipant(
+            "1",
+            "Ada Lovelace",
+            "+15550100",
+            null,
+            "ada",
+            onHold = false,
+            canSeparate = true,
+            canDisconnect = true,
+        )
+    private val bob =
+        ConferenceParticipant(
+            "2",
+            null,
+            "+15550199",
+            null,
+            "bob",
+            onHold = true,
+            canSeparate = false,
+            canDisconnect = true,
+        )
 
-    private fun show(vararg participants: ConferenceParticipant) = compose.setContent {
-        PhoneScreenTheme {
-            ConferenceManagerScreen(
-                participants = participants.toList(),
-                onSeparate = { events += "separate $it" },
-                onDisconnect = { events += "disconnect $it" },
-                onBack = { events += "back" },
-            )
+    private fun show(vararg participants: ConferenceParticipant) =
+        compose.setContent {
+            PhoneScreenTheme {
+                ConferenceManagerScreen(
+                    participants = participants.toList(),
+                    onSeparate = { events += "separate $it" },
+                    onDisconnect = { events += "disconnect $it" },
+                    onBack = { events += "back" },
+                )
+            }
         }
-    }
 
     @Test
     fun aParticipantCanBeSplitOutOrHungUpOn() {
@@ -76,6 +97,9 @@ class ConferenceManagerScreenTest {
     @Test
     fun screenshotDark() {
         show(ada, bob)
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/incall/manage_conference_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/incall/manage_conference_dark.png")
     }
 }

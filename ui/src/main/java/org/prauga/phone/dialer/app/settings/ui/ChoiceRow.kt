@@ -82,7 +82,10 @@ fun <T> ChoiceRow(
             }
         },
     ) {
-        PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = { open = false })
+        PvotDialogAction(
+            label = stringResource(android.R.string.cancel),
+            onClick = { open = false },
+        )
     }
 }
 
@@ -90,25 +93,27 @@ fun <T> ChoiceRow(
 @Composable
 private fun <T> ChoiceList(choices: List<Choice<T>>, selected: T, onPick: (T) -> Unit) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .verticalScroll(rememberScrollState())
-            .selectableGroup(),
+        modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).selectableGroup()
     ) {
         for (choice in choices) {
             val isSelected = choice.value == selected
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(min = PvotListRowDefaults.MinHeight)
-                    .clip(PvotShapes.Card)
-                    .selectable(selected = isSelected, role = Role.RadioButton, onClick = { onPick(choice.value) })
-                    .testTag(TestTags.settingsOption(choice.value.toString()))
-                    .padding(horizontal = PvotSpacing.XS),
+                modifier =
+                    Modifier.fillMaxWidth()
+                        .heightIn(min = PvotListRowDefaults.MinHeight)
+                        .clip(PvotShapes.Card)
+                        .selectable(
+                            selected = isSelected,
+                            role = Role.RadioButton,
+                            onClick = { onPick(choice.value) },
+                        )
+                        .testTag(TestTags.settingsOption(choice.value.toString()))
+                        .padding(horizontal = PvotSpacing.XS),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S),
             ) {
-                // Material's radio with its defaults until PvotLib has one; the row takes the click.
+                // Material's radio with its defaults until PvotLib has one; the row takes the
+                // click.
                 RadioButton(selected = isSelected, onClick = null)
                 Text(
                     text = choice.label,

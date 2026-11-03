@@ -64,22 +64,35 @@ class CallbackRemindersTest {
     @Test
     fun aDueReminderShowsANotificationWithItsActions() {
         val reminder = CallbackReminders.schedule(context, "+15550199", "Ada Lovelace", 1_000L)
-        CallbackReminderReceiver().onReceive(context, Intent(CallbackReminderReceiver.ACTION_DUE).putExtra(CallbackReminderReceiver.EXTRA_ID, reminder.id))
+        CallbackReminderReceiver()
+            .onReceive(
+                context,
+                Intent(CallbackReminderReceiver.ACTION_DUE)
+                    .putExtra(CallbackReminderReceiver.EXTRA_ID, reminder.id),
+            )
 
         val shown = notifications.allNotifications.single()
-        assertThat(shown.extras.getCharSequence("android.title").toString()).isEqualTo(context.getString(R.string.callback_reminder_title, "Ada Lovelace"))
-        assertThat(shown.actions.map { it.title.toString() }).containsExactly(
-            context.getString(R.string.notification_missedCall_call_back),
-            context.getString(R.string.notification_missedCall_message),
-            context.getString(R.string.callback_reminder_snooze),
-        ).inOrder()
+        assertThat(shown.extras.getCharSequence("android.title").toString())
+            .isEqualTo(context.getString(R.string.callback_reminder_title, "Ada Lovelace"))
+        assertThat(shown.actions.map { it.title.toString() })
+            .containsExactly(
+                context.getString(R.string.notification_missedCall_call_back),
+                context.getString(R.string.notification_missedCall_message),
+                context.getString(R.string.callback_reminder_snooze),
+            )
+            .inOrder()
     }
 
     @Test
     fun snoozingMovesTheReminderAnHourOn() {
         val reminder = CallbackReminders.schedule(context, "+15550199", null, 1_000L)
         val before = System.currentTimeMillis()
-        CallbackReminderReceiver().onReceive(context, Intent(CallbackReminderReceiver.ACTION_SNOOZE).putExtra(CallbackReminderReceiver.EXTRA_ID, reminder.id))
+        CallbackReminderReceiver()
+            .onReceive(
+                context,
+                Intent(CallbackReminderReceiver.ACTION_SNOOZE)
+                    .putExtra(CallbackReminderReceiver.EXTRA_ID, reminder.id),
+            )
 
         val moved = CallbackReminders.get(context, reminder.id)!!
         assertThat(moved.atMillis).isAtLeast(before + 60 * 60 * 1000L)
@@ -101,13 +114,18 @@ class CallbackRemindersTest {
         val noon = LocalDateTime.of(2026, 11, 3, 12, 0).atZone(zone).toInstant().toEpochMilli()
         val night = LocalDateTime.of(2026, 11, 3, 21, 0).atZone(zone).toInstant().toEpochMilli()
 
-        assertThat(ReminderDelay.IN_FIFTEEN_MINUTES.dueAt(noon, zone)).isEqualTo(noon + 15 * 60 * 1000L)
+        assertThat(ReminderDelay.IN_FIFTEEN_MINUTES.dueAt(noon, zone))
+            .isEqualTo(noon + 15 * 60 * 1000L)
         assertThat(ReminderDelay.IN_AN_HOUR.dueAt(noon, zone)).isEqualTo(noon + 60 * 60 * 1000L)
-        assertThat(local(ReminderDelay.THIS_EVENING.dueAt(noon, zone), zone)).isEqualTo(LocalDateTime.of(2026, 11, 3, 18, 0))
+        assertThat(local(ReminderDelay.THIS_EVENING.dueAt(noon, zone), zone))
+            .isEqualTo(LocalDateTime.of(2026, 11, 3, 18, 0))
         // Past six already: the next evening.
-        assertThat(local(ReminderDelay.THIS_EVENING.dueAt(night, zone), zone)).isEqualTo(LocalDateTime.of(2026, 11, 4, 18, 0))
-        assertThat(local(ReminderDelay.TOMORROW_MORNING.dueAt(night, zone), zone)).isEqualTo(LocalDateTime.of(2026, 11, 4, 9, 0))
+        assertThat(local(ReminderDelay.THIS_EVENING.dueAt(night, zone), zone))
+            .isEqualTo(LocalDateTime.of(2026, 11, 4, 18, 0))
+        assertThat(local(ReminderDelay.TOMORROW_MORNING.dueAt(night, zone), zone))
+            .isEqualTo(LocalDateTime.of(2026, 11, 4, 9, 0))
     }
 
-    private fun local(millis: Long, zone: ZoneId): LocalDateTime = Instant.ofEpochMilli(millis).atZone(zone).toLocalDateTime()
+    private fun local(millis: Long, zone: ZoneId): LocalDateTime =
+        Instant.ofEpochMilli(millis).atZone(zone).toLocalDateTime()
 }

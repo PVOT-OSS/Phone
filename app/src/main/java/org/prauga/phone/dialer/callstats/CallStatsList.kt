@@ -53,15 +53,24 @@ object CallStatsLoader {
     fun load(resolver: ContentResolver, uri: Uri, from: Long, to: Long): List<CallStatsEntry> {
         val selection = mutableListOf<String>()
         val args = mutableListOf<String>()
-        if (from != -1L) { selection += "(${Calls.DATE} > ?)"; args += from.toString() }
-        if (to != -1L) { selection += "(${Calls.DATE} < ?)"; args += to.toString() }
-        return resolver.query(
-            uri,
-            CallStatsQuery._PROJECTION,
-            selection.joinToString(" AND "),
-            args.toTypedArray(),
-            "${Calls.NUMBER} ASC",
-        )?.use(::process).orEmpty()
+        if (from != -1L) {
+            selection += "(${Calls.DATE} > ?)"
+            args += from.toString()
+        }
+        if (to != -1L) {
+            selection += "(${Calls.DATE} < ?)"
+            args += to.toString()
+        }
+        return resolver
+            .query(
+                uri,
+                CallStatsQuery._PROJECTION,
+                selection.joinToString(" AND "),
+                args.toTypedArray(),
+                "${Calls.NUMBER} ASC",
+            )
+            ?.use(::process)
+            .orEmpty()
     }
 
     /** Sums each number's calls; numbers written differently but equal count as one. */
@@ -73,42 +82,52 @@ object CallStatsLoader {
             val number = cursor.getString(CallStatsQuery.NUMBER).orEmpty()
             if (pending == null || !numbersEqual(pending.number.orEmpty(), number)) {
                 val info = cachedInfo(cursor)
-                pending = CallStatsDetails(
-                    number,
-                    cursor.getInt(CallStatsQuery.NUMBER_PRESENTATION),
-                    cursor.getString(CallStatsQuery.POST_DIAL_DIGITS),
-                    TelecomUtil.composePhoneAccountHandle(
-                        cursor.getString(CallStatsQuery.ACCOUNT_COMPONENT_NAME),
-                        cursor.getString(CallStatsQuery.ACCOUNT_ID),
-                    ),
-                    info,
-                    cursor.getString(CallStatsQuery.COUNTRY_ISO),
-                    cursor.getString(CallStatsQuery.GEOCODED_LOCATION),
-                    cursor.getLong(CallStatsQuery.DATE),
-                )
+                pending =
+                    CallStatsDetails(
+                        number,
+                        cursor.getInt(CallStatsQuery.NUMBER_PRESENTATION),
+                        cursor.getString(CallStatsQuery.POST_DIAL_DIGITS),
+                        TelecomUtil.composePhoneAccountHandle(
+                            cursor.getString(CallStatsQuery.ACCOUNT_COMPONENT_NAME),
+                            cursor.getString(CallStatsQuery.ACCOUNT_ID),
+                        ),
+                        info,
+                        cursor.getString(CallStatsQuery.COUNTRY_ISO),
+                        cursor.getString(CallStatsQuery.GEOCODED_LOCATION),
+                        cursor.getLong(CallStatsQuery.DATE),
+                    )
                 entries += CallStatsEntry(info, pending)
             }
-            pending.addTimeOrMissed(cursor.getInt(CallStatsQuery.CALL_TYPE), cursor.getLong(CallStatsQuery.DURATION))
+            pending.addTimeOrMissed(
+                cursor.getInt(CallStatsQuery.CALL_TYPE),
+                cursor.getLong(CallStatsQuery.DURATION),
+            )
         }
         // Sorting by number keeps most equal numbers together; merge the rest.
         val merged = mutableListOf<CallStatsEntry>()
         for (entry in entries) {
-            val same = merged.firstOrNull { numbersEqual(it.details.number.orEmpty(), entry.details.number.orEmpty()) }
+            val same =
+                merged.firstOrNull {
+                    numbersEqual(it.details.number.orEmpty(), entry.details.number.orEmpty())
+                }
             if (same != null) same.details.mergeWith(entry.details) else merged += entry
         }
         return merged
     }
 
-    private fun cachedInfo(cursor: Cursor) = ContactInfo().apply {
-        lookupUri = UriUtils.parseUriOrNull(cursor.getString(CallStatsQuery.CACHED_LOOKUP_URI))
-        name = cursor.getString(CallStatsQuery.CACHED_NAME)
-        type = cursor.getInt(CallStatsQuery.CACHED_NUMBER_TYPE)
-        label = cursor.getString(CallStatsQuery.CACHED_NUMBER_LABEL)
-        number = cursor.getString(CallStatsQuery.CACHED_MATCHED_NUMBER) ?: cursor.getString(CallStatsQuery.NUMBER)
-        normalizedNumber = cursor.getString(CallStatsQuery.CACHED_NORMALIZED_NUMBER)
-        formattedNumber = cursor.getString(CallStatsQuery.CACHED_FORMATTED_NUMBER)
-        photoId = cursor.getLong(CallStatsQuery.CACHED_PHOTO_ID)
-    }
+    private fun cachedInfo(cursor: Cursor) =
+        ContactInfo().apply {
+            lookupUri = UriUtils.parseUriOrNull(cursor.getString(CallStatsQuery.CACHED_LOOKUP_URI))
+            name = cursor.getString(CallStatsQuery.CACHED_NAME)
+            type = cursor.getInt(CallStatsQuery.CACHED_NUMBER_TYPE)
+            label = cursor.getString(CallStatsQuery.CACHED_NUMBER_LABEL)
+            number =
+                cursor.getString(CallStatsQuery.CACHED_MATCHED_NUMBER)
+                    ?: cursor.getString(CallStatsQuery.NUMBER)
+            normalizedNumber = cursor.getString(CallStatsQuery.CACHED_NORMALIZED_NUMBER)
+            formattedNumber = cursor.getString(CallStatsQuery.CACHED_FORMATTED_NUMBER)
+            photoId = cursor.getLong(CallStatsQuery.CACHED_PHOTO_ID)
+        }
 
     private fun numbersEqual(a: String, b: String): Boolean =
         if (PhoneNumberHelper.isUriNumber(a) || PhoneNumberHelper.isUriNumber(b)) {
@@ -142,7 +161,10 @@ object CallStatsFormat {
         val showMinutes = minutes > 0 || (!includeSeconds && hours == 0)
         val showSeconds = includeSeconds && (seconds > 0 || (hours == 0 && minutes == 0))
         val res = context.resources
-        val index = ((if (showHours) 4 else 0) or (if (showMinutes) 2 else 0) or (if (showSeconds) 1 else 0)) - 1
+        val index =
+            ((if (showHours) 4 else 0) or
+                (if (showMinutes) 2 else 0) or
+                (if (showSeconds) 1 else 0)) - 1
         return String.format(
             res.getStringArray(R.array.call_stats_duration)[index],
             if (showHours) res.getQuantityString(R.plurals.hour, hours, hours) else null,
@@ -155,26 +177,40 @@ object CallStatsFormat {
 /** What the statistics show. */
 sealed interface CallStatsUiState {
     data object Loading : CallStatsUiState
+
     data object NeedsPermission : CallStatsUiState
 
     /** No calls; [inRange] when a time range is set. */
     data class Empty(val inRange: Boolean) : CallStatsUiState
 
-    data class Loaded(val entries: List<CallStatsEntry>, val total: CallStatsDetails) : CallStatsUiState
+    data class Loaded(val entries: List<CallStatsEntry>, val total: CallStatsDetails) :
+        CallStatsUiState
 }
 
 /** The time range and sort order the user picked. */
-data class CallStatsFilter(val from: Long = -1, val to: Long = -1, val sortByDuration: Boolean = true) {
-    val hasRange: Boolean get() = from != -1L || to != -1L
+data class CallStatsFilter(
+    val from: Long = -1,
+    val to: Long = -1,
+    val sortByDuration: Boolean = true,
+) {
+    val hasRange: Boolean
+        get() = from != -1L || to != -1L
 }
 
 /** Loads the statistics for the user's time range and keeps their sort order. */
 class CallStatsListViewModel(
     application: Application,
     private val load: (from: Long, to: Long) -> List<CallStatsEntry> = { from, to ->
-        CallStatsLoader.load(application.contentResolver, TelecomUtil.getCallLogUri(application), from, to)
+        CallStatsLoader.load(
+            application.contentResolver,
+            TelecomUtil.getCallLogUri(application),
+            from,
+            to,
+        )
     },
-    private val hasPermission: () -> Boolean = { PermissionsUtil.hasCallLogReadPermissions(application) },
+    private val hasPermission: () -> Boolean = {
+        PermissionsUtil.hasCallLogReadPermissions(application)
+    },
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : AndroidViewModel(application) {
 
@@ -187,22 +223,31 @@ class CallStatsListViewModel(
     private val _contactInfoVersion = MutableStateFlow(0)
     val contactInfoVersion: StateFlow<Int> = _contactInfoVersion.asStateFlow()
 
-    val contactInfoCache = ContactInfoCache(
-        ExpirableCache.create(ExpirableCacheHeadlessFragment.CONTACT_INFO_CACHE_SIZE),
-        ContactInfoHelper(application, GeoUtil.getCurrentCountryIso(application)),
-    ) { _contactInfoVersion.value++ }
+    val contactInfoCache =
+        ContactInfoCache(
+            ExpirableCache.create(ExpirableCacheHeadlessFragment.CONTACT_INFO_CACHE_SIZE),
+            ContactInfoHelper(application, GeoUtil.getCurrentCountryIso(application)),
+        ) {
+            _contactInfoVersion.value++
+        }
 
     private var loadJob: Job? = null
     private var raw: List<CallStatsEntry> = emptyList()
 
-    private val observer = object : ContentObserver(Handler(Looper.getMainLooper())) {
-        override fun onChange(selfChange: Boolean) = refresh()
-    }
+    private val observer =
+        object : ContentObserver(Handler(Looper.getMainLooper())) {
+            override fun onChange(selfChange: Boolean) = refresh()
+        }
 
     init {
-        if (!PermissionsUtil.hasContactsReadPermissions(application)) contactInfoCache.disableRequestProcessing()
+        if (!PermissionsUtil.hasContactsReadPermissions(application))
+            contactInfoCache.disableRequestProcessing()
         application.contentResolver.registerContentObserver(CallLog.CONTENT_URI, true, observer)
-        application.contentResolver.registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, observer)
+        application.contentResolver.registerContentObserver(
+            ContactsContract.Contacts.CONTENT_URI,
+            true,
+            observer,
+        )
     }
 
     fun refresh() {
@@ -213,17 +258,23 @@ class CallStatsListViewModel(
         }
         val filter = _filter.value
         loadJob?.cancel()
-        loadJob = viewModelScope.launch {
-            raw = try {
-                withContext(ioDispatcher) { load(filter.from, filter.to) }
-            } catch (e: SecurityException) {
-                LogUtil.e("CallStatsListViewModel.refresh", "permission revoked while loading", e)
-                _state.value = CallStatsUiState.NeedsPermission
-                return@launch
+        loadJob =
+            viewModelScope.launch {
+                raw =
+                    try {
+                        withContext(ioDispatcher) { load(filter.from, filter.to) }
+                    } catch (e: SecurityException) {
+                        LogUtil.e(
+                            "CallStatsListViewModel.refresh",
+                            "permission revoked while loading",
+                            e,
+                        )
+                        _state.value = CallStatsUiState.NeedsPermission
+                        return@launch
+                    }
+                contactInfoCache.invalidate()
+                publish()
             }
-            contactInfoCache.invalidate()
-            publish()
-        }
     }
 
     /** Shows calls from [from] to [to], or every call for -1 and -1. */
@@ -247,14 +298,21 @@ class CallStatsListViewModel(
         val filter = _filter.value
         val total = CallStatsDetails(null, 0, null, null, null, null, null, 0)
         raw.forEach { total.mergeWith(it.details) }
-        val shown = raw
-            .filter { if (filter.sortByDuration) it.details.getRequestedDuration(ALL) > 0 else it.details.getRequestedCount(ALL) > 0 }
-            .sortedByDescending { if (filter.sortByDuration) it.details.getRequestedDuration(ALL) else it.details.getRequestedCount(ALL).toLong() }
-        _state.value = if (shown.isEmpty()) {
-            CallStatsUiState.Empty(inRange = filter.hasRange)
-        } else {
-            CallStatsUiState.Loaded(shown, total)
-        }
+        val shown =
+            raw.filter {
+                    if (filter.sortByDuration) it.details.getRequestedDuration(ALL) > 0
+                    else it.details.getRequestedCount(ALL) > 0
+                }
+                .sortedByDescending {
+                    if (filter.sortByDuration) it.details.getRequestedDuration(ALL)
+                    else it.details.getRequestedCount(ALL).toLong()
+                }
+        _state.value =
+            if (shown.isEmpty()) {
+                CallStatsUiState.Empty(inRange = filter.hasRange)
+            } else {
+                CallStatsUiState.Loaded(shown, total)
+            }
     }
 
     override fun onCleared() {

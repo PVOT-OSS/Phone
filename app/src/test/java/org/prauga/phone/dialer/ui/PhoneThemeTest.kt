@@ -70,7 +70,8 @@ class PhoneThemeTest {
     fun theDarkModeHasItsOwnSchemeEitherWay() {
         assertThat(PhoneColors.scheme(context).background).isEqualTo(PvotDarkColorScheme.background)
         AppearanceSettings.setDynamicColor(context, true)
-        assertThat(PhoneColors.scheme(context).background).isEqualTo(dynamicDarkColorScheme(context).background)
+        assertThat(PhoneColors.scheme(context).background)
+            .isEqualTo(dynamicDarkColorScheme(context).background)
     }
 
     @Test

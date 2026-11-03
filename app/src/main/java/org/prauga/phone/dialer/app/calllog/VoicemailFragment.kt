@@ -8,20 +8,20 @@ package org.prauga.phone.dialer.app.calllog
 import android.app.KeyguardManager
 import android.content.Intent
 import android.media.AudioManager
-import android.telecom.TelecomManager
 import android.os.Bundle
 import android.provider.CallLog.Calls
 import android.provider.VoicemailContract
+import android.telecom.TelecomManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -47,7 +47,11 @@ import org.prauga.phone.dialer.voicemail.listui.error.VoicemailStatusWorker
 class VoicemailFragment : Fragment() {
 
     private val viewModel: CallHistoryViewModel by viewModels {
-        viewModelFactory { initializer { CallHistoryViewModel(requireActivity().application, Calls.VOICEMAIL_TYPE) } }
+        viewModelFactory {
+            initializer {
+                CallHistoryViewModel(requireActivity().application, Calls.VOICEMAIL_TYPE)
+            }
+        }
     }
 
     private lateinit var presenter: VoicemailPlaybackPresenter
@@ -56,7 +60,11 @@ class VoicemailFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = VoicemailPlaybackPresenter.getInstance(requireActivity() as AppCompatActivity, savedInstanceState)
+        presenter =
+            VoicemailPlaybackPresenter.getInstance(
+                requireActivity() as AppCompatActivity,
+                savedInstanceState,
+            )
         statusMonitor = VoicemailStatusMonitor(requireContext())
     }
 
@@ -64,25 +72,30 @@ class VoicemailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View = ComposeView(requireContext()).apply {
-        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-        setContent {
-            val statusMessage by statusMonitor.message.collectAsStateWithLifecycle()
-            // Scrolls reach the main screen, which shrinks the nav bar while a list scrolls up.
-            PhoneScreenTheme(modifier = Modifier.nestedScroll(rememberNestedScrollInteropConnection())) {
-                CallHistoryRoute(
-                    viewModel = viewModel,
-                    callType = Calls.VOICEMAIL_TYPE,
-                    showEmptyAction = false,
-                    bottomPadding = navBarClearance(),
-                    onShowDialpad = {},
-                    onMissedCallRead = { listener()?.updateTabUnreadCounts() },
-                    voicemail = VoicemailParts(presenter, playbackState, statusMessage),
-                    onSelectionModeChanged = { enabled, exit -> listener()?.onSelectionModeChanged(enabled, exit) },
-                )
+    ): View =
+        ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                val statusMessage by statusMonitor.message.collectAsStateWithLifecycle()
+                // Scrolls reach the main screen, which shrinks the nav bar while a list scrolls up.
+                PhoneScreenTheme(
+                    modifier = Modifier.nestedScroll(rememberNestedScrollInteropConnection())
+                ) {
+                    CallHistoryRoute(
+                        viewModel = viewModel,
+                        callType = Calls.VOICEMAIL_TYPE,
+                        showEmptyAction = false,
+                        bottomPadding = navBarClearance(),
+                        onShowDialpad = {},
+                        onMissedCallRead = { listener()?.updateTabUnreadCounts() },
+                        voicemail = VoicemailParts(presenter, playbackState, statusMessage),
+                        onSelectionModeChanged = { enabled, exit ->
+                            listener()?.onSelectionModeChanged(enabled, exit)
+                        },
+                    )
+                }
             }
         }
-    }
 
     override fun onResume() {
         super.onResume()
@@ -125,7 +138,8 @@ class VoicemailFragment : Fragment() {
         super.onDestroy()
     }
 
-    private fun listener(): CallLogListener? = FragmentUtils.getParent(this, CallLogListener::class.java)
+    private fun listener(): CallLogListener? =
+        FragmentUtils.getParent(this, CallLogListener::class.java)
 
     private fun onVisible() {
         requireActivity().volumeControlStream = VoicemailAudioManager.PLAYBACK_STREAM
@@ -146,21 +160,23 @@ class VoicemailFragment : Fragment() {
         val context = requireContext().applicationContext
         viewLifecycleOwnerLiveData.value ?: return
         lifecycleScope.launch {
-            val statuses: List<VoicemailStatus> = withContext(Dispatchers.IO) {
-                VoicemailStatusWorker().doInBackground(context).orEmpty()
-            }
+            val statuses: List<VoicemailStatus> =
+                withContext(Dispatchers.IO) {
+                    VoicemailStatusWorker().doInBackground(context).orEmpty()
+                }
             val creator = VoicemailErrorMessageCreator()
             val blocked = statuses.any { it.isActive(context) && creator.isSyncBlockingError(it) }
             if (blocked) {
                 LogUtil.i("VoicemailFragment.syncUnlessBlocked", "auto-sync blocked")
                 return@launch
             }
-            context.sendBroadcast(Intent(VoicemailContract.ACTION_SYNC_VOICEMAIL).setPackage(context.packageName))
+            context.sendBroadcast(
+                Intent(VoicemailContract.ACTION_SYNC_VOICEMAIL).setPackage(context.packageName)
+            )
         }
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance(): VoicemailFragment = VoicemailFragment()
+        @JvmStatic fun newInstance(): VoicemailFragment = VoicemailFragment()
     }
 }

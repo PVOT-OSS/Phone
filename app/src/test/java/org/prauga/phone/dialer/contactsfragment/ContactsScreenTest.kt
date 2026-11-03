@@ -36,26 +36,53 @@ class ContactsScreenTest {
 
     private class RecordingActions : ContactsActions {
         val events = mutableListOf<String>()
-        override fun onContactClick(contact: ContactEntry) { events += "open ${contact.name}" }
-        override fun onAddContact() { events += "add" }
-        override fun onTurnOnPermission() { events += "permission" }
+
+        override fun onContactClick(contact: ContactEntry) {
+            events += "open ${contact.name}"
+        }
+
+        override fun onAddContact() {
+            events += "add"
+        }
+
+        override fun onTurnOnPermission() {
+            events += "permission"
+        }
     }
 
     private val actions = RecordingActions()
 
-    private val few = listOf(
-        ContactSection("A", listOf(ContactEntry(1, "k1", "Ada Lovelace", null), ContactEntry(2, "k2", "Alan Turing", null))),
-        ContactSection("G", listOf(ContactEntry(3, "k3", "Grace Hopper", null))),
-        ContactSection("K", listOf(ContactEntry(4, "k4", "Katherine Johnson", null))),
-    )
+    private val few =
+        listOf(
+            ContactSection(
+                "A",
+                listOf(
+                    ContactEntry(1, "k1", "Ada Lovelace", null),
+                    ContactEntry(2, "k2", "Alan Turing", null),
+                ),
+            ),
+            ContactSection("G", listOf(ContactEntry(3, "k3", "Grace Hopper", null))),
+            ContactSection("K", listOf(ContactEntry(4, "k4", "Katherine Johnson", null))),
+        )
 
-    private val many = ('A'..'Z').mapIndexed { s, letter ->
-        ContactSection(letter.toString(), (1..5).map { ContactEntry(s * 10L + it, "k$s$it", "$letter-name $it", null) })
-    }
+    private val many =
+        ('A'..'Z').mapIndexed { s, letter ->
+            ContactSection(
+                letter.toString(),
+                (1..5).map { ContactEntry(s * 10L + it, "k$s$it", "$letter-name $it", null) },
+            )
+        }
 
     private fun show(state: ContactsUiState, listState: LazyListState = LazyListState()) {
         compose.setContent {
-            PhoneScreenTheme { ContactsScreen(state, showAddContact = true, actions = actions, listState = listState) }
+            PhoneScreenTheme {
+                ContactsScreen(
+                    state,
+                    showAddContact = true,
+                    actions = actions,
+                    listState = listState,
+                )
+            }
         }
     }
 
@@ -83,7 +110,9 @@ class ContactsScreenTest {
     @Test
     fun missingPermissionOffersToTurnItOn() {
         show(ContactsUiState.NeedsPermission)
-        compose.onNodeWithText("To see your contacts, turn on the Contacts permission.").assertExists()
+        compose
+            .onNodeWithText("To see your contacts, turn on the Contacts permission.")
+            .assertExists()
         compose.onNodeWithText("Turn on").performClick()
         assertThat(actions.events).containsExactly("permission")
     }
@@ -102,7 +131,11 @@ class ContactsScreenTest {
         show(ContactsUiState.Loaded(many), listState)
 
         compose.onNodeWithTag(TestTags.CONTACTS_LIST).performTouchInput {
-            swipe(Offset(right - 10f, top + 10f), Offset(right - 10f, bottom - 10f), durationMillis = 400)
+            swipe(
+                Offset(right - 10f, top + 10f),
+                Offset(right - 10f, bottom - 10f),
+                durationMillis = 400,
+            )
         }
         compose.waitForIdle()
 
@@ -113,7 +146,10 @@ class ContactsScreenTest {
     fun screenshotDark() {
         show(ContactsUiState.Loaded(few))
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/contacts/contacts_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/contacts/contacts_dark.png")
     }
 
     @Test
@@ -121,13 +157,19 @@ class ContactsScreenTest {
     fun screenshotLight() {
         show(ContactsUiState.Loaded(few))
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/contacts/contacts_light.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/contacts/contacts_light.png")
     }
 
     @Test
     fun screenshotPermission() {
         show(ContactsUiState.NeedsPermission)
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/contacts/permission_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/contacts/permission_dark.png")
     }
 }

@@ -38,14 +38,16 @@ import com.prauga.pvot.designsystem.components.list.PvotListRow
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.ui.ContactAvatar
-import org.prauga.phone.dialer.ui.navBarClearance
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.ui.fullWidthRow
+import org.prauga.phone.dialer.ui.navBarClearance
 
 /** What the contacts tab does when the user taps something. */
 interface ContactsActions {
     fun onContactClick(contact: ContactEntry)
+
     fun onAddContact()
+
     fun onTurnOnPermission()
 }
 
@@ -64,21 +66,28 @@ fun ContactsScreen(
     Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         when (state) {
             ContactsUiState.Loading -> PvotLoadingContent()
-            ContactsUiState.NeedsPermission -> PvotEmptyContent(
-                message = stringResource(R.string.permission_no_contacts),
-                modifier = Modifier.padding(PvotSpacing.L),
-                icon = { Icon(painterResource(R.drawable.ic_users), contentDescription = null) },
-                actionLabel = stringResource(R.string.permission_single_turn_on),
-                onAction = actions::onTurnOnPermission,
-            )
-            ContactsUiState.Empty -> PvotEmptyContent(
-                message = stringResource(R.string.all_contacts_empty),
-                modifier = Modifier.padding(PvotSpacing.L),
-                icon = { Icon(painterResource(R.drawable.ic_users), contentDescription = null) },
-                actionLabel = stringResource(R.string.all_contacts_empty_add_contact_action),
-                onAction = actions::onAddContact,
-            )
-            is ContactsUiState.Loaded -> ContactsList(state.sections, showAddContact, actions, listState)
+            ContactsUiState.NeedsPermission ->
+                PvotEmptyContent(
+                    message = stringResource(R.string.permission_no_contacts),
+                    modifier = Modifier.padding(PvotSpacing.L),
+                    icon = {
+                        Icon(painterResource(R.drawable.ic_users), contentDescription = null)
+                    },
+                    actionLabel = stringResource(R.string.permission_single_turn_on),
+                    onAction = actions::onTurnOnPermission,
+                )
+            ContactsUiState.Empty ->
+                PvotEmptyContent(
+                    message = stringResource(R.string.all_contacts_empty),
+                    modifier = Modifier.padding(PvotSpacing.L),
+                    icon = {
+                        Icon(painterResource(R.drawable.ic_users), contentDescription = null)
+                    },
+                    actionLabel = stringResource(R.string.all_contacts_empty_add_contact_action),
+                    onAction = actions::onAddContact,
+                )
+            is ContactsUiState.Loaded ->
+                ContactsList(state.sections, showAddContact, actions, listState)
         }
     }
 }
@@ -91,16 +100,14 @@ private fun ContactsList(
     actions: ContactsActions,
     listState: LazyListState,
 ) {
-    val scrollSections = remember(sections, showAddContact) { scrollSectionsOf(sections, showAddContact) }
+    val scrollSections =
+        remember(sections, showAddContact) { scrollSectionsOf(sections, showAddContact) }
     Box(Modifier.fillMaxSize()) {
         PvotScreen(
             modifier = Modifier.fillMaxSize().testTag(TestTags.CONTACTS_LIST),
             state = listState,
             // The bottom clears the nav bar that floats over the list.
-            contentPadding = PaddingValues(
-                top = PvotSpacing.S,
-                bottom = navBarClearance(),
-            ),
+            contentPadding = PaddingValues(top = PvotSpacing.S, bottom = navBarClearance()),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start,
         ) {
@@ -118,10 +125,10 @@ private fun ContactsList(
                 stickyHeader(key = "header_$index", contentType = "header") {
                     PvotSectionHeader(
                         title = section.label,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.background)
-                            .padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.XS),
+                        modifier =
+                            Modifier.fillMaxWidth()
+                                .background(MaterialTheme.colorScheme.background)
+                                .padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.XS),
                     )
                 }
                 items(section.contacts, key = { it.id }, contentType = { "contact" }) { contact ->
@@ -151,9 +158,9 @@ private fun ContactsList(
 @Composable
 private fun AddContactTile() {
     Box(
-        modifier = Modifier
-            .size(PvotLetterTileDefaults.Size)
-            .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
+        modifier =
+            Modifier.size(PvotLetterTileDefaults.Size)
+                .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
         contentAlignment = Alignment.Center,
     ) {
         Icon(
@@ -165,7 +172,10 @@ private fun AddContactTile() {
 }
 
 /** The list index of each section's header, counting the optional add contact row. */
-internal fun scrollSectionsOf(sections: List<ContactSection>, showAddContact: Boolean): List<PvotFastScrollSection> {
+internal fun scrollSectionsOf(
+    sections: List<ContactSection>,
+    showAddContact: Boolean,
+): List<PvotFastScrollSection> {
     var index = if (showAddContact) 1 else 0
     return sections.map { section ->
         PvotFastScrollSection(section.label, index).also { index += 1 + section.contacts.size }

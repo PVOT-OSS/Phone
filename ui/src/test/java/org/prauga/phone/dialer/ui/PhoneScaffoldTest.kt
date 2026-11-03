@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.unit.dp
@@ -35,7 +34,10 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
-/** The frame every screen sits in. Robolectric cannot run the glass shaders, so the glass is solid here. */
+/**
+ * The frame every screen sits in. Robolectric cannot run the glass shaders, so the glass is solid
+ * here.
+ */
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(qualifiers = "w411dp-h891dp-xxhdpi")
@@ -49,7 +51,9 @@ class PhoneScaffoldTest {
                 CompositionLocalProvider(
                     LocalPvotGlassReduced provides false,
                     LocalPvotGlassIntensity provides PvotGlassDefaults.SolidIntensity,
-                ) { content() }
+                ) {
+                    content()
+                }
             }
         }
     }
@@ -58,7 +62,9 @@ class PhoneScaffoldTest {
     fun theContentIsPaddedBelowTheTopBar() {
         var padding: PaddingValues? = null
         show {
-            PhoneScaffold(topBar = { Box(Modifier.fillMaxWidth().height(64.dp).testTag("bar")) }) { padding = it }
+            PhoneScaffold(topBar = { Box(Modifier.fillMaxWidth().height(64.dp).testTag("bar")) }) {
+                padding = it
+            }
         }
         compose.waitForIdle()
         assertThat(padding!!.calculateTopPadding()).isEqualTo(64.dp)
@@ -91,17 +97,21 @@ class PhoneScaffoldTest {
         compose.onNodeWithText("Hello").assertIsDisplayed()
     }
 
-    @Test
-    @Config(qualifiers = "+night")
-    fun screenshotDark() = screenshot("scaffold_dark")
+    @Test @Config(qualifiers = "+night") fun screenshotDark() = screenshot("scaffold_dark")
 
-    @Test
-    fun screenshotLight() = screenshot("scaffold_light")
+    @Test fun screenshotLight() = screenshot("scaffold_light")
 
     private fun screenshot(name: String) {
         show {
             PhoneScaffold(topBar = { PvotTopBar(title = "Recents", compact = true) }) { padding ->
-                PvotScreen(contentPadding = PaddingValues(top = padding.calculateTopPadding() + 16.dp, start = 16.dp, end = 16.dp)) {
+                PvotScreen(
+                    contentPadding =
+                        PaddingValues(
+                            top = padding.calculateTopPadding() + 16.dp,
+                            start = 16.dp,
+                            end = 16.dp,
+                        )
+                ) {
                     items(3) { Text("Row $it") }
                 }
             }

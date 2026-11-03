@@ -69,15 +69,22 @@ class PostCallActivity : ComponentActivity() {
         pendingMessage = bundle?.getString(KEY_MESSAGE)
         LogUtil.i("PostCallActivity.onCreate", "useRcs: %b", useRcs)
 
-        val postCallCharLimit = if (useRcs) resources.getInteger(R.integer.post_call_char_limit) else null
-        val messages = listOf(
-            getString(R.string.post_call_message_1),
-            getString(R.string.post_call_message_2),
-            getString(R.string.post_call_message_3),
-        )
+        val postCallCharLimit =
+            if (useRcs) resources.getInteger(R.integer.post_call_char_limit) else null
+        val messages =
+            listOf(
+                getString(R.string.post_call_message_1),
+                getString(R.string.post_call_message_2),
+                getString(R.string.post_call_message_3),
+            )
         setPvotContent {
             PhoneScreenTheme(fillBackground = false) {
-                PostCallSheet(messages, postCallCharLimit, onSend = ::sendMessage, onDismiss = ::finish)
+                PostCallSheet(
+                    messages,
+                    postCallCharLimit,
+                    onSend = ::sendMessage,
+                    onDismiss = ::finish,
+                )
             }
         }
     }
@@ -98,16 +105,26 @@ class PostCallActivity : ComponentActivity() {
         } else if (PermissionsUtil.hasPermission(this, permission.SEND_SMS)) {
             LogUtil.i("PostCallActivity.sendMessage", "Sending post call SMS.")
             val smsManager = getSystemService(SmsManager::class.java)
-            smsManager.sendMultipartTextMessage(number, null, smsManager.divideMessage(message), null, null)
+            smsManager.sendMultipartTextMessage(
+                number,
+                null,
+                smsManager.divideMessage(message),
+                null,
+                null,
+            )
             PostCall.onMessageSent(this, number)
             finish()
-        } else if (PermissionsUtil.isFirstRequest(this, permission.SEND_SMS) ||
-            shouldShowRequestPermissionRationale(permission.SEND_SMS)
+        } else if (
+            PermissionsUtil.isFirstRequest(this, permission.SEND_SMS) ||
+                shouldShowRequestPermissionRationale(permission.SEND_SMS)
         ) {
             LogUtil.i("PostCallActivity.sendMessage", "Requesting SMS_SEND permission.")
             smsPermissionLauncher.launch(permission.SEND_SMS)
         } else {
-            LogUtil.i("PostCallActivity.sendMessage", "Permission permanently denied, sending to settings.")
+            LogUtil.i(
+                "PostCallActivity.sendMessage",
+                "Permission permanently denied, sending to settings.",
+            )
             val intent = Intent(Intent.ACTION_VIEW)
             intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -146,13 +163,20 @@ internal fun PostCallSheet(
 ) {
     var message by rememberSaveable { mutableStateOf("") }
     val send = { if (message.isNotEmpty()) onSend(message) }
-    PvotBottomSheet(visible = true, onDismissRequest = onDismiss, title = stringResource(R.string.post_call_message)) {
+    PvotBottomSheet(
+        visible = true,
+        onDismissRequest = onDismiss,
+        title = stringResource(R.string.post_call_message),
+    ) {
         FlowRow(
             modifier = Modifier.fillMaxWidth().padding(horizontal = PvotSpacing.S),
             horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S),
         ) {
             for (reply in messages) {
-                SuggestionChip(onClick = { message = if (charLimit != null) reply.take(charLimit) else reply }, label = { Text(reply) })
+                SuggestionChip(
+                    onClick = { message = if (charLimit != null) reply.take(charLimit) else reply },
+                    label = { Text(reply) },
+                )
             }
         }
         PvotTextField(
@@ -161,10 +185,11 @@ internal fun PostCallSheet(
             modifier = Modifier.fillMaxWidth().padding(top = PvotSpacing.S),
             placeholder = stringResource(R.string.custom_message_hint),
             maxLength = charLimit,
-            keyboardOptions = KeyboardOptions(
-                capitalization = KeyboardCapitalization.Sentences,
-                imeAction = ImeAction.Send,
-            ),
+            keyboardOptions =
+                KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Sentences,
+                    imeAction = ImeAction.Send,
+                ),
             keyboardActions = KeyboardActions(onSend = { send() }),
         )
         PvotButton(

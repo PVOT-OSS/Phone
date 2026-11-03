@@ -24,14 +24,16 @@ import org.robolectric.annotation.Config
 class CallLogRowResolverTest {
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
-    private val resolver = CallLogRowResolver(context, CallLogCache(context)) { DisplayOrder.PRIMARY }
+    private val resolver =
+        CallLogRowResolver(context, CallLogCache(context)) { DisplayOrder.PRIMARY }
 
-    private fun contact(name: String) = ContactInfo().apply {
-        this.name = name
-        lookupUri = Uri.parse("content://com.android.contacts/contacts/lookup/key/1")
-        lookupKey = "key"
-        number = "+15550100"
-    }
+    private fun contact(name: String) =
+        ContactInfo().apply {
+            this.name = name
+            lookupUri = Uri.parse("content://com.android.contacts/contacts/lookup/key/1")
+            lookupKey = "key"
+            number = "+15550100"
+        }
 
     @Test
     fun aContactShowsItsName() {
@@ -49,8 +51,12 @@ class CallLogRowResolverTest {
 
     @Test
     fun aPrivateNumberCannotBeCalledBack() {
-        val row = resolver.resolve(
-            callLogGroup(1, number = "", presentation = Calls.PRESENTATION_RESTRICTED), ContactInfo.EMPTY, isBlocked = false)
+        val row =
+            resolver.resolve(
+                callLogGroup(1, number = "", presentation = Calls.PRESENTATION_RESTRICTED),
+                ContactInfo.EMPTY,
+                isBlocked = false,
+            )
         assertThat(row.primaryAction).isEqualTo(PrimaryAction.NONE)
         assertThat(row.actions).doesNotContain(RowAction.SEND_MESSAGE)
     }
@@ -65,19 +71,26 @@ class CallLogRowResolverTest {
     @Test
     fun aBlockedNumberOffersNoMessageOrNewContact() {
         val row = resolver.resolve(callLogGroup(1), ContactInfo.EMPTY, isBlocked = true)
-        assertThat(row.actions).containsNoneOf(RowAction.SEND_MESSAGE, RowAction.CREATE_CONTACT, RowAction.BLOCK)
+        assertThat(row.actions)
+            .containsNoneOf(RowAction.SEND_MESSAGE, RowAction.CREATE_CONTACT, RowAction.BLOCK)
         assertThat(row.details).startsWith("Blocked")
     }
 
     @Test
     fun moreThanThreeCallsShowTheirCount() {
         val group = callLogGroup(1, callTypes = List(5) { Calls.INCOMING_TYPE })
-        assertThat(resolver.resolve(group, ContactInfo.EMPTY, isBlocked = false).details).startsWith("(5)")
+        assertThat(resolver.resolve(group, ContactInfo.EMPTY, isBlocked = false).details)
+            .startsWith("(5)")
     }
 
     @Test
     fun aVoicemailHasNoDetailsButCanBeCalledBack() {
-        val group = callLogGroup(1, callTypes = listOf(Calls.VOICEMAIL_TYPE), voicemailUri = "content://voicemail/1")
+        val group =
+            callLogGroup(
+                1,
+                callTypes = listOf(Calls.VOICEMAIL_TYPE),
+                voicemailUri = "content://voicemail/1",
+            )
         val row = resolver.resolve(group, ContactInfo.EMPTY, isBlocked = false)
         assertThat(row.primaryAction).isEqualTo(PrimaryAction.PLAY_VOICEMAIL)
         assertThat(row.actions).contains(RowAction.CALL)
@@ -86,7 +99,8 @@ class CallLogRowResolverTest {
 
     @Test
     fun anEmergencyNumberOffersOnlyDetails() {
-        val row = resolver.resolve(callLogGroup(1, number = "911"), ContactInfo.EMPTY, isBlocked = false)
+        val row =
+            resolver.resolve(callLogGroup(1, number = "911"), ContactInfo.EMPTY, isBlocked = false)
         assertThat(row.isEmergency).isTrue()
         assertThat(row.actions).containsExactly(RowAction.DETAILS)
     }

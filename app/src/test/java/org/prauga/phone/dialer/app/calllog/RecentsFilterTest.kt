@@ -17,15 +17,21 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class RecentsFilterTest {
 
-    private fun info(lookupKey: String? = null, lookupUri: String? = null) = ContactInfo().apply {
-        this.lookupKey = lookupKey
-        this.lookupUri = lookupUri?.let(Uri::parse)
-    }
+    private fun info(lookupKey: String? = null, lookupUri: String? = null) =
+        ContactInfo().apply {
+            this.lookupKey = lookupKey
+            this.lookupUri = lookupUri?.let(Uri::parse)
+        }
 
     @Test
     fun contactsKeepsCallsWithAContact() {
         val byKey = callLogGroup(1, cachedInfo = info(lookupKey = "0r1-ABC"))
-        val byUri = callLogGroup(2, cachedInfo = info(lookupUri = "content://com.android.contacts/contacts/lookup/0r1-ABC/7"))
+        val byUri =
+            callLogGroup(
+                2,
+                cachedInfo =
+                    info(lookupUri = "content://com.android.contacts/contacts/lookup/0r1-ABC/7"),
+            )
         assertThat(CallLogFilter.CONTACTS.matches(byKey, emptySet())).isTrue()
         assertThat(CallLogFilter.CONTACTS.matches(byUri, emptySet())).isTrue()
     }
@@ -33,10 +39,15 @@ class RecentsFilterTest {
     @Test
     fun contactsDropsUnknownNumbers() {
         val unknown = callLogGroup(1)
-        val temporary = callLogGroup(
-            2,
-            cachedInfo = info(lookupUri = "content://com.android.contacts/contacts/lookup/encoded?directory=1#{}"),
-        )
+        val temporary =
+            callLogGroup(
+                2,
+                cachedInfo =
+                    info(
+                        lookupUri =
+                            "content://com.android.contacts/contacts/lookup/encoded?directory=1#{}"
+                    ),
+            )
         assertThat(CallLogFilter.CONTACTS.matches(unknown, emptySet())).isFalse()
         assertThat(CallLogFilter.CONTACTS.matches(temporary, emptySet())).isFalse()
     }

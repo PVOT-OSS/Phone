@@ -45,7 +45,12 @@ class RttAndVideoChargesDialogsTest {
     }
 
     private fun rttRequest() = show {
-        RttRequestDialogFragment.createDialog(compose.activity, details, { events += "accept" }, { events += "decline" })
+        RttRequestDialogFragment.createDialog(
+            compose.activity,
+            details,
+            { events += "accept" },
+            { events += "decline" },
+        )
     }
 
     private fun videoCharges() = show {
@@ -81,7 +86,10 @@ class RttAndVideoChargesDialogsTest {
     fun screenshotRttRequestDark() {
         details.value = "Ada Lovelace wants to use RTT"
         rttRequest()
-        compose.onAllNodes(isRoot()).onLast().captureRoboImage("src/test/screenshots/dialogs/rtt_request_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onLast()
+            .captureRoboImage("src/test/screenshots/dialogs/rtt_request_dark.png")
     }
 
     @Test
@@ -89,19 +97,28 @@ class RttAndVideoChargesDialogsTest {
     fun screenshotRttRequestLight() {
         details.value = "Ada Lovelace wants to use RTT"
         rttRequest()
-        compose.onAllNodes(isRoot()).onLast().captureRoboImage("src/test/screenshots/dialogs/rtt_request_light.png")
+        compose
+            .onAllNodes(isRoot())
+            .onLast()
+            .captureRoboImage("src/test/screenshots/dialogs/rtt_request_light.png")
     }
 
     @Test
     fun screenshotVideoChargesDark() {
         videoCharges()
-        compose.onAllNodes(isRoot()).onLast().captureRoboImage("src/test/screenshots/dialogs/video_charges_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onLast()
+            .captureRoboImage("src/test/screenshots/dialogs/video_charges_dark.png")
     }
 
     @Test
     @Config(qualifiers = "en-rUS-w411dp-h891dp-notnight-xxhdpi")
     fun screenshotVideoChargesLight() {
         videoCharges()
-        compose.onAllNodes(isRoot()).onLast().captureRoboImage("src/test/screenshots/dialogs/video_charges_light.png")
+        compose
+            .onAllNodes(isRoot())
+            .onLast()
+            .captureRoboImage("src/test/screenshots/dialogs/video_charges_light.png")
     }
 }

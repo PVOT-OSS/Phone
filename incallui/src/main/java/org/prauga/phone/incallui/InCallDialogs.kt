@@ -24,10 +24,9 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
 import com.prauga.pvot.designsystem.theme.PvotSpacing
-import org.prauga.phone.incallui.R
+import java.util.function.Consumer
 import org.prauga.phone.dialer.ui.PvotAlertDialog
 import org.prauga.phone.dialer.ui.PvotAlertDialog.Action
-import java.util.function.Consumer
 
 /** The dialogs the in-call screens show, drawn as Pvot dialogs in platform dialog windows. */
 object InCallDialogs {
@@ -35,7 +34,12 @@ object InCallDialogs {
     /** A message after a call failed, with one button to close it. */
     @JvmStatic
     fun message(context: Context, message: CharSequence): Dialog =
-        PvotAlertDialog(context, null, message, listOf(Action(context.getString(android.R.string.cancel))))
+        PvotAlertDialog(
+            context,
+            null,
+            message,
+            listOf(Action(context.getString(android.R.string.cancel))),
+        )
 
     /** Wi-Fi is on but Wi-Fi calling is off: offers to open its settings. */
     @JvmStatic
@@ -45,7 +49,11 @@ object InCallDialogs {
             null,
             message,
             listOf(
-                Action(context.getString(R.string.incall_enable_wifi_calling_button), PvotDialogActionStyle.Primary, onEnable),
+                Action(
+                    context.getString(R.string.incall_enable_wifi_calling_button),
+                    PvotDialogActionStyle.Primary,
+                    onEnable,
+                ),
                 Action(context.getString(android.R.string.cancel)),
             ),
         )
@@ -58,7 +66,11 @@ object InCallDialogs {
             context.getString(R.string.video_call_not_available_title),
             context.getString(R.string.video_call_not_available_message),
             listOf(
-                Action(context.getString(R.string.voice_call), PvotDialogActionStyle.Primary, onVoiceCall),
+                Action(
+                    context.getString(R.string.voice_call),
+                    PvotDialogActionStyle.Primary,
+                    onVoiceCall,
+                ),
                 Action(context.getString(android.R.string.cancel)),
             ),
         )
@@ -71,14 +83,18 @@ object InCallDialogs {
             null,
             context.getString(R.string.wait_prompt_str) + postDial,
             listOf(
-                Action(context.getString(R.string.pause_prompt_yes), PvotDialogActionStyle.Primary, onSend),
+                Action(
+                    context.getString(R.string.pause_prompt_yes),
+                    PvotDialogActionStyle.Primary,
+                    onSend,
+                ),
                 Action(context.getString(R.string.pause_prompt_no), cancels = true),
             ),
         )
 
     /**
-     * A video call could not move from LTE to Wi-Fi. OK cancels the dialog and tells [onOk]
-     * whether to stop showing this.
+     * A video call could not move from LTE to Wi-Fi. OK cancels the dialog and tells [onOk] whether
+     * to stop showing this.
      */
     @JvmStatic
     fun wifiHandoverFailed(context: Context, onOk: Consumer<Boolean>): Dialog {
@@ -93,10 +109,15 @@ object InCallDialogs {
                     PvotDialogActionStyle.Primary,
                     { onOk.accept(doNotShow) },
                     cancels = true,
-                ),
+                )
             ),
         ) {
-            CheckboxRow(context.getString(R.string.video_call_lte_to_wifi_failed_do_not_show), doNotShow) { doNotShow = it }
+            CheckboxRow(
+                context.getString(R.string.video_call_lte_to_wifi_failed_do_not_show),
+                doNotShow,
+            ) {
+                doNotShow = it
+            }
         }
     }
 
@@ -113,26 +134,34 @@ object InCallDialogs {
     ): Dialog {
         var warn by mutableStateOf(alwaysWarn)
         return PvotAlertDialog(
-            context,
-            null,
-            null,
-            listOf(
-                Action(context.getString(android.R.string.ok), PvotDialogActionStyle.Primary, { onContinue.accept(warn) }),
-                Action(context.getString(android.R.string.cancel), onClick = { onCancel.accept(warn) }),
-            ),
-        ) {
-            Text(
-                text = context.getString(R.string.details),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth(),
-            )
-            CheckboxRow(context.getString(R.string.always_warn), warn) { warn = it }
-        }.apply {
-            setCancelable(false)
-            setCanceledOnTouchOutside(false)
-        }
+                context,
+                null,
+                null,
+                listOf(
+                    Action(
+                        context.getString(android.R.string.ok),
+                        PvotDialogActionStyle.Primary,
+                        { onContinue.accept(warn) },
+                    ),
+                    Action(
+                        context.getString(android.R.string.cancel),
+                        onClick = { onCancel.accept(warn) },
+                    ),
+                ),
+            ) {
+                Text(
+                    text = context.getString(R.string.details),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                CheckboxRow(context.getString(R.string.always_warn), warn) { warn = it }
+            }
+            .apply {
+                setCancelable(false)
+                setCanceledOnTouchOutside(false)
+            }
     }
 }
 
@@ -140,9 +169,9 @@ object InCallDialogs {
 @Composable
 private fun CheckboxRow(label: String, checked: Boolean, onCheckedChange: (Boolean) -> Unit) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .toggleable(value = checked, role = Role.Checkbox, onValueChange = onCheckedChange),
+        modifier =
+            Modifier.fillMaxWidth()
+                .toggleable(value = checked, role = Role.Checkbox, onValueChange = onCheckedChange),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S),
     ) {

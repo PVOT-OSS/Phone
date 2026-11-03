@@ -22,10 +22,10 @@ import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.prauga.phone.dialer.R
+import org.prauga.phone.dialer.calllogutils.CallbackActionHelper
 import org.prauga.phone.dialer.callrecord.CallRecording
 import org.prauga.phone.dialer.callrecord.CallRecordingDataStore
 import org.prauga.phone.dialer.callrecord.impl.CallRecorderService
-import org.prauga.phone.dialer.calllogutils.CallbackActionHelper
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.dialercontact.DialerContact
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper
@@ -42,11 +42,13 @@ internal class CallDetailsViewModel(
 ) : ViewModel() {
 
     var contact: DialerContact =
-        handle.get<ByteArray>(KEY_CONTACT)?.let(DialerContact::parseFrom) ?: DialerContact.getDefaultInstance()
+        handle.get<ByteArray>(KEY_CONTACT)?.let(DialerContact::parseFrom)
+            ?: DialerContact.getDefaultInstance()
         private set
 
     var entries: CallDetailsEntries =
-        handle.get<ByteArray>(KEY_ENTRIES)?.let(CallDetailsEntries::parseFrom) ?: CallDetailsEntries.getDefaultInstance()
+        handle.get<ByteArray>(KEY_ENTRIES)?.let(CallDetailsEntries::parseFrom)
+            ?: CallDetailsEntries.getDefaultInstance()
         private set
 
     /** The screen, or null until the calls are known. */
@@ -60,7 +62,8 @@ internal class CallDetailsViewModel(
     var finished by mutableStateOf(false)
         private set
 
-    val hasEntries: Boolean get() = entries.entriesCount > 0
+    val hasEntries: Boolean
+        get() = entries.entriesCount > 0
 
     private val recordingStore = CallRecordingDataStore()
     private var loadJob: Job? = null
@@ -82,13 +85,19 @@ internal class CallDetailsViewModel(
 
     /** Removes one call from the history, here and in the call log. */
     fun deleteCall(callId: Long) {
-        entries = entries.toBuilder().apply {
-            val index = entriesList.indexOfFirst { it.callId == callId }
-            if (index >= 0) removeEntries(index)
-        }.build()
+        entries =
+            entries
+                .toBuilder()
+                .apply {
+                    val index = entriesList.indexOfFirst { it.callId == callId }
+                    if (index >= 0) removeEntries(index)
+                }
+                .build()
         handle[KEY_ENTRIES] = entries.toByteArray()
         ui = ui?.let { it.copy(entries = it.entries.filterNot { e -> e.callId == callId }) }
-        viewModelScope.launch { withContext(Dispatchers.IO) { deleteCalls(listOf(callId.toString())) } }
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) { deleteCalls(listOf(callId.toString())) }
+        }
     }
 
     /** Removes the whole history from the call log; [finished] turns true once it is gone. */
@@ -103,23 +112,31 @@ internal class CallDetailsViewModel(
     private fun load() {
         loadJob?.cancel()
         ui = map()
-        loadJob = viewModelScope.launch {
-            val recordings = withContext(Dispatchers.IO) { loadRecordings() }
-            val transcripts = try {
-                val ids = ImmutableSet.copyOf(entries.entriesList.map { it.callMappingId })
-                RttTranscriptUtil.getAvailableRttTranscriptIds(application, ids).await()
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                LogUtil.w("CallDetailsViewModel.load", "no transcripts: %s", e.javaClass.simpleName)
-                emptySet()
+        loadJob =
+            viewModelScope.launch {
+                val recordings = withContext(Dispatchers.IO) { loadRecordings() }
+                val transcripts =
+                    try {
+                        val ids = ImmutableSet.copyOf(entries.entriesList.map { it.callMappingId })
+                        RttTranscriptUtil.getAvailableRttTranscriptIds(application, ids).await()
+                    } catch (e: CancellationException) {
+                        throw e
+                    } catch (e: Exception) {
+                        LogUtil.w(
+                            "CallDetailsViewModel.load",
+                            "no transcripts: %s",
+                            e.javaClass.simpleName,
+                        )
+                        emptySet()
+                    }
+                ui = map(recordings, transcripts)
             }
-            ui = map(recordings, transcripts)
-        }
         if (ui?.header?.usedAssistedDialing == true) {
             viewModelScope.launch {
                 assistedDialingCountryCode =
-                    withContext(Dispatchers.Default) { OldCallDetailsActivity.countryCodeOf(contact.number) }
+                    withContext(Dispatchers.Default) {
+                        OldCallDetailsActivity.countryCodeOf(contact.number)
+                    }
             }
         }
     }
@@ -127,18 +144,23 @@ internal class CallDetailsViewModel(
     private fun map(
         recordings: Map<Long, List<CallRecording>> = emptyMap(),
         transcripts: Set<String> = emptySet(),
-    ) = CallDetailsMapper.map(
-        contact = contact,
-        entries = entries,
-        isEmergencyNumber = PhoneNumberHelper.isEmergencyNumber(application, contact.number),
-        callbackAction = CallbackActionHelper.getCallbackAction(contact.number, entries.getEntries(0).features),
-        numberLabelAndNumber = { label, number ->
-            application.getString(R.string.call_subject_type_and_number, label, number)
-        },
-        emergencyTitle = application.getString(R.string.emergency_number),
-        recordingsFor = { recordings[it.callId].orEmpty() },
-        rttTranscriptIds = transcripts,
-    )
+    ) =
+        CallDetailsMapper.map(
+            contact = contact,
+            entries = entries,
+            isEmergencyNumber = PhoneNumberHelper.isEmergencyNumber(application, contact.number),
+            callbackAction =
+                CallbackActionHelper.getCallbackAction(
+                    contact.number,
+                    entries.getEntries(0).features,
+                ),
+            numberLabelAndNumber = { label, number ->
+                application.getString(R.string.call_subject_type_and_number, label, number)
+            },
+            emergencyTitle = application.getString(R.string.emergency_number),
+            recordingsFor = { recordings[it.callId].orEmpty() },
+            rttTranscriptIds = transcripts,
+        )
 
     /** Recordings of each call, by call log ID; read up front so they don't pop in later. */
     private fun loadRecordings(): Map<Long, List<CallRecording>> {

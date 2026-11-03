@@ -15,16 +15,20 @@ import org.lineageos.lib.phone.spn.Item
 /** Finds the helplines for the countries of the active SIMs. */
 internal object HelplineLoader {
 
-    /** The helplines for every active SIM's country, sorted by name. Reads bundled data; call off the main thread. */
+    /**
+     * The helplines for every active SIM's country, sorted by name. Reads bundled data; call off
+     * the main thread.
+     */
     fun load(resources: Resources, subscriptions: SubscriptionManager): List<HelplineItem> =
-        load(resources, activeSubscriptions(subscriptions).map { it.countryIso to it.mccString }) { mcc ->
+        load(resources, activeSubscriptions(subscriptions).map { it.countryIso to it.mccString }) {
+            mcc ->
             SensitivePhoneNumbers.getInstance().getSensitivePnInfosForMcc(mcc)
         }
 
     /**
-     * The helplines for [sims], given as (country ISO, MCC) pairs. When a SIM's country differs from
-     * the user's locale, names include the country, so a number near a border is clearly the right
-     * one.
+     * The helplines for [sims], given as (country ISO, MCC) pairs. When a SIM's country differs
+     * from the user's locale, names include the country, so a number near a border is clearly the
+     * right one.
      */
     fun load(
         resources: Resources,
@@ -48,5 +52,9 @@ internal object HelplineLoader {
     @SuppressLint("MissingPermission")
     private fun activeSubscriptions(subscriptions: SubscriptionManager): List<SubscriptionInfo> =
         subscriptions.activeSubscriptionInfoList
-            ?: listOfNotNull(subscriptions.getActiveSubscriptionInfo(SubscriptionManager.getDefaultVoiceSubscriptionId()))
+            ?: listOfNotNull(
+                subscriptions.getActiveSubscriptionInfo(
+                    SubscriptionManager.getDefaultVoiceSubscriptionId()
+                )
+            )
 }

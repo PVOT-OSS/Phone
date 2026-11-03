@@ -38,10 +38,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.prauga.pvot.designsystem.components.PvotBottomSheetDefaults
 import com.prauga.pvot.designsystem.components.PvotSheetItem
 import com.prauga.pvot.designsystem.theme.PvotSpacing
-import org.prauga.phone.incallui.R
 import org.prauga.phone.dialer.common.FragmentUtils
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
+import org.prauga.phone.incallui.R
 import org.prauga.phone.incallui.incalluilock.InCallUiLock
 
 /**
@@ -56,25 +56,30 @@ fun SmsReplySheet(
     onForward: (() -> Unit)? = null,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(PvotBottomSheetDefaults.containerColor, PvotBottomSheetDefaults.Shape)
-            .windowInsetsPadding(WindowInsets.navigationBars)
-            .padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.M),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .background(PvotBottomSheetDefaults.containerColor, PvotBottomSheetDefaults.Shape)
+                .windowInsetsPadding(WindowInsets.navigationBars)
+                .padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.M),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(PvotSpacing.XS),
     ) {
         Box(
-            Modifier
-                .padding(bottom = PvotSpacing.S)
+            Modifier.padding(bottom = PvotSpacing.S)
                 .size(PvotBottomSheetDefaults.HandleWidth, PvotBottomSheetDefaults.HandleHeight)
-                .background(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f), CircleShape),
+                .background(
+                    MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
+                    CircleShape,
+                )
         )
         if (replies != null) {
             for (reply in replies) {
                 PvotSheetItem(
                     title = reply.toString(),
-                    icon = { Icon(painterResource(R.drawable.ic_message), contentDescription = null) },
+                    icon = {
+                        Icon(painterResource(R.drawable.ic_message), contentDescription = null)
+                    },
                     onClick = { onPick(reply) },
                 )
             }
@@ -87,7 +92,9 @@ fun SmsReplySheet(
         if (onForward != null) {
             PvotSheetItem(
                 title = stringResource(R.string.call_incoming_forward),
-                icon = { Icon(painterResource(R.drawable.ic_arrow_forward_up), contentDescription = null) },
+                icon = {
+                    Icon(painterResource(R.drawable.ic_arrow_forward_up), contentDescription = null)
+                },
                 onClick = onForward,
             )
         }
@@ -112,7 +119,11 @@ class SmsBottomSheetFragment : BottomSheetDialogFragment() {
         return dialog
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         val replies = requireArguments().getCharSequenceArrayList(ARG_OPTIONS)
         val canForward = requireArguments().getBoolean(ARG_CAN_FORWARD)
         return ComposeView(requireContext()).apply {
@@ -125,12 +136,13 @@ class SmsBottomSheetFragment : BottomSheetDialogFragment() {
                             holder().smsSelected(text)
                             dismiss()
                         },
-                        onForward = if (canForward) {
-                            {
-                                holder().forwardSelected()
-                                dismiss()
-                            }
-                        } else null,
+                        onForward =
+                            if (canForward) {
+                                {
+                                    holder().forwardSelected()
+                                    dismiss()
+                                }
+                            } else null,
                     )
                 }
             }
@@ -140,7 +152,9 @@ class SmsBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onStart() {
         super.onStart()
         // The Compose sheet draws its own rounded surface.
-        dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)?.setBackgroundColor(Color.TRANSPARENT)
+        dialog
+            ?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+            ?.setBackgroundColor(Color.TRANSPARENT)
     }
 
     override fun onDismiss(dialog: DialogInterface) {
@@ -172,12 +186,13 @@ class SmsBottomSheetFragment : BottomSheetDialogFragment() {
          * @param canForward whether to offer forwarding the call to another number
          */
         @JvmStatic
-        fun newInstance(options: ArrayList<CharSequence>?, canForward: Boolean) = SmsBottomSheetFragment().apply {
-            arguments = Bundle().apply {
-                putCharSequenceArrayList(ARG_OPTIONS, options)
-                putBoolean(ARG_CAN_FORWARD, canForward)
+        fun newInstance(options: ArrayList<CharSequence>?, canForward: Boolean) =
+            SmsBottomSheetFragment().apply {
+                arguments =
+                    Bundle().apply {
+                        putCharSequenceArrayList(ARG_OPTIONS, options)
+                        putBoolean(ARG_CAN_FORWARD, canForward)
+                    }
             }
-        }
     }
 }
-

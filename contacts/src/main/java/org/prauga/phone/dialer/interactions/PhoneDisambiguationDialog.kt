@@ -44,24 +44,30 @@ object PhoneDisambiguationDialog {
     ): Dialog {
         var setPrimary by mutableStateOf(false)
         lateinit var dialog: Dialog
-        dialog = PvotAlertDialog(context, title, null, emptyList()) {
-            // The list scrolls inside whatever height the dialog leaves it, above the checkbox.
-            Column(modifier = Modifier.fillMaxWidth()) {
-                Column(modifier = Modifier.weight(1f, fill = false).verticalScroll(rememberScrollState())) {
-                    choices.forEachIndexed { position, choice ->
-                        PvotListRow(
-                            title = choice.label?.toString().orEmpty(),
-                            supportingText = choice.number,
-                            onClick = {
-                                listener.onChosen(position, setPrimary)
-                                dialog.dismiss()
-                            },
-                        )
+        dialog =
+            PvotAlertDialog(context, title, null, emptyList()) {
+                // The list scrolls inside whatever height the dialog leaves it, above the checkbox.
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Column(
+                        modifier =
+                            Modifier.weight(1f, fill = false).verticalScroll(rememberScrollState())
+                    ) {
+                        choices.forEachIndexed { position, choice ->
+                            PvotListRow(
+                                title = choice.label?.toString().orEmpty(),
+                                supportingText = choice.number,
+                                onClick = {
+                                    listener.onChosen(position, setPrimary)
+                                    dialog.dismiss()
+                                },
+                            )
+                        }
+                    }
+                    PvotDialogCheckboxRow(context.getString(R.string.make_primary), setPrimary) {
+                        setPrimary = it
                     }
                 }
-                PvotDialogCheckboxRow(context.getString(R.string.make_primary), setPrimary) { setPrimary = it }
             }
-        }
         return dialog
     }
 }

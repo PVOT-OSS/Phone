@@ -36,16 +36,21 @@ class OnboardingActivityTest {
     private val context: Application = ApplicationProvider.getApplicationContext()
     private val roleManager = context.getSystemService(RoleManager::class.java)
 
-    /** Solid glass holds the live background still, so the test clock can go idle; set before launch. */
-    @get:Rule(order = 0) val solidGlass = object : ExternalResource() {
-        override fun before() {
-            AppearanceSettings.setGlass(context, false)
-        }
+    /**
+     * Solid glass holds the live background still, so the test clock can go idle; set before
+     * launch.
+     */
+    @get:Rule(order = 0)
+    val solidGlass =
+        object : ExternalResource() {
+            override fun before() {
+                AppearanceSettings.setGlass(context, false)
+            }
 
-        override fun after() {
-            AppearanceSettings.prefs(context).edit().clear().commit()
+            override fun after() {
+                AppearanceSettings.prefs(context).edit().clear().commit()
+            }
         }
-    }
 
     @get:Rule(order = 1) val compose = createAndroidComposeRule<OnboardingActivity>()
 
@@ -54,16 +59,21 @@ class OnboardingActivityTest {
         compose.onNodeWithTag(TestTags.ONBOARDING_PRIMARY).performClick()
         val started = shadowOf(compose.activity).nextStartedActivityForResult
         assertThat(started.intent.action).isEqualTo(ACTION_REQUEST_ROLE)
-        assertThat(started.intent.getStringExtra(EXTRA_ROLE_NAME)).isEqualTo(RoleManager.ROLE_DIALER)
+        assertThat(started.intent.getStringExtra(EXTRA_ROLE_NAME))
+            .isEqualTo(RoleManager.ROLE_DIALER)
     }
 
     @Test
     fun notNowOnTheRoleMovesOnToPermissionsThenDismisses() {
         compose.onNodeWithTag(TestTags.ONBOARDING_NOT_NOW).performClick()
-        compose.onNodeWithText(context.getString(R.string.onboarding_permissions_body)).assertIsDisplayed()
+        compose
+            .onNodeWithText(context.getString(R.string.onboarding_permissions_body))
+            .assertIsDisplayed()
         assertThat(compose.activity.isFinishing).isFalse()
 
-        compose.onNodeWithTag(TestTags.ONBOARDING).performScrollToNode(hasTestTag(TestTags.ONBOARDING_NOT_NOW))
+        compose
+            .onNodeWithTag(TestTags.ONBOARDING)
+            .performScrollToNode(hasTestTag(TestTags.ONBOARDING_NOT_NOW))
         compose.onNodeWithTag(TestTags.ONBOARDING_NOT_NOW).performClick()
         assertThat(compose.activity.isFinishing).isTrue()
         assertThat(OnboardingRouter.isDismissed(context)).isTrue()
@@ -79,7 +89,8 @@ class OnboardingActivityTest {
     @Test
     fun theDefaultAppWithEveryPermissionFinishesStraightAway() {
         shadowOf(roleManager).addHeldRole(RoleManager.ROLE_DIALER)
-        shadowOf(context).grantPermissions(*PermissionGroup.entries.flatMap { it.permissions }.toTypedArray())
+        shadowOf(context)
+            .grantPermissions(*PermissionGroup.entries.flatMap { it.permissions }.toTypedArray())
         val activity = Robolectric.buildActivity(OnboardingActivity::class.java).setup().get()
         assertThat(activity.isFinishing).isTrue()
     }

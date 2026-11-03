@@ -22,7 +22,14 @@ class CallLogFetchQueryTest {
     private val application = ApplicationProvider.getApplicationContext<Application>()
 
     private fun selection() =
-        CallLogQueryHandler.buildFetchQuery(application, CallLogQueryHandler.CALL_TYPE_ALL, false, 0, -1).selection
+        CallLogQueryHandler.buildFetchQuery(
+                application,
+                CallLogQueryHandler.CALL_TYPE_ALL,
+                false,
+                0,
+                -1,
+            )
+            .selection
 
     @Test
     fun withoutVoicemailAccessTheDeletedColumnIsNotNamed() {
@@ -31,8 +38,11 @@ class CallLogFetchQueryTest {
 
     @Test
     fun withVoicemailAccessDeletedVoicemailsAreLeftOut() {
-        shadowOf(application).grantPermissions(Manifest.permission.READ_VOICEMAIL, Manifest.permission.WRITE_VOICEMAIL)
+        shadowOf(application)
+            .grantPermissions(
+                Manifest.permission.READ_VOICEMAIL,
+                Manifest.permission.WRITE_VOICEMAIL,
+            )
         assertThat(selection()).contains("${Voicemails.DELETED} = 0")
     }
-
 }

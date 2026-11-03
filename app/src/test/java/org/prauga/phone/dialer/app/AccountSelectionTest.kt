@@ -35,34 +35,53 @@ class AccountSelectionTest {
     @get:Rule val compose = createComposeRule()
 
     private fun account(id: String, label: String, number: String) =
-        CallingAccount(PhoneAccountHandle(ComponentName("com.android.phone", "Telephony"), id), label, number, null)
+        CallingAccount(
+            PhoneAccountHandle(ComponentName("com.android.phone", "Telephony"), id),
+            label,
+            number,
+            null,
+        )
 
-    private val accounts = listOf(account("1", "Work SIM", "+1 555-0100"), account("2", "Personal SIM", "+1 555-0199"))
+    private val accounts =
+        listOf(account("1", "Work SIM", "+1 555-0100"), account("2", "Personal SIM", "+1 555-0199"))
 
     @Test
     fun noChooserWithoutANumber() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        assertThat(AccountSelectionActivity.createIntent(context, "", CallInitiationType.Type.CALL_DETAILS)).isNull()
+        assertThat(
+                AccountSelectionActivity.createIntent(
+                    context,
+                    "",
+                    CallInitiationType.Type.CALL_DETAILS,
+                )
+            )
+            .isNull()
     }
 
     @Test
     fun pickingAnAccountChoosesIt() {
         var picked: CallingAccount? = null
-        compose.setContent { PvotAppTheme { AccountSheet(accounts, onSelect = { picked = it }, onDismiss = {}) } }
+        compose.setContent {
+            PvotAppTheme { AccountSheet(accounts, onSelect = { picked = it }, onDismiss = {}) }
+        }
         compose.onNodeWithTag(TestTags.callingAccount("2")).performClick()
         assertThat(picked?.label).isEqualTo("Personal SIM")
     }
 
-    @Test
-    fun screenshotDark() = screenshot("account_selection_dark")
+    @Test fun screenshotDark() = screenshot("account_selection_dark")
 
     @Test
     @Config(qualifiers = "+notnight")
     fun screenshotLight() = screenshot("account_selection_light")
 
     private fun screenshot(name: String) {
-        compose.setContent { PvotAppTheme { AccountSheet(accounts, onSelect = {}, onDismiss = {}) } }
+        compose.setContent {
+            PvotAppTheme { AccountSheet(accounts, onSelect = {}, onDismiss = {}) }
+        }
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/dialogs/$name.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/dialogs/$name.png")
     }
 }

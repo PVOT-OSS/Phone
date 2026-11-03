@@ -23,12 +23,17 @@ import com.prauga.pvot.designsystem.theme.PvotSpacing
 @Composable
 fun PhoneSnackbarHost(hostState: SnackbarHostState, modifier: Modifier = Modifier) {
     val colors = phoneSnackbarColors()
-    PvotSnackbarHost(hostState = hostState, modifier = modifier.padding(horizontal = PvotSpacing.L)) { data ->
+    PvotSnackbarHost(
+        hostState = hostState,
+        modifier = modifier.padding(horizontal = PvotSpacing.L),
+    ) { data ->
         PvotSnackbar(data, colors = colors)
     }
 }
 
-/** The theme's raised surface and accent, rather than the inverse colors, so it reads as Phone's. */
+/**
+ * The theme's raised surface and accent, rather than the inverse colors, so it reads as Phone's.
+ */
 @Composable
 private fun phoneSnackbarColors(): PvotSnackbarColors {
     val scheme = MaterialTheme.colorScheme

@@ -34,19 +34,32 @@ class CallStatsDetailTest {
     @get:Rule val compose = createComposeRule()
 
     private fun details(vararg calls: Pair<Int, Long>) =
-        CallStatsDetails("+15551234567", Calls.PRESENTATION_ALLOWED, "", null, null, "us", "", 0).apply {
-            for ((type, seconds) in calls) addTimeOrMissed(type, seconds)
-        }
+        CallStatsDetails("+15551234567", Calls.PRESENTATION_ALLOWED, "", null, null, "us", "", 0)
+            .apply { for ((type, seconds) in calls) addTimeOrMissed(type, seconds) }
 
-    private val number = details(Calls.INCOMING_TYPE to 120, Calls.INCOMING_TYPE to 60, Calls.OUTGOING_TYPE to 300,
-        Calls.MISSED_TYPE to 0)
-    private val total = details(Calls.INCOMING_TYPE to 600, Calls.OUTGOING_TYPE to 1200, Calls.MISSED_TYPE to 0,
-        Calls.MISSED_TYPE to 0, Calls.BLOCKED_TYPE to 0).apply { mergeWith(this@CallStatsDetailTest.number) }
+    private val number =
+        details(
+            Calls.INCOMING_TYPE to 120,
+            Calls.INCOMING_TYPE to 60,
+            Calls.OUTGOING_TYPE to 300,
+            Calls.MISSED_TYPE to 0,
+        )
+    private val total =
+        details(
+                Calls.INCOMING_TYPE to 600,
+                Calls.OUTGOING_TYPE to 1200,
+                Calls.MISSED_TYPE to 0,
+                Calls.MISSED_TYPE to 0,
+                Calls.BLOCKED_TYPE to 0,
+            )
+            .apply { mergeWith(this@CallStatsDetailTest.number) }
 
     @Test
     fun durationsShowOnlyTypesWithTalkTime() {
         val lines = CallStatsSummary(number, total).durations
-        assertThat(lines.map { it.type }).containsExactly(Calls.INCOMING_TYPE, Calls.OUTGOING_TYPE).inOrder()
+        assertThat(lines.map { it.type })
+            .containsExactly(Calls.INCOMING_TYPE, Calls.OUTGOING_TYPE)
+            .inOrder()
         assertThat(lines.map { it.amount }).containsExactly(180L, 300L).inOrder()
         assertThat(lines.map { it.percent }).containsExactly(38, 63).inOrder()
     }
@@ -54,7 +67,9 @@ class CallStatsDetailTest {
     @Test
     fun countsLeaveOutTypesWithNoCalls() {
         val lines = CallStatsSummary(number, total).counts
-        assertThat(lines.map { it.type }).containsExactly(Calls.INCOMING_TYPE, Calls.OUTGOING_TYPE, Calls.MISSED_TYPE).inOrder()
+        assertThat(lines.map { it.type })
+            .containsExactly(Calls.INCOMING_TYPE, Calls.OUTGOING_TYPE, Calls.MISSED_TYPE)
+            .inOrder()
         assertThat(lines.map { it.percent }).containsExactly(50, 25, 25).inOrder()
     }
 
@@ -67,7 +82,9 @@ class CallStatsDetailTest {
 
     @Test
     fun averagesRoundToTheNearestSecond() {
-        val averages = CallStatsSummary(details(Calls.INCOMING_TYPE to 10, Calls.INCOMING_TYPE to 11), total).averages
+        val averages =
+            CallStatsSummary(details(Calls.INCOMING_TYPE to 10, Calls.INCOMING_TYPE to 11), total)
+                .averages
         assertThat(averages.single().amount).isEqualTo(11L)
     }
 
@@ -92,29 +109,37 @@ class CallStatsDetailTest {
         compose.onNodeWithTag(TestTags.CALL_STATS_CALL).assertDoesNotExist()
     }
 
-    @Test
-    fun screenshotDark() = screenshot("detail_dark")
+    @Test fun screenshotDark() = screenshot("detail_dark")
 
-    @Test
-    @Config(qualifiers = "+notnight")
-    fun screenshotLight() = screenshot("detail_light")
+    @Test @Config(qualifiers = "+notnight") fun screenshotLight() = screenshot("detail_light")
 
     private fun screenshot(name: String) {
         show(header(canCall = true), dateRange = "Oct 1 – 31, 2026")
         compose.onRoot().captureRoboImage("src/test/screenshots/callstats/$name.png")
     }
 
-    private fun header(canCall: Boolean) = CallStatsHeader(
-        title = "Alex Doe", subtitle = "Mobile +1 555-123-4567", nameForPhoto = "Alex Doe",
-        contactType = LetterTileDrawable.TYPE_DEFAULT, canCall = canCall, canEditBeforeCall = canCall,
-    )
+    private fun header(canCall: Boolean) =
+        CallStatsHeader(
+            title = "Alex Doe",
+            subtitle = "Mobile +1 555-123-4567",
+            nameForPhoto = "Alex Doe",
+            contactType = LetterTileDrawable.TYPE_DEFAULT,
+            canCall = canCall,
+            canEditBeforeCall = canCall,
+        )
 
     private fun show(header: CallStatsHeader, dateRange: String? = null, onCall: () -> Unit = {}) {
         compose.setContent {
             SolidGlassTheme {
                 CallStatsDetailScreen(
-                    header = header, summary = CallStatsSummary(number, total), dateRange = dateRange,
-                    onBack = {}, onCall = onCall, callWithIntent = null, onEditNumber = {}, onCopy = {},
+                    header = header,
+                    summary = CallStatsSummary(number, total),
+                    dateRange = dateRange,
+                    onBack = {},
+                    onCall = onCall,
+                    callWithIntent = null,
+                    onEditNumber = {},
+                    onCopy = {},
                     avatar = { PvotAvatar(name = header.nameForPhoto, size = it) },
                 )
             }

@@ -15,9 +15,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DatePickerDefaults
@@ -42,13 +42,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.Dp
-import com.prauga.pvot.designsystem.navigation.PvotTopBarDefaults
-import com.prauga.pvot.designsystem.effects.PvotGlassDefaults
-import com.prauga.pvot.designsystem.effects.PvotGlassMaterial
-import com.prauga.pvot.designsystem.effects.LocalPvotGlassBackdrop
-import com.prauga.pvot.designsystem.components.pvotGlassSurface
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -60,8 +55,13 @@ import com.prauga.pvot.designsystem.components.PvotDialogAction
 import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
 import com.prauga.pvot.designsystem.components.PvotTabRow
 import com.prauga.pvot.designsystem.components.PvotTabRowDefaults
+import com.prauga.pvot.designsystem.components.pvotGlassSurface
+import com.prauga.pvot.designsystem.effects.LocalPvotGlassBackdrop
+import com.prauga.pvot.designsystem.effects.PvotGlassDefaults
+import com.prauga.pvot.designsystem.effects.PvotGlassMaterial
 import com.prauga.pvot.designsystem.navigation.PvotTopBar
 import com.prauga.pvot.designsystem.navigation.PvotTopBarAction
+import com.prauga.pvot.designsystem.navigation.PvotTopBarDefaults
 import com.prauga.pvot.designsystem.platform.enablePvotEdgeToEdge
 import com.prauga.pvot.designsystem.platform.setPvotContent
 import com.prauga.pvot.designsystem.theme.PvotSpacing
@@ -78,6 +78,7 @@ import org.prauga.phone.dialer.callstats.CallStatsDetails
 import org.prauga.phone.dialer.callstats.CallStatsEntry
 import org.prauga.phone.dialer.callstats.CallStatsListScreen
 import org.prauga.phone.dialer.callstats.CallStatsListViewModel
+import org.prauga.phone.dialer.clipboard.ClipboardUtils
 import org.prauga.phone.dialer.contacts.ContactsComponent
 import org.prauga.phone.dialer.database.CallLogQueryHandler
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper
@@ -85,7 +86,6 @@ import org.prauga.phone.dialer.ui.PhoneScaffold
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.util.CallUtil
-import org.prauga.phone.dialer.clipboard.ClipboardUtils
 import org.prauga.phone.dialer.util.DialerUtils
 
 /** The call history screen: all calls, missed calls and call statistics. */
@@ -96,11 +96,14 @@ class CallLogActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enablePvotEdgeToEdge()
-        val startTab = if (intent?.getIntExtra(CallLog.Calls.EXTRA_CALL_TYPE_FILTER, -1) == Calls.MISSED_TYPE) {
-            TAB_MISSED
-        } else {
-            TAB_ALL
-        }
+        val startTab =
+            if (
+                intent?.getIntExtra(CallLog.Calls.EXTRA_CALL_TYPE_FILTER, -1) == Calls.MISSED_TYPE
+            ) {
+                TAB_MISSED
+            } else {
+                TAB_ALL
+            }
         setPvotContent {
             PhoneScreenTheme {
                 CallLogContent(
@@ -164,15 +167,29 @@ private fun CallLogContent(
     val application = context.applicationContext as Application
     var tab by rememberSaveable { mutableIntStateOf(startTab) }
     var confirmClear by remember { mutableStateOf(false) }
-    val allCalls: CallHistoryViewModel = viewModel(key = "all", factory = viewModelFactory {
-        initializer { CallHistoryViewModel(application, CallLogQueryHandler.CALL_TYPE_ALL) }
-    })
-    val missedCalls: CallHistoryViewModel = viewModel(key = "missed", factory = viewModelFactory {
-        initializer { CallHistoryViewModel(application, Calls.MISSED_TYPE) }
-    })
-    val stats: CallStatsListViewModel = viewModel(key = "stats", factory = viewModelFactory {
-        initializer { CallStatsListViewModel(application) }
-    })
+    val allCalls: CallHistoryViewModel =
+        viewModel(
+            key = "all",
+            factory =
+                viewModelFactory {
+                    initializer {
+                        CallHistoryViewModel(application, CallLogQueryHandler.CALL_TYPE_ALL)
+                    }
+                },
+        )
+    val missedCalls: CallHistoryViewModel =
+        viewModel(
+            key = "missed",
+            factory =
+                viewModelFactory {
+                    initializer { CallHistoryViewModel(application, Calls.MISSED_TYPE) }
+                },
+        )
+    val stats: CallStatsListViewModel =
+        viewModel(
+            key = "stats",
+            factory = viewModelFactory { initializer { CallStatsListViewModel(application) } },
+        )
     val allState by allCalls.state.collectAsStateWithLifecycle()
 
     PhoneScaffold(
@@ -187,40 +204,50 @@ private fun CallLogContent(
                 onBack = onBack,
                 onClear = { confirmClear = true },
             )
-        },
+        }
     ) { padding ->
         // The lists scroll under the glass bar, so it frosts the calls as they pass.
         val modifier = Modifier.fillMaxSize()
         val topPadding = padding.calculateTopPadding()
         when (tab) {
-            CallLogActivity.TAB_ALL -> CallHistoryRoute(
-                viewModel = allCalls,
-                callType = CallLogQueryHandler.CALL_TYPE_ALL,
-                showEmptyAction = showsEmptyAction(CallLogQueryHandler.CALL_TYPE_ALL, isCallLogActivity = true),
-                onShowDialpad = {},
-                onMissedCallRead = {},
-                modifier = modifier,
-                topPadding = topPadding,
-            )
-            CallLogActivity.TAB_MISSED -> CallHistoryRoute(
-                viewModel = missedCalls,
-                callType = Calls.MISSED_TYPE,
-                showEmptyAction = false,
-                onShowDialpad = {},
-                onMissedCallRead = {},
-                modifier = modifier,
-                topPadding = topPadding,
-            )
-            CallLogActivity.TAB_CONTACTS, CallLogActivity.TAB_BLOCKED -> CallHistoryRoute(
-                viewModel = allCalls,
-                callType = CallLogQueryHandler.CALL_TYPE_ALL,
-                showEmptyAction = false,
-                onShowDialpad = {},
-                onMissedCallRead = {},
-                modifier = modifier,
-                topPadding = topPadding,
-                filter = if (tab == CallLogActivity.TAB_CONTACTS) CallLogFilter.CONTACTS else CallLogFilter.BLOCKED,
-            )
+            CallLogActivity.TAB_ALL ->
+                CallHistoryRoute(
+                    viewModel = allCalls,
+                    callType = CallLogQueryHandler.CALL_TYPE_ALL,
+                    showEmptyAction =
+                        showsEmptyAction(
+                            CallLogQueryHandler.CALL_TYPE_ALL,
+                            isCallLogActivity = true,
+                        ),
+                    onShowDialpad = {},
+                    onMissedCallRead = {},
+                    modifier = modifier,
+                    topPadding = topPadding,
+                )
+            CallLogActivity.TAB_MISSED ->
+                CallHistoryRoute(
+                    viewModel = missedCalls,
+                    callType = Calls.MISSED_TYPE,
+                    showEmptyAction = false,
+                    onShowDialpad = {},
+                    onMissedCallRead = {},
+                    modifier = modifier,
+                    topPadding = topPadding,
+                )
+            CallLogActivity.TAB_CONTACTS,
+            CallLogActivity.TAB_BLOCKED ->
+                CallHistoryRoute(
+                    viewModel = allCalls,
+                    callType = CallLogQueryHandler.CALL_TYPE_ALL,
+                    showEmptyAction = false,
+                    onShowDialpad = {},
+                    onMissedCallRead = {},
+                    modifier = modifier,
+                    topPadding = topPadding,
+                    filter =
+                        if (tab == CallLogActivity.TAB_CONTACTS) CallLogFilter.CONTACTS
+                        else CallLogFilter.BLOCKED,
+                )
             else -> CallStatsRoute(stats, modifier, topPadding)
         }
     }
@@ -235,17 +262,23 @@ private fun CallLogContent(
         ) {
             PvotDialogAction(
                 label = stringResource(android.R.string.ok),
-                onClick = { confirmClear = false; onClearHistory() },
+                onClick = {
+                    confirmClear = false
+                    onClearHistory()
+                },
                 style = PvotDialogActionStyle.Destructive,
             )
-            PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = { confirmClear = false })
+            PvotDialogAction(
+                label = stringResource(android.R.string.cancel),
+                onClick = { confirmClear = false },
+            )
         }
     }
 }
 
 /**
- * The call history's top bar: back, Clear and the All / Missed / Stats choice on one glass pane,
- * so the calls scrolling under show frosted behind both.
+ * The call history's top bar: back, Clear and the All / Missed / Stats choice on one glass pane, so
+ * the calls scrolling under show frosted behind both.
  */
 @Composable
 internal fun CallLogTopBar(
@@ -256,8 +289,7 @@ internal fun CallLogTopBar(
     onClear: () -> Unit,
 ) {
     Column(
-        Modifier
-            .fillMaxWidth()
+        Modifier.fillMaxWidth()
             .pvotGlassSurface(
                 backdrop = LocalPvotGlassBackdrop.current,
                 cornerRadius = 0.dp,
@@ -265,7 +297,7 @@ internal fun CallLogTopBar(
                 style = PvotGlassDefaults.materialStyle(PvotGlassMaterial.Thick),
                 rim = false,
                 role = null,
-            ),
+            )
     ) {
         // Compact from the start, so the tabs sit right under the bar on every tab. The pane is the
         // glass, so the bar itself draws none.
@@ -288,22 +320,24 @@ internal fun CallLogTopBar(
         // The Recents filters and Statistics; five tabs scroll rather than squeeze.
         PvotTabRow(
             // No voicemail here: the screen has no player, so its tabs skip that filter.
-            tabs = recentsFilterLabels(CallLogFilter.entries - CallLogFilter.VOICEMAIL) + stringResource(R.string.call_log_stats_title),
+            tabs =
+                recentsFilterLabels(CallLogFilter.entries - CallLogFilter.VOICEMAIL) +
+                    stringResource(R.string.call_log_stats_title),
             selectedIndex = tab,
             onSelect = onTabSelected,
             scrollable = true,
             // Each tab pads its label, so this lines the first label up with the screen padding.
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = PvotSpacing.L - PvotTabRowDefaults.TabHorizontalPadding)
-                .testTag(TestTags.CALL_HISTORY_TABS),
+            modifier =
+                Modifier.fillMaxWidth()
+                    .padding(horizontal = PvotSpacing.L - PvotTabRowDefaults.TabHorizontalPadding)
+                    .testTag(TestTags.CALL_HISTORY_TABS),
         )
     }
 }
 
 /**
- * Picks the statistics' time range: Material's date range picker, the one Material component
- * kept, in a Pvot dialog. Days come back as the picker's UTC midnights.
+ * Picks the statistics' time range: Material's date range picker, the one Material component kept,
+ * in a Pvot dialog. Days come back as the picker's UTC midnights.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -314,10 +348,11 @@ internal fun CallStatsRangeDialog(
     onDismiss: () -> Unit,
     onPick: (startUtcDay: Long, endUtcDay: Long) -> Unit,
 ) {
-    val pickerState = rememberDateRangePickerState(
-        initialSelectedStartDateMillis = initialStartUtcDay,
-        initialSelectedEndDateMillis = initialEndUtcDay,
-    )
+    val pickerState =
+        rememberDateRangePickerState(
+            initialSelectedStartDateMillis = initialStartUtcDay,
+            initialSelectedEndDateMillis = initialEndUtcDay,
+        )
     val dateFormatter = remember { DatePickerDefaults.dateFormatter() }
     val locale = LocalConfiguration.current.locales[0]
     PvotDialog(
@@ -327,10 +362,10 @@ internal fun CallStatsRangeDialog(
         content = {
             DateRangePicker(
                 state = pickerState,
-                modifier = Modifier
-                    .bleedToDialogEdges()
-                    .height(RangePickerHeight)
-                    .testTag(TestTags.CALL_STATS_RANGE_PICKER),
+                modifier =
+                    Modifier.bleedToDialogEdges()
+                        .height(RangePickerHeight)
+                        .testTag(TestTags.CALL_STATS_RANGE_PICKER),
                 // The dialog is the surface; a second fill would draw a box inside it.
                 colors = DatePickerDefaults.colors(containerColor = Color.Transparent),
                 // The picker's own title and heading are sized and indented for a full screen and
@@ -338,14 +373,21 @@ internal fun CallStatsRangeDialog(
                 // a whole month and both actions fit.
                 title = null,
                 headline = {
-                    val start = pickerState.selectedStartDateMillis?.let { dateFormatter.formatDate(it, locale) }
-                    val end = pickerState.selectedEndDateMillis?.let { dateFormatter.formatDate(it, locale) }
+                    val start =
+                        pickerState.selectedStartDateMillis?.let {
+                            dateFormatter.formatDate(it, locale)
+                        }
+                    val end =
+                        pickerState.selectedEndDateMillis?.let {
+                            dateFormatter.formatDate(it, locale)
+                        }
                     Text(
-                        text = stringResource(
-                            R.string.call_stats_range_heading,
-                            start ?: stringResource(R.string.call_stats_range_start),
-                            end ?: stringResource(R.string.call_stats_range_end),
-                        ),
+                        text =
+                            stringResource(
+                                R.string.call_stats_range_heading,
+                                start ?: stringResource(R.string.call_stats_range_start),
+                                end ?: stringResource(R.string.call_stats_range_end),
+                            ),
                         style = MaterialTheme.typography.titleMedium,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
@@ -360,7 +402,8 @@ internal fun CallStatsRangeDialog(
             style = PvotDialogActionStyle.Primary,
             onClick = {
                 val start = pickerState.selectedStartDateMillis
-                if (start != null) onPick(start, pickerState.selectedEndDateMillis ?: start) else onDismiss()
+                if (start != null) onPick(start, pickerState.selectedEndDateMillis ?: start)
+                else onDismiss()
             },
         )
         PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = onDismiss)
@@ -371,7 +414,8 @@ internal fun CallStatsRangeDialog(
 private val RangePickerHeight = 384.dp
 
 /** The dialog's indent for the picked range. */
-private val RangePickerHeadlinePadding = PaddingValues(start = 24.dp, end = 12.dp, top = 16.dp, bottom = 12.dp)
+private val RangePickerHeadlinePadding =
+    PaddingValues(start = 24.dp, end = 12.dp, top = 16.dp, bottom = 12.dp)
 
 /** The padding inside a Pvot dialog's card, which the picker spans so a week fits across. */
 private val DialogContentPadding = PvotSpacing.L * 1.5f
@@ -391,10 +435,13 @@ private fun CallStatsRoute(viewModel: CallStatsListViewModel, modifier: Modifier
     val filter by viewModel.filter.collectAsStateWithLifecycle()
     val version by viewModel.contactInfoVersion.collectAsStateWithLifecycle()
     var pickingRange by remember { mutableStateOf(false) }
-    val displayOrder = remember { ContactsComponent.get(context).contactDisplayPreferences().displayOrder }
-    val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
-        if (it) viewModel.refresh()
+    val displayOrder = remember {
+        ContactsComponent.get(context).contactDisplayPreferences().displayOrder
     }
+    val permissionLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it) viewModel.refresh()
+        }
 
     LifecycleResumeEffect(viewModel) {
         viewModel.start()
@@ -402,29 +449,43 @@ private fun CallStatsRoute(viewModel: CallStatsListViewModel, modifier: Modifier
         onPauseOrDispose { viewModel.stop() }
     }
 
-    val actions = remember(viewModel) {
-        object : CallStatsActions {
-            override fun open(entry: CallStatsEntry, total: CallStatsDetails) {
-                context.startActivity(
-                    Intent(context, CallStatsDetailActivity::class.java)
-                        .putExtra(CallStatsDetailActivity.EXTRA_DETAILS, entry.details)
-                        .putExtra(CallStatsDetailActivity.EXTRA_TOTAL, total)
-                        .putExtra(CallStatsDetailActivity.EXTRA_FROM, viewModel.filter.value.from)
-                        .putExtra(CallStatsDetailActivity.EXTRA_TO, viewModel.filter.value.to),
-                )
+    val actions =
+        remember(viewModel) {
+            object : CallStatsActions {
+                override fun open(entry: CallStatsEntry, total: CallStatsDetails) {
+                    context.startActivity(
+                        Intent(context, CallStatsDetailActivity::class.java)
+                            .putExtra(CallStatsDetailActivity.EXTRA_DETAILS, entry.details)
+                            .putExtra(CallStatsDetailActivity.EXTRA_TOTAL, total)
+                            .putExtra(
+                                CallStatsDetailActivity.EXTRA_FROM,
+                                viewModel.filter.value.from,
+                            )
+                            .putExtra(CallStatsDetailActivity.EXTRA_TO, viewModel.filter.value.to)
+                    )
+                }
+
+                override fun copyNumber(number: String) =
+                    ClipboardUtils.copyText(context, null, number, true)
+
+                override fun editBeforeCall(number: String) =
+                    DialerUtils.startActivityWithErrorToast(
+                        context,
+                        Intent(Intent.ACTION_DIAL, CallUtil.getCallUri(number)),
+                    )
+
+                override fun pickRange() {
+                    pickingRange = true
+                }
+
+                override fun clearRange() = viewModel.setRange(-1, -1)
+
+                override fun sortByDuration(byDuration: Boolean) =
+                    viewModel.setSortByDuration(byDuration)
+
+                override fun turnOnPermission() = permissionLauncher.launch(READ_CALL_LOG)
             }
-
-            override fun copyNumber(number: String) = ClipboardUtils.copyText(context, null, number, true)
-
-            override fun editBeforeCall(number: String) =
-                DialerUtils.startActivityWithErrorToast(context, Intent(Intent.ACTION_DIAL, CallUtil.getCallUri(number)))
-
-            override fun pickRange() { pickingRange = true }
-            override fun clearRange() = viewModel.setRange(-1, -1)
-            override fun sortByDuration(byDuration: Boolean) = viewModel.setSortByDuration(byDuration)
-            override fun turnOnPermission() = permissionLauncher.launch(READ_CALL_LOG)
         }
-    }
 
     CallStatsListScreen(
         state = state,
@@ -432,10 +493,18 @@ private fun CallStatsRoute(viewModel: CallStatsListViewModel, modifier: Modifier
         prepare = { entry ->
             version.let {
                 val details = entry.details
-                if (PhoneNumberHelper.canPlaceCallsTo(details.number, details.numberPresentation) && !details.isVoicemailNumber) {
-                    viewModel.contactInfoCache.getValue(
-                        details.number + details.postDialDigits, details.countryIso, entry.cachedInfo, false,
-                    )?.let(details::updateFromInfo)
+                if (
+                    PhoneNumberHelper.canPlaceCallsTo(details.number, details.numberPresentation) &&
+                        !details.isVoicemailNumber
+                ) {
+                    viewModel.contactInfoCache
+                        .getValue(
+                            details.number + details.postDialDigits,
+                            details.countryIso,
+                            entry.cachedInfo,
+                            false,
+                        )
+                        ?.let(details::updateFromInfo)
                 }
                 details.updateDisplayProperties(context, displayOrder)
                 details
@@ -464,10 +533,18 @@ private const val DAY_MILLIS = 24 * 60 * 60 * 1000L
 
 /** The picker's UTC midnight for a day, as the start of that day in the phone's time zone. */
 private fun startOfLocalDay(utcDayMillis: Long): Long =
-    Instant.ofEpochMilli(utcDayMillis).atZone(ZoneOffset.UTC).toLocalDate()
-        .atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+    Instant.ofEpochMilli(utcDayMillis)
+        .atZone(ZoneOffset.UTC)
+        .toLocalDate()
+        .atStartOfDay(ZoneId.systemDefault())
+        .toInstant()
+        .toEpochMilli()
 
 /** A local time, as the picker's UTC midnight of its day. */
 private fun localToUtcDay(localMillis: Long): Long =
-    Instant.ofEpochMilli(localMillis).atZone(ZoneId.systemDefault()).toLocalDate()
-        .atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
+    Instant.ofEpochMilli(localMillis)
+        .atZone(ZoneId.systemDefault())
+        .toLocalDate()
+        .atStartOfDay(ZoneOffset.UTC)
+        .toInstant()
+        .toEpochMilli()

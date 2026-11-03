@@ -43,15 +43,17 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.prauga.pvot.designsystem.components.PvotBottomSheetDefaults
 import com.prauga.pvot.designsystem.components.list.PvotListRow
 import com.prauga.pvot.designsystem.theme.PvotSpacing
-import org.prauga.phone.incallui.R
 import org.prauga.phone.dialer.common.FragmentUtils
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.TestTags
+import org.prauga.phone.incallui.R
 import org.prauga.phone.incallui.call.TelecomAdapter
 import org.prauga.phone.incallui.util.BluetoothUtil
 
-/** One place the call's audio can go: a Bluetooth device, the speaker, a headset or the earpiece. */
+/**
+ * One place the call's audio can go: a Bluetooth device, the speaker, a headset or the earpiece.
+ */
 data class AudioRoute(
     val route: Int,
     val label: String?,
@@ -61,56 +63,77 @@ data class AudioRoute(
 )
 
 /**
- * The routes [state] supports, Bluetooth devices first. A null [AudioRoute.label] means the
- * route's usual name; [bluetoothName] gives a device's name, or null when it has none.
+ * The routes [state] supports, Bluetooth devices first. A null [AudioRoute.label] means the route's
+ * usual name; [bluetoothName] gives a device's name, or null when it has none.
  */
-fun audioRoutesOf(state: CallAudioState, bluetoothName: (BluetoothDevice) -> String?): List<AudioRoute> {
+fun audioRoutesOf(
+    state: CallAudioState,
+    bluetoothName: (BluetoothDevice) -> String?,
+): List<AudioRoute> {
     val devices = state.supportedBluetoothDevices
     // The old sheet put each device on top of the previous one, so the last device came first.
-    val bluetooth = devices.reversed().map { device ->
-        AudioRoute(
-            route = CallAudioState.ROUTE_BLUETOOTH,
-            label = bluetoothName(device)?.takeIf { it.isNotEmpty() },
-            icon = R.drawable.ic_bluetooth,
-            selected = state.route == CallAudioState.ROUTE_BLUETOOTH &&
-                (devices.size == 1 || device == state.activeBluetoothDevice),
-            device = device,
-        )
-    }
-    val others = listOf(
-        CallAudioState.ROUTE_SPEAKER to R.drawable.ic_volume,
-        CallAudioState.ROUTE_WIRED_HEADSET to R.drawable.ic_headphones,
-        CallAudioState.ROUTE_EARPIECE to R.drawable.ic_phone,
-    ).filter { (route, _) -> state.supportedRouteMask and route != 0 }
-        .map { (route, icon) -> AudioRoute(route, null, icon, selected = state.route == route) }
+    val bluetooth =
+        devices.reversed().map { device ->
+            AudioRoute(
+                route = CallAudioState.ROUTE_BLUETOOTH,
+                label = bluetoothName(device)?.takeIf { it.isNotEmpty() },
+                icon = R.drawable.ic_bluetooth,
+                selected =
+                    state.route == CallAudioState.ROUTE_BLUETOOTH &&
+                        (devices.size == 1 || device == state.activeBluetoothDevice),
+                device = device,
+            )
+        }
+    val others =
+        listOf(
+                CallAudioState.ROUTE_SPEAKER to R.drawable.ic_volume,
+                CallAudioState.ROUTE_WIRED_HEADSET to R.drawable.ic_headphones,
+                CallAudioState.ROUTE_EARPIECE to R.drawable.ic_phone,
+            )
+            .filter { (route, _) -> state.supportedRouteMask and route != 0 }
+            .map { (route, icon) -> AudioRoute(route, null, icon, selected = state.route == route) }
     return bluetooth + others
 }
 
 /** The list of audio routes in the picker; tapping one picks it. */
 @Composable
-fun AudioRouteSheet(routes: List<AudioRoute>, onSelect: (AudioRoute) -> Unit, modifier: Modifier = Modifier) {
+fun AudioRouteSheet(
+    routes: List<AudioRoute>,
+    onSelect: (AudioRoute) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(PvotBottomSheetDefaults.containerColor, PvotBottomSheetDefaults.Shape)
-            .windowInsetsPadding(WindowInsets.navigationBars)
-            .padding(horizontal = PvotSpacing.S, vertical = PvotSpacing.M),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .background(PvotBottomSheetDefaults.containerColor, PvotBottomSheetDefaults.Shape)
+                .windowInsetsPadding(WindowInsets.navigationBars)
+                .padding(horizontal = PvotSpacing.S, vertical = PvotSpacing.M),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
-            Modifier
-                .padding(bottom = PvotSpacing.S)
+            Modifier.padding(bottom = PvotSpacing.S)
                 .size(PvotBottomSheetDefaults.HandleWidth, PvotBottomSheetDefaults.HandleHeight)
-                .background(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f), CircleShape),
+                .background(
+                    MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
+                    CircleShape,
+                )
         )
         for (route in routes) {
             PvotListRow(
                 title = route.label ?: stringResource(defaultLabel(route.route)),
                 modifier = Modifier.testTag(TestTags.audioRoute(route.route, route.label)),
                 leading = { Icon(painterResource(route.icon), contentDescription = null) },
-                trailing = if (route.selected) {
-                    { Icon(painterResource(R.drawable.ic_check), contentDescription = null, tint = MaterialTheme.colorScheme.primary) }
-                } else null,
+                trailing =
+                    if (route.selected) {
+                        {
+                            Icon(
+                                painterResource(R.drawable.ic_check),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary,
+                            )
+                        }
+                    } else null,
                 selected = route.selected,
                 onClick = { onSelect(route) },
             )
@@ -118,12 +141,13 @@ fun AudioRouteSheet(routes: List<AudioRoute>, onSelect: (AudioRoute) -> Unit, mo
     }
 }
 
-private fun defaultLabel(route: Int) = when (route) {
-    CallAudioState.ROUTE_BLUETOOTH -> R.string.audioroute_bluetooth
-    CallAudioState.ROUTE_SPEAKER -> R.string.audioroute_speaker
-    CallAudioState.ROUTE_WIRED_HEADSET -> R.string.audioroute_headset
-    else -> R.string.audioroute_phone
-}
+private fun defaultLabel(route: Int) =
+    when (route) {
+        CallAudioState.ROUTE_BLUETOOTH -> R.string.audioroute_bluetooth
+        CallAudioState.ROUTE_SPEAKER -> R.string.audioroute_speaker
+        CallAudioState.ROUTE_WIRED_HEADSET -> R.string.audioroute_headset
+        else -> R.string.audioroute_phone
+    }
 
 /** Shows picker for audio routes */
 class AudioRouteSelectorDialogFragment : BottomSheetDialogFragment() {
@@ -152,8 +176,17 @@ class AudioRouteSelectorDialogFragment : BottomSheetDialogFragment() {
         return dialog
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val state = BundleCompat.getParcelable(requireArguments(), ARG_AUDIO_STATE, CallAudioState::class.java)!!
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        val state =
+            BundleCompat.getParcelable(
+                requireArguments(),
+                ARG_AUDIO_STATE,
+                CallAudioState::class.java,
+            )!!
         val routes = audioRoutesOf(state, BluetoothUtil::getAliasName)
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
@@ -166,7 +199,9 @@ class AudioRouteSelectorDialogFragment : BottomSheetDialogFragment() {
     override fun onStart() {
         super.onStart()
         // The Compose sheet draws its own rounded surface.
-        dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)?.setBackgroundColor(Color.TRANSPARENT)
+        dialog
+            ?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+            ?.setBackgroundColor(Color.TRANSPARENT)
     }
 
     override fun onCancel(dialog: DialogInterface) {
@@ -181,7 +216,8 @@ class AudioRouteSelectorDialogFragment : BottomSheetDialogFragment() {
         dismiss()
     }
 
-    private fun presenter() = FragmentUtils.getParentUnsafe(this, AudioRouteSelectorPresenter::class.java)
+    private fun presenter() =
+        FragmentUtils.getParentUnsafe(this, AudioRouteSelectorPresenter::class.java)
 
     companion object {
         const val TAG = "AudioRouteSelectorDialogFragment"

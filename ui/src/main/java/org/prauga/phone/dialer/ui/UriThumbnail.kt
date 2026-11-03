@@ -31,19 +31,28 @@ import org.prauga.phone.dialer.common.LogUtil
 
 /**
  * A picture from [uri], such as one sent with a call, cropped to a [size] square with rounded
- * corners. Loads off the main thread and shows an empty tile until it is ready or if it can't be read.
+ * corners. Loads off the main thread and shows an empty tile until it is ready or if it can't be
+ * read.
  */
 @Composable
 fun UriThumbnail(uri: Uri, contentDescription: String?, size: Dp, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val sizePx = with(LocalDensity.current) { size.roundToPx() }
-    val picture by produceState<ImageBitmap?>(null, uri, sizePx) {
-        value = withContext(Dispatchers.IO) {
-            runCatching { context.contentResolver.loadThumbnail(uri, Size(sizePx, sizePx), null).asImageBitmap() }
-                .onFailure { LogUtil.w("UriThumbnail", "no picture: %s", it.javaClass.simpleName) }
-                .getOrNull()
+    val picture by
+        produceState<ImageBitmap?>(null, uri, sizePx) {
+            value =
+                withContext(Dispatchers.IO) {
+                    runCatching {
+                            context.contentResolver
+                                .loadThumbnail(uri, Size(sizePx, sizePx), null)
+                                .asImageBitmap()
+                        }
+                        .onFailure {
+                            LogUtil.w("UriThumbnail", "no picture: %s", it.javaClass.simpleName)
+                        }
+                        .getOrNull()
+                }
         }
-    }
     val shape = RoundedCornerShape(PvotSpacing.S)
     val tile = modifier.size(size).clip(shape)
     val image = picture

@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -51,7 +50,6 @@ import com.prauga.pvot.designsystem.motion.PvotMotion
 import com.prauga.pvot.designsystem.theme.PvotCallEnd
 import com.prauga.pvot.designsystem.theme.PvotOnCallEnd
 import com.prauga.pvot.designsystem.theme.PvotSpacing
-import org.prauga.phone.incallui.R
 import org.prauga.phone.dialer.common.Assert
 import org.prauga.phone.dialer.common.FragmentUtils
 import org.prauga.phone.dialer.common.LogUtil
@@ -60,6 +58,7 @@ import org.prauga.phone.dialer.telecom.TelecomUtil
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.ui.UriThumbnail
+import org.prauga.phone.incallui.R
 import org.prauga.phone.incallui.answer.impl.CreateCustomSmsDialogFragment.CreateCustomSmsHolder
 import org.prauga.phone.incallui.answer.impl.SmsBottomSheetFragment.SmsSheetHolder
 import org.prauga.phone.incallui.answer.protocol.AnswerScreen
@@ -79,7 +78,8 @@ import org.prauga.phone.incallui.video.protocol.VideoCallScreen
 import org.prauga.phone.incallui.videotech.utils.VideoUtils
 
 /** The incoming call screen: who is calling, and the controls to answer, decline or reply. */
-class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, CreateCustomSmsHolder, AnswerActions {
+class AnswerFragment :
+    Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, CreateCustomSmsHolder, AnswerActions {
 
     private lateinit var answerScreenDelegate: AnswerScreenDelegate
     private lateinit var inCallScreenDelegate: InCallScreenDelegate
@@ -108,7 +108,11 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
         FragmentUtils.checkParent(this, InCallScreenDelegateFactory::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         val arguments = requireArguments()
         Assert.checkState(arguments.containsKey(ARG_CALL_ID))
         Assert.checkState(arguments.containsKey(ARG_IS_RTT_CALL))
@@ -119,44 +123,72 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
         hasAnimatedEntry = savedInstanceState?.getBoolean(STATE_HAS_ANIMATED_ENTRY) == true
         val context = requireContext()
         val activity = requireActivity()
-        val grid = ContactGridState(context).apply { isInMultiWindowMode = activity.isInMultiWindowMode }
+        val grid =
+            ContactGridState(context).apply { isInMultiWindowMode = activity.isInMultiWindowMode }
         contactGrid = grid
         showAvatar = !isVideoCall && !isVideoUpgradeRequest
-        ui.answerIcon = when {
-            isVideoCall || isVideoUpgradeRequest -> R.drawable.ic_video
-            isRttCall -> R.drawable.ic_message
-            else -> R.drawable.ic_call_filled
-        }
+        ui.answerIcon =
+            when {
+                isVideoCall || isVideoUpgradeRequest -> R.drawable.ic_video
+                isRttCall -> R.drawable.ic_message
+                else -> R.drawable.ic_call_filled
+            }
 
-        answerScreenDelegate = FragmentUtils.getParentUnsafe(this, AnswerScreenDelegateFactory::class.java).newAnswerScreenDelegate(this)
+        answerScreenDelegate =
+            FragmentUtils.getParentUnsafe(this, AnswerScreenDelegateFactory::class.java)
+                .newAnswerScreenDelegate(this)
         initSecondaryButtons()
 
         val root = FrameLayout(context)
         inflater.inflate(R.layout.answer_video_preview, root, true)
-        val column = LinearLayout(context).apply {
-            orientation = LinearLayout.VERTICAL
-            addView(compose(context) { Header(grid) }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f))
-            addView(
-                FrameLayout(context).apply { id = R.id.incall_location_holder },
-                LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT),
-            )
-            addView(
-                compose(context) { AnswerControls(ui, this@AnswerFragment, Modifier.navigationBarsPadding().padding(bottom = PvotSpacing.L)) },
-                LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT),
-            )
-        }
-        root.addView(column, FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+        val column =
+            LinearLayout(context).apply {
+                orientation = LinearLayout.VERTICAL
+                addView(
+                    compose(context) { Header(grid) },
+                    LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f),
+                )
+                addView(
+                    FrameLayout(context).apply { id = R.id.incall_location_holder },
+                    LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ),
+                )
+                addView(
+                    compose(context) {
+                        AnswerControls(
+                            ui,
+                            this@AnswerFragment,
+                            Modifier.navigationBarsPadding().padding(bottom = PvotSpacing.L),
+                        )
+                    },
+                    LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ),
+                )
+            }
+        root.addView(
+            column,
+            FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+            ),
+        )
 
         @Suppress("DEPRECATION")
-        root.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+        root.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 
         if (isVideoCall || isVideoUpgradeRequest) {
             if (VideoUtils.hasCameraPermissionAndShownPrivacyToast(context)) {
-                answerVideoCallScreen = if (isSelfManagedCamera()) {
-                    SelfManagedAnswerVideoCallScreen(callId, this, root)
-                } else {
-                    AnswerVideoCallScreen(callId, this, root)
-                }
+                answerVideoCallScreen =
+                    if (isSelfManagedCamera()) {
+                        SelfManagedAnswerVideoCallScreen(callId, this, root)
+                    } else {
+                        AnswerVideoCallScreen(callId, this, root)
+                    }
             } else {
                 videoOff = true
             }
@@ -164,10 +196,14 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
         return root
     }
 
-    private fun compose(context: Context, content: @androidx.compose.runtime.Composable () -> Unit) = ComposeView(context).apply {
-        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-        setContent { PhoneScreenTheme(fillBackground = false) { content() } }
-    }
+    private fun compose(
+        context: Context,
+        content: @androidx.compose.runtime.Composable () -> Unit,
+    ) =
+        ComposeView(context).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent { PhoneScreenTheme(fillBackground = false) { content() } }
+        }
 
     @androidx.compose.runtime.Composable
     private fun Header(grid: ContactGridState) {
@@ -175,25 +211,42 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
         val entry = remember { Animatable(if (hasAnimatedEntry) 1f else 0f) }
         LaunchedEffect(Unit) {
             if (!hasAnimatedEntry) {
-                entry.animateTo(1f, androidx.compose.animation.core.tween(resources.getInteger(R.integer.answer_animate_entry_millis), easing = PvotMotion.Settle))
+                entry.animateTo(
+                    1f,
+                    androidx.compose.animation.core.tween(
+                        resources.getInteger(R.integer.answer_animate_entry_millis),
+                        easing = PvotMotion.Settle,
+                    ),
+                )
                 hasAnimatedEntry = true
             }
         }
-        Box(Modifier.fillMaxSize().statusBarsPadding().padding(top = PvotSpacing.L * 2), contentAlignment = Alignment.TopCenter) {
+        Box(
+            Modifier.fillMaxSize().statusBarsPadding().padding(top = PvotSpacing.L * 2),
+            contentAlignment = Alignment.TopCenter,
+        ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 ContactGrid(
                     grid,
-                    modifier = Modifier.graphicsLayer {
-                        alpha = entry.value
-                        translationY = (1f - entry.value) * 120.dp.toPx()
-                    },
+                    modifier =
+                        Modifier.graphicsLayer {
+                            alpha = entry.value
+                            translationY = (1f - entry.value) * 120.dp.toPx()
+                        },
                     avatarSize = if (showAvatar) 112.dp else 0.dp,
                 )
                 callerData?.let { CallerData(it) }
                 if (videoOff) {
-                    Column(Modifier.padding(64.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                    Column(
+                        Modifier.padding(64.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
                         Icon(painterResource(R.drawable.ic_video_off), contentDescription = null)
-                        Text(stringResource(R.string.call_incoming_video_is_off), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = PvotSpacing.S))
+                        Text(
+                            stringResource(R.string.call_incoming_video_is_off),
+                            style = MaterialTheme.typography.titleMedium,
+                            modifier = Modifier.padding(top = PvotSpacing.S),
+                        )
                     }
                 }
             }
@@ -202,9 +255,11 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        inCallScreenDelegate = Assert.isNotNull(
-            FragmentUtils.getParentUnsafe(this, InCallScreenDelegateFactory::class.java).newInCallScreenDelegate(),
-        )
+        inCallScreenDelegate =
+            Assert.isNotNull(
+                FragmentUtils.getParentUnsafe(this, InCallScreenDelegateFactory::class.java)
+                    .newInCallScreenDelegate()
+            )
         inCallScreenDelegate.onInCallScreenDelegateInit(this)
         inCallScreenDelegate.onInCallScreenReady()
         updateUI()
@@ -250,13 +305,14 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
 
     private fun initSecondaryButtons() {
         ui.secondary = secondaryBehavior
-        ui.secondaryVisible = when {
-            isVideoUpgradeRequest -> false
-            isVideoCall -> true
-            // The sheet behind it offers forwarding even when no text reply can be sent.
-            canForwardCall() -> true
-            else -> ui.secondaryVisible
-        }
+        ui.secondaryVisible =
+            when {
+                isVideoUpgradeRequest -> false
+                isVideoCall -> true
+                // The sheet behind it offers forwarding even when no text reply can be sent.
+                canForwardCall() -> true
+                else -> ui.secondaryVisible
+            }
         ui.answerAndRelease = ANSWER_AND_RELEASE
         ui.answerAndReleaseVisible = allowAnswerAndRelease()
         if (allowAnswerAndRelease()) {
@@ -289,7 +345,10 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
         contactGrid?.setPrimary(primaryInfo)
         ui.incomingWillDisconnectText = incomingWillDisconnectText()
         // A video upgrade request is not a new call; what a spam caller sent isn't shown.
-        callerData = primaryInfo.multimediaData()?.takeIf { !isVideoUpgradeRequest && !primaryInfo.isSpam && it.hasData() }
+        callerData =
+            primaryInfo.multimediaData()?.takeIf {
+                !isVideoUpgradeRequest && !primaryInfo.isSpam && it.hasData()
+            }
     }
 
     // AnswerScreen
@@ -300,32 +359,45 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
 
     override fun isVideoCall(): Boolean = requireArguments().getBoolean(ARG_IS_VIDEO_CALL)
 
-    override fun isVideoUpgradeRequest(): Boolean = requireArguments().getBoolean(ARG_IS_VIDEO_UPGRADE_REQUEST)
+    override fun isVideoUpgradeRequest(): Boolean =
+        requireArguments().getBoolean(ARG_IS_VIDEO_UPGRADE_REQUEST)
 
     fun isSelfManagedCamera(): Boolean = requireArguments().getBoolean(ARG_IS_SELF_MANAGED_CAMERA)
 
-    override fun allowAnswerAndRelease(): Boolean = requireArguments().getBoolean(ARG_ALLOW_ANSWER_AND_RELEASE)
+    override fun allowAnswerAndRelease(): Boolean =
+        requireArguments().getBoolean(ARG_ALLOW_ANSWER_AND_RELEASE)
 
     private fun hasCallOnHold(): Boolean = requireArguments().getBoolean(ARG_HAS_CALL_ON_HOLD)
 
-    override fun isActionTimeout(): Boolean = (buttonAcceptClicked || buttonRejectClicked) && answerScreenDelegate.isActionTimeout
+    override fun isActionTimeout(): Boolean =
+        (buttonAcceptClicked || buttonRejectClicked) && answerScreenDelegate.isActionTimeout
 
     override fun setTextResponses(textResponses: List<String>?) {
         when {
-            isVideoCall || isVideoUpgradeRequest -> LogUtil.i("AnswerFragment.setTextResponses", "no-op for video calls")
+            isVideoCall || isVideoUpgradeRequest ->
+                LogUtil.i("AnswerFragment.setTextResponses", "no-op for video calls")
             textResponses == null -> {
-                LogUtil.i("AnswerFragment.setTextResponses", "no text responses, hiding secondary button")
+                LogUtil.i(
+                    "AnswerFragment.setTextResponses",
+                    "no text responses, hiding secondary button",
+                )
                 this.textResponses = null
                 // The sheet behind it still offers forwarding when no text reply can be sent.
                 ui.secondaryVisible = canForwardCall()
             }
             requireActivity().isInMultiWindowMode -> {
-                LogUtil.i("AnswerFragment.setTextResponses", "in multiwindow, hiding secondary button")
+                LogUtil.i(
+                    "AnswerFragment.setTextResponses",
+                    "in multiwindow, hiding secondary button",
+                )
                 this.textResponses = null
                 ui.secondaryVisible = false
             }
             else -> {
-                LogUtil.i("AnswerFragment.setTextResponses", "textResponses.size: " + textResponses.size)
+                LogUtil.i(
+                    "AnswerFragment.setTextResponses",
+                    "textResponses.size: " + textResponses.size,
+                )
                 this.textResponses = ArrayList(textResponses)
                 ui.secondaryVisible = true
             }
@@ -380,12 +452,16 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
 
     override fun onInCallScreenDialpadVisibilityChange(isShowing: Boolean) = Unit
 
-    override fun getAnswerAndDialpadContainerResourceId(): Int = throw Assert.createUnsupportedOperationFailException()
+    override fun getAnswerAndDialpadContainerResourceId(): Int =
+        throw Assert.createUnsupportedOperationFailException()
 
     override fun showLocationUi(locationUi: Fragment?) {
         val showing = isShowingLocationUi()
         if (!showing && locationUi != null) {
-            childFragmentManager.beginTransaction().replace(R.id.incall_location_holder, locationUi).commitAllowingStateLoss()
+            childFragmentManager
+                .beginTransaction()
+                .replace(R.id.incall_location_holder, locationUi)
+                .commitAllowingStateLoss()
         } else if (showing && locationUi == null) {
             childFragmentManager.findFragmentById(R.id.incall_location_holder)?.let {
                 childFragmentManager.beginTransaction().remove(it).commitAllowingStateLoss()
@@ -404,9 +480,12 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
 
     override fun onReject(): Boolean = rejectCall()
 
-    /** Answers a video call as audio; otherwise opens the reply sheet, which settles nothing yet. */
+    /**
+     * Answers a video call as audio; otherwise opens the reply sheet, which settles nothing yet.
+     */
     override fun onSecondary(): Boolean {
-        if (secondaryBehavior == ANSWER_VIDEO_AS_AUDIO) return acceptCallByUser(answerVideoAsAudio = true)
+        if (secondaryBehavior == ANSWER_VIDEO_AS_AUDIO)
+            return acceptCallByUser(answerVideoAsAudio = true)
         showMessageMenu()
         return false
     }
@@ -420,7 +499,10 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
 
     /** Returns whether this answered the call, which only the first tap does. */
     private fun acceptCallByUser(answerVideoAsAudio: Boolean): Boolean {
-        LogUtil.i("AnswerFragment.acceptCallByUser", if (answerVideoAsAudio) " answerVideoAsAudio" else "")
+        LogUtil.i(
+            "AnswerFragment.acceptCallByUser",
+            if (answerVideoAsAudio) " answerVideoAsAudio" else "",
+        )
         if (buttonAcceptClicked) return false
         answerScreenDelegate.onAnswer(answerVideoAsAudio)
         buttonAcceptClicked = true
@@ -430,7 +512,8 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
     private fun rejectCall(): Boolean {
         LogUtil.i("AnswerFragment.rejectCall", null)
         if (buttonRejectClicked) return false
-        if (context == null) LogUtil.w("AnswerFragment.rejectCall", "Null context when rejecting call")
+        if (context == null)
+            LogUtil.w("AnswerFragment.rejectCall", "Null context when rejecting call")
         buttonRejectClicked = true
         answerScreenDelegate.onReject()
         return true
@@ -443,13 +526,17 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
     private fun showMessageMenu() {
         LogUtil.i("AnswerFragment.showMessageMenu", "Show sms menu.")
         if (context == null || isDetached || childFragmentManager.isDestroyed) return
-        textResponsesFragment = SmsBottomSheetFragment.newInstance(textResponses, canForwardCall()).also { it.show(childFragmentManager, null) }
+        textResponsesFragment =
+            SmsBottomSheetFragment.newInstance(textResponses, canForwardCall()).also {
+                it.show(childFragmentManager, null)
+            }
         TelecomUtil.silenceRinger(context)
     }
 
     // SmsSheetHolder and CreateCustomSmsHolder
 
-    override fun acquireInCallUiLock(tag: String): InCallUiLock = answerScreenDelegate.acquireInCallUiLock(tag)
+    override fun acquireInCallUiLock(tag: String): InCallUiLock =
+        answerScreenDelegate.acquireInCallUiLock(tag)
 
     override fun smsSelected(text: CharSequence?) {
         LogUtil.i("AnswerFragment.smsSelected", null)
@@ -465,9 +552,11 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
             keyguard.requestDismissKeyguard(
                 requireActivity(),
                 object : KeyguardDismissCallback() {
-                    override fun onDismissCancelled() = LogUtil.i("AnswerFragment.smsSelected", "onDismissCancelled")
+                    override fun onDismissCancelled() =
+                        LogUtil.i("AnswerFragment.smsSelected", "onDismissCancelled")
 
-                    override fun onDismissError() = LogUtil.i("AnswerFragment.smsSelected", "onDismissError")
+                    override fun onDismissError() =
+                        LogUtil.i("AnswerFragment.smsSelected", "onDismissError")
 
                     override fun onDismissSucceeded() {
                         LogUtil.i("AnswerFragment.smsSelected", "onDismissSucceeded")
@@ -484,10 +573,14 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
     }
 
     private fun showCustomSmsDialog() {
-        createCustomSmsDialogFragment = CreateCustomSmsDialogFragment.newInstance().also { it.showNow(childFragmentManager, null) }
+        createCustomSmsDialogFragment =
+            CreateCustomSmsDialogFragment.newInstance().also {
+                it.showNow(childFragmentManager, null)
+            }
     }
 
-    private fun canForwardCall(): Boolean = ::answerScreenDelegate.isInitialized && answerScreenDelegate.canForwardCall()
+    private fun canForwardCall(): Boolean =
+        ::answerScreenDelegate.isInitialized && answerScreenDelegate.canForwardCall()
 
     override fun forwardSelected() {
         LogUtil.i("AnswerFragment.forwardSelected", null)
@@ -516,7 +609,9 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
 
     private fun canRejectCallWithSms(): Boolean {
         val state = primaryCallState?.state() ?: return false
-        return state != DialerCallState.DISCONNECTED && state != DialerCallState.DISCONNECTING && state != DialerCallState.IDLE
+        return state != DialerCallState.DISCONNECTED &&
+            state != DialerCallState.DISCONNECTING &&
+            state != DialerCallState.IDLE
     }
 
     companion object {
@@ -529,27 +624,30 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
         private const val ARG_IS_SELF_MANAGED_CAMERA = "is_self_managed_camera"
         private const val STATE_HAS_ANIMATED_ENTRY = "hasAnimated"
 
-        val REJECT_WITH_SMS = AnswerSideAction(
-            icon = R.drawable.ic_message,
-            label = R.string.call_incoming_message,
-            description = R.string.a11y_description_incoming_call_reject_with_sms,
-            accessibilityLabel = R.string.a11y_incoming_call_reject_with_sms,
-            slot = AnswerSideSlot.Message,
-        )
-        val ANSWER_VIDEO_AS_AUDIO = AnswerSideAction(
-            icon = R.drawable.ic_video_off,
-            label = R.string.call_incoming_answer_as_audio,
-            description = R.string.a11y_description_incoming_call_answer_video_as_audio,
-            accessibilityLabel = R.string.a11y_incoming_call_answer_video_as_audio,
-            slot = AnswerSideSlot.AnswerAsAudio,
-        )
-        val ANSWER_AND_RELEASE = AnswerSideAction(
-            icon = R.drawable.ic_phone_x,
-            label = R.string.call_incoming_answer_and_end,
-            description = R.string.a11y_description_incoming_call_answer_and_release,
-            accessibilityLabel = R.string.a11y_incoming_call_answer_and_release,
-            slot = AnswerSideSlot.AnswerAndRelease,
-        )
+        val REJECT_WITH_SMS =
+            AnswerSideAction(
+                icon = R.drawable.ic_message,
+                label = R.string.call_incoming_message,
+                description = R.string.a11y_description_incoming_call_reject_with_sms,
+                accessibilityLabel = R.string.a11y_incoming_call_reject_with_sms,
+                slot = AnswerSideSlot.Message,
+            )
+        val ANSWER_VIDEO_AS_AUDIO =
+            AnswerSideAction(
+                icon = R.drawable.ic_video_off,
+                label = R.string.call_incoming_answer_as_audio,
+                description = R.string.a11y_description_incoming_call_answer_video_as_audio,
+                accessibilityLabel = R.string.a11y_incoming_call_answer_video_as_audio,
+                slot = AnswerSideSlot.AnswerAsAudio,
+            )
+        val ANSWER_AND_RELEASE =
+            AnswerSideAction(
+                icon = R.drawable.ic_phone_x,
+                label = R.string.call_incoming_answer_and_end,
+                description = R.string.a11y_description_incoming_call_answer_and_release,
+                accessibilityLabel = R.string.a11y_incoming_call_answer_and_release,
+                slot = AnswerSideSlot.AnswerAndRelease,
+            )
 
         @JvmStatic
         fun newInstance(
@@ -560,23 +658,25 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
             isSelfManagedCamera: Boolean,
             allowAnswerAndRelease: Boolean,
             hasCallOnHold: Boolean,
-        ): AnswerFragment = AnswerFragment().apply {
-            arguments = Bundle().apply {
-                putString(ARG_CALL_ID, Assert.isNotNull(callId))
-                putBoolean(ARG_IS_RTT_CALL, isRttCall)
-                putBoolean(ARG_IS_VIDEO_CALL, isVideoCall)
-                putBoolean(ARG_IS_VIDEO_UPGRADE_REQUEST, isVideoUpgradeRequest)
-                putBoolean(ARG_IS_SELF_MANAGED_CAMERA, isSelfManagedCamera)
-                putBoolean(ARG_ALLOW_ANSWER_AND_RELEASE, allowAnswerAndRelease)
-                putBoolean(ARG_HAS_CALL_ON_HOLD, hasCallOnHold)
+        ): AnswerFragment =
+            AnswerFragment().apply {
+                arguments =
+                    Bundle().apply {
+                        putString(ARG_CALL_ID, Assert.isNotNull(callId))
+                        putBoolean(ARG_IS_RTT_CALL, isRttCall)
+                        putBoolean(ARG_IS_VIDEO_CALL, isVideoCall)
+                        putBoolean(ARG_IS_VIDEO_UPGRADE_REQUEST, isVideoUpgradeRequest)
+                        putBoolean(ARG_IS_SELF_MANAGED_CAMERA, isSelfManagedCamera)
+                        putBoolean(ARG_ALLOW_ANSWER_AND_RELEASE, allowAnswerAndRelease)
+                        putBoolean(ARG_HAS_CALL_ON_HOLD, hasCallOnHold)
+                    }
             }
-        }
     }
 }
 
 /**
- * What the caller sent with call composer: the Important badge for an urgent call, the note and
- * the picture.
+ * What the caller sent with call composer: the Important badge for an urgent call, the note and the
+ * picture.
  */
 @androidx.compose.runtime.Composable
 private fun CallerData(data: MultimediaData) {
@@ -591,24 +691,30 @@ private fun CallerData(data: MultimediaData) {
                 style = MaterialTheme.typography.labelLarge,
                 fontWeight = FontWeight.Bold,
                 color = PvotOnCallEnd,
-                modifier = Modifier
-                    .background(PvotCallEnd, CircleShape)
-                    .padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.S)
-                    .testTag(TestTags.IMPORTANT_CALL_BADGE),
+                modifier =
+                    Modifier.background(PvotCallEnd, CircleShape)
+                        .padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.S)
+                        .testTag(TestTags.IMPORTANT_CALL_BADGE),
             )
         }
-        data.text?.takeIf { it.isNotBlank() }?.let { note ->
-            Text(
-                text = note,
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-                textAlign = TextAlign.Center,
-                maxLines = 3,
-                overflow = TextOverflow.Ellipsis,
-            )
-        }
+        data.text
+            ?.takeIf { it.isNotBlank() }
+            ?.let { note ->
+                Text(
+                    text = note,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    textAlign = TextAlign.Center,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
         data.imageUri?.let { picture ->
-            UriThumbnail(picture, stringResource(R.string.call_composer_picture_description), CallerPictureSize)
+            UriThumbnail(
+                picture,
+                stringResource(R.string.call_composer_picture_description),
+                CallerPictureSize,
+            )
         }
     }
 }

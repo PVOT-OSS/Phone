@@ -27,10 +27,16 @@ class ReminderDelayDialogTest {
     @Test
     fun pickingADelayReportsIt() {
         var picked: ReminderDelay? = null
-        compose.setContent { PhoneTheme { ReminderDelayDialog(name = "Ada Lovelace", onPick = { picked = it }, onDismiss = {}) } }
+        compose.setContent {
+            PhoneTheme {
+                ReminderDelayDialog(name = "Ada Lovelace", onPick = { picked = it }, onDismiss = {})
+            }
+        }
 
         compose.onNodeWithText("Remind me to call Ada Lovelace").assertIsDisplayed()
-        for (delay in ReminderDelay.entries) compose.onNodeWithTag(TestTags.callbackReminderDelay(delay.name)).assertIsDisplayed()
+        for (delay in ReminderDelay.entries) compose
+            .onNodeWithTag(TestTags.callbackReminderDelay(delay.name))
+            .assertIsDisplayed()
         compose.onNodeWithText("In an hour").performClick()
 
         assertThat(picked).isEqualTo(ReminderDelay.IN_AN_HOUR)
@@ -39,7 +45,15 @@ class ReminderDelayDialogTest {
     @Test
     fun cancelDismisses() {
         var dismissed = false
-        compose.setContent { PhoneTheme { ReminderDelayDialog(name = "+15550199", onPick = {}, onDismiss = { dismissed = true }) } }
+        compose.setContent {
+            PhoneTheme {
+                ReminderDelayDialog(
+                    name = "+15550199",
+                    onPick = {},
+                    onDismiss = { dismissed = true },
+                )
+            }
+        }
         compose.onNodeWithText("Cancel").performClick()
         assertThat(dismissed).isTrue()
     }

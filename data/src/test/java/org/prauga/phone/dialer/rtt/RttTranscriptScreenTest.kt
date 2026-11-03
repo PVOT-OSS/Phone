@@ -31,13 +31,18 @@ class RttTranscriptScreenTest {
     @get:Rule val compose = createComposeRule()
 
     private fun message(text: String, remote: Boolean, at: Long = 0L) =
-        RttTranscriptMessage.newBuilder().setContent(text).setIsRemote(remote).setTimestamp(at).build()
+        RttTranscriptMessage.newBuilder()
+            .setContent(text)
+            .setIsRemote(remote)
+            .setTimestamp(at)
+            .build()
 
-    private val conversation = listOf(
-        message("Hi, can you hear me?", remote = true),
-        message("I'm typing because it's loud here", remote = true),
-        message("Yes, all good", remote = false),
-    )
+    private val conversation =
+        listOf(
+            message("Hi, can you hear me?", remote = true),
+            message("I'm typing because it's loud here", remote = true),
+            message("Yes, all good", remote = false),
+        )
 
     @Test
     fun theFullDateGoesUnderTheFirstRun() {
@@ -51,7 +56,13 @@ class RttTranscriptScreenTest {
         var back = false
         compose.setContent {
             SolidGlassTheme {
-                RttTranscriptScreen("Ada Lovelace", PhotoInfo.newBuilder().setName("Ada Lovelace").build(), conversation) { back = true }
+                RttTranscriptScreen(
+                    "Ada Lovelace",
+                    PhotoInfo.newBuilder().setName("Ada Lovelace").build(),
+                    conversation,
+                ) {
+                    back = true
+                }
             }
         }
         compose.onNodeWithText("Hi, can you hear me?").assertExists()
@@ -60,8 +71,7 @@ class RttTranscriptScreenTest {
         assertThat(back).isTrue()
     }
 
-    @Test
-    fun screenshotDark() = screenshot("rtt_transcript_dark")
+    @Test fun screenshotDark() = screenshot("rtt_transcript_dark")
 
     @Test
     @Config(qualifiers = "+notnight")
@@ -70,9 +80,16 @@ class RttTranscriptScreenTest {
     private fun screenshot(name: String) {
         compose.setContent {
             SolidGlassTheme {
-                RttTranscriptScreen("Ada Lovelace", PhotoInfo.newBuilder().setName("Ada Lovelace").build(), conversation) {}
+                RttTranscriptScreen(
+                    "Ada Lovelace",
+                    PhotoInfo.newBuilder().setName("Ada Lovelace").build(),
+                    conversation,
+                ) {}
             }
         }
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/rtt/$name.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/rtt/$name.png")
     }
 }

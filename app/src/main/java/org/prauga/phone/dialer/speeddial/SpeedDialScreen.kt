@@ -40,13 +40,13 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -94,13 +94,21 @@ import org.prauga.phone.dialer.ui.TestTags
 interface SpeedDialActions {
     /** Calls [channel]; [fromChooser] when the user picked it in the number chooser. */
     fun call(channel: Channel, fromChooser: Boolean = false)
+
     fun message(number: String)
+
     fun openContact(item: SpeedDialUiItem)
+
     fun addFavorite()
+
     fun star(item: SpeedDialUiItem)
+
     fun remove(item: SpeedDialUiItem)
+
     fun move(from: Int, to: Int)
+
     fun setDefaultChannel(item: SpeedDialUiItem, channel: Channel)
+
     fun turnOnPermission()
 
     /** Opens the app menu, from the avatar beside the quick dial title. */
@@ -116,8 +124,8 @@ private val TileWidth = FavoriteAvatarSize
 private val QuickDialMargin = PvotSpacing.L + PvotSpacing.S
 
 /**
- * The dialpad tab's quick dial, at the top above the keypad: starred contacts in a row the user
- * can reorder, ending with a tile to add one, then frequent contacts in a row of their own.
+ * The dialpad tab's quick dial, at the top above the keypad: starred contacts in a row the user can
+ * reorder, ending with a tile to add one, then frequent contacts in a row of their own.
  */
 @Composable
 fun SpeedDialScreen(
@@ -127,81 +135,108 @@ fun SpeedDialScreen(
     listState: LazyListState = rememberLazyListState(),
 ) {
     Column(modifier.fillMaxSize()) {
-        TabHeader(title = stringResource(R.string.quick_dial_header), onOpenMenu = actions::openAppMenu)
+        TabHeader(
+            title = stringResource(R.string.quick_dial_header),
+            onOpenMenu = actions::openAppMenu,
+        )
         when (state) {
             SpeedDialUiState.Loading -> Unit
-            SpeedDialUiState.NeedsPermission -> PvotEmptyContent(
-                message = stringResource(R.string.speed_dial_contacts_permission_description),
-                modifier = Modifier.fillMaxWidth().padding(PvotSpacing.L),
-                icon = { Icon(painterResource(R.drawable.ic_star), contentDescription = null) },
-                actionLabel = stringResource(R.string.speed_dial_turn_on_contacts_permission),
-                onAction = actions::turnOnPermission,
-            )
-            SpeedDialUiState.Empty -> QuickDial(SpeedDialUiState.Loaded(emptyList(), emptyList()), actions, listState)
+            SpeedDialUiState.NeedsPermission ->
+                PvotEmptyContent(
+                    message = stringResource(R.string.speed_dial_contacts_permission_description),
+                    modifier = Modifier.fillMaxWidth().padding(PvotSpacing.L),
+                    icon = { Icon(painterResource(R.drawable.ic_star), contentDescription = null) },
+                    actionLabel = stringResource(R.string.speed_dial_turn_on_contacts_permission),
+                    onAction = actions::turnOnPermission,
+                )
+            SpeedDialUiState.Empty ->
+                QuickDial(SpeedDialUiState.Loaded(emptyList(), emptyList()), actions, listState)
             is SpeedDialUiState.Loaded -> QuickDial(state, actions, listState)
         }
     }
 }
 
 @Composable
-private fun QuickDial(state: SpeedDialUiState.Loaded, actions: SpeedDialActions, listState: LazyListState) {
+private fun QuickDial(
+    state: SpeedDialUiState.Loaded,
+    actions: SpeedDialActions,
+    listState: LazyListState,
+) {
     var menuFor by remember { mutableStateOf<SpeedDialUiItem?>(null) }
     var suggestionMenuFor by remember { mutableStateOf<SpeedDialUiItem?>(null) }
     var chooserFor by remember { mutableStateOf<SpeedDialUiItem?>(null) }
     val haptics = LocalHapticFeedback.current
     val favoritesByKey by rememberUpdatedState(state.favorites.associateBy(::favoriteKey))
     val currentActions by rememberUpdatedState(actions)
-    val dragState = remember(listState) {
-        FavoriteDragState(
-            items = FavoriteDragState.rowItems(listState),
-            onMove = { from, to -> currentActions.move(from, to) },
-            onRemove = { key -> favoritesByKey[key]?.let(currentActions::remove) },
-        )
-    }
+    val dragState =
+        remember(listState) {
+            FavoriteDragState(
+                items = FavoriteDragState.rowItems(listState),
+                onMove = { from, to -> currentActions.move(from, to) },
+                onRemove = { key -> favoritesByKey[key]?.let(currentActions::remove) },
+            )
+        }
     dragState.favoriteKeys = state.favorites.map(::favoriteKey)
 
     Box(Modifier.fillMaxWidth()) {
         Column(Modifier.fillMaxWidth()) {
             LazyRow(
                 state = listState,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .testTag(TestTags.SPEED_DIAL_GRID)
-                    .onGloballyPositioned { dragState.rowBounds = it.boundsInRoot() },
+                modifier =
+                    Modifier.fillMaxWidth().testTag(TestTags.SPEED_DIAL_GRID).onGloballyPositioned {
+                        dragState.rowBounds = it.boundsInRoot()
+                    },
                 contentPadding = PaddingValues(horizontal = QuickDialMargin),
                 horizontalArrangement = Arrangement.spacedBy(PvotSpacing.M),
             ) {
                 items(state.favorites, key = ::favoriteKey) { item ->
                     val key = favoriteKey(item)
                     val dragging = dragState.draggingKey == key
-                    // The gesture handler keeps its first callbacks, so they read the latest item here.
+                    // The gesture handler keeps its first callbacks, so they read the latest item
+                    // here.
                     val current by rememberUpdatedState(item)
                     FavoriteTile(
                         item = item,
                         lifted = dragging,
                         overRemove = dragging && dragState.isOverRemove,
-                        modifier = Modifier
-                            // The same modifiers either way, so lifting does not restart the gesture.
-                            .zIndex(if (dragging) 1f else 0f)
-                            .animateItem(placementSpec = if (dragging) null else spring(stiffness = Spring.StiffnessMediumLow, visibilityThreshold = IntOffset.VisibilityThreshold))
-                            .graphicsLayer {
-                                if (dragging) {
-                                    translationX = dragState.offset.x
-                                    translationY = dragState.offset.y
+                        modifier =
+                            Modifier
+                                // The same modifiers either way, so lifting does not restart the
+                                // gesture.
+                                .zIndex(if (dragging) 1f else 0f)
+                                .animateItem(
+                                    placementSpec =
+                                        if (dragging) null
+                                        else
+                                            spring(
+                                                stiffness = Spring.StiffnessMediumLow,
+                                                visibilityThreshold = IntOffset.VisibilityThreshold,
+                                            )
+                                )
+                                .graphicsLayer {
+                                    if (dragging) {
+                                        translationX = dragState.offset.x
+                                        translationY = dragState.offset.y
+                                    }
                                 }
-                            }
-                            .testTag(TestTags.speedDialFavorite(item.contactId())),
+                                .testTag(TestTags.speedDialFavorite(item.contactId())),
                         gestures = { source ->
                             Modifier.favoriteGestures(
                                 key = key,
                                 state = dragState,
                                 interactionSource = source,
-                                onTap = { onFavoriteTap(current, currentActions) { chooserFor = current } },
+                                onTap = {
+                                    onFavoriteTap(current, currentActions) { chooserFor = current }
+                                },
                                 onLongPress = { menuFor = current },
-                                onLift = { haptics.performHapticFeedback(HapticFeedbackType.LongPress) },
+                                onLift = {
+                                    haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                                },
                             )
                         },
-                        onTapForAccessibility = { onFavoriteTap(item, actions) { chooserFor = item } },
+                        onTapForAccessibility = {
+                            onFavoriteTap(item, actions) { chooserFor = item }
+                        },
                         onLongPressForAccessibility = { menuFor = item },
                     )
                 }
@@ -210,7 +245,12 @@ private fun QuickDial(state: SpeedDialUiState.Loaded, actions: SpeedDialActions,
             if (state.suggestions.isNotEmpty()) {
                 PvotSectionHeader(
                     title = stringResource(R.string.suggestions_header),
-                    modifier = Modifier.padding(start = QuickDialMargin, end = QuickDialMargin, top = PvotSpacing.M),
+                    modifier =
+                        Modifier.padding(
+                            start = QuickDialMargin,
+                            end = QuickDialMargin,
+                            top = PvotSpacing.M,
+                        ),
                 )
                 LazyRow(
                     modifier = Modifier.fillMaxWidth(),
@@ -231,19 +271,25 @@ private fun QuickDial(state: SpeedDialUiState.Loaded, actions: SpeedDialActions,
         AnimatedVisibility(
             visible = dragState.isMoving,
             modifier = Modifier.align(Alignment.TopCenter).padding(top = PvotSpacing.S),
-            enter = slideInVertically(tween(PvotDurations.Medium, easing = PvotMotion.Settle)) { -it } +
-                fadeIn(tween(PvotDurations.Short)),
-            exit = slideOutVertically(tween(PvotDurations.Short)) { -it } + fadeOut(tween(PvotDurations.Short)),
+            enter =
+                slideInVertically(tween(PvotDurations.Medium, easing = PvotMotion.Settle)) { -it } +
+                    fadeIn(tween(PvotDurations.Short)),
+            exit =
+                slideOutVertically(tween(PvotDurations.Short)) { -it } +
+                    fadeOut(tween(PvotDurations.Short)),
         ) {
             RemoveTarget(
                 active = dragState.isOverRemove,
-                modifier = Modifier.onGloballyPositioned { dragState.removeBounds = it.boundsInRoot() },
+                modifier =
+                    Modifier.onGloballyPositioned { dragState.removeBounds = it.boundsInRoot() },
             )
         }
     }
 
     menuFor?.let { item -> FavoriteMenu(item, actions, onDismiss = { menuFor = null }) }
-    suggestionMenuFor?.let { item -> SuggestionMenu(item, actions, onDismiss = { suggestionMenuFor = null }) }
+    suggestionMenuFor?.let { item ->
+        SuggestionMenu(item, actions, onDismiss = { suggestionMenuFor = null })
+    }
     chooserFor?.let { item -> NumberChooser(item, actions, onDismiss = { chooserFor = null }) }
 }
 
@@ -253,19 +299,29 @@ private fun AddTile(onClick: () -> Unit) {
     val source = remember { MutableInteractionSource() }
     val label = stringResource(R.string.speed_dial_add_button_text)
     Column(
-        modifier = Modifier
-            .width(TileWidth)
-            .pvotPressScale(source)
-            .clickable(interactionSource = source, indication = null, role = Role.Button, onClick = onClick)
-            .padding(vertical = PvotSpacing.S)
-            .testTag(TestTags.SPEED_DIAL_ADD),
+        modifier =
+            Modifier.width(TileWidth)
+                .pvotPressScale(source)
+                .clickable(
+                    interactionSource = source,
+                    indication = null,
+                    role = Role.Button,
+                    onClick = onClick,
+                )
+                .padding(vertical = PvotSpacing.S)
+                .testTag(TestTags.SPEED_DIAL_ADD),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
-            Modifier.size(FavoriteAvatarSize).background(MaterialTheme.colorScheme.surfaceContainerHigh, CircleShape),
+            Modifier.size(FavoriteAvatarSize)
+                .background(MaterialTheme.colorScheme.surfaceContainerHigh, CircleShape),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(painterResource(R.drawable.ic_plus), contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+            Icon(
+                painterResource(R.drawable.ic_plus),
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+            )
         }
         Text(
             text = label,
@@ -299,29 +355,38 @@ private fun FavoriteTile(
     onLongPressForAccessibility: () -> Unit,
 ) {
     val source = remember { MutableInteractionSource() }
-    val scale by animateFloatAsState(
-        targetValue = when {
-            overRemove -> 0.5f
-            lifted -> 1.1f
-            else -> 1f
-        },
-        animationSpec = tween(PvotDurations.Short, easing = PvotMotion.Settle),
-        label = "favoriteScale",
-    )
+    val scale by
+        animateFloatAsState(
+            targetValue =
+                when {
+                    overRemove -> 0.5f
+                    lifted -> 1.1f
+                    else -> 1f
+                },
+            animationSpec = tween(PvotDurations.Short, easing = PvotMotion.Settle),
+            label = "favoriteScale",
+        )
     val channel = item.defaultChannel() ?: item.getDefaultVoiceChannel()
     val callLabel = stringResource(R.string.disambig_option_voice_call)
     val moreLabel = stringResource(R.string.speed_dial_more_options)
     Column(
-        modifier = modifier
-            .width(TileWidth)
-            .pvotPressScale(source)
-            .then(gestures(source))
-            .semantics(mergeDescendants = true) {
-                role = Role.Button
-                onClick(callLabel) { onTapForAccessibility(); true }
-                onLongClick(moreLabel) { onLongPressForAccessibility(); true }
-            }
-            .padding(vertical = PvotSpacing.S),
+        modifier =
+            modifier
+                .width(TileWidth)
+                .pvotPressScale(source)
+                .then(gestures(source))
+                .semantics(mergeDescendants = true) {
+                    role = Role.Button
+                    onClick(callLabel) {
+                        onTapForAccessibility()
+                        true
+                    }
+                    onLongClick(moreLabel) {
+                        onLongPressForAccessibility()
+                        true
+                    }
+                }
+                .padding(vertical = PvotSpacing.S),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
@@ -329,7 +394,7 @@ private fun FavoriteTile(
                 scaleX = scale
                 scaleY = scale
                 alpha = if (overRemove) 0.5f else 1f
-            },
+            }
         ) {
             ContactAvatar(
                 name = item.name(),
@@ -339,10 +404,10 @@ private fun FavoriteTile(
             )
             if (channel?.isVideoTechnology == true) {
                 Box(
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .size(24.dp)
-                        .background(MaterialTheme.colorScheme.primary, CircleShape),
+                    modifier =
+                        Modifier.align(Alignment.BottomEnd)
+                            .size(24.dp)
+                            .background(MaterialTheme.colorScheme.primary, CircleShape),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
@@ -374,20 +439,20 @@ private fun SuggestionTile(item: SpeedDialUiItem, onClick: () -> Unit, onMore: (
     val callLabel = stringResource(R.string.disambig_option_voice_call)
     val moreLabel = stringResource(R.string.speed_dial_more_options)
     Column(
-        modifier = Modifier
-            .width(TileWidth)
-            .pvotPressScale(source)
-            .combinedClickable(
-                interactionSource = source,
-                indication = null,
-                role = Role.Button,
-                onClickLabel = callLabel,
-                onLongClickLabel = moreLabel,
-                onLongClick = onMore,
-                onClick = onClick,
-            )
-            .padding(vertical = PvotSpacing.S)
-            .testTag(TestTags.speedDialSuggestion(item.contactId())),
+        modifier =
+            Modifier.width(TileWidth)
+                .pvotPressScale(source)
+                .combinedClickable(
+                    interactionSource = source,
+                    indication = null,
+                    role = Role.Button,
+                    onClickLabel = callLabel,
+                    onLongClickLabel = moreLabel,
+                    onLongClick = onMore,
+                    onClick = onClick,
+                )
+                .padding(vertical = PvotSpacing.S)
+                .testTag(TestTags.speedDialSuggestion(item.contactId())),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         ContactAvatar(
@@ -412,10 +477,14 @@ private fun SuggestionTile(item: SpeedDialUiItem, onClick: () -> Unit, onMore: (
 @Composable
 private fun channelSummary(channel: Channel): String {
     val context = LocalContext.current
-    val number = remember(channel.number()) {
-        PhoneNumberHelper.formatNumber(context, channel.number(), GeoUtil.getCurrentCountryIso(context))
-            ?: channel.number()
-    }
+    val number =
+        remember(channel.number()) {
+            PhoneNumberHelper.formatNumber(
+                context,
+                channel.number(),
+                GeoUtil.getCurrentCountryIso(context),
+            ) ?: channel.number()
+        }
     return if (channel.label().isNullOrEmpty()) {
         number
     } else {
@@ -425,17 +494,22 @@ private fun channelSummary(channel: Channel): String {
 
 @Composable
 private fun RemoveTarget(active: Boolean, modifier: Modifier = Modifier) {
-    val container by animateColorAsState(
-        if (active) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.surfaceContainerHigh,
-        tween(PvotDurations.Short),
-        label = "removeTargetColor",
-    )
-    val content = if (active) MaterialTheme.colorScheme.onErrorContainer else MaterialTheme.colorScheme.onSurface
+    val container by
+        animateColorAsState(
+            if (active) MaterialTheme.colorScheme.errorContainer
+            else MaterialTheme.colorScheme.surfaceContainerHigh,
+            tween(PvotDurations.Short),
+            label = "removeTargetColor",
+        )
+    val content =
+        if (active) MaterialTheme.colorScheme.onErrorContainer
+        else MaterialTheme.colorScheme.onSurface
     Row(
-        modifier = modifier
-            .testTag(TestTags.SPEED_DIAL_REMOVE_TARGET)
-            .background(container, PvotShapes.Pill)
-            .padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.M),
+        modifier =
+            modifier
+                .testTag(TestTags.SPEED_DIAL_REMOVE_TARGET)
+                .background(container, PvotShapes.Pill)
+                .padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.M),
         horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -458,40 +532,59 @@ private fun FavoriteMenu(item: SpeedDialUiItem, actions: SpeedDialActions, onDis
                 title = stringResource(R.string.contact_menu_voice_call),
                 subtitle = channelSummary(voice),
                 icon = { Icon(painterResource(R.drawable.ic_phone), contentDescription = null) },
-                onClick = { onDismiss(); actions.call(voice) },
+                onClick = {
+                    onDismiss()
+                    actions.call(voice)
+                },
             )
         }
         if (video != null) {
             PvotSheetItem(
                 title = stringResource(R.string.contact_menu_video_call),
                 icon = { Icon(painterResource(R.drawable.ic_video), contentDescription = null) },
-                onClick = { onDismiss(); actions.call(video) },
+                onClick = {
+                    onDismiss()
+                    actions.call(video)
+                },
             )
         }
         if (voice != null) {
             PvotSheetItem(
                 title = stringResource(R.string.contact_menu_message),
                 icon = { Icon(painterResource(R.drawable.ic_message), contentDescription = null) },
-                onClick = { onDismiss(); actions.message(voice.number()) },
+                onClick = {
+                    onDismiss()
+                    actions.message(voice.number())
+                },
             )
         }
         PvotSheetItem(
             title = stringResource(R.string.contact_menu_contact_info),
             icon = { Icon(painterResource(R.drawable.ic_user), contentDescription = null) },
-            onClick = { onDismiss(); actions.openContact(item) },
+            onClick = {
+                onDismiss()
+                actions.openContact(item)
+            },
         )
         PvotSheetItem(
             title = stringResource(R.string.speed_dial_remove_favorites),
             modifier = Modifier.testTag(TestTags.SPEED_DIAL_MENU_REMOVE),
             icon = { Icon(painterResource(R.drawable.ic_trash), contentDescription = null) },
             destructive = true,
-            onClick = { onDismiss(); actions.remove(item) },
+            onClick = {
+                onDismiss()
+                actions.remove(item)
+            },
         )
     }
 }
 
 @Composable
-private fun SuggestionMenu(item: SpeedDialUiItem, actions: SpeedDialActions, onDismiss: () -> Unit) {
+private fun SuggestionMenu(
+    item: SpeedDialUiItem,
+    actions: SpeedDialActions,
+    onDismiss: () -> Unit,
+) {
     val voice = item.getDefaultVoiceChannel()
     val video = item.getDefaultVideoChannel()
     val number = item.defaultChannel()?.number().orEmpty()
@@ -501,33 +594,48 @@ private fun SuggestionMenu(item: SpeedDialUiItem, actions: SpeedDialActions, onD
                 title = stringResource(R.string.contact_menu_voice_call),
                 subtitle = channelSummary(voice),
                 icon = { Icon(painterResource(R.drawable.ic_phone), contentDescription = null) },
-                onClick = { onDismiss(); actions.call(voice) },
+                onClick = {
+                    onDismiss()
+                    actions.call(voice)
+                },
             )
         }
         if (video != null) {
             PvotSheetItem(
                 title = stringResource(R.string.contact_menu_video_call),
                 icon = { Icon(painterResource(R.drawable.ic_video), contentDescription = null) },
-                onClick = { onDismiss(); actions.call(video) },
+                onClick = {
+                    onDismiss()
+                    actions.call(video)
+                },
             )
         }
         if (number.isNotEmpty()) {
             PvotSheetItem(
                 title = stringResource(R.string.contact_menu_message),
                 icon = { Icon(painterResource(R.drawable.ic_message), contentDescription = null) },
-                onClick = { onDismiss(); actions.message(number) },
+                onClick = {
+                    onDismiss()
+                    actions.message(number)
+                },
             )
         }
         PvotSheetItem(
             title = stringResource(R.string.suggested_contact_bottom_sheet_add_favorite_option),
             modifier = Modifier.testTag(TestTags.SPEED_DIAL_MENU_STAR),
             icon = { Icon(painterResource(R.drawable.ic_star), contentDescription = null) },
-            onClick = { onDismiss(); actions.star(item) },
+            onClick = {
+                onDismiss()
+                actions.star(item)
+            },
         )
         PvotSheetItem(
             title = stringResource(R.string.contact_menu_contact_info),
             icon = { Icon(painterResource(R.drawable.ic_user), contentDescription = null) },
-            onClick = { onDismiss(); actions.openContact(item) },
+            onClick = {
+                onDismiss()
+                actions.openContact(item)
+            },
         )
     }
 }
@@ -545,14 +653,23 @@ private fun NumberChooser(item: SpeedDialUiItem, actions: SpeedDialActions, onDi
                 PvotListRow(
                     title = channel.label().ifEmpty { channel.number() },
                     supportingText = channel.number(),
-                    modifier = Modifier.testTag(TestTags.speedDialChannel(channel.number(), channel.isVideoTechnology)),
+                    modifier =
+                        Modifier.testTag(
+                            TestTags.speedDialChannel(channel.number(), channel.isVideoTechnology)
+                        ),
                     leading = {
                         Icon(
-                            painter = painterResource(if (channel.isVideoTechnology) R.drawable.ic_video else R.drawable.ic_phone),
-                            contentDescription = stringResource(
-                                if (channel.isVideoTechnology) R.string.disambig_option_video_call
-                                else R.string.disambig_option_voice_call,
-                            ),
+                            painter =
+                                painterResource(
+                                    if (channel.isVideoTechnology) R.drawable.ic_video
+                                    else R.drawable.ic_phone
+                                ),
+                            contentDescription =
+                                stringResource(
+                                    if (channel.isVideoTechnology)
+                                        R.string.disambig_option_video_call
+                                    else R.string.disambig_option_voice_call
+                                ),
                         )
                     },
                     onClick = {
@@ -563,10 +680,14 @@ private fun NumberChooser(item: SpeedDialUiItem, actions: SpeedDialActions, onDi
                 )
             }
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .toggleable(value = remember, role = Role.Checkbox, onValueChange = { remember = it })
-                    .padding(vertical = PvotSpacing.S),
+                modifier =
+                    Modifier.fillMaxWidth()
+                        .toggleable(
+                            value = remember,
+                            role = Role.Checkbox,
+                            onValueChange = { remember = it },
+                        )
+                        .padding(vertical = PvotSpacing.S),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Checkbox(checked = remember, onCheckedChange = null)

@@ -25,15 +25,16 @@ internal fun speedDialItem(
     pinned: Int? = null,
     channels: List<Channel> = listOf(channel("+1555020$id")),
     defaultChannel: Channel? = channels.singleOrNull(),
-): SpeedDialUiItem = SpeedDialUiItem.builder()
-    .setSpeedDialEntryId(if (starred) id else null)
-    .setPinnedPosition(Optional.ofNullable(pinned))
-    .setName(name)
-    .setContactId(id)
-    .setLookupKey("key$id")
-    .setIsStarred(starred)
-    .setPhotoId(0)
-    .setPhotoUri("")
-    .setChannels(ImmutableList.copyOf(channels))
-    .setDefaultChannel(defaultChannel)
-    .build()
+): SpeedDialUiItem =
+    SpeedDialUiItem.builder()
+        .setSpeedDialEntryId(if (starred) id else null)
+        .setPinnedPosition(Optional.ofNullable(pinned))
+        .setName(name)
+        .setContactId(id)
+        .setLookupKey("key$id")
+        .setIsStarred(starred)
+        .setPhotoId(0)
+        .setPhotoUri("")
+        .setChannels(ImmutableList.copyOf(channels))
+        .setDefaultChannel(defaultChannel)
+        .build()

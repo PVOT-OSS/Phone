@@ -38,7 +38,9 @@ import org.prauga.phone.dialer.voicemail.listui.error.VoicemailErrorMessage
 @Composable
 fun VoicemailStatusCard(message: VoicemailErrorMessage, modifier: Modifier = Modifier) {
     val view = LocalView.current
-    PvotCard(modifier = modifier.fillMaxWidth().padding(PvotSpacing.L).testTag(TestTags.VOICEMAIL_STATUS)) {
+    PvotCard(
+        modifier = modifier.fillMaxWidth().padding(PvotSpacing.L).testTag(TestTags.VOICEMAIL_STATUS)
+    ) {
         Column(verticalArrangement = Arrangement.spacedBy(PvotSpacing.S)) {
             Text(text = message.title.toString(), style = MaterialTheme.typography.titleMedium)
             Text(
@@ -56,15 +58,20 @@ fun VoicemailStatusCard(message: VoicemailErrorMessage, modifier: Modifier = Mod
 fun VoicemailTermsScreen(message: VoicemailErrorMessage, modifier: Modifier = Modifier) {
     val view = LocalView.current
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(PvotSpacing.L)
-            .testTag(TestTags.VOICEMAIL_STATUS),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(PvotSpacing.L)
+                .testTag(TestTags.VOICEMAIL_STATUS),
         verticalArrangement = Arrangement.spacedBy(PvotSpacing.M),
     ) {
         message.imageResourceId?.let { image ->
-            Image(painterResource(image), contentDescription = null, modifier = Modifier.align(Alignment.CenterHorizontally))
+            Image(
+                painterResource(image),
+                contentDescription = null,
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+            )
         }
         Text(text = message.title.toString(), style = MaterialTheme.typography.headlineSmall)
         Text(
@@ -80,7 +87,10 @@ fun VoicemailTermsScreen(message: VoicemailErrorMessage, modifier: Modifier = Mo
 private fun MessageActions(message: VoicemailErrorMessage, view: View) {
     val actions = message.actions.orEmpty()
     if (actions.isEmpty()) return
-    Row(horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S), modifier = Modifier.fillMaxWidth()) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S),
+        modifier = Modifier.fillMaxWidth(),
+    ) {
         for (action in actions) {
             PvotButton(
                 text = action.text.toString(),
@@ -92,8 +102,10 @@ private fun MessageActions(message: VoicemailErrorMessage, view: View) {
 }
 
 /** Keeps the links of a styled message, such as "Learn more". */
-private fun CharSequence?.toAnnotated(): AnnotatedString = when (this) {
-    null -> AnnotatedString("")
-    is Spanned -> AnnotatedString.fromHtml(Html.toHtml(this, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE))
-    else -> AnnotatedString(toString())
-}
+private fun CharSequence?.toAnnotated(): AnnotatedString =
+    when (this) {
+        null -> AnnotatedString("")
+        is Spanned ->
+            AnnotatedString.fromHtml(Html.toHtml(this, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE))
+        else -> AnnotatedString(toString())
+    }

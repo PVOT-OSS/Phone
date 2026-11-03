@@ -42,27 +42,56 @@ class DialpadScreenTest {
     @get:Rule val compose = createComposeRule()
 
     private val events = mutableListOf<String>()
-    private val callbacks = object : DialpadCallbacks {
-        override fun onKey(keyCode: Int, pressed: Boolean) { events += "key $keyCode ${if (pressed) "down" else "up"}" }
-        override fun onKeyLongPress(keyCode: Int): Boolean {
-            events += "long $keyCode"
-            return keyCode == KeyEvent.KEYCODE_0
+    private val callbacks =
+        object : DialpadCallbacks {
+            override fun onKey(keyCode: Int, pressed: Boolean) {
+                events += "key $keyCode ${if (pressed) "down" else "up"}"
+            }
+
+            override fun onKeyLongPress(keyCode: Int): Boolean {
+                events += "long $keyCode"
+                return keyCode == KeyEvent.KEYCODE_0
+            }
+
+            override fun onDelete() {
+                events += "delete"
+            }
+
+            override fun onDeleteLongPress() {
+                events += "clear"
+            }
+
+            override fun onCall() {
+                events += "call"
+            }
+
+            override fun onMenuOpen() {
+                events += "menu"
+            }
+
+            override fun onAddPause() {
+                events += "pause"
+            }
+
+            override fun onAddWait() {
+                events += "wait"
+            }
+
+            override fun onCallWithNote() {
+                events += "note"
+            }
+
+            override fun onSelectAccount(handle: PhoneAccountHandle) {
+                events += "account ${handle.id}"
+            }
         }
-        override fun onDelete() { events += "delete" }
-        override fun onDeleteLongPress() { events += "clear" }
-        override fun onCall() { events += "call" }
-        override fun onMenuOpen() { events += "menu" }
-        override fun onAddPause() { events += "pause" }
-        override fun onAddWait() { events += "wait" }
-        override fun onCallWithNote() { events += "note" }
-        override fun onSelectAccount(handle: PhoneAccountHandle) { events += "account ${handle.id}" }
-    }
 
     private val state = DialpadUiState()
 
     private fun show() {
-        val digits = LayoutInflater.from(ApplicationProvider.getApplicationContext<Context>())
-            .inflate(R.layout.dialpad_digits, null) as EditText
+        val digits =
+            LayoutInflater.from(ApplicationProvider.getApplicationContext<Context>())
+                .inflate(R.layout.dialpad_digits, null) as EditText
         compose.setContent { PhoneScreenTheme { DialpadScreen(state, digits, callbacks) } }
     }
 
@@ -70,18 +99,22 @@ class DialpadScreenTest {
     fun aKeyGoesDownThenUp() {
         show()
         compose.onNodeWithTag(TestTags.dialpadKey("5")).performClick()
-        assertThat(events).containsExactly("key ${KeyEvent.KEYCODE_5} down", "key ${KeyEvent.KEYCODE_5} up").inOrder()
+        assertThat(events)
+            .containsExactly("key ${KeyEvent.KEYCODE_5} down", "key ${KeyEvent.KEYCODE_5} up")
+            .inOrder()
     }
 
     @Test
     fun holdingZeroAsksForAPlus() {
         show()
         compose.onNodeWithTag(TestTags.dialpadKey("0")).performTouchInput { longClick() }
-        assertThat(events).containsExactly(
-            "key ${KeyEvent.KEYCODE_0} down",
-            "long ${KeyEvent.KEYCODE_0}",
-            "key ${KeyEvent.KEYCODE_0} up",
-        ).inOrder()
+        assertThat(events)
+            .containsExactly(
+                "key ${KeyEvent.KEYCODE_0} down",
+                "long ${KeyEvent.KEYCODE_0}",
+                "key ${KeyEvent.KEYCODE_0} up",
+            )
+            .inOrder()
     }
 
     @Test
@@ -96,7 +129,9 @@ class DialpadScreenTest {
     fun holdingAPlainKeyIsNotALongPress() {
         show()
         compose.onNodeWithTag(TestTags.dialpadKey("5")).performTouchInput { longClick() }
-        assertThat(events).containsExactly("key ${KeyEvent.KEYCODE_5} down", "key ${KeyEvent.KEYCODE_5} up").inOrder()
+        assertThat(events)
+            .containsExactly("key ${KeyEvent.KEYCODE_5} down", "key ${KeyEvent.KEYCODE_5} up")
+            .inOrder()
     }
 
     @Test
@@ -128,7 +163,12 @@ class DialpadScreenTest {
     fun theOptionsActAndClose() {
         state.menuEnabled = true
         state.callWithNoteSupported = true
-        state.accounts += DialpadAccount(PhoneAccountHandle(ComponentName("p", "c"), "sim2"), "SIM 2", selected = false)
+        state.accounts +=
+            DialpadAccount(
+                PhoneAccountHandle(ComponentName("p", "c"), "sim2"),
+                "SIM 2",
+                selected = false,
+            )
         state.menuOpen = true
         show()
         compose.onNodeWithText("Add 2-sec pause").performClick()
@@ -156,6 +196,9 @@ class DialpadScreenTest {
         state.hint = "Can't make emergency calls over WiFi"
         show()
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/dialpad/dialpad_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/dialpad/dialpad_dark.png")
     }
 }

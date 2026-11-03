@@ -33,30 +33,66 @@ class SearchScreenTest {
     @get:Rule val compose = createComposeRule()
 
     private val events = mutableListOf<String>()
-    private val actions = object : SearchActions {
-        override fun call(number: String, position: Int) { events += "call $number" }
-        override fun videoCall(number: String, position: Int) { events += "video $number" }
-        override fun addToContact(number: String) { events += "add $number" }
-        override fun createContact(number: String) { events += "create $number" }
-        override fun sendSms(number: String) { events += "sms $number" }
-        override fun allowLocation() { events += "allow" }
-        override fun dismissLocation() { events += "dismiss" }
-        override fun turnOnPermission() { events += "permission" }
-        override fun listTouched() { events += "touched" }
-    }
+    private val actions =
+        object : SearchActions {
+            override fun call(number: String, position: Int) {
+                events += "call $number"
+            }
 
-    private fun number(key: String, name: String?, number: String, video: Boolean = false) = SearchRow.Number(
-        key = key, kind = SearchRow.Kind.CONTACT, position = 1, number = number,
-        name = name?.let(::AnnotatedString), details = AnnotatedString("Mobile $number"),
-        photoUri = null, colorKey = key, canVideoCall = video, isWork = false,
-    )
+            override fun videoCall(number: String, position: Int) {
+                events += "video $number"
+            }
 
-    private val rows = listOf(
-        SearchRow.Header("h", "Contacts"),
-        number("ada1", "Ada Lovelace", "+15550100"),
-        number("ada2", null, "+15550109", video = true),
-        SearchRow.Action("action_3", SearchAction.SEND_SMS, 3, "5550100"),
-    )
+            override fun addToContact(number: String) {
+                events += "add $number"
+            }
+
+            override fun createContact(number: String) {
+                events += "create $number"
+            }
+
+            override fun sendSms(number: String) {
+                events += "sms $number"
+            }
+
+            override fun allowLocation() {
+                events += "allow"
+            }
+
+            override fun dismissLocation() {
+                events += "dismiss"
+            }
+
+            override fun turnOnPermission() {
+                events += "permission"
+            }
+
+            override fun listTouched() {
+                events += "touched"
+            }
+        }
+
+    private fun number(key: String, name: String?, number: String, video: Boolean = false) =
+        SearchRow.Number(
+            key = key,
+            kind = SearchRow.Kind.CONTACT,
+            position = 1,
+            number = number,
+            name = name?.let(::AnnotatedString),
+            details = AnnotatedString("Mobile $number"),
+            photoUri = null,
+            colorKey = key,
+            canVideoCall = video,
+            isWork = false,
+        )
+
+    private val rows =
+        listOf(
+            SearchRow.Header("h", "Contacts"),
+            number("ada1", "Ada Lovelace", "+15550100"),
+            number("ada2", null, "+15550109", video = true),
+            SearchRow.Action("action_3", SearchAction.SEND_SMS, 3, "5550100"),
+        )
 
     private fun show(needsPermission: Boolean = false) =
         compose.setContent { PhoneScreenTheme { SearchScreen(rows, needsPermission, actions) } }
@@ -93,6 +129,9 @@ class SearchScreenTest {
     fun screenshotDark() {
         show()
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/search/search_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/search/search_dark.png")
     }
 }

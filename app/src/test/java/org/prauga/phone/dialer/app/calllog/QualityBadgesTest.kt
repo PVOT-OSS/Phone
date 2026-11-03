@@ -19,9 +19,13 @@ class QualityBadgesTest {
 
     @Test
     fun badgesComeWifiThenHdThenAssistedDialing() {
-        val all = Calls.FEATURES_HD_CALL or Calls.FEATURES_WIFI or TelephonyManagerCompat.FEATURES_ASSISTED_DIALING
+        val all =
+            Calls.FEATURES_HD_CALL or
+                Calls.FEATURES_WIFI or
+                TelephonyManagerCompat.FEATURES_ASSISTED_DIALING
         assertThat(qualityBadges(all).map { it.first })
-            .containsExactly(R.drawable.ic_wifi, R.drawable.ic_badge_hd, R.drawable.ic_world).inOrder()
+            .containsExactly(R.drawable.ic_wifi, R.drawable.ic_badge_hd, R.drawable.ic_world)
+            .inOrder()
     }
 
     @Test

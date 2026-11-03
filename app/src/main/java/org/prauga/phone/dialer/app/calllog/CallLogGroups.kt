@@ -45,9 +45,11 @@ data class CallLogGroup(
     val transcription: String? = null,
 ) {
     /** The newest call's type. */
-    val callType: Int get() = callTypes.first()
+    val callType: Int
+        get() = callTypes.first()
 
-    val isVoicemail: Boolean get() = callType == Calls.VOICEMAIL_TYPE
+    val isVoicemail: Boolean
+        get() = callType == Calls.VOICEMAIL_TYPE
 }
 
 /** Groups the rows of a [CallLogQuery] cursor the way the call history always has. */
@@ -57,21 +59,24 @@ object CallLogGrouper {
         val positions = mutableListOf<Pair<Int, Int>>()
         val dayGroups = mutableMapOf<Long, Int>()
         val callbackActions = mutableMapOf<Long, Int>()
-        val builder = CallLogGroupBuilder(object : CallLogGroupBuilder.GroupCreator {
-            override fun addGroup(cursorPosition: Int, size: Int) {
-                positions += cursorPosition to size
-            }
+        val builder =
+            CallLogGroupBuilder(
+                object : CallLogGroupBuilder.GroupCreator {
+                    override fun addGroup(cursorPosition: Int, size: Int) {
+                        positions += cursorPosition to size
+                    }
 
-            override fun setCallbackAction(rowId: Long, callbackAction: Int) {
-                callbackActions[rowId] = callbackAction
-            }
+                    override fun setCallbackAction(rowId: Long, callbackAction: Int) {
+                        callbackActions[rowId] = callbackAction
+                    }
 
-            override fun setDayGroup(rowId: Long, dayGroup: Int) {
-                dayGroups[rowId] = dayGroup
-            }
+                    override fun setDayGroup(rowId: Long, dayGroup: Int) {
+                        dayGroups[rowId] = dayGroup
+                    }
 
-            override fun clearDayGroups() = dayGroups.clear()
-        })
+                    override fun clearDayGroups() = dayGroups.clear()
+                }
+            )
         builder.addGroups(cursor)
         // The builder only reports groups of two or more; every other row is a group of one.
         val sizes = positions.toMap()
@@ -117,14 +122,17 @@ object CallLogGrouper {
                     .setIsUrgent(cursor.getInt(CallLogQuery.PRIORITY) == Calls.PRIORITY_URGENT)
                     .apply {
                         cursor.getString(CallLogQuery.SUBJECT)?.let(::setSubject)
-                        cursor.getString(CallLogQuery.COMPOSER_PHOTO_URI)?.let(::setComposerPictureUri)
+                        cursor
+                            .getString(CallLogQuery.COMPOSER_PHOTO_URI)
+                            ?.let(::setComposerPictureUri)
                     }
-                    .build(),
+                    .build()
             )
             cursor.moveToNext()
         }
         cursor.moveToPosition(start)
-        val unreadable = first.callType != Calls.VOICEMAIL_TYPE && first.callType != Calls.MISSED_TYPE
+        val unreadable =
+            first.callType != Calls.VOICEMAIL_TYPE && first.callType != Calls.MISSED_TYPE
         return CallLogGroup(
             rowId = rowId,
             callIds = callIds,
@@ -167,7 +175,10 @@ object CallLogGrouper {
         val voicemailUri: String? = cursor.getString(CallLogQuery.VOICEMAIL_URI)
         val callType: Int = cursor.getInt(CallLogQuery.CALL_TYPE)
         val isRead: Boolean = cursor.getInt(CallLogQuery.IS_READ) == 1
-        val dataUsage: Long? = if (cursor.isNull(CallLogQuery.DATA_USAGE)) null else cursor.getLong(CallLogQuery.DATA_USAGE)
-        val transcription: String? = cursor.getString(CallLogQuery.TRANSCRIPTION)?.takeIf { it.isNotBlank() }
+        val dataUsage: Long? =
+            if (cursor.isNull(CallLogQuery.DATA_USAGE)) null
+            else cursor.getLong(CallLogQuery.DATA_USAGE)
+        val transcription: String? =
+            cursor.getString(CallLogQuery.TRANSCRIPTION)?.takeIf { it.isNotBlank() }
     }
 }

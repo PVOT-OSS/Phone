@@ -19,7 +19,11 @@ enum class PermissionGroup(
 ) {
     PHONE(
         // READ_PHONE_NUMBERS shares the dialog: Telecom asks for it to read calling accounts.
-        listOf(Manifest.permission.CALL_PHONE, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_PHONE_NUMBERS),
+        listOf(
+            Manifest.permission.CALL_PHONE,
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.READ_PHONE_NUMBERS,
+        ),
         R.string.onboarding_permission_phone,
         R.string.onboarding_permission_phone_reason,
         R.drawable.ic_phone,
@@ -45,7 +49,11 @@ enum class PermissionGroup(
 }
 
 /** Where onboarding is: asking for the phone role, asking for permissions, or finished. */
-enum class OnboardingStep { ROLE, PERMISSIONS, DONE }
+enum class OnboardingStep {
+    ROLE,
+    PERMISSIONS,
+    DONE,
+}
 
 /**
  * What onboarding knows about the app's setup.
@@ -63,17 +71,20 @@ data class OnboardingState(
     val granted: Set<PermissionGroup> = emptySet(),
     val blocked: Set<PermissionGroup> = emptySet(),
 ) {
-    val missing: List<PermissionGroup> get() = PermissionGroup.entries.filterNot { it in granted }
+    val missing: List<PermissionGroup>
+        get() = PermissionGroup.entries.filterNot { it in granted }
 
     /** Missing groups Android can still ask for. */
-    val requestable: List<PermissionGroup> get() = missing.filterNot { it in blocked }
+    val requestable: List<PermissionGroup>
+        get() = missing.filterNot { it in blocked }
 
     val step: OnboardingStep
-        get() = when {
-            !isDefaultDialer && !roleSkipped -> OnboardingStep.ROLE
-            missing.isNotEmpty() -> OnboardingStep.PERMISSIONS
-            else -> OnboardingStep.DONE
-        }
+        get() =
+            when {
+                !isDefaultDialer && !roleSkipped -> OnboardingStep.ROLE
+                missing.isNotEmpty() -> OnboardingStep.PERMISSIONS
+                else -> OnboardingStep.DONE
+            }
 
     /** This state after a permission request, given which groups Android would still explain. */
     fun afterPermissionRequest(
@@ -81,7 +92,8 @@ data class OnboardingState(
         asked: Collection<PermissionGroup>,
         showsRationale: (PermissionGroup) -> Boolean,
     ): OnboardingState {
-        // Denied right after asking, with no rationale to show: Android won't show the dialog again.
+        // Denied right after asking, with no rationale to show: Android won't show the dialog
+        // again.
         val newlyBlocked = asked.filter { it !in nowGranted && !showsRationale(it) }
         return copy(granted = nowGranted, blocked = (blocked + newlyBlocked) - nowGranted)
     }

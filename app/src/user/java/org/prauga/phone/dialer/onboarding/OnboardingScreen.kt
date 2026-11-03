@@ -5,10 +5,8 @@
 
 package org.prauga.phone.dialer.onboarding
 
-import androidx.compose.foundation.layout.Box
-import com.prauga.pvot.designsystem.components.PvotCard
-import com.prauga.pvot.designsystem.components.PvotGlassCardDefaults
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,6 +28,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
+import com.prauga.pvot.designsystem.components.PvotCard
+import com.prauga.pvot.designsystem.components.PvotGlassCardDefaults
 import com.prauga.pvot.designsystem.components.PvotScreen
 import com.prauga.pvot.designsystem.components.PvotScreenDefaults
 import com.prauga.pvot.designsystem.components.button.PvotButton
@@ -43,9 +43,13 @@ import org.prauga.phone.dialer.ui.TestTags
 /** What the onboarding screen's buttons do. */
 interface OnboardingActions {
     fun onRequestRole()
+
     fun onOpenDefaultApps()
+
     fun onRequestPermissions()
+
     fun onOpenAppSettings()
+
     fun onNotNow()
 }
 
@@ -54,18 +58,24 @@ interface OnboardingActions {
  * step is one card, centred on the plain background.
  */
 @Composable
-fun OnboardingScreen(state: OnboardingState, actions: OnboardingActions, modifier: Modifier = Modifier) {
+fun OnboardingScreen(
+    state: OnboardingState,
+    actions: OnboardingActions,
+    modifier: Modifier = Modifier,
+) {
     PhoneScaffold(modifier = modifier) {
         PvotScreen(
-            modifier = Modifier
-                .fillMaxSize()
-                .windowInsetsPadding(WindowInsets.safeDrawing)
-                .testTag(TestTags.ONBOARDING),
-            contentPadding = PvotScreenDefaults.contentPadding(top = PvotSpacing.L, bottom = PvotSpacing.L),
+            modifier =
+                Modifier.fillMaxSize()
+                    .windowInsetsPadding(WindowInsets.safeDrawing)
+                    .testTag(TestTags.ONBOARDING),
+            contentPadding =
+                PvotScreenDefaults.contentPadding(top = PvotSpacing.L, bottom = PvotSpacing.L),
             // Centred like a dialog; a step taller than the screen scrolls from the top.
             verticalArrangement = Arrangement.Center,
         ) {
-            // The activity finishes after the last step; nothing to show for the frame before it does.
+            // The activity finishes after the last step; nothing to show for the frame before it
+            // does.
             if (state.step != OnboardingStep.DONE) {
                 item(key = state.step.name) {
                     PvotCard(modifier = Modifier.fillMaxWidth()) {
@@ -110,7 +120,11 @@ private fun RoleStep(state: OnboardingState, actions: OnboardingActions) {
 
 @Composable
 private fun PermissionsStep(state: OnboardingState, actions: OnboardingActions) {
-    Header(R.drawable.ic_settings, R.string.onboarding_permissions_title, R.string.onboarding_permissions_body)
+    Header(
+        R.drawable.ic_settings,
+        R.string.onboarding_permissions_title,
+        R.string.onboarding_permissions_body,
+    )
     for (group in PermissionGroup.entries) {
         key(group.name) {
             PermissionRow(group, granted = group in state.granted, blocked = group in state.blocked)
@@ -130,7 +144,8 @@ private fun PermissionsStep(state: OnboardingState, actions: OnboardingActions) 
             text = stringResource(R.string.onboarding_permissions_settings),
             onClick = actions::onOpenAppSettings,
             modifier = Modifier.fillMaxWidth().testTag(TestTags.ONBOARDING_SETTINGS),
-            style = if (state.requestable.isEmpty()) PvotButtonStyle.Filled else PvotButtonStyle.Tonal,
+            style =
+                if (state.requestable.isEmpty()) PvotButtonStyle.Filled else PvotButtonStyle.Tonal,
         )
     }
     NotNow(actions)
@@ -177,27 +192,29 @@ private fun PermissionRow(group: PermissionGroup, granted: Boolean, blocked: Boo
                 tint = MaterialTheme.colorScheme.primary,
             )
         },
-        trailing = when {
-            granted -> {
-                {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_check),
-                        contentDescription = stringResource(R.string.onboarding_permission_granted),
-                        tint = MaterialTheme.colorScheme.primary,
-                    )
+        trailing =
+            when {
+                granted -> {
+                    {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_check),
+                            contentDescription =
+                                stringResource(R.string.onboarding_permission_granted),
+                            tint = MaterialTheme.colorScheme.primary,
+                        )
+                    }
                 }
-            }
-            blocked -> {
-                {
-                    Text(
-                        text = stringResource(R.string.onboarding_permission_blocked),
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.error,
-                    )
+                blocked -> {
+                    {
+                        Text(
+                            text = stringResource(R.string.onboarding_permission_blocked),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.error,
+                        )
+                    }
                 }
-            }
-            else -> null
-        },
+                else -> null
+            },
     )
 }
 

@@ -41,28 +41,44 @@ class SelectPhoneAccountDialogTest {
     private val events = mutableListOf<String>()
     private val setDefault = mutableStateOf(false)
 
-    private fun rows() = listOf(
-        SelectPhoneAccountDialogFragment.AccountRow(
-            "Work SIM",
-            "+1 555-0100",
-            null,
-            ContextCompat.getDrawable(compose.activity, R.drawable.ic_user),
-            true,
-        ),
-        SelectPhoneAccountDialogFragment.AccountRow("Personal SIM", "+1 555-0199", "Last used", null, true),
-        SelectPhoneAccountDialogFragment.AccountRow("Travel SIM", null, "No service", null, false),
-    )
+    private fun rows() =
+        listOf(
+            SelectPhoneAccountDialogFragment.AccountRow(
+                "Work SIM",
+                "+1 555-0100",
+                null,
+                ContextCompat.getDrawable(compose.activity, R.drawable.ic_user),
+                true,
+            ),
+            SelectPhoneAccountDialogFragment.AccountRow(
+                "Personal SIM",
+                "+1 555-0199",
+                "Last used",
+                null,
+                true,
+            ),
+            SelectPhoneAccountDialogFragment.AccountRow(
+                "Travel SIM",
+                null,
+                "No service",
+                null,
+                false,
+            ),
+        )
 
     private fun show(setDefaultLabel: String? = "Always use this for calls"): Dialog {
         lateinit var dialog: Dialog
         compose.runOnUiThread {
-            dialog = SelectPhoneAccountDialogFragment.createDialog(
-                compose.activity,
-                "Call with",
-                rows(),
-                setDefaultLabel,
-                setDefault,
-            ) { events += "selected $it default=${setDefault.value}" }
+            dialog =
+                SelectPhoneAccountDialogFragment.createDialog(
+                    compose.activity,
+                    "Call with",
+                    rows(),
+                    setDefaultLabel,
+                    setDefault,
+                ) {
+                    events += "selected $it default=${setDefault.value}"
+                }
             dialog.setOnCancelListener { events += "cancelled" }
             dialog.show()
         }
@@ -82,7 +98,9 @@ class SelectPhoneAccountDialogTest {
     @Test
     fun aDisabledAccountCannotBePicked() {
         show()
-        compose.onNode(hasText("Travel SIM", substring = true) and hasClickAction()).assertIsNotEnabled()
+        compose
+            .onNode(hasText("Travel SIM", substring = true) and hasClickAction())
+            .assertIsNotEnabled()
     }
 
     @Test
@@ -94,7 +112,9 @@ class SelectPhoneAccountDialogTest {
     @Test
     fun backCancels() {
         val dialog = show()
-        compose.runOnUiThread { (dialog as ComponentDialog).onBackPressedDispatcher.onBackPressed() }
+        compose.runOnUiThread {
+            (dialog as ComponentDialog).onBackPressedDispatcher.onBackPressed()
+        }
         shadowOf(Looper.getMainLooper()).idle()
         assertThat(events).containsExactly("cancelled")
     }
@@ -102,13 +122,19 @@ class SelectPhoneAccountDialogTest {
     @Test
     fun screenshotDark() {
         show()
-        compose.onAllNodes(isRoot()).onLast().captureRoboImage("src/test/screenshots/dialogs/select_phone_account_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onLast()
+            .captureRoboImage("src/test/screenshots/dialogs/select_phone_account_dark.png")
     }
 
     @Test
     @Config(qualifiers = "en-rUS-w411dp-h891dp-notnight-xxhdpi")
     fun screenshotLight() {
         show()
-        compose.onAllNodes(isRoot()).onLast().captureRoboImage("src/test/screenshots/dialogs/select_phone_account_light.png")
+        compose
+            .onAllNodes(isRoot())
+            .onLast()
+            .captureRoboImage("src/test/screenshots/dialogs/select_phone_account_light.png")
     }
 }

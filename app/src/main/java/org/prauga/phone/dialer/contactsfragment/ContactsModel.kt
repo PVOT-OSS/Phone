@@ -24,7 +24,9 @@ data class ContactEntry(
 ) {
     /** The contact's lookup URI, which survives contact joins, else its plain URI. */
     val contactUri: Uri
-        get() = Contacts.getLookupUri(id, lookupKey) ?: ContentUris.withAppendedId(Contacts.CONTENT_URI, id)
+        get() =
+            Contacts.getLookupUri(id, lookupKey)
+                ?: ContentUris.withAppendedId(Contacts.CONTENT_URI, id)
 }
 
 /** Contacts that share an index letter, such as all names starting with "A". */
@@ -41,23 +43,28 @@ object ContactsQuery {
     /** Loads every named contact, on the calling thread. */
     fun load(context: Context, hasPhoneNumbers: Boolean = false): List<ContactSection> {
         val preferences = ContactsComponent.get(context).contactDisplayPreferences()
-        val nameColumn = when (preferences.displayOrder) {
-            DisplayOrder.ALTERNATIVE -> Contacts.DISPLAY_NAME_ALTERNATIVE
-            else -> Contacts.DISPLAY_NAME_PRIMARY
-        }
-        val sortColumn = when (preferences.sortOrder) {
-            SortOrder.BY_ALTERNATIVE -> Contacts.SORT_KEY_ALTERNATIVE
-            else -> Contacts.SORT_KEY_PRIMARY
-        }
+        val nameColumn =
+            when (preferences.displayOrder) {
+                DisplayOrder.ALTERNATIVE -> Contacts.DISPLAY_NAME_ALTERNATIVE
+                else -> Contacts.DISPLAY_NAME_PRIMARY
+            }
+        val sortColumn =
+            when (preferences.sortOrder) {
+                SortOrder.BY_ALTERNATIVE -> Contacts.SORT_KEY_ALTERNATIVE
+                else -> Contacts.SORT_KEY_PRIMARY
+            }
         val where = buildString {
             append("$nameColumn IS NOT NULL")
             if (hasPhoneNumbers) append(" AND ${Contacts.HAS_PHONE_NUMBER}=1")
         }
-        val uri = Contacts.CONTENT_URI.buildUpon()
-            .appendQueryParameter(Contacts.EXTRA_ADDRESS_BOOK_INDEX, "true")
-            .build()
-        val projection = arrayOf(Contacts._ID, nameColumn, Contacts.PHOTO_THUMBNAIL_URI, Contacts.LOOKUP_KEY)
-        return context.contentResolver.query(uri, projection, where, null, "$sortColumn ASC")
+        val uri =
+            Contacts.CONTENT_URI.buildUpon()
+                .appendQueryParameter(Contacts.EXTRA_ADDRESS_BOOK_INDEX, "true")
+                .build()
+        val projection =
+            arrayOf(Contacts._ID, nameColumn, Contacts.PHOTO_THUMBNAIL_URI, Contacts.LOOKUP_KEY)
+        return context.contentResolver
+            .query(uri, projection, where, null, "$sortColumn ASC")
             ?.use(::map)
             .orEmpty()
     }
@@ -71,7 +78,12 @@ object ContactsQuery {
         val titles = cursor.extras?.getStringArray(Contacts.EXTRA_ADDRESS_BOOK_INDEX_TITLES)
         val counts = cursor.extras?.getIntArray(Contacts.EXTRA_ADDRESS_BOOK_INDEX_COUNTS)
         if (titles != null && counts != null && counts.sum() != cursor.count) {
-            LogUtil.e("ContactsQuery.map", "Count sum (%d) != cursor count (%d).", counts.sum(), cursor.count)
+            LogUtil.e(
+                "ContactsQuery.map",
+                "Count sum (%d) != cursor count (%d).",
+                counts.sum(),
+                cursor.count,
+            )
         }
         val sections = mutableListOf<ContactSection>()
         var label: String? = null
@@ -80,22 +92,29 @@ object ContactsQuery {
         var leftInSection = counts?.firstOrNull() ?: 0
         cursor.moveToPosition(-1)
         while (cursor.moveToNext()) {
-            val entry = ContactEntry(
-                id = cursor.getLong(ID),
-                lookupKey = cursor.getString(LOOKUP_KEY),
-                name = cursor.getString(DISPLAY_NAME).orEmpty(),
-                photoUri = cursor.getString(PHOTO_URI),
-            )
+            val entry =
+                ContactEntry(
+                    id = cursor.getLong(ID),
+                    lookupKey = cursor.getString(LOOKUP_KEY),
+                    name = cursor.getString(DISPLAY_NAME).orEmpty(),
+                    photoUri = cursor.getString(PHOTO_URI),
+                )
             // Skip empty index sections before taking the next title.
-            while (titles != null && counts != null && leftInSection == 0 && indexSection < counts.lastIndex) {
+            while (
+                titles != null &&
+                    counts != null &&
+                    leftInSection == 0 &&
+                    indexSection < counts.lastIndex
+            ) {
                 leftInSection = counts[++indexSection]
             }
-            val rowLabel = if (titles != null && leftInSection > 0 && indexSection < titles.size) {
-                leftInSection--
-                titles[indexSection]
-            } else {
-                firstLetter(entry.name)
-            }
+            val rowLabel =
+                if (titles != null && leftInSection > 0 && indexSection < titles.size) {
+                    leftInSection--
+                    titles[indexSection]
+                } else {
+                    firstLetter(entry.name)
+                }
             if (rowLabel != label) {
                 label?.let { sections += ContactSection(it, current) }
                 label = rowLabel

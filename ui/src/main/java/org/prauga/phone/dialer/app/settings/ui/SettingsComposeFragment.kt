@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -67,26 +66,28 @@ import org.prauga.phone.dialer.ui.TestTags
 abstract class SettingsComposeFragment : Fragment() {
 
     /** The screen's content. */
-    @Composable
-    abstract fun Content()
+    @Composable abstract fun Content()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View = ComposeView(requireContext()).apply {
-        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-        val chrome = (activity as? SettingsChromeHost)?.settingsChrome
-        setContent {
-            // Inside the scaffold the background is the scaffold's, so the content stays see-through.
-            SettingsTheme(fillBackground = chrome == null) {
-                CompositionLocalProvider(LocalSettingsChrome provides chrome) {
-                    // Qualified: inside apply, a bare Content() is ComposeView.Content and recurses forever.
-                    this@SettingsComposeFragment.Content()
+    ): View =
+        ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            val chrome = (activity as? SettingsChromeHost)?.settingsChrome
+            setContent {
+                // Inside the scaffold the background is the scaffold's, so the content stays
+                // see-through.
+                SettingsTheme(fillBackground = chrome == null) {
+                    CompositionLocalProvider(LocalSettingsChrome provides chrome) {
+                        // Qualified: inside apply, a bare Content() is ComposeView.Content and
+                        // recurses forever.
+                        this@SettingsComposeFragment.Content()
+                    }
                 }
             }
         }
-    }
 }
 
 /** An activity that draws the settings chrome (the top bar and background) around its screens. */
@@ -96,8 +97,8 @@ interface SettingsChromeHost {
 
 /**
  * What the settings chrome and the screen under it tell each other: the padding that keeps the
- * screen's first row clear of the top bar and its last clear of the navigation bar, and whether
- * the screen has scrolled, which folds the top bar into its glass row.
+ * screen's first row clear of the top bar and its last clear of the navigation bar, and whether the
+ * screen has scrolled, which folds the top bar into its glass row.
  */
 @Stable
 class SettingsChrome {
@@ -140,14 +141,15 @@ fun SettingsScaffold(
                 onBack = onBack,
                 compact = chrome.compact,
             )
-        },
+        }
     ) { padding ->
-        val contentPadding = PaddingValues(
-            start = navigationBar.calculateStartPadding(direction),
-            end = navigationBar.calculateEndPadding(direction),
-            top = padding.calculateTopPadding(),
-            bottom = navigationBar.calculateBottomPadding(),
-        )
+        val contentPadding =
+            PaddingValues(
+                start = navigationBar.calculateStartPadding(direction),
+                end = navigationBar.calculateEndPadding(direction),
+                top = padding.calculateTopPadding(),
+                bottom = navigationBar.calculateBottomPadding(),
+            )
         SideEffect { chrome.contentPadding = contentPadding }
         CompositionLocalProvider(LocalSettingsChrome provides chrome) { content() }
     }
@@ -172,20 +174,22 @@ fun SettingsList(content: LazyListScope.() -> Unit) {
     PvotScreen(
         modifier = Modifier.fillMaxSize().testTag(TestTags.SETTINGS_LIST),
         state = state,
-        contentPadding = PaddingValues(
-            start = PvotScreenDefaults.HorizontalPadding + bars.calculateStartPadding(direction),
-            end = PvotScreenDefaults.HorizontalPadding + bars.calculateEndPadding(direction),
-            top = PvotSpacing.S + bars.calculateTopPadding(),
-            bottom = PvotScreenDefaults.BottomSpacing + bars.calculateBottomPadding(),
-        ),
+        contentPadding =
+            PaddingValues(
+                start =
+                    PvotScreenDefaults.HorizontalPadding + bars.calculateStartPadding(direction),
+                end = PvotScreenDefaults.HorizontalPadding + bars.calculateEndPadding(direction),
+                top = PvotSpacing.S + bars.calculateTopPadding(),
+                bottom = PvotScreenDefaults.BottomSpacing + bars.calculateBottomPadding(),
+            ),
         content = content,
     )
 }
 
 /**
- * A group of settings rows on one card, under an optional [title], with a hairline between rows
- * as a [PvotListGroup] draws them. Rows keep their own padding, so their text lines up with
- * anything else in the group padded by [SettingsGroupDefaults.RowPadding].
+ * A group of settings rows on one card, under an optional [title], with a hairline between rows as
+ * a [PvotListGroup] draws them. Rows keep their own padding, so their text lines up with anything
+ * else in the group padded by [SettingsGroupDefaults.RowPadding].
  *
  * @param dividers Whether to draw the hairlines; off for a group that is one control, not rows
  */
@@ -211,23 +215,35 @@ fun SettingsGroup(
 
 /** Children stacked like a column, with a hairline between each two that have any height. */
 @Composable
-private fun DividedColumn(dividers: Boolean, color: Color, modifier: Modifier, content: @Composable () -> Unit) {
+private fun DividedColumn(
+    dividers: Boolean,
+    color: Color,
+    modifier: Modifier,
+    content: @Composable () -> Unit,
+) {
     // Where each line goes, worked out while placing and read when drawing, in the same frame.
     val lines = remember { mutableListOf<Int>() }
     val inset = with(LocalDensity.current) { PvotListGroupDefaults.DividerInset.toPx() }
     val thickness = with(LocalDensity.current) { PvotListGroupDefaults.DividerThickness.toPx() }
     Layout(
         content = content,
-        modifier = modifier.drawBehind {
-            if (dividers) {
-                for (y in lines) {
-                    drawRect(color, topLeft = Offset(inset, y - thickness / 2f), size = Size(size.width - inset * 2, thickness))
+        modifier =
+            modifier.drawBehind {
+                if (dividers) {
+                    for (y in lines) {
+                        drawRect(
+                            color,
+                            topLeft = Offset(inset, y - thickness / 2f),
+                            size = Size(size.width - inset * 2, thickness),
+                        )
+                    }
                 }
-            }
-        },
+            },
     ) { measurables, constraints ->
         val placeables = measurables.map { it.measure(constraints.copy(minHeight = 0)) }
-        val width = placeables.maxOfOrNull { it.width }?.coerceAtLeast(constraints.minWidth) ?: constraints.minWidth
+        val width =
+            placeables.maxOfOrNull { it.width }?.coerceAtLeast(constraints.minWidth)
+                ?: constraints.minWidth
         val height = placeables.sumOf { it.height }
         layout(width, height) {
             lines.clear()
@@ -261,13 +277,13 @@ object SettingsGroupDefaults {
 fun SettingsSectionHeader(title: String) {
     PvotSectionHeader(
         title = title,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(
-                start = SettingsGroupDefaults.CardPadding + SettingsGroupDefaults.RowPadding,
-                end = SettingsGroupDefaults.RowPadding,
-                top = PvotSpacing.S,
-                bottom = PvotSpacing.S,
-            ),
+        modifier =
+            Modifier.fillMaxWidth()
+                .padding(
+                    start = SettingsGroupDefaults.CardPadding + SettingsGroupDefaults.RowPadding,
+                    end = SettingsGroupDefaults.RowPadding,
+                    top = PvotSpacing.S,
+                    bottom = PvotSpacing.S,
+                ),
     )
 }

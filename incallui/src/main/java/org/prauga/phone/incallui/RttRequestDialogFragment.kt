@@ -17,7 +17,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.fragment.app.DialogFragment
 import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
-import org.prauga.phone.incallui.R
+import java.lang.ref.WeakReference
 import org.prauga.phone.dialer.common.Assert
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.contacts.ContactsComponent
@@ -27,7 +27,6 @@ import org.prauga.phone.dialer.ui.PvotDialogText
 import org.prauga.phone.incallui.ContactInfoCache.ContactCacheEntry
 import org.prauga.phone.incallui.ContactInfoCache.ContactInfoCacheCallback
 import org.prauga.phone.incallui.call.CallList
-import java.lang.ref.WeakReference
 
 /** Dialog that shown to user when receiving RTT request mid call. */
 class RttRequestDialogFragment : DialogFragment() {
@@ -40,10 +39,17 @@ class RttRequestDialogFragment : DialogFragment() {
         LogUtil.enterBlock("RttRequestDialogFragment.onCreateDialog")
 
         val cache = ContactInfoCache.getInstance(requireContext())
-        val dialerCall = CallList.getInstance().getCallById(requireArguments().getString(ARG_CALL_ID))
+        val dialerCall =
+            CallList.getInstance().getCallById(requireArguments().getString(ARG_CALL_ID))
         cache.findInfo(dialerCall, false, ContactLookupCallback(this))
 
-        val dialog = createDialog(requireActivity(), details, ::onPositiveButtonClick, ::onNegativeButtonClick)
+        val dialog =
+            createDialog(
+                requireActivity(),
+                details,
+                ::onPositiveButtonClick,
+                ::onNegativeButtonClick,
+            )
         dialog.setCancelable(false)
         dialog.setCanceledOnTouchOutside(false)
         return dialog
@@ -84,15 +90,17 @@ class RttRequestDialogFragment : DialogFragment() {
         }
 
         private fun getNameOrNumber(entry: ContactCacheEntry, context: Context): CharSequence? {
-            val preferredName = ContactsComponent.get(context)
-                .contactDisplayPreferences()
-                .getDisplayName(entry.namePrimary, entry.nameAlternative)
+            val preferredName =
+                ContactsComponent.get(context)
+                    .contactDisplayPreferences()
+                    .getDisplayName(entry.namePrimary, entry.nameAlternative)
             if (TextUtils.isEmpty(preferredName)) {
                 return if (TextUtils.isEmpty(entry.number)) {
                     null
                 } else {
                     PhoneNumberUtils.createTtsSpannable(
-                        BidiFormatter.getInstance().unicodeWrap(entry.number, TextDirectionHeuristics.LTR),
+                        BidiFormatter.getInstance()
+                            .unicodeWrap(entry.number, TextDirectionHeuristics.LTR)
                     )
                 }
             }
@@ -104,8 +112,8 @@ class RttRequestDialogFragment : DialogFragment() {
 
     companion object {
         /**
-         * The dialog itself: who asks (once [details] is known), what RTT is, and Accept or Decline,
-         * each of which runs its callback and closes the dialog.
+         * The dialog itself: who asks (once [details] is known), what RTT is, and Accept or
+         * Decline, each of which runs its callback and closes the dialog.
          */
         @VisibleForTesting
         internal fun createDialog(
@@ -119,8 +127,15 @@ class RttRequestDialogFragment : DialogFragment() {
                 context.getString(R.string.rtt_request_dialog_title),
                 null,
                 listOf(
-                    Action(context.getString(R.string.rtt_button_accept_request), PvotDialogActionStyle.Primary, onAccept),
-                    Action(context.getString(R.string.rtt_button_decline_request), onClick = onDecline),
+                    Action(
+                        context.getString(R.string.rtt_button_accept_request),
+                        PvotDialogActionStyle.Primary,
+                        onAccept,
+                    ),
+                    Action(
+                        context.getString(R.string.rtt_button_decline_request),
+                        onClick = onDecline,
+                    ),
                 ),
             ) {
                 details.value?.let { PvotDialogText(it) }
@@ -140,10 +155,11 @@ class RttRequestDialogFragment : DialogFragment() {
         @JvmStatic
         fun newInstance(callId: String?, rttRequestId: Int): RttRequestDialogFragment =
             RttRequestDialogFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_CALL_ID, Assert.isNotNull(callId))
-                    putInt(ARG_RTT_REQUEST_ID, rttRequestId)
-                }
+                arguments =
+                    Bundle().apply {
+                        putString(ARG_CALL_ID, Assert.isNotNull(callId))
+                        putInt(ARG_RTT_REQUEST_ID, rttRequestId)
+                    }
             }
     }
 }

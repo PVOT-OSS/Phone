@@ -28,7 +28,8 @@ object ClipboardUtils {
             return
         }
 
-        val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipboardManager =
+            context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clipData = ClipData.newPlainText(label ?: "", text)
         clipboardManager.setPrimaryClip(clipData)
 

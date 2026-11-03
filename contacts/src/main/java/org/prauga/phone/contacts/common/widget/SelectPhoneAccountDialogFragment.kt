@@ -34,8 +34,8 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.DialogFragment
 import com.prauga.pvot.designsystem.components.list.PvotListRow
 import com.prauga.pvot.designsystem.components.list.PvotListRowDefaults
-import org.prauga.phone.contacts.common.compat.PhoneAccountCompat
 import org.prauga.phone.contacts.R
+import org.prauga.phone.contacts.common.compat.PhoneAccountCompat
 import org.prauga.phone.dialer.location.GeoUtil
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper
 import org.prauga.phone.dialer.protos.ProtoParsers
@@ -49,7 +49,8 @@ import org.prauga.phone.dialer.ui.PvotDialogCheckboxRow
  */
 class SelectPhoneAccountDialogFragment : DialogFragment() {
 
-    private var options: SelectPhoneAccountDialogOptions = SelectPhoneAccountDialogOptions.getDefaultInstance()
+    private var options: SelectPhoneAccountDialogOptions =
+        SelectPhoneAccountDialogOptions.getDefaultInstance()
     private var listener: SelectPhoneAccountListener? = null
 
     private val isDefaultChecked = mutableStateOf(false)
@@ -65,11 +66,12 @@ class SelectPhoneAccountDialogFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        options = ProtoParsers.getTrusted(
-            requireArguments(),
-            ARG_OPTIONS,
-            SelectPhoneAccountDialogOptions.getDefaultInstance(),
-        )
+        options =
+            ProtoParsers.getTrusted(
+                requireArguments(),
+                ARG_OPTIONS,
+                SelectPhoneAccountDialogOptions.getDefaultInstance(),
+            )
         if (savedInstanceState != null) {
             isDefaultChecked.value = savedInstanceState.getBoolean(ARG_IS_DEFAULT_CHECKED)
         }
@@ -77,35 +79,54 @@ class SelectPhoneAccountDialogFragment : DialogFragment() {
 
         val context = requireActivity()
         val telecomManager = context.getSystemService(TelecomManager::class.java)
-        val rows = options.entriesList.map { entry ->
-            val handle = SelectPhoneAccountDialogOptionsUtil.getPhoneAccountHandle(entry)
-            val account = TelecomUtil.getPhoneAccount(context, handle)
-            val address = account?.address?.schemeSpecificPart
-            AccountRow(
-                label = account?.label?.toString().orEmpty(),
-                number = if (account == null || TextUtils.isEmpty(address)) {
-                    null
-                } else {
-                    PhoneNumberHelper.formatNumberForDisplay(context, address, getCountryIso(context, handle))?.toString()
-                },
-                hint = entry.hint.takeUnless { TextUtils.isEmpty(it) },
-                icon = PhoneAccountCompat.createIconDrawable(account, context),
-                enabled = entry.enabled,
+        val rows =
+            options.entriesList.map { entry ->
+                val handle = SelectPhoneAccountDialogOptionsUtil.getPhoneAccountHandle(entry)
+                val account = TelecomUtil.getPhoneAccount(context, handle)
+                val address = account?.address?.schemeSpecificPart
+                AccountRow(
+                    label = account?.label?.toString().orEmpty(),
+                    number =
+                        if (account == null || TextUtils.isEmpty(address)) {
+                            null
+                        } else {
+                            PhoneNumberHelper.formatNumberForDisplay(
+                                    context,
+                                    address,
+                                    getCountryIso(context, handle),
+                                )
+                                ?.toString()
+                        },
+                    hint = entry.hint.takeUnless { TextUtils.isEmpty(it) },
+                    icon = PhoneAccountCompat.createIconDrawable(account, context),
+                    enabled = entry.enabled,
+                )
+            }
+        val setDefaultLabel =
+            if (options.getCanSetDefault()) {
+                getString(
+                    if (options.hasSetDefaultLabel()) options.setDefaultLabel
+                    else R.string.set_default_account
+                )
+            } else {
+                null
+            }
+        val title =
+            getString(
+                if (options.hasTitle()) options.title else R.string.select_account_dialog_title
             )
-        }
-        val setDefaultLabel = if (options.getCanSetDefault()) {
-            getString(if (options.hasSetDefaultLabel()) options.setDefaultLabel else R.string.set_default_account)
-        } else {
-            null
-        }
-        val title = getString(if (options.hasTitle()) options.title else R.string.select_account_dialog_title)
 
         return createDialog(context, title, rows, setDefaultLabel, isDefaultChecked) { position ->
             isSelected = true
             val selectedAccountHandle =
-                SelectPhoneAccountDialogOptionsUtil.getPhoneAccountHandle(options.entriesList[position])
+                SelectPhoneAccountDialogOptionsUtil.getPhoneAccountHandle(
+                    options.entriesList[position]
+                )
             val result = Bundle()
-            result.putParcelable(SelectPhoneAccountListener.EXTRA_SELECTED_ACCOUNT_HANDLE, selectedAccountHandle)
+            result.putParcelable(
+                SelectPhoneAccountListener.EXTRA_SELECTED_ACCOUNT_HANDLE,
+                selectedAccountHandle,
+            )
             result.putBoolean(SelectPhoneAccountListener.EXTRA_SET_DEFAULT, isDefaultChecked.value)
             result.putString(SelectPhoneAccountListener.EXTRA_CALL_ID, getCallId())
             listener?.deliver(SelectPhoneAccountListener.RESULT_SELECTED, result)
@@ -129,7 +150,10 @@ class SelectPhoneAccountDialogFragment : DialogFragment() {
         override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
             if (resultCode == RESULT_SELECTED) {
                 onPhoneAccountSelected(
-                    resultData!!.getParcelable(EXTRA_SELECTED_ACCOUNT_HANDLE, PhoneAccountHandle::class.java),
+                    resultData!!.getParcelable(
+                        EXTRA_SELECTED_ACCOUNT_HANDLE,
+                        PhoneAccountHandle::class.java,
+                    ),
                     resultData.getBoolean(EXTRA_SET_DEFAULT),
                     resultData.getString(EXTRA_CALL_ID),
                 )
@@ -139,7 +163,8 @@ class SelectPhoneAccountDialogFragment : DialogFragment() {
         }
 
         /** Hands a result to [onReceiveResult] directly, as the dialog always has. */
-        internal fun deliver(resultCode: Int, resultData: Bundle) = onReceiveResult(resultCode, resultData)
+        internal fun deliver(resultCode: Int, resultData: Bundle) =
+            onReceiveResult(resultCode, resultData)
 
         open fun onPhoneAccountSelected(
             selectedAccountHandle: PhoneAccountHandle?,
@@ -190,8 +215,8 @@ class SelectPhoneAccountDialogFragment : DialogFragment() {
 
         /**
          * The dialog: a row per account (its icon, label, number and hint; disabled accounts can't
-         * be picked) and, when [setDefaultLabel] is given, a checkbox to keep the choice. Picking an
-         * account reports its position and closes the dialog; back or a tap outside cancels it.
+         * be picked) and, when [setDefaultLabel] is given, a checkbox to keep the choice. Picking
+         * an account reports its position and closes the dialog; back or a tap outside cancels it.
          */
         @VisibleForTesting
         internal fun createDialog(
@@ -203,31 +228,47 @@ class SelectPhoneAccountDialogFragment : DialogFragment() {
             onSelected: (position: Int) -> Unit,
         ): Dialog {
             lateinit var dialog: Dialog
-            dialog = PvotAlertDialog(context, title, null, emptyList()) {
-                Column(modifier = Modifier.fillMaxWidth()) {
-                    Column(modifier = Modifier.weight(1f, fill = false).verticalScroll(rememberScrollState())) {
-                        rows.forEachIndexed { position, row ->
-                            PvotListRow(
-                                title = row.label,
-                                supportingText = listOfNotNull(row.number, row.hint).joinToString("\n").ifEmpty { null },
-                                leading = row.icon?.let { icon -> { AccountIcon(icon, row.enabled) } },
-                                enabled = row.enabled,
-                                onClick = {
-                                    onSelected(position)
-                                    dialog.dismiss()
-                                },
-                            )
+            dialog =
+                PvotAlertDialog(context, title, null, emptyList()) {
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        Column(
+                            modifier =
+                                Modifier.weight(1f, fill = false)
+                                    .verticalScroll(rememberScrollState())
+                        ) {
+                            rows.forEachIndexed { position, row ->
+                                PvotListRow(
+                                    title = row.label,
+                                    supportingText =
+                                        listOfNotNull(row.number, row.hint)
+                                            .joinToString("\n")
+                                            .ifEmpty { null },
+                                    leading =
+                                        row.icon?.let { icon ->
+                                            { AccountIcon(icon, row.enabled) }
+                                        },
+                                    enabled = row.enabled,
+                                    onClick = {
+                                        onSelected(position)
+                                        dialog.dismiss()
+                                    },
+                                )
+                            }
+                        }
+                        if (setDefaultLabel != null) {
+                            PvotDialogCheckboxRow(setDefaultLabel, isDefaultChecked.value) {
+                                isDefaultChecked.value = it
+                            }
                         }
                     }
-                    if (setDefaultLabel != null) {
-                        PvotDialogCheckboxRow(setDefaultLabel, isDefaultChecked.value) { isDefaultChecked.value = it }
-                    }
                 }
-            }
             return dialog
         }
 
-        private fun getCountryIso(context: Context, phoneAccountHandle: PhoneAccountHandle): String {
+        private fun getCountryIso(
+            context: Context,
+            phoneAccountHandle: PhoneAccountHandle,
+        ): String {
             val info = TelecomUtil.getSubscriptionInfo(context, phoneAccountHandle)
             if (!info.isPresent) {
                 return GeoUtil.getCurrentCountryIso(context)

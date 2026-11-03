@@ -59,7 +59,8 @@ object Assert {
 
     @JvmStatic
     @CheckReturnValue
-    fun createIllegalStateFailException(msg: String?): IllegalStateException = IllegalStateException(msg)
+    fun createIllegalStateFailException(msg: String?): IllegalStateException =
+        IllegalStateException(msg)
 
     /**
      * Ensures the truth of an expression involving one or more parameters to the calling method.
@@ -122,8 +123,7 @@ object Assert {
      * @return the non-null reference that was validated
      * @throws NullPointerException if `reference` is null
      */
-    @JvmStatic
-    fun <T : Any> isNotNull(reference: T?): T = isNotNull(reference, null)
+    @JvmStatic fun <T : Any> isNotNull(reference: T?): T = isNotNull(reference, null)
 
     /**
      * Ensures that an object reference passed as a parameter to the calling method is not null.

@@ -40,14 +40,22 @@ class SpeedDialViewModelTest {
             failWith?.let { throw it }
             return items
         }
+
         override suspend fun star(contactUri: Uri) = items.also { starred += contactUri }
+
         override suspend fun remove(item: SpeedDialUiItem): List<SpeedDialUiItem> {
             removed += item
             items = items.filterNot { it.contactId() == item.contactId() }
             return items
         }
-        override suspend fun savePositions(items: List<SpeedDialUiItem>) { saved = items }
-        override suspend fun setDefaultChannel(item: SpeedDialUiItem, channel: Channel) { defaults += item to channel }
+
+        override suspend fun savePositions(items: List<SpeedDialUiItem>) {
+            saved = items
+        }
+
+        override suspend fun setDefaultChannel(item: SpeedDialUiItem, channel: Channel) {
+            defaults += item to channel
+        }
     }
 
     private val ada = speedDialItem(1, "Ada", pinned = 1)
@@ -63,19 +71,24 @@ class SpeedDialViewModelTest {
 
     @After fun tearDown() = Dispatchers.resetMain()
 
-    private fun viewModel() = SpeedDialViewModel(
-        ApplicationProvider.getApplicationContext<Application>(),
-        repository,
-        hasPermission = { permitted },
-        onSaved = { shortcutsFor = it },
-    ).apply { refresh() }
+    private fun viewModel() =
+        SpeedDialViewModel(
+                ApplicationProvider.getApplicationContext<Application>(),
+                repository,
+                hasPermission = { permitted },
+                onSaved = { shortcutsFor = it },
+            )
+            .apply { refresh() }
 
-    private val SpeedDialViewModel.loaded get() = state.value as SpeedDialUiState.Loaded
+    private val SpeedDialViewModel.loaded
+        get() = state.value as SpeedDialUiState.Loaded
 
     @Test
     fun favoritesFollowTheirPinnedPositionThenSuggestions() {
         val vm = viewModel()
-        assertThat(vm.loaded.favorites.map { it.name() }).containsExactly("Bea", "Ada", "Cy").inOrder()
+        assertThat(vm.loaded.favorites.map { it.name() })
+            .containsExactly("Bea", "Ada", "Cy")
+            .inOrder()
         assertThat(vm.loaded.suggestions.map { it.name() }).containsExactly("Dev")
     }
 
@@ -102,11 +115,15 @@ class SpeedDialViewModelTest {
     fun movingAFavoriteReordersAndSavesOnLeave() {
         val vm = viewModel()
         vm.moveFavorite(0, 2)
-        assertThat(vm.loaded.favorites.map { it.name() }).containsExactly("Ada", "Cy", "Bea").inOrder()
+        assertThat(vm.loaded.favorites.map { it.name() })
+            .containsExactly("Ada", "Cy", "Bea")
+            .inOrder()
 
         vm.savePositions()
 
-        assertThat(repository.saved?.map { it.name() }).containsExactly("Ada", "Cy", "Bea", "Dev").inOrder()
+        assertThat(repository.saved?.map { it.name() })
+            .containsExactly("Ada", "Cy", "Bea", "Dev")
+            .inOrder()
         assertThat(shortcutsFor).isEqualTo(repository.saved)
     }
 
@@ -114,7 +131,9 @@ class SpeedDialViewModelTest {
     fun movesOutOfRangeAreIgnored() {
         val vm = viewModel()
         vm.moveFavorite(0, 9)
-        assertThat(vm.loaded.favorites.map { it.name() }).containsExactly("Bea", "Ada", "Cy").inOrder()
+        assertThat(vm.loaded.favorites.map { it.name() })
+            .containsExactly("Bea", "Ada", "Cy")
+            .inOrder()
     }
 
     @Test

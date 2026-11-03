@@ -56,80 +56,104 @@ class SpeedDialFragment : Fragment() {
         }
 
     /** Reloads when the contacts permission is granted from another screen. */
-    private val permissionGrantedReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) = viewModel.refresh()
-    }
+    private val permissionGrantedReceiver =
+        object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) = viewModel.refresh()
+        }
 
-    private val actions = object : SpeedDialActions {
-        override fun call(channel: Channel, fromChooser: Boolean) {
-            val type = if (fromChooser) {
-                CallInitiationType.Type.SPEED_DIAL_DISAMBIG_DIALOG
-            } else {
-                CallInitiationType.Type.SPEED_DIAL
+    private val actions =
+        object : SpeedDialActions {
+            override fun call(channel: Channel, fromChooser: Boolean) {
+                val type =
+                    if (fromChooser) {
+                        CallInitiationType.Type.SPEED_DIAL_DISAMBIG_DIALOG
+                    } else {
+                        CallInitiationType.Type.SPEED_DIAL
+                    }
+                PreCall.start(
+                    requireContext(),
+                    CallIntentBuilder(channel.number(), type)
+                        .setAllowAssistedDial(true)
+                        .setIsVideoCall(channel.isVideoTechnology),
+                )
             }
-            PreCall.start(
-                requireContext(),
-                CallIntentBuilder(channel.number(), type)
-                    .setAllowAssistedDial(true)
-                    .setIsVideoCall(channel.isVideoTechnology),
-            )
-        }
 
-        override fun message(number: String) = startActivity(IntentUtil.getSendSmsIntent(number))
+            override fun message(number: String) =
+                startActivity(IntentUtil.getSendSmsIntent(number))
 
-        override fun openContact(item: SpeedDialUiItem) {
-            startActivity(
-                Intent(Intent.ACTION_VIEW, Uri.withAppendedPath(Contacts.CONTENT_URI, item.contactId().toString())))
-        }
+            override fun openContact(item: SpeedDialUiItem) {
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.withAppendedPath(Contacts.CONTENT_URI, item.contactId().toString()),
+                    )
+                )
+            }
 
-        override fun addFavorite() = pickContactLauncher.launch(Intent(Intent.ACTION_PICK, Phone.CONTENT_URI))
+            override fun addFavorite() =
+                pickContactLauncher.launch(Intent(Intent.ACTION_PICK, Phone.CONTENT_URI))
 
-        override fun star(item: SpeedDialUiItem) {
-            val number = item.defaultChannel()?.number() ?: return
-            viewModel.star(Uri.withAppendedPath(Phone.CONTENT_FILTER_URI, number))
-        }
+            override fun star(item: SpeedDialUiItem) {
+                val number = item.defaultChannel()?.number() ?: return
+                viewModel.star(Uri.withAppendedPath(Phone.CONTENT_FILTER_URI, number))
+            }
 
-        override fun remove(item: SpeedDialUiItem) = viewModel.remove(item)
+            override fun remove(item: SpeedDialUiItem) = viewModel.remove(item)
 
-        override fun move(from: Int, to: Int) = viewModel.moveFavorite(from, to)
+            override fun move(from: Int, to: Int) = viewModel.moveFavorite(from, to)
 
-        override fun setDefaultChannel(item: SpeedDialUiItem, channel: Channel) =
-            viewModel.setDefaultChannel(item, channel)
+            override fun setDefaultChannel(item: SpeedDialUiItem, channel: Channel) =
+                viewModel.setDefaultChannel(item, channel)
 
-        override fun openAppMenu() {
-            FragmentUtils.getParent(this@SpeedDialFragment, HostInterface::class.java)?.openAppMenu()
-        }
+            override fun openAppMenu() {
+                FragmentUtils.getParent(this@SpeedDialFragment, HostInterface::class.java)
+                    ?.openAppMenu()
+            }
 
-        override fun turnOnPermission() {
-            val denied = PermissionsUtil.getPermissionsCurrentlyDenied(
-                requireContext(), PermissionsUtil.allContactsGroupPermissionsUsedInDialer)
-            if (denied.isNotEmpty()) {
-                LogUtil.i("SpeedDialFragment.turnOnPermission", "Requesting permissions: %s", denied.joinToString())
-                permissionLauncher.launch(denied)
+            override fun turnOnPermission() {
+                val denied =
+                    PermissionsUtil.getPermissionsCurrentlyDenied(
+                        requireContext(),
+                        PermissionsUtil.allContactsGroupPermissionsUsedInDialer,
+                    )
+                if (denied.isNotEmpty()) {
+                    LogUtil.i(
+                        "SpeedDialFragment.turnOnPermission",
+                        "Requesting permissions: %s",
+                        denied.joinToString(),
+                    )
+                    permissionLauncher.launch(denied)
+                }
             }
         }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View = ComposeView(requireContext()).apply {
-        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-        setContent {
-            val state by viewModel.state.collectAsStateWithLifecycle()
-            // The toolbar offers "Clear frequents" only while there are some.
-            LaunchedEffect(state) {
-                val hasFrequents = (state as? SpeedDialUiState.Loaded)?.suggestions?.isNotEmpty() == true
-                FragmentUtils.getParent(this@SpeedDialFragment, HostInterface::class.java)?.setHasFrequents(hasFrequents)
+    ): View =
+        ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                val state by viewModel.state.collectAsStateWithLifecycle()
+                // The toolbar offers "Clear frequents" only while there are some.
+                LaunchedEffect(state) {
+                    val hasFrequents =
+                        (state as? SpeedDialUiState.Loaded)?.suggestions?.isNotEmpty() == true
+                    FragmentUtils.getParent(this@SpeedDialFragment, HostInterface::class.java)
+                        ?.setHasFrequents(hasFrequents)
+                }
+                PhoneScreenTheme { SpeedDialScreen(state = state, actions = actions) }
             }
-            PhoneScreenTheme { SpeedDialScreen(state = state, actions = actions) }
         }
-    }
 
     override fun onStart() {
         super.onStart()
-        PermissionsUtil.registerPermissionReceiver(requireActivity(), permissionGrantedReceiver, READ_CONTACTS)
+        PermissionsUtil.registerPermissionReceiver(
+            requireActivity(),
+            permissionGrantedReceiver,
+            READ_CONTACTS,
+        )
     }
 
     override fun onResume() {
@@ -162,7 +186,6 @@ class SpeedDialFragment : Fragment() {
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance(): SpeedDialFragment = SpeedDialFragment()
+        @JvmStatic fun newInstance(): SpeedDialFragment = SpeedDialFragment()
     }
 }

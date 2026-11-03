@@ -26,15 +26,22 @@ import org.prauga.phone.dialer.util.PermissionsUtil
 /** What the contacts tab shows. */
 sealed interface ContactsUiState {
     data object Loading : ContactsUiState
+
     data object NeedsPermission : ContactsUiState
+
     data object Empty : ContactsUiState
+
     data class Loaded(val sections: List<ContactSection>) : ContactsUiState
 }
 
 /** Loads the contacts tab, and reloads it when contacts change. */
-class ContactsViewModel @JvmOverloads constructor(
+class ContactsViewModel
+@JvmOverloads
+constructor(
     application: Application,
-    private val hasPermission: () -> Boolean = { PermissionsUtil.hasContactsReadPermissions(application) },
+    private val hasPermission: () -> Boolean = {
+        PermissionsUtil.hasContactsReadPermissions(application)
+    },
     private val loadContacts: () -> List<ContactSection> = { ContactsQuery.load(application) },
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : AndroidViewModel(application) {
@@ -44,9 +51,10 @@ class ContactsViewModel @JvmOverloads constructor(
 
     private var loadJob: Job? = null
 
-    private val observer = object : ContentObserver(Handler(Looper.getMainLooper())) {
-        override fun onChange(selfChange: Boolean) = refresh()
-    }
+    private val observer =
+        object : ContentObserver(Handler(Looper.getMainLooper())) {
+            override fun onChange(selfChange: Boolean) = refresh()
+        }
 
     // Registered once the permission is there: without it, registering throws.
     private var observing = false
@@ -59,23 +67,32 @@ class ContactsViewModel @JvmOverloads constructor(
             return
         }
         if (!observing) {
-            getApplication<Application>().contentResolver.registerContentObserver(Contacts.CONTENT_URI, true, observer)
+            getApplication<Application>()
+                .contentResolver
+                .registerContentObserver(Contacts.CONTENT_URI, true, observer)
             observing = true
         }
         loadJob?.cancel()
-        loadJob = viewModelScope.launch {
-            val sections = try {
-                withContext(ioDispatcher) { loadContacts() }
-            } catch (e: SecurityException) {
-                LogUtil.e("ContactsViewModel.refresh", "permission revoked while loading", e)
-                null
+        loadJob =
+            viewModelScope.launch {
+                val sections =
+                    try {
+                        withContext(ioDispatcher) { loadContacts() }
+                    } catch (e: SecurityException) {
+                        LogUtil.e(
+                            "ContactsViewModel.refresh",
+                            "permission revoked while loading",
+                            e,
+                        )
+                        null
+                    }
+                _state.value =
+                    when {
+                        sections == null -> ContactsUiState.NeedsPermission
+                        sections.isEmpty() -> ContactsUiState.Empty
+                        else -> ContactsUiState.Loaded(sections)
+                    }
             }
-            _state.value = when {
-                sections == null -> ContactsUiState.NeedsPermission
-                sections.isEmpty() -> ContactsUiState.Empty
-                else -> ContactsUiState.Loaded(sections)
-            }
-        }
     }
 
     override fun onCleared() {

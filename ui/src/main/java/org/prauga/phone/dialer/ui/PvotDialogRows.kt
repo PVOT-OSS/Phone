@@ -28,9 +28,10 @@ fun PvotDialogCheckboxRow(
     onCheckedChange: (Boolean) -> Unit,
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .toggleable(value = checked, role = Role.Checkbox, onValueChange = onCheckedChange),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .toggleable(value = checked, role = Role.Checkbox, onValueChange = onCheckedChange),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S),
     ) {

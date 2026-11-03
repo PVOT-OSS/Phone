@@ -43,9 +43,25 @@ class CallbackReminderActivity : ComponentActivity() {
                 ReminderDelayDialog(
                     name = name ?: number,
                     onPick = { delay ->
-                        val reminder = CallbackReminders.schedule(this, number, name, delay.dueAt(System.currentTimeMillis()))
-                        val at = DateUtils.formatDateTime(this, reminder.atMillis, DateUtils.FORMAT_SHOW_TIME)
-                        Toast.makeText(this, getString(R.string.callback_reminder_set, at), Toast.LENGTH_SHORT).show()
+                        val reminder =
+                            CallbackReminders.schedule(
+                                this,
+                                number,
+                                name,
+                                delay.dueAt(System.currentTimeMillis()),
+                            )
+                        val at =
+                            DateUtils.formatDateTime(
+                                this,
+                                reminder.atMillis,
+                                DateUtils.FORMAT_SHOW_TIME,
+                            )
+                        Toast.makeText(
+                                this,
+                                getString(R.string.callback_reminder_set, at),
+                                Toast.LENGTH_SHORT,
+                            )
+                            .show()
                         finish()
                     },
                     onDismiss = ::finish,
@@ -70,12 +86,21 @@ class CallbackReminderActivity : ComponentActivity() {
 
 /** The choices of when to be reminded, one row each. */
 @Composable
-internal fun ReminderDelayDialog(name: String, onPick: (ReminderDelay) -> Unit, onDismiss: () -> Unit) {
+internal fun ReminderDelayDialog(
+    name: String,
+    onPick: (ReminderDelay) -> Unit,
+    onDismiss: () -> Unit,
+) {
     PvotDialog(
         visible = true,
         onDismissRequest = onDismiss,
         title = stringResource(R.string.callback_reminder_dialog_title, name),
-        icon = { androidx.compose.material3.Icon(painterResource(R.drawable.ic_bell), contentDescription = null) },
+        icon = {
+            androidx.compose.material3.Icon(
+                painterResource(R.drawable.ic_bell),
+                contentDescription = null,
+            )
+        },
         content = {
             Column(Modifier.testTag(TestTags.CALLBACK_REMINDER_DELAYS)) {
                 for (delay in ReminderDelay.entries) {
@@ -87,13 +112,16 @@ internal fun ReminderDelayDialog(name: String, onPick: (ReminderDelay) -> Unit, 
                 }
             }
         },
-        actions = { PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = onDismiss) },
+        actions = {
+            PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = onDismiss)
+        },
     )
 }
 
-private fun labelOf(delay: ReminderDelay): Int = when (delay) {
-    ReminderDelay.IN_FIFTEEN_MINUTES -> R.string.callback_reminder_in_fifteen_minutes
-    ReminderDelay.IN_AN_HOUR -> R.string.callback_reminder_in_an_hour
-    ReminderDelay.THIS_EVENING -> R.string.callback_reminder_this_evening
-    ReminderDelay.TOMORROW_MORNING -> R.string.callback_reminder_tomorrow_morning
-}
+private fun labelOf(delay: ReminderDelay): Int =
+    when (delay) {
+        ReminderDelay.IN_FIFTEEN_MINUTES -> R.string.callback_reminder_in_fifteen_minutes
+        ReminderDelay.IN_AN_HOUR -> R.string.callback_reminder_in_an_hour
+        ReminderDelay.THIS_EVENING -> R.string.callback_reminder_this_evening
+        ReminderDelay.TOMORROW_MORNING -> R.string.callback_reminder_tomorrow_morning
+    }

@@ -37,17 +37,24 @@ class RecordingFormatTest {
         val model = SoundSettingsModel(context)
         model.devicePrefs.edit().clear().commit()
         val key = context.getString(R.string.call_recording_format_key)
-        val other = context.resources.getStringArray(R.array.call_recording_encoder_values).first { it != "0" }
+        val other =
+            context.resources.getStringArray(R.array.call_recording_encoder_values).first {
+                it != "0"
+            }
 
         compose.setContent { SettingsTheme { SoundSettingsList(model) } }
-        compose.onNodeWithTag(TestTags.SETTINGS_LIST).performScrollToNode(hasTestTag(TestTags.settingsRow(key)))
+        compose
+            .onNodeWithTag(TestTags.SETTINGS_LIST)
+            .performScrollToNode(hasTestTag(TestTags.settingsRow(key)))
         compose.onNodeWithTag(TestTags.settingsRow(key)).performClick()
         compose.onNodeWithTag(TestTags.settingsOption(other)).performClick()
         compose.waitForIdle()
 
         // CallRecorderService reads <package>_preferences in device-protected storage.
-        val prefs = context.createDeviceProtectedStorageContext()
-            .getSharedPreferences(context.packageName + "_preferences", 0)
+        val prefs =
+            context
+                .createDeviceProtectedStorageContext()
+                .getSharedPreferences(context.packageName + "_preferences", 0)
         assertThat(prefs.getString(key, null)).isEqualTo(other)
     }
 }

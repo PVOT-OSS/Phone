@@ -43,7 +43,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.prauga.pvot.designsystem.theme.PvotSpacing
-import org.prauga.phone.incallui.R
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.dialpadview.DialpadKeyGrid
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
@@ -52,12 +51,13 @@ import org.prauga.phone.incallui.DialpadPresenter.DialpadUi
 import org.prauga.phone.incallui.baseui.BaseFragment
 
 /** The digit [keyCode] sends as a tone, or null for a key that sends none. */
-internal fun dtmfCharOf(keyCode: Int): Char? = when (keyCode) {
-    in KeyEvent.KEYCODE_0..KeyEvent.KEYCODE_9 -> '0' + (keyCode - KeyEvent.KEYCODE_0)
-    KeyEvent.KEYCODE_STAR -> '*'
-    KeyEvent.KEYCODE_POUND -> '#'
-    else -> null
-}
+internal fun dtmfCharOf(keyCode: Int): Char? =
+    when (keyCode) {
+        in KeyEvent.KEYCODE_0..KeyEvent.KEYCODE_9 -> '0' + (keyCode - KeyEvent.KEYCODE_0)
+        KeyEvent.KEYCODE_STAR -> '*'
+        KeyEvent.KEYCODE_POUND -> '#'
+        else -> null
+    }
 
 /** The dialpad shown during a call: each key sends its tone while held and shows the digit. */
 class DialpadFragment : BaseFragment<DialpadPresenter, DialpadUi>(), DialpadUi {
@@ -70,7 +70,11 @@ class DialpadFragment : BaseFragment<DialpadPresenter, DialpadUi>(), DialpadUi {
 
     override fun getUi(): DialpadUi = this
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         val field = inflater.inflate(R.layout.dialpad_digits, container, false) as EditText
         LogUtil.i("DialpadFragment.onCreateView", "creating dtmfKeyListener")
         val listener = DtmfKeyListener(presenter)
@@ -130,21 +134,35 @@ class DialpadFragment : BaseFragment<DialpadPresenter, DialpadUi>(), DialpadUi {
 
 /** The in-call dialpad: the tones sent so far, the keys, and room for the end call button. */
 @Composable
-fun InCallDialpad(digits: EditText, showEndCallSpace: Boolean, onKey: (Int, Boolean) -> Unit, onBack: () -> Unit) {
+fun InCallDialpad(
+    digits: EditText,
+    showEndCallSpace: Boolean,
+    onKey: (Int, Boolean) -> Unit,
+    onBack: () -> Unit,
+) {
     val textColor = MaterialTheme.colorScheme.onSurface.toArgb()
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(MaterialTheme.shapes.extraLarge)
-                .background(MaterialTheme.colorScheme.surfaceContainer)
-                .navigationBarsPadding()
-                .padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.M)
-                .testTag(TestTags.INCALL_DIALPAD),
+            modifier =
+                Modifier.fillMaxWidth()
+                    .clip(MaterialTheme.shapes.extraLarge)
+                    .background(MaterialTheme.colorScheme.surfaceContainer)
+                    .navigationBarsPadding()
+                    .padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.M)
+                    .testTag(TestTags.INCALL_DIALPAD)
         ) {
-            Row(Modifier.fillMaxWidth().height(64.dp), verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = onBack, modifier = Modifier.testTag(TestTags.INCALL_DIALPAD_BACK)) {
-                    Icon(painterResource(R.drawable.ic_x), stringResource(R.string.description_dialpad_back))
+            Row(
+                Modifier.fillMaxWidth().height(64.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                IconButton(
+                    onClick = onBack,
+                    modifier = Modifier.testTag(TestTags.INCALL_DIALPAD_BACK),
+                ) {
+                    Icon(
+                        painterResource(R.drawable.ic_x),
+                        stringResource(R.string.description_dialpad_back),
+                    )
                 }
                 AndroidView(
                     factory = { digits.also { (it.parent as? ViewGroup)?.removeView(it) } },
@@ -155,7 +173,8 @@ fun InCallDialpad(digits: EditText, showEndCallSpace: Boolean, onKey: (Int, Bool
             }
             Spacer(Modifier.height(PvotSpacing.S))
             DialpadKeyGrid(onKey = onKey, onKeyLongPress = { false }, longPressKeys = false)
-            if (showEndCallSpace) Spacer(Modifier.height(dimensionResource(R.dimen.dialpad_bottom_space_height)))
+            if (showEndCallSpace)
+                Spacer(Modifier.height(dimensionResource(R.dimen.dialpad_bottom_space_height)))
         }
     }
 }

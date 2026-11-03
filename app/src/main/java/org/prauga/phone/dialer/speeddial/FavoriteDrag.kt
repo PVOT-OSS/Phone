@@ -11,28 +11,28 @@ import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.input.pointer.PointerEventTimeoutCancellationException
 import androidx.compose.ui.input.pointer.changedToUp
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChange
-import androidx.compose.ui.geometry.Size
 
 /** A laid out item of the favorites row: its key and its bounds within the row. */
 class FavoriteItemBounds(val key: Any, val bounds: Rect)
 
 /**
- * Drag state of the favorites row: which favorite is lifted, how far it has moved, and whether
- * it is over the remove target.
+ * Drag state of the favorites row: which favorite is lifted, how far it has moved, and whether it
+ * is over the remove target.
  *
  * Favorites are keyed by [favoriteKey]. While dragging, the lifted favorite swaps places with the
- * one under its center through [onMove]; dropping it on the remove target calls [onRemove].
- * [items] gives the visible items' bounds, as [rowItems] does for a horizontal lazy row.
+ * one under its center through [onMove]; dropping it on the remove target calls [onRemove]. [items]
+ * gives the visible items' bounds, as [rowItems] does for a horizontal lazy row.
  */
 class FavoriteDragState(
     private val items: () -> List<FavoriteItemBounds>,
@@ -81,9 +81,10 @@ class FavoriteDragState(
         val center = dragged.bounds.topLeft + offset + dragged.bounds.size.center()
         isOverRemove = removeBounds.contains(rowBounds.topLeft + center)
         if (isOverRemove) return
-        val target = visible.firstOrNull {
-            it.key != key && it.key in favoriteKeys && it.bounds.contains(center)
-        } ?: return
+        val target =
+            visible.firstOrNull {
+                it.key != key && it.key in favoriteKeys && it.bounds.contains(center)
+            } ?: return
         val from = favoriteKeys.indexOf(key)
         val to = favoriteKeys.indexOf(target.key)
         // The lifted favorite takes the target's place; keep it under the finger.
@@ -108,7 +109,10 @@ class FavoriteDragState(
             val info = listState.layoutInfo
             val height = info.viewportSize.height.toFloat()
             info.visibleItemsInfo.map {
-                FavoriteItemBounds(it.key, Rect(Offset(it.offset.toFloat(), 0f), Size(it.size.toFloat(), height)))
+                FavoriteItemBounds(
+                    it.key,
+                    Rect(Offset(it.offset.toFloat(), 0f), Size(it.size.toFloat(), height)),
+                )
             }
         }
     }
@@ -125,48 +129,53 @@ fun Modifier.favoriteGestures(
     onTap: () -> Unit,
     onLongPress: () -> Unit,
     onLift: () -> Unit,
-): Modifier = pointerInput(key, state) {
-    awaitEachGesture {
-        val down = awaitFirstDown()
-        val press = PressInteraction.Press(down.position)
-        interactionSource.tryEmit(press)
-        var longPressed = false
-        val up = try {
-            withTimeout(viewConfiguration.longPressTimeoutMillis) { waitForUpOrCancellation() }
-        } catch (_: PointerEventTimeoutCancellationException) {
-            longPressed = true
-            null
-        }
-        if (!longPressed) {
-            if (up != null) {
-                up.consume()
-                interactionSource.tryEmit(PressInteraction.Release(press))
-                onTap()
-            } else {
-                interactionSource.tryEmit(PressInteraction.Cancel(press))
+): Modifier =
+    pointerInput(key, state) {
+        awaitEachGesture {
+            val down = awaitFirstDown()
+            val press = PressInteraction.Press(down.position)
+            interactionSource.tryEmit(press)
+            var longPressed = false
+            val up =
+                try {
+                    withTimeout(viewConfiguration.longPressTimeoutMillis) {
+                        waitForUpOrCancellation()
+                    }
+                } catch (_: PointerEventTimeoutCancellationException) {
+                    longPressed = true
+                    null
+                }
+            if (!longPressed) {
+                if (up != null) {
+                    up.consume()
+                    interactionSource.tryEmit(PressInteraction.Release(press))
+                    onTap()
+                } else {
+                    interactionSource.tryEmit(PressInteraction.Cancel(press))
+                }
+                return@awaitEachGesture
             }
-            return@awaitEachGesture
-        }
 
-        interactionSource.tryEmit(PressInteraction.Release(press))
-        state.lift(key)
-        onLift()
-        var total = Offset.Zero
-        while (true) {
-            val event = awaitPointerEvent()
-            val change = event.changes.firstOrNull { it.id == down.id } ?: break
-            if (change.changedToUp()) {
+            interactionSource.tryEmit(PressInteraction.Release(press))
+            state.lift(key)
+            onLift()
+            var total = Offset.Zero
+            while (true) {
+                val event = awaitPointerEvent()
+                val change = event.changes.firstOrNull { it.id == down.id } ?: break
+                if (change.changedToUp()) {
+                    change.consume()
+                    break
+                }
+                val delta = change.positionChange()
+                total += delta
+                if (!state.isMoving && total.getDistance() > viewConfiguration.touchSlop)
+                    state.startMoving()
+                if (state.isMoving) state.drag(delta)
                 change.consume()
-                break
             }
-            val delta = change.positionChange()
-            total += delta
-            if (!state.isMoving && total.getDistance() > viewConfiguration.touchSlop) state.startMoving()
-            if (state.isMoving) state.drag(delta)
-            change.consume()
+            val moved = state.isMoving
+            state.drop()
+            if (!moved) onLongPress()
         }
-        val moved = state.isMoving
-        state.drop()
-        if (!moved) onLongPress()
     }
-}

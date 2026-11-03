@@ -24,33 +24,39 @@ class OnboardingScreenshotTest {
 
     @get:Rule val compose = createComposeRule()
 
-    @Test
-    fun roleDark() = capture(OnboardingState(roleDenied = true), "role_dark")
+    @Test fun roleDark() = capture(OnboardingState(roleDenied = true), "role_dark")
 
     @Test
     @Config(qualifiers = "+notnight")
     fun roleLight() = capture(OnboardingState(roleDenied = true), "role_light")
 
     @Test
-    fun permissionsDark() = capture(
-        OnboardingState(
-            isDefaultDialer = true,
-            granted = setOf(PermissionGroup.PHONE),
-            blocked = setOf(PermissionGroup.CONTACTS),
-        ),
-        "permissions_dark",
-    )
+    fun permissionsDark() =
+        capture(
+            OnboardingState(
+                isDefaultDialer = true,
+                granted = setOf(PermissionGroup.PHONE),
+                blocked = setOf(PermissionGroup.CONTACTS),
+            ),
+            "permissions_dark",
+        )
 
     private fun capture(state: OnboardingState, name: String) {
-        compose.setContent { PhoneScreenTheme { SolidGlass { OnboardingScreen(state, NoActions) } } }
+        compose.setContent {
+            PhoneScreenTheme { SolidGlass { OnboardingScreen(state, NoActions) } }
+        }
         compose.onRoot().captureRoboImage("src/test/screenshots/onboarding/$name.png")
     }
 
     private object NoActions : OnboardingActions {
         override fun onRequestRole() = Unit
+
         override fun onOpenDefaultApps() = Unit
+
         override fun onRequestPermissions() = Unit
+
         override fun onOpenAppSettings() = Unit
+
         override fun onNotNow() = Unit
     }
 }

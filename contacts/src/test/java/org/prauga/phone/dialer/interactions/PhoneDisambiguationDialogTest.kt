@@ -31,17 +31,21 @@ class PhoneDisambiguationDialogTest {
 
     private val events = mutableListOf<String>()
 
-    private val choices = listOf(
-        PhoneDisambiguationDialog.Choice("Mobile", "+1 555-0100"),
-        PhoneDisambiguationDialog.Choice("Work", "+1 555-0199"),
-    )
+    private val choices =
+        listOf(
+            PhoneDisambiguationDialog.Choice("Mobile", "+1 555-0100"),
+            PhoneDisambiguationDialog.Choice("Work", "+1 555-0199"),
+        )
 
     private fun show(): Dialog {
         lateinit var dialog: Dialog
         compose.runOnUiThread {
-            dialog = PhoneDisambiguationDialog.create(compose.activity, "Choose number", choices) { position, primary ->
-                events += "$position primary=$primary"
-            }
+            dialog =
+                PhoneDisambiguationDialog.create(compose.activity, "Choose number", choices) {
+                    position,
+                    primary ->
+                    events += "$position primary=$primary"
+                }
             dialog.show()
         }
         compose.waitForIdle()
@@ -67,13 +71,19 @@ class PhoneDisambiguationDialogTest {
     @Test
     fun screenshotDark() {
         show()
-        compose.onAllNodes(isRoot()).onLast().captureRoboImage("src/test/screenshots/dialogs/phone_disambiguation_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onLast()
+            .captureRoboImage("src/test/screenshots/dialogs/phone_disambiguation_dark.png")
     }
 
     @Test
     @Config(qualifiers = "en-rUS-w411dp-h891dp-notnight-xxhdpi")
     fun screenshotLight() {
         show()
-        compose.onAllNodes(isRoot()).onLast().captureRoboImage("src/test/screenshots/dialogs/phone_disambiguation_light.png")
+        compose
+            .onAllNodes(isRoot())
+            .onLast()
+            .captureRoboImage("src/test/screenshots/dialogs/phone_disambiguation_light.png")
     }
 }

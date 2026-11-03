@@ -58,19 +58,23 @@ class CallLogActivityScreenTest {
                     topBar = {
                         CallLogTopBar(
                             tab = tab,
-                            onTabSelected = { tab = it; events += "tab $it" },
+                            onTabSelected = {
+                                tab = it
+                                events += "tab $it"
+                            },
                             canClear = canClear,
                             onBack = { events += "back" },
                             onClear = { events += "clear" },
                         )
-                    },
+                    }
                 ) { padding ->
                     CallStatsListScreen(
                         state = CallStatsUiState.Loaded(entries, total),
                         filter = CallStatsFilter(),
                         prepare = { it.details },
                         actions = NoActions,
-                        modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()),
+                        modifier =
+                            Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()),
                     )
                 }
             }
@@ -115,7 +119,9 @@ class CallLogActivityScreenTest {
             }
         }
         // The picker merges its days into one node for TalkBack, so look at the unmerged tree.
-        compose.onNodeWithTag(TestTags.CALL_STATS_RANGE_PICKER, useUnmergedTree = true).assertIsDisplayed()
+        compose
+            .onNodeWithTag(TestTags.CALL_STATS_RANGE_PICKER, useUnmergedTree = true)
+            .assertIsDisplayed()
         compose.onNodeWithText("OK").performClick()
         assertThat(picked).isEqualTo(DAY to DAY * 3)
         assertThat(dismissed).isFalse()
@@ -127,8 +133,13 @@ class CallLogActivityScreenTest {
         var dismissed = false
         compose.setContent {
             SolidGlassTheme {
-                CallStatsRangeDialog(visible = true, initialStartUtcDay = null, initialEndUtcDay = null,
-                    onDismiss = { dismissed = true }, onPick = { _, _ -> picked = true })
+                CallStatsRangeDialog(
+                    visible = true,
+                    initialStartUtcDay = null,
+                    initialEndUtcDay = null,
+                    onDismiss = { dismissed = true },
+                    onPick = { _, _ -> picked = true },
+                )
             }
         }
         compose.onNodeWithText("Cancel").performClick()
@@ -136,33 +147,48 @@ class CallLogActivityScreenTest {
         assertThat(picked).isFalse()
     }
 
-    @Test
-    fun screenshotDark() = screenshot("stats_tab_dark")
+    @Test fun screenshotDark() = screenshot("stats_tab_dark")
 
-    @Test
-    @Config(qualifiers = "+notnight")
-    fun screenshotLight() = screenshot("stats_tab_light")
+    @Test @Config(qualifiers = "+notnight") fun screenshotLight() = screenshot("stats_tab_light")
 
     @Test
     fun rangeDialogScreenshotDark() {
         compose.setContent {
             SolidGlassTheme {
-                CallStatsRangeDialog(visible = true, initialStartUtcDay = OCT_1_2026, initialEndUtcDay = OCT_1_2026 + DAY * 4,
-                    onDismiss = {}, onPick = { _, _ -> })
+                CallStatsRangeDialog(
+                    visible = true,
+                    initialStartUtcDay = OCT_1_2026,
+                    initialEndUtcDay = OCT_1_2026 + DAY * 4,
+                    onDismiss = {},
+                    onPick = { _, _ -> },
+                )
             }
         }
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/calllog/range_dialog_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/calllog/range_dialog_dark.png")
     }
 
     private fun screenshot(name: String) {
         show()
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/calllog/$name.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/calllog/$name.png")
     }
 
-    private fun entry(number: String, name: String?, inSeconds: Long, outSeconds: Long, missed: Int): CallStatsEntry {
-        val details = CallStatsDetails(number, Calls.PRESENTATION_ALLOWED, "", null, null, "US", null, 0)
+    private fun entry(
+        number: String,
+        name: String?,
+        inSeconds: Long,
+        outSeconds: Long,
+        missed: Int,
+    ): CallStatsEntry {
+        val details =
+            CallStatsDetails(number, Calls.PRESENTATION_ALLOWED, "", null, null, "US", null, 0)
         details.addTimeOrMissed(Calls.INCOMING_TYPE, inSeconds)
         details.addTimeOrMissed(Calls.OUTGOING_TYPE, outSeconds)
         repeat(missed) { details.addTimeOrMissed(Calls.MISSED_TYPE, 0) }
@@ -172,21 +198,29 @@ class CallLogActivityScreenTest {
         return CallStatsEntry(ContactInfo(), details)
     }
 
-    private val entries = listOf(
-        entry("+15550100", "Ada Lovelace", 1_800, 600, 1),
-        entry("+15550199", null, 300, 900, 2),
-    )
-    private val total = CallStatsDetails(null, 0, null, null, null, null, null, 0).apply {
-        entries.forEach { mergeWith(it.details) }
-    }
+    private val entries =
+        listOf(
+            entry("+15550100", "Ada Lovelace", 1_800, 600, 1),
+            entry("+15550199", null, 300, 900, 2),
+        )
+    private val total =
+        CallStatsDetails(null, 0, null, null, null, null, null, 0).apply {
+            entries.forEach { mergeWith(it.details) }
+        }
 
     private object NoActions : CallStatsActions {
         override fun open(entry: CallStatsEntry, total: CallStatsDetails) = Unit
+
         override fun copyNumber(number: String) = Unit
+
         override fun editBeforeCall(number: String) = Unit
+
         override fun pickRange() = Unit
+
         override fun clearRange() = Unit
+
         override fun sortByDuration(byDuration: Boolean) = Unit
+
         override fun turnOnPermission() = Unit
     }
 

@@ -20,8 +20,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.prauga.phone.dialer.rtt.RttTranscript
 import org.prauga.phone.dialer.rtt.RttTranscriptMessage
-import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
+import org.prauga.phone.dialer.ui.TestTags
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
@@ -35,19 +35,50 @@ class RttChatScreenTest {
     @get:Rule val compose = createComposeRule()
 
     private val events = mutableListOf<String>()
-    private val actions = object : RttChatActions {
-        override fun onSubmit() { events += "submit" }
-        override fun onEndCall() { events += "end" }
-        override fun onMenuOpen() { events += "menu" }
-        override fun onMute(muted: Boolean) { events += "mute $muted" }
-        override fun onSpeaker() { events += "speaker" }
-        override fun onDialpad(show: Boolean) { events += "dialpad $show" }
-        override fun onAddCall() { events += "add" }
-        override fun onSwap() { events += "swap" }
-        override fun onSwitchToVoice() { events += "voice" }
-        override fun onAudioRoute(route: Int) { events += "route $route" }
-        override fun onScrollBack() = Unit
-    }
+    private val actions =
+        object : RttChatActions {
+            override fun onSubmit() {
+                events += "submit"
+            }
+
+            override fun onEndCall() {
+                events += "end"
+            }
+
+            override fun onMenuOpen() {
+                events += "menu"
+            }
+
+            override fun onMute(muted: Boolean) {
+                events += "mute $muted"
+            }
+
+            override fun onSpeaker() {
+                events += "speaker"
+            }
+
+            override fun onDialpad(show: Boolean) {
+                events += "dialpad $show"
+            }
+
+            override fun onAddCall() {
+                events += "add"
+            }
+
+            override fun onSwap() {
+                events += "swap"
+            }
+
+            override fun onSwitchToVoice() {
+                events += "voice"
+            }
+
+            override fun onAudioRoute(route: Int) {
+                events += "route $route"
+            }
+
+            override fun onScrollBack() = Unit
+        }
 
     @Test
     fun typingGrowsOneBubbleUntilSubmitted() {
@@ -76,19 +107,34 @@ class RttChatScreenTest {
         messages.submitLocalMessage()
         messages.addRemoteMessage("Hey")
         messages.addRemoteMessage(" there")
-        assertThat(messages.bubbles).containsExactly(RttBubble("Hi", false), RttBubble("Hey there", true)).inOrder()
+        assertThat(messages.bubbles)
+            .containsExactly(RttBubble("Hi", false), RttBubble("Hey there", true))
+            .inOrder()
         assertThat(messages.retrieveLastLocalMessage()).isEqualTo("Hi")
     }
 
     @Test
     fun restoringGivesBackAnUnfinishedMessage() {
-        val transcript = RttTranscript.newBuilder()
-            .addMessages(RttTranscriptMessage.newBuilder().setContent("Hello").setIsRemote(true).setIsFinished(true))
-            .addMessages(RttTranscriptMessage.newBuilder().setContent("Typ").setIsRemote(false).setIsFinished(false))
-            .build()
+        val transcript =
+            RttTranscript.newBuilder()
+                .addMessages(
+                    RttTranscriptMessage.newBuilder()
+                        .setContent("Hello")
+                        .setIsRemote(true)
+                        .setIsFinished(true)
+                )
+                .addMessages(
+                    RttTranscriptMessage.newBuilder()
+                        .setContent("Typ")
+                        .setIsRemote(false)
+                        .setIsFinished(false)
+                )
+                .build()
         val messages = RttChatMessages()
         assertThat(messages.onRestoreRttChat(transcript)).isEqualTo("Typ")
-        assertThat(messages.getRttTranscriptMessageList().map { it.content }).containsExactly("Hello", "Typ").inOrder()
+        assertThat(messages.getRttTranscriptMessageList().map { it.content })
+            .containsExactly("Hello", "Typ")
+            .inOrder()
     }
 
     private fun show(state: RttChatUiState, messages: RttChatMessages = RttChatMessages()) {
@@ -117,10 +163,16 @@ class RttChatScreenTest {
 
     @Test
     fun theMenuTogglesAndOffersSwapOnlyWhenPossible() {
-        val state = RttChatUiState().apply {
-            audioState = CallAudioState(false, CallAudioState.ROUTE_EARPIECE, CallAudioState.ROUTE_EARPIECE or CallAudioState.ROUTE_SPEAKER)
-            menuOpen = true
-        }
+        val state =
+            RttChatUiState().apply {
+                audioState =
+                    CallAudioState(
+                        false,
+                        CallAudioState.ROUTE_EARPIECE,
+                        CallAudioState.ROUTE_EARPIECE or CallAudioState.ROUTE_SPEAKER,
+                    )
+                menuOpen = true
+            }
         show(state)
         compose.onNodeWithText("Mute").performClick()
         compose.onNodeWithText("Speaker").performClick()
@@ -134,9 +186,14 @@ class RttChatScreenTest {
     fun theAudioMenuPicksARoute() {
         show(
             RttChatUiState().apply {
-                audioState = CallAudioState(false, CallAudioState.ROUTE_EARPIECE, CallAudioState.ROUTE_EARPIECE or CallAudioState.ROUTE_SPEAKER)
+                audioState =
+                    CallAudioState(
+                        false,
+                        CallAudioState.ROUTE_EARPIECE,
+                        CallAudioState.ROUTE_EARPIECE or CallAudioState.ROUTE_SPEAKER,
+                    )
                 audioMenuOpen = true
-            },
+            }
         )
         compose.onNodeWithText("Speaker").performClick()
         assertThat(events).containsExactly("route ${CallAudioState.ROUTE_SPEAKER}")
@@ -144,11 +201,12 @@ class RttChatScreenTest {
 
     @Test
     fun screenshotDark() {
-        val messages = RttChatMessages().apply {
-            showAdvisory()
-            addRemoteMessage("Hi, can you hear me?")
-            addLocalMessage("Yes, typing because it's loud")
-        }
+        val messages =
+            RttChatMessages().apply {
+                showAdvisory()
+                addRemoteMessage("Hi, can you hear me?")
+                addLocalMessage("Yes, typing because it's loud")
+            }
         show(
             RttChatUiState().apply {
                 name = "Ada Lovelace"
@@ -157,6 +215,9 @@ class RttChatScreenTest {
             },
             messages,
         )
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/rtt/rtt_chat_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/rtt/rtt_chat_dark.png")
     }
 }

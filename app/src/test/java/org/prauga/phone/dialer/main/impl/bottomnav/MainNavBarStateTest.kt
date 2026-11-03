@@ -17,10 +17,22 @@ class MainNavBarStateTest {
 
     private class RecordingListener : MainNavBarState.OnBottomNavTabSelectedListener {
         val selected = mutableListOf<String>()
-        override fun onDialpadSelected() { selected += "dialpad" }
-        override fun onCallLogSelected() { selected += "call_log" }
-        override fun onContactsSelected() { selected += "contacts" }
-        override fun onVoicemailSelected() { selected += "voicemail" }
+
+        override fun onDialpadSelected() {
+            selected += "dialpad"
+        }
+
+        override fun onCallLogSelected() {
+            selected += "call_log"
+        }
+
+        override fun onContactsSelected() {
+            selected += "contacts"
+        }
+
+        override fun onVoicemailSelected() {
+            selected += "voicemail"
+        }
     }
 
     private val state = MainNavBarState()
@@ -54,13 +66,20 @@ class MainNavBarStateTest {
 
     @Test
     fun voicemailTabIsLastAndOnlyWhenShown() {
-        assertThat(state.tabs).containsExactly(TabIndex.DIALPAD, TabIndex.CALL_LOG, TabIndex.CONTACTS).inOrder()
+        assertThat(state.tabs)
+            .containsExactly(TabIndex.DIALPAD, TabIndex.CALL_LOG, TabIndex.CONTACTS)
+            .inOrder()
 
         state.showVoicemail(true)
 
-        assertThat(state.tabs).containsExactly(
-            TabIndex.DIALPAD, TabIndex.CALL_LOG, TabIndex.CONTACTS, TabIndex.VOICEMAIL,
-        ).inOrder()
+        assertThat(state.tabs)
+            .containsExactly(
+                TabIndex.DIALPAD,
+                TabIndex.CALL_LOG,
+                TabIndex.CONTACTS,
+                TabIndex.VOICEMAIL,
+            )
+            .inOrder()
     }
 
     @Test

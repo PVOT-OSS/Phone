@@ -22,7 +22,8 @@ object TelephonyManagerCompat {
         "android.telephony.event.EVENT_HANDOVER_VIDEO_FROM_WIFI_TO_LTE"
     const val EVENT_HANDOVER_VIDEO_FROM_LTE_TO_WIFI =
         "android.telephony.event.EVENT_HANDOVER_VIDEO_FROM_LTE_TO_WIFI"
-    const val EVENT_HANDOVER_TO_WIFI_FAILED = "android.telephony.event.EVENT_HANDOVER_TO_WIFI_FAILED"
+    const val EVENT_HANDOVER_TO_WIFI_FAILED =
+        "android.telephony.event.EVENT_HANDOVER_TO_WIFI_FAILED"
     const val EVENT_CALL_REMOTELY_HELD = "android.telecom.event.CALL_REMOTELY_HELD"
     const val EVENT_CALL_REMOTELY_UNHELD = "android.telecom.event.CALL_REMOTELY_UNHELD"
     const val EVENT_MERGE_START = "android.telecom.event.MERGE_START"
@@ -79,8 +80,8 @@ object TelephonyManagerCompat {
      * Whether the phone supports TTY mode.
      *
      * @param telecomManager The TelecomManager manager instance to use for method calls.
-     * @return `true` if the device supports TTY mode, and `false` otherwise, including
-     *     when the app may not read the phone state yet.
+     * @return `true` if the device supports TTY mode, and `false` otherwise, including when the app
+     *   may not read the phone state yet.
      */
     @JvmStatic
     @SuppressLint("MissingPermission")
@@ -96,16 +97,15 @@ object TelephonyManagerCompat {
      * Whether the phone supports hearing aid compatibility.
      *
      * @param telephonyManager The telephony manager instance to use for method calls.
-     * @return `true` if the device supports hearing aid compatibility, and `false`
-     *     otherwise.
+     * @return `true` if the device supports hearing aid compatibility, and `false` otherwise.
      */
     @JvmStatic
     fun isHearingAidCompatibilitySupported(telephonyManager: TelephonyManager?): Boolean =
         telephonyManager != null && telephonyManager.isHearingAidCompatibilitySupported
 
     /**
-     * This method uses a new system API to enable or disable visual voicemail. TODO(twyen): restrict
-     * to N MR1, not needed in future SDK.
+     * This method uses a new system API to enable or disable visual voicemail. TODO(twyen):
+     * restrict to N MR1, not needed in future SDK.
      */
     @JvmStatic
     fun setVisualVoicemailEnabled(
@@ -114,8 +114,13 @@ object TelephonyManagerCompat {
         enabled: Boolean,
     ) {
         try {
-            TelephonyManager::class.java
-                .getMethod("setVisualVoicemailEnabled", PhoneAccountHandle::class.java, Boolean::class.javaPrimitiveType)
+            TelephonyManager::class
+                .java
+                .getMethod(
+                    "setVisualVoicemailEnabled",
+                    PhoneAccountHandle::class.java,
+                    Boolean::class.javaPrimitiveType,
+                )
                 .invoke(telephonyManager, handle, enabled)
         } catch (e: NoSuchMethodException) {
             LogUtil.e("TelephonyManagerCompat.setVisualVoicemailEnabled", "failed", e)
@@ -135,21 +140,25 @@ object TelephonyManagerCompat {
     @JvmStatic
     fun handleSecretCode(context: Context, secretCode: String?) {
         if (!TelecomUtil.isDefaultDialer(context)) {
-            LogUtil.e("TelephonyManagerCompat.handleSecretCode", "not default dialer, cannot send special code")
+            LogUtil.e(
+                "TelephonyManagerCompat.handleSecretCode",
+                "not default dialer, cannot send special code",
+            )
             return
         }
         context.getSystemService(TelephonyManager::class.java).sendDialerSpecialCode(secretCode)
     }
 
     /**
-     * Returns network country iso for given `PhoneAccountHandle` for O+ devices and country iso
-     * for default sim for pre-O devices.
+     * Returns network country iso for given `PhoneAccountHandle` for O+ devices and country iso for
+     * default sim for pre-O devices.
      */
     @JvmStatic
     fun getNetworkCountryIsoForPhoneAccountHandle(
         context: Context,
         phoneAccountHandle: PhoneAccountHandle?,
-    ): String = getTelephonyManagerForPhoneAccountHandle(context, phoneAccountHandle).networkCountryIso
+    ): String =
+        getTelephonyManagerForPhoneAccountHandle(context, phoneAccountHandle).networkCountryIso
 
     /**
      * Returns TelephonyManager for given `PhoneAccountHandle` for O+ devices and default
@@ -164,7 +173,8 @@ object TelephonyManagerCompat {
         if (phoneAccountHandle == null) {
             return telephonyManager
         }
-        val telephonyManagerForPhoneAccount = telephonyManager.createForPhoneAccountHandle(phoneAccountHandle)
+        val telephonyManagerForPhoneAccount =
+            telephonyManager.createForPhoneAccountHandle(phoneAccountHandle)
         if (telephonyManagerForPhoneAccount != null) {
             return telephonyManagerForPhoneAccount
         }

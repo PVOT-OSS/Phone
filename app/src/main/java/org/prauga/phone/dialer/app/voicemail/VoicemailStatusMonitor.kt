@@ -12,8 +12,8 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.VoicemailContract
 import android.telecom.PhoneAccountHandle
-import android.telephony.TelephonyCallback
 import android.telephony.ServiceState
+import android.telephony.TelephonyCallback
 import android.telephony.TelephonyManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,7 +31,8 @@ import org.prauga.phone.voicemail.VoicemailComponent
  * Watches the visual voicemail status of each account and publishes the one message the voicemail
  * tab should show, such as "Inbox almost full" or the carrier's terms, or null when all is well.
  */
-class VoicemailStatusMonitor(private val context: Context) : CallLogQueryHandler.Listener, VoicemailStatusReader {
+class VoicemailStatusMonitor(private val context: Context) :
+    CallLogQueryHandler.Listener, VoicemailStatusReader {
 
     private val _message = MutableStateFlow<VoicemailErrorMessage?>(null)
     val message: StateFlow<VoicemailErrorMessage?> = _message.asStateFlow()
@@ -42,13 +43,21 @@ class VoicemailStatusMonitor(private val context: Context) : CallLogQueryHandler
     private var isForeground = false
     private var statusInvalidated = true
 
-    private val statusObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
-        override fun onChange(selfChange: Boolean) = fetchStatus()
-    }
+    private val statusObserver =
+        object : ContentObserver(Handler(Looper.getMainLooper())) {
+            override fun onChange(selfChange: Boolean) = fetchStatus()
+        }
 
     init {
-        if (PermissionsUtil.hasReadVoicemailPermissions(context) && PermissionsUtil.hasAddVoicemailPermissions(context)) {
-            context.contentResolver.registerContentObserver(VoicemailContract.Status.CONTENT_URI, true, statusObserver)
+        if (
+            PermissionsUtil.hasReadVoicemailPermissions(context) &&
+                PermissionsUtil.hasAddVoicemailPermissions(context)
+        ) {
+            context.contentResolver.registerContentObserver(
+                VoicemailContract.Status.CONTENT_URI,
+                true,
+                statusObserver,
+            )
         } else {
             LogUtil.w("VoicemailStatusMonitor", "read voicemail permission unavailable.")
         }
@@ -86,7 +95,9 @@ class VoicemailStatusMonitor(private val context: Context) : CallLogQueryHandler
     }
 
     override fun onVoicemailUnreadCountFetched(cursor: Cursor) = Unit
+
     override fun onMissedCallsUnreadCountFetched(cursor: Cursor) = Unit
+
     override fun onCallsFetched(combinedCursor: Cursor): Boolean = false
 
     private fun fetchStatus() {
@@ -103,11 +114,14 @@ class VoicemailStatusMonitor(private val context: Context) : CallLogQueryHandler
         if (status.sourcePackage != context.packageName) return
         val handle = status.phoneAccountHandle ?: return
         if (handle in serviceListeners) return
-        val telephonyManager = context.getSystemService(TelephonyManager::class.java)
-            .createForPhoneAccountHandle(handle) ?: return
-        val listener = object : TelephonyCallback(), TelephonyCallback.ServiceStateListener {
-            override fun onServiceStateChanged(serviceState: ServiceState) = fetchStatus()
-        }
+        val telephonyManager =
+            context
+                .getSystemService(TelephonyManager::class.java)
+                .createForPhoneAccountHandle(handle) ?: return
+        val listener =
+            object : TelephonyCallback(), TelephonyCallback.ServiceStateListener {
+                override fun onServiceStateChanged(serviceState: ServiceState) = fetchStatus()
+            }
         telephonyManager.registerTelephonyCallback(context.mainExecutor, listener)
         serviceListeners[handle] = listener
     }

@@ -32,7 +32,12 @@ class ContactsViewModelTest {
     @After fun tearDown() = Dispatchers.resetMain()
 
     private fun viewModel(permitted: () -> Boolean = { true }, load: () -> List<ContactSection>) =
-        ContactsViewModel(ApplicationProvider.getApplicationContext<Application>(), permitted, load, dispatcher)
+        ContactsViewModel(
+            ApplicationProvider.getApplicationContext<Application>(),
+            permitted,
+            load,
+            dispatcher,
+        )
 
     @Test
     fun startsLoading() {
@@ -56,7 +61,11 @@ class ContactsViewModelTest {
     @Test
     fun missingPermissionAsksForIt() {
         var loads = 0
-        val vm = viewModel(permitted = { false }) { loads++; sections }
+        val vm =
+            viewModel(permitted = { false }) {
+                loads++
+                sections
+            }
         vm.refresh()
         assertThat(vm.state.value).isEqualTo(ContactsUiState.NeedsPermission)
         assertThat(loads).isEqualTo(0)

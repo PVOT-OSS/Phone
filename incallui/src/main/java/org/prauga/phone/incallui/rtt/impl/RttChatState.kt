@@ -112,7 +112,8 @@ class RttChatMessages {
         return if (message.isFinished) null else message.content
     }
 
-    fun getRttTranscriptMessageList(): List<RttTranscriptMessage> = RttChatMessage.toTranscriptMessageList(messages)
+    fun getRttTranscriptMessageList(): List<RttTranscriptMessage> =
+        RttChatMessage.toTranscriptMessageList(messages)
 
     private fun publish() {
         bubbles = messages.map { RttBubble(it.content, it.isRemote) }

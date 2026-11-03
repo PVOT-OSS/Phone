@@ -16,11 +16,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -46,53 +46,75 @@ class ContactsFragment : Fragment() {
         }
 
     /** Reloads when the contacts permission is granted from another screen. */
-    private val permissionGrantedReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) = viewModel.refresh()
-    }
-
-    private val actions = object : ContactsActions {
-        override fun onContactClick(contact: ContactEntry) {
-            FragmentUtils.getParentUnsafe(this@ContactsFragment, OnContactSelectedListener::class.java)
-                .onContactSelected(contact.contactUri, contact.id)
+    private val permissionGrantedReceiver =
+        object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) = viewModel.refresh()
         }
 
-        override fun onAddContact() {
-            DialerUtils.startActivityWithErrorToast(
-                requireContext(), IntentUtil.getNewContactIntent(), R.string.add_contact_not_available)
-        }
+    private val actions =
+        object : ContactsActions {
+            override fun onContactClick(contact: ContactEntry) {
+                FragmentUtils.getParentUnsafe(
+                        this@ContactsFragment,
+                        OnContactSelectedListener::class.java,
+                    )
+                    .onContactSelected(contact.contactUri, contact.id)
+            }
 
-        override fun onTurnOnPermission() {
-            val denied = PermissionsUtil.getPermissionsCurrentlyDenied(
-                requireContext(), PermissionsUtil.allContactsGroupPermissionsUsedInDialer)
-            if (denied.isNotEmpty()) {
-                LogUtil.i("ContactsFragment.onTurnOnPermission", "Requesting permissions: %s", denied.joinToString())
-                permissionLauncher.launch(denied)
+            override fun onAddContact() {
+                DialerUtils.startActivityWithErrorToast(
+                    requireContext(),
+                    IntentUtil.getNewContactIntent(),
+                    R.string.add_contact_not_available,
+                )
+            }
+
+            override fun onTurnOnPermission() {
+                val denied =
+                    PermissionsUtil.getPermissionsCurrentlyDenied(
+                        requireContext(),
+                        PermissionsUtil.allContactsGroupPermissionsUsedInDialer,
+                    )
+                if (denied.isNotEmpty()) {
+                    LogUtil.i(
+                        "ContactsFragment.onTurnOnPermission",
+                        "Requesting permissions: %s",
+                        denied.joinToString(),
+                    )
+                    permissionLauncher.launch(denied)
+                }
             }
         }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View = ComposeView(requireContext()).apply {
-        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-        setContent {
-            val state by viewModel.state.collectAsStateWithLifecycle()
-            // Scrolls reach the main screen, which shrinks the nav bar while a list scrolls up.
-            PhoneScreenTheme(modifier = Modifier.nestedScroll(rememberNestedScrollInteropConnection())) {
-                ContactsScreen(
-                    state = state,
-                    showAddContact = requireArguments().getBoolean(ARG_SHOW_ADD_CONTACT),
-                    actions = actions,
-                )
+    ): View =
+        ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                val state by viewModel.state.collectAsStateWithLifecycle()
+                // Scrolls reach the main screen, which shrinks the nav bar while a list scrolls up.
+                PhoneScreenTheme(
+                    modifier = Modifier.nestedScroll(rememberNestedScrollInteropConnection())
+                ) {
+                    ContactsScreen(
+                        state = state,
+                        showAddContact = requireArguments().getBoolean(ARG_SHOW_ADD_CONTACT),
+                        actions = actions,
+                    )
+                }
             }
         }
-    }
 
     override fun onStart() {
         super.onStart()
-        PermissionsUtil.registerPermissionReceiver(requireActivity(), permissionGrantedReceiver, READ_CONTACTS)
+        PermissionsUtil.registerPermissionReceiver(
+            requireActivity(),
+            permissionGrantedReceiver,
+            READ_CONTACTS,
+        )
     }
 
     override fun onResume() {
@@ -116,8 +138,9 @@ class ContactsFragment : Fragment() {
 
         /** A contacts list, with a "Create new contact" row at the top if [showAddContact]. */
         @JvmStatic
-        fun newInstance(showAddContact: Boolean): ContactsFragment = ContactsFragment().apply {
-            arguments = bundleOf(ARG_SHOW_ADD_CONTACT to showAddContact)
-        }
+        fun newInstance(showAddContact: Boolean): ContactsFragment =
+            ContactsFragment().apply {
+                arguments = bundleOf(ARG_SHOW_ADD_CONTACT to showAddContact)
+            }
     }
 }

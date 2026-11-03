@@ -37,16 +37,22 @@ class PostCallSheetTest {
     private val sent = mutableListOf<String>()
     private var dismissed = false
 
-    private val messages = listOf(
-        "This is urgent. Call me back.",
-        "Call me back when you have some time.",
-        "Not urgent, we can chat later.",
-    )
+    private val messages =
+        listOf(
+            "This is urgent. Call me back.",
+            "Call me back when you have some time.",
+            "Not urgent, we can chat later.",
+        )
 
     private fun show(charLimit: Int? = null) {
         compose.setContent {
             PhoneScreenTheme(fillBackground = false) {
-                PostCallSheet(messages, charLimit, onSend = { sent += it }, onDismiss = { dismissed = true })
+                PostCallSheet(
+                    messages,
+                    charLimit,
+                    onSend = { sent += it },
+                    onDismiss = { dismissed = true },
+                )
             }
         }
         compose.waitForIdle()
@@ -81,20 +87,28 @@ class PostCallSheetTest {
     fun startsWithTheTitle() {
         show()
         val context = ApplicationProvider.getApplicationContext<Context>()
-        compose.onNodeWithText(context.getString(org.prauga.phone.calls.R.string.post_call_message)).assertExists()
+        compose
+            .onNodeWithText(context.getString(org.prauga.phone.calls.R.string.post_call_message))
+            .assertExists()
         assertThat(dismissed).isFalse()
     }
 
     @Test
     fun screenshotDark() {
         show()
-        compose.onAllNodes(isRoot()).onLast().captureRoboImage("src/test/screenshots/dialogs/post_call_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onLast()
+            .captureRoboImage("src/test/screenshots/dialogs/post_call_dark.png")
     }
 
     @Test
     @Config(qualifiers = "en-rUS-w411dp-h891dp-notnight-xxhdpi")
     fun screenshotLight() {
         show()
-        compose.onAllNodes(isRoot()).onLast().captureRoboImage("src/test/screenshots/dialogs/post_call_light.png")
+        compose
+            .onAllNodes(isRoot())
+            .onLast()
+            .captureRoboImage("src/test/screenshots/dialogs/post_call_light.png")
     }
 }

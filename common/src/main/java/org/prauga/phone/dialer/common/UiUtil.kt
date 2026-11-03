@@ -23,14 +23,16 @@ object UiUtil {
     /** Opens the android keyboard. */
     @JvmStatic
     fun showKeyboardFrom(context: Context, view: View) {
-        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager =
+            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.showSoftInput(view, 0)
     }
 
     /** Force open the android keyboard. */
     @JvmStatic
     fun forceOpenKeyboardFrom(context: Context, view: View) {
-        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager =
+            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.toggleSoftInputFromWindow(
             view.applicationWindowToken,
             InputMethodManager.SHOW_FORCED,

@@ -8,8 +8,8 @@ package org.prauga.phone.dialer.constants
 /**
  * Registry of scheduled job ids used by the dialer UID.
  *
- * Any dialer jobs which use the android JobScheduler should register their IDs here, to avoid
- * the same ID accidentally being reused.
+ * Any dialer jobs which use the android JobScheduler should register their IDs here, to avoid the
+ * same ID accidentally being reused.
  *
  * Do not change any existing IDs.
  */

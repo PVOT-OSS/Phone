@@ -11,9 +11,9 @@ import androidx.compose.ui.unit.Dp
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 
 /**
- * Inset for a list row that spans the screen. The row pads its own content by M, so this brings
- * its avatar and title in line with the screen padding (L) that titles and section headers use,
- * and keeps the row's rounded press and selection fill off the screen edges.
+ * Inset for a list row that spans the screen. The row pads its own content by M, so this brings its
+ * avatar and title in line with the screen padding (L) that titles and section headers use, and
+ * keeps the row's rounded press and selection fill off the screen edges.
  */
 val FullWidthRowInset: Dp = PvotSpacing.L - PvotSpacing.M
 

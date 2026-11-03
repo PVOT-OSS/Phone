@@ -20,8 +20,7 @@ import org.prauga.phone.incallui.call.DialerCall
 
 /** Fragment that allows the user to manage a conference call. */
 class ConferenceManagerFragment :
-    BaseFragment<ConferenceManagerPresenter, ConferenceManagerUi>(),
-    ConferenceManagerUi {
+    BaseFragment<ConferenceManagerPresenter, ConferenceManagerUi>(), ConferenceManagerUi {
 
     private lateinit var participants: ConferenceParticipants
 
@@ -29,7 +28,11 @@ class ConferenceManagerFragment :
 
     override fun getUi(): ConferenceManagerUi = this
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         participants = ConferenceParticipants(requireContext().applicationContext)
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
@@ -62,5 +65,7 @@ class ConferenceManagerFragment :
     }
 
     private fun callById(id: String): DialerCall? =
-        CallList.getInstance().getCallById(id).also { LogUtil.i("ConferenceManagerFragment.callById", "call: %s", it) }
+        CallList.getInstance().getCallById(id).also {
+            LogUtil.i("ConferenceManagerFragment.callById", "call: %s", it)
+        }
 }

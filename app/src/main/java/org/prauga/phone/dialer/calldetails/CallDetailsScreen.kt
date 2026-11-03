@@ -5,17 +5,17 @@
 
 package org.prauga.phone.dialer.calldetails
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import android.content.Intent
 import android.provider.CallLog.Calls
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -54,6 +54,7 @@ import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import com.prauga.pvot.designsystem.components.PvotBottomSheet
 import com.prauga.pvot.designsystem.components.PvotCard
 import com.prauga.pvot.designsystem.components.PvotCardDefaults
@@ -81,13 +82,12 @@ import com.prauga.pvot.designsystem.components.list.PvotSwipeRowDefaults
 import com.prauga.pvot.designsystem.navigation.PvotTopBar
 import com.prauga.pvot.designsystem.navigation.rememberPvotTopBarCompact
 import com.prauga.pvot.designsystem.theme.PvotSpacing
-import androidx.core.net.toUri
 import org.prauga.phone.dialer.R
-import org.prauga.phone.dialer.callrecord.CallRecording
 import org.prauga.phone.dialer.calllogutils.CallLogDates
 import org.prauga.phone.dialer.calllogutils.CallLogDurations
 import org.prauga.phone.dialer.calllogutils.CallTypeHelper
 import org.prauga.phone.dialer.calllogutils.CallbackActionHelper.CallbackAction
+import org.prauga.phone.dialer.callrecord.CallRecording
 import org.prauga.phone.dialer.ui.PhoneScaffold
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.ui.UriThumbnail
@@ -95,16 +95,24 @@ import org.prauga.phone.dialer.ui.UriThumbnail
 /** What the call details screen can ask its activity to do. */
 internal interface CallDetailsActions {
     fun back()
+
     fun callBack(video: Boolean)
+
     fun message()
+
     fun copyNumber()
+
     fun editNumber()
+
     fun delete()
 
     /** Deletes one call; the screen asks first. */
     fun deleteCall(entry: CallDetailsEntryUi)
+
     fun showTranscript(entry: CallDetailsEntryUi)
+
     fun play(recording: CallRecording)
+
     fun recordingTime(recording: CallRecording): String
 }
 
@@ -140,12 +148,15 @@ internal fun CallDetailsScreen(
         PvotScreen(
             modifier = Modifier.fillMaxSize().testTag(TestTags.CALL_DETAILS),
             state = listState,
-            contentPadding = PaddingValues(
-                start = PvotScreenDefaults.HorizontalPadding,
-                end = PvotScreenDefaults.HorizontalPadding,
-                top = padding.calculateTopPadding() + PvotSpacing.S,
-                bottom = PvotScreenDefaults.BottomSpacing + WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding(),
-            ),
+            contentPadding =
+                PaddingValues(
+                    start = PvotScreenDefaults.HorizontalPadding,
+                    end = PvotScreenDefaults.HorizontalPadding,
+                    top = padding.calculateTopPadding() + PvotSpacing.S,
+                    bottom =
+                        PvotScreenDefaults.BottomSpacing +
+                            WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding(),
+                ),
             // The calls are separate items on one card, so the screen's own gap would split it.
             verticalArrangement = Arrangement.Top,
         ) {
@@ -164,37 +175,50 @@ internal fun CallDetailsScreen(
                 contentType = { _, _ -> "call" },
             ) { index, entry ->
                 // The card's fill over the background, so a swiped row covers its gap exactly.
-                val rowFill = MaterialTheme.colorScheme.surfaceVariant
-                    .copy(alpha = PvotCardDefaults.ContainerAlpha)
-                    .compositeOver(MaterialTheme.colorScheme.background)
+                val rowFill =
+                    MaterialTheme.colorScheme.surfaceVariant
+                        .copy(alpha = PvotCardDefaults.ContainerAlpha)
+                        .compositeOver(MaterialTheme.colorScheme.background)
                 CallHistorySlice(first = index == 0, last = index == ui.entries.lastIndex) {
                     // Swiping a call away asks first; the last call means the whole history.
                     PvotSwipeRow(
-                        endAction = PvotSwipeRowDefaults.destructiveAction(
-                            label = stringResource(R.string.delete),
-                            icon = painterResource(R.drawable.ic_trash),
-                            onSwipe = { askDeleteCall = entry },
-                            removesRow = false,
-                        ),
+                        endAction =
+                            PvotSwipeRowDefaults.destructiveAction(
+                                label = stringResource(R.string.delete),
+                                icon = painterResource(R.drawable.ic_trash),
+                                onSwipe = { askDeleteCall = entry },
+                                removesRow = false,
+                            ),
                         containerColor = rowFill,
                     ) {
-                        Column { Entry(entry, actions, onPickRecording = { recordingsToPick = it }) }
+                        Column {
+                            Entry(entry, actions, onPickRecording = { recordingsToPick = it })
+                        }
                     }
                 }
             }
-            item(key = "history_end", contentType = "history_end") { Spacer(Modifier.height(PvotSpacing.M)) }
+            item(key = "history_end", contentType = "history_end") {
+                Spacer(Modifier.height(PvotSpacing.M))
+            }
             item(key = "actions") {
-                val danger = PvotListRowDefaults.themeColors().copy(
-                    titleColor = MaterialTheme.colorScheme.error,
-                    iconColor = MaterialTheme.colorScheme.error,
-                )
+                val danger =
+                    PvotListRowDefaults.themeColors()
+                        .copy(
+                            titleColor = MaterialTheme.colorScheme.error,
+                            iconColor = MaterialTheme.colorScheme.error,
+                        )
                 PvotListGroup {
                     if (ui.hasNumber) {
                         item {
                             PvotPreferenceRow(
                                 title = stringResource(R.string.call_details_copy_number),
                                 onClick = actions::copyNumber,
-                                icon = { Icon(painterResource(R.drawable.ic_copy), contentDescription = null) },
+                                icon = {
+                                    Icon(
+                                        painterResource(R.drawable.ic_copy),
+                                        contentDescription = null,
+                                    )
+                                },
                                 iconStyle = PvotRowIconStyle.Plain,
                                 showChevron = false,
                             )
@@ -203,7 +227,12 @@ internal fun CallDetailsScreen(
                             PvotPreferenceRow(
                                 title = stringResource(R.string.call_details_edit_number),
                                 onClick = actions::editNumber,
-                                icon = { Icon(painterResource(R.drawable.ic_pencil), contentDescription = null) },
+                                icon = {
+                                    Icon(
+                                        painterResource(R.drawable.ic_pencil),
+                                        contentDescription = null,
+                                    )
+                                },
                                 iconStyle = PvotRowIconStyle.Plain,
                                 showChevron = false,
                             )
@@ -214,7 +243,12 @@ internal fun CallDetailsScreen(
                             title = stringResource(R.string.delete),
                             onClick = { askDeleteAll = true },
                             modifier = Modifier.testTag(TestTags.CALL_DETAILS_DELETE),
-                            icon = { Icon(painterResource(R.drawable.ic_trash), contentDescription = null) },
+                            icon = {
+                                Icon(
+                                    painterResource(R.drawable.ic_trash),
+                                    contentDescription = null,
+                                )
+                            },
                             iconStyle = PvotRowIconStyle.Plain,
                             showChevron = false,
                             colors = danger,
@@ -230,9 +264,11 @@ internal fun CallDetailsScreen(
         PvotDialog(
             visible = true,
             onDismissRequest = { askDeleteCall = null },
-            title = stringResource(
-                if (lastCall) R.string.call_details_delete_all_title else R.string.call_details_delete_call_title,
-            ),
+            title =
+                stringResource(
+                    if (lastCall) R.string.call_details_delete_all_title
+                    else R.string.call_details_delete_call_title
+                ),
             destructive = true,
         ) {
             PvotDialogAction(
@@ -243,7 +279,10 @@ internal fun CallDetailsScreen(
                 },
                 style = PvotDialogActionStyle.Destructive,
             )
-            PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = { askDeleteCall = null })
+            PvotDialogAction(
+                label = stringResource(android.R.string.cancel),
+                onClick = { askDeleteCall = null },
+            )
         }
     }
     if (askDeleteAll) {
@@ -255,19 +294,31 @@ internal fun CallDetailsScreen(
         ) {
             PvotDialogAction(
                 label = stringResource(R.string.delete),
-                onClick = { askDeleteAll = false; actions.delete() },
+                onClick = {
+                    askDeleteAll = false
+                    actions.delete()
+                },
                 style = PvotDialogActionStyle.Destructive,
             )
-            PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = { askDeleteAll = false })
+            PvotDialogAction(
+                label = stringResource(android.R.string.cancel),
+                onClick = { askDeleteAll = false },
+            )
         }
     }
 
-    PvotBottomSheet(visible = recordingsToPick != null, onDismissRequest = { recordingsToPick = null }) {
+    PvotBottomSheet(
+        visible = recordingsToPick != null,
+        onDismissRequest = { recordingsToPick = null },
+    ) {
         for (recording in recordingsToPick.orEmpty()) {
-            PvotSheetItem(title = actions.recordingTime(recording), onClick = {
-                recordingsToPick = null
-                actions.play(recording)
-            })
+            PvotSheetItem(
+                title = actions.recordingTime(recording),
+                onClick = {
+                    recordingsToPick = null
+                    actions.play(recording)
+                },
+            )
         }
     }
 }
@@ -279,10 +330,10 @@ private fun CallHistoryTitle(title: String) {
         text = title,
         style = MaterialTheme.typography.titleSmall,
         color = PvotListGroupDefaults.colors().titleColor,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = PvotSpacing.L, end = PvotSpacing.L, bottom = PvotSpacing.S)
-            .semantics { heading() },
+        modifier =
+            Modifier.fillMaxWidth()
+                .padding(start = PvotSpacing.L, end = PvotSpacing.L, bottom = PvotSpacing.S)
+                .semantics { heading() },
     )
 }
 
@@ -295,12 +346,13 @@ private fun CallHistoryTitle(title: String) {
 @Composable
 private fun CallHistorySlice(first: Boolean, last: Boolean, content: @Composable () -> Unit) {
     val corner = PvotGlassCardDefaults.CornerRadius
-    val shape = RoundedCornerShape(
-        topStart = if (first) corner else 0.dp,
-        topEnd = if (first) corner else 0.dp,
-        bottomStart = if (last) corner else 0.dp,
-        bottomEnd = if (last) corner else 0.dp,
-    )
+    val shape =
+        RoundedCornerShape(
+            topStart = if (first) corner else 0.dp,
+            topEnd = if (first) corner else 0.dp,
+            bottomStart = if (last) corner else 0.dp,
+            bottomEnd = if (last) corner else 0.dp,
+        )
     val direction = LocalLayoutDirection.current
     val inner = PvotListGroupDefaults.ContentPadding
     PvotCard(modifier = Modifier.fillMaxWidth(), shape = shape) {
@@ -310,15 +362,14 @@ private fun CallHistorySlice(first: Boolean, last: Boolean, content: @Composable
                 end = inner.calculateEndPadding(direction),
                 top = if (first) inner.calculateTopPadding() else 0.dp,
                 bottom = if (last) inner.calculateBottomPadding() else 0.dp,
-            ),
+            )
         ) {
             if (!first) {
                 Box(
-                    Modifier
-                        .padding(horizontal = PvotListGroupDefaults.DividerInset)
+                    Modifier.padding(horizontal = PvotListGroupDefaults.DividerInset)
                         .fillMaxWidth()
                         .height(PvotListGroupDefaults.DividerThickness)
-                        .background(PvotListGroupDefaults.colors().dividerColor),
+                        .background(PvotListGroupDefaults.colors().dividerColor)
                 )
             }
             content()
@@ -354,21 +405,36 @@ private fun Hero(
                     modifier = Modifier.padding(top = PvotSpacing.S),
                 )
                 header.subtitle?.let {
-                    Text(it, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        textAlign = TextAlign.Center)
+                    Text(
+                        it,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center,
+                    )
                 }
                 header.network?.let {
                     // The SIM's own highlight color, as the system shows it.
-                    Text(it, style = MaterialTheme.typography.bodySmall,
-                        color = header.networkColor?.let(::Color) ?: MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(
+                        it,
+                        style = MaterialTheme.typography.bodySmall,
+                        color =
+                            header.networkColor?.let(::Color)
+                                ?: MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
                 }
                 if (header.usedAssistedDialing) {
                     Text(
-                        text = if (assistedDialingCountryCode != null && assistedDialingCountryCode > 0) {
-                            stringResource(R.string.assisted_dialing_country_code_entry, assistedDialingCountryCode.toString())
-                        } else {
-                            stringResource(R.string.assisted_dialing_country_code_entry_failure)
-                        },
+                        text =
+                            if (
+                                assistedDialingCountryCode != null && assistedDialingCountryCode > 0
+                            ) {
+                                stringResource(
+                                    R.string.assisted_dialing_country_code_entry,
+                                    assistedDialingCountryCode.toString(),
+                                )
+                            } else {
+                                stringResource(R.string.assisted_dialing_country_code_entry_failure)
+                            },
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.primary,
                         textAlign = TextAlign.Center,
@@ -382,14 +448,20 @@ private fun Hero(
                     ) {
                         val video = header.callbackAction == CallbackAction.IMS_VIDEO
                         PvotCallButton(
-                            icon = painterResource(if (video) R.drawable.ic_video else R.drawable.ic_phone),
-                            label = stringResource(if (video) R.string.video_call else R.string.call),
+                            icon =
+                                painterResource(
+                                    if (video) R.drawable.ic_video else R.drawable.ic_phone
+                                ),
+                            label =
+                                stringResource(if (video) R.string.video_call else R.string.call),
                             onClick = { actions.callBack(video) },
                             modifier = Modifier.testTag(TestTags.CALL_DETAILS_CALL_BACK),
-                            colors = PvotCallButtonDefaults.colors().copy(
-                                containerColor = MaterialTheme.colorScheme.primary,
-                                contentColor = MaterialTheme.colorScheme.onPrimary,
-                            ),
+                            colors =
+                                PvotCallButtonDefaults.colors()
+                                    .copy(
+                                        containerColor = MaterialTheme.colorScheme.primary,
+                                        contentColor = MaterialTheme.colorScheme.onPrimary,
+                                    ),
                         )
                         if (ui.canMessage) {
                             PvotCallButton(
@@ -414,27 +486,37 @@ private fun Hero(
 }
 
 @Composable
-private fun Entry(entry: CallDetailsEntryUi, actions: CallDetailsActions, onPickRecording: (List<CallRecording>) -> Unit) {
+private fun Entry(
+    entry: CallDetailsEntryUi,
+    actions: CallDetailsActions,
+    onPickRecording: (List<CallRecording>) -> Unit,
+) {
     val context = LocalContext.current
     val typeHelper = remember(context) { CallTypeHelper(context.resources) }
     val missed = CallTypeHelper.isMissedCallType(entry.callType)
-    val accent = if (missed) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant
-    val duration = if (entry.showsDuration) {
-        CallLogDurations.formatDurationAndDataUsage(context, entry.duration, entry.dataUsage).toString()
-    } else {
-        null
-    }
+    val accent =
+        if (missed) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant
+    val duration =
+        if (entry.showsDuration) {
+            CallLogDurations.formatDurationAndDataUsage(context, entry.duration, entry.dataUsage)
+                .toString()
+        } else {
+            null
+        }
     PvotListRow(
-        title = typeHelper.getCallTypeText(entry.callType, entry.isVideo, entry.isPulledExternally).toString(),
+        title =
+            typeHelper
+                .getCallTypeText(entry.callType, entry.isVideo, entry.isPulledExternally)
+                .toString(),
         supportingText = CallLogDates.formatDate(context, entry.date).toString(),
         modifier = Modifier.testTag(TestTags.callDetailsEntry(entry.callId)),
         leading = {
             // The call's type in a circle, red for a missed call, as the row's one picture.
             Box(
-                Modifier
-                    .size(PvotListRowDefaults.LeadingSize)
+                Modifier.size(PvotListRowDefaults.LeadingSize)
                     .background(
-                        if (missed) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.surfaceContainerHighest,
+                        if (missed) MaterialTheme.colorScheme.errorContainer
+                        else MaterialTheme.colorScheme.surfaceContainerHighest,
                         CircleShape,
                     ),
                 contentAlignment = Alignment.Center,
@@ -451,8 +533,10 @@ private fun Entry(entry: CallDetailsEntryUi, actions: CallDetailsActions, onPick
     )
     val direction = LocalLayoutDirection.current
     // Where the row's title starts: row padding, then the icon and its gap.
-    val titleStart = PvotListRowDefaults.ContentPadding.calculateStartPadding(direction) +
-        PvotListRowDefaults.LeadingSize + PvotSpacing.L
+    val titleStart =
+        PvotListRowDefaults.ContentPadding.calculateStartPadding(direction) +
+            PvotListRowDefaults.LeadingSize +
+            PvotSpacing.L
     val composer = ComposerDetails.describe(context, entry.isUrgent, entry.composerNote)
     if (composer != null || entry.composerPicture != null) {
         Column(
@@ -460,48 +544,75 @@ private fun Entry(entry: CallDetailsEntryUi, actions: CallDetailsActions, onPick
             verticalArrangement = Arrangement.spacedBy(PvotSpacing.S),
         ) {
             composer?.let {
-                Text(it, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.testTag(TestTags.callDetailsComposer(entry.callId)))
+                Text(
+                    it,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.testTag(TestTags.callDetailsComposer(entry.callId)),
+                )
             }
             entry.composerPicture?.let {
-                UriThumbnail(it.toUri(), stringResource(R.string.call_details_composer_picture), ComposerPictureSize)
+                UriThumbnail(
+                    it.toUri(),
+                    stringResource(R.string.call_details_composer_picture),
+                    ComposerPictureSize,
+                )
             }
         }
     }
     val recordings = entry.recordings
     if (recordings.isNotEmpty() || entry.isRtt) {
         // Line the buttons' text up with the row title, less the text button's own padding.
-        val textStart = titleStart - PvotButtonDefaults.TextContentPadding.calculateStartPadding(direction)
-        FlowRow(Modifier.padding(start = textStart, end = PvotSpacing.L, bottom = PvotSpacing.S),
-            horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S)) {
+        val textStart =
+            titleStart - PvotButtonDefaults.TextContentPadding.calculateStartPadding(direction)
+        FlowRow(
+            Modifier.padding(start = textStart, end = PvotSpacing.L, bottom = PvotSpacing.S),
+            horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S),
+        ) {
             if (recordings.isNotEmpty()) {
                 PvotButton(
-                    text = pluralStringResource(R.plurals.play_recordings, recordings.size, recordings.size),
+                    text =
+                        pluralStringResource(
+                            R.plurals.play_recordings,
+                            recordings.size,
+                            recordings.size,
+                        ),
                     style = PvotButtonStyle.Text,
-                    onClick = { if (recordings.size == 1) actions.play(recordings.single()) else onPickRecording(recordings) },
+                    onClick = {
+                        if (recordings.size == 1) actions.play(recordings.single())
+                        else onPickRecording(recordings)
+                    },
                     modifier = Modifier.testTag(TestTags.callDetailsRecordings(entry.callId)),
                 )
             }
             if (entry.isRtt) {
                 if (entry.hasRttTranscript) {
-                    PvotButton(stringResource(R.string.rtt_transcript_link), style = PvotButtonStyle.Text,
-                        onClick = { actions.showTranscript(entry) })
+                    PvotButton(
+                        stringResource(R.string.rtt_transcript_link),
+                        style = PvotButtonStyle.Text,
+                        onClick = { actions.showTranscript(entry) },
+                    )
                 } else {
-                    Text(stringResource(R.string.rtt_transcript_not_available), style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(
+                        stringResource(R.string.rtt_transcript_not_available),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
                 }
             }
         }
     }
 }
 
-private fun iconFor(callType: Int): Int = when (callType) {
-    Calls.INCOMING_TYPE, Calls.ANSWERED_EXTERNALLY_TYPE -> R.drawable.ic_call_incoming
-    Calls.OUTGOING_TYPE -> R.drawable.ic_call_outgoing
-    Calls.VOICEMAIL_TYPE -> R.drawable.ic_call_voicemail
-    Calls.BLOCKED_TYPE -> R.drawable.ic_call_blocked
-    else -> R.drawable.ic_call_missed
-}
+private fun iconFor(callType: Int): Int =
+    when (callType) {
+        Calls.INCOMING_TYPE,
+        Calls.ANSWERED_EXTERNALLY_TYPE -> R.drawable.ic_call_incoming
+        Calls.OUTGOING_TYPE -> R.drawable.ic_call_outgoing
+        Calls.VOICEMAIL_TYPE -> R.drawable.ic_call_voicemail
+        Calls.BLOCKED_TYPE -> R.drawable.ic_call_blocked
+        else -> R.drawable.ic_call_missed
+    }
 
 /** Size of the call type icon in its circle. */
 private val TypeIconSize = 20.dp

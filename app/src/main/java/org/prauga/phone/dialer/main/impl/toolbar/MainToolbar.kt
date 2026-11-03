@@ -26,13 +26,13 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -44,21 +44,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.core.view.isGone
 import com.prauga.pvot.designsystem.components.PvotBottomSheet
 import com.prauga.pvot.designsystem.components.PvotSheetItem
-import com.prauga.pvot.designsystem.components.button.PvotIconButtonDefaults
 import com.prauga.pvot.designsystem.components.button.PvotIconButton
+import com.prauga.pvot.designsystem.components.button.PvotIconButtonDefaults
 import com.prauga.pvot.designsystem.components.textfield.PvotTextField
 import com.prauga.pvot.designsystem.motion.PvotDurations
 import com.prauga.pvot.designsystem.theme.PvotSpacing
-import androidx.core.view.isGone
+import java.util.Optional
 import org.prauga.phone.dialer.R
-import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.TabHeader
 import org.prauga.phone.dialer.ui.TabHeaderDefaults
 import org.prauga.phone.dialer.ui.TestTags
-import java.util.Optional
 
 /**
  * The main screen's toolbar: the selected tab's large title with the avatar that opens the app
@@ -93,7 +92,9 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         this.listener = listener
     }
 
-    /** Shows a search button in the collapsed header, as on the contacts tab, which opens search. */
+    /**
+     * Shows a search button in the collapsed header, as on the contacts tab, which opens search.
+     */
     fun setSearchVisible(visible: Boolean) {
         searchButtonShown = visible
     }
@@ -148,7 +149,9 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
     }
 
     fun hideKeyboard() {
-        context.getSystemService(InputMethodManager::class.java).hideSoftInputFromWindow(windowToken, 0)
+        context
+            .getSystemService(InputMethodManager::class.java)
+            .hideSoftInputFromWindow(windowToken, 0)
     }
 
     fun showKeyboard() {
@@ -198,16 +201,15 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
     override fun Content() {
         PhoneScreenTheme(fillBackground = false) {
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(TabHeaderDefaults.Height),
+                modifier = Modifier.fillMaxWidth().height(TabHeaderDefaults.Height),
                 contentAlignment = Alignment.Center,
             ) {
                 AnimatedContent(
                     targetState = expanded,
                     transitionSpec = {
                         if (animateChange) {
-                            fadeIn(tween(PvotDurations.Short)) togetherWith fadeOut(tween(PvotDurations.Short))
+                            fadeIn(tween(PvotDurations.Short)) togetherWith
+                                fadeOut(tween(PvotDurations.Short))
                         } else {
                             fadeIn(snap()) togetherWith fadeOut(snap())
                         }
@@ -224,7 +226,8 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                                 if (searchButtonShown) {
                                     PvotIconButton(
                                         icon = painterResource(R.drawable.ic_search),
-                                        contentDescription = stringResource(R.string.nav_bar_action_search),
+                                        contentDescription =
+                                            stringResource(R.string.nav_bar_action_search),
                                         onClick = { listener?.onSearchBarClicked() },
                                         modifier = Modifier.testTag(TestTags.TAB_SEARCH),
                                         colors = PvotIconButtonDefaults.plainColors(),
@@ -251,27 +254,45 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             }
         }
         Row(
-            modifier = Modifier.fillMaxSize().padding(horizontal = PvotSpacing.S, vertical = PvotSpacing.XS),
+            modifier =
+                Modifier.fillMaxSize()
+                    .padding(horizontal = PvotSpacing.S, vertical = PvotSpacing.XS),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = ::onBack, modifier = Modifier.testTag(TestTags.SEARCH_BACK)) {
-                Icon(painterResource(R.drawable.ic_arrow_left), stringResource(R.string.action_menu_back_from_search))
+                Icon(
+                    painterResource(R.drawable.ic_arrow_left),
+                    stringResource(R.string.action_menu_back_from_search),
+                )
             }
             PvotTextField(
                 value = queryText,
                 onValueChange = ::updateQuery,
-                modifier = Modifier.weight(1f).focusRequester(focusRequester).testTag(TestTags.SEARCH_FIELD),
+                modifier =
+                    Modifier.weight(1f)
+                        .focusRequester(focusRequester)
+                        .testTag(TestTags.SEARCH_FIELD),
                 placeholder = stringResource(hintRes),
                 singleLine = true,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Search),
+                keyboardOptions =
+                    KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Search),
                 trailingIcon = {
                     if (queryText.isNotEmpty()) {
                         IconButton(onClick = { updateQuery("") }) {
-                            Icon(painterResource(R.drawable.ic_x), stringResource(R.string.description_clear_search))
+                            Icon(
+                                painterResource(R.drawable.ic_x),
+                                stringResource(R.string.description_clear_search),
+                            )
                         }
                     } else {
-                        IconButton(onClick = ::onVoiceSearch, modifier = Modifier.testTag(TestTags.SEARCH_VOICE)) {
-                            Icon(painterResource(R.drawable.ic_microphone), stringResource(R.string.description_start_voice_search))
+                        IconButton(
+                            onClick = ::onVoiceSearch,
+                            modifier = Modifier.testTag(TestTags.SEARCH_VOICE),
+                        ) {
+                            Icon(
+                                painterResource(R.drawable.ic_microphone),
+                                stringResource(R.string.description_start_voice_search),
+                            )
                         }
                     }
                 },
@@ -294,7 +315,9 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
             if (clearFrequentsVisible) {
                 PvotSheetItem(
                     title = stringResource(R.string.menu_clear_frequents),
-                    icon = { Icon(painterResource(R.drawable.ic_trash), contentDescription = null) },
+                    icon = {
+                        Icon(painterResource(R.drawable.ic_trash), contentDescription = null)
+                    },
                     onClick = { pick(MainMenuItem.CLEAR_FREQUENTS) },
                 )
             }

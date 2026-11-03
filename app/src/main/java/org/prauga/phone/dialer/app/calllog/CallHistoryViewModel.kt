@@ -6,7 +6,9 @@
 package org.prauga.phone.dialer.app.calllog
 
 import android.app.Application
+import android.content.ContentValues
 import android.database.ContentObserver
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.provider.BlockedNumberContract
@@ -14,8 +16,6 @@ import android.provider.BlockedNumberContract.BlockedNumbers
 import android.provider.CallLog
 import android.provider.CallLog.Calls
 import android.provider.ContactsContract
-import android.content.ContentValues
-import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
@@ -44,15 +44,18 @@ import org.prauga.phone.dialer.database.CallLogQueryHandler
 import org.prauga.phone.dialer.location.GeoUtil
 import org.prauga.phone.dialer.phonenumbercache.CallLogQuery
 import org.prauga.phone.dialer.phonenumbercache.ContactInfoHelper
-import org.prauga.phone.dialer.util.ExpirableCache
 import org.prauga.phone.dialer.telecom.TelecomUtil
+import org.prauga.phone.dialer.util.ExpirableCache
 import org.prauga.phone.dialer.util.PermissionsUtil
 
 /** What a call history list shows. */
 sealed interface CallHistoryUiState {
     data object Loading : CallHistoryUiState
+
     data object NeedsPermission : CallHistoryUiState
+
     data object Empty : CallHistoryUiState
+
     /**
      * @param pendingDeletes Calls hidden until their delete is undone or done; part of the state so
      *   a reload publishes the rows and what hides them together
@@ -66,13 +69,18 @@ sealed interface CallHistoryUiState {
     ) : CallHistoryUiState {
         /** The rows to show: [groups] without the ones waiting on a delete. */
         val visible: List<CallLogGroup>
-            get() = if (pendingDeletes.isEmpty()) groups else groups.filter { group -> group.callIds.none { it in pendingDeletes } }
+            get() =
+                if (pendingDeletes.isEmpty()) groups
+                else groups.filter { group -> group.callIds.none { it in pendingDeletes } }
     }
 }
 
 /** Reads, filters and changes the call log for a call history list. */
 interface CallHistoryRepository {
-    /** Calls of [callType] ([CallLogQueryHandler.CALL_TYPE_ALL] for all but voicemail), newest first. */
+    /**
+     * Calls of [callType] ([CallLogQueryHandler.CALL_TYPE_ALL] for all but voicemail), newest
+     * first.
+     */
     suspend fun load(callType: Int): List<CallLogGroup>
 
     /** Which of [numbers] are blocked. */
@@ -80,7 +88,9 @@ interface CallHistoryRepository {
 
     /** Deletes [groups]' calls; a voicemail is also marked deleted on the server. */
     suspend fun delete(groups: Collection<CallLogGroup>)
+
     suspend fun block(number: String, countryIso: String?)
+
     suspend fun unblock(number: String)
 }
 
@@ -89,57 +99,75 @@ class DefaultCallHistoryRepository(
     private val application: Application,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : CallHistoryRepository {
-    private val resolver get() = application.contentResolver
+    private val resolver
+        get() = application.contentResolver
 
-    override suspend fun load(callType: Int): List<CallLogGroup> = withContext(ioDispatcher) {
-        val query = CallLogQueryHandler.buildFetchQuery(application, callType, false, 0, -1)
-        resolver.query(query.uri, CallLogQuery.getProjection(), query.selection, query.selectionArgs, Calls.DEFAULT_SORT_ORDER)
-            ?.use(CallLogGrouper::group)
-            .orEmpty()
-    }
-
-    override suspend fun blocked(numbers: Collection<String>): Set<String> = withContext(ioDispatcher) {
-        // Only the default phone app may read blocked numbers.
-        if (!TelecomUtil.isDefaultDialer(application) ||
-            !BlockedNumberContract.canCurrentUserBlockNumbers(application)
-        ) return@withContext emptySet()
-        numbers.filterTo(mutableSetOf()) { number ->
-            number.isNotEmpty() && BlockedNumberContract.isBlocked(application, number)
+    override suspend fun load(callType: Int): List<CallLogGroup> =
+        withContext(ioDispatcher) {
+            val query = CallLogQueryHandler.buildFetchQuery(application, callType, false, 0, -1)
+            resolver
+                .query(
+                    query.uri,
+                    CallLogQuery.getProjection(),
+                    query.selection,
+                    query.selectionArgs,
+                    Calls.DEFAULT_SORT_ORDER,
+                )
+                ?.use(CallLogGrouper::group)
+                .orEmpty()
         }
-    }
 
-    override suspend fun delete(groups: Collection<CallLogGroup>) = withContext<Unit>(ioDispatcher) {
-        val (voicemails, calls) = groups.partition { it.voicemailUri != null }
-        voicemails.forEach { CallLogAsyncTaskUtil.deleteVoicemailSynchronous(application, Uri.parse(it.voicemailUri)) }
-        val callIds = calls.flatMap { it.callIds }
-        if (callIds.isEmpty()) return@withContext
-        val where = "${CallLog.Calls._ID} IN (${callIds.joinToString(",")})"
-        resolver.delete(Calls.CONTENT_URI, where, null)
-    }
+    override suspend fun blocked(numbers: Collection<String>): Set<String> =
+        withContext(ioDispatcher) {
+            // Only the default phone app may read blocked numbers.
+            if (
+                !TelecomUtil.isDefaultDialer(application) ||
+                    !BlockedNumberContract.canCurrentUserBlockNumbers(application)
+            )
+                return@withContext emptySet()
+            numbers.filterTo(mutableSetOf()) { number ->
+                number.isNotEmpty() && BlockedNumberContract.isBlocked(application, number)
+            }
+        }
 
-    override suspend fun block(number: String, countryIso: String?) = withContext<Unit>(ioDispatcher) {
-        resolver.insert(
-            BlockedNumbers.CONTENT_URI,
-            ContentValues().apply { put(BlockedNumbers.COLUMN_ORIGINAL_NUMBER, number) },
-        )
-    }
+    override suspend fun delete(groups: Collection<CallLogGroup>) =
+        withContext<Unit>(ioDispatcher) {
+            val (voicemails, calls) = groups.partition { it.voicemailUri != null }
+            voicemails.forEach {
+                CallLogAsyncTaskUtil.deleteVoicemailSynchronous(
+                    application,
+                    Uri.parse(it.voicemailUri),
+                )
+            }
+            val callIds = calls.flatMap { it.callIds }
+            if (callIds.isEmpty()) return@withContext
+            val where = "${CallLog.Calls._ID} IN (${callIds.joinToString(",")})"
+            resolver.delete(Calls.CONTENT_URI, where, null)
+        }
 
-    override suspend fun unblock(number: String) = withContext<Unit>(ioDispatcher) {
-        BlockedNumberContract.unblock(application, number)
-    }
+    override suspend fun block(number: String, countryIso: String?) =
+        withContext<Unit>(ioDispatcher) {
+            resolver.insert(
+                BlockedNumbers.CONTENT_URI,
+                ContentValues().apply { put(BlockedNumbers.COLUMN_ORIGINAL_NUMBER, number) },
+            )
+        }
+
+    override suspend fun unblock(number: String) =
+        withContext<Unit>(ioDispatcher) { BlockedNumberContract.unblock(application, number) }
 }
 
 /**
  * Loads one call history list (all calls, or missed calls), reloads it when calls or contacts
  * change, and looks up callers in the background through [contactInfoCache].
  *
- * The rows show as soon as they are grouped; which of them are blocked follows, from a lookup
- * that is slow (one call into the blocked numbers provider per number) and so is kept across
- * reloads until the blocked numbers change. Each row's text and actions are resolved here, off
- * the main thread, and again only when the groups, their callers or the blocked numbers change.
+ * The rows show as soon as they are grouped; which of them are blocked follows, from a lookup that
+ * is slow (one call into the blocked numbers provider per number) and so is kept across reloads
+ * until the blocked numbers change. Each row's text and actions are resolved here, off the main
+ * thread, and again only when the groups, their callers or the blocked numbers change.
  *
- * @param resolveRow Turns a group, its index and whether it is blocked into its row; by default
- *   the [CallLogRowResolver] with the caller from [contactInfoCache]
+ * @param resolveRow Turns a group, its index and whether it is blocked into its row; by default the
+ *   [CallLogRowResolver] with the caller from [contactInfoCache]
  * @param resolveDispatcher Where rows are resolved: one thread at a time, as the resolver is not
  *   thread safe
  */
@@ -148,7 +176,9 @@ class CallHistoryViewModel(
     application: Application,
     private val callType: Int,
     private val repository: CallHistoryRepository = DefaultCallHistoryRepository(application),
-    private val hasPermission: () -> Boolean = { PermissionsUtil.hasCallLogReadPermissions(application) },
+    private val hasPermission: () -> Boolean = {
+        PermissionsUtil.hasCallLogReadPermissions(application)
+    },
     resolveRow: ((group: CallLogGroup, index: Int, isBlocked: Boolean) -> CallLogRowUi)? = null,
     private val resolveDispatcher: CoroutineDispatcher = Dispatchers.Default.limitedParallelism(1),
 ) : AndroidViewModel(application) {
@@ -157,63 +187,89 @@ class CallHistoryViewModel(
     val state: StateFlow<CallHistoryUiState> = _state.asStateFlow()
 
     /** What went wrong, as a string resource to show once. */
-    private val _errors = MutableSharedFlow<Int>(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val _errors =
+        MutableSharedFlow<Int>(
+            extraBufferCapacity = 1,
+            onBufferOverflow = BufferOverflow.DROP_OLDEST,
+        )
     val errors: SharedFlow<Int> = _errors.asSharedFlow()
 
     /** Rows deleted with a swipe, hidden until the delete is undone or committed. */
     private var pendingDeletes: Set<Long> = emptySet()
 
-    /** Swiped rows whose undo window is still open, by row id, each with the timer that commits it. */
+    /**
+     * Swiped rows whose undo window is still open, by row id, each with the timer that commits it.
+     */
     private val undoTimers = mutableMapOf<Long, PendingDelete>()
 
     private class PendingDelete(val group: CallLogGroup, val timer: Job)
 
     /**
-     * Runs the deletes still pending when this is cleared. [viewModelScope] is closed by then,
-     * and a delete the user did not undo must land even as the screen goes.
+     * Runs the deletes still pending when this is cleared. [viewModelScope] is closed by then, and
+     * a delete the user did not undo must land even as the screen goes.
      */
     private val commitScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    /** Calls deleted from the call log that a load may still have shown, until it no longer does. */
+    /**
+     * Calls deleted from the call log that a load may still have shown, until it no longer does.
+     */
     private val deleted = mutableSetOf<Long>()
 
     /** Whether each number looked up so far is blocked; cleared when the blocked numbers change. */
     private val knownBlocked = mutableMapOf<String, Boolean>()
 
     /** A change to the calls, contacts or blocked numbers; the list reloads once they settle. */
-    private val changes = MutableSharedFlow<Unit>(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val changes =
+        MutableSharedFlow<Unit>(
+            extraBufferCapacity = 1,
+            onBufferOverflow = BufferOverflow.DROP_OLDEST,
+        )
 
-    /** Whether a load has finished since the observers were registered, so a resume can skip one. */
+    /**
+     * Whether a load has finished since the observers were registered, so a resume can skip one.
+     */
     private var loadedOnce = false
 
     /** Whether the list is showing, so caller lookups may run. */
     private var lookingUp = false
 
-    val contactInfoCache = ContactInfoCache(
-        ExpirableCache.create(ExpirableCacheHeadlessFragment.CONTACT_INFO_CACHE_SIZE),
-        ContactInfoHelper(application, GeoUtil.getCurrentCountryIso(application)),
-    ) { contactInfoChanged() }
+    val contactInfoCache =
+        ContactInfoCache(
+            ExpirableCache.create(ExpirableCacheHeadlessFragment.CONTACT_INFO_CACHE_SIZE),
+            ContactInfoHelper(application, GeoUtil.getCurrentCountryIso(application)),
+        ) {
+            contactInfoChanged()
+        }
 
-    private val resolveRow: (CallLogGroup, Int, Boolean) -> CallLogRowUi = resolveRow ?: run {
-        val resolver = CallLogRowResolver(application, CallLogCache(application))
-        val remoteLookups = REMOTE_LOOKUP_ROWS
-        ({ group, index, isBlocked ->
-            val info = contactInfoCache.getValue(
-                group.number + group.postDialDigits, group.countryIso, group.cachedInfo, index < remoteLookups)
-            resolver.resolve(group, info, isBlocked)
-        })
-    }
+    private val resolveRow: (CallLogGroup, Int, Boolean) -> CallLogRowUi =
+        resolveRow
+            ?: run {
+                val resolver = CallLogRowResolver(application, CallLogCache(application))
+                val remoteLookups = REMOTE_LOOKUP_ROWS
+                ({ group, index, isBlocked ->
+                    val info =
+                        contactInfoCache.getValue(
+                            group.number + group.postDialDigits,
+                            group.countryIso,
+                            group.cachedInfo,
+                            index < remoteLookups,
+                        )
+                    resolver.resolve(group, info, isBlocked)
+                })
+            }
 
     private var loadJob: Job? = null
     private var rowsJob: Job? = null
 
-    private val observer = object : ContentObserver(Handler(Looper.getMainLooper())) {
-        override fun onChange(selfChange: Boolean) = contentChanged()
-    }
+    private val observer =
+        object : ContentObserver(Handler(Looper.getMainLooper())) {
+            override fun onChange(selfChange: Boolean) = contentChanged()
+        }
 
-    private val blockedObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
-        override fun onChange(selfChange: Boolean) = blockedNumbersChanged()
-    }
+    private val blockedObserver =
+        object : ContentObserver(Handler(Looper.getMainLooper())) {
+            override fun onChange(selfChange: Boolean) = blockedNumbersChanged()
+        }
 
     // Each observer is registered once its permission is there: without it, registering throws.
     private var observingCalls = false
@@ -221,7 +277,8 @@ class CallHistoryViewModel(
     private var observingBlocked = false
 
     init {
-        if (!PermissionsUtil.hasContactsReadPermissions(application)) contactInfoCache.disableRequestProcessing()
+        if (!PermissionsUtil.hasContactsReadPermissions(application))
+            contactInfoCache.disableRequestProcessing()
         // A burst of changes (a call ends, its caller is looked up and written back, a contact is
         // edited) becomes one reload once it has settled, rather than a load restarted each time.
         viewModelScope.launch { changes.debounce(CHANGE_DEBOUNCE_MS).collect { load() } }
@@ -248,12 +305,20 @@ class CallHistoryViewModel(
             observingCalls = true
         }
         if (!observingContacts && PermissionsUtil.hasContactsReadPermissions(application)) {
-            application.contentResolver.registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, observer)
+            application.contentResolver.registerContentObserver(
+                ContactsContract.Contacts.CONTENT_URI,
+                true,
+                observer,
+            )
             observingContacts = true
         }
         if (!observingBlocked) {
             try {
-                application.contentResolver.registerContentObserver(BlockedNumbers.CONTENT_URI, true, blockedObserver)
+                application.contentResolver.registerContentObserver(
+                    BlockedNumbers.CONTENT_URI,
+                    true,
+                    blockedObserver,
+                )
                 observingBlocked = true
             } catch (e: SecurityException) {
                 // Not the default phone app: it cannot read blocked numbers either, so none show.
@@ -285,45 +350,54 @@ class CallHistoryViewModel(
 
     private fun load() {
         loadJob?.cancel()
-        loadJob = viewModelScope.launch {
-            try {
-                val groups = repository.load(callType)
-                if (groups.isEmpty()) {
+        loadJob =
+            viewModelScope.launch {
+                try {
+                    val groups = repository.load(callType)
+                    if (groups.isEmpty()) {
+                        forgetDeleted(groups)
+                        _state.value = CallHistoryUiState.Empty
+                        loadedOnce = true
+                        return@launch
+                    }
+                    // The rows show now, with the blocked numbers as last known (a number not
+                    // looked
+                    // up yet keeps what the last list said of it); the lookup follows. The rows,
+                    // what
+                    // hides them and the blocked set go out together, so a row waiting on undo
+                    // never
+                    // shows between two states.
+                    contactInfoCache.expireAll()
+                    if (lookingUp) contactInfoCache.start()
+                    val numbers = groups.mapTo(LinkedHashSet()) { it.number }
+                    val previous =
+                        (_state.value as? CallHistoryUiState.Loaded)?.blockedNumbers.orEmpty()
+                    val blockedNow =
+                        numbers.filterTo(HashSet()) { knownBlocked[it] ?: (it in previous) }
+                    val rows = resolveRows(groups, blockedNow)
                     forgetDeleted(groups)
-                    _state.value = CallHistoryUiState.Empty
+                    _state.value =
+                        CallHistoryUiState.Loaded(groups, blockedNow, pendingDeletes, rows)
                     loadedOnce = true
-                    return@launch
-                }
-                // The rows show now, with the blocked numbers as last known (a number not looked
-                // up yet keeps what the last list said of it); the lookup follows. The rows, what
-                // hides them and the blocked set go out together, so a row waiting on undo never
-                // shows between two states.
-                contactInfoCache.expireAll()
-                if (lookingUp) contactInfoCache.start()
-                val numbers = groups.mapTo(LinkedHashSet()) { it.number }
-                val previous = (_state.value as? CallHistoryUiState.Loaded)?.blockedNumbers.orEmpty()
-                val blockedNow = numbers.filterTo(HashSet()) { knownBlocked[it] ?: (it in previous) }
-                val rows = resolveRows(groups, blockedNow)
-                forgetDeleted(groups)
-                _state.value = CallHistoryUiState.Loaded(groups, blockedNow, pendingDeletes, rows)
-                loadedOnce = true
 
-                val unknown = numbers.filter { it !in knownBlocked }
-                if (unknown.isNotEmpty()) {
-                    val blocked = repository.blocked(unknown)
-                    unknown.forEach { knownBlocked[it] = it in blocked }
-                    updateBlocked { it - unknown.toSet() + blocked }
+                    val unknown = numbers.filter { it !in knownBlocked }
+                    if (unknown.isNotEmpty()) {
+                        val blocked = repository.blocked(unknown)
+                        unknown.forEach { knownBlocked[it] = it in blocked }
+                        updateBlocked { it - unknown.toSet() + blocked }
+                    }
+                } catch (e: SecurityException) {
+                    LogUtil.e("CallHistoryViewModel.refresh", "permission revoked while loading", e)
+                    _state.value = CallHistoryUiState.NeedsPermission
+                } catch (e: Exception) {
+                    // The provider can fail in other ways too; the list keeps what it had and says
+                    // so.
+                    LogUtil.e("CallHistoryViewModel.refresh", "loading the call log failed", e)
+                    if (_state.value is CallHistoryUiState.Loading)
+                        _state.value = CallHistoryUiState.Empty
+                    _errors.tryEmit(R.string.call_history_load_failed)
                 }
-            } catch (e: SecurityException) {
-                LogUtil.e("CallHistoryViewModel.refresh", "permission revoked while loading", e)
-                _state.value = CallHistoryUiState.NeedsPermission
-            } catch (e: Exception) {
-                // The provider can fail in other ways too; the list keeps what it had and says so.
-                LogUtil.e("CallHistoryViewModel.refresh", "loading the call log failed", e)
-                if (_state.value is CallHistoryUiState.Loading) _state.value = CallHistoryUiState.Empty
-                _errors.tryEmit(R.string.call_history_load_failed)
             }
-        }
     }
 
     /**
@@ -338,9 +412,16 @@ class CallHistoryViewModel(
         pendingDeletes -= gone
     }
 
-    private suspend fun resolveRows(groups: List<CallLogGroup>, blocked: Set<String>): Map<Long, CallLogRowUi> =
+    private suspend fun resolveRows(
+        groups: List<CallLogGroup>,
+        blocked: Set<String>,
+    ): Map<Long, CallLogRowUi> =
         withContext(resolveDispatcher) {
-            groups.mapIndexed { index, group -> group.rowId to resolveRow(group, index, group.number in blocked) }.toMap()
+            groups
+                .mapIndexed { index, group ->
+                    group.rowId to resolveRow(group, index, group.number in blocked)
+                }
+                .toMap()
         }
 
     /**
@@ -350,13 +431,17 @@ class CallHistoryViewModel(
     private fun resolveRows() {
         val loaded = _state.value as? CallHistoryUiState.Loaded ?: return
         rowsJob?.cancel()
-        rowsJob = viewModelScope.launch {
-            val rows = resolveRows(loaded.groups, loaded.blockedNumbers)
-            val current = _state.value as? CallHistoryUiState.Loaded ?: return@launch
-            if (current.groups === loaded.groups && current.blockedNumbers == loaded.blockedNumbers) {
-                _state.value = current.copy(rows = rows)
+        rowsJob =
+            viewModelScope.launch {
+                val rows = resolveRows(loaded.groups, loaded.blockedNumbers)
+                val current = _state.value as? CallHistoryUiState.Loaded ?: return@launch
+                if (
+                    current.groups === loaded.groups &&
+                        current.blockedNumbers == loaded.blockedNumbers
+                ) {
+                    _state.value = current.copy(rows = rows)
+                }
             }
-        }
     }
 
     /** Hides or shows calls at once, in the state the list reads. */
@@ -389,11 +474,12 @@ class CallHistoryViewModel(
     fun deleteLater(group: CallLogGroup) {
         undoTimers.remove(group.rowId)?.timer?.cancel()
         updatePendingDeletes { it + group.callIds }
-        val timer = viewModelScope.launch {
-            delay(UNDO_WINDOW_MS)
-            undoTimers -= group.rowId
-            delete(listOf(group))
-        }
+        val timer =
+            viewModelScope.launch {
+                delay(UNDO_WINDOW_MS)
+                undoTimers -= group.rowId
+                delete(listOf(group))
+            }
         undoTimers[group.rowId] = PendingDelete(group, timer)
     }
 

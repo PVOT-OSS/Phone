@@ -26,23 +26,29 @@ class SearchResultsTest {
     /** A contacts cursor whose first row is its "Contacts" header. */
     private class FakeContactsCursor : MatrixCursor(Projections.CP2_PROJECTION), SearchCursor {
         override fun isHeader() = position == 0
+
         override fun updateQuery(query: String) = false
+
         override fun getDirectoryId() = 0L
     }
 
-    private fun contacts(vararg rows: Triple<String, String, String>) = FakeContactsCursor().apply {
-        addRow(arrayOfNulls<Any?>(Projections.CP2_PROJECTION.size).also { it[0] = "Contacts" })
-        rows.forEachIndexed { i, (name, number, key) ->
-            addRow(arrayOfNulls<Any?>(Projections.CP2_PROJECTION.size).also {
-                it[Projections.ID] = i + 1L
-                it[Projections.PHONE_TYPE] = Phone.TYPE_MOBILE
-                it[Projections.PHONE_NUMBER] = number
-                it[Projections.DISPLAY_NAME] = name
-                it[Projections.LOOKUP_KEY] = key
-                it[Projections.CARRIER_PRESENCE] = if (number.endsWith("9")) Phone.CARRIER_PRESENCE_VT_CAPABLE else 0
-            })
+    private fun contacts(vararg rows: Triple<String, String, String>) =
+        FakeContactsCursor().apply {
+            addRow(arrayOfNulls<Any?>(Projections.CP2_PROJECTION.size).also { it[0] = "Contacts" })
+            rows.forEachIndexed { i, (name, number, key) ->
+                addRow(
+                    arrayOfNulls<Any?>(Projections.CP2_PROJECTION.size).also {
+                        it[Projections.ID] = i + 1L
+                        it[Projections.PHONE_TYPE] = Phone.TYPE_MOBILE
+                        it[Projections.PHONE_NUMBER] = number
+                        it[Projections.DISPLAY_NAME] = name
+                        it[Projections.LOOKUP_KEY] = key
+                        it[Projections.CARRIER_PRESENCE] =
+                            if (number.endsWith("9")) Phone.CARRIER_PRESENCE_VT_CAPABLE else 0
+                    }
+                )
+            }
         }
-    }
 
     private val results = SearchResults(ApplicationProvider.getApplicationContext<Context>())
 
@@ -71,7 +77,12 @@ class SearchResultsTest {
     @Test
     fun aContactsSecondNumberHasNoName() {
         results.setQuery("a", null)
-        results.setContactsCursor(contacts(Triple("Ada Lovelace", "+15550100", "a"), Triple("Ada Lovelace", "+15550109", "a")))
+        results.setContactsCursor(
+            contacts(
+                Triple("Ada Lovelace", "+15550100", "a"),
+                Triple("Ada Lovelace", "+15550109", "a"),
+            )
+        )
 
         val numbers = results.rows.filterIsInstance<SearchRow.Number>()
         assertThat(numbers.map { it.name != null }).containsExactly(true, false).inOrder()
@@ -84,7 +95,9 @@ class SearchResultsTest {
         results.setSearchActions(listOf(SearchAction.CREATE_NEW_CONTACT, SearchAction.SEND_SMS))
 
         val actions = results.rows.filterIsInstance<SearchRow.Action>()
-        assertThat(actions.map { it.action }).containsExactly(SearchAction.CREATE_NEW_CONTACT, SearchAction.SEND_SMS).inOrder()
+        assertThat(actions.map { it.action })
+            .containsExactly(SearchAction.CREATE_NEW_CONTACT, SearchAction.SEND_SMS)
+            .inOrder()
         assertThat(actions.first().number).isEqualTo("555-0100")
     }
 

@@ -41,27 +41,34 @@ class CallHistoryViewModelTest {
 
         /** When set, [blocked] waits on it, as the real lookup waits on the provider. */
         var blockedGate: CompletableDeferred<Unit>? = null
+
         override suspend fun load(callType: Int): List<CallLogGroup> {
             loadedTypes += callType
             failWith?.let { throw it }
             return groups
         }
+
         override suspend fun blocked(numbers: Collection<String>): Set<String> {
             blockedLookups += numbers.toSet()
             blockedGate?.await()
             return blockedNumbers.intersect(numbers.toSet())
         }
+
         override suspend fun delete(groups: Collection<CallLogGroup>) {
             deleteFailsWith?.let { throw it }
             val ids = groups.flatMap { it.callIds }
             deleted += ids
             this.groups = this.groups.filter { group -> group.callIds.none { it in ids } }
         }
+
         override suspend fun block(number: String, countryIso: String?) {
             blockFailsWith?.let { throw it }
             blockedNumbers = blockedNumbers + number
         }
-        override suspend fun unblock(number: String) { blockedNumbers = blockedNumbers - number }
+
+        override suspend fun unblock(number: String) {
+            blockedNumbers = blockedNumbers - number
+        }
     }
 
     private val ada = callLogGroup(10, "+15550100")
@@ -75,26 +82,37 @@ class CallHistoryViewModelTest {
 
     @After fun tearDown() = Dispatchers.resetMain()
 
-    private fun viewModel(callType: Int = CallLogQueryHandler.CALL_TYPE_ALL) = CallHistoryViewModel(
-        ApplicationProvider.getApplicationContext<Application>(),
-        callType,
-        repository,
-        hasPermission = { permitted },
-        resolveRow = { group, _, isBlocked -> resolved++; row(group).copy(isBlocked = isBlocked) },
-        resolveDispatcher = dispatcher,
-    ).apply { refresh() }
+    private fun viewModel(callType: Int = CallLogQueryHandler.CALL_TYPE_ALL) =
+        CallHistoryViewModel(
+                ApplicationProvider.getApplicationContext<Application>(),
+                callType,
+                repository,
+                hasPermission = { permitted },
+                resolveRow = { group, _, isBlocked ->
+                    resolved++
+                    row(group).copy(isBlocked = isBlocked)
+                },
+                resolveDispatcher = dispatcher,
+            )
+            .apply { refresh() }
 
-    private val CallHistoryViewModel.loaded get() = state.value as CallHistoryUiState.Loaded
-    private val CallHistoryViewModel.pendingDeletes get() = loaded.pendingDeletes
+    private val CallHistoryViewModel.loaded
+        get() = state.value as CallHistoryUiState.Loaded
+
+    private val CallHistoryViewModel.pendingDeletes
+        get() = loaded.pendingDeletes
 
     /** The messages [CallHistoryViewModel.errors] sends, as they come. */
     private fun CallHistoryViewModel.errorsShown(): List<Int> =
-        mutableListOf<Int>().also { shown -> CoroutineScope(Dispatchers.Main).launch { errors.collect { shown += it } } }
+        mutableListOf<Int>().also { shown ->
+            CoroutineScope(Dispatchers.Main).launch { errors.collect { shown += it } }
+        }
 
     @Test
     fun loadsTheRequestedCallType() {
         val vm = viewModel(callType = android.provider.CallLog.Calls.MISSED_TYPE)
-        assertThat(repository.loadedTypes).containsExactly(android.provider.CallLog.Calls.MISSED_TYPE)
+        assertThat(repository.loadedTypes)
+            .containsExactly(android.provider.CallLog.Calls.MISSED_TYPE)
         assertThat(vm.loaded.groups).containsExactly(ada, bea).inOrder()
     }
 
@@ -244,7 +262,8 @@ class CallHistoryViewModelTest {
         vm.commitDelete(bea)
 
         assertThat(repository.deleted).containsExactly(20L, 21L)
-        // Still hidden until a reload no longer has the calls, or the row would come back meanwhile.
+        // Still hidden until a reload no longer has the calls, or the row would come back
+        // meanwhile.
         assertThat(vm.pendingDeletes).containsExactly(20L, 21L)
         vm.refresh()
         assertThat(vm.pendingDeletes).isEmpty()

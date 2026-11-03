@@ -56,7 +56,9 @@ class DialerSettingsActivityTest {
 
     @Test
     fun opensOnTheSettingsList() {
-        compose.onNodeWithTag(TestTags.settingsRow(DialerSettingsActivity.KEY_SCREENING)).assertIsDisplayed()
+        compose
+            .onNodeWithTag(TestTags.settingsRow(DialerSettingsActivity.KEY_SCREENING))
+            .assertIsDisplayed()
         assertTitle(context.getString(R.string.dialer_settings_label))
     }
 
@@ -65,11 +67,15 @@ class DialerSettingsActivityTest {
         openAppearance()
         compose.onNodeWithTag(TestTags.APPEARANCE_GLASS_SWITCH).assertIsDisplayed()
         assertTitle(context.getString(R.string.appearance_settings_label))
-        scenario.onActivity { assertThat(it.supportFragmentManager.backStackEntryCount).isEqualTo(1) }
+        scenario.onActivity {
+            assertThat(it.supportFragmentManager.backStackEntryCount).isEqualTo(1)
+        }
 
         scenario.onActivity { it.onBackPressedDispatcher.onBackPressed() }
         compose.waitForIdle()
-        compose.onNodeWithTag(TestTags.settingsRow(DialerSettingsActivity.KEY_SCREENING)).assertIsDisplayed()
+        compose
+            .onNodeWithTag(TestTags.settingsRow(DialerSettingsActivity.KEY_SCREENING))
+            .assertIsDisplayed()
         assertTitle(context.getString(R.string.dialer_settings_label))
         scenario.onActivity { assertThat(it.isFinishing).isFalse() }
     }
@@ -99,11 +105,15 @@ class DialerSettingsActivityTest {
     }
 
     private fun openAppearance() {
-        compose.onNodeWithTag(TestTags.settingsRow(DialerSettingsActivity.KEY_APPEARANCE)).performClick()
+        compose
+            .onNodeWithTag(TestTags.settingsRow(DialerSettingsActivity.KEY_APPEARANCE))
+            .performClick()
         compose.waitForIdle()
     }
 
     private fun assertTitle(title: String) {
-        compose.onNode(hasText(title).and(hasAnyAncestor(hasTestTag(TestTags.SETTINGS_TOP_BAR)))).assertExists()
+        compose
+            .onNode(hasText(title).and(hasAnyAncestor(hasTestTag(TestTags.SETTINGS_TOP_BAR))))
+            .assertExists()
     }
 }

@@ -10,11 +10,11 @@ import android.app.Application
 import android.provider.Settings
 import androidx.compose.ui.test.assertIsOff
 import androidx.compose.ui.test.assertIsOn
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToNode
-import androidx.compose.ui.test.hasTestTag
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
@@ -54,14 +54,26 @@ class SoundSettingsTest {
     fun dialpadTonesDefaultOnAndWriteTheSystemSetting() {
         assertThat(model.dialpadTones).isTrue()
         model.changeDialpadTones(false)
-        assertThat(Settings.System.getInt(context.contentResolver, Settings.System.DTMF_TONE_WHEN_DIALING)).isEqualTo(0)
+        assertThat(
+                Settings.System.getInt(
+                    context.contentResolver,
+                    Settings.System.DTMF_TONE_WHEN_DIALING,
+                )
+            )
+            .isEqualTo(0)
         assertThat(model.dialpadTones).isFalse()
     }
 
     @Test
     fun dtmfToneLengthStoresTheIndex() {
         model.changeDtmfToneLength(1)
-        assertThat(Settings.System.getInt(context.contentResolver, Settings.System.DTMF_TONE_TYPE_WHEN_DIALING)).isEqualTo(1)
+        assertThat(
+                Settings.System.getInt(
+                    context.contentResolver,
+                    Settings.System.DTMF_TONE_TYPE_WHEN_DIALING,
+                )
+            )
+            .isEqualTo(1)
     }
 
     @Test
@@ -82,8 +94,10 @@ class SoundSettingsTest {
             compose.onNodeWithTag(TestTags.SETTINGS_LIST).performScrollToNode(hasTestTag(hangup))
             compose.onNodeWithTag(hangup).performClick().assertIsOn()
             // InCallVibrationHandler reads this file and key.
-            val prefs = context.createDeviceProtectedStorageContext()
-                .getSharedPreferences(context.packageName + "_preferences", 0)
+            val prefs =
+                context
+                    .createDeviceProtectedStorageContext()
+                    .getSharedPreferences(context.packageName + "_preferences", 0)
             assertThat(prefs.getBoolean("incall_vibrate_hangup", false)).isTrue()
         }
     }

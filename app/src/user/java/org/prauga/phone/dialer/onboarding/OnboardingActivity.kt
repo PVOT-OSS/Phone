@@ -25,28 +25,31 @@ import com.prauga.pvot.designsystem.platform.setPvotContent
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 
 /**
- * Asks to become the default phone app, then for the permissions the dialer needs, explaining
- * each. It sits over [org.prauga.phone.dialer.main.impl.MainActivity], which keeps the intent
- * that opened it, so a number from a DIAL or CALL intent is still there once this finishes.
+ * Asks to become the default phone app, then for the permissions the dialer needs, explaining each.
+ * It sits over [org.prauga.phone.dialer.main.impl.MainActivity], which keeps the intent that opened
+ * it, so a number from a DIAL or CALL intent is still there once this finishes.
  */
 class OnboardingActivity : ComponentActivity(), OnboardingActions {
 
     private var state by mutableStateOf(OnboardingState())
 
-    private val roleRequest = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        val held = isRoleHeld()
-        state = state.copy(isDefaultDialer = held, roleDenied = !held)
-        advance()
-    }
-
-    private val permissionRequest = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
-        val asked = asking
-        asking = emptyList()
-        state = state.afterPermissionRequest(grantedGroups(), asked) { group ->
-            group.permissions.any(::shouldShowRequestPermissionRationale)
+    private val roleRequest =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            val held = isRoleHeld()
+            state = state.copy(isDefaultDialer = held, roleDenied = !held)
+            advance()
         }
-        advance()
-    }
+
+    private val permissionRequest =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+            val asked = asking
+            asking = emptyList()
+            state =
+                state.afterPermissionRequest(grantedGroups(), asked) { group ->
+                    group.permissions.any(::shouldShowRequestPermissionRationale)
+                }
+            advance()
+        }
 
     /** The groups in the permission request in flight. */
     private var asking: List<PermissionGroup> = emptyList()
@@ -55,18 +58,22 @@ class OnboardingActivity : ComponentActivity(), OnboardingActions {
         super.onCreate(savedInstanceState)
         enablePvotEdgeToEdge()
         savedInstanceState?.let { saved ->
-            state = state.copy(
-                roleSkipped = saved.getBoolean(KEY_ROLE_SKIPPED),
-                roleDenied = saved.getBoolean(KEY_ROLE_DENIED),
-                blocked = saved.getStringArrayList(KEY_BLOCKED).orEmpty().map(PermissionGroup::valueOf).toSet(),
-            )
+            state =
+                state.copy(
+                    roleSkipped = saved.getBoolean(KEY_ROLE_SKIPPED),
+                    roleDenied = saved.getBoolean(KEY_ROLE_DENIED),
+                    blocked =
+                        saved
+                            .getStringArrayList(KEY_BLOCKED)
+                            .orEmpty()
+                            .map(PermissionGroup::valueOf)
+                            .toSet(),
+                )
             asking = saved.getStringArrayList(KEY_ASKING).orEmpty().map(PermissionGroup::valueOf)
         }
         // Leaving with back is the same as "Not now", or MainActivity would open this again.
         onBackPressedDispatcher.addCallback(this) { dismiss() }
-        setPvotContent {
-            PhoneScreenTheme { OnboardingScreen(state, this) }
-        }
+        setPvotContent { PhoneScreenTheme { OnboardingScreen(state, this) } }
     }
 
     override fun onResume() {
@@ -86,8 +93,10 @@ class OnboardingActivity : ComponentActivity(), OnboardingActions {
     }
 
     override fun onRequestRole() {
-        val intent = getSystemService(RoleManager::class.java).createRequestRoleIntent(RoleManager.ROLE_DIALER)
-            .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName)
+        val intent =
+            getSystemService(RoleManager::class.java)
+                .createRequestRoleIntent(RoleManager.ROLE_DIALER)
+                .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName)
         roleRequest.launch(intent)
     }
 
@@ -101,7 +110,12 @@ class OnboardingActivity : ComponentActivity(), OnboardingActions {
     }
 
     override fun onOpenAppSettings() {
-        open(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", packageName, null)))
+        open(
+            Intent(
+                Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                Uri.fromParts("package", packageName, null),
+            )
+        )
     }
 
     override fun onNotNow() {
@@ -133,9 +147,14 @@ class OnboardingActivity : ComponentActivity(), OnboardingActions {
 
     private fun isRoleHeld() = isDefaultDialer(this)
 
-    private fun grantedGroups() = PermissionGroup.entries.filter { group ->
-        group.permissions.all { checkSelfPermission(it) == PackageManager.PERMISSION_GRANTED }
-    }.toSet()
+    private fun grantedGroups() =
+        PermissionGroup.entries
+            .filter { group ->
+                group.permissions.all {
+                    checkSelfPermission(it) == PackageManager.PERMISSION_GRANTED
+                }
+            }
+            .toSet()
 
     companion object {
         private const val KEY_ROLE_SKIPPED = "role_skipped"
@@ -144,6 +163,8 @@ class OnboardingActivity : ComponentActivity(), OnboardingActions {
         private const val KEY_ASKING = "asking"
 
         internal fun isDefaultDialer(context: Context) =
-            context.getSystemService(RoleManager::class.java)?.isRoleHeld(RoleManager.ROLE_DIALER) == true
+            context
+                .getSystemService(RoleManager::class.java)
+                ?.isRoleHeld(RoleManager.ROLE_DIALER) == true
     }
 }

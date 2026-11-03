@@ -117,6 +117,7 @@ object TestTags {
 
     /** The list of delays in the call-back reminder dialog. */
     const val CALLBACK_REMINDER_DELAYS = "callback_reminder_delays"
+
     fun callbackReminderDelay(name: String) = "callback_reminder_delay_$name"
 
     /** The search button in a main tab's header, as on the contacts tab. */
@@ -164,7 +165,10 @@ object TestTags {
     fun incallButton(slot: Int) = "incall_button_$slot"
 
     /** The incoming call screen: the Answer and Decline pills and the side buttons above them. */
-    /** The Important badge on an urgent incoming call; the old view's id, which the device tests look for. */
+    /**
+     * The Important badge on an urgent incoming call; the old view's id, which the device tests
+     * look for.
+     */
     const val IMPORTANT_CALL_BADGE = "incall_important_call_badge"
     const val ANSWER_ACCEPT = "answer_accept"
     const val ANSWER_DECLINE = "answer_decline"

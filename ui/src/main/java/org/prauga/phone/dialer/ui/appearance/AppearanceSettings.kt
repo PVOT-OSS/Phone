@@ -27,8 +27,8 @@ import org.prauga.phone.ui.R
  * whether the colors come from the wallpaper.
  *
  * Stored in the default preferences beside the other settings. [preferredIntensity] is what the
- * root hands to PvotLib's `ProvidePvotGlassIntensity`, which still holds it to the device and
- * drops it to solid under battery saver.
+ * root hands to PvotLib's `ProvidePvotGlassIntensity`, which still holds it to the device and drops
+ * it to solid under battery saver.
  */
 object AppearanceSettings {
 
@@ -48,10 +48,15 @@ object AppearanceSettings {
             get() = if (!glass || animationsOff) PvotGlassDefaults.SolidIntensity else intensity
     }
 
-    fun prefs(context: Context): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    fun prefs(context: Context): SharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(context)
 
     fun intensity(context: Context): Float =
-        prefs(context).getFloat(context.getString(R.string.appearance_glass_intensity_key), PvotGlassDefaults.defaultIntensity())
+        prefs(context)
+            .getFloat(
+                context.getString(R.string.appearance_glass_intensity_key),
+                PvotGlassDefaults.defaultIntensity(),
+            )
             .coerceIn(0f, 1f)
 
     fun isGlass(context: Context): Boolean =
@@ -61,20 +66,33 @@ object AppearanceSettings {
         prefs(context).getBoolean(context.getString(R.string.appearance_dynamic_color_key), false)
 
     fun setIntensity(context: Context, value: Float) {
-        prefs(context).edit { putFloat(context.getString(R.string.appearance_glass_intensity_key), value.coerceIn(0f, 1f)) }
+        prefs(context).edit {
+            putFloat(
+                context.getString(R.string.appearance_glass_intensity_key),
+                value.coerceIn(0f, 1f),
+            )
+        }
     }
 
     fun setGlass(context: Context, enabled: Boolean) {
-        prefs(context).edit { putBoolean(context.getString(R.string.appearance_glass_key), enabled) }
+        prefs(context).edit {
+            putBoolean(context.getString(R.string.appearance_glass_key), enabled)
+        }
     }
 
     fun setDynamicColor(context: Context, enabled: Boolean) {
-        prefs(context).edit { putBoolean(context.getString(R.string.appearance_dynamic_color_key), enabled) }
+        prefs(context).edit {
+            putBoolean(context.getString(R.string.appearance_dynamic_color_key), enabled)
+        }
     }
 
     /** Whether the user turned animations off in the system settings. */
     fun animationsOff(context: Context): Boolean =
-        Settings.Global.getFloat(context.contentResolver, Settings.Global.ANIMATOR_DURATION_SCALE, 1f) == 0f
+        Settings.Global.getFloat(
+            context.contentResolver,
+            Settings.Global.ANIMATOR_DURATION_SCALE,
+            1f,
+        ) == 0f
 
     fun current(context: Context): Appearance =
         Appearance(
@@ -91,15 +109,21 @@ object AppearanceSettings {
         val state = remember(context) { mutableStateOf(current(context)) }
         DisposableEffect(context) {
             val prefs = prefs(context)
-            val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ -> state.value = current(context) }
-            prefs.registerOnSharedPreferenceChangeListener(listener)
-            val observer = object : ContentObserver(Handler(Looper.getMainLooper())) {
-                override fun onChange(selfChange: Boolean) {
+            val listener =
+                SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
                     state.value = current(context)
                 }
-            }
+            prefs.registerOnSharedPreferenceChangeListener(listener)
+            val observer =
+                object : ContentObserver(Handler(Looper.getMainLooper())) {
+                    override fun onChange(selfChange: Boolean) {
+                        state.value = current(context)
+                    }
+                }
             context.contentResolver.registerContentObserver(
-                Settings.Global.getUriFor(Settings.Global.ANIMATOR_DURATION_SCALE), false, observer
+                Settings.Global.getUriFor(Settings.Global.ANIMATOR_DURATION_SCALE),
+                false,
+                observer,
             )
             state.value = current(context)
             onDispose {

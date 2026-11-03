@@ -22,18 +22,20 @@ class FavoritesWidgetDataTest {
 
     @Test
     fun starredContactsBecomeTilesInPinnedOrder() {
-        val tiles = FavoritesWidgetData.tiles(
-            context,
-            listOf(
-                speedDialItem(1, "Ada Lovelace", pinned = 2),
-                speedDialItem(2, "Grace Hopper", pinned = 1),
-                speedDialItem(3, "Not Starred", starred = false),
-            ),
-        )
+        val tiles =
+            FavoritesWidgetData.tiles(
+                context,
+                listOf(
+                    speedDialItem(1, "Ada Lovelace", pinned = 2),
+                    speedDialItem(2, "Grace Hopper", pinned = 1),
+                    speedDialItem(3, "Not Starred", starred = false),
+                ),
+            )
 
         assertThat(tiles.map { it.name }).containsExactly("Grace Hopper", "Ada Lovelace").inOrder()
         assertThat(tiles[0].intent.data).isEqualTo(Contacts.getLookupUri(2, "key2"))
-        assertThat(tiles[0].intent.action).isEqualTo("org.prauga.phone.dialer.shortcuts.CALL_CONTACT")
+        assertThat(tiles[0].intent.action)
+            .isEqualTo("org.prauga.phone.dialer.shortcuts.CALL_CONTACT")
         assertThat(tiles[0].photo.width).isGreaterThan(0)
     }
 

@@ -11,14 +11,14 @@ import android.content.pm.PackageManager
 import android.provider.ContactsContract
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -28,11 +28,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
-import androidx.lifecycle.compose.LifecycleResumeEffect
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,8 +46,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import com.prauga.pvot.designsystem.theme.PvotSpacing
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import com.prauga.pvot.designsystem.navigation.LocalPvotNavBarSizes
+import com.prauga.pvot.designsystem.theme.PvotSpacing
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.prauga.phone.ui.R
@@ -78,10 +78,11 @@ fun TabHeader(
     actions: @Composable RowScope.() -> Unit = {},
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(TabHeaderDefaults.Height)
-            .padding(start = PvotSpacing.L, end = PvotSpacing.S),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .height(TabHeaderDefaults.Height)
+                .padding(start = PvotSpacing.L, end = PvotSpacing.S),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
@@ -97,7 +98,10 @@ fun TabHeader(
     }
 }
 
-/** The user's photo or initial from their profile card, or a person icon; tapping opens the app menu. */
+/**
+ * The user's photo or initial from their profile card, or a person icon; tapping opens the app
+ * menu.
+ */
 @Composable
 fun ProfileButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     val context = LocalContext.current
@@ -107,28 +111,33 @@ fun ProfileButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
         resumes++
         onPauseOrDispose {}
     }
-    val profile by produceState<Profile?>(initialValue = null, context, resumes) {
-        value = withContext(Dispatchers.IO) { loadProfile(context) }
-    }
+    val profile by
+        produceState<Profile?>(initialValue = null, context, resumes) {
+            value = withContext(Dispatchers.IO) { loadProfile(context) }
+        }
     Box(
-        modifier = modifier
-            .size(TabHeaderDefaults.AvatarTouchSize)
-            .clip(CircleShape)
-            .clickable(
-                onClickLabel = stringResource(R.string.action_menu_overflow_description),
-                role = Role.Button,
-                onClick = onClick,
-            )
-            .testTag(TestTags.APP_MENU),
+        modifier =
+            modifier
+                .size(TabHeaderDefaults.AvatarTouchSize)
+                .clip(CircleShape)
+                .clickable(
+                    onClickLabel = stringResource(R.string.action_menu_overflow_description),
+                    role = Role.Button,
+                    onClick = onClick,
+                )
+                .testTag(TestTags.APP_MENU),
         contentAlignment = Alignment.Center,
     ) {
         val name = profile?.name
         if (name != null) {
-            ContactAvatar(name = name, photoUri = profile?.photoUri, size = TabHeaderDefaults.AvatarSize)
+            ContactAvatar(
+                name = name,
+                photoUri = profile?.photoUri,
+                size = TabHeaderDefaults.AvatarSize,
+            )
         } else {
             Box(
-                Modifier
-                    .size(TabHeaderDefaults.AvatarSize)
+                Modifier.size(TabHeaderDefaults.AvatarSize)
                     .background(MaterialTheme.colorScheme.surfaceContainerHighest, CircleShape),
                 contentAlignment = Alignment.Center,
             ) {
@@ -149,23 +158,33 @@ fun ProfileButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
  */
 @Composable
 fun navBarClearance(): Dp =
-    LocalPvotNavBarSizes.current.barHeight + PvotSpacing.M * 2 +
+    LocalPvotNavBarSizes.current.barHeight +
+        PvotSpacing.M * 2 +
         WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
 
 /** The user's own name and photo, from the "Me" card in contacts. */
-@Immutable
-private data class Profile(val name: String, val photoUri: String?)
+@Immutable private data class Profile(val name: String, val photoUri: String?)
 
 private fun loadProfile(context: Context): Profile? {
-    if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+    if (
+        ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) !=
+            PackageManager.PERMISSION_GRANTED
+    ) {
         return null
     }
-    val projection = arrayOf(ContactsContract.Profile.DISPLAY_NAME_PRIMARY, ContactsContract.Profile.PHOTO_THUMBNAIL_URI)
+    val projection =
+        arrayOf(
+            ContactsContract.Profile.DISPLAY_NAME_PRIMARY,
+            ContactsContract.Profile.PHOTO_THUMBNAIL_URI,
+        )
     return runCatching {
-        context.contentResolver.query(ContactsContract.Profile.CONTENT_URI, projection, null, null, null)?.use { cursor ->
-            if (!cursor.moveToFirst()) return@use null
-            val name = cursor.getString(0)?.takeIf { it.isNotBlank() } ?: return@use null
-            Profile(name, cursor.getString(1))
+            context.contentResolver
+                .query(ContactsContract.Profile.CONTENT_URI, projection, null, null, null)
+                ?.use { cursor ->
+                    if (!cursor.moveToFirst()) return@use null
+                    val name = cursor.getString(0)?.takeIf { it.isNotBlank() } ?: return@use null
+                    Profile(name, cursor.getString(1))
+                }
         }
-    }.getOrNull()
+        .getOrNull()
 }

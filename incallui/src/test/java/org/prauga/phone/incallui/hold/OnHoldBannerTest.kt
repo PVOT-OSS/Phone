@@ -43,7 +43,11 @@ class OnHoldBannerTest {
     fun showsWhoIsOnHoldOverGlass() {
         compose.setContent {
             PhoneScreenTheme(fillBackground = false) {
-                CompositionLocalProvider(LocalPvotGlassBackdrop provides rememberPvotGlassBackdrop()) { OnHoldBanner(info) }
+                CompositionLocalProvider(
+                    LocalPvotGlassBackdrop provides rememberPvotGlassBackdrop()
+                ) {
+                    OnHoldBanner(info)
+                }
             }
         }
         compose.onNodeWithText("Ada Lovelace").assertExists()
@@ -53,6 +57,9 @@ class OnHoldBannerTest {
     @Test
     fun screenshotDark() {
         compose.setContent { PhoneScreenTheme(fillBackground = false) { OnHoldBanner(info) } }
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/incall/on_hold_banner_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/incall/on_hold_banner_dark.png")
     }
 }

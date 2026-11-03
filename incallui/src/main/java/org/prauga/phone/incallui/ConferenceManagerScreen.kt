@@ -8,6 +8,7 @@ package org.prauga.phone.incallui
 import android.content.Context
 import android.telecom.Call
 import android.telephony.PhoneNumberUtils
+import android.text.BidiFormatter
 import android.text.TextDirectionHeuristics
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,8 +23,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,19 +33,17 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import android.text.BidiFormatter
 import com.prauga.pvot.designsystem.components.PvotScreen
 import com.prauga.pvot.designsystem.components.list.PvotListRow
 import com.prauga.pvot.designsystem.navigation.PvotTopBar
 import com.prauga.pvot.designsystem.theme.PvotSpacing
-import org.prauga.phone.incallui.R
+import java.lang.ref.WeakReference
 import org.prauga.phone.dialer.contacts.ContactsComponent
 import org.prauga.phone.dialer.ui.ContactAvatar
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.incallui.ContactInfoCache.ContactCacheEntry
 import org.prauga.phone.incallui.call.DialerCall
 import org.prauga.phone.incallui.call.state.DialerCallState
-import java.lang.ref.WeakReference
 
 /** One person in a conference call, as the conference screen shows them. */
 data class ConferenceParticipant(
@@ -64,7 +63,11 @@ data class ConferenceParticipant(
  */
 class ConferenceParticipants(private val context: Context) {
 
-    private class Info(var call: DialerCall, var contact: ContactCacheEntry, var lookupComplete: Boolean = false)
+    private class Info(
+        var call: DialerCall,
+        var contact: ContactCacheEntry,
+        var lookupComplete: Boolean = false,
+    )
 
     private val infos = mutableListOf<Info>()
     private var parentCanSeparate = false
@@ -78,7 +81,8 @@ class ConferenceParticipants(private val context: Context) {
         val cache = ContactInfoCache.getInstance(context)
         var added = false
         for (call in calls) {
-            val contact = cache.getInfo(call.id) ?: ContactInfoCache.buildCacheEntryFromCall(context, call)
+            val contact =
+                cache.getInfo(call.id) ?: ContactInfoCache.buildCacheEntryFromCall(context, call)
             val existing = infos.find { it.call.id == call.id }
             if (existing != null) {
                 existing.call = call
@@ -92,9 +96,13 @@ class ConferenceParticipants(private val context: Context) {
         infos.removeAll { it.call.id !in ids }
         if (added) {
             val preferences = ContactsComponent.get(context).contactDisplayPreferences()
-            infos.sortWith(compareBy(String.CASE_INSENSITIVE_ORDER) {
-                preferences.getSortName(it.contact.namePrimary, it.contact.nameAlternative).orEmpty()
-            })
+            infos.sortWith(
+                compareBy(String.CASE_INSENSITIVE_ORDER) {
+                    preferences
+                        .getSortName(it.contact.namePrimary, it.contact.nameAlternative)
+                        .orEmpty()
+                }
+            )
         }
         rebuild()
     }
@@ -116,28 +124,39 @@ class ConferenceParticipants(private val context: Context) {
     private fun rebuild() {
         val cache = ContactInfoCache.getInstance(context)
         val preferences = ContactsComponent.get(context).contactDisplayPreferences()
-        participants = infos.map { info ->
-            val call = info.call
-            if (!info.lookupComplete) {
-                cache.findInfo(call, call.state == DialerCallState.INCOMING, LookupCallback(this))
+        participants =
+            infos.map { info ->
+                val call = info.call
+                if (!info.lookupComplete) {
+                    cache.findInfo(
+                        call,
+                        call.state == DialerCallState.INCOMING,
+                        LookupCallback(this),
+                    )
+                }
+                val contact = info.contact
+                val name =
+                    call.updateNameIfRestricted(
+                        preferences.getDisplayName(contact.namePrimary, contact.nameAlternative)
+                    )
+                ConferenceParticipant(
+                    callId = call.id,
+                    name = name?.takeIf { it.isNotEmpty() },
+                    number = contact.number?.takeIf { it.isNotEmpty() },
+                    photoUri = contact.displayPhotoUri?.toString(),
+                    colorKey = contact.lookupKey ?: contact.number.orEmpty(),
+                    onHold = call.nonConferenceState == DialerCallState.ONHOLD,
+                    canSeparate =
+                        parentCanSeparate &&
+                            call.can(Call.Details.CAPABILITY_SEPARATE_FROM_CONFERENCE),
+                    canDisconnect = call.can(Call.Details.CAPABILITY_DISCONNECT_FROM_CONFERENCE),
+                )
             }
-            val contact = info.contact
-            val name = call.updateNameIfRestricted(preferences.getDisplayName(contact.namePrimary, contact.nameAlternative))
-            ConferenceParticipant(
-                callId = call.id,
-                name = name?.takeIf { it.isNotEmpty() },
-                number = contact.number?.takeIf { it.isNotEmpty() },
-                photoUri = contact.displayPhotoUri?.toString(),
-                colorKey = contact.lookupKey ?: contact.number.orEmpty(),
-                onHold = call.nonConferenceState == DialerCallState.ONHOLD,
-                canSeparate = parentCanSeparate && call.can(Call.Details.CAPABILITY_SEPARATE_FROM_CONFERENCE),
-                canDisconnect = call.can(Call.Details.CAPABILITY_DISCONNECT_FROM_CONFERENCE),
-            )
-        }
     }
 
     /** Holds the participants weakly, as the contact cache may answer after the screen is gone. */
-    private class LookupCallback(participants: ConferenceParticipants) : ContactInfoCache.ContactInfoCacheCallback {
+    private class LookupCallback(participants: ConferenceParticipants) :
+        ContactInfoCache.ContactInfoCacheCallback {
         private val participants = WeakReference(participants)
 
         override fun onContactInfoComplete(callId: String, entry: ContactCacheEntry) {
@@ -150,7 +169,10 @@ class ConferenceParticipants(private val context: Context) {
     }
 }
 
-/** The manage conference screen: everyone in the call, with buttons to split them out or hang up on them. */
+/**
+ * The manage conference screen: everyone in the call, with buttons to split them out or hang up on
+ * them.
+ */
 @Composable
 fun ConferenceManagerScreen(
     participants: List<ConferenceParticipant>,
@@ -166,16 +188,26 @@ fun ConferenceManagerScreen(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start,
         ) {
-            items(participants, key = { it.callId }) { ParticipantRow(it, onSeparate, onDisconnect) }
+            items(participants, key = { it.callId }) {
+                ParticipantRow(it, onSeparate, onDisconnect)
+            }
         }
     }
 }
 
 @Composable
-private fun ParticipantRow(participant: ConferenceParticipant, onSeparate: (String) -> Unit, onDisconnect: (String) -> Unit) {
-    val number = participant.number?.let {
-        PhoneNumberUtils.createTtsSpannable(BidiFormatter.getInstance().unicodeWrap(it, TextDirectionHeuristics.LTR)).toString()
-    }
+private fun ParticipantRow(
+    participant: ConferenceParticipant,
+    onSeparate: (String) -> Unit,
+    onDisconnect: (String) -> Unit,
+) {
+    val number =
+        participant.number?.let {
+            PhoneNumberUtils.createTtsSpannable(
+                    BidiFormatter.getInstance().unicodeWrap(it, TextDirectionHeuristics.LTR)
+                )
+                .toString()
+        }
     val onHold = stringResource(R.string.notification_on_hold)
     val dim = if (participant.onHold) Modifier.alpha(DimmedAlpha) else Modifier
     PvotListRow(
@@ -188,9 +220,21 @@ private fun ParticipantRow(participant: ConferenceParticipant, onSeparate: (Stri
             )
         },
         modifier = Modifier.testTag(TestTags.conferenceParticipant(participant.callId)),
-        supportingText = listOfNotNull(onHold.takeIf { participant.onHold }, number.takeIf { participant.name != null })
-            .takeIf { it.isNotEmpty() }
-            ?.let { parts -> { Text(parts.joinToString(" • "), maxLines = 1, overflow = TextOverflow.Ellipsis) } },
+        supportingText =
+            listOfNotNull(
+                    onHold.takeIf { participant.onHold },
+                    number.takeIf { participant.name != null },
+                )
+                .takeIf { it.isNotEmpty() }
+                ?.let { parts ->
+                    {
+                        Text(
+                            parts.joinToString(" • "),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
+                },
         leading = {
             ContactAvatar(
                 name = participant.name ?: participant.number.orEmpty(),
@@ -203,14 +247,19 @@ private fun ParticipantRow(participant: ConferenceParticipant, onSeparate: (Stri
             Row(horizontalArrangement = Arrangement.spacedBy(PvotSpacing.XS)) {
                 if (participant.canSeparate) {
                     IconButton(onClick = { onSeparate(participant.callId) }) {
-                        Icon(painterResource(R.drawable.ic_arrows_split), stringResource(R.string.goPrivate))
+                        Icon(
+                            painterResource(R.drawable.ic_arrows_split),
+                            stringResource(R.string.goPrivate),
+                        )
                     }
                 }
                 if (participant.canDisconnect) {
                     IconButton(onClick = { onDisconnect(participant.callId) }) {
                         Icon(
                             painterResource(R.drawable.ic_phone_off),
-                            stringResource(R.string.conference_caller_disconnect_content_description),
+                            stringResource(
+                                R.string.conference_caller_disconnect_content_description
+                            ),
                             tint = MaterialTheme.colorScheme.error,
                         )
                     }
@@ -222,4 +271,3 @@ private fun ParticipantRow(participant: ConferenceParticipant, onSeparate: (Stri
 
 /** How faint a participant on hold looks. */
 private const val DimmedAlpha = 0.38f
-

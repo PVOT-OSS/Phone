@@ -35,8 +35,8 @@ import com.prauga.pvot.designsystem.components.list.PvotLetterTile
 import com.prauga.pvot.designsystem.components.list.PvotLetterTileDefaults
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.prauga.phone.ui.R
 import org.prauga.phone.dialer.common.LogUtil
+import org.prauga.phone.ui.R
 
 /**
  * A contact's photo, or a letter tile while it loads or when there is none.
@@ -55,9 +55,11 @@ fun ContactAvatar(
 ) {
     val context = LocalContext.current
     val sizePx = with(LocalDensity.current) { size.roundToPx() }
-    val photo by produceState(ContactPhotoCache.cached(photoUri, sizePx), photoUri, sizePx) {
-        if (value == null && photoUri != null) value = ContactPhotoCache.load(context, photoUri, sizePx)
-    }
+    val photo by
+        produceState(ContactPhotoCache.cached(photoUri, sizePx), photoUri, sizePx) {
+            if (value == null && photoUri != null)
+                value = ContactPhotoCache.load(context, photoUri, sizePx)
+        }
     val bitmap = photo
     if (bitmap != null) {
         Image(
@@ -68,7 +70,8 @@ fun ContactAvatar(
         )
     } else if (name.none(Char::isLetter)) {
         // A number or an empty name has no initial; show a person instead.
-        val colors = PvotLetterTileDefaults.colorsFor(colorKey, PvotLetterTileDefaults.themePalette())
+        val colors =
+            PvotLetterTileDefaults.colorsFor(colorKey, PvotLetterTileDefaults.themePalette())
         Box(
             modifier = modifier.size(size).background(colors.containerColor, CircleShape),
             contentAlignment = Alignment.Center,
@@ -95,7 +98,8 @@ internal object ContactPhotoCache {
     suspend fun load(context: Context, photoUri: String, sizePx: Int): ImageBitmap? =
         withContext(Dispatchers.IO) {
             try {
-                context.contentResolver.loadThumbnail(photoUri.toUri(), Size(sizePx, sizePx), null)
+                context.contentResolver
+                    .loadThumbnail(photoUri.toUri(), Size(sizePx, sizePx), null)
                     .asImageBitmap()
                     .also { cache.put(key(photoUri, sizePx), it) }
             } catch (e: Exception) {
@@ -113,17 +117,20 @@ internal object ContactPhotoCache {
     suspend fun loadThumbnail(context: Context, photoId: Long): ImageBitmap? =
         withContext(Dispatchers.IO) {
             try {
-                context.contentResolver.query(
-                    ContentUris.withAppendedId(ContactsContract.Data.CONTENT_URI, photoId),
-                    arrayOf(ContactsContract.CommonDataKinds.Photo.PHOTO),
-                    null,
-                    null,
-                    null,
-                )?.use { cursor ->
-                    if (!cursor.moveToFirst()) return@use null
-                    val bytes = cursor.getBlob(0) ?: return@use null
-                    BitmapFactory.decodeByteArray(bytes, 0, bytes.size)?.asImageBitmap()
-                }?.also { cache.put(thumbnailKey(photoId), it) }
+                context.contentResolver
+                    .query(
+                        ContentUris.withAppendedId(ContactsContract.Data.CONTENT_URI, photoId),
+                        arrayOf(ContactsContract.CommonDataKinds.Photo.PHOTO),
+                        null,
+                        null,
+                        null,
+                    )
+                    ?.use { cursor ->
+                        if (!cursor.moveToFirst()) return@use null
+                        val bytes = cursor.getBlob(0) ?: return@use null
+                        BitmapFactory.decodeByteArray(bytes, 0, bytes.size)?.asImageBitmap()
+                    }
+                    ?.also { cache.put(thumbnailKey(photoId), it) }
             } catch (e: Exception) {
                 // A deleted contact or a missing permission falls back to the letter tile.
                 LogUtil.w("ContactPhotoCache.loadThumbnail", "no photo: %s", e.javaClass.simpleName)

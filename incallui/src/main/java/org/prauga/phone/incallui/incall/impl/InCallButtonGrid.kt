@@ -31,9 +31,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -66,8 +66,8 @@ import com.prauga.pvot.designsystem.motion.PvotMotion
 import com.prauga.pvot.designsystem.theme.PvotCallEnd
 import com.prauga.pvot.designsystem.theme.PvotOnCallEnd
 import com.prauga.pvot.designsystem.theme.PvotSpacing
-import org.prauga.phone.incallui.R
 import org.prauga.phone.dialer.ui.TestTags
+import org.prauga.phone.incallui.R
 import org.prauga.phone.incallui.incall.protocol.InCallButtonIds
 
 /**
@@ -76,17 +76,21 @@ import org.prauga.phone.incallui.incall.protocol.InCallButtonIds
  * the More sheet.
  */
 class InCallButtonSlots(context: Context) {
-    val buttons: List<CheckableLabeledButton> = List(BUTTON_COUNT) { CheckableLabeledButton(context) }
+    val buttons: List<CheckableLabeledButton> =
+        List(BUTTON_COUNT) { CheckableLabeledButton(context) }
 
     /** The [InCallButtonIds] each slot holds, or [NO_BUTTON]. */
-    val ids: SnapshotStateList<Int> = mutableStateListOf<Int>().apply { repeat(BUTTON_COUNT) { add(NO_BUTTON) } }
+    val ids: SnapshotStateList<Int> =
+        mutableStateListOf<Int>().apply { repeat(BUTTON_COUNT) { add(NO_BUTTON) } }
 
     /** Hides the buttons from TalkBack while the dialpad covers them. */
     fun onDialpadVisibilityChange(isShowing: Boolean) {
         buttons.forEach { it.hiddenFromAccessibility = isShowing }
     }
 
-    /** Gives each allowed button a slot, in the order [buttonChooser] prefers, and empties the rest. */
+    /**
+     * Gives each allowed button a slot, in the order [buttonChooser] prefers, and empties the rest.
+     */
     fun place(
         buttonControllers: List<ButtonController>,
         buttonChooser: ButtonChooser?,
@@ -102,7 +106,9 @@ class InCallButtonSlots(context: Context) {
             }
         }
         buttonControllers.forEach { it.setButton(null) }
-        val chooser = buttonChooser ?: ButtonChooserFactory.newButtonChooser(voiceNetworkType, false, phoneType)
+        val chooser =
+            buttonChooser
+                ?: ButtonChooserFactory.newButtonChooser(voiceNetworkType, false, phoneType)
         val placement = chooser.getButtonPlacement(BUTTON_COUNT, allowed, disabled)
         for (i in 0 until BUTTON_COUNT) {
             if (i >= placement.size) {
@@ -121,7 +127,12 @@ class InCallButtonSlots(context: Context) {
         const val NO_BUTTON = -1
 
         /** The buttons on the capsule, in order; the rest are in the More sheet. */
-        val CAPSULE_BUTTONS = listOf(InCallButtonIds.BUTTON_AUDIO, InCallButtonIds.BUTTON_MUTE, InCallButtonIds.BUTTON_DIALPAD)
+        val CAPSULE_BUTTONS =
+            listOf(
+                InCallButtonIds.BUTTON_AUDIO,
+                InCallButtonIds.BUTTON_MUTE,
+                InCallButtonIds.BUTTON_DIALPAD,
+            )
     }
 }
 
@@ -130,10 +141,10 @@ class InCallButtonSlots(context: Context) {
  * under it. The first row is audio route, mute and keypad; the second the call's next buttons in
  * the order the chooser prefers, with More for the rest, which opens them in a sheet.
  *
- * The panel has a place for every button it can hold from its first frame, so it is as tall
- * before the call offers any buttons as after, and the contact grid above it stays put. A button
- * fades and grows into its place, a button that leaves fades out, and a place that changes
- * buttons crossfades between them.
+ * The panel has a place for every button it can hold from its first frame, so it is as tall before
+ * the call offers any buttons as after, and the contact grid above it stays put. A button fades and
+ * grows into its place, a button that leaves fades out, and a place that changes buttons crossfades
+ * between them.
  */
 @Composable
 fun InCallControls(
@@ -143,11 +154,15 @@ fun InCallControls(
     modifier: Modifier = Modifier,
 ) {
     var moreOpen by remember { mutableStateOf(false) }
-    val placed = slots.ids.indices.filter { slots.ids[it] != InCallButtonSlots.NO_BUTTON && slots.buttons[it].visible }
+    val placed =
+        slots.ids.indices.filter {
+            slots.ids[it] != InCallButtonSlots.NO_BUTTON && slots.buttons[it].visible
+        }
     val layout = ControlsLayout.of(placed) { slots.ids[it] }
     val moreLabel = stringResource(R.string.incall_label_more)
     // One entry per place on the panel: a slot index, MORE_CELL, or null while the place is empty.
-    val filled: List<Int?> = layout.panel + if (layout.more.isNotEmpty()) listOf(MORE_CELL) else emptyList()
+    val filled: List<Int?> =
+        layout.panel + if (layout.more.isNotEmpty()) listOf(MORE_CELL) else emptyList()
     val places = filled + List((ControlsLayout.PANEL_SIZE - filled.size).coerceAtLeast(0)) { null }
     Column(
         modifier.fillMaxWidth(),
@@ -155,8 +170,7 @@ fun InCallControls(
         verticalArrangement = Arrangement.spacedBy(ControlsGap),
     ) {
         Column(
-            Modifier
-                .fillMaxWidth()
+            Modifier.fillMaxWidth()
                 .pvotGlassSurface(LocalPvotGlassBackdrop.current, PanelCorner, role = null)
                 .animateContentSize(tween(PvotDurations.Medium, easing = PvotMotion.Settle))
                 .padding(vertical = PvotSpacing.L, horizontal = PvotSpacing.S)
@@ -168,13 +182,27 @@ fun InCallControls(
                     for (place in row) {
                         Box(Modifier.weight(1f), contentAlignment = Alignment.TopCenter) {
                             // Gives the place its height, so an empty one is as tall as a full one.
-                            Column(Modifier.alpha(0f).clearAndSetSemantics {}, horizontalAlignment = Alignment.CenterHorizontally) {
+                            Column(
+                                Modifier.alpha(0f).clearAndSetSemantics {},
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
                                 Spacer(Modifier.height(ControlSize + PvotSpacing.S))
-                                Text(text = moreLabel, style = MaterialTheme.typography.labelMedium, maxLines = 1)
+                                Text(
+                                    text = moreLabel,
+                                    style = MaterialTheme.typography.labelMedium,
+                                    maxLines = 1,
+                                )
                             }
                             PanelPlace(
-                                cell = place?.let { if (it == MORE_CELL) moreCell(moreLabel) else slotCell(slots, it) },
-                                onClick = { cell -> if (cell.slot == MORE_CELL) moreOpen = true else slots.buttons[cell.slot].performClick() },
+                                cell =
+                                    place?.let {
+                                        if (it == MORE_CELL) moreCell(moreLabel)
+                                        else slotCell(slots, it)
+                                    },
+                                onClick = { cell ->
+                                    if (cell.slot == MORE_CELL) moreOpen = true
+                                    else slots.buttons[cell.slot].performClick()
+                                },
                             )
                         }
                     }
@@ -189,13 +217,20 @@ fun InCallControls(
                 val button = slots.buttons[index]
                 PvotSheetItem(
                     title = button.label.toString(),
-                    subtitle = if (button.checkedState) stringResource(R.string.incall_button_on) else null,
+                    subtitle =
+                        if (button.checkedState) stringResource(R.string.incall_button_on)
+                        else null,
                     onClick = {
                         moreOpen = false
                         button.performClick()
                     },
                     enabled = button.enabledState,
-                    icon = { Icon(painterResource(pvotIconFor(button.iconRes)), contentDescription = null) },
+                    icon = {
+                        Icon(
+                            painterResource(pvotIconFor(button.iconRes)),
+                            contentDescription = null,
+                        )
+                    },
                     modifier = Modifier.testTag(TestTags.incallButton(index)),
                 )
             }
@@ -204,8 +239,8 @@ fun InCallControls(
 }
 
 /**
- * What one place on the panel shows, taken from its button so a place that changes buttons can
- * keep drawing the old one while it fades out.
+ * What one place on the panel shows, taken from its button so a place that changes buttons can keep
+ * drawing the old one while it fades out.
  */
 @Immutable
 private data class PanelCell(
@@ -235,16 +270,17 @@ private fun slotCell(slots: InCallButtonSlots, slot: Int): PanelCell {
     )
 }
 
-private fun moreCell(label: String) = PanelCell(
-    id = MORE_CELL,
-    slot = MORE_CELL,
-    iconRes = R.drawable.ic_dots_filled,
-    label = label,
-    description = label,
-    checked = null,
-    enabled = true,
-    hiddenFromAccessibility = false,
-)
+private fun moreCell(label: String) =
+    PanelCell(
+        id = MORE_CELL,
+        slot = MORE_CELL,
+        iconRes = R.drawable.ic_dots_filled,
+        label = label,
+        description = label,
+        checked = null,
+        enabled = true,
+        hiddenFromAccessibility = false,
+    )
 
 /**
  * One place on the panel: its [cell] fades and grows in, fades out when the place empties, and
@@ -283,7 +319,10 @@ fun EndCallButton(enabled: Boolean, onEndCall: () -> Unit, modifier: Modifier = 
         width = EndCallWidth,
         labelInside = true,
         enabled = enabled,
-        modifier = modifier.semantics { contentDescription = description }.testTag(TestTags.INCALL_END_CALL),
+        modifier =
+            modifier
+                .semantics { contentDescription = description }
+                .testTag(TestTags.INCALL_END_CALL),
     )
 }
 
@@ -297,7 +336,10 @@ internal data class ControlsLayout(val panel: List<Int>, val more: List<Int>) {
         const val PANEL_SIZE = 6
 
         fun of(placed: List<Int>, idOf: (Int) -> Int): ControlsLayout {
-            val first = InCallButtonSlots.CAPSULE_BUTTONS.mapNotNull { id -> placed.firstOrNull { idOf(it) == id } }
+            val first =
+                InCallButtonSlots.CAPSULE_BUTTONS.mapNotNull { id ->
+                    placed.firstOrNull { idOf(it) == id }
+                }
             val rest = placed - first.toSet()
             val room = PANEL_SIZE - first.size
             return if (rest.size <= room) {
@@ -319,15 +361,25 @@ private fun ControlCell(cell: PanelCell, onClick: () -> Unit) {
         onClick = onClick,
         checked = cell.checked,
         enabled = cell.enabled,
-        colors = if (cell.id == InCallButtonIds.BUTTON_MUTE) {
-            // Muted is the call's one warning: the same red as End.
-            PvotIconButtonDefaults.tonalColors(checkedContainerColor = PvotCallEnd, checkedContentColor = PvotOnCallEnd)
-        } else {
-            PvotIconButtonDefaults.tonalColors()
-        },
-        modifier = Modifier
-            .then(if (cell.hiddenFromAccessibility) Modifier.semantics { hideFromAccessibility() } else Modifier)
-            .testTag(if (cell.slot == MORE_CELL) TestTags.INCALL_MORE else TestTags.incallButton(cell.slot)),
+        colors =
+            if (cell.id == InCallButtonIds.BUTTON_MUTE) {
+                // Muted is the call's one warning: the same red as End.
+                PvotIconButtonDefaults.tonalColors(
+                    checkedContainerColor = PvotCallEnd,
+                    checkedContentColor = PvotOnCallEnd,
+                )
+            } else {
+                PvotIconButtonDefaults.tonalColors()
+            },
+        modifier =
+            Modifier.then(
+                    if (cell.hiddenFromAccessibility) Modifier.semantics { hideFromAccessibility() }
+                    else Modifier
+                )
+                .testTag(
+                    if (cell.slot == MORE_CELL) TestTags.INCALL_MORE
+                    else TestTags.incallButton(cell.slot)
+                ),
     )
 }
 
@@ -361,52 +413,65 @@ private fun LabelledControl(
         Text(
             text = label,
             style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = if (enabled) 1f else DisabledLabelAlpha),
+            color =
+                MaterialTheme.colorScheme.onSurface.copy(
+                    alpha = if (enabled) 1f else DisabledLabelAlpha
+                ),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             textAlign = TextAlign.Center,
-            // The button already says this to TalkBack; the label is a bigger target for the finger.
-            modifier = Modifier
-                .semantics { hideFromAccessibility() }
-                .clickable(enabled = enabled, interactionSource = null, indication = null, onClick = onClick),
+            // The button already says this to TalkBack; the label is a bigger target for the
+            // finger.
+            modifier =
+                Modifier.semantics { hideFromAccessibility() }
+                    .clickable(
+                        enabled = enabled,
+                        interactionSource = null,
+                        indication = null,
+                        onClick = onClick,
+                    ),
         )
     }
 }
 
-/** The filled icon for the panel's main buttons, the outline one otherwise, as the More sheet uses. */
+/**
+ * The filled icon for the panel's main buttons, the outline one otherwise, as the More sheet uses.
+ */
 @DrawableRes
-internal fun panelIconFor(@DrawableRes iconRes: Int): Int = when (iconRes) {
-    R.drawable.quantum_ic_volume_up_vd_theme_24 -> R.drawable.ic_speaker_filled
-    R.drawable.quantum_ic_mic_off_vd_theme_24 -> R.drawable.ic_microphone_off_filled
-    R.drawable.quantum_ic_dialpad_vd_theme_24 -> R.drawable.ic_dialpad_filled
-    R.drawable.ic_addcall_white -> R.drawable.ic_plus_bold
-    R.drawable.quantum_ic_pause_vd_theme_24 -> R.drawable.ic_pause_filled
-    R.drawable.quantum_ic_phone_in_talk_vd_theme_24 -> R.drawable.ic_call_filled
-    else -> pvotIconFor(iconRes)
-}
+internal fun panelIconFor(@DrawableRes iconRes: Int): Int =
+    when (iconRes) {
+        R.drawable.quantum_ic_volume_up_vd_theme_24 -> R.drawable.ic_speaker_filled
+        R.drawable.quantum_ic_mic_off_vd_theme_24 -> R.drawable.ic_microphone_off_filled
+        R.drawable.quantum_ic_dialpad_vd_theme_24 -> R.drawable.ic_dialpad_filled
+        R.drawable.ic_addcall_white -> R.drawable.ic_plus_bold
+        R.drawable.quantum_ic_pause_vd_theme_24 -> R.drawable.ic_pause_filled
+        R.drawable.quantum_ic_phone_in_talk_vd_theme_24 -> R.drawable.ic_call_filled
+        else -> pvotIconFor(iconRes)
+    }
 
 /** The Tabler icon for an in-call button icon the controllers set. */
 @DrawableRes
-internal fun pvotIconFor(@DrawableRes iconRes: Int): Int = when (iconRes) {
-    R.drawable.ic_addcall_white -> R.drawable.ic_user_plus
-    R.drawable.ic_sim_change_white -> R.drawable.ic_device_sim
-    R.drawable.quantum_ic_call_merge_vd_theme_24 -> R.drawable.ic_arrow_merge
-    R.drawable.quantum_ic_dialpad_vd_theme_24 -> R.drawable.ic_dialpad
-    R.drawable.quantum_ic_forward_vd_theme_24 -> R.drawable.ic_arrow_forward_up
-    R.drawable.quantum_ic_group_vd_theme_24 -> R.drawable.ic_users
-    R.drawable.quantum_ic_headset_vd_theme_24 -> R.drawable.ic_headphones
-    R.drawable.quantum_ic_mic_off_vd_theme_24 -> R.drawable.ic_microphone_off
-    R.drawable.quantum_ic_pause_vd_theme_24 -> R.drawable.ic_player_pause
-    R.drawable.quantum_ic_phone_bluetooth_vd_theme_24 -> R.drawable.ic_bluetooth
-    R.drawable.quantum_ic_phone_in_talk_vd_theme_24 -> R.drawable.ic_phone
-    R.drawable.quantum_ic_record_white_36 -> R.drawable.ic_player_record
-    R.drawable.quantum_ic_rtt_vd_theme_24 -> R.drawable.ic_message
-    R.drawable.quantum_ic_swap_calls_vd_theme_24 -> R.drawable.ic_arrows_exchange
-    R.drawable.quantum_ic_videocam_vd_theme_24 -> R.drawable.ic_video
-    R.drawable.quantum_ic_volume_up_vd_theme_24 -> R.drawable.ic_volume
-    0 -> R.drawable.ic_phone
-    else -> iconRes
-}
+internal fun pvotIconFor(@DrawableRes iconRes: Int): Int =
+    when (iconRes) {
+        R.drawable.ic_addcall_white -> R.drawable.ic_user_plus
+        R.drawable.ic_sim_change_white -> R.drawable.ic_device_sim
+        R.drawable.quantum_ic_call_merge_vd_theme_24 -> R.drawable.ic_arrow_merge
+        R.drawable.quantum_ic_dialpad_vd_theme_24 -> R.drawable.ic_dialpad
+        R.drawable.quantum_ic_forward_vd_theme_24 -> R.drawable.ic_arrow_forward_up
+        R.drawable.quantum_ic_group_vd_theme_24 -> R.drawable.ic_users
+        R.drawable.quantum_ic_headset_vd_theme_24 -> R.drawable.ic_headphones
+        R.drawable.quantum_ic_mic_off_vd_theme_24 -> R.drawable.ic_microphone_off
+        R.drawable.quantum_ic_pause_vd_theme_24 -> R.drawable.ic_player_pause
+        R.drawable.quantum_ic_phone_bluetooth_vd_theme_24 -> R.drawable.ic_bluetooth
+        R.drawable.quantum_ic_phone_in_talk_vd_theme_24 -> R.drawable.ic_phone
+        R.drawable.quantum_ic_record_white_36 -> R.drawable.ic_player_record
+        R.drawable.quantum_ic_rtt_vd_theme_24 -> R.drawable.ic_message
+        R.drawable.quantum_ic_swap_calls_vd_theme_24 -> R.drawable.ic_arrows_exchange
+        R.drawable.quantum_ic_videocam_vd_theme_24 -> R.drawable.ic_video
+        R.drawable.quantum_ic_volume_up_vd_theme_24 -> R.drawable.ic_volume
+        0 -> R.drawable.ic_phone
+        else -> iconRes
+    }
 
 /** The panel's buttons, large enough for a hurried tap during a call. */
 private val ControlSize = 64.dp
@@ -436,4 +501,3 @@ private val EndCallWidth = 144.dp
 internal val EndCallBottomGap = PvotSpacing.L + PvotSpacing.S
 
 private const val DisabledLabelAlpha = 0.38f
-

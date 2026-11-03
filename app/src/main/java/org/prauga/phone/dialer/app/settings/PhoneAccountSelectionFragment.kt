@@ -34,7 +34,11 @@ import org.prauga.phone.dialer.ui.TestTags
 class PhoneAccountSelectionFragment : SettingsComposeFragment() {
 
     /** A SIM account as the list shows it. */
-    internal data class SimAccount(val handle: PhoneAccountHandle, val label: String, val description: String?)
+    internal data class SimAccount(
+        val handle: PhoneAccountHandle,
+        val label: String,
+        val description: String?,
+    )
 
     private var accounts by mutableStateOf(emptyList<SimAccount>())
 
@@ -62,12 +66,16 @@ class PhoneAccountSelectionFragment : SettingsComposeFragment() {
     private fun open(handle: PhoneAccountHandle) {
         val args = requireArguments()
         val target = args.getString(PARAM_TARGET_FRAGMENT) ?: return
-        val targetArguments = Bundle(args.getBundle(PARAM_ARGUMENTS) ?: Bundle()).apply {
-            putParcelable(args.getString(PARAM_PHONE_ACCOUNT_HANDLE_KEY), handle)
-        }
+        val targetArguments =
+            Bundle(args.getBundle(PARAM_ARGUMENTS) ?: Bundle()).apply {
+                putParcelable(args.getString(PARAM_PHONE_ACCOUNT_HANDLE_KEY), handle)
+            }
         val titleRes = args.getInt(PARAM_TARGET_TITLE_RES, 0)
-        (requireActivity() as DialerSettingsActivity)
-            .openScreen(target, targetArguments, if (titleRes != 0) getString(titleRes) else null)
+        (requireActivity() as DialerSettingsActivity).openScreen(
+            target,
+            targetArguments,
+            if (titleRes != 0) getString(titleRes) else null,
+        )
     }
 
     companion object {
@@ -101,7 +109,10 @@ internal fun PhoneAccountList(
                                 title = account.label,
                                 summary = account.description,
                                 onClick = { onOpen(account.handle) },
-                                modifier = Modifier.testTag(TestTags.settingsRow("account_${account.handle.id}")),
+                                modifier =
+                                    Modifier.testTag(
+                                        TestTags.settingsRow("account_${account.handle.id}")
+                                    ),
                                 icon = settingsIcon(R.drawable.ic_device_sim),
                                 iconStyle = PvotRowIconStyle.Plain,
                             )

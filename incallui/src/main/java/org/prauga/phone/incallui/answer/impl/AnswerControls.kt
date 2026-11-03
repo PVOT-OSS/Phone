@@ -47,17 +47,25 @@ import androidx.compose.ui.unit.dp
 import com.prauga.pvot.designsystem.components.button.PvotIconButton
 import com.prauga.pvot.designsystem.components.call.PvotCallAction
 import com.prauga.pvot.designsystem.components.call.PvotCallActionButton
-import com.prauga.pvot.designsystem.components.call.PvotCallActionButtonDefaults
 import com.prauga.pvot.designsystem.motion.PvotMotion
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.ui.appearance.AppearanceSettings
 import org.prauga.phone.incallui.R
 
-/** Where a side action sits in the row above the pickup pills; a hidden one leaves its place empty. */
-enum class AnswerSideSlot { Message, AnswerAsAudio, AnswerAndRelease }
+/**
+ * Where a side action sits in the row above the pickup pills; a hidden one leaves its place empty.
+ */
+enum class AnswerSideSlot {
+    Message,
+    AnswerAsAudio,
+    AnswerAndRelease,
+}
 
-/** A button above the pickup pills: decline with a message, answer as audio, or answer and end the other call. */
+/**
+ * A button above the pickup pills: decline with a message, answer as audio, or answer and end the
+ * other call.
+ */
 data class AnswerSideAction(
     @DrawableRes val icon: Int,
     /** The short label under the button. */
@@ -71,8 +79,7 @@ data class AnswerSideAction(
 
 /** What the answer controls show; the answer fragment sets it. */
 class AnswerUiState {
-    @get:DrawableRes
-    var answerIcon by mutableIntStateOf(R.drawable.ic_call_filled)
+    @get:DrawableRes var answerIcon by mutableIntStateOf(R.drawable.ic_call_filled)
 
     /** What answering will end, said to the user; null when it ends nothing. */
     var incomingWillDisconnectText by mutableStateOf<CharSequence?>(null)
@@ -84,21 +91,23 @@ class AnswerUiState {
 }
 
 /**
- * What the answer controls do; the answer fragment implements it. Each returns whether it
- * settled the call, so the controls can take further taps again when one did not.
+ * What the answer controls do; the answer fragment implements it. Each returns whether it settled
+ * the call, so the controls can take further taps again when one did not.
  */
 interface AnswerActions {
     fun onAnswer(): Boolean
+
     fun onReject(): Boolean
 
     /** Decline with a message, or answer a video call as audio. */
     fun onSecondary(): Boolean
+
     fun onAnswerAndRelease(): Boolean
 }
 
 /**
- * The bottom of the incoming call screen: the side actions in a row, each in its own place, and
- * the Decline and Answer pills under them, side by side. Once a tap settles the call the controls
+ * The bottom of the incoming call screen: the side actions in a row, each in its own place, and the
+ * Decline and Answer pills under them, side by side. Once a tap settles the call the controls
  * ignore further taps, including TalkBack's.
  */
 @Composable
@@ -110,10 +119,11 @@ fun AnswerControls(state: AnswerUiState, actions: AnswerActions, modifier: Modif
         // Taps work again when the action did not take the call, such as a reply sheet dismissed.
         if (!action()) done = false
     }
-    val sideActions = listOfNotNull(
-        state.secondary.takeIf { state.secondaryVisible },
-        state.answerAndRelease.takeIf { state.answerAndReleaseVisible },
-    )
+    val sideActions =
+        listOfNotNull(
+            state.secondary.takeIf { state.secondaryVisible },
+            state.answerAndRelease.takeIf { state.answerAndReleaseVisible },
+        )
     Column(
         modifier.fillMaxWidth().padding(horizontal = PvotSpacing.L),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -158,7 +168,10 @@ fun AnswerControls(state: AnswerUiState, actions: AnswerActions, modifier: Modif
     }
 }
 
-/** A Decline or Answer pill, half the row wide; the Answer one breathes until a tap settles the call. */
+/**
+ * A Decline or Answer pill, half the row wide; the Answer one breathes until a tap settles the
+ * call.
+ */
 @Composable
 private fun RowScope.PickupPill(
     action: PvotCallAction,
@@ -169,7 +182,12 @@ private fun RowScope.PickupPill(
     pulse: Boolean = false,
 ) {
     val scale = if (pulse) pulseScale() else 1f
-    BoxWithConstraints(Modifier.weight(1f).graphicsLayer { scaleX = scale; scaleY = scale }) {
+    BoxWithConstraints(
+        Modifier.weight(1f).graphicsLayer {
+            scaleX = scale
+            scaleY = scale
+        }
+    ) {
         PvotCallActionButton(
             action = action,
             icon = painterResource(icon),
@@ -187,18 +205,24 @@ private fun RowScope.PickupPill(
 private fun pulseScale(): Float {
     val appearance by AppearanceSettings.rememberAppearance()
     if (appearance.animationsOff) return 1f
-    val scale by rememberInfiniteTransition(label = "answerPulse").animateFloat(
-        initialValue = 1f,
-        targetValue = PulseScale,
-        animationSpec = infiniteRepeatable(tween(PulseMillis, easing = PvotMotion.Settle), RepeatMode.Reverse),
-        label = "pulse",
-    )
+    val scale by
+        rememberInfiniteTransition(label = "answerPulse")
+            .animateFloat(
+                initialValue = 1f,
+                targetValue = PulseScale,
+                animationSpec =
+                    infiniteRepeatable(
+                        tween(PulseMillis, easing = PvotMotion.Settle),
+                        RepeatMode.Reverse,
+                    ),
+                label = "pulse",
+            )
     return scale
 }
 
 /**
- * A place for a side action: its button with the label under, or, with no [action], the same
- * room left empty so the pills stay where they are whatever the call offers.
+ * A place for a side action: its button with the label under, or, with no [action], the same room
+ * left empty so the pills stay where they are whatever the call offers.
  */
 @Composable
 private fun SidePlace(action: AnswerSideAction?, onClick: () -> Unit) {
@@ -211,9 +235,18 @@ private fun SidePlace(action: AnswerSideAction?, onClick: () -> Unit) {
                     contentDescription = stringResource(action.description),
                     onClick = onClick,
                     size = SideSize,
-                    modifier = Modifier
-                        .semantics { onClick(accessibilityLabel) { onClick(); true } }
-                        .testTag(if (action.slot == AnswerSideSlot.AnswerAndRelease) TestTags.ANSWER_AND_RELEASE else TestTags.ANSWER_SECONDARY),
+                    modifier =
+                        Modifier.semantics {
+                                onClick(accessibilityLabel) {
+                                    onClick()
+                                    true
+                                }
+                            }
+                            .testTag(
+                                if (action.slot == AnswerSideSlot.AnswerAndRelease)
+                                    TestTags.ANSWER_AND_RELEASE
+                                else TestTags.ANSWER_SECONDARY
+                            ),
                 )
             }
         }
@@ -222,14 +255,18 @@ private fun SidePlace(action: AnswerSideAction?, onClick: () -> Unit) {
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
-            // Two lines, taken or not, so the pills under the row stay put whatever the call offers.
+            // Two lines, taken or not, so the pills under the row stay put whatever the call
+            // offers.
             minLines = 2,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
             // The button already says this to TalkBack; an empty place says nothing.
-            modifier = Modifier
-                .padding(top = PvotSpacing.S)
-                .then(if (action == null) Modifier.alpha(0f).clearAndSetSemantics {} else Modifier.semantics { hideFromAccessibility() }),
+            modifier =
+                Modifier.padding(top = PvotSpacing.S)
+                    .then(
+                        if (action == null) Modifier.alpha(0f).clearAndSetSemantics {}
+                        else Modifier.semantics { hideFromAccessibility() }
+                    ),
         )
     }
 }

@@ -21,7 +21,9 @@ import org.prauga.phone.dialer.app.settings.ui.SettingsTheme
 import org.prauga.phone.dialer.ui.TestTags
 import org.robolectric.RobolectricTestRunner
 
-/** The settings row that makes Phone the default phone app after "Not now" on the first-run prompt. */
+/**
+ * The settings row that makes Phone the default phone app after "Not now" on the first-run prompt.
+ */
 @RunWith(RobolectricTestRunner::class)
 class DefaultPhoneAppRowTest {
 
@@ -34,7 +36,9 @@ class DefaultPhoneAppRowTest {
     fun theRowShowsAndAsksForTheRoleWhenTapped() {
         var asked = 0
         show(DefaultPhoneAppPrompt(denied = false) { asked++ })
-        compose.onNodeWithText(context.getString(R.string.settings_default_phone_app_summary)).assertIsDisplayed()
+        compose
+            .onNodeWithText(context.getString(R.string.settings_default_phone_app_summary))
+            .assertIsDisplayed()
         compose.onNodeWithTag(row).performClick()
         assertThat(asked).isEqualTo(1)
     }
@@ -42,7 +46,9 @@ class DefaultPhoneAppRowTest {
     @Test
     fun afterARefusalTheRowPointsToDefaultApps() {
         show(DefaultPhoneAppPrompt(denied = true) {})
-        compose.onNodeWithText(context.getString(R.string.settings_default_phone_app_denied)).assertIsDisplayed()
+        compose
+            .onNodeWithText(context.getString(R.string.settings_default_phone_app_denied))
+            .assertIsDisplayed()
     }
 
     @Test

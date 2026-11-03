@@ -58,8 +58,12 @@ fun PhoneScreenTheme(
         if (fillBackground) WindowBackground(MaterialTheme.colorScheme.background)
         ProvidePvotGlassIntensity(appearance.preferredIntensity) {
             Surface(
-                modifier = modifier.then(if (fillBackground) Modifier.fillMaxSize() else Modifier).semantics { testTagsAsResourceId = true },
-                color = if (fillBackground) MaterialTheme.colorScheme.background else Color.Transparent,
+                modifier =
+                    modifier
+                        .then(if (fillBackground) Modifier.fillMaxSize() else Modifier)
+                        .semantics { testTagsAsResourceId = true },
+                color =
+                    if (fillBackground) MaterialTheme.colorScheme.background else Color.Transparent,
                 contentColor = MaterialTheme.colorScheme.onBackground,
                 content = content,
             )
@@ -77,10 +81,16 @@ fun PhoneTheme(content: @Composable () -> Unit) {
     val appearance by AppearanceSettings.rememberAppearance()
     val dark = isSystemInDarkTheme()
     val context = LocalContext.current
-    val scheme = remember(context, appearance.dynamicColor, dark) {
-        PhoneColors.scheme(context, appearance.dynamicColor, dark)
-    }
-    PvotAppTheme(darkTheme = dark, dynamicColor = appearance.dynamicColor, colorScheme = scheme, content = content)
+    val scheme =
+        remember(context, appearance.dynamicColor, dark) {
+            PhoneColors.scheme(context, appearance.dynamicColor, dark)
+        }
+    PvotAppTheme(
+        darkTheme = dark,
+        dynamicColor = appearance.dynamicColor,
+        colorScheme = scheme,
+        content = content,
+    )
 }
 
 /**
@@ -93,28 +103,32 @@ object PhoneColors {
      * The scheme for [dark]: the wallpaper's when [dynamicColor] is on, else the Pvot palette with
      * Phone's accent.
      */
-    fun scheme(context: Context, dynamicColor: Boolean, dark: Boolean): ColorScheme = when {
-        dynamicColor && dark -> dynamicDarkColorScheme(context)
-        dynamicColor -> dynamicLightColorScheme(context)
-        dark -> PvotDarkColorScheme.withSecondaryAccent()
-        else -> PvotLightColorScheme.withSecondaryAccent()
-    }
+    fun scheme(context: Context, dynamicColor: Boolean, dark: Boolean): ColorScheme =
+        when {
+            dynamicColor && dark -> dynamicDarkColorScheme(context)
+            dynamicColor -> dynamicLightColorScheme(context)
+            dark -> PvotDarkColorScheme.withSecondaryAccent()
+            else -> PvotLightColorScheme.withSecondaryAccent()
+        }
 
     /** The current scheme, as the user chose it and for the context's light or dark mode. */
     @JvmStatic
     fun scheme(context: Context): ColorScheme {
         val night = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        return scheme(context, AppearanceSettings.isDynamicColor(context), night == Configuration.UI_MODE_NIGHT_YES)
+        return scheme(
+            context,
+            AppearanceSettings.isDynamicColor(context),
+            night == Configuration.UI_MODE_NIGHT_YES,
+        )
     }
 
     /** The current scheme's background, as a color int. */
-    @JvmStatic
-    fun background(context: Context): Int = scheme(context).background.toArgb()
+    @JvmStatic fun background(context: Context): Int = scheme(context).background.toArgb()
 }
 
 /**
- * Paints the activity's window in [color] when this composition fills that window. Skips dialogs and
- * see-through windows, which show what is behind them.
+ * Paints the activity's window in [color] when this composition fills that window. Skips dialogs
+ * and see-through windows, which show what is behind them.
  */
 @Composable
 private fun WindowBackground(color: Color) {
@@ -123,7 +137,11 @@ private fun WindowBackground(color: Color) {
     DisposableEffect(view, color) {
         if (!view.isInEditMode) {
             val activity = view.context.findActivity()
-            if (activity != null && activity.window.decorView == view.rootView && !activity.isTranslucent()) {
+            if (
+                activity != null &&
+                    activity.window.decorView == view.rootView &&
+                    !activity.isTranslucent()
+            ) {
                 activity.window.setBackgroundDrawable(ColorDrawable(color.toArgb()))
             }
         }
@@ -131,11 +149,12 @@ private fun WindowBackground(color: Color) {
     }
 }
 
-private tailrec fun Context.findActivity(): Activity? = when (this) {
-    is Activity -> this
-    is ContextWrapper -> baseContext.findActivity()
-    else -> null
-}
+private tailrec fun Context.findActivity(): Activity? =
+    when (this) {
+        is Activity -> this
+        is ContextWrapper -> baseContext.findActivity()
+        else -> null
+    }
 
 private fun Activity.isTranslucent(): Boolean {
     val attrs = theme.obtainStyledAttributes(intArrayOf(android.R.attr.windowIsTranslucent))
@@ -147,10 +166,11 @@ private fun Activity.isTranslucent(): Boolean {
 }
 
 /** This scheme with its secondary roles copied into the primary ones. */
-internal fun ColorScheme.withSecondaryAccent(): ColorScheme = copy(
-    primary = secondary,
-    onPrimary = onSecondary,
-    primaryContainer = secondaryContainer,
-    onPrimaryContainer = onSecondaryContainer,
-    surfaceTint = secondary,
-)
+internal fun ColorScheme.withSecondaryAccent(): ColorScheme =
+    copy(
+        primary = secondary,
+        onPrimary = onSecondary,
+        primaryContainer = secondaryContainer,
+        onPrimaryContainer = onSecondaryContainer,
+        surfaceTint = secondary,
+    )

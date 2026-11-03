@@ -5,6 +5,10 @@
 
 package org.prauga.phone.dialer.main.impl.toolbar
 
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.FrameLayout
+import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsNotFocused
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
@@ -14,12 +18,9 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.FrameLayout
-import androidx.activity.ComponentActivity
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.google.common.truth.Truth.assertThat
+import java.util.Optional
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,7 +29,6 @@ import org.prauga.phone.dialer.ui.TestTags
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
-import java.util.Optional
 
 /** The main toolbar's search bar, search field and options menu. */
 @RunWith(RobolectricTestRunner::class)
@@ -40,31 +40,52 @@ class MainToolbarTest {
 
     private val events = mutableListOf<String>()
     private var voiceCallback: SearchBarListener.VoiceSearchResultCallback? = null
-    private val listener = object : SearchBarListener {
-        override fun onSearchBarClicked() { events += "bar" }
-        override fun onSearchQueryUpdated(query: String) { events += "query $query" }
-        override fun onSearchBackButtonClicked() { events += "back" }
-        override fun onVoiceButtonClicked(callback: SearchBarListener.VoiceSearchResultCallback) {
-            events += "voice"
-            voiceCallback = callback
+    private val listener =
+        object : SearchBarListener {
+            override fun onSearchBarClicked() {
+                events += "bar"
+            }
+
+            override fun onSearchQueryUpdated(query: String) {
+                events += "query $query"
+            }
+
+            override fun onSearchBackButtonClicked() {
+                events += "back"
+            }
+
+            override fun onVoiceButtonClicked(
+                callback: SearchBarListener.VoiceSearchResultCallback
+            ) {
+                events += "voice"
+                voiceCallback = callback
+            }
+
+            override fun onMenuItemClicked(item: MainMenuItem) {
+                events += "menu $item"
+            }
+
+            override fun onActivityPause() = Unit
+
+            override fun onUserLeaveHint() = Unit
+
+            override fun onCallPlacedFromSearch() = Unit
+
+            override fun requestingPermission() = Unit
         }
-        override fun onMenuItemClicked(item: MainMenuItem) { events += "menu $item" }
-        override fun onActivityPause() = Unit
-        override fun onUserLeaveHint() = Unit
-        override fun onCallPlacedFromSearch() = Unit
-        override fun requestingPermission() = Unit
-    }
 
     private lateinit var toolbar: MainToolbar
 
     private fun show() {
         compose.runOnUiThread {
             toolbar = MainToolbar(compose.activity).also { it.setSearchBarListener(listener) }
-            // Laid out as the main screen lays it out: full width, its own height, on a dark window.
-            val window = FrameLayout(compose.activity).apply {
-                setBackgroundColor(compose.activity.getColor(android.R.color.background_dark))
-                addView(toolbar, FrameLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT))
-            }
+            // Laid out as the main screen lays it out: full width, its own height, on a dark
+            // window.
+            val window =
+                FrameLayout(compose.activity).apply {
+                    setBackgroundColor(compose.activity.getColor(android.R.color.background_dark))
+                    addView(toolbar, FrameLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT))
+                }
             compose.activity.setContentView(window)
         }
         compose.waitForIdle()

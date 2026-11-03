@@ -28,13 +28,15 @@ object DisplayOptions {
     @JvmStatic
     fun applyTheme(context: Context, value: String?) {
         AppCompatDelegate.setDefaultNightMode(nightModeOf(value))
-        context.getSystemService(UiModeManager::class.java)?.setApplicationNightMode(
-            when (value) {
-                THEME_LIGHT -> UiModeManager.MODE_NIGHT_NO
-                THEME_DARK -> UiModeManager.MODE_NIGHT_YES
-                else -> UiModeManager.MODE_NIGHT_AUTO
-            },
-        )
+        context
+            .getSystemService(UiModeManager::class.java)
+            ?.setApplicationNightMode(
+                when (value) {
+                    THEME_LIGHT -> UiModeManager.MODE_NIGHT_NO
+                    THEME_DARK -> UiModeManager.MODE_NIGHT_YES
+                    else -> UiModeManager.MODE_NIGHT_AUTO
+                }
+            )
     }
 
     /** The AppCompat night mode for a theme preference value. */

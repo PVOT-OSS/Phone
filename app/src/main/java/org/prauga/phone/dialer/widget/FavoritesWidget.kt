@@ -62,44 +62,69 @@ object FavoritesWidgetData {
     private const val PHOTO_PX = 144
 
     /** The starred contacts, in their pinned order, as tiles. */
-    suspend fun load(context: Context): List<FavoriteTile> = withContext(Dispatchers.IO) {
-        val items = runCatching {
-            UiItemLoaderComponent.get(context).speedDialUiItemMutator().loadSpeedDialUiItems().await()
-        }.getOrElse {
-            LogUtil.e("FavoritesWidgetData.load", "could not load favorites", it)
-            emptyList()
+    suspend fun load(context: Context): List<FavoriteTile> =
+        withContext(Dispatchers.IO) {
+            val items =
+                runCatching {
+                        UiItemLoaderComponent.get(context)
+                            .speedDialUiItemMutator()
+                            .loadSpeedDialUiItems()
+                            .await()
+                    }
+                    .getOrElse {
+                        LogUtil.e("FavoritesWidgetData.load", "could not load favorites", it)
+                        emptyList()
+                    }
+            tiles(context, items)
         }
-        tiles(context, items)
-    }
 
     /** The tiles for [items]: the starred ones in order, each with a photo or a letter tile. */
-    fun tiles(context: Context, items: List<SpeedDialUiItem>): List<FavoriteTile> = items
-        .filter { it.isStarred }
-        .sortedBy { it.pinnedPosition().orElse(Int.MAX_VALUE) }
-        .take(MAX_TILES)
-        .map { item ->
-            val lookupUri = Contacts.getLookupUri(item.contactId(), item.lookupKey())
-            FavoriteTile(
-                name = item.name(),
-                photo = photo(context, item.photoUri(), item.name(), item.lookupKey()),
-                intent = Intent(CALL_CONTACT_ACTION).setClassName(context, CALL_CONTACT_ACTIVITY).setData(lookupUri),
-            )
-        }
+    fun tiles(context: Context, items: List<SpeedDialUiItem>): List<FavoriteTile> =
+        items
+            .filter { it.isStarred }
+            .sortedBy { it.pinnedPosition().orElse(Int.MAX_VALUE) }
+            .take(MAX_TILES)
+            .map { item ->
+                val lookupUri = Contacts.getLookupUri(item.contactId(), item.lookupKey())
+                FavoriteTile(
+                    name = item.name(),
+                    photo = photo(context, item.photoUri(), item.name(), item.lookupKey()),
+                    intent =
+                        Intent(CALL_CONTACT_ACTION)
+                            .setClassName(context, CALL_CONTACT_ACTIVITY)
+                            .setData(lookupUri),
+                )
+            }
 
-    private fun photo(context: Context, photoUri: String?, name: String, lookupKey: String): Bitmap {
-        val fromUri = photoUri?.let { uri ->
-            runCatching {
-                context.contentResolver.openInputStream(uri.toUri())?.use(BitmapFactory::decodeStream)
-            }.getOrNull()
-        }
+    private fun photo(
+        context: Context,
+        photoUri: String?,
+        name: String,
+        lookupKey: String,
+    ): Bitmap {
+        val fromUri =
+            photoUri?.let { uri ->
+                runCatching {
+                        context.contentResolver
+                            .openInputStream(uri.toUri())
+                            ?.use(BitmapFactory::decodeStream)
+                    }
+                    .getOrNull()
+            }
         if (fromUri != null) return fromUri
         return LetterTileDrawable(context.resources)
-            .setCanonicalDialerLetterTileDetails(name, lookupKey, LetterTileDrawable.SHAPE_CIRCLE, LetterTileDrawable.TYPE_DEFAULT)
+            .setCanonicalDialerLetterTileDetails(
+                name,
+                lookupKey,
+                LetterTileDrawable.SHAPE_CIRCLE,
+                LetterTileDrawable.TYPE_DEFAULT,
+            )
             .getBitmap(PHOTO_PX, PHOTO_PX)
     }
 
     private const val CALL_CONTACT_ACTION = "org.prauga.phone.dialer.shortcuts.CALL_CONTACT"
-    private const val CALL_CONTACT_ACTIVITY = "org.prauga.phone.dialer.shortcuts.CallContactActivity"
+    private const val CALL_CONTACT_ACTIVITY =
+        "org.prauga.phone.dialer.shortcuts.CallContactActivity"
 }
 
 /** The favorites on the home screen: a row of photos that call with a tap. */
@@ -113,22 +138,32 @@ class FavoritesWidget : GlanceAppWidget() {
     @Composable
     private fun Content(tiles: List<FavoriteTile>) {
         Column(
-            modifier = GlanceModifier
-                .fillMaxSize()
-                .background(GlanceTheme.colors.widgetBackground)
-                .cornerRadius(24.dp)
-                .padding(12.dp),
+            modifier =
+                GlanceModifier.fillMaxSize()
+                    .background(GlanceTheme.colors.widgetBackground)
+                    .cornerRadius(24.dp)
+                    .padding(12.dp)
         ) {
             Text(
                 text = LocalContextCompat.string(R.string.quick_dial_header),
-                style = TextStyle(color = GlanceTheme.colors.onSurface, fontSize = 14.sp, fontWeight = FontWeight.Medium),
+                style =
+                    TextStyle(
+                        color = GlanceTheme.colors.onSurface,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Medium,
+                    ),
                 modifier = GlanceModifier.padding(start = 4.dp, bottom = 8.dp),
             )
             if (tiles.isEmpty()) {
                 Box(GlanceModifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Text(
                         text = LocalContextCompat.string(R.string.favorites_widget_empty),
-                        style = TextStyle(color = GlanceTheme.colors.onSurfaceVariant, fontSize = 13.sp, textAlign = TextAlign.Center),
+                        style =
+                            TextStyle(
+                                color = GlanceTheme.colors.onSurfaceVariant,
+                                fontSize = 13.sp,
+                                textAlign = TextAlign.Center,
+                            ),
                     )
                 }
             } else {
@@ -154,7 +189,12 @@ class FavoritesWidget : GlanceAppWidget() {
             )
             Text(
                 text = tile.name.substringBefore(' '),
-                style = TextStyle(color = GlanceTheme.colors.onSurface, fontSize = 12.sp, textAlign = TextAlign.Center),
+                style =
+                    TextStyle(
+                        color = GlanceTheme.colors.onSurface,
+                        fontSize = 12.sp,
+                        textAlign = TextAlign.Center,
+                    ),
                 maxLines = 1,
                 modifier = GlanceModifier.padding(top = 4.dp),
             )
@@ -168,7 +208,9 @@ class FavoritesWidget : GlanceAppWidget() {
         /** Redraws every placed widget; call after the favorites change. */
         suspend fun update(context: Context) {
             runCatching { FavoritesWidget().updateAll(context) }
-                .onFailure { LogUtil.e("FavoritesWidget.update", "could not update the widget", it) }
+                .onFailure {
+                    LogUtil.e("FavoritesWidget.update", "could not update the widget", it)
+                }
         }
     }
 }
@@ -180,6 +222,5 @@ class FavoritesWidgetReceiver : GlanceAppWidgetReceiver() {
 
 /** Reads a string without a Compose resource API, which Glance does not have. */
 private object LocalContextCompat {
-    @Composable
-    fun string(id: Int): String = androidx.glance.LocalContext.current.getString(id)
+    @Composable fun string(id: Int): String = androidx.glance.LocalContext.current.getString(id)
 }

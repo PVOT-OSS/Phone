@@ -42,15 +42,24 @@ class VoicemailSettingsStateTest {
 
     @Test
     fun activatedShowsArchiveWhenAvailable() {
-        val state = read(carrierSupport = true, enabled = true, activated = true, archiveAvailable = true)
+        val state =
+            read(carrierSupport = true, enabled = true, activated = true, archiveAvailable = true)
         assertThat(state.activating).isFalse()
         assertThat(state.archiveAvailable).isTrue()
     }
 
     @Test
     fun scrambledPinAsksToSetAPin() {
-        assertThat(read(carrierSupport = true, enabled = true, activated = true, scrambledPin = "1234").pinScrambled).isTrue()
-        assertThat(read(carrierSupport = true, enabled = true, activated = true, scrambledPin = null).pinScrambled).isFalse()
+        assertThat(
+                read(carrierSupport = true, enabled = true, activated = true, scrambledPin = "1234")
+                    .pinScrambled
+            )
+            .isTrue()
+        assertThat(
+                read(carrierSupport = true, enabled = true, activated = true, scrambledPin = null)
+                    .pinScrambled
+            )
+            .isFalse()
     }
 
     private fun read(
@@ -60,18 +69,20 @@ class VoicemailSettingsStateTest {
         archiveAvailable: Boolean = false,
         scrambledPin: String? = null,
     ): VoicemailSettingsState {
-        val pinChanger = proxy<PinChanger> { name -> if (name == "getScrambledPin") scrambledPin else null }
-        val client = proxy<VoicemailClient> { name ->
-            when (name) {
-                "hasCarrierSupport" -> carrierSupport
-                "isVoicemailEnabled" -> enabled
-                "isActivated" -> activated
-                "isVoicemailArchiveAvailable" -> archiveAvailable
-                "isVoicemailArchiveEnabled" -> false
-                "createPinChanger" -> pinChanger
-                else -> error("unexpected call $name")
+        val pinChanger =
+            proxy<PinChanger> { name -> if (name == "getScrambledPin") scrambledPin else null }
+        val client =
+            proxy<VoicemailClient> { name ->
+                when (name) {
+                    "hasCarrierSupport" -> carrierSupport
+                    "isVoicemailEnabled" -> enabled
+                    "isActivated" -> activated
+                    "isVoicemailArchiveAvailable" -> archiveAvailable
+                    "isVoicemailArchiveEnabled" -> false
+                    "createPinChanger" -> pinChanger
+                    else -> error("unexpected call $name")
+                }
             }
-        }
         return VoicemailSettingsState.read(context, client, handle)
     }
 

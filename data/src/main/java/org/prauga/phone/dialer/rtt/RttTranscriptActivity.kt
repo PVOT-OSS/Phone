@@ -26,7 +26,6 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.core.net.toUri
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import com.prauga.pvot.designsystem.components.PvotScreen
 import com.prauga.pvot.designsystem.components.list.PvotAvatarDefaults
@@ -69,9 +69,7 @@ class RttTranscriptActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enablePvotEdgeToEdge()
         setPvotContent {
-            PhoneScreenTheme {
-                RttTranscriptScreen(title, photoInfo, messages, onBack = ::finish)
-            }
+            PhoneScreenTheme { RttTranscriptScreen(title, photoInfo, messages, onBack = ::finish) }
         }
         handleIntent(intent)
     }
@@ -86,10 +84,12 @@ class RttTranscriptActivity : ComponentActivity() {
         Assert.checkArgument(intent.hasExtra(EXTRA_PRIMARY_TEXT))
         Assert.checkArgument(intent.hasExtra(EXTRA_PHOTO_INFO))
         title = intent.getStringExtra(EXTRA_PRIMARY_TEXT).orEmpty()
-        photoInfo = ProtoParsers.getTrusted(intent, EXTRA_PHOTO_INFO, PhotoInfo.getDefaultInstance())
+        photoInfo =
+            ProtoParsers.getTrusted(intent, EXTRA_PHOTO_INFO, PhotoInfo.getDefaultInstance())
         val id = intent.getStringExtra(EXTRA_TRANSCRIPT_ID)
         lifecycleScope.launch {
-            val transcript = RttTranscriptUtil.loadRttTranscript(this@RttTranscriptActivity, id).await()
+            val transcript =
+                RttTranscriptUtil.loadRttTranscript(this@RttTranscriptActivity, id).await()
             if (transcript == null) {
                 LogUtil.w("RttTranscriptActivity.handleIntent", "null RttTranscript")
             } else {
@@ -104,7 +104,12 @@ class RttTranscriptActivity : ComponentActivity() {
         const val EXTRA_PHOTO_INFO = "extra_photo_info"
 
         @JvmStatic
-        fun getIntent(context: Context, transcriptId: String, primaryText: String, photoInfo: PhotoInfo): Intent =
+        fun getIntent(
+            context: Context,
+            transcriptId: String,
+            primaryText: String,
+            photoInfo: PhotoInfo,
+        ): Intent =
             Intent(context, RttTranscriptActivity::class.java)
                 .putExtra(EXTRA_TRANSCRIPT_ID, transcriptId)
                 .putExtra(EXTRA_PRIMARY_TEXT, primaryText)
@@ -113,8 +118,8 @@ class RttTranscriptActivity : ComponentActivity() {
 }
 
 /**
- * The first message whose timestamp shows the full date: the end of the first run of messages
- * from one side. Later timestamps show the time only.
+ * The first message whose timestamp shows the full date: the end of the first run of messages from
+ * one side. Later timestamps show the time only.
  */
 internal fun firstPositionToShowTimestamp(messages: List<RttTranscriptMessage>): Int {
     var i = 0
@@ -122,33 +127,60 @@ internal fun firstPositionToShowTimestamp(messages: List<RttTranscriptMessage>):
     return i
 }
 
-/** An RTT conversation: the other side's bubbles on the start side with their photo, ours on the end. */
+/**
+ * An RTT conversation: the other side's bubbles on the start side with their photo, ours on the
+ * end.
+ */
 @Composable
-fun RttTranscriptScreen(title: String, photoInfo: PhotoInfo, messages: List<RttTranscriptMessage>, onBack: () -> Unit) {
+fun RttTranscriptScreen(
+    title: String,
+    photoInfo: PhotoInfo,
+    messages: List<RttTranscriptMessage>,
+    onBack: () -> Unit,
+) {
     val context = LocalContext.current
     val fullDateAt = firstPositionToShowTimestamp(messages)
     val listState = rememberLazyListState()
     PhoneScaffold(
-        topBar = { PvotTopBar(title = title, onBack = onBack, compact = rememberPvotTopBarCompact(listState)) },
+        topBar = {
+            PvotTopBar(
+                title = title,
+                onBack = onBack,
+                compact = rememberPvotTopBarCompact(listState),
+            )
+        }
     ) { padding ->
         PvotScreen(
             modifier = Modifier.fillMaxSize().testTag(TestTags.RTT_TRANSCRIPT),
             state = listState,
-            contentPadding = PaddingValues(start = PvotSpacing.L, end = PvotSpacing.L, top = padding.calculateTopPadding()),
+            contentPadding =
+                PaddingValues(
+                    start = PvotSpacing.L,
+                    end = PvotSpacing.L,
+                    top = padding.calculateTopPadding(),
+                ),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start,
         ) {
             itemsIndexed(messages) { i, message ->
                 val sameGroup = i > 0 && messages[i - 1].isRemote == message.isRemote
-                val moreInGroup = i + 1 < messages.size && messages[i + 1].isRemote == message.isRemote
+                val moreInGroup =
+                    i + 1 < messages.size && messages[i + 1].isRemote == message.isRemote
                 TranscriptMessage(
                     message = message,
                     photoInfo = photoInfo,
                     sameGroup = sameGroup,
-                    timestamp = if (moreInGroup) null else timestampText(context, message.timestamp, i == fullDateAt),
+                    timestamp =
+                        if (moreInGroup) null
+                        else timestampText(context, message.timestamp, i == fullDateAt),
                 )
             }
-            item { Spacer(Modifier.windowInsetsPadding(WindowInsets.navigationBars).padding(bottom = PvotSpacing.L)) }
+            item {
+                Spacer(
+                    Modifier.windowInsetsPadding(WindowInsets.navigationBars)
+                        .padding(bottom = PvotSpacing.L)
+                )
+            }
         }
     }
 }
@@ -157,17 +189,28 @@ private fun timestampText(context: Context, timestamp: Long, fullDate: Boolean):
     DateUtils.formatDateTime(
         context,
         timestamp,
-        if (fullDate) DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME else DateUtils.FORMAT_SHOW_TIME,
+        if (fullDate) DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME
+        else DateUtils.FORMAT_SHOW_TIME,
     )
 
 @Composable
-private fun TranscriptMessage(message: RttTranscriptMessage, photoInfo: PhotoInfo, sameGroup: Boolean, timestamp: String?) {
+private fun TranscriptMessage(
+    message: RttTranscriptMessage,
+    photoInfo: PhotoInfo,
+    sameGroup: Boolean,
+    timestamp: String?,
+) {
     val remote = message.isRemote
     Column(
-        modifier = Modifier.fillMaxWidth().padding(top = if (sameGroup) PvotSpacing.XS / 2 else PvotSpacing.M),
+        modifier =
+            Modifier.fillMaxWidth()
+                .padding(top = if (sameGroup) PvotSpacing.XS / 2 else PvotSpacing.M),
         horizontalAlignment = if (remote) Alignment.Start else Alignment.End,
     ) {
-        Row(verticalAlignment = Alignment.Top, horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S)) {
+        Row(
+            verticalAlignment = Alignment.Top,
+            horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S),
+        ) {
             if (remote) {
                 if (sameGroup) {
                     Spacer(Modifier.size(AvatarSize))
@@ -185,14 +228,17 @@ private fun TranscriptMessage(message: RttTranscriptMessage, photoInfo: PhotoInf
             Text(
                 text = message.content,
                 style = MaterialTheme.typography.bodyLarge,
-                color = if (remote) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onPrimaryContainer,
-                modifier = Modifier
-                    .widthIn(max = BubbleMaxWidth)
-                    .background(
-                        if (remote) MaterialTheme.colorScheme.surfaceContainerHigh else MaterialTheme.colorScheme.primaryContainer,
-                        PvotShapes.Card,
-                    )
-                    .padding(horizontal = PvotSpacing.M, vertical = PvotSpacing.S),
+                color =
+                    if (remote) MaterialTheme.colorScheme.onSurface
+                    else MaterialTheme.colorScheme.onPrimaryContainer,
+                modifier =
+                    Modifier.widthIn(max = BubbleMaxWidth)
+                        .background(
+                            if (remote) MaterialTheme.colorScheme.surfaceContainerHigh
+                            else MaterialTheme.colorScheme.primaryContainer,
+                            PvotShapes.Card,
+                        )
+                        .padding(horizontal = PvotSpacing.M, vertical = PvotSpacing.S),
             )
         }
         if (timestamp != null) {
@@ -200,10 +246,11 @@ private fun TranscriptMessage(message: RttTranscriptMessage, photoInfo: PhotoInf
                 text = timestamp,
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(
-                    top = PvotSpacing.XS,
-                    start = if (remote) AvatarSize + PvotSpacing.S else 0.dp,
-                ),
+                modifier =
+                    Modifier.padding(
+                        top = PvotSpacing.XS,
+                        start = if (remote) AvatarSize + PvotSpacing.S else 0.dp,
+                    ),
             )
         }
     }

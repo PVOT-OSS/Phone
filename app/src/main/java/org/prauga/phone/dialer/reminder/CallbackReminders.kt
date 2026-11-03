@@ -18,23 +18,36 @@ import org.json.JSONObject
 import org.prauga.phone.dialer.common.LogUtil
 
 /** A reminder to call [number] back, due at [atMillis]; [name] is who it is, when known. */
-data class CallbackReminder(val id: Int, val number: String, val name: String?, val atMillis: Long) {
+data class CallbackReminder(
+    val id: Int,
+    val number: String,
+    val name: String?,
+    val atMillis: Long,
+) {
 
-    internal fun toJson(): String = JSONObject()
-        .put(KEY_NUMBER, number)
-        .put(KEY_NAME, name ?: JSONObject.NULL)
-        .put(KEY_AT, atMillis)
-        .toString()
+    internal fun toJson(): String =
+        JSONObject()
+            .put(KEY_NUMBER, number)
+            .put(KEY_NAME, name ?: JSONObject.NULL)
+            .put(KEY_AT, atMillis)
+            .toString()
 
     internal companion object {
         private const val KEY_NUMBER = "number"
         private const val KEY_NAME = "name"
         private const val KEY_AT = "at"
 
-        fun fromJson(id: Int, json: String): CallbackReminder? = runCatching {
-            val o = JSONObject(json)
-            CallbackReminder(id, o.getString(KEY_NUMBER), o.optString(KEY_NAME).takeIf { !o.isNull(KEY_NAME) }, o.getLong(KEY_AT))
-        }.getOrNull()
+        fun fromJson(id: Int, json: String): CallbackReminder? =
+            runCatching {
+                    val o = JSONObject(json)
+                    CallbackReminder(
+                        id,
+                        o.getString(KEY_NUMBER),
+                        o.optString(KEY_NAME).takeIf { !o.isNull(KEY_NAME) },
+                        o.getLong(KEY_AT),
+                    )
+                }
+                .getOrNull()
     }
 }
 
@@ -45,7 +58,10 @@ enum class ReminderDelay {
     THIS_EVENING,
     TOMORROW_MORNING;
 
-    /** When the reminder is due, from [nowMillis] in [zone]; an evening already past means tomorrow's. */
+    /**
+     * When the reminder is due, from [nowMillis] in [zone]; an evening already past means
+     * tomorrow's.
+     */
     fun dueAt(nowMillis: Long, zone: ZoneId = ZoneId.systemDefault()): Long {
         val now = Instant.ofEpochMilli(nowMillis).atZone(zone)
         return when (this) {
@@ -53,7 +69,9 @@ enum class ReminderDelay {
             IN_AN_HOUR -> nowMillis + Duration.ofHours(1).toMillis()
             THIS_EVENING -> {
                 val evening = now.with(EVENING)
-                (if (evening.isAfter(now)) evening else evening.plusDays(1)).toInstant().toEpochMilli()
+                (if (evening.isAfter(now)) evening else evening.plusDays(1))
+                    .toInstant()
+                    .toEpochMilli()
             }
             TOMORROW_MORNING -> now.plusDays(1).with(MORNING).toInstant().toEpochMilli()
         }
@@ -72,7 +90,12 @@ object CallbackReminders {
     private const val TAG = "CallbackReminders"
 
     /** Stores a reminder for [number] due at [atMillis] and schedules it; returns it. */
-    fun schedule(context: Context, number: String, name: String?, atMillis: Long): CallbackReminder {
+    fun schedule(
+        context: Context,
+        number: String,
+        name: String?,
+        atMillis: Long,
+    ): CallbackReminder {
         val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
         val id = (prefs.all.keys.mapNotNull { it.toIntOrNull() }.maxOrNull() ?: 0) + 1
         val reminder = CallbackReminder(id, number, name, atMillis)
@@ -86,7 +109,9 @@ object CallbackReminders {
     fun reschedule(context: Context, id: Int, atMillis: Long): CallbackReminder? {
         val old = get(context, id) ?: return null
         val moved = old.copy(atMillis = atMillis)
-        context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit { putString(id.toString(), moved.toJson()) }
+        context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit {
+            putString(id.toString(), moved.toJson())
+        }
         setAlarm(context, moved)
         return moved
     }
@@ -99,14 +124,23 @@ object CallbackReminders {
 
     /** The reminder [id], if it is still waiting. */
     fun get(context: Context, id: Int): CallbackReminder? {
-        val json = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(id.toString(), null) ?: return null
+        val json =
+            context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(id.toString(), null)
+                ?: return null
         return CallbackReminder.fromJson(id, json)
     }
 
     /** Every reminder still waiting, soonest first. */
     fun pending(context: Context): List<CallbackReminder> =
-        context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).all
-            .mapNotNull { (key, value) -> CallbackReminder.fromJson(key.toIntOrNull() ?: return@mapNotNull null, value as? String ?: return@mapNotNull null) }
+        context
+            .getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+            .all
+            .mapNotNull { (key, value) ->
+                CallbackReminder.fromJson(
+                    key.toIntOrNull() ?: return@mapNotNull null,
+                    value as? String ?: return@mapNotNull null,
+                )
+            }
             .sortedBy { it.atMillis }
 
     /** Sets the alarms again, after a reboot cleared them. */
@@ -117,7 +151,8 @@ object CallbackReminders {
     private fun setAlarm(context: Context, reminder: CallbackReminder) {
         val alarms = context.getSystemService(AlarmManager::class.java)
         val intent = alarmIntent(context, reminder.id)
-        // An exact alarm when the user allows them, so "in 15 minutes" means that; a loose one otherwise.
+        // An exact alarm when the user allows them, so "in 15 minutes" means that; a loose one
+        // otherwise.
         if (alarms.canScheduleExactAlarms()) {
             alarms.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, reminder.atMillis, intent)
         } else {
@@ -125,10 +160,13 @@ object CallbackReminders {
         }
     }
 
-    private fun alarmIntent(context: Context, id: Int): PendingIntent = PendingIntent.getBroadcast(
-        context,
-        id,
-        Intent(context, CallbackReminderReceiver::class.java).setAction(CallbackReminderReceiver.ACTION_DUE).putExtra(CallbackReminderReceiver.EXTRA_ID, id),
-        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-    )
+    private fun alarmIntent(context: Context, id: Int): PendingIntent =
+        PendingIntent.getBroadcast(
+            context,
+            id,
+            Intent(context, CallbackReminderReceiver::class.java)
+                .setAction(CallbackReminderReceiver.ACTION_DUE)
+                .putExtra(CallbackReminderReceiver.EXTRA_ID, id),
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+        )
 }

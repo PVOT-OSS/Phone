@@ -33,16 +33,22 @@ class CheckableLabeledButton(private val context: Context) {
     @get:DrawableRes
     var iconRes by mutableIntStateOf(0)
         private set
+
     var label by mutableStateOf<CharSequence>("")
         private set
+
     var description by mutableStateOf<CharSequence?>(null)
         private set
+
     var checkedState by mutableStateOf(false)
         private set
+
     var enabledState by mutableStateOf(true)
         private set
+
     var visible by mutableStateOf(true)
         private set
+
     var showMoreIndicator by mutableStateOf(false)
         private set
 

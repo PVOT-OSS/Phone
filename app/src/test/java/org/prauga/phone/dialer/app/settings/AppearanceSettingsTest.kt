@@ -46,7 +46,11 @@ class AppearanceSettingsTest {
     @Before
     fun reset() {
         AppearanceSettings.prefs(context).edit().clear().commit()
-        Settings.Global.putFloat(context.contentResolver, Settings.Global.ANIMATOR_DURATION_SCALE, 1f)
+        Settings.Global.putFloat(
+            context.contentResolver,
+            Settings.Global.ANIMATOR_DURATION_SCALE,
+            1f,
+        )
     }
 
     @Test
@@ -70,14 +74,20 @@ class AppearanceSettingsTest {
     fun glassOffAsksForSolid() {
         AppearanceSettings.setIntensity(context, 1f)
         AppearanceSettings.setGlass(context, false)
-        assertThat(AppearanceSettings.current(context).preferredIntensity).isEqualTo(PvotGlassDefaults.SolidIntensity)
+        assertThat(AppearanceSettings.current(context).preferredIntensity)
+            .isEqualTo(PvotGlassDefaults.SolidIntensity)
     }
 
     @Test
     fun animationsOffAsksForSolid() {
-        Settings.Global.putFloat(context.contentResolver, Settings.Global.ANIMATOR_DURATION_SCALE, 0f)
+        Settings.Global.putFloat(
+            context.contentResolver,
+            Settings.Global.ANIMATOR_DURATION_SCALE,
+            0f,
+        )
         assertThat(AppearanceSettings.current(context).animationsOff).isTrue()
-        assertThat(AppearanceSettings.current(context).preferredIntensity).isEqualTo(PvotGlassDefaults.SolidIntensity)
+        assertThat(AppearanceSettings.current(context).preferredIntensity)
+            .isEqualTo(PvotGlassDefaults.SolidIntensity)
     }
 
     @Test
@@ -93,7 +103,8 @@ class AppearanceSettingsTest {
     fun dynamicColorIsOffToBeginWithAndStoredUnderItsKey() {
         assertThat(AppearanceSettings.current(context).dynamicColor).isFalse()
         AppearanceSettings.setDynamicColor(context, true)
-        assertThat(AppearanceSettings.prefs(context).getBoolean("appearance_dynamic_color", false)).isTrue()
+        assertThat(AppearanceSettings.prefs(context).getBoolean("appearance_dynamic_color", false))
+            .isTrue()
         assertThat(AppearanceSettings.current(context).dynamicColor).isTrue()
     }
 
@@ -111,7 +122,9 @@ class AppearanceSettingsTest {
     fun screenshotDynamicColorDark() {
         AppearanceSettings.setDynamicColor(context, true)
         show()
-        compose.onRoot().captureRoboImage("src/test/screenshots/settings/appearance_dynamic_dark.png")
+        compose
+            .onRoot()
+            .captureRoboImage("src/test/screenshots/settings/appearance_dynamic_dark.png")
     }
 
     @Test
@@ -135,7 +148,10 @@ class AppearanceSettingsTest {
                     LocalPvotGlassReduced provides false,
                     LocalPvotGlassIntensity provides PvotGlassDefaults.SolidIntensity,
                 ) {
-                    SettingsScaffold(title = context.getString(R.string.appearance_settings_label), onBack = {}) {
+                    SettingsScaffold(
+                        title = context.getString(R.string.appearance_settings_label),
+                        onBack = {},
+                    ) {
                         AppearanceSettingsList()
                     }
                 }

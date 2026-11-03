@@ -42,11 +42,20 @@ class MainNavBarTest {
 
     private val navBar = MainNavBarState().apply { selectTab(TabIndex.DIALPAD) }
     private val actions = mutableListOf<String>()
-    private val navBarActions = object : MainNavBarActions {
-        override fun onDial() { actions += "dial" }
-        override fun onSearch() { actions += "search" }
-        override fun onAddContact() { actions += "add" }
-    }
+    private val navBarActions =
+        object : MainNavBarActions {
+            override fun onDial() {
+                actions += "dial"
+            }
+
+            override fun onSearch() {
+                actions += "search"
+            }
+
+            override fun onAddContact() {
+                actions += "add"
+            }
+        }
 
     private fun setChrome() {
         compose.setContent {
@@ -158,7 +167,10 @@ class MainNavBarTest {
         navBar.setNotificationCount(TabIndex.VOICEMAIL, 120)
         setChrome()
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/main/nav_bar_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/main/nav_bar_dark.png")
     }
 
     @Test
@@ -167,7 +179,10 @@ class MainNavBarTest {
         navBar.isCompact = true
         setChrome()
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/main/nav_bar_compact_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/main/nav_bar_compact_dark.png")
     }
 
     @Test
@@ -176,6 +191,9 @@ class MainNavBarTest {
         navBar.setNotificationCount(TabIndex.CALL_LOG, 3)
         setChrome()
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/main/nav_bar_light.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/main/nav_bar_light.png")
     }
 }

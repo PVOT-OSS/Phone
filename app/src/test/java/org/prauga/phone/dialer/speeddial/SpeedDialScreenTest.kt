@@ -40,37 +40,65 @@ class SpeedDialScreenTest {
 
     private val mobile = channel("+15550101", "Mobile")
     private val work = channel("+15550102", "Work")
-    private val ada = speedDialItem(1, "Ada Lovelace", channels = listOf(mobile, work), defaultChannel = null)
+    private val ada =
+        speedDialItem(1, "Ada Lovelace", channels = listOf(mobile, work), defaultChannel = null)
     private val bea = speedDialItem(2, "Bea Arthur")
-    private val cy = speedDialItem(3, "Cy Twombly", channels = listOf(channel("+15550103", video = true)))
+    private val cy =
+        speedDialItem(3, "Cy Twombly", channels = listOf(channel("+15550103", video = true)))
     private val dev = speedDialItem(4, "Dev Patel", starred = false)
 
-    private var state by mutableStateOf<SpeedDialUiState>(SpeedDialUiState.Loaded(listOf(ada, bea, cy), listOf(dev)))
+    private var state by
+        mutableStateOf<SpeedDialUiState>(SpeedDialUiState.Loaded(listOf(ada, bea, cy), listOf(dev)))
 
     private inner class RecordingActions : SpeedDialActions {
         val events = mutableListOf<String>()
+
         override fun call(channel: Channel, fromChooser: Boolean) {
             events += "call ${channel.number()}${if (fromChooser) " chosen" else ""}"
         }
-        override fun message(number: String) { events += "message $number" }
-        override fun openContact(item: SpeedDialUiItem) { events += "contact ${item.name()}" }
-        override fun addFavorite() { events += "add" }
-        override fun star(item: SpeedDialUiItem) { events += "star ${item.name()}" }
+
+        override fun message(number: String) {
+            events += "message $number"
+        }
+
+        override fun openContact(item: SpeedDialUiItem) {
+            events += "contact ${item.name()}"
+        }
+
+        override fun addFavorite() {
+            events += "add"
+        }
+
+        override fun star(item: SpeedDialUiItem) {
+            events += "star ${item.name()}"
+        }
+
         override fun remove(item: SpeedDialUiItem) {
             events += "remove ${item.name()}"
             val loaded = state as SpeedDialUiState.Loaded
             state = loaded.copy(favorites = loaded.favorites - item)
         }
+
         override fun move(from: Int, to: Int) {
             events += "move $from $to"
             val loaded = state as SpeedDialUiState.Loaded
-            state = loaded.copy(favorites = loaded.favorites.toMutableList().apply { add(to, removeAt(from)) })
+            state =
+                loaded.copy(
+                    favorites = loaded.favorites.toMutableList().apply { add(to, removeAt(from)) }
+                )
         }
+
         override fun setDefaultChannel(item: SpeedDialUiItem, channel: Channel) {
             events += "default ${item.name()} ${channel.number()}"
         }
-        override fun turnOnPermission() { events += "permission" }
-        override fun openAppMenu() { events += "menu" }
+
+        override fun turnOnPermission() {
+            events += "permission"
+        }
+
+        override fun openAppMenu() {
+            events += "menu"
+        }
     }
 
     private val actions = RecordingActions()
@@ -93,7 +121,9 @@ class SpeedDialScreenTest {
         compose.onNodeWithText("Remember this choice").performClick()
         compose.onNodeWithTag(TestTags.speedDialChannel("+15550102", false)).performClick()
 
-        assertThat(actions.events).containsExactly("default Ada Lovelace +15550102", "call +15550102 chosen").inOrder()
+        assertThat(actions.events)
+            .containsExactly("default Ada Lovelace +15550102", "call +15550102 chosen")
+            .inOrder()
         compose.onNodeWithText("Choose call type").assertDoesNotExist()
     }
 
@@ -105,7 +135,8 @@ class SpeedDialScreenTest {
         assertThat(actions.events).containsExactly("remove Bea Arthur")
     }
 
-    private fun centerOf(tag: String) = compose.onNodeWithTag(tag).fetchSemanticsNode().boundsInRoot.center
+    private fun centerOf(tag: String) =
+        compose.onNodeWithTag(tag).fetchSemanticsNode().boundsInRoot.center
 
     /** Long-presses the favorite with [tag], then drags it by [delta] in small steps. */
     private fun dragFavorite(tag: String, delta: Offset, release: Boolean = true) {
@@ -120,17 +151,25 @@ class SpeedDialScreenTest {
     @Test
     fun draggingAFavoriteOntoAnotherReorders() {
         show()
-        dragFavorite(TestTags.speedDialFavorite(1), centerOf(TestTags.speedDialFavorite(3)) - centerOf(TestTags.speedDialFavorite(1)))
+        dragFavorite(
+            TestTags.speedDialFavorite(1),
+            centerOf(TestTags.speedDialFavorite(3)) - centerOf(TestTags.speedDialFavorite(1)),
+        )
 
         assertThat(actions.events.first()).startsWith("move 0")
-        assertThat((state as SpeedDialUiState.Loaded).favorites.last().name()).isEqualTo("Ada Lovelace")
+        assertThat((state as SpeedDialUiState.Loaded).favorites.last().name())
+            .isEqualTo("Ada Lovelace")
     }
 
     @Test
     fun draggingAFavoriteOntoRemoveRemovesIt() {
         show()
         val start = centerOf(TestTags.speedDialFavorite(2))
-        dragFavorite(TestTags.speedDialFavorite(2), Offset(0f, 150f), release = false) // past the touch slop
+        dragFavorite(
+            TestTags.speedDialFavorite(2),
+            Offset(0f, 150f),
+            release = false,
+        ) // past the touch slop
         val target = centerOf(TestTags.SPEED_DIAL_REMOVE_TARGET)
         compose.onNodeWithTag(TestTags.speedDialFavorite(2)).performTouchInput {
             repeat(20) { moveBy((target - start - Offset(0f, 150f)) / 20f) }
@@ -180,7 +219,10 @@ class SpeedDialScreenTest {
     fun screenshotDark() {
         show()
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/speeddial/speed_dial_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/speeddial/speed_dial_dark.png")
     }
 
     @Test
@@ -188,6 +230,9 @@ class SpeedDialScreenTest {
     fun screenshotLight() {
         show()
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/speeddial/speed_dial_light.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/speeddial/speed_dial_light.png")
     }
 }

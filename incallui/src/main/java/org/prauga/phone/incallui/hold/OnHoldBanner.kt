@@ -10,9 +10,9 @@ import android.text.BidiFormatter
 import android.text.TextDirectionHeuristics
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -31,45 +31,61 @@ import com.prauga.pvot.designsystem.components.pvotGlassSurface
 import com.prauga.pvot.designsystem.effects.LocalPvotGlassBackdrop
 import com.prauga.pvot.designsystem.effects.PvotGlassDefaults
 import com.prauga.pvot.designsystem.theme.PvotSpacing
-import org.prauga.phone.incallui.R
 import org.prauga.phone.dialer.ui.TestTags
+import org.prauga.phone.incallui.R
 import org.prauga.phone.incallui.incall.protocol.SecondaryInfo
 
 /** Size of the circle holding the on-hold icon at the capsule's start. */
 private val HoldIconCircle = 32.dp
 
 /**
- * A slim capsule for the call on hold: who it is and that they are on hold. Glass over the
- * screen's backdrop when there is one, solid otherwise.
+ * A slim capsule for the call on hold: who it is and that they are on hold. Glass over the screen's
+ * backdrop when there is one, solid otherwise.
  */
 @Composable
 fun OnHoldBanner(info: SecondaryInfo, modifier: Modifier = Modifier) {
-    val name = if (info.nameIsNumber()) {
-        PhoneNumberUtils.createTtsSpannable(BidiFormatter.getInstance().unicodeWrap(info.name(), TextDirectionHeuristics.LTR)).toString()
-    } else {
-        info.name().orEmpty()
-    }
+    val name =
+        if (info.nameIsNumber()) {
+            PhoneNumberUtils.createTtsSpannable(
+                    BidiFormatter.getInstance()
+                        .unicodeWrap(info.name(), TextDirectionHeuristics.LTR)
+                )
+                .toString()
+        } else {
+            info.name().orEmpty()
+        }
     val backdrop = LocalPvotGlassBackdrop.current
-    val surface = if (backdrop != null) {
-        Modifier.pvotGlassSurface(backdrop, PvotGlassDefaults.CapsuleRadius, role = null)
-    } else {
-        Modifier.background(MaterialTheme.colorScheme.surfaceContainerHigh, CircleShape)
-    }
+    val surface =
+        if (backdrop != null) {
+            Modifier.pvotGlassSurface(backdrop, PvotGlassDefaults.CapsuleRadius, role = null)
+        } else {
+            Modifier.background(MaterialTheme.colorScheme.surfaceContainerHigh, CircleShape)
+        }
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .then(surface)
-            .padding(start = PvotSpacing.XS, end = PvotSpacing.L, top = PvotSpacing.XS, bottom = PvotSpacing.XS)
-            .testTag(TestTags.ON_HOLD_BANNER),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .then(surface)
+                .padding(
+                    start = PvotSpacing.XS,
+                    end = PvotSpacing.L,
+                    top = PvotSpacing.XS,
+                    bottom = PvotSpacing.XS,
+                )
+                .testTag(TestTags.ON_HOLD_BANNER),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(PvotSpacing.M),
     ) {
         Box(
-            Modifier.size(HoldIconCircle).background(MaterialTheme.colorScheme.surfaceContainerHighest, CircleShape),
+            Modifier.size(HoldIconCircle)
+                .background(MaterialTheme.colorScheme.surfaceContainerHighest, CircleShape),
             contentAlignment = Alignment.Center,
         ) {
             Icon(
-                painter = painterResource(if (info.isVideoCall()) R.drawable.ic_video else R.drawable.ic_player_pause),
+                painter =
+                    painterResource(
+                        if (info.isVideoCall()) R.drawable.ic_video else R.drawable.ic_player_pause
+                    ),
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.size(18.dp),
@@ -97,10 +113,16 @@ object OnHoldBannerHost {
     @JvmStatic
     fun create(context: android.content.Context, info: SecondaryInfo): android.view.View =
         androidx.compose.ui.platform.ComposeView(context).apply {
-            setViewCompositionStrategy(androidx.compose.ui.platform.ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setViewCompositionStrategy(
+                androidx.compose.ui.platform.ViewCompositionStrategy
+                    .DisposeOnViewTreeLifecycleDestroyed
+            )
             setContent {
                 org.prauga.phone.dialer.ui.PhoneScreenTheme(fillBackground = false) {
-                    OnHoldBanner(info, Modifier.padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.XS))
+                    OnHoldBanner(
+                        info,
+                        Modifier.padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.XS),
+                    )
                 }
             }
         }

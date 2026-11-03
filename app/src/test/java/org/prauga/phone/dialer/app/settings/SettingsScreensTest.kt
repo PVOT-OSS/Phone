@@ -59,18 +59,24 @@ class SettingsScreensTest {
     @Test
     fun screeningShowsRingUntilTheUserChooses() {
         showScreening()
-        compose.onNodeWithText(context.getString(R.string.screening_category_first_time)).assertIsDisplayed()
+        compose
+            .onNodeWithText(context.getString(R.string.screening_category_first_time))
+            .assertIsDisplayed()
         assertThat(prefs.getString("screening_action_first_time", null)).isNull()
-        assertThat(ScreeningSettings(prefs).actionFor(CallerCategory.FIRST_TIME)).isEqualTo(CategoryAction.RING)
+        assertThat(ScreeningSettings(prefs).actionFor(CallerCategory.FIRST_TIME))
+            .isEqualTo(CategoryAction.RING)
     }
 
     @Test
     fun choosingDeclineStoresTheOldListPreferenceValue() {
         showScreening()
         compose.onNodeWithTag(TestTags.settingsRow("screening_action_first_time")).performClick()
-        compose.onNodeWithTag(TestTags.settingsOption(CategoryAction.DECLINE.toString())).performClick()
+        compose
+            .onNodeWithTag(TestTags.settingsOption(CategoryAction.DECLINE.toString()))
+            .performClick()
         compose.waitForIdle()
-        // ListPreference stored CategoryAction names in lower case under screening_action_<category>.
+        // ListPreference stored CategoryAction names in lower case under
+        // screening_action_<category>.
         assertThat(prefs.getString("screening_action_first_time", null)).isEqualTo("decline")
         assertThat(prefs.getString("screening_action_private_or_hidden", null)).isNull()
     }
@@ -79,9 +85,15 @@ class SettingsScreensTest {
     fun screeningShowsAnExistingChoice() {
         prefs.edit().putString("screening_action_possibly_faked", "silence").commit()
         showScreening()
-        compose.onNodeWithTag(TestTags.settingsRow("screening_action_possibly_faked"), useUnmergedTree = true)
+        compose
+            .onNodeWithTag(
+                TestTags.settingsRow("screening_action_possibly_faked"),
+                useUnmergedTree = true,
+            )
             .assertIsDisplayed()
-        compose.onNodeWithText(context.getString(R.string.screening_action_silence)).assertIsDisplayed()
+        compose
+            .onNodeWithText(context.getString(R.string.screening_action_silence))
+            .assertIsDisplayed()
     }
 
     @Test
@@ -100,7 +112,10 @@ class SettingsScreensTest {
                 )
             }
         }
-        val other = values.first { it != context.getString(R.string.display_options_sort_by_given_name_value) }
+        val other =
+            values.first {
+                it != context.getString(R.string.display_options_sort_by_given_name_value)
+            }
         compose.onNodeWithTag(TestTags.settingsRow(key)).performClick()
         compose.onNodeWithTag(TestTags.settingsOption(other)).performClick()
         compose.waitForIdle()
@@ -110,11 +125,13 @@ class SettingsScreensTest {
     @Test
     fun topLevelListHasTheCoreEntries() {
         val keys = DialerSettingsActivity.settingsEntries(context).map { it.key }
-        assertThat(keys).containsAtLeast(
-            DialerSettingsActivity.KEY_SOUNDS,
-            DialerSettingsActivity.KEY_QUICK_RESPONSES,
-            DialerSettingsActivity.KEY_SCREENING,
-        ).inOrder()
+        assertThat(keys)
+            .containsAtLeast(
+                DialerSettingsActivity.KEY_SOUNDS,
+                DialerSettingsActivity.KEY_QUICK_RESPONSES,
+                DialerSettingsActivity.KEY_SCREENING,
+            )
+            .inOrder()
         assertThat(keys).containsNoDuplicates()
     }
 
@@ -153,28 +170,45 @@ class SettingsScreensTest {
 
     @Test
     fun flipToSilenceNeedsAnAccelerometer() {
-        compose.setContent { SettingsTheme { IncomingCallSettingsList(prefs, hasAccelerometer = false) } }
-        compose.onNodeWithText(context.getString(R.string.flip_to_silence_title)).assertDoesNotExist()
+        compose.setContent {
+            SettingsTheme { IncomingCallSettingsList(prefs, hasAccelerometer = false) }
+        }
+        compose
+            .onNodeWithText(context.getString(R.string.flip_to_silence_title))
+            .assertDoesNotExist()
         compose.onNodeWithText(context.getString(R.string.call_announcer_title)).assertIsDisplayed()
     }
 
     @Test
     fun flipToSilenceIsStored() {
-        compose.setContent { SettingsTheme { IncomingCallSettingsList(prefs, hasAccelerometer = true) } }
-        compose.onNodeWithTag(TestTags.settingsRow(IncomingCallSettings.KEY_FLIP_TO_SILENCE)).performClick()
+        compose.setContent {
+            SettingsTheme { IncomingCallSettingsList(prefs, hasAccelerometer = true) }
+        }
+        compose
+            .onNodeWithTag(TestTags.settingsRow(IncomingCallSettings.KEY_FLIP_TO_SILENCE))
+            .performClick()
         assertThat(IncomingCallSettings.flipToSilence(context)).isTrue()
     }
 
     @Test
     fun keepPortraitIsStored() {
         compose.setContent { SettingsTheme { DisplayOptionsList(prefs) } }
-        compose.onNodeWithTag(context.getString(R.string.display_options_force_portrait_key)).performClick()
-        assertThat(prefs.getBoolean(context.getString(R.string.display_options_force_portrait_key), false)).isTrue()
+        compose
+            .onNodeWithTag(context.getString(R.string.display_options_force_portrait_key))
+            .performClick()
+        assertThat(
+                prefs.getBoolean(
+                    context.getString(R.string.display_options_force_portrait_key),
+                    false,
+                )
+            )
+            .isTrue()
     }
 
     @Test
     fun topLevelListHasIncomingCalls() {
-        assertThat(DialerSettingsActivity.settingsEntries(context).map { it.key }).contains(DialerSettingsActivity.KEY_INCOMING_CALLS)
+        assertThat(DialerSettingsActivity.settingsEntries(context).map { it.key })
+            .contains(DialerSettingsActivity.KEY_INCOMING_CALLS)
     }
 
     private fun showScreening() {

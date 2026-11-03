@@ -25,9 +25,7 @@ open class PerAccountSharedPreferences {
         sharedPrefsKeyPrefix = "phone_account_dependent_"
     }
 
-    /**
-     * Not to be used, currently only used by {@VisualVoicemailPreferences} for legacy reasons.
-     */
+    /** Not to be used, currently only used by {@VisualVoicemailPreferences} for legacy reasons. */
     protected constructor(
         context: Context,
         handle: PhoneAccountHandle,
@@ -106,5 +104,6 @@ open class PerAccountSharedPreferences {
         return `object` as T
     }
 
-    private fun getKey(key: String): String = sharedPrefsKeyPrefix + key + "_" + phoneAccountHandle.id
+    private fun getKey(key: String): String =
+        sharedPrefsKeyPrefix + key + "_" + phoneAccountHandle.id
 }

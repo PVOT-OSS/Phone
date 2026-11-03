@@ -37,7 +37,9 @@ import org.prauga.phone.dialer.widget.FavoritesWidget
 /** What the favorites tab shows. */
 sealed interface SpeedDialUiState {
     data object Loading : SpeedDialUiState
+
     data object NeedsPermission : SpeedDialUiState
+
     data object Empty : SpeedDialUiState
 
     /** Starred contacts in their pinned order, then frequently called contacts. */
@@ -46,7 +48,8 @@ sealed interface SpeedDialUiState {
         val suggestions: List<SpeedDialUiItem>,
     ) : SpeedDialUiState {
         /** Every item in display order, as positions are saved. */
-        val all: List<SpeedDialUiItem> get() = favorites + suggestions
+        val all: List<SpeedDialUiItem>
+            get() = favorites + suggestions
     }
 }
 
@@ -63,9 +66,13 @@ internal fun stateOf(items: List<SpeedDialUiItem>): SpeedDialUiState {
 /** Reads and changes favorites; the work happens off the main thread. */
 interface SpeedDialRepository {
     suspend fun load(): List<SpeedDialUiItem>
+
     suspend fun star(contactUri: Uri): List<SpeedDialUiItem>
+
     suspend fun remove(item: SpeedDialUiItem): List<SpeedDialUiItem>
+
     suspend fun savePositions(items: List<SpeedDialUiItem>)
+
     suspend fun setDefaultChannel(item: SpeedDialUiItem, channel: Channel)
 }
 
@@ -74,11 +81,13 @@ class DefaultSpeedDialRepository(
     private val context: Context,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : SpeedDialRepository {
-    private val mutator get() = UiItemLoaderComponent.get(context).speedDialUiItemMutator()
+    private val mutator
+        get() = UiItemLoaderComponent.get(context).speedDialUiItemMutator()
 
     override suspend fun load(): List<SpeedDialUiItem> = mutator.loadSpeedDialUiItems().await()
 
-    override suspend fun star(contactUri: Uri): List<SpeedDialUiItem> = mutator.starContact(contactUri).await()
+    override suspend fun star(contactUri: Uri): List<SpeedDialUiItem> =
+        mutator.starContact(contactUri).await()
 
     override suspend fun remove(item: SpeedDialUiItem): List<SpeedDialUiItem> =
         mutator.removeSpeedDialUiItem(item).await()
@@ -86,24 +95,33 @@ class DefaultSpeedDialRepository(
     override suspend fun savePositions(items: List<SpeedDialUiItem>) =
         withContext(ioDispatcher) { mutator.updatePinnedPosition(items) }
 
-    override suspend fun setDefaultChannel(item: SpeedDialUiItem, channel: Channel) = withContext(ioDispatcher) {
-        val entry = SpeedDialEntry.builder()
-            .setId(item.speedDialEntryId())
-            .setContactId(item.contactId())
-            .setLookupKey(item.lookupKey())
-            .setDefaultChannel(channel)
-            .build()
-        SpeedDialEntryDatabaseHelper(context).update(ImmutableList.of(entry))
-    }
+    override suspend fun setDefaultChannel(item: SpeedDialUiItem, channel: Channel) =
+        withContext(ioDispatcher) {
+            val entry =
+                SpeedDialEntry.builder()
+                    .setId(item.speedDialEntryId())
+                    .setContactId(item.contactId())
+                    .setLookupKey(item.lookupKey())
+                    .setDefaultChannel(channel)
+                    .build()
+            SpeedDialEntryDatabaseHelper(context).update(ImmutableList.of(entry))
+        }
 }
 
 /** Loads favorites and suggestions, and keeps the user's changes to them. */
-class SpeedDialViewModel @JvmOverloads constructor(
+class SpeedDialViewModel
+@JvmOverloads
+constructor(
     application: Application,
     private val repository: SpeedDialRepository = DefaultSpeedDialRepository(application),
-    private val hasPermission: () -> Boolean = { PermissionsUtil.hasContactsReadPermissions(application) },
+    private val hasPermission: () -> Boolean = {
+        PermissionsUtil.hasContactsReadPermissions(application)
+    },
     private val onSaved: (List<SpeedDialUiItem>) -> Unit = { items ->
-        ShortcutRefresher.refresh(application, ShortcutRefresher.speedDialUiItemsToContactEntries(items))
+        ShortcutRefresher.refresh(
+            application,
+            ShortcutRefresher.speedDialUiItemsToContactEntries(items),
+        )
     },
 ) : AndroidViewModel(application) {
 
@@ -118,9 +136,10 @@ class SpeedDialViewModel @JvmOverloads constructor(
     /** Set when a change already produced fresh items, so the next resume need not reload. */
     private var skipNextRefresh = false
 
-    private val observer = object : ContentObserver(Handler(Looper.getMainLooper())) {
-        override fun onChange(selfChange: Boolean) = refresh()
-    }
+    private val observer =
+        object : ContentObserver(Handler(Looper.getMainLooper())) {
+            override fun onChange(selfChange: Boolean) = refresh()
+        }
 
     // Registered once the permission is there: without it, registering throws.
     private var observing = false
@@ -137,7 +156,9 @@ class SpeedDialViewModel @JvmOverloads constructor(
             return
         }
         if (!observing) {
-            getApplication<Application>().contentResolver.registerContentObserver(Contacts.CONTENT_STREQUENT_URI, true, observer)
+            getApplication<Application>()
+                .contentResolver
+                .registerContentObserver(Contacts.CONTENT_STREQUENT_URI, true, observer)
             observing = true
         }
         update { repository.load() }
@@ -154,11 +175,12 @@ class SpeedDialViewModel @JvmOverloads constructor(
         val loaded = _state.value as? SpeedDialUiState.Loaded
         if (loaded != null) {
             val favorites = loaded.favorites.filterNot { it.contactId() == item.contactId() }
-            _state.value = if (favorites.isEmpty() && loaded.suggestions.isEmpty()) {
-                SpeedDialUiState.Empty
-            } else {
-                loaded.copy(favorites = favorites)
-            }
+            _state.value =
+                if (favorites.isEmpty() && loaded.suggestions.isEmpty()) {
+                    SpeedDialUiState.Empty
+                } else {
+                    loaded.copy(favorites = favorites)
+                }
         }
         update { repository.remove(item) }
     }
@@ -166,7 +188,8 @@ class SpeedDialViewModel @JvmOverloads constructor(
     /** Moves the favorite at [from] to [to] while the user drags it; saved by [savePositions]. */
     fun moveFavorite(from: Int, to: Int) {
         val loaded = _state.value as? SpeedDialUiState.Loaded ?: return
-        if (from == to || from !in loaded.favorites.indices || to !in loaded.favorites.indices) return
+        if (from == to || from !in loaded.favorites.indices || to !in loaded.favorites.indices)
+            return
         val favorites = loaded.favorites.toMutableList().apply { add(to, removeAt(from)) }
         _state.value = loaded.copy(favorites = favorites)
     }
@@ -176,15 +199,16 @@ class SpeedDialViewModel @JvmOverloads constructor(
         val loaded = _state.value as? SpeedDialUiState.Loaded ?: return
         if (!hasPermission()) return
         val items = loaded.all
-        saveJob = viewModelScope.launch {
-            try {
-                repository.savePositions(items)
-                onSaved(items)
-                refreshWidget()
-            } catch (e: Exception) {
-                LogUtil.e("SpeedDialViewModel.savePositions", "could not save the order", e)
+        saveJob =
+            viewModelScope.launch {
+                try {
+                    repository.savePositions(items)
+                    onSaved(items)
+                    refreshWidget()
+                } catch (e: Exception) {
+                    LogUtil.e("SpeedDialViewModel.savePositions", "could not save the order", e)
+                }
             }
-        }
     }
 
     /** Remembers [channel] as the one to call when [item] is tapped, and shows it on the item. */
@@ -202,20 +226,27 @@ class SpeedDialViewModel @JvmOverloads constructor(
 
     private fun update(block: suspend () -> List<SpeedDialUiItem>) {
         loadJob?.cancel()
-        loadJob = viewModelScope.launch {
-            saveJob?.join()
-            _state.value = try {
-                stateOf(block())
-            } catch (e: SecurityException) {
-                LogUtil.e("SpeedDialViewModel.update", "permission revoked while loading", e)
-                SpeedDialUiState.NeedsPermission
-            } catch (e: Exception) {
-                LogUtil.e("SpeedDialViewModel.update", "could not load favorites", e)
-                // What is on screen stays; a first load that fails shows the empty state.
-                if (_state.value is SpeedDialUiState.Loading) SpeedDialUiState.Empty else _state.value
+        loadJob =
+            viewModelScope.launch {
+                saveJob?.join()
+                _state.value =
+                    try {
+                        stateOf(block())
+                    } catch (e: SecurityException) {
+                        LogUtil.e(
+                            "SpeedDialViewModel.update",
+                            "permission revoked while loading",
+                            e,
+                        )
+                        SpeedDialUiState.NeedsPermission
+                    } catch (e: Exception) {
+                        LogUtil.e("SpeedDialViewModel.update", "could not load favorites", e)
+                        // What is on screen stays; a first load that fails shows the empty state.
+                        if (_state.value is SpeedDialUiState.Loading) SpeedDialUiState.Empty
+                        else _state.value
+                    }
+                if (_state.value is SpeedDialUiState.Loaded) refreshWidget()
             }
-            if (_state.value is SpeedDialUiState.Loaded) refreshWidget()
-        }
     }
 
     override fun onCleared() {

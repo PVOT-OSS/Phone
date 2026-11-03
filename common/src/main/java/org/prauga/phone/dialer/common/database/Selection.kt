@@ -13,13 +13,11 @@ import org.prauga.phone.dialer.common.Assert
  * Utility to build SQL selections. Handles string concatenation, nested statements, empty
  * statements, and tracks the selection arguments.
  *
- * A selection can be build from a string, factory methods like [column], or use
- * [Builder] to build complex nested selection with multiple operators. The Selection manages
- * the `selection` and `selectionArgs` passed into
- * [android.content.ContentResolver.query].
+ * A selection can be build from a string, factory methods like [column], or use [Builder] to build
+ * complex nested selection with multiple operators. The Selection manages the `selection` and
+ * `selectionArgs` passed into [android.content.ContentResolver.query].
  *
  * Example:
- *
  * ```
  *   fromString("foo = 1")
  * ```
@@ -44,16 +42,13 @@ import org.prauga.phone.dialer.common.Assert
  *
  * expands into "(((foo = ?) OR (bar < ?)) AND (NOT (baz != 3)))", {"1", "2"}
  */
-class Selection private constructor(
-    val selection: String,
-    val selectionArgs: Array<String>,
-) {
+class Selection private constructor(val selection: String, val selectionArgs: Array<String>) {
 
     fun isEmpty(): Boolean = selection.isEmpty()
 
     /**
      * @return a mutable builder that appends to the selection. The selection will be parenthesized
-     *     before anything is appended to it.
+     *   before anything is appended to it.
      */
     fun buildUpon(): Builder = Builder(this)
 
@@ -67,10 +62,11 @@ class Selection private constructor(
             fromString(column + " " + Assert.isNotNull(operator) + " ?", value.toString())
 
         /**
-         * Expands to "<column> <operator>". [is] should be used if the condition
-         * is comparing to a string or a user input value, which must be sanitized.
+         * Expands to "<column> <operator>". [is] should be used if the condition is comparing to a
+         * string or a user input value, which must be sanitized.
          */
-        fun `is`(condition: String): Selection = fromString(column + " " + Assert.isNotNull(condition))
+        fun `is`(condition: String): Selection =
+            fromString(column + " " + Assert.isNotNull(condition))
 
         fun `in`(vararg values: String): Selection = `in`(values.asList())
 
@@ -153,12 +149,11 @@ class Selection private constructor(
 
     companion object {
         /** @return a builder that is empty. */
-        @JvmStatic
-        fun builder(): Builder = Builder()
+        @JvmStatic fun builder(): Builder = Builder()
 
         /**
-         * @return a Selection built from regular selection string/args pair. The result selection will be
-         *     enclosed in a parenthesis.
+         * @return a Selection built from regular selection string/args pair. The result selection
+         *   will be enclosed in a parenthesis.
          */
         @JvmStatic
         fun fromString(selection: String?, vararg args: String): Selection =
@@ -179,12 +174,11 @@ class Selection private constructor(
          * Build a selection based on condition upon a column. is() should be called to complete the
          * selection.
          */
-        @JvmStatic
-        fun column(column: String): Column = Column(column)
+        @JvmStatic fun column(column: String): Column = Column(column)
 
         /**
-         * Parenthesized the `string`. Will not parenthesized if `string` is empty or is
-         * already parenthesized (top level parenthesis encloses the whole string).
+         * Parenthesized the `string`. Will not parenthesized if `string` is empty or is already
+         * parenthesized (top level parenthesis encloses the whole string).
          */
         private fun parenthesized(string: String): String {
             if (string.isEmpty()) {
@@ -200,7 +194,8 @@ class Selection private constructor(
                     ')' -> {
                         depth--
                         if (depth == 0) {
-                            // First '(' closed before the string has ended,need an additional level of nesting.
+                            // First '(' closed before the string has ended,need an additional level
+                            // of nesting.
                             // For example "(A) AND (B)" should become "((A) AND (B))"
                             return "($string)"
                         }

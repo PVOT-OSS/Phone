@@ -6,8 +6,8 @@
 package org.prauga.phone.dialer.app.settings
 
 import android.app.Application
-import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.assertCountEquals
+import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat

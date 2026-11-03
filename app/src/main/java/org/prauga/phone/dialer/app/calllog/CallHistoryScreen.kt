@@ -7,9 +7,9 @@ package org.prauga.phone.dialer.app.calllog
 
 import android.provider.CallLog.Calls
 import android.text.TextUtils
+import androidx.activity.compose.BackHandler
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
@@ -99,6 +99,7 @@ import org.prauga.phone.dialer.ui.fullWidthRow
 /** What a call history list does when the user acts. */
 interface CallHistoryActions {
     fun primaryAction(row: CallLogRowUi)
+
     fun rowAction(row: CallLogRowUi, action: RowAction)
 
     /** The row was opened; [playNow] when its play button opened it. Marks it as read. */
@@ -109,6 +110,7 @@ interface CallHistoryActions {
 
     /** The row was swiped away: hide it, and delete it unless [undoDelete] follows. */
     fun deleteLater(group: CallLogGroup)
+
     fun undoDelete(group: CallLogGroup)
 
     /** Deletes the selected voicemails at once, after the user confirmed. */
@@ -118,7 +120,9 @@ interface CallHistoryActions {
     fun selectionModeChanged(enabled: Boolean, exit: () -> Unit) = Unit
 
     fun block(row: CallLogRowUi)
+
     fun unblock(row: CallLogRowUi)
+
     fun turnOnPermission()
 
     /** The empty list's action: open the dialpad. */
@@ -145,7 +149,8 @@ fun CallHistoryScreen(
     actions: CallHistoryActions,
     modifier: Modifier = Modifier,
     topPadding: Dp = 0.dp,
-    bottomPadding: Dp = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() + PvotSpacing.L,
+    bottomPadding: Dp =
+        WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() + PvotSpacing.L,
     @DrawableRes emptyIcon: Int = R.drawable.ic_history,
     header: (@Composable () -> Unit)? = null,
     fullScreen: (@Composable () -> Unit)? = null,
@@ -165,11 +170,12 @@ fun CallHistoryScreen(
         actions.deleteLater(group)
         scope.launch {
             snackbarHostState.currentSnackbarData?.dismiss()
-            val result = snackbarHostState.showSnackbar(
-                message = deletedMessage,
-                actionLabel = undoLabel,
-                duration = SnackbarDuration.Short,
-            )
+            val result =
+                snackbarHostState.showSnackbar(
+                    message = deletedMessage,
+                    actionLabel = undoLabel,
+                    duration = SnackbarDuration.Short,
+                )
             if (result == SnackbarResult.ActionPerformed) actions.undoDelete(group)
         }
     }
@@ -177,20 +183,24 @@ fun CallHistoryScreen(
         when {
             fullScreen != null -> Box(belowBar) { fullScreen() }
             state is CallHistoryUiState.Loading -> PvotLoadingContent(belowBar)
-            state is CallHistoryUiState.NeedsPermission -> PvotEmptyContent(
-                message = stringResource(R.string.permission_no_calllog),
-                modifier = belowBar.padding(PvotSpacing.L),
-                icon = { Icon(painterResource(emptyIcon), contentDescription = null) },
-                actionLabel = stringResource(R.string.permission_single_turn_on),
-                onAction = actions::turnOnPermission,
-            )
+            state is CallHistoryUiState.NeedsPermission ->
+                PvotEmptyContent(
+                    message = stringResource(R.string.permission_no_calllog),
+                    modifier = belowBar.padding(PvotSpacing.L),
+                    icon = { Icon(painterResource(emptyIcon), contentDescription = null) },
+                    actionLabel = stringResource(R.string.permission_single_turn_on),
+                    onAction = actions::turnOnPermission,
+                )
             else -> {
                 val loaded = state as? CallHistoryUiState.Loaded
                 val visible = loaded?.visible.orEmpty()
                 if (visible.isEmpty()) {
                     Column(belowBar.fillMaxSize()) {
                         header?.invoke()
-                        Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
+                        Box(
+                            Modifier.weight(1f).fillMaxWidth(),
+                            contentAlignment = Alignment.Center,
+                        ) {
                             EmptyHistory(emptyMessage, emptyIcon, showEmptyAction, actions)
                         }
                     }
@@ -212,15 +222,20 @@ fun CallHistoryScreen(
         }
         PhoneSnackbarHost(
             hostState = snackbarHostState,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = bottomPadding + PvotSpacing.S),
+            modifier =
+                Modifier.align(Alignment.BottomCenter)
+                    .padding(bottom = bottomPadding + PvotSpacing.S),
         )
     }
 }
 
 @Composable
-private fun EmptyHistory(@StringRes message: Int, @DrawableRes icon: Int, showAction: Boolean, actions: CallHistoryActions) {
+private fun EmptyHistory(
+    @StringRes message: Int,
+    @DrawableRes icon: Int,
+    showAction: Boolean,
+    actions: CallHistoryActions,
+) {
     PvotEmptyContent(
         message = stringResource(message),
         modifier = Modifier.padding(PvotSpacing.L),
@@ -281,17 +296,20 @@ private fun HistoryList(
             SelectionBar(
                 count = selection.size,
                 allSelected = selection.size == groups.size,
-                onSelectAll = { all -> select(if (all) groups.map { it.rowId }.toSet() else emptySet()) },
+                onSelectAll = { all ->
+                    select(if (all) groups.map { it.rowId }.toSet() else emptySet())
+                },
                 onDelete = { confirmDeleteSelected = true },
             )
         }
         PvotScreen(
             modifier = Modifier.weight(1f).fillMaxWidth().testTag(TestTags.CALL_HISTORY_LIST),
             state = listState,
-            contentPadding = PaddingValues(
-                top = (if (selecting) 0.dp else topPadding) + PvotSpacing.S,
-                bottom = bottomPadding,
-            ),
+            contentPadding =
+                PaddingValues(
+                    top = (if (selecting) 0.dp else topPadding) + PvotSpacing.S,
+                    bottom = bottomPadding,
+                ),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start,
         ) {
@@ -310,10 +328,13 @@ private fun HistoryList(
                 item(key = group.rowId, contentType = "row") {
                     Column(Modifier.animateItem()) {
                         val expanded = expandedRowId == group.rowId && !selecting
-                        val onClick: () -> Unit = { if (selecting) select(selection.toggled(group.rowId)) else toggle(row) }
-                        val onLongClick: (() -> Unit)? = if (selectable) {
-                            { select(selection + group.rowId) }
-                        } else null
+                        val onClick: () -> Unit = {
+                            if (selecting) select(selection.toggled(group.rowId)) else toggle(row)
+                        }
+                        val onLongClick: (() -> Unit)? =
+                            if (selectable) {
+                                { select(selection + group.rowId) }
+                            } else null
                         val onPlay: () -> Unit = {
                             expandedRowId = group.rowId
                             actions.opened(row, playNow = true)
@@ -385,7 +406,10 @@ private fun HistoryList(
                 },
                 style = PvotDialogActionStyle.Destructive,
             )
-            PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = { confirmDeleteId = null })
+            PvotDialogAction(
+                label = stringResource(android.R.string.cancel),
+                onClick = { confirmDeleteId = null },
+            )
         }
     }
     confirmBlockId?.let(rows::get)?.let { row ->
@@ -398,10 +422,16 @@ private fun HistoryList(
         ) {
             PvotDialogAction(
                 label = stringResource(R.string.block_number_ok),
-                onClick = { confirmBlockId = null; actions.block(row) },
+                onClick = {
+                    confirmBlockId = null
+                    actions.block(row)
+                },
                 style = PvotDialogActionStyle.Destructive,
             )
-            PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = { confirmBlockId = null })
+            PvotDialogAction(
+                label = stringResource(android.R.string.cancel),
+                onClick = { confirmBlockId = null },
+            )
         }
     }
     confirmUnblockId?.let(rows::get)?.let { row ->
@@ -412,21 +442,35 @@ private fun HistoryList(
         ) {
             PvotDialogAction(
                 label = stringResource(R.string.unblock_number_ok),
-                onClick = { confirmUnblockId = null; actions.unblock(row) },
+                onClick = {
+                    confirmUnblockId = null
+                    actions.unblock(row)
+                },
                 style = PvotDialogActionStyle.Primary,
             )
-            PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = { confirmUnblockId = null })
+            PvotDialogAction(
+                label = stringResource(android.R.string.cancel),
+                onClick = { confirmUnblockId = null },
+            )
         }
     }
     if (confirmDeleteSelected) {
         PvotDialog(
             visible = true,
             onDismissRequest = { confirmDeleteSelected = false },
-            title = if (voicemailPlayback != null) {
-                pluralStringResource(R.plurals.delete_voicemails_confirmation_dialog_title, selection.size)
-            } else {
-                pluralStringResource(R.plurals.delete_calls_confirmation_dialog_title, selection.size, selection.size)
-            },
+            title =
+                if (voicemailPlayback != null) {
+                    pluralStringResource(
+                        R.plurals.delete_voicemails_confirmation_dialog_title,
+                        selection.size,
+                    )
+                } else {
+                    pluralStringResource(
+                        R.plurals.delete_calls_confirmation_dialog_title,
+                        selection.size,
+                        selection.size,
+                    )
+                },
             destructive = true,
         ) {
             PvotDialogAction(
@@ -449,12 +493,17 @@ private fun HistoryList(
 private fun Set<Long>.toggled(id: Long) = if (id in this) this - id else this + id
 
 @Composable
-private fun SelectionBar(count: Int, allSelected: Boolean, onSelectAll: (Boolean) -> Unit, onDelete: () -> Unit) {
+private fun SelectionBar(
+    count: Int,
+    allSelected: Boolean,
+    onSelectAll: (Boolean) -> Unit,
+    onDelete: () -> Unit,
+) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = PvotSpacing.S, vertical = PvotSpacing.XS)
-            .testTag(TestTags.CALL_HISTORY_SELECTION),
+        modifier =
+            Modifier.fillMaxWidth()
+                .padding(horizontal = PvotSpacing.S, vertical = PvotSpacing.XS)
+                .testTag(TestTags.CALL_HISTORY_SELECTION),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Checkbox(checked = allSelected, onCheckedChange = onSelectAll)
@@ -474,14 +523,18 @@ private fun SelectionBar(count: Int, allSelected: Boolean, onSelectAll: (Boolean
 
 @Composable
 private fun DayHeader(dayGroup: Int, modifier: Modifier = Modifier) {
-    val title = when (dayGroup) {
-        CallLogGroupBuilder.DAY_GROUP_TODAY -> R.string.call_log_header_today
-        CallLogGroupBuilder.DAY_GROUP_YESTERDAY -> R.string.call_log_header_yesterday
-        else -> R.string.call_log_header_other
-    }
+    val title =
+        when (dayGroup) {
+            CallLogGroupBuilder.DAY_GROUP_TODAY -> R.string.call_log_header_today
+            CallLogGroupBuilder.DAY_GROUP_YESTERDAY -> R.string.call_log_header_yesterday
+            else -> R.string.call_log_header_other
+        }
     PvotSectionHeader(
         title = stringResource(title),
-        modifier = modifier.fillMaxWidth().padding(start = PvotSpacing.L, end = PvotSpacing.L, top = PvotSpacing.L),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(start = PvotSpacing.L, end = PvotSpacing.L, top = PvotSpacing.L),
     )
 }
 
@@ -498,37 +551,42 @@ private fun HistoryRow(
     actions: CallHistoryActions,
     onRowAction: (RowAction) -> Unit,
 ) {
-    val canSwipeCall = row.primaryAction == PrimaryAction.CALL || row.primaryAction == PrimaryAction.VIDEO_CALL ||
-        row.primaryAction == PrimaryAction.CALL_VOICEMAIL
+    val canSwipeCall =
+        row.primaryAction == PrimaryAction.CALL ||
+            row.primaryAction == PrimaryAction.VIDEO_CALL ||
+            row.primaryAction == PrimaryAction.CALL_VOICEMAIL
     // The open row is a card: the row on top, its actions under it.
-    val cardColor by animateColorAsState(
-        if (expanded) MaterialTheme.colorScheme.surfaceContainer else MaterialTheme.colorScheme.background,
-        tween(PvotDurations.Medium, easing = PvotMotion.Settle),
-        label = "openRowCard",
-    )
+    val cardColor by
+        animateColorAsState(
+            if (expanded) MaterialTheme.colorScheme.surfaceContainer
+            else MaterialTheme.colorScheme.background,
+            tween(PvotDurations.Medium, easing = PvotMotion.Settle),
+            label = "openRowCard",
+        )
     Column(
-        Modifier
-            .fullWidthRow()
+        Modifier.fullWidthRow()
             .padding(vertical = if (expanded) PvotSpacing.XS else 0.dp)
             .clip(PvotShapes.Card)
-            .background(cardColor),
+            .background(cardColor)
     ) {
         PvotSwipeRow(
             containerColor = cardColor,
             thresholdFraction = SwipeThresholdFraction,
             dragResistance = SwipeDragResistance,
-            startAction = if (canSwipeCall) {
-                PvotSwipeRowDefaults.action(
-                    label = stringResource(R.string.call),
-                    icon = painterResource(R.drawable.ic_phone),
-                    onSwipe = { actions.primaryAction(row) },
-                )
-            } else null,
-            endAction = PvotSwipeRowDefaults.destructiveAction(
-                label = stringResource(R.string.call_history_delete),
-                icon = painterResource(R.drawable.ic_trash),
-                onSwipe = onDelete,
-            ),
+            startAction =
+                if (canSwipeCall) {
+                    PvotSwipeRowDefaults.action(
+                        label = stringResource(R.string.call),
+                        icon = painterResource(R.drawable.ic_phone),
+                        onSwipe = { actions.primaryAction(row) },
+                    )
+                } else null,
+            endAction =
+                PvotSwipeRowDefaults.destructiveAction(
+                    label = stringResource(R.string.call_history_delete),
+                    icon = painterResource(R.drawable.ic_trash),
+                    onSwipe = onDelete,
+                ),
         ) {
             PvotListRow(
                 title = {
@@ -537,14 +595,18 @@ private fun HistoryRow(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         fontWeight = if (row.group.isRead) null else FontWeight.Bold,
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            textDirection = if (row.titleIsNumber) TextDirection.Ltr else TextDirection.Content,
-                        ),
-                        color = if (row.group.callType == Calls.MISSED_TYPE && !row.group.isRead) {
-                            MaterialTheme.colorScheme.error
-                        } else {
-                            MaterialTheme.colorScheme.onSurface
-                        },
+                        style =
+                            MaterialTheme.typography.titleMedium.copy(
+                                textDirection =
+                                    if (row.titleIsNumber) TextDirection.Ltr
+                                    else TextDirection.Content
+                            ),
+                        color =
+                            if (row.group.callType == Calls.MISSED_TYPE && !row.group.isRead) {
+                                MaterialTheme.colorScheme.error
+                            } else {
+                                MaterialTheme.colorScheme.onSurface
+                            },
                     )
                 },
                 modifier = Modifier.testTag(TestTags.callHistoryRow(row.group.rowId)),
@@ -568,8 +630,11 @@ private fun HistoryRow(
         }
         AnimatedVisibility(
             visible = expanded && row.actions.isNotEmpty(),
-            enter = expandVertically(tween(PvotDurations.Medium, easing = PvotMotion.Settle)) + fadeIn(tween(PvotDurations.Medium)),
-            exit = shrinkVertically(tween(PvotDurations.Short)) + fadeOut(tween(PvotDurations.Short)),
+            enter =
+                expandVertically(tween(PvotDurations.Medium, easing = PvotMotion.Settle)) +
+                    fadeIn(tween(PvotDurations.Medium)),
+            exit =
+                shrinkVertically(tween(PvotDurations.Short)) + fadeOut(tween(PvotDurations.Short)),
         ) {
             RowActions(row, onRowAction)
         }
@@ -577,8 +642,8 @@ private fun HistoryRow(
 }
 
 /**
- * The open row's actions: round buttons with their labels under them, up to four to a line in
- * equal columns, below a gap that keeps them clear of the row.
+ * The open row's actions: round buttons with their labels under them, up to four to a line in equal
+ * columns, below a gap that keeps them clear of the row.
  */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -586,10 +651,15 @@ private fun RowActions(row: CallLogRowUi, onRowAction: (RowAction) -> Unit) {
     // A few actions share the card's width; more wrap, four to a line.
     val perLine = row.actions.size.coerceIn(1, ActionsPerLine)
     FlowRow(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = PvotSpacing.S, end = PvotSpacing.S, top = PvotSpacing.S, bottom = PvotSpacing.L)
-            .testTag(TestTags.callHistoryActions(row.group.rowId)),
+        modifier =
+            Modifier.fillMaxWidth()
+                .padding(
+                    start = PvotSpacing.S,
+                    end = PvotSpacing.S,
+                    top = PvotSpacing.S,
+                    bottom = PvotSpacing.L,
+                )
+                .testTag(TestTags.callHistoryActions(row.group.rowId)),
         maxItemsInEachRow = perLine,
         verticalArrangement = Arrangement.spacedBy(PvotSpacing.L),
     ) {
@@ -605,25 +675,33 @@ private fun RowActions(row: CallLogRowUi, onRowAction: (RowAction) -> Unit) {
                     icon = painterResource(icon),
                     contentDescription = label,
                     onClick = { onRowAction(action) },
-                    colors = if (destructive) {
-                        PvotIconButtonDefaults.tonalColors().copy(contentColor = MaterialTheme.colorScheme.error)
-                    } else {
-                        PvotIconButtonDefaults.tonalColors()
-                    },
-                    modifier = Modifier.testTag(TestTags.callHistoryAction(row.group.rowId, action.name)),
+                    colors =
+                        if (destructive) {
+                            PvotIconButtonDefaults.tonalColors()
+                                .copy(contentColor = MaterialTheme.colorScheme.error)
+                        } else {
+                            PvotIconButtonDefaults.tonalColors()
+                        },
+                    modifier =
+                        Modifier.testTag(TestTags.callHistoryAction(row.group.rowId, action.name)),
                 )
                 Text(
                     text = label,
                     style = MaterialTheme.typography.labelMedium,
-                    color = if (destructive) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
+                    color =
+                        if (destructive) MaterialTheme.colorScheme.error
+                        else MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
-                    // The button says this to TalkBack; the label is a bigger target for the finger.
-                    modifier = Modifier
-                        .padding(horizontal = PvotSpacing.XS)
-                        .semantics { hideFromAccessibility() }
-                        .clickable(interactionSource = null, indication = null) { onRowAction(action) },
+                    // The button says this to TalkBack; the label is a bigger target for the
+                    // finger.
+                    modifier =
+                        Modifier.padding(horizontal = PvotSpacing.XS)
+                            .semantics { hideFromAccessibility() }
+                            .clickable(interactionSource = null, indication = null) {
+                                onRowAction(action)
+                            },
                 )
             }
         }
@@ -643,9 +721,7 @@ private const val SwipeDragResistance = 0.75f
 @Composable
 internal fun SelectedTile(size: Dp = PvotLetterTileDefaults.Size) {
     Box(
-        modifier = Modifier
-            .size(size)
-            .background(MaterialTheme.colorScheme.primary, CircleShape),
+        modifier = Modifier.size(size).background(MaterialTheme.colorScheme.primary, CircleShape),
         contentAlignment = Alignment.Center,
     ) {
         Icon(
@@ -658,19 +734,31 @@ internal fun SelectedTile(size: Dp = PvotLetterTileDefaults.Size) {
 }
 
 @Composable
-internal fun labelAndIcon(action: RowAction, row: CallLogRowUi): Pair<String, Int> = when (action) {
-    RowAction.CALL -> TextUtils.expandTemplate(stringResource(R.string.call_log_action_call), row.title).toString() to R.drawable.ic_phone
-    RowAction.VIDEO_CALL -> stringResource(R.string.call_log_action_video_call) to R.drawable.ic_video
-    RowAction.SEND_MESSAGE -> stringResource(R.string.call_log_action_send_message) to R.drawable.ic_message
-    RowAction.CALL_WITH_NOTE -> stringResource(R.string.call_with_a_note) to R.drawable.ic_call_note
-    RowAction.REMIND -> stringResource(R.string.callback_reminder_action) to R.drawable.ic_bell
-    RowAction.CREATE_CONTACT -> stringResource(R.string.search_shortcut_create_new_contact) to R.drawable.ic_user_plus
-    RowAction.ADD_TO_CONTACT -> stringResource(R.string.search_shortcut_add_to_contact) to R.drawable.ic_user
-    RowAction.BLOCK -> stringResource(R.string.call_log_action_block_number) to R.drawable.ic_ban
-    RowAction.UNBLOCK -> stringResource(R.string.call_log_action_unblock_number) to R.drawable.ic_ban
-    RowAction.DETAILS -> stringResource(R.string.call_log_action_details) to R.drawable.ic_info_circle
-    RowAction.DELETE -> stringResource(R.string.voicemailMultiSelectDeleteConfirm) to R.drawable.ic_trash
-}
+internal fun labelAndIcon(action: RowAction, row: CallLogRowUi): Pair<String, Int> =
+    when (action) {
+        RowAction.CALL ->
+            TextUtils.expandTemplate(stringResource(R.string.call_log_action_call), row.title)
+                .toString() to R.drawable.ic_phone
+        RowAction.VIDEO_CALL ->
+            stringResource(R.string.call_log_action_video_call) to R.drawable.ic_video
+        RowAction.SEND_MESSAGE ->
+            stringResource(R.string.call_log_action_send_message) to R.drawable.ic_message
+        RowAction.CALL_WITH_NOTE ->
+            stringResource(R.string.call_with_a_note) to R.drawable.ic_call_note
+        RowAction.REMIND -> stringResource(R.string.callback_reminder_action) to R.drawable.ic_bell
+        RowAction.CREATE_CONTACT ->
+            stringResource(R.string.search_shortcut_create_new_contact) to R.drawable.ic_user_plus
+        RowAction.ADD_TO_CONTACT ->
+            stringResource(R.string.search_shortcut_add_to_contact) to R.drawable.ic_user
+        RowAction.BLOCK ->
+            stringResource(R.string.call_log_action_block_number) to R.drawable.ic_ban
+        RowAction.UNBLOCK ->
+            stringResource(R.string.call_log_action_unblock_number) to R.drawable.ic_ban
+        RowAction.DETAILS ->
+            stringResource(R.string.call_log_action_details) to R.drawable.ic_info_circle
+        RowAction.DELETE ->
+            stringResource(R.string.voicemailMultiSelectDeleteConfirm) to R.drawable.ic_trash
+    }
 
 @Composable
 private fun RowDetails(row: CallLogRowUi) {
@@ -682,7 +770,9 @@ private fun RowDetails(row: CallLogRowUi) {
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 fontWeight = if (row.group.isRead) null else FontWeight.Bold,
-                color = if (row.group.isRead) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface,
+                color =
+                    if (row.group.isRead) MaterialTheme.colorScheme.onSurfaceVariant
+                    else MaterialTheme.colorScheme.onSurface,
             )
         }
         row.accountLabel?.let { label ->
@@ -712,11 +802,12 @@ private fun CallTypeIcons(group: CallLogGroup) {
             Icon(
                 painter = painterResource(icon),
                 contentDescription = stringResource(description),
-                tint = if (type == Calls.MISSED_TYPE || type == Calls.REJECTED_TYPE) {
-                    MaterialTheme.colorScheme.error
-                } else {
-                    MaterialTheme.colorScheme.onSurfaceVariant
-                },
+                tint =
+                    if (type == Calls.MISSED_TYPE || type == Calls.REJECTED_TYPE) {
+                        MaterialTheme.colorScheme.error
+                    } else {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    },
                 modifier = Modifier.size(CallTypeIconSize),
             )
         }
@@ -731,11 +822,19 @@ private fun CallTypeIcons(group: CallLogGroup) {
     }
 }
 
-/** The badges for a call's [features]: icon and description, Wi-Fi first, then HD, then assisted dialing. */
+/**
+ * The badges for a call's [features]: icon and description, Wi-Fi first, then HD, then assisted
+ * dialing.
+ */
 internal fun qualityBadges(features: Int): List<Pair<Int, Int>> = buildList {
-    if (features and Calls.FEATURES_WIFI == Calls.FEATURES_WIFI) add(R.drawable.ic_wifi to R.string.description_wifi_call)
-    if (features and Calls.FEATURES_HD_CALL == Calls.FEATURES_HD_CALL) add(R.drawable.ic_badge_hd to R.string.description_hd_call)
-    if (features and TelephonyManagerCompat.FEATURES_ASSISTED_DIALING == TelephonyManagerCompat.FEATURES_ASSISTED_DIALING) {
+    if (features and Calls.FEATURES_WIFI == Calls.FEATURES_WIFI)
+        add(R.drawable.ic_wifi to R.string.description_wifi_call)
+    if (features and Calls.FEATURES_HD_CALL == Calls.FEATURES_HD_CALL)
+        add(R.drawable.ic_badge_hd to R.string.description_hd_call)
+    if (
+        features and TelephonyManagerCompat.FEATURES_ASSISTED_DIALING ==
+            TelephonyManagerCompat.FEATURES_ASSISTED_DIALING
+    ) {
         add(R.drawable.ic_world to R.string.description_assisted_dialing)
     }
 }
@@ -743,13 +842,15 @@ internal fun qualityBadges(features: Int): List<Pair<Int, Int>> = buildList {
 /** Size of the call type icons and badges on a row's second line. */
 private val CallTypeIconSize = 16.dp
 
-private fun callTypeIcon(type: Int): Pair<Int, Int> = when (type) {
-    Calls.INCOMING_TYPE, Calls.ANSWERED_EXTERNALLY_TYPE -> R.drawable.ic_call_incoming to R.string.type_incoming
-    Calls.OUTGOING_TYPE -> R.drawable.ic_call_outgoing to R.string.type_outgoing
-    Calls.VOICEMAIL_TYPE -> R.drawable.ic_call_voicemail to R.string.type_voicemail
-    Calls.BLOCKED_TYPE -> R.drawable.ic_call_blocked to R.string.type_blocked
-    else -> R.drawable.ic_call_missed to R.string.type_missed
-}
+private fun callTypeIcon(type: Int): Pair<Int, Int> =
+    when (type) {
+        Calls.INCOMING_TYPE,
+        Calls.ANSWERED_EXTERNALLY_TYPE -> R.drawable.ic_call_incoming to R.string.type_incoming
+        Calls.OUTGOING_TYPE -> R.drawable.ic_call_outgoing to R.string.type_outgoing
+        Calls.VOICEMAIL_TYPE -> R.drawable.ic_call_voicemail to R.string.type_voicemail
+        Calls.BLOCKED_TYPE -> R.drawable.ic_call_blocked to R.string.type_blocked
+        else -> R.drawable.ic_call_missed to R.string.type_missed
+    }
 
 @Composable
 private fun PrimaryButton(row: CallLogRowUi, onPlay: () -> Unit, actions: CallHistoryActions) {
@@ -757,14 +858,28 @@ private fun PrimaryButton(row: CallLogRowUi, onPlay: () -> Unit, actions: CallHi
     @StringRes val description: Int
     when (row.primaryAction) {
         PrimaryAction.NONE -> return
-        PrimaryAction.VIDEO_CALL -> { icon = R.drawable.ic_video; description = R.string.description_video_call_action }
-        PrimaryAction.PLAY_VOICEMAIL -> { icon = R.drawable.ic_player_play; description = R.string.description_voicemail_action }
-        PrimaryAction.CALL, PrimaryAction.CALL_VOICEMAIL -> { icon = R.drawable.ic_phone; description = R.string.description_call_action }
+        PrimaryAction.VIDEO_CALL -> {
+            icon = R.drawable.ic_video
+            description = R.string.description_video_call_action
+        }
+        PrimaryAction.PLAY_VOICEMAIL -> {
+            icon = R.drawable.ic_player_play
+            description = R.string.description_voicemail_action
+        }
+        PrimaryAction.CALL,
+        PrimaryAction.CALL_VOICEMAIL -> {
+            icon = R.drawable.ic_phone
+            description = R.string.description_call_action
+        }
     }
     PvotIconButton(
         icon = painterResource(icon),
-        contentDescription = TextUtils.expandTemplate(stringResource(description), row.title).toString(),
-        onClick = { if (row.primaryAction == PrimaryAction.PLAY_VOICEMAIL) onPlay() else actions.primaryAction(row) },
+        contentDescription =
+            TextUtils.expandTemplate(stringResource(description), row.title).toString(),
+        onClick = {
+            if (row.primaryAction == PrimaryAction.PLAY_VOICEMAIL) onPlay()
+            else actions.primaryAction(row)
+        },
         modifier = Modifier.testTag(TestTags.callHistoryPrimary(row.group.rowId)),
         colors = PvotIconButtonDefaults.plainColors(MaterialTheme.colorScheme.primary),
     )

@@ -56,12 +56,19 @@ import org.prauga.phone.dialer.ui.fullWidthRow
 /** What the search results do when the user acts. */
 interface SearchActions {
     fun call(number: String, position: Int)
+
     fun videoCall(number: String, position: Int)
+
     fun addToContact(number: String)
+
     fun createContact(number: String)
+
     fun sendSms(number: String)
+
     fun allowLocation()
+
     fun dismissLocation()
+
     fun turnOnPermission()
 
     /** A finger went down on the list, which hides the dialpad or the keyboard. */
@@ -69,24 +76,28 @@ interface SearchActions {
 }
 
 /**
- * Search results: contacts, directory contacts and nearby places matching the query, then
- * shortcuts for the typed number.
+ * Search results: contacts, directory contacts and nearby places matching the query, then shortcuts
+ * for the typed number.
  *
  * @param needsPermission Whether contacts cannot be read, which asks for the permission instead
  */
 @Composable
-fun SearchScreen(rows: List<SearchRow>, needsPermission: Boolean, actions: SearchActions, modifier: Modifier = Modifier) {
+fun SearchScreen(
+    rows: List<SearchRow>,
+    needsPermission: Boolean,
+    actions: SearchActions,
+    modifier: Modifier = Modifier,
+) {
     val listState = rememberLazyListState()
     // New results, as when the permission is granted or the query changes, start from the first
     // one: the list would otherwise keep the row it showed while matches arrive above it.
-    LaunchedEffect(needsPermission, rows.firstOrNull()?.key) {
-        listState.scrollToItem(0)
-    }
+    LaunchedEffect(needsPermission, rows.firstOrNull()?.key) { listState.scrollToItem(0) }
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .pointerInput(actions, needsPermission) {
+        modifier =
+            modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).pointerInput(
+                actions,
+                needsPermission,
+            ) {
                 // Tapping the permission prompt is not the list being touched: it keeps the keypad.
                 if (needsPermission) return@pointerInput
                 // Watches the first touch without taking it from the rows.
@@ -94,7 +105,7 @@ fun SearchScreen(rows: List<SearchRow>, needsPermission: Boolean, actions: Searc
                     awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
                     actions.listTouched()
                 }
-            },
+            }
     ) {
         PvotScreen(
             modifier = Modifier.fillMaxSize().testTag(TestTags.SEARCH_LIST),
@@ -110,7 +121,9 @@ fun SearchScreen(rows: List<SearchRow>, needsPermission: Boolean, actions: Searc
                     PvotEmptyContent(
                         message = stringResource(R.string.new_permission_no_search),
                         modifier = Modifier.fillMaxWidth().padding(PvotSpacing.L),
-                        icon = { Icon(painterResource(R.drawable.ic_users), contentDescription = null) },
+                        icon = {
+                            Icon(painterResource(R.drawable.ic_users), contentDescription = null)
+                        },
                         actionLabel = stringResource(R.string.permission_single_turn_on),
                         onAction = actions::turnOnPermission,
                     )
@@ -118,10 +131,17 @@ fun SearchScreen(rows: List<SearchRow>, needsPermission: Boolean, actions: Searc
             }
             items(rows, key = { it.key }) { row ->
                 when (row) {
-                    is SearchRow.Header -> PvotSectionHeader(
-                        title = row.text,
-                        modifier = Modifier.fillMaxWidth().padding(start = PvotSpacing.L, end = PvotSpacing.L, top = PvotSpacing.M),
-                    )
+                    is SearchRow.Header ->
+                        PvotSectionHeader(
+                            title = row.text,
+                            modifier =
+                                Modifier.fillMaxWidth()
+                                    .padding(
+                                        start = PvotSpacing.L,
+                                        end = PvotSpacing.L,
+                                        top = PvotSpacing.M,
+                                    ),
+                        )
                     is SearchRow.Number -> NumberRow(row, actions)
                     is SearchRow.Action -> ActionRow(row, actions)
                     SearchRow.LocationRequest -> LocationRequest(actions)
@@ -139,26 +159,33 @@ private fun NumberRow(row: SearchRow.Number, actions: SearchActions) {
                 text = row.name ?: row.details,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                color = if (row.name == null) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface,
+                color =
+                    if (row.name == null) MaterialTheme.colorScheme.onSurfaceVariant
+                    else MaterialTheme.colorScheme.onSurface,
             )
         },
         modifier = Modifier.fullWidthRow().testTag(TestTags.searchRow(row.key)),
-        supportingText = if (row.name != null && row.details.isNotEmpty()) {
-            { Text(text = row.details, maxLines = 1, overflow = TextOverflow.Ellipsis) }
-        } else null,
+        supportingText =
+            if (row.name != null && row.details.isNotEmpty()) {
+                { Text(text = row.details, maxLines = 1, overflow = TextOverflow.Ellipsis) }
+            } else null,
         leading = {
             if (row.name != null) {
                 Box {
-                    ContactAvatar(name = row.name.text, photoUri = row.photoUri, colorKey = row.colorKey)
+                    ContactAvatar(
+                        name = row.name.text,
+                        photoUri = row.photoUri,
+                        colorKey = row.colorKey,
+                    )
                     if (row.isWork) {
                         Icon(
                             painter = painterResource(R.drawable.ic_briefcase),
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier
-                                .align(Alignment.BottomEnd)
-                                .size(16.dp)
-                                .background(MaterialTheme.colorScheme.surface, CircleShape),
+                            modifier =
+                                Modifier.align(Alignment.BottomEnd)
+                                    .size(16.dp)
+                                    .background(MaterialTheme.colorScheme.surface, CircleShape),
                         )
                     }
                 }
@@ -167,41 +194,55 @@ private fun NumberRow(row: SearchRow.Number, actions: SearchActions) {
                 Spacer(Modifier.size(PvotLetterTileDefaults.Size))
             }
         },
-        trailing = if (row.canVideoCall) {
-            {
-                IconButton(onClick = { actions.videoCall(row.number, row.position) }) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_video),
-                        contentDescription = stringResource(R.string.description_search_video_call),
-                        tint = MaterialTheme.colorScheme.primary,
-                    )
+        trailing =
+            if (row.canVideoCall) {
+                {
+                    IconButton(onClick = { actions.videoCall(row.number, row.position) }) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_video),
+                            contentDescription =
+                                stringResource(R.string.description_search_video_call),
+                            tint = MaterialTheme.colorScheme.primary,
+                        )
+                    }
                 }
-            }
-        } else null,
+            } else null,
         onClick = { actions.call(row.number, row.position) },
     )
 }
 
 @Composable
 private fun ActionRow(row: SearchRow.Action, actions: SearchActions) {
-    val (label, icon) = when (row.action) {
-        SearchAction.ADD_TO_CONTACT -> stringResource(R.string.search_shortcut_add_to_contact) to R.drawable.ic_user
-        SearchAction.CREATE_NEW_CONTACT -> stringResource(R.string.search_shortcut_create_new_contact) to R.drawable.ic_user_plus
-        SearchAction.MAKE_VILTE_CALL -> stringResource(R.string.search_shortcut_make_video_call) to R.drawable.ic_video
-        SearchAction.SEND_SMS -> stringResource(R.string.search_shortcut_send_sms_message) to R.drawable.ic_message
-        else -> stringResource(R.string.search_shortcut_make_voice_call, row.number) to R.drawable.ic_phone
-    }
+    val (label, icon) =
+        when (row.action) {
+            SearchAction.ADD_TO_CONTACT ->
+                stringResource(R.string.search_shortcut_add_to_contact) to R.drawable.ic_user
+            SearchAction.CREATE_NEW_CONTACT ->
+                stringResource(R.string.search_shortcut_create_new_contact) to
+                    R.drawable.ic_user_plus
+            SearchAction.MAKE_VILTE_CALL ->
+                stringResource(R.string.search_shortcut_make_video_call) to R.drawable.ic_video
+            SearchAction.SEND_SMS ->
+                stringResource(R.string.search_shortcut_send_sms_message) to R.drawable.ic_message
+            else ->
+                stringResource(R.string.search_shortcut_make_voice_call, row.number) to
+                    R.drawable.ic_phone
+        }
     PvotListRow(
         title = label,
         modifier = Modifier.fullWidthRow().testTag(TestTags.searchAction(row.action)),
         leading = {
             Box(
-                modifier = Modifier
-                    .size(PvotLetterTileDefaults.Size)
-                    .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
+                modifier =
+                    Modifier.size(PvotLetterTileDefaults.Size)
+                        .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(painterResource(icon), contentDescription = null, tint = MaterialTheme.colorScheme.onPrimaryContainer)
+                Icon(
+                    painterResource(icon),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                )
             }
         },
         onClick = {
@@ -220,10 +261,21 @@ private fun ActionRow(row: SearchRow.Action, actions: SearchActions) {
 private fun LocationRequest(actions: SearchActions) {
     PvotCard(modifier = Modifier.fillMaxWidth().padding(PvotSpacing.L)) {
         Column(verticalArrangement = Arrangement.spacedBy(PvotSpacing.S)) {
-            Text(text = stringResource(R.string.search_location_permission), style = MaterialTheme.typography.bodyMedium)
+            Text(
+                text = stringResource(R.string.search_location_permission),
+                style = MaterialTheme.typography.bodyMedium,
+            )
             Row(horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S)) {
-                PvotButton(text = stringResource(R.string.nearby_places_dismiss), onClick = actions::dismissLocation, style = PvotButtonStyle.Text)
-                PvotButton(text = stringResource(R.string.nearby_places_allow), onClick = actions::allowLocation, style = PvotButtonStyle.Filled)
+                PvotButton(
+                    text = stringResource(R.string.nearby_places_dismiss),
+                    onClick = actions::dismissLocation,
+                    style = PvotButtonStyle.Text,
+                )
+                PvotButton(
+                    text = stringResource(R.string.nearby_places_allow),
+                    onClick = actions::allowLocation,
+                    style = PvotButtonStyle.Filled,
+                )
             }
         }
     }

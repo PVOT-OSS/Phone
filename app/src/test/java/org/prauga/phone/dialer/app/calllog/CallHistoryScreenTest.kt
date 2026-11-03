@@ -43,17 +43,31 @@ class CallHistoryScreenTest {
 
     @get:Rule val compose = createComposeRule()
 
-    private val missed = callLogGroup(1, "+15550100", listOf(Calls.MISSED_TYPE, Calls.MISSED_TYPE), isRead = false)
+    private val missed =
+        callLogGroup(1, "+15550100", listOf(Calls.MISSED_TYPE, Calls.MISSED_TYPE), isRead = false)
     private val incoming = callLogGroup(10, "+15550101")
-    private val older = callLogGroup(20, "+15550102", listOf(Calls.OUTGOING_TYPE), dayGroup = CallLogGroupBuilder.DAY_GROUP_OTHER)
-    private val rows = mapOf(
-        1L to row(missed, "Ada Lovelace", details = "(2) Mobile, 2 mins ago"),
-        10L to row(incoming, actions = listOf(RowAction.SEND_MESSAGE, RowAction.BLOCK, RowAction.DETAILS)),
-        20L to row(older, "Grace Hopper", details = "Work, Mar 3"),
-    )
+    private val older =
+        callLogGroup(
+            20,
+            "+15550102",
+            listOf(Calls.OUTGOING_TYPE),
+            dayGroup = CallLogGroupBuilder.DAY_GROUP_OTHER,
+        )
+    private val rows =
+        mapOf(
+            1L to row(missed, "Ada Lovelace", details = "(2) Mobile, 2 mins ago"),
+            10L to
+                row(
+                    incoming,
+                    actions = listOf(RowAction.SEND_MESSAGE, RowAction.BLOCK, RowAction.DETAILS),
+                ),
+            20L to row(older, "Grace Hopper", details = "Work, Mar 3"),
+        )
 
-    private var state by mutableStateOf<CallHistoryUiState>(
-        CallHistoryUiState.Loaded(listOf(missed, incoming, older), emptySet(), rows = rows))
+    private var state by
+        mutableStateOf<CallHistoryUiState>(
+            CallHistoryUiState.Loaded(listOf(missed, incoming, older), emptySet(), rows = rows)
+        )
 
     private fun hide(change: (Set<Long>) -> Set<Long>) {
         val loaded = state as CallHistoryUiState.Loaded
@@ -62,33 +76,72 @@ class CallHistoryScreenTest {
 
     private inner class RecordingActions : CallHistoryActions {
         val events = mutableListOf<String>()
-        override fun primaryAction(row: CallLogRowUi) { events += "call ${row.group.rowId}" }
-        override fun rowAction(row: CallLogRowUi, action: RowAction) { events += "${action.name} ${row.group.rowId}" }
-        override fun opened(row: CallLogRowUi, playNow: Boolean) { events += "opened ${row.group.rowId}${if (playNow) " play" else ""}" }
-        override fun closed(row: CallLogRowUi) { events += "closed ${row.group.rowId}" }
-        override fun deleteSelected(groups: List<CallLogGroup>) { events += "deleteSelected ${groups.map { it.rowId }}" }
-        override fun selectionModeChanged(enabled: Boolean, exit: () -> Unit) { events += "selecting $enabled" }
-        override fun deleteLater(group: CallLogGroup) { events += "delete ${group.rowId}"; hide { it + group.callIds } }
-        override fun undoDelete(group: CallLogGroup) { events += "undo ${group.rowId}"; hide { it - group.callIds.toSet() } }
-        override fun block(row: CallLogRowUi) { events += "block ${row.group.rowId}" }
-        override fun unblock(row: CallLogRowUi) { events += "unblock ${row.group.rowId}" }
-        override fun turnOnPermission() { events += "permission" }
-        override fun emptyAction() { events += "dialpad" }
+
+        override fun primaryAction(row: CallLogRowUi) {
+            events += "call ${row.group.rowId}"
+        }
+
+        override fun rowAction(row: CallLogRowUi, action: RowAction) {
+            events += "${action.name} ${row.group.rowId}"
+        }
+
+        override fun opened(row: CallLogRowUi, playNow: Boolean) {
+            events += "opened ${row.group.rowId}${if (playNow) " play" else ""}"
+        }
+
+        override fun closed(row: CallLogRowUi) {
+            events += "closed ${row.group.rowId}"
+        }
+
+        override fun deleteSelected(groups: List<CallLogGroup>) {
+            events += "deleteSelected ${groups.map { it.rowId }}"
+        }
+
+        override fun selectionModeChanged(enabled: Boolean, exit: () -> Unit) {
+            events += "selecting $enabled"
+        }
+
+        override fun deleteLater(group: CallLogGroup) {
+            events += "delete ${group.rowId}"
+            hide { it + group.callIds }
+        }
+
+        override fun undoDelete(group: CallLogGroup) {
+            events += "undo ${group.rowId}"
+            hide { it - group.callIds.toSet() }
+        }
+
+        override fun block(row: CallLogRowUi) {
+            events += "block ${row.group.rowId}"
+        }
+
+        override fun unblock(row: CallLogRowUi) {
+            events += "unblock ${row.group.rowId}"
+        }
+
+        override fun turnOnPermission() {
+            events += "permission"
+        }
+
+        override fun emptyAction() {
+            events += "dialpad"
+        }
     }
 
     private val actions = RecordingActions()
 
-    private fun show(showEmptyAction: Boolean = true) = compose.setContent {
-        PhoneScreenTheme {
-            CallHistoryScreen(
-                state = state,
-                emptyMessage = R.string.call_log_all_empty,
-                showEmptyAction = showEmptyAction,
-                actions = actions,
-                selectable = true,
-            )
+    private fun show(showEmptyAction: Boolean = true) =
+        compose.setContent {
+            PhoneScreenTheme {
+                CallHistoryScreen(
+                    state = state,
+                    emptyMessage = R.string.call_log_all_empty,
+                    showEmptyAction = showEmptyAction,
+                    actions = actions,
+                    selectable = true,
+                )
+            }
         }
-    }
 
     @Test
     fun callsSitUnderTheirDay() {
@@ -112,7 +165,12 @@ class CallHistoryScreenTest {
     fun anOpenRowsLabelsRunTheirActionsToo() {
         show()
         compose.onNodeWithTag(TestTags.callHistoryRow(10)).performClick()
-        compose.onNode(hasText("Call details") and hasAnyAncestor(hasTestTag(TestTags.callHistoryActions(10)))).performClick()
+        compose
+            .onNode(
+                hasText("Call details") and
+                    hasAnyAncestor(hasTestTag(TestTags.callHistoryActions(10)))
+            )
+            .performClick()
         assertThat(actions.events).containsExactly("opened 10", "DETAILS 10").inOrder()
     }
 
@@ -124,11 +182,17 @@ class CallHistoryScreenTest {
         compose.onNodeWithTag(TestTags.callHistoryRow(20)).performClick()
         compose.onNodeWithText("2 selected").assertExists()
 
-        compose.onNode(hasText("Delete") and hasAnyAncestor(hasTestTag(TestTags.CALL_HISTORY_SELECTION))).performClick()
+        compose
+            .onNode(
+                hasText("Delete") and hasAnyAncestor(hasTestTag(TestTags.CALL_HISTORY_SELECTION))
+            )
+            .performClick()
         compose.onNodeWithText("Delete these 2 calls from your history?").assertExists()
         compose.onAllNodes(hasText("Delete")).onLast().performClick()
 
-        assertThat(actions.events).containsExactly("selecting true", "deleteSelected [10, 20]", "selecting false").inOrder()
+        assertThat(actions.events)
+            .containsExactly("selecting true", "deleteSelected [10, 20]", "selecting false")
+            .inOrder()
     }
 
     @Test
@@ -191,7 +255,10 @@ class CallHistoryScreenTest {
     fun screenshotDark() {
         show()
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/calllog/history_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/calllog/history_dark.png")
     }
 
     @Test
@@ -200,6 +267,9 @@ class CallHistoryScreenTest {
         show()
         compose.onNodeWithTag(TestTags.callHistoryRow(10)).performClick()
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/calllog/history_light_open.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/calllog/history_light_open.png")
     }
 }

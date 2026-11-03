@@ -48,8 +48,8 @@ import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.settings.ui.Choice
 import org.prauga.phone.dialer.app.settings.ui.ChoiceRow
 import org.prauga.phone.dialer.app.settings.ui.SettingsComposeFragment
-import org.prauga.phone.dialer.app.settings.ui.SettingsList
 import org.prauga.phone.dialer.app.settings.ui.SettingsGroup
+import org.prauga.phone.dialer.app.settings.ui.SettingsList
 import org.prauga.phone.dialer.app.settings.ui.settingsIcon
 import org.prauga.phone.dialer.callrecord.impl.CallRecorderService
 import org.prauga.phone.dialer.ui.TestTags
@@ -102,10 +102,13 @@ internal class SoundSettingsModel(private val context: Context) {
 
     var vibrateWhenRinging by mutableStateOf(false)
         private set
+
     var dialpadTones by mutableStateOf(true)
         private set
+
     var dtmfToneLength by mutableIntStateOf(DTMF_TONE_TYPE_NORMAL)
         private set
+
     var ringtoneName by mutableStateOf<String?>(null)
         private set
 
@@ -115,17 +118,24 @@ internal class SoundSettingsModel(private val context: Context) {
 
     /** Re-reads the system settings, which can change while this screen is in the background. */
     fun refresh() {
-        vibrateWhenRinging = hasVibrator &&
-            Settings.System.getInt(resolver, Settings.System.VIBRATE_WHEN_RINGING, 0) == 1
-        dialpadTones = Settings.System.getInt(resolver, Settings.System.DTMF_TONE_WHEN_DIALING, 1) == 1
+        vibrateWhenRinging =
+            hasVibrator &&
+                Settings.System.getInt(resolver, Settings.System.VIBRATE_WHEN_RINGING, 0) == 1
+        dialpadTones =
+            Settings.System.getInt(resolver, Settings.System.DTMF_TONE_WHEN_DIALING, 1) == 1
         dtmfToneLength =
-            Settings.System.getInt(resolver, Settings.System.DTMF_TONE_TYPE_WHEN_DIALING, DTMF_TONE_TYPE_NORMAL)
+            Settings.System.getInt(
+                resolver,
+                Settings.System.DTMF_TONE_TYPE_WHEN_DIALING,
+                DTMF_TONE_TYPE_NORMAL,
+            )
     }
 
     /** Runs [write] if Phone may write system settings, and says so otherwise. */
     private inline fun writeSystem(write: () -> Unit): Boolean {
         if (!Settings.System.canWrite(context)) {
-            Toast.makeText(context, R.string.toast_cannot_write_system_settings, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, R.string.toast_cannot_write_system_settings, Toast.LENGTH_SHORT)
+                .show()
             return false
         }
         write()
@@ -133,59 +143,88 @@ internal class SoundSettingsModel(private val context: Context) {
     }
 
     fun changeVibrateWhenRinging(on: Boolean) {
-        if (writeSystem { Settings.System.putInt(resolver, Settings.System.VIBRATE_WHEN_RINGING, if (on) 1 else 0) }) {
+        if (
+            writeSystem {
+                Settings.System.putInt(
+                    resolver,
+                    Settings.System.VIBRATE_WHEN_RINGING,
+                    if (on) 1 else 0,
+                )
+            }
+        ) {
             vibrateWhenRinging = on
         }
     }
 
     fun changeDialpadTones(on: Boolean) {
-        if (writeSystem { Settings.System.putInt(resolver, Settings.System.DTMF_TONE_WHEN_DIALING, if (on) 1 else 0) }) {
+        if (
+            writeSystem {
+                Settings.System.putInt(
+                    resolver,
+                    Settings.System.DTMF_TONE_WHEN_DIALING,
+                    if (on) 1 else 0,
+                )
+            }
+        ) {
             dialpadTones = on
         }
     }
 
     fun changeDtmfToneLength(index: Int) {
-        if (writeSystem { Settings.System.putInt(resolver, Settings.System.DTMF_TONE_TYPE_WHEN_DIALING, index) }) {
+        if (
+            writeSystem {
+                Settings.System.putInt(resolver, Settings.System.DTMF_TONE_TYPE_WHEN_DIALING, index)
+            }
+        ) {
             dtmfToneLength = index
         }
     }
 
     /** The current ringtone, for the picker to start from. */
-    fun ringtoneUri(): Uri? = RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_RINGTONE)
+    fun ringtoneUri(): Uri? =
+        RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_RINGTONE)
 
     /** The system ringtone picker, starting from the current ringtone. */
-    fun ringtonePickerIntent(title: String): Intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
-        .putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_RINGTONE)
-        .putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, false)
-        .putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true)
-        .putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, title)
-        .putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, ringtoneUri())
+    fun ringtonePickerIntent(title: String): Intent =
+        Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
+            .putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_RINGTONE)
+            .putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, false)
+            .putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true)
+            .putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, title)
+            .putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, ringtoneUri())
 
     /** Makes [uri] the phone's ringtone; null is silent. */
     fun setRingtone(uri: Uri?) {
-        writeSystem { RingtoneManager.setActualDefaultRingtoneUri(context, RingtoneManager.TYPE_RINGTONE, uri) }
+        writeSystem {
+            RingtoneManager.setActualDefaultRingtoneUri(context, RingtoneManager.TYPE_RINGTONE, uri)
+        }
     }
 
     /** Looks up the ringtone's title, which reads the media provider. */
     suspend fun loadRingtoneName() {
-        ringtoneName = withContext(Dispatchers.IO) {
-            val uri = ringtoneUri() ?: return@withContext context.getString(R.string.ringtone_silent)
-            runCatching { RingtoneManager.getRingtone(context, uri)?.getTitle(context) }.getOrNull()
-                ?.takeIf { it.isNotEmpty() }
-                ?: context.getString(R.string.ringtone_unknown)
-        }
+        ringtoneName =
+            withContext(Dispatchers.IO) {
+                val uri =
+                    ringtoneUri() ?: return@withContext context.getString(R.string.ringtone_silent)
+                runCatching { RingtoneManager.getRingtone(context, uri)?.getTitle(context) }
+                    .getOrNull()
+                    ?.takeIf { it.isNotEmpty() } ?: context.getString(R.string.ringtone_unknown)
+            }
     }
 
     fun hasDndAccess(): Boolean =
         context.getSystemService(NotificationManager::class.java).isNotificationPolicyAccessGranted
 
-    private fun hidesCarrierSettings(): Boolean = try {
-        context.getSystemService(CarrierConfigManager::class.java).config
-            ?.getBoolean(CarrierConfigManager.KEY_HIDE_CARRIER_NETWORK_SETTINGS_BOOL) == true
-    } catch (e: SecurityException) {
-        // Needs READ_PHONE_STATE; without it, treat the carrier as not hiding its settings.
-        false
-    }
+    private fun hidesCarrierSettings(): Boolean =
+        try {
+            context
+                .getSystemService(CarrierConfigManager::class.java)
+                .config
+                ?.getBoolean(CarrierConfigManager.KEY_HIDE_CARRIER_NETWORK_SETTINGS_BOOL) == true
+        } catch (e: SecurityException) {
+            // Needs READ_PHONE_STATE; without it, treat the carrier as not hiding its settings.
+            false
+        }
 
     companion object {
         const val DTMF_TONE_TYPE_NORMAL = 0
@@ -198,21 +237,47 @@ internal class SoundSettingsModel(private val context: Context) {
 internal fun SoundSettingsList(model: SoundSettingsModel) {
     val context = LocalContext.current
     val ringtoneTitle = stringResource(R.string.ringtone_title)
-    val picker = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val data = result.data ?: return@rememberLauncherForActivityResult
-            if (!data.hasExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)) return@rememberLauncherForActivityResult
-            model.setRingtone(IntentCompat.getParcelableExtra(data, RingtoneManager.EXTRA_RINGTONE_PICKED_URI, Uri::class.java))
+    val picker =
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result
+            ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data = result.data ?: return@rememberLauncherForActivityResult
+                if (!data.hasExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI))
+                    return@rememberLauncherForActivityResult
+                model.setRingtone(
+                    IntentCompat.getParcelableExtra(
+                        data,
+                        RingtoneManager.EXTRA_RINGTONE_PICKED_URI,
+                        Uri::class.java,
+                    )
+                )
+            }
         }
-    }
     LaunchedEffect(model.ringtoneName == null) { model.loadRingtoneName() }
     var askForDndAccess by rememberSaveable { mutableStateOf(false) }
-    val inCallVibrations = listOf(
-        Triple(stringResource(R.string.incall_vibrate_outgoing_key), R.string.incall_vibrate_outgoing_title, null),
-        Triple(stringResource(R.string.incall_vibrate_call_waiting_key), R.string.incall_vibrate_call_waiting_title, null),
-        Triple(stringResource(R.string.incall_vibrate_hangup_key), R.string.incall_vibrate_hangup_title, null),
-        Triple(stringResource(R.string.incall_vibrate_45_key), R.string.incall_vibrate_45_title, R.string.incall_vibrate_45_summary),
-    )
+    val inCallVibrations =
+        listOf(
+            Triple(
+                stringResource(R.string.incall_vibrate_outgoing_key),
+                R.string.incall_vibrate_outgoing_title,
+                null,
+            ),
+            Triple(
+                stringResource(R.string.incall_vibrate_call_waiting_key),
+                R.string.incall_vibrate_call_waiting_title,
+                null,
+            ),
+            Triple(
+                stringResource(R.string.incall_vibrate_hangup_key),
+                R.string.incall_vibrate_hangup_title,
+                null,
+            ),
+            Triple(
+                stringResource(R.string.incall_vibrate_45_key),
+                R.string.incall_vibrate_45_title,
+                R.string.incall_vibrate_45_summary,
+            ),
+        )
 
     SettingsList {
         item(key = "ringing") {
@@ -260,7 +325,9 @@ internal fun SoundSettingsList(model: SoundSettingsModel) {
         item(key = "incall") {
             SettingsGroup(title = stringResource(R.string.incall_category_title)) {
                 var enabled by remember {
-                    mutableStateOf(model.devicePrefs.getBoolean(SoundSettingsModel.KEY_ENABLE_DND, false))
+                    mutableStateOf(
+                        model.devicePrefs.getBoolean(SoundSettingsModel.KEY_ENABLE_DND, false)
+                    )
                 }
                 PvotSwitchRow(
                     title = stringResource(R.string.incall_enable_dnd_title),
@@ -271,16 +338,24 @@ internal fun SoundSettingsList(model: SoundSettingsModel) {
                             askForDndAccess = true
                         } else {
                             enabled = on
-                            model.devicePrefs.edit { putBoolean(SoundSettingsModel.KEY_ENABLE_DND, on) }
+                            model.devicePrefs.edit {
+                                putBoolean(SoundSettingsModel.KEY_ENABLE_DND, on)
+                            }
                         }
                     },
-                    modifier = Modifier.testTag(TestTags.settingsRow(SoundSettingsModel.KEY_ENABLE_DND)),
+                    modifier =
+                        Modifier.testTag(TestTags.settingsRow(SoundSettingsModel.KEY_ENABLE_DND)),
                     icon = settingsIcon(R.drawable.ic_bell),
                     iconStyle = PvotRowIconStyle.Plain,
                 )
                 if (model.hasVibrator) {
                     for ((keyName, title, summary) in inCallVibrations) {
-                        DeviceSwitchRow(model.devicePrefs, keyName, stringResource(title), summary?.let { stringResource(it) })
+                        DeviceSwitchRow(
+                            model.devicePrefs,
+                            keyName,
+                            stringResource(title),
+                            summary?.let { stringResource(it) },
+                        )
                     }
                 }
             }
@@ -317,13 +392,21 @@ internal fun SoundSettingsList(model: SoundSettingsModel) {
                 context.startActivity(Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS))
             },
         )
-        PvotDialogAction(label = stringResource(R.string.deny), onClick = { askForDndAccess = false })
+        PvotDialogAction(
+            label = stringResource(R.string.deny),
+            onClick = { askForDndAccess = false },
+        )
     }
 }
 
 /** A switch stored as a boolean in [prefs] under [key], off until the user turns it on. */
 @Composable
-private fun DeviceSwitchRow(prefs: SharedPreferences, key: String, title: String, summary: String?) {
+private fun DeviceSwitchRow(
+    prefs: SharedPreferences,
+    key: String,
+    title: String,
+    summary: String?,
+) {
     var checked by remember(key) { mutableStateOf(prefs.getBoolean(key, false)) }
     PvotSwitchRow(
         title = title,

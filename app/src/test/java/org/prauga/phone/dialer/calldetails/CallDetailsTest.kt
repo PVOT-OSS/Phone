@@ -28,8 +28,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.prauga.phone.dialer.R
-import org.prauga.phone.dialer.callrecord.CallRecording
 import org.prauga.phone.dialer.calllogutils.CallbackActionHelper.CallbackAction
+import org.prauga.phone.dialer.callrecord.CallRecording
 import org.prauga.phone.dialer.compat.telephony.TelephonyManagerCompat
 import org.prauga.phone.dialer.dialercontact.DialerContact
 import org.prauga.phone.dialer.dialercontact.SimDetails
@@ -53,30 +53,45 @@ class CallDetailsTest {
     // Call times show in the device's zone; pin it so the screenshots match on any machine.
     private val zone = TimeZone.getDefault()
 
-    @Before
-    fun pinTimeZone() = TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
+    @Before fun pinTimeZone() = TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
 
-    @After
-    fun restoreTimeZone() = TimeZone.setDefault(zone)
+    @After fun restoreTimeZone() = TimeZone.setDefault(zone)
 
-    private val contact = DialerContact.newBuilder()
-        .setNameOrNumber("Alex Doe")
-        .setNumber("+15551234567")
-        .setDisplayNumber("+1 555-123-4567")
-        .setNumberLabel("Mobile")
-        .setSimDetails(SimDetails.newBuilder().setNetwork("Carrier").setColor(PhoneAccount.NO_HIGHLIGHT_COLOR))
-        .build()
+    private val contact =
+        DialerContact.newBuilder()
+            .setNameOrNumber("Alex Doe")
+            .setNumber("+15551234567")
+            .setDisplayNumber("+1 555-123-4567")
+            .setNumberLabel("Mobile")
+            .setSimDetails(
+                SimDetails.newBuilder()
+                    .setNetwork("Carrier")
+                    .setColor(PhoneAccount.NO_HIGHLIGHT_COLOR)
+            )
+            .build()
 
-    private fun entry(id: Long, type: Int, features: Int = 0, duration: Long = 65, mappingId: String = "m$id") =
+    private fun entry(
+        id: Long,
+        type: Int,
+        features: Int = 0,
+        duration: Long = 65,
+        mappingId: String = "m$id",
+    ) =
         CallDetailsEntries.CallDetailsEntry.newBuilder()
-            .setCallId(id).setCallType(type).setFeatures(features).setDate(1_790_000_000_000L - id * 3_600_000)
-            .setDuration(duration).setCallMappingId(mappingId).build()
+            .setCallId(id)
+            .setCallType(type)
+            .setFeatures(features)
+            .setDate(1_790_000_000_000L - id * 3_600_000)
+            .setDuration(duration)
+            .setCallMappingId(mappingId)
+            .build()
 
-    private val entries = CallDetailsEntries.newBuilder()
-        .addEntries(entry(1, Calls.OUTGOING_TYPE))
-        .addEntries(entry(2, Calls.MISSED_TYPE, duration = 0))
-        .addEntries(entry(3, Calls.INCOMING_TYPE, features = Calls.FEATURES_RTT))
-        .build()
+    private val entries =
+        CallDetailsEntries.newBuilder()
+            .addEntries(entry(1, Calls.OUTGOING_TYPE))
+            .addEntries(entry(2, Calls.MISSED_TYPE, duration = 0))
+            .addEntries(entry(3, Calls.INCOMING_TYPE, features = Calls.FEATURES_RTT))
+            .build()
 
     private fun map(
         contact: DialerContact = this.contact,
@@ -85,11 +100,17 @@ class CallDetailsTest {
         callback: Int = CallbackAction.VOICE,
         recordings: Map<Long, List<CallRecording>> = emptyMap(),
         transcripts: Set<String> = emptySet(),
-    ) = CallDetailsMapper.map(
-        contact = contact, entries = entries, isEmergencyNumber = emergency, callbackAction = callback,
-        numberLabelAndNumber = { label, number -> "$label $number" }, emergencyTitle = "Emergency number",
-        recordingsFor = { recordings[it.callId].orEmpty() }, rttTranscriptIds = transcripts,
-    )
+    ) =
+        CallDetailsMapper.map(
+            contact = contact,
+            entries = entries,
+            isEmergencyNumber = emergency,
+            callbackAction = callback,
+            numberLabelAndNumber = { label, number -> "$label $number" },
+            emergencyTitle = "Emergency number",
+            recordingsFor = { recordings[it.callId].orEmpty() },
+            rttTranscriptIds = transcripts,
+        )
 
     @Test
     fun headerShowsNameWithLabelAndNumber() {
@@ -122,8 +143,16 @@ class CallDetailsTest {
 
     @Test
     fun assistedDialingFollowsTheMostRecentCall() {
-        val assisted = CallDetailsEntries.newBuilder()
-            .addEntries(entry(1, Calls.OUTGOING_TYPE, features = TelephonyManagerCompat.FEATURES_ASSISTED_DIALING)).build()
+        val assisted =
+            CallDetailsEntries.newBuilder()
+                .addEntries(
+                    entry(
+                        1,
+                        Calls.OUTGOING_TYPE,
+                        features = TelephonyManagerCompat.FEATURES_ASSISTED_DIALING,
+                    )
+                )
+                .build()
         assertThat(map(entries = assisted).header.usedAssistedDialing).isTrue()
         assertThat(map().header.usedAssistedDialing).isFalse()
     }
@@ -148,7 +177,9 @@ class CallDetailsTest {
         compose.onNodeWithTag(TestTags.CALL_DETAILS_DELETE).performClick()
         // Deleting the whole history asks first.
         assertThat(actions.calls).containsExactly("callBack video=false")
-        compose.onNode(hasText(context.getString(R.string.delete)) and hasAnyAncestor(isDialog())).performClick()
+        compose
+            .onNode(hasText(context.getString(R.string.delete)) and hasAnyAncestor(isDialog()))
+            .performClick()
         assertThat(actions.calls).containsExactly("callBack video=false", "delete").inOrder()
     }
 
@@ -170,7 +201,9 @@ class CallDetailsTest {
     @Test
     fun rttCallWithoutTranscriptSaysSo() {
         show(map())
-        compose.onNodeWithText(context.getString(R.string.rtt_transcript_not_available)).assertIsDisplayed()
+        compose
+            .onNodeWithText(context.getString(R.string.rtt_transcript_not_available))
+            .assertIsDisplayed()
     }
 
     @Test
@@ -178,7 +211,8 @@ class CallDetailsTest {
         assertThat(map().canMessage).isTrue()
         assertThat(map(callback = CallbackAction.NONE).canMessage).isFalse()
         assertThat(map(emergency = true).canMessage).isFalse()
-        val voicemail = contact.toBuilder().setContactType(LetterTileDrawable.TYPE_VOICEMAIL).build()
+        val voicemail =
+            contact.toBuilder().setContactType(LetterTileDrawable.TYPE_VOICEMAIL).build()
         assertThat(map(contact = voicemail).canMessage).isFalse()
     }
 
@@ -197,25 +231,32 @@ class CallDetailsTest {
         compose.onNodeWithText("Mobile +1 555-123-4567").assertIsDisplayed()
     }
 
-    @Test
-    fun screenshotDark() = screenshot("call_details_dark")
+    @Test fun screenshotDark() = screenshot("call_details_dark")
 
-    @Test
-    @Config(qualifiers = "+notnight")
-    fun screenshotLight() = screenshot("call_details_light")
+    @Test @Config(qualifiers = "+notnight") fun screenshotLight() = screenshot("call_details_light")
 
     private fun screenshot(name: String) {
         show(map(recordings = mapOf(1L to listOf(recording(10))), transcripts = setOf("m3")))
         compose.onRoot().captureRoboImage("src/test/screenshots/calldetails/$name.png")
     }
 
-    private fun recording(mediaId: Long) = CallRecording("+15551234567", 0, "rec$mediaId.m4a", mediaId, mediaId)
+    private fun recording(mediaId: Long) =
+        CallRecording("+15551234567", 0, "rec$mediaId.m4a", mediaId, mediaId)
 
-    private fun show(ui: CallDetailsUi, actions: CallDetailsActions = RecordingActions(), callWith: Intent? = null) {
+    private fun show(
+        ui: CallDetailsUi,
+        actions: CallDetailsActions = RecordingActions(),
+        callWith: Intent? = null,
+    ) {
         compose.setContent {
             SolidGlassTheme {
-                CallDetailsScreen(ui, assistedDialingCountryCode = null, callWithIntent = callWith, actions = actions,
-                    avatar = { PvotAvatar(name = "Alex Doe", size = it) })
+                CallDetailsScreen(
+                    ui,
+                    assistedDialingCountryCode = null,
+                    callWithIntent = callWith,
+                    actions = actions,
+                    avatar = { PvotAvatar(name = "Alex Doe", size = it) },
+                )
             }
         }
     }
@@ -223,15 +264,43 @@ class CallDetailsTest {
     /** Records what the screen asked for. */
     private class RecordingActions : CallDetailsActions {
         val calls = mutableListOf<String>()
-        override fun back() { calls += "back" }
-        override fun callBack(video: Boolean) { calls += "callBack video=$video" }
-        override fun message() { calls += "message" }
-        override fun copyNumber() { calls += "copy" }
-        override fun editNumber() { calls += "edit" }
-        override fun delete() { calls += "delete" }
-        override fun deleteCall(entry: CallDetailsEntryUi) { calls += "deleteCall" }
-        override fun showTranscript(entry: CallDetailsEntryUi) { calls += "transcript ${entry.callId}" }
-        override fun play(recording: CallRecording) { calls += "play ${recording.mediaId}" }
+
+        override fun back() {
+            calls += "back"
+        }
+
+        override fun callBack(video: Boolean) {
+            calls += "callBack video=$video"
+        }
+
+        override fun message() {
+            calls += "message"
+        }
+
+        override fun copyNumber() {
+            calls += "copy"
+        }
+
+        override fun editNumber() {
+            calls += "edit"
+        }
+
+        override fun delete() {
+            calls += "delete"
+        }
+
+        override fun deleteCall(entry: CallDetailsEntryUi) {
+            calls += "deleteCall"
+        }
+
+        override fun showTranscript(entry: CallDetailsEntryUi) {
+            calls += "transcript ${entry.callId}"
+        }
+
+        override fun play(recording: CallRecording) {
+            calls += "play ${recording.mediaId}"
+        }
+
         override fun recordingTime(recording: CallRecording) = "time ${recording.mediaId}"
     }
 }

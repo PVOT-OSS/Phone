@@ -27,8 +27,8 @@ import org.prauga.phone.dialer.common.LogUtil
  * The row asking to make Phone the default phone app, shown while it isn't. It is the way back
  * after "Not now" on the first-run prompt.
  *
- * @property denied Whether the user turned down Android's dialog here. Android may stop showing
- *   the dialog after that, so [onClick] then opens Default apps, where Phone can always be chosen
+ * @property denied Whether the user turned down Android's dialog here. Android may stop showing the
+ *   dialog after that, so [onClick] then opens Default apps, where Phone can always be chosen
  */
 internal class DefaultPhoneAppPrompt(val denied: Boolean, val onClick: () -> Unit)
 
@@ -36,15 +36,21 @@ internal class DefaultPhoneAppPrompt(val denied: Boolean, val onClick: () -> Uni
 @Composable
 internal fun rememberDefaultPhoneAppPrompt(): DefaultPhoneAppPrompt? {
     val context = LocalContext.current
-    val roleManager = remember(context) {
-        context.getSystemService(RoleManager::class.java)?.takeIf { it.isRoleAvailable(RoleManager.ROLE_DIALER) }
+    val roleManager =
+        remember(context) {
+            context.getSystemService(RoleManager::class.java)?.takeIf {
+                it.isRoleAvailable(RoleManager.ROLE_DIALER)
+            }
+        }
+    var held by remember {
+        mutableStateOf(roleManager?.isRoleHeld(RoleManager.ROLE_DIALER) ?: true)
     }
-    var held by remember { mutableStateOf(roleManager?.isRoleHeld(RoleManager.ROLE_DIALER) ?: true) }
     var denied by rememberSaveable { mutableStateOf(false) }
-    val roleRequest = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        held = roleManager?.isRoleHeld(RoleManager.ROLE_DIALER) ?: true
-        denied = !held
-    }
+    val roleRequest =
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            held = roleManager?.isRoleHeld(RoleManager.ROLE_DIALER) ?: true
+            denied = !held
+        }
     // Default apps may have been changed in Android's settings meanwhile.
     LifecycleResumeEffect(roleManager) {
         held = roleManager?.isRoleHeld(RoleManager.ROLE_DIALER) ?: true
@@ -56,8 +62,12 @@ internal fun rememberDefaultPhoneAppPrompt(): DefaultPhoneAppPrompt? {
             openDefaultApps(context)
         } else {
             roleRequest.launch(
-                roleManager.createRequestRoleIntent(RoleManager.ROLE_DIALER)
-                    .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, context.packageName),
+                roleManager
+                    .createRequestRoleIntent(RoleManager.ROLE_DIALER)
+                    .putExtra(
+                        TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME,
+                        context.packageName,
+                    )
             )
         }
     }

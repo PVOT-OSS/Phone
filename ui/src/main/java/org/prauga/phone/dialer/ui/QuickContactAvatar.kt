@@ -23,8 +23,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import com.prauga.pvot.designsystem.components.list.PvotAvatar
-import org.prauga.phone.ui.R
 import org.prauga.phone.dialer.util.UriUtils
+import org.prauga.phone.ui.R
 
 /**
  * A contact's photo, or their letter tile, that opens Quick Contact when tapped, as the
@@ -48,36 +48,56 @@ fun QuickContactAvatar(
 ) {
     val context = LocalContext.current
     val sizePx = with(LocalDensity.current) { size.roundToPx() }
-    // Start from the cache, so a hero that scrolls back in shows its photo, not a letter tile first.
-    val cached = when {
-        photoUri != null -> ContactPhotoCache.cached(photoUri.toString(), sizePx)
-        else -> ContactPhotoCache.cachedThumbnail(photoId)
-    }
-    val photo by produceState(cached, photoUri, photoId, sizePx) {
-        if (value == null) {
-            value = when {
-                photoUri != null -> ContactPhotoCache.load(context, photoUri.toString(), sizePx)
-                photoId != 0L -> ContactPhotoCache.loadThumbnail(context, photoId)
-                else -> null
+    // Start from the cache, so a hero that scrolls back in shows its photo, not a letter tile
+    // first.
+    val cached =
+        when {
+            photoUri != null -> ContactPhotoCache.cached(photoUri.toString(), sizePx)
+            else -> ContactPhotoCache.cachedThumbnail(photoId)
+        }
+    val photo by
+        produceState(cached, photoUri, photoId, sizePx) {
+            if (value == null) {
+                value =
+                    when {
+                        photoUri != null ->
+                            ContactPhotoCache.load(context, photoUri.toString(), sizePx)
+                        photoId != 0L -> ContactPhotoCache.loadThumbnail(context, photoId)
+                        else -> null
+                    }
             }
         }
-    }
     val painter = photo?.let { remember(it) { BitmapPainter(it) } }
-    val tileKey = colorKey ?: remember(contactUri, name) { contactUri?.let(UriUtils::getLookupKeyFromUri) ?: name }
-    val tapModifier = modifier
-        .clip(CircleShape)
-        .then(
-            if (contactUri != null) {
-                Modifier.clickable {
-                    QuickContact.showQuickContact(context, null as Rect?, contactUri, null, Phone.CONTENT_ITEM_TYPE)
+    val tileKey =
+        colorKey
+            ?: remember(contactUri, name) { contactUri?.let(UriUtils::getLookupKeyFromUri) ?: name }
+    val tapModifier =
+        modifier
+            .clip(CircleShape)
+            .then(
+                if (contactUri != null) {
+                    Modifier.clickable {
+                        QuickContact.showQuickContact(
+                            context,
+                            null as Rect?,
+                            contactUri,
+                            null,
+                            Phone.CONTENT_ITEM_TYPE,
+                        )
+                    }
+                } else {
+                    Modifier
                 }
-            } else {
-                Modifier
-            },
-        )
+            )
     if (painter == null && name.none(Char::isLetter)) {
         // A number has no initial: show the same person tile as the lists do.
-        ContactAvatar(name = name, photoUri = null, modifier = tapModifier, colorKey = tileKey, size = size)
+        ContactAvatar(
+            name = name,
+            photoUri = null,
+            modifier = tapModifier,
+            colorKey = tileKey,
+            size = size,
+        )
         return
     }
     PvotAvatar(
@@ -87,6 +107,8 @@ fun QuickContactAvatar(
         colorKey = tileKey,
         size = size,
         // Only a picture that opens Quick Contact is announced; otherwise it is decoration.
-        contentDescription = if (contactUri != null) stringResource(R.string.description_quick_contact_for, name) else null,
+        contentDescription =
+            if (contactUri != null) stringResource(R.string.description_quick_contact_for, name)
+            else null,
     )
 }

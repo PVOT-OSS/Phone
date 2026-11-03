@@ -17,8 +17,8 @@ import android.telecom.PhoneAccount
 import android.telecom.PhoneAccountHandle
 import android.telecom.TelecomManager
 import android.telephony.TelephonyManager
-import android.widget.Toast
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -41,6 +41,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.prauga.pvot.designsystem.components.list.PvotPreferenceRow
@@ -48,7 +49,6 @@ import com.prauga.pvot.designsystem.components.list.PvotRowChevron
 import com.prauga.pvot.designsystem.components.list.PvotRowIconStyle
 import com.prauga.pvot.designsystem.platform.enablePvotEdgeToEdge
 import com.prauga.pvot.designsystem.platform.setPvotContent
-import androidx.lifecycle.compose.LifecycleResumeEffect
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.settings.ui.SettingsChrome
 import org.prauga.phone.dialer.app.settings.ui.SettingsChromeHost
@@ -103,7 +103,12 @@ class DialerSettingsActivity :
         }
         supportFragmentManager.registerFragmentLifecycleCallbacks(
             object : FragmentManager.FragmentLifecycleCallbacks() {
-                override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View, savedInstanceState: Bundle?) {
+                override fun onFragmentViewCreated(
+                    fm: FragmentManager,
+                    f: Fragment,
+                    v: View,
+                    savedInstanceState: Bundle?,
+                ) {
                     if (f.id == R.id.settings_content) showingCompose = f is SettingsComposeFragment
                 }
             },
@@ -131,7 +136,9 @@ class DialerSettingsActivity :
         val padding = settingsChrome.contentPadding
         val padContainer = !showingCompose
         AndroidView(
-            factory = { context -> FragmentContainerView(context).apply { id = R.id.settings_content } },
+            factory = { context ->
+                FragmentContainerView(context).apply { id = R.id.settings_content }
+            },
             modifier = Modifier.fillMaxSize(),
             update = { container ->
                 // Compose screens scroll under the bars and pad their own lists; preference screens
@@ -161,20 +168,23 @@ class DialerSettingsActivity :
     /**
      * Puts a screen in the container: the requested one (or the list) the first time, or the
      * restored one again after the activity is recreated. A restored screen made its view before
-     * its container existed, so it is detached and attached to make its view again in the container.
+     * its container existed, so it is detached and attached to make its view again in the
+     * container.
      */
     private fun showScreen() {
         val manager = supportFragmentManager
         val current = manager.findFragmentById(R.id.settings_content)
         when {
             current == null -> {
-                // The URI comes from any app, so only the dialer's own settings screens open from it.
+                // The URI comes from any app, so only the dialer's own settings screens open from
+                // it.
                 val requested = intent.data?.schemeSpecificPart?.takeIf(::isSettingsScreen)
                 val fragment = requested?.let { instantiate(it) } ?: PrefsFragment()
                 manager.beginTransaction().replace(R.id.settings_content, fragment).commitNow()
             }
             current.view?.parent == null -> {
-                // Two transactions: in one, the fragment manager cancels the detach against the attach.
+                // Two transactions: in one, the fragment manager cancels the detach against the
+                // attach.
                 manager.beginTransaction().detach(current).commitNow()
                 manager.beginTransaction().attach(current).commitNow()
             }
@@ -186,16 +196,23 @@ class DialerSettingsActivity :
         screenTitle = title?.toString().orEmpty()
     }
 
-    override fun onPreferenceStartFragment(caller: PreferenceFragmentCompat, pref: Preference): Boolean {
+    override fun onPreferenceStartFragment(
+        caller: PreferenceFragmentCompat,
+        pref: Preference,
+    ): Boolean {
         openScreen(pref.fragment ?: return false, pref.extras, pref.title)
         return true
     }
 
-    /** Shows the settings screen [fragmentClass] with [arguments], titled [title], on the back stack. */
+    /**
+     * Shows the settings screen [fragmentClass] with [arguments], titled [title], on the back
+     * stack.
+     */
     fun openScreen(fragmentClass: String, arguments: Bundle?, title: CharSequence?) {
         val fragment = instantiate(fragmentClass) ?: return
         fragment.arguments = arguments
-        supportFragmentManager.beginTransaction()
+        supportFragmentManager
+            .beginTransaction()
             .replace(R.id.settings_content, fragment, "")
             .addToBackStack(null)
             .commit()
@@ -203,14 +220,17 @@ class DialerSettingsActivity :
     }
 
     private fun isSettingsScreen(fragmentClass: String): Boolean =
-        SETTINGS_PACKAGES.any { fragmentClass.startsWith(it) && '.' !in fragmentClass.removePrefix(it) }
+        SETTINGS_PACKAGES.any {
+            fragmentClass.startsWith(it) && '.' !in fragmentClass.removePrefix(it)
+        }
 
-    private fun instantiate(fragmentClass: String): Fragment? = try {
-        supportFragmentManager.fragmentFactory.instantiate(classLoader, fragmentClass)
-    } catch (e: Exception) {
-        LogUtil.e("DialerSettingsActivity.instantiate", "no settings screen $fragmentClass", e)
-        null
-    }
+    private fun instantiate(fragmentClass: String): Fragment? =
+        try {
+            supportFragmentManager.fragmentFactory.instantiate(classLoader, fragmentClass)
+        } catch (e: Exception) {
+            LogUtil.e("DialerSettingsActivity.instantiate", "no settings screen $fragmentClass", e)
+            null
+        }
 
     /** The top-level settings list. */
     class PrefsFragment : SettingsComposeFragment() {
@@ -232,13 +252,22 @@ class DialerSettingsActivity :
             when (val target = entry.target) {
                 is Target.Screen -> {
                     if (entry.key == KEY_SOUNDS && !Settings.System.canWrite(requireContext())) {
-                        // Without permission to write system settings, go to the system's sound settings.
-                        Toast.makeText(requireContext(), R.string.toast_cannot_write_system_settings, Toast.LENGTH_SHORT)
+                        // Without permission to write system settings, go to the system's sound
+                        // settings.
+                        Toast.makeText(
+                                requireContext(),
+                                R.string.toast_cannot_write_system_settings,
+                                Toast.LENGTH_SHORT,
+                            )
                             .show()
                         startSafely(Intent(Settings.ACTION_SOUND_SETTINGS))
                         return
                     }
-                    (requireActivity() as DialerSettingsActivity).openScreen(target.fragmentClass, target.arguments, title)
+                    (requireActivity() as DialerSettingsActivity).openScreen(
+                        target.fragmentClass,
+                        target.arguments,
+                        title,
+                    )
                 }
                 is Target.Activity -> startSafely(target.intent)
             }
@@ -254,11 +283,17 @@ class DialerSettingsActivity :
     }
 
     /** A row of the top-level list. */
-    internal data class Entry(val key: String, val titleRes: Int, val target: Target, @DrawableRes val icon: Int = R.drawable.ic_settings)
+    internal data class Entry(
+        val key: String,
+        val titleRes: Int,
+        val target: Target,
+        @DrawableRes val icon: Int = R.drawable.ic_settings,
+    )
 
     /** Where a row leads: another settings screen here, or another app's activity. */
     internal sealed interface Target {
         data class Screen(val fragmentClass: String, val arguments: Bundle? = null) : Target
+
         data class Activity(val intent: Intent) : Target
     }
 
@@ -275,11 +310,12 @@ class DialerSettingsActivity :
         const val KEY_BLOCKED_NUMBERS = "blocked_numbers"
 
         /** Where the settings screens live; a `header:` URI may name a class in these only. */
-        private val SETTINGS_PACKAGES = listOf(
-            "org.prauga.phone.dialer.app.settings.",
-            "org.prauga.phone.dialer.screening.",
-            "org.prauga.phone.dialer.voicemail.settings.",
-        )
+        private val SETTINGS_PACKAGES =
+            listOf(
+                "org.prauga.phone.dialer.app.settings.",
+                "org.prauga.phone.dialer.screening.",
+                "org.prauga.phone.dialer.voicemail.settings.",
+            )
         const val KEY_VOICEMAIL = "voicemail"
         const val KEY_ACCESSIBILITY = "accessibility"
 
@@ -288,22 +324,59 @@ class DialerSettingsActivity :
             val resources = context.resources
             // For languages such as Chinese, Japanese and Korean, contacts are sorted and shown
             // family name first by default, so display options aren't useful.
-            if (resources.getBoolean(R.bool.config_display_order_user_changeable) &&
-                resources.getBoolean(R.bool.config_sort_order_user_changeable)
+            if (
+                resources.getBoolean(R.bool.config_display_order_user_changeable) &&
+                    resources.getBoolean(R.bool.config_sort_order_user_changeable)
             ) {
-                add(Entry(KEY_DISPLAY_OPTIONS, R.string.display_options_title,
-                    Target.Screen(DisplayOptionsSettingsFragment::class.java.name), R.drawable.ic_list))
+                add(
+                    Entry(
+                        KEY_DISPLAY_OPTIONS,
+                        R.string.display_options_title,
+                        Target.Screen(DisplayOptionsSettingsFragment::class.java.name),
+                        R.drawable.ic_list,
+                    )
+                )
             }
-            add(Entry(KEY_APPEARANCE, R.string.appearance_settings_label,
-                Target.Screen(AppearanceSettingsFragment::class.java.name), R.drawable.ic_palette))
-            add(Entry(KEY_SOUNDS, R.string.sounds_and_vibration_title,
-                Target.Screen(SoundSettingsFragment::class.java.name), R.drawable.ic_volume))
-            add(Entry(KEY_QUICK_RESPONSES, R.string.respond_via_sms_setting_title,
-                Target.Activity(Intent(TelecomManager.ACTION_SHOW_RESPOND_VIA_SMS_SETTINGS)), R.drawable.ic_message_circle))
-            add(Entry(KEY_SCREENING, R.string.screening_settings_title,
-                Target.Screen(ScreeningSettingsFragment::class.java.name), R.drawable.ic_user))
-            add(Entry(KEY_INCOMING_CALLS, R.string.incoming_call_settings_title,
-                Target.Screen(IncomingCallSettingsFragment::class.java.name), R.drawable.ic_phone_incoming))
+            add(
+                Entry(
+                    KEY_APPEARANCE,
+                    R.string.appearance_settings_label,
+                    Target.Screen(AppearanceSettingsFragment::class.java.name),
+                    R.drawable.ic_palette,
+                )
+            )
+            add(
+                Entry(
+                    KEY_SOUNDS,
+                    R.string.sounds_and_vibration_title,
+                    Target.Screen(SoundSettingsFragment::class.java.name),
+                    R.drawable.ic_volume,
+                )
+            )
+            add(
+                Entry(
+                    KEY_QUICK_RESPONSES,
+                    R.string.respond_via_sms_setting_title,
+                    Target.Activity(Intent(TelecomManager.ACTION_SHOW_RESPOND_VIA_SMS_SETTINGS)),
+                    R.drawable.ic_message_circle,
+                )
+            )
+            add(
+                Entry(
+                    KEY_SCREENING,
+                    R.string.screening_settings_title,
+                    Target.Screen(ScreeningSettingsFragment::class.java.name),
+                    R.drawable.ic_user,
+                )
+            )
+            add(
+                Entry(
+                    KEY_INCOMING_CALLS,
+                    R.string.incoming_call_settings_title,
+                    Target.Screen(IncomingCallSettingsFragment::class.java.name),
+                    R.drawable.ic_phone_incoming,
+                )
+            )
 
             val telephonyManager = context.getSystemService(TelephonyManager::class.java)
             val telecomManager = context.getSystemService(TelecomManager::class.java)
@@ -311,22 +384,56 @@ class DialerSettingsActivity :
             // "Calling accounts".
             val isPrimaryUser = context.getSystemService(UserManager::class.java).isSystemUser
             if (isPrimaryUser && TelephonyManagerCompat.getPhoneCount(telephonyManager) <= 1) {
-                add(Entry(KEY_CALL_SETTINGS, R.string.call_settings_label, Target.Activity(
-                    Intent(TelecomManager.ACTION_SHOW_CALL_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)), R.drawable.ic_phone))
+                add(
+                    Entry(
+                        KEY_CALL_SETTINGS,
+                        R.string.call_settings_label,
+                        Target.Activity(
+                            Intent(TelecomManager.ACTION_SHOW_CALL_SETTINGS)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        ),
+                        R.drawable.ic_phone,
+                    )
+                )
             } else {
-                add(Entry(KEY_CALLING_ACCOUNTS, R.string.phone_account_settings_label, Target.Activity(
-                    Intent(TelecomManager.ACTION_CHANGE_PHONE_ACCOUNTS).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)), R.drawable.ic_device_sim))
+                add(
+                    Entry(
+                        KEY_CALLING_ACCOUNTS,
+                        R.string.phone_account_settings_label,
+                        Target.Activity(
+                            Intent(TelecomManager.ACTION_CHANGE_PHONE_ACCOUNTS)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        ),
+                        R.drawable.ic_device_sim,
+                    )
+                )
             }
             if (BlockedNumberContract.canCurrentUserBlockNumbers(context)) {
-                add(Entry(KEY_BLOCKED_NUMBERS, R.string.manage_blocked_numbers_label,
-                    Target.Activity(telecomManager.createManageBlockedNumbersIntent()), R.drawable.ic_ban))
+                add(
+                    Entry(
+                        KEY_BLOCKED_NUMBERS,
+                        R.string.manage_blocked_numbers_label,
+                        Target.Activity(telecomManager.createManageBlockedNumbersIntent()),
+                        R.drawable.ic_ban,
+                    )
+                )
             }
             voicemailEntry(context, isPrimaryUser)?.let(::add)
-            if (isPrimaryUser && (TelephonyManagerCompat.isTtyModeSupported(telecomManager) ||
-                    TelephonyManagerCompat.isHearingAidCompatibilitySupported(telephonyManager))
+            if (
+                isPrimaryUser &&
+                    (TelephonyManagerCompat.isTtyModeSupported(telecomManager) ||
+                        TelephonyManagerCompat.isHearingAidCompatibilitySupported(telephonyManager))
             ) {
-                add(Entry(KEY_ACCESSIBILITY, R.string.accessibility_settings_title,
-                    Target.Activity(Intent(TelecomManager.ACTION_SHOW_CALL_ACCESSIBILITY_SETTINGS)), R.drawable.ic_eye))
+                add(
+                    Entry(
+                        KEY_ACCESSIBILITY,
+                        R.string.accessibility_settings_title,
+                        Target.Activity(
+                            Intent(TelecomManager.ACTION_SHOW_CALL_ACCESSIBILITY_SETTINGS)
+                        ),
+                        R.drawable.ic_eye,
+                    )
+                )
             }
         }
 
@@ -340,22 +447,48 @@ class DialerSettingsActivity :
                 return null
             }
             val soleAccount = soleSimAccount(context)
-            val target = if (soleAccount == null) {
-                LogUtil.i("DialerSettingsActivity.voicemailEntry", "showing multi-SIM voicemail settings")
-                Target.Screen(PhoneAccountSelectionFragment::class.java.name, Bundle().apply {
-                    putString(PhoneAccountSelectionFragment.PARAM_TARGET_FRAGMENT, VoicemailSettingsFragment::class.java.name)
-                    putString(PhoneAccountSelectionFragment.PARAM_PHONE_ACCOUNT_HANDLE_KEY,
-                        VoicemailClient.PARAM_PHONE_ACCOUNT_HANDLE)
-                    putBundle(PhoneAccountSelectionFragment.PARAM_ARGUMENTS, Bundle())
-                    putInt(PhoneAccountSelectionFragment.PARAM_TARGET_TITLE_RES, R.string.voicemail_settings_label)
-                })
-            } else {
-                LogUtil.i("DialerSettingsActivity.voicemailEntry", "showing single-SIM voicemail settings")
-                Target.Screen(VoicemailSettingsFragment::class.java.name, Bundle().apply {
-                    putParcelable(VoicemailClient.PARAM_PHONE_ACCOUNT_HANDLE, soleAccount)
-                })
-            }
-            return Entry(KEY_VOICEMAIL, R.string.voicemail_settings_label, target, R.drawable.ic_call_voicemail)
+            val target =
+                if (soleAccount == null) {
+                    LogUtil.i(
+                        "DialerSettingsActivity.voicemailEntry",
+                        "showing multi-SIM voicemail settings",
+                    )
+                    Target.Screen(
+                        PhoneAccountSelectionFragment::class.java.name,
+                        Bundle().apply {
+                            putString(
+                                PhoneAccountSelectionFragment.PARAM_TARGET_FRAGMENT,
+                                VoicemailSettingsFragment::class.java.name,
+                            )
+                            putString(
+                                PhoneAccountSelectionFragment.PARAM_PHONE_ACCOUNT_HANDLE_KEY,
+                                VoicemailClient.PARAM_PHONE_ACCOUNT_HANDLE,
+                            )
+                            putBundle(PhoneAccountSelectionFragment.PARAM_ARGUMENTS, Bundle())
+                            putInt(
+                                PhoneAccountSelectionFragment.PARAM_TARGET_TITLE_RES,
+                                R.string.voicemail_settings_label,
+                            )
+                        },
+                    )
+                } else {
+                    LogUtil.i(
+                        "DialerSettingsActivity.voicemailEntry",
+                        "showing single-SIM voicemail settings",
+                    )
+                    Target.Screen(
+                        VoicemailSettingsFragment::class.java.name,
+                        Bundle().apply {
+                            putParcelable(VoicemailClient.PARAM_PHONE_ACCOUNT_HANDLE, soleAccount)
+                        },
+                    )
+                }
+            return Entry(
+                KEY_VOICEMAIL,
+                R.string.voicemail_settings_label,
+                target,
+                R.drawable.ic_call_voicemail,
+            )
         }
 
         /**
@@ -380,12 +513,13 @@ class DialerSettingsActivity :
 }
 
 /** The settings that change how this app looks and sounds; the rest are about calls. */
-private val APP_KEYS = setOf(
-    DialerSettingsActivity.KEY_DISPLAY_OPTIONS,
-    DialerSettingsActivity.KEY_APPEARANCE,
-    DialerSettingsActivity.KEY_SOUNDS,
-    DialerSettingsActivity.KEY_QUICK_RESPONSES,
-)
+private val APP_KEYS =
+    setOf(
+        DialerSettingsActivity.KEY_DISPLAY_OPTIONS,
+        DialerSettingsActivity.KEY_APPEARANCE,
+        DialerSettingsActivity.KEY_SOUNDS,
+        DialerSettingsActivity.KEY_QUICK_RESPONSES,
+    )
 
 /**
  * The top-level settings [entries] in two groups, this app's look and sound and then calls, in
@@ -406,14 +540,18 @@ internal fun SettingsRootList(
                     PvotPreferenceRow(
                         title = stringResource(R.string.settings_default_phone_app_title),
                         onClick = defaultApp.onClick,
-                        modifier = Modifier.testTag(TestTags.settingsRow(DialerSettingsActivity.KEY_DEFAULT_PHONE_APP)),
-                        summary = stringResource(
-                            if (defaultApp.denied) {
-                                R.string.settings_default_phone_app_denied
-                            } else {
-                                R.string.settings_default_phone_app_summary
-                            },
-                        ),
+                        modifier =
+                            Modifier.testTag(
+                                TestTags.settingsRow(DialerSettingsActivity.KEY_DEFAULT_PHONE_APP)
+                            ),
+                        summary =
+                            stringResource(
+                                if (defaultApp.denied) {
+                                    R.string.settings_default_phone_app_denied
+                                } else {
+                                    R.string.settings_default_phone_app_summary
+                                }
+                            ),
                         icon = settingsIcon(R.drawable.ic_phone),
                         iconStyle = PvotRowIconStyle.Plain,
                         chevron = PvotRowChevron.Arrow,
@@ -421,10 +559,11 @@ internal fun SettingsRootList(
                 }
             }
         }
-        for ((key, title, group) in listOf(
-            Triple("app", R.string.settings_section_app, app),
-            Triple("calls", R.string.settings_section_calls, calls),
-        )) {
+        for ((key, title, group) in
+            listOf(
+                Triple("app", R.string.settings_section_app, app),
+                Triple("calls", R.string.settings_section_calls, calls),
+            )) {
             if (group.isEmpty()) continue
             item(key = key) {
                 SettingsGroup(title = stringResource(title)) {

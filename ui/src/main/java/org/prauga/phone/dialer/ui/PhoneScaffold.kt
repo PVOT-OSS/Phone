@@ -22,7 +22,10 @@ sealed interface PhoneBackground {
     /** Nothing: the plain theme background, with the glass refracting the content under it. */
     data object Plain : PhoneBackground
 
-    /** A photo blurred once and dimmed, for a screen about it, such as a call with a contact's picture. */
+    /**
+     * A photo blurred once and dimmed, for a screen about it, such as a call with a contact's
+     * picture.
+     */
     data class Photo(val blurred: ImageBitmap?) : PhoneBackground
 }
 
@@ -31,8 +34,8 @@ sealed interface PhoneBackground {
  * the bars, floating action, snackbars and overlays as glass over it. Thin over
  * [PvotScreenScaffold], which hands its backdrop to the chrome through [LocalPvotGlassBackdrop].
  *
- * @param background What draws over the theme background under the content; plain unless a
- *     screen is about a photo
+ * @param background What draws over the theme background under the content; plain unless a screen
+ *   is about a photo
  * @param topBar The bar at the top, over the content
  * @param navBar The bar at the bottom, over the content
  * @param fab The floating action above the nav bar's end
@@ -69,6 +72,7 @@ fun PhoneScaffold(
 private fun PhoneBackgroundContent(background: PhoneBackground) {
     when (background) {
         PhoneBackground.Plain -> Unit
-        is PhoneBackground.Photo -> PvotPhotoBackground(image = background.blurred, modifier = Modifier.fillMaxSize())
+        is PhoneBackground.Photo ->
+            PvotPhotoBackground(image = background.blurred, modifier = Modifier.fillMaxSize())
     }
 }

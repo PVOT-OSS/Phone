@@ -34,8 +34,15 @@ class CallStatsListScreenTest {
 
     @get:Rule val compose = createComposeRule()
 
-    private fun entry(number: String, name: String?, inSeconds: Long, outSeconds: Long, missed: Int): CallStatsEntry {
-        val details = CallStatsDetails(number, Calls.PRESENTATION_ALLOWED, "", null, null, "US", null, 0)
+    private fun entry(
+        number: String,
+        name: String?,
+        inSeconds: Long,
+        outSeconds: Long,
+        missed: Int,
+    ): CallStatsEntry {
+        val details =
+            CallStatsDetails(number, Calls.PRESENTATION_ALLOWED, "", null, null, "US", null, 0)
         details.addTimeOrMissed(Calls.INCOMING_TYPE, inSeconds)
         details.addTimeOrMissed(Calls.OUTGOING_TYPE, outSeconds)
         repeat(missed) { details.addTimeOrMissed(Calls.MISSED_TYPE, 0) }
@@ -45,30 +52,59 @@ class CallStatsListScreenTest {
         return CallStatsEntry(ContactInfo(), details)
     }
 
-    private val entries = listOf(
-        entry("+15550100", "Ada Lovelace", 1_800, 600, 1),
-        entry("+15550199", null, 300, 900, 2),
-    )
-    private val total = CallStatsDetails(null, 0, null, null, null, null, null, 0).apply {
-        entries.forEach { mergeWith(it.details) }
-    }
+    private val entries =
+        listOf(
+            entry("+15550100", "Ada Lovelace", 1_800, 600, 1),
+            entry("+15550199", null, 300, 900, 2),
+        )
+    private val total =
+        CallStatsDetails(null, 0, null, null, null, null, null, 0).apply {
+            entries.forEach { mergeWith(it.details) }
+        }
 
     private val events = mutableListOf<String>()
-    private val actions = object : CallStatsActions {
-        override fun open(entry: CallStatsEntry, total: CallStatsDetails) { events += "open ${entry.details.number}" }
-        override fun copyNumber(number: String) { events += "copy $number" }
-        override fun editBeforeCall(number: String) { events += "edit $number" }
-        override fun pickRange() { events += "range" }
-        override fun clearRange() { events += "clear" }
-        override fun sortByDuration(byDuration: Boolean) { events += "byDuration $byDuration" }
-        override fun turnOnPermission() { events += "permission" }
-    }
+    private val actions =
+        object : CallStatsActions {
+            override fun open(entry: CallStatsEntry, total: CallStatsDetails) {
+                events += "open ${entry.details.number}"
+            }
 
-    private fun show(filter: CallStatsFilter = CallStatsFilter()) = compose.setContent {
-        PhoneScreenTheme {
-            CallStatsListScreen(CallStatsUiState.Loaded(entries, total), filter, prepare = { it.details }, actions = actions)
+            override fun copyNumber(number: String) {
+                events += "copy $number"
+            }
+
+            override fun editBeforeCall(number: String) {
+                events += "edit $number"
+            }
+
+            override fun pickRange() {
+                events += "range"
+            }
+
+            override fun clearRange() {
+                events += "clear"
+            }
+
+            override fun sortByDuration(byDuration: Boolean) {
+                events += "byDuration $byDuration"
+            }
+
+            override fun turnOnPermission() {
+                events += "permission"
+            }
         }
-    }
+
+    private fun show(filter: CallStatsFilter = CallStatsFilter()) =
+        compose.setContent {
+            PhoneScreenTheme {
+                CallStatsListScreen(
+                    CallStatsUiState.Loaded(entries, total),
+                    filter,
+                    prepare = { it.details },
+                    actions = actions,
+                )
+            }
+        }
 
     @Test
     fun showsTheTotalAndEachNumber() {
@@ -106,6 +142,9 @@ class CallStatsListScreenTest {
     fun screenshotDark() {
         show()
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/callstats/list_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/callstats/list_dark.png")
     }
 }

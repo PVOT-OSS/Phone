@@ -37,24 +37,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.prauga.pvot.designsystem.theme.PvotSpacing
-import com.prauga.pvot.designsystem.components.call.PvotCallAction
-import com.prauga.pvot.designsystem.components.call.PvotCallActionButton
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
-import org.prauga.phone.incallui.InCallPresenter
-import org.prauga.phone.incallui.R
 import org.prauga.phone.dialer.common.Assert
 import org.prauga.phone.dialer.common.FragmentUtils
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
-import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.ui.WindowBackdrop
+import org.prauga.phone.incallui.InCallPresenter
+import org.prauga.phone.incallui.R
 import org.prauga.phone.incallui.audioroute.AudioRouteSelectorDialogFragment
 import org.prauga.phone.incallui.audioroute.AudioRouteSelectorDialogFragment.AudioRouteSelectorPresenter
 import org.prauga.phone.incallui.contactgrid.ContactGrid
@@ -94,15 +86,17 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
     private var endCallEnabled by mutableStateOf(true)
     private var dialpadShowing by mutableStateOf(false)
 
-    private val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
-        if (results.values.all { it }) inCallButtonUiDelegate.callRecordClicked(true)
-    }
+    private val permissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
+            if (results.values.all { it }) inCallButtonUiDelegate.callRecordClicked(true)
+        }
 
-    private val bluetoothPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
-        // Noted first: the selector asks for the permission again unless the refusal is known.
-        if (!results.values.all { it }) userDeniedBluetooth = true
-        inCallButtonUiDelegate.showAudioRouteSelector()
-    }
+    private val bluetoothPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
+            // Noted first: the selector asks for the permission again unless the refusal is known.
+            if (!results.values.all { it }) userDeniedBluetooth = true
+            inCallButtonUiDelegate.showAudioRouteSelector()
+        }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -112,23 +106,35 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         inCallButtonUiDelegate =
-            FragmentUtils.getParent(this, InCallButtonUiDelegateFactory::class.java)!!.newInCallButtonUiDelegate()
+            FragmentUtils.getParent(this, InCallButtonUiDelegateFactory::class.java)!!
+                .newInCallButtonUiDelegate()
     }
 
     @SuppressLint("MissingPermission")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         LogUtil.i("InCallFragment.onCreateView", null)
         val context = requireContext()
-        val grid = ContactGridState(context).apply { isInMultiWindowMode = requireActivity().isInMultiWindowMode }
+        val grid =
+            ContactGridState(context).apply {
+                isInMultiWindowMode = requireActivity().isInMultiWindowMode
+            }
         val buttons = InCallButtonSlots(context)
         contactGrid = grid
         slots = buttons
         val telephony = context.getSystemService(TelephonyManager::class.java)
-        voiceNetworkType = if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            TelephonyManager.NETWORK_TYPE_UNKNOWN
-        } else {
-            telephony.voiceNetworkType
-        }
+        voiceNetworkType =
+            if (
+                ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) !=
+                    PackageManager.PERMISSION_GRANTED
+            ) {
+                TelephonyManager.NETWORK_TYPE_UNKNOWN
+            } else {
+                telephony.voiceNetworkType
+            }
         phoneType = telephony.phoneType
         return InCallScreenHost.createView(
             context,
@@ -137,7 +143,10 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
                     onHold?.let { OnHoldBanner(it, Modifier.padding(horizontal = PvotSpacing.L)) }
                     // Who the call is with sits in the upper third, clear of the controls below.
                     Spacer(Modifier.weight(1f))
-                    Box(Modifier.fillMaxWidth().padding(horizontal = PvotSpacing.L), contentAlignment = Alignment.Center) {
+                    Box(
+                        Modifier.fillMaxWidth().padding(horizontal = PvotSpacing.L),
+                        contentAlignment = Alignment.Center,
+                    ) {
                         ContactGrid(grid)
                     }
                     Spacer(Modifier.weight(2f))
@@ -145,14 +154,18 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
             },
             bottom = {
                 Column(
-                    Modifier.fillMaxWidth().navigationBarsPadding().padding(horizontal = PvotSpacing.L).padding(bottom = EndCallBottomGap),
+                    Modifier.fillMaxWidth()
+                        .navigationBarsPadding()
+                        .padding(horizontal = PvotSpacing.L)
+                        .padding(bottom = EndCallBottomGap),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     InCallControls(buttons, endCallEnabled, ::onEndCall)
                 }
             },
             overDialpad = {
-                // The dialpad leaves room at its bottom for this, so the call can end while it shows.
+                // The dialpad leaves room at its bottom for this, so the call can end while it
+                // shows.
                 if (dialpadShowing) {
                     Box(Modifier.navigationBarsPadding().padding(bottom = EndCallBottomGap)) {
                         EndCallButton(endCallEnabled, ::onEndCall)
@@ -170,27 +183,30 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         LogUtil.i("InCallFragment.onViewCreated", null)
         super.onViewCreated(view, savedInstanceState)
-        inCallScreenDelegate = Assert.isNotNull(
-            FragmentUtils.getParent(this, InCallScreenDelegateFactory::class.java)!!.newInCallScreenDelegate(),
-        )
+        inCallScreenDelegate =
+            Assert.isNotNull(
+                FragmentUtils.getParent(this, InCallScreenDelegateFactory::class.java)!!
+                    .newInCallScreenDelegate()
+            )
         val delegate = inCallButtonUiDelegate
         buttonControllers.clear()
-        buttonControllers += listOf(
-            ButtonController.MuteButtonController(delegate),
-            ButtonController.SpeakerButtonController(delegate),
-            ButtonController.DialpadButtonController(delegate),
-            ButtonController.HoldButtonController(delegate),
-            ButtonController.AddCallButtonController(delegate),
-            ButtonController.SwapButtonController(delegate),
-            ButtonController.MergeButtonController(delegate),
-            ButtonController.SwapSimButtonController(delegate),
-            ButtonController.UpgradeToVideoButtonController(delegate),
-            UpgradeToRttButtonController(delegate),
-            ButtonController.TransferButtonController(delegate),
-            ButtonController.ManageConferenceButtonController(inCallScreenDelegate),
-            ButtonController.SwitchToSecondaryButtonController(inCallScreenDelegate),
-            ButtonController.CallRecordButtonController(delegate),
-        )
+        buttonControllers +=
+            listOf(
+                ButtonController.MuteButtonController(delegate),
+                ButtonController.SpeakerButtonController(delegate),
+                ButtonController.DialpadButtonController(delegate),
+                ButtonController.HoldButtonController(delegate),
+                ButtonController.AddCallButtonController(delegate),
+                ButtonController.SwapButtonController(delegate),
+                ButtonController.MergeButtonController(delegate),
+                ButtonController.SwapSimButtonController(delegate),
+                ButtonController.UpgradeToVideoButtonController(delegate),
+                UpgradeToRttButtonController(delegate),
+                ButtonController.TransferButtonController(delegate),
+                ButtonController.ManageConferenceButtonController(inCallScreenDelegate),
+                ButtonController.SwitchToSecondaryButtonController(inCallScreenDelegate),
+                ButtonController.CallRecordButtonController(delegate),
+            )
         inCallScreenDelegate.onInCallScreenDelegateInit(this)
         inCallScreenDelegate.onInCallScreenReady()
         // The button grid exists with the view; it used to arrive with a child fragment.
@@ -243,7 +259,12 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
             isAllowed = primaryCallState.swapToSecondaryButtonState() != ButtonState.NOT_SUPPORT
             isEnabled = primaryCallState.swapToSecondaryButtonState() == ButtonState.ENABLED
         }
-        buttonChooser = ButtonChooserFactory.newButtonChooser(voiceNetworkType, primaryCallState.isWifi, phoneType)
+        buttonChooser =
+            ButtonChooserFactory.newButtonChooser(
+                voiceNetworkType,
+                primaryCallState.isWifi,
+                phoneType,
+            )
         updateButtonStates()
     }
 
@@ -286,12 +307,22 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
     override fun getInCallScreenFragment(): Fragment = this
 
     override fun showButton(@InCallButtonIds buttonId: Int, show: Boolean) {
-        LogUtil.v("InCallFragment.showButton", "buttionId: %s, show: %b", InCallButtonIdsExtension.toString(buttonId), show)
+        LogUtil.v(
+            "InCallFragment.showButton",
+            "buttionId: %s, show: %b",
+            InCallButtonIdsExtension.toString(buttonId),
+            show,
+        )
         if (isSupportedButton(buttonId)) getButtonController(buttonId).isAllowed = show
     }
 
     override fun enableButton(@InCallButtonIds buttonId: Int, enable: Boolean) {
-        LogUtil.v("InCallFragment.enableButton", "buttonId: %s, enable: %b", InCallButtonIdsExtension.toString(buttonId), enable)
+        LogUtil.v(
+            "InCallFragment.enableButton",
+            "buttonId: %s, enable: %b",
+            InCallButtonIdsExtension.toString(buttonId),
+            enable,
+        )
         if (isSupportedButton(buttonId)) getButtonController(buttonId).isEnabled = enable
     }
 
@@ -310,16 +341,19 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
 
     override fun setAudioState(audioState: CallAudioState) {
         LogUtil.i("InCallFragment.setAudioState", "audioState: $audioState")
-        (getButtonController(InCallButtonIds.BUTTON_AUDIO) as SpeakerButtonController).setAudioState(audioState)
+        (getButtonController(InCallButtonIds.BUTTON_AUDIO) as SpeakerButtonController)
+            .setAudioState(audioState)
         getButtonController(InCallButtonIds.BUTTON_MUTE).setChecked(audioState.isMuted)
     }
 
     override fun setCallRecordingState(isRecording: Boolean) {
-        (getButtonController(InCallButtonIds.BUTTON_RECORD_CALL) as CallRecordButtonController).setRecordingState(isRecording)
+        (getButtonController(InCallButtonIds.BUTTON_RECORD_CALL) as CallRecordButtonController)
+            .setRecordingState(isRecording)
     }
 
     override fun setCallRecordingDuration(durationMs: Long) {
-        (getButtonController(InCallButtonIds.BUTTON_RECORD_CALL) as CallRecordButtonController).setRecordingDuration(durationMs)
+        (getButtonController(InCallButtonIds.BUTTON_RECORD_CALL) as CallRecordButtonController)
+            .setRecordingDuration(durationMs)
     }
 
     override fun requestCallRecordingPermissions(permissions: Array<String>) {
@@ -336,7 +370,11 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
 
     override fun showAudioRouteSelector() {
         val permissions = arrayOf(Manifest.permission.BLUETOOTH_CONNECT)
-        if (permissions.all { requireContext().checkSelfPermission(it) == PackageManager.PERMISSION_GRANTED } || userDeniedBluetooth) {
+        if (
+            permissions.all {
+                requireContext().checkSelfPermission(it) == PackageManager.PERMISSION_GRANTED
+            } || userDeniedBluetooth
+        ) {
             AudioRouteSelectorDialogFragment.newInstance(inCallButtonUiDelegate.currentAudioState)
                 .show(childFragmentManager, null)
         } else {
@@ -351,23 +389,29 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
     override fun onAudioRouteSelectorDismiss() = Unit
 
     fun getButtonController(@InCallButtonIds id: Int): ButtonController =
-        buttonControllers.firstOrNull { it.inCallButtonId == id } ?: throw Assert.createAssertionFailException("")
+        buttonControllers.firstOrNull { it.inCallButtonId == id }
+            ?: throw Assert.createAssertionFailException("")
 
     override fun isShowingLocationUi(): Boolean = locationFragment()?.isVisible == true
 
     override fun showLocationUi(locationUi: Fragment?) {
         val isVisible = isShowingLocationUi()
         if (locationUi != null && !isVisible) {
-            childFragmentManager.beginTransaction().replace(R.id.incall_location_holder, locationUi).commitAllowingStateLoss()
+            childFragmentManager
+                .beginTransaction()
+                .replace(R.id.incall_location_holder, locationUi)
+                .commitAllowingStateLoss()
         } else if (locationUi == null && isVisible) {
-            childFragmentManager.beginTransaction().remove(locationFragment()!!).commitAllowingStateLoss()
+            childFragmentManager
+                .beginTransaction()
+                .remove(locationFragment()!!)
+                .commitAllowingStateLoss()
         }
     }
 
     @Deprecated("Deprecated in Java")
     override fun onMultiWindowModeChanged(isInMultiWindowMode: Boolean) {
-        @Suppress("DEPRECATION")
-        super.onMultiWindowModeChanged(isInMultiWindowMode)
+        @Suppress("DEPRECATION") super.onMultiWindowModeChanged(isInMultiWindowMode)
         if (isInMultiWindowMode == isShowingLocationUi()) {
             LogUtil.i("InCallFragment.onMultiWindowModeChanged", "hide = $isInMultiWindowMode")
             showLocationUi(if (isInMultiWindowMode) null else locationFragment())
@@ -375,24 +419,27 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
         contactGrid?.isInMultiWindowMode = isInMultiWindowMode
     }
 
-    private fun locationFragment(): Fragment? = childFragmentManager.findFragmentById(R.id.incall_location_holder)
+    private fun locationFragment(): Fragment? =
+        childFragmentManager.findFragmentById(R.id.incall_location_holder)
 
     private companion object {
-        fun isSupportedButton(@InCallButtonIds id: Int) = id in setOf(
-            InCallButtonIds.BUTTON_AUDIO,
-            InCallButtonIds.BUTTON_MUTE,
-            InCallButtonIds.BUTTON_DIALPAD,
-            InCallButtonIds.BUTTON_HOLD,
-            InCallButtonIds.BUTTON_SWAP,
-            InCallButtonIds.BUTTON_UPGRADE_TO_VIDEO,
-            InCallButtonIds.BUTTON_ADD_CALL,
-            InCallButtonIds.BUTTON_MERGE,
-            InCallButtonIds.BUTTON_MANAGE_VOICE_CONFERENCE,
-            InCallButtonIds.BUTTON_SWAP_SIM,
-            InCallButtonIds.BUTTON_UPGRADE_TO_RTT,
-            InCallButtonIds.BUTTON_TRANSFER,
-            InCallButtonIds.BUTTON_RECORD_CALL,
-        )
+        fun isSupportedButton(@InCallButtonIds id: Int) =
+            id in
+                setOf(
+                    InCallButtonIds.BUTTON_AUDIO,
+                    InCallButtonIds.BUTTON_MUTE,
+                    InCallButtonIds.BUTTON_DIALPAD,
+                    InCallButtonIds.BUTTON_HOLD,
+                    InCallButtonIds.BUTTON_SWAP,
+                    InCallButtonIds.BUTTON_UPGRADE_TO_VIDEO,
+                    InCallButtonIds.BUTTON_ADD_CALL,
+                    InCallButtonIds.BUTTON_MERGE,
+                    InCallButtonIds.BUTTON_MANAGE_VOICE_CONFERENCE,
+                    InCallButtonIds.BUTTON_SWAP_SIM,
+                    InCallButtonIds.BUTTON_UPGRADE_TO_RTT,
+                    InCallButtonIds.BUTTON_TRANSFER,
+                    InCallButtonIds.BUTTON_RECORD_CALL,
+                )
     }
 }
 
@@ -408,38 +455,69 @@ object InCallScreenHost {
         bottom: @Composable () -> Unit,
         overDialpad: @Composable () -> Unit = {},
     ): View {
-        fun compose(glass: Boolean = true, content: @Composable () -> Unit) = ComposeView(context).apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                PhoneScreenTheme(fillBackground = false) {
-                    if (glass) {
-                        // The window's gradient changes with the call's colors; the glass redraws its copy then.
-                        val background = InCallPresenter.getInstance().themeColorManager?.windowBackgroundVersion?.intValue
-                        WindowBackdrop(backgroundKey = background, content = content)
-                    } else {
-                        content()
+        fun compose(glass: Boolean = true, content: @Composable () -> Unit) =
+            ComposeView(context).apply {
+                setViewCompositionStrategy(
+                    ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
+                )
+                setContent {
+                    PhoneScreenTheme(fillBackground = false) {
+                        if (glass) {
+                            // The window's gradient changes with the call's colors; the glass
+                            // redraws its copy then.
+                            val background =
+                                InCallPresenter.getInstance()
+                                    .themeColorManager
+                                    ?.windowBackgroundVersion
+                                    ?.intValue
+                            WindowBackdrop(backgroundKey = background, content = content)
+                        } else {
+                            content()
+                        }
                     }
                 }
             }
-        }
-        val column = LinearLayout(context).apply {
-            orientation = LinearLayout.VERTICAL
-            addView(compose(content = top), LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f))
-            addView(
-                FrameLayout(context).apply { id = R.id.incall_location_holder },
-                LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT),
-            )
-            addView(compose(content = bottom), LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
-        }
+        val column =
+            LinearLayout(context).apply {
+                orientation = LinearLayout.VERTICAL
+                addView(
+                    compose(content = top),
+                    LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f),
+                )
+                addView(
+                    FrameLayout(context).apply { id = R.id.incall_location_holder },
+                    LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ),
+                )
+                addView(
+                    compose(content = bottom),
+                    LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ),
+                )
+            }
         return FrameLayout(context).apply {
-            addView(column, FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+            addView(
+                column,
+                FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                ),
+            )
             addView(
                 FrameLayout(context).apply {
                     id = R.id.incall_dialpad_container
                     clipChildren = false
                     clipToPadding = false
                 },
-                FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM),
+                FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    Gravity.BOTTOM,
+                ),
             )
             // Wraps its content, so it only takes touches where it draws.
             addView(

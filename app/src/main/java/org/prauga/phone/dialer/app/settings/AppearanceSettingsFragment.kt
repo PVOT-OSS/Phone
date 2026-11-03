@@ -9,10 +9,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -77,7 +77,10 @@ fun AppearanceSettingsList() {
             }
         }
         item(key = "glass") {
-            SettingsGroup(title = stringResource(R.string.appearance_glass_title), dividers = false) {
+            SettingsGroup(
+                title = stringResource(R.string.appearance_glass_title),
+                dividers = false,
+            ) {
                 PvotSwitchRow(
                     title = stringResource(R.string.appearance_glass_effects),
                     checked = appearance.glass,
@@ -90,9 +93,11 @@ fun AppearanceSettingsList() {
                     Text(
                         text = stringResource(R.string.appearance_glass_amount),
                         style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurface.copy(
-                            alpha = if (appearance.glass) 1f else PvotListRowDefaults.DisabledAlpha,
-                        ),
+                        color =
+                            MaterialTheme.colorScheme.onSurface.copy(
+                                alpha =
+                                    if (appearance.glass) 1f else PvotListRowDefaults.DisabledAlpha
+                            ),
                     )
                     PvotSlider(
                         value = appearance.intensity.coerceAtMost(max),
@@ -107,19 +112,22 @@ fun AppearanceSettingsList() {
         item(key = "preview") { GlassPreview() }
         item(key = "note") {
             val reduced = PvotGlassIntensity.isReduced()
-            val note = when {
-                reduced -> R.string.appearance_glass_reduced
-                appearance.animationsOff -> R.string.appearance_glass_animations_off
-                else -> null
-            }
+            val note =
+                when {
+                    reduced -> R.string.appearance_glass_reduced
+                    appearance.animationsOff -> R.string.appearance_glass_animations_off
+                    else -> null
+                }
             if (note != null) {
                 Text(
                     text = stringResource(note),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(
-                        horizontal = SettingsGroupDefaults.CardPadding + SettingsGroupDefaults.RowPadding,
-                    ),
+                    modifier =
+                        Modifier.padding(
+                            horizontal =
+                                SettingsGroupDefaults.CardPadding + SettingsGroupDefaults.RowPadding
+                        ),
                 )
             }
         }
@@ -136,10 +144,8 @@ private fun GlassPreview() {
     val intensity = PvotGlassDefaults.currentIntensity()
     val label = stringResource(R.string.appearance_glass_preview)
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(PvotShapes.Card)
-            .testTag(TestTags.APPEARANCE_GLASS_PREVIEW),
+        modifier =
+            Modifier.fillMaxWidth().clip(PvotShapes.Card).testTag(TestTags.APPEARANCE_GLASS_PREVIEW)
     ) {
         // Glass sits over the content that scrolls under it, so the preview's card sits over rows.
         PreviewRows(Modifier.fillMaxWidth().pvotGlassBackdrop(backdrop))
@@ -152,10 +158,17 @@ private fun GlassPreview() {
                 modifier = cardModifier,
                 style = PvotGlassDefaults.materialStyle(PvotGlassMaterial.Regular),
                 contentPadding = PvotGlassCardDefaults.ContentPadding,
-            ) { PreviewText(label) }
+            ) {
+                PreviewText(label)
+            }
         } else {
-            PvotCard(modifier = cardModifier, shape = RoundedCornerShape(PvotGlassCardDefaults.CornerRadius)) {
-                Column(Modifier.padding(PvotGlassCardDefaults.ContentPadding)) { PreviewText(label) }
+            PvotCard(
+                modifier = cardModifier,
+                shape = RoundedCornerShape(PvotGlassCardDefaults.CornerRadius),
+            ) {
+                Column(Modifier.padding(PvotGlassCardDefaults.ContentPadding)) {
+                    PreviewText(label)
+                }
             }
         }
     }
@@ -166,9 +179,10 @@ private fun GlassPreview() {
 private fun PreviewRows(modifier: Modifier) {
     val line = MaterialTheme.colorScheme.surfaceContainerHighest
     Column(
-        modifier = modifier
-            .background(MaterialTheme.colorScheme.surfaceContainerLow)
-            .padding(PvotSpacing.L),
+        modifier =
+            modifier
+                .background(MaterialTheme.colorScheme.surfaceContainerLow)
+                .padding(PvotSpacing.L),
         verticalArrangement = Arrangement.spacedBy(PvotSpacing.M),
     ) {
         PreviewRowNames.forEachIndexed { index, name ->
@@ -178,8 +192,16 @@ private fun PreviewRows(modifier: Modifier) {
                     modifier = Modifier.padding(start = PvotSpacing.M),
                     verticalArrangement = Arrangement.spacedBy(PvotSpacing.XS),
                 ) {
-                    Box(Modifier.fillMaxWidth(PreviewTitleFraction).height(PvotSpacing.M).background(line, PvotShapes.Pill))
-                    Box(Modifier.fillMaxWidth(PreviewSubtitleFraction).height(PvotSpacing.S).background(line, PvotShapes.Pill))
+                    Box(
+                        Modifier.fillMaxWidth(PreviewTitleFraction)
+                            .height(PvotSpacing.M)
+                            .background(line, PvotShapes.Pill)
+                    )
+                    Box(
+                        Modifier.fillMaxWidth(PreviewSubtitleFraction)
+                            .height(PvotSpacing.S)
+                            .background(line, PvotShapes.Pill)
+                    )
                 }
             }
         }

@@ -7,7 +7,6 @@ package org.prauga.phone.dialer.main.impl.bottomnav
 
 import android.view.View
 import androidx.annotation.StringRes
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -28,6 +27,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import com.prauga.pvot.designsystem.effects.ProvidePvotGlassIntensity
 import com.prauga.pvot.designsystem.motion.PvotDurations
@@ -38,9 +38,9 @@ import com.prauga.pvot.designsystem.theme.PvotSpacing
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.ui.PhoneSnackbarHost
 import org.prauga.phone.dialer.ui.PhoneTheme
-import org.prauga.phone.dialer.ui.appearance.AppearanceSettings
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.ui.WindowBackdrop
+import org.prauga.phone.dialer.ui.appearance.AppearanceSettings
 
 /** Puts the Compose nav bar into the main screen's view layout. */
 object MainChrome {
@@ -57,7 +57,9 @@ object MainChrome {
         snackbars: SnackbarHostState,
         actions: MainNavBarActions,
     ) {
-        navBarView.setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+        navBarView.setViewCompositionStrategy(
+            ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
+        )
         navBarView.setChromeContent {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 PhoneSnackbarHost(snackbars, Modifier.padding(bottom = PvotSpacing.S))
@@ -65,7 +67,8 @@ object MainChrome {
             }
         }
         val tabs = behind.findViewById<View>(R.id.fragment_container)
-        (tabs.layoutParams as? CoordinatorLayout.LayoutParams)?.behavior = CompactOnScrollBehavior(navBar)
+        (tabs.layoutParams as? CoordinatorLayout.LayoutParams)?.behavior =
+            CompactOnScrollBehavior(navBar)
     }
 
     @OptIn(ExperimentalComposeUiApi::class)
@@ -85,16 +88,15 @@ object MainChrome {
 @Composable
 internal fun MainChromeTheme(content: @Composable () -> Unit) {
     val appearance by AppearanceSettings.rememberAppearance()
-    PhoneTheme {
-        ProvidePvotGlassIntensity(appearance.preferredIntensity, content = content)
-    }
+    PhoneTheme { ProvidePvotGlassIntensity(appearance.preferredIntensity, content = content) }
 }
 
 /**
  * Shrinks the bar while the tabs scroll up and restores it when they scroll back down, as the Pvot
  * catalog does. The tabs' lists pass their scrolls to the coordinator layout holding them.
  */
-internal class CompactOnScrollBehavior(private val navBar: MainNavBarState) : CoordinatorLayout.Behavior<View>() {
+internal class CompactOnScrollBehavior(private val navBar: MainNavBarState) :
+    CoordinatorLayout.Behavior<View>() {
 
     override fun onStartNestedScroll(
         coordinatorLayout: CoordinatorLayout,
@@ -150,10 +152,12 @@ fun MainNavBar(state: MainNavBarState, actions: MainNavBarActions, modifier: Mod
     AnimatedVisibility(
         visible = state.isVisible,
         modifier = modifier,
-        enter = slideInVertically(tween(PvotDurations.Medium, easing = PvotMotion.Settle)) { it } +
-            fadeIn(tween(PvotDurations.Medium)),
-        exit = slideOutVertically(tween(PvotDurations.Short)) { it } +
-            fadeOut(tween(PvotDurations.Short)),
+        enter =
+            slideInVertically(tween(PvotDurations.Medium, easing = PvotMotion.Settle)) { it } +
+                fadeIn(tween(PvotDurations.Medium)),
+        exit =
+            slideOutVertically(tween(PvotDurations.Short)) { it } +
+                fadeOut(tween(PvotDurations.Short)),
     ) {
         PvotNavBar(
             selectedTab = selected,
@@ -180,40 +184,46 @@ private fun runAction(@TabIndex tab: Int, actions: MainNavBarActions) {
 
 /** What the selected [tab]'s pill reads, its action or, for voicemail, the tab's name. */
 @StringRes
-private fun actionLabel(@TabIndex tab: Int): Int = when (tab) {
-    TabIndex.DIALPAD -> R.string.nav_bar_action_dial
-    TabIndex.CALL_LOG -> R.string.nav_bar_action_search
-    TabIndex.CONTACTS -> R.string.nav_bar_action_add
-    else -> R.string.tab_title_voicemail
-}
+private fun actionLabel(@TabIndex tab: Int): Int =
+    when (tab) {
+        TabIndex.DIALPAD -> R.string.nav_bar_action_dial
+        TabIndex.CALL_LOG -> R.string.nav_bar_action_search
+        TabIndex.CONTACTS -> R.string.nav_bar_action_add
+        else -> R.string.tab_title_voicemail
+    }
 
-private fun tabItem(@TabIndex tab: Int, badgeCount: Int): PvotTabItem = when (tab) {
-    TabIndex.DIALPAD -> PvotTabItem(
-        iconRes = R.drawable.ic_dialpad,
-        labelRes = R.string.tab_title_dialpad,
-        contentDescriptionRes = R.string.tab_title_dialpad,
-        expandedIconRes = R.drawable.ic_phone,
-        expandedLabelRes = R.string.nav_bar_action_dial,
-    )
-    TabIndex.CALL_LOG -> PvotTabItem(
-        iconRes = R.drawable.ic_history,
-        labelRes = R.string.tab_title_call_history,
-        contentDescriptionRes = R.string.tab_title_call_history,
-        expandedIconRes = R.drawable.ic_search,
-        expandedLabelRes = R.string.nav_bar_action_search,
-        badgeCount = badgeCount,
-    )
-    TabIndex.CONTACTS -> PvotTabItem(
-        iconRes = R.drawable.ic_users,
-        labelRes = R.string.tab_all_contacts,
-        contentDescriptionRes = R.string.tab_all_contacts,
-        expandedIconRes = R.drawable.ic_user_plus,
-        expandedLabelRes = R.string.nav_bar_action_add,
-    )
-    else -> PvotTabItem(
-        iconRes = R.drawable.ic_call_voicemail,
-        labelRes = R.string.tab_title_voicemail,
-        contentDescriptionRes = R.string.tab_title_voicemail,
-        badgeCount = badgeCount,
-    )
-}
+private fun tabItem(@TabIndex tab: Int, badgeCount: Int): PvotTabItem =
+    when (tab) {
+        TabIndex.DIALPAD ->
+            PvotTabItem(
+                iconRes = R.drawable.ic_dialpad,
+                labelRes = R.string.tab_title_dialpad,
+                contentDescriptionRes = R.string.tab_title_dialpad,
+                expandedIconRes = R.drawable.ic_phone,
+                expandedLabelRes = R.string.nav_bar_action_dial,
+            )
+        TabIndex.CALL_LOG ->
+            PvotTabItem(
+                iconRes = R.drawable.ic_history,
+                labelRes = R.string.tab_title_call_history,
+                contentDescriptionRes = R.string.tab_title_call_history,
+                expandedIconRes = R.drawable.ic_search,
+                expandedLabelRes = R.string.nav_bar_action_search,
+                badgeCount = badgeCount,
+            )
+        TabIndex.CONTACTS ->
+            PvotTabItem(
+                iconRes = R.drawable.ic_users,
+                labelRes = R.string.tab_all_contacts,
+                contentDescriptionRes = R.string.tab_all_contacts,
+                expandedIconRes = R.drawable.ic_user_plus,
+                expandedLabelRes = R.string.nav_bar_action_add,
+            )
+        else ->
+            PvotTabItem(
+                iconRes = R.drawable.ic_call_voicemail,
+                labelRes = R.string.tab_title_voicemail,
+                contentDescriptionRes = R.string.tab_title_voicemail,
+                badgeCount = badgeCount,
+            )
+    }

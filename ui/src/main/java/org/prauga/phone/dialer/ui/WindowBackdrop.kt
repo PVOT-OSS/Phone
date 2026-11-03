@@ -31,21 +31,25 @@ import com.prauga.pvot.designsystem.effects.pvotGlassBackdrop
 import com.prauga.pvot.designsystem.effects.rememberPvotGlassBackdrop
 
 /**
- * Records what the window shows behind [content] as a glass backdrop, for a Compose part placed
- * in a view layout, whose background and neighbours are views rather than composables. Draws the
- * window's background and then [behind], each moved to where it sits relative to this part, so
- * the glass in [content] frosts what is really under it. [behind]'s children are drawn from their
- * own render nodes, so the copy follows them as they scroll.
+ * Records what the window shows behind [content] as a glass backdrop, for a Compose part placed in
+ * a view layout, whose background and neighbours are views rather than composables. Draws the
+ * window's background and then [behind], each moved to where it sits relative to this part, so the
+ * glass in [content] frosts what is really under it. [behind]'s children are drawn from their own
+ * render nodes, so the copy follows them as they scroll.
  *
  * The copy is only for the glass: on screen this part draws [content] alone.
  *
- * @param behind The view under this part, such as the container of a screen's lists; never a
- *     view that holds this part
+ * @param behind The view under this part, such as the container of a screen's lists; never a view
+ *   that holds this part
  * @param backgroundKey A value that changes whenever the window's background drawable is replaced
- *     or recolored, such as a version the screen bumps then; the copy is drawn again when it does
+ *   or recolored, such as a version the screen bumps then; the copy is drawn again when it does
  */
 @Composable
-fun WindowBackdrop(behind: View? = null, backgroundKey: Any? = null, content: @Composable () -> Unit) {
+fun WindowBackdrop(
+    behind: View? = null,
+    backgroundKey: Any? = null,
+    content: @Composable () -> Unit,
+) {
     val backdrop = rememberPvotGlassBackdrop()
     val root = LocalView.current.rootView
     var inWindow by remember { mutableStateOf(Offset.Zero) }
@@ -62,8 +66,7 @@ fun WindowBackdrop(behind: View? = null, backgroundKey: Any? = null, content: @C
     }
     Box(Modifier.onGloballyPositioned { inWindow = it.positionInWindow() }) {
         Box(
-            Modifier
-                .matchParentSize()
+            Modifier.matchParentSize()
                 .graphicsLayer { alpha = 0f }
                 .pvotGlassBackdrop(backdrop)
                 .drawBehind {
@@ -72,14 +75,21 @@ fun WindowBackdrop(behind: View? = null, backgroundKey: Any? = null, content: @C
                     drawIntoCanvas { canvas ->
                         val native = canvas.nativeCanvas
                         root.background?.let { background ->
-                            native.withTranslation(-inWindow.x, -inWindow.y) { background.draw(this) }
+                            native.withTranslation(-inWindow.x, -inWindow.y) {
+                                background.draw(this)
+                            }
                         }
                         if (behind != null && behind.isShown) {
                             behind.getLocationInWindow(behindLocation)
-                            native.withTranslation(behindLocation[0] - inWindow.x, behindLocation[1] - inWindow.y) { behind.draw(this) }
+                            native.withTranslation(
+                                behindLocation[0] - inWindow.x,
+                                behindLocation[1] - inWindow.y,
+                            ) {
+                                behind.draw(this)
+                            }
                         }
                     }
-                },
+                }
         )
         CompositionLocalProvider(LocalPvotGlassBackdrop provides backdrop) { content() }
     }

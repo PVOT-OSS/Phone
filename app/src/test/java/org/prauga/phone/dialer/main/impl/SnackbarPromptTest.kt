@@ -35,7 +35,9 @@ class SnackbarPromptTest {
         }
         var acted = 0
         var done = 0
-        compose.runOnIdle { prompt.show("Send a message?", "Message", { acted++ }, true) { done++ } }
+        compose.runOnIdle {
+            prompt.show("Send a message?", "Message", { acted++ }, true) { done++ }
+        }
 
         compose.onNodeWithText("Send a message?").assertIsDisplayed()
         compose.onNodeWithText("Message").performClick()

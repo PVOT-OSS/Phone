@@ -41,22 +41,39 @@ class AccountSelectionActivity : ComponentActivity() {
         enablePvotEdgeToEdge()
         super.onCreate(savedInstanceState)
         val number = intent.getStringExtra(EXTRA_NUMBER)
-        val handles = IntentCompat.getParcelableArrayListExtra(intent, EXTRA_ACCOUNT_HANDLES, PhoneAccountHandle::class.java)
+        val handles =
+            IntentCompat.getParcelableArrayListExtra(
+                intent,
+                EXTRA_ACCOUNT_HANDLES,
+                PhoneAccountHandle::class.java,
+            )
         if (number.isNullOrEmpty() || handles.isNullOrEmpty()) {
             finish()
             return
         }
         val initiationType = CallInitiationType.Type.entries[intent.getIntExtra(EXTRA_TYPE, 0)]
         val telecom = getSystemService(TelecomManager::class.java)
-        val accounts = handles.mapNotNull { handle -> TelecomUtil.getPhoneAccount(this, handle)?.let { CallingAccount.of(this, it) } }
+        val accounts =
+            handles.mapNotNull { handle ->
+                TelecomUtil.getPhoneAccount(this, handle)?.let { CallingAccount.of(this, it) }
+            }
 
         setPvotContent {
-            // Not filled: the window is see-through, and the sheet draws its own scrim over the app below.
+            // Not filled: the window is see-through, and the sheet draws its own scrim over the app
+            // below.
             PhoneScreenTheme(fillBackground = false) {
-                AccountSheet(accounts, onSelect = { account ->
-                    startActivity(CallIntentBuilder(number, initiationType).setPhoneAccountHandle(account.handle).build())
-                    finish()
-                }, onDismiss = ::finish)
+                AccountSheet(
+                    accounts,
+                    onSelect = { account ->
+                        startActivity(
+                            CallIntentBuilder(number, initiationType)
+                                .setPhoneAccountHandle(account.handle)
+                                .build()
+                        )
+                        finish()
+                    },
+                    onDismiss = ::finish,
+                )
             }
         }
     }
@@ -66,21 +83,32 @@ class AccountSelectionActivity : ComponentActivity() {
         private const val EXTRA_ACCOUNT_HANDLES = "accountHandles"
         private const val EXTRA_TYPE = "type"
 
-        /** An intent to choose the account to call [number] with, or null with one account or none. */
+        /**
+         * An intent to choose the account to call [number] with, or null with one account or none.
+         */
         @JvmStatic
-        fun createIntent(context: Context, number: String?, initiationType: CallInitiationType.Type): Intent? {
+        fun createIntent(
+            context: Context,
+            number: String?,
+            initiationType: CallInitiationType.Type,
+        ): Intent? {
             if (number.isNullOrEmpty()) return null
             val accounts = CallUtil.getCallCapablePhoneAccounts(context, PhoneAccount.SCHEME_TEL)
             if (accounts == null || accounts.size <= 1) return null
             return Intent(context, AccountSelectionActivity::class.java)
                 .putExtra(EXTRA_NUMBER, number)
-                .putParcelableArrayListExtra(EXTRA_ACCOUNT_HANDLES, ArrayList(accounts.map { it.accountHandle }))
+                .putParcelableArrayListExtra(
+                    EXTRA_ACCOUNT_HANDLES,
+                    ArrayList(accounts.map { it.accountHandle }),
+                )
                 .putExtra(EXTRA_TYPE, initiationType.ordinal)
         }
     }
 }
 
-/** A calling account as the chooser shows it: its label, its number and the system's icon for it. */
+/**
+ * A calling account as the chooser shows it: its label, its number and the system's icon for it.
+ */
 internal data class CallingAccount(
     val handle: PhoneAccountHandle,
     val label: String,
@@ -88,12 +116,16 @@ internal data class CallingAccount(
     val icon: android.graphics.Bitmap?,
 ) {
     companion object {
-        fun of(context: Context, account: PhoneAccount) = CallingAccount(
-            handle = account.accountHandle,
-            label = account.label.toString(),
-            number = (account.subscriptionAddress ?: account.address)?.schemeSpecificPart?.ifEmpty { null },
-            icon = account.icon?.loadDrawable(context)?.toBitmap(),
-        )
+        fun of(context: Context, account: PhoneAccount) =
+            CallingAccount(
+                handle = account.accountHandle,
+                label = account.label.toString(),
+                number =
+                    (account.subscriptionAddress ?: account.address)?.schemeSpecificPart?.ifEmpty {
+                        null
+                    },
+                icon = account.icon?.loadDrawable(context)?.toBitmap(),
+            )
     }
 }
 
@@ -102,8 +134,16 @@ private val AccountIconSize = 24.dp
 
 /** The sheet listing [accounts]; picking one calls [onSelect], dismissing calls [onDismiss]. */
 @Composable
-internal fun AccountSheet(accounts: List<CallingAccount>, onSelect: (CallingAccount) -> Unit, onDismiss: () -> Unit) {
-    PvotBottomSheet(visible = true, onDismissRequest = onDismiss, title = stringResource(R.string.call_via_dialog_title)) {
+internal fun AccountSheet(
+    accounts: List<CallingAccount>,
+    onSelect: (CallingAccount) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    PvotBottomSheet(
+        visible = true,
+        onDismissRequest = onDismiss,
+        title = stringResource(R.string.call_via_dialog_title),
+    ) {
         for (account in accounts) {
             PvotSheetItem(
                 title = account.label,
@@ -111,7 +151,16 @@ internal fun AccountSheet(accounts: List<CallingAccount>, onSelect: (CallingAcco
                 onClick = { onSelect(account) },
                 modifier = Modifier.testTag(TestTags.callingAccount(account.handle.id)),
                 // The account's own icon, usually its SIM color, as the system shows it.
-                icon = account.icon?.let { bitmap -> { Image(bitmap.asImageBitmap(), contentDescription = null, Modifier.size(AccountIconSize)) } },
+                icon =
+                    account.icon?.let { bitmap ->
+                        {
+                            Image(
+                                bitmap.asImageBitmap(),
+                                contentDescription = null,
+                                Modifier.size(AccountIconSize),
+                            )
+                        }
+                    },
             )
         }
     }

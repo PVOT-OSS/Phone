@@ -40,12 +40,9 @@ class SettingsScreenshotTest {
 
     private val context: Context = ApplicationProvider.getApplicationContext()
 
-    @Test
-    fun screeningLight() = captureScreening("screening_light")
+    @Test fun screeningLight() = captureScreening("screening_light")
 
-    @Test
-    @Config(qualifiers = "+night")
-    fun screeningDark() = captureScreening("screening_dark")
+    @Test @Config(qualifiers = "+night") fun screeningDark() = captureScreening("screening_dark")
 
     @Test
     @Config(fontScale = 1.3f)
@@ -55,37 +52,30 @@ class SettingsScreenshotTest {
     @Config(qualifiers = "+night")
     fun soundDark() {
         val model = SoundSettingsModel(context)
-        // The screen reads the ringtone's title off the main thread; read it first so the capture is stable.
+        // The screen reads the ringtone's title off the main thread; read it first so the capture
+        // is stable.
         kotlinx.coroutines.runBlocking { model.loadRingtoneName() }
         compose.setContent { SettingsTheme { SoundSettingsList(model) } }
         compose.waitForIdle()
         compose.onRoot().captureRoboImage("src/test/screenshots/settings/sound_dark.png")
     }
 
-    @Test
-    fun rootLight() = captureRoot("root_light")
+    @Test fun rootLight() = captureRoot("root_light")
+
+    @Test @Config(qualifiers = "+night") fun rootDark() = captureRoot("root_dark")
 
     @Test
     @Config(qualifiers = "+night")
-    fun rootDark() = captureRoot("root_dark")
+    fun rootNotDefaultDark() =
+        captureRoot("root_not_default_dark", DefaultPhoneAppPrompt(denied = false) {})
 
-    @Test
-    @Config(qualifiers = "+night")
-    fun rootNotDefaultDark() = captureRoot("root_not_default_dark", DefaultPhoneAppPrompt(denied = false) {})
+    @Test fun displayLight() = captureDisplay("display_light")
 
-    @Test
-    fun displayLight() = captureDisplay("display_light")
+    @Test @Config(qualifiers = "+night") fun displayDark() = captureDisplay("display_dark")
 
-    @Test
-    @Config(qualifiers = "+night")
-    fun displayDark() = captureDisplay("display_dark")
+    @Test fun accountsLight() = captureAccounts("accounts_light")
 
-    @Test
-    fun accountsLight() = captureAccounts("accounts_light")
-
-    @Test
-    @Config(qualifiers = "+night")
-    fun accountsDark() = captureAccounts("accounts_dark")
+    @Test @Config(qualifiers = "+night") fun accountsDark() = captureAccounts("accounts_dark")
 
     private fun captureScreening(name: String) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -104,19 +94,39 @@ class SettingsScreenshotTest {
     private fun captureDisplay(name: String) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         prefs.edit().clear().commit()
-        captureScreen(name, context.getString(R.string.display_options_title)) { DisplayOptionsList(prefs) }
+        captureScreen(name, context.getString(R.string.display_options_title)) {
+            DisplayOptionsList(prefs)
+        }
     }
 
     private fun captureAccounts(name: String) {
-        val component = ComponentName("com.android.phone", "com.android.services.telephony.TelephonyConnectionService")
-        val accounts = listOf(
-            PhoneAccountSelectionFragment.SimAccount(PhoneAccountHandle(component, "1"), "SIM 1", "Carrier One"),
-            PhoneAccountSelectionFragment.SimAccount(PhoneAccountHandle(component, "2"), "SIM 2", "Carrier Two"),
-        )
-        captureScreen(name, context.getString(R.string.voicemail_settings_label)) { PhoneAccountList(accounts) {} }
+        val component =
+            ComponentName(
+                "com.android.phone",
+                "com.android.services.telephony.TelephonyConnectionService",
+            )
+        val accounts =
+            listOf(
+                PhoneAccountSelectionFragment.SimAccount(
+                    PhoneAccountHandle(component, "1"),
+                    "SIM 1",
+                    "Carrier One",
+                ),
+                PhoneAccountSelectionFragment.SimAccount(
+                    PhoneAccountHandle(component, "2"),
+                    "SIM 2",
+                    "Carrier Two",
+                ),
+            )
+        captureScreen(name, context.getString(R.string.voicemail_settings_label)) {
+            PhoneAccountList(accounts) {}
+        }
     }
 
-    /** The whole screen in its scaffold. Robolectric cannot run the glass shaders, so the glass is solid. */
+    /**
+     * The whole screen in its scaffold. Robolectric cannot run the glass shaders, so the glass is
+     * solid.
+     */
     private fun captureScreen(name: String, title: String, content: @Composable () -> Unit) {
         compose.setContent {
             SettingsTheme {

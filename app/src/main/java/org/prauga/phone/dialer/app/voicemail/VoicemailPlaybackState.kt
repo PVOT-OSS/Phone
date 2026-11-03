@@ -13,10 +13,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import org.prauga.phone.dialer.R
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
+import org.prauga.phone.dialer.R
 
 /**
  * The playback controls of the open voicemail, as Compose state. The [VoicemailPlaybackPresenter]
@@ -30,20 +30,26 @@ class VoicemailPlaybackState : VoicemailPlaybackPresenter.PlaybackView {
 
     var voicemailUri: Uri? by mutableStateOf(null)
         private set
+
     var isPlaying by mutableStateOf(false)
         private set
+
     var positionMs by mutableIntStateOf(0)
         private set
+
     var durationMs by mutableIntStateOf(0)
         private set
+
     var isSpeakerOn by mutableStateOf(false)
         private set
 
     /** Whether play, pause and seeking work; off while the audio downloads or after an error. */
     var controlsEnabled by mutableStateOf(false)
         private set
+
     var isSeekEnabled by mutableStateOf(false)
         private set
+
     var isShareVisible by mutableStateOf(false)
         private set
 
@@ -98,15 +104,17 @@ class VoicemailPlaybackState : VoicemailPlaybackPresenter.PlaybackView {
     override fun onPlaybackStarted(duration: Int, executorService: ScheduledExecutorService) {
         isPlaying = true
         stopPositionUpdates()
-        positionUpdates = executorService.scheduleWithFixedDelay(
-            {
-                val position = presenter?.getMediaPlayerPosition() ?: return@scheduleWithFixedDelay
-                mainHandler.post { setClipPosition(position, duration) }
-            },
-            0,
-            POSITION_UPDATE_MILLIS,
-            TimeUnit.MILLISECONDS,
-        )
+        positionUpdates =
+            executorService.scheduleWithFixedDelay(
+                {
+                    val position =
+                        presenter?.getMediaPlayerPosition() ?: return@scheduleWithFixedDelay
+                    mainHandler.post { setClipPosition(position, duration) }
+                },
+                0,
+                POSITION_UPDATE_MILLIS,
+                TimeUnit.MILLISECONDS,
+            )
     }
 
     override fun onPlaybackStopped() {

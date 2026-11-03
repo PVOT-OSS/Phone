@@ -48,7 +48,9 @@ class OnboardingScreenTest {
     @Test
     fun aDeniedRoleOffersDefaultAppsSettings() {
         show(OnboardingState(roleDenied = true))
-        compose.onNodeWithText(context.getString(R.string.onboarding_role_denied)).assertIsDisplayed()
+        compose
+            .onNodeWithText(context.getString(R.string.onboarding_role_denied))
+            .assertIsDisplayed()
         compose.onNodeWithTag(TestTags.ONBOARDING_SETTINGS).performClick()
         assertThat(actions.calls).containsExactly("default_apps")
     }
@@ -75,15 +77,25 @@ class OnboardingScreenTest {
     fun grantedGroupsAreMarkedAllowed() {
         show(OnboardingState(isDefaultDialer = true, granted = setOf(PermissionGroup.PHONE)))
         val allowed = context.getString(R.string.onboarding_permission_granted)
-        compose.onAllNodesWithContentDescription(allowed, useUnmergedTree = true).assertCountEquals(1)
+        compose
+            .onAllNodesWithContentDescription(allowed, useUnmergedTree = true)
+            .assertCountEquals(1)
     }
 
     @Test
     fun blockedGroupsLinkToAppSettings() {
         val everythingElse = PermissionGroup.entries.toSet() - PermissionGroup.CONTACTS
-        show(OnboardingState(isDefaultDialer = true, granted = everythingElse, blocked = setOf(PermissionGroup.CONTACTS)))
+        show(
+            OnboardingState(
+                isDefaultDialer = true,
+                granted = everythingElse,
+                blocked = setOf(PermissionGroup.CONTACTS),
+            )
+        )
         scrollTo(tag(PermissionGroup.CONTACTS))
-        compose.onNodeWithText(context.getString(R.string.onboarding_permission_blocked)).assertIsDisplayed()
+        compose
+            .onNodeWithText(context.getString(R.string.onboarding_permission_blocked))
+            .assertIsDisplayed()
         // Nothing left that Android would ask for, so the only way on is app settings.
         compose.onNodeWithTag(TestTags.ONBOARDING_PRIMARY).assertDoesNotExist()
         scrollTo(TestTags.ONBOARDING_SETTINGS).performClick()
@@ -95,18 +107,34 @@ class OnboardingScreenTest {
         compose.setContent { PhoneScreenTheme { SolidGlass { OnboardingScreen(state, actions) } } }
     }
 
-    private fun scrollTo(tag: String) = compose.onNodeWithTag(TestTags.ONBOARDING)
-        .performScrollToNode(hasTestTag(tag))
-        .let { compose.onNodeWithTag(tag) }
+    private fun scrollTo(tag: String) =
+        compose.onNodeWithTag(TestTags.ONBOARDING).performScrollToNode(hasTestTag(tag)).let {
+            compose.onNodeWithTag(tag)
+        }
 
     private fun tag(group: PermissionGroup) = TestTags.onboardingPermission(group.name.lowercase())
 
     private class RecordingActions : OnboardingActions {
         val calls = mutableListOf<String>()
-        override fun onRequestRole() { calls += "role" }
-        override fun onOpenDefaultApps() { calls += "default_apps" }
-        override fun onRequestPermissions() { calls += "permissions" }
-        override fun onOpenAppSettings() { calls += "app_settings" }
-        override fun onNotNow() { calls += "not_now" }
+
+        override fun onRequestRole() {
+            calls += "role"
+        }
+
+        override fun onOpenDefaultApps() {
+            calls += "default_apps"
+        }
+
+        override fun onRequestPermissions() {
+            calls += "permissions"
+        }
+
+        override fun onOpenAppSettings() {
+            calls += "app_settings"
+        }
+
+        override fun onNotNow() {
+            calls += "not_now"
+        }
     }
 }

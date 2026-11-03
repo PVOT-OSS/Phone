@@ -43,7 +43,8 @@ class CallSubjectDialogTest {
     private val context = ApplicationProvider.getApplicationContext<Context>()
     private val handle = PhoneAccountHandle(ComponentName("com.android.phone", "Telephony"), "1")
 
-    private fun account(extras: Bundle?) = PhoneAccount.builder(handle, "SIM 1").setExtras(extras).build()
+    private fun account(extras: Bundle?) =
+        PhoneAccount.builder(handle, "SIM 1").setExtras(extras).build()
 
     @Test
     fun withoutAccountSettingsNotesAreSixteenCharacters() {
@@ -54,19 +55,32 @@ class CallSubjectDialogTest {
 
     @Test
     fun theAccountCanSetTheLimitAndCountBytes() {
-        val limits = SubjectLimits.of(account(Bundle().apply {
-            putInt(PhoneAccount.EXTRA_CALL_SUBJECT_MAX_LENGTH, 20)
-            putString(PhoneAccount.EXTRA_CALL_SUBJECT_CHARACTER_ENCODING, "UTF-8")
-        }))
+        val limits =
+            SubjectLimits.of(
+                account(
+                    Bundle().apply {
+                        putInt(PhoneAccount.EXTRA_CALL_SUBJECT_MAX_LENGTH, 20)
+                        putString(PhoneAccount.EXTRA_CALL_SUBJECT_CHARACTER_ENCODING, "UTF-8")
+                    }
+                )
+            )
         assertThat(limits.maxLength).isEqualTo(20)
         assertThat(limits.lengthOf("héllo")).isEqualTo(6)
     }
 
     @Test
     fun anUnknownEncodingCountsCharacters() {
-        val limits = SubjectLimits.of(account(Bundle().apply {
-            putString(PhoneAccount.EXTRA_CALL_SUBJECT_CHARACTER_ENCODING, "not-a-charset")
-        }))
+        val limits =
+            SubjectLimits.of(
+                account(
+                    Bundle().apply {
+                        putString(
+                            PhoneAccount.EXTRA_CALL_SUBJECT_CHARACTER_ENCODING,
+                            "not-a-charset",
+                        )
+                    }
+                )
+            )
         assertThat(limits.encoding).isNull()
     }
 
@@ -75,7 +89,9 @@ class CallSubjectDialogTest {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         prefs.edit().clear().commit()
         CallSubjectDialog.saveSubjectHistory(prefs, listOf("1", "", "2", "3", "4", "5", "6"))
-        assertThat(CallSubjectDialog.loadSubjectHistory(prefs)).containsExactly("2", "3", "4", "5", "6").inOrder()
+        assertThat(CallSubjectDialog.loadSubjectHistory(prefs))
+            .containsExactly("2", "3", "4", "5", "6")
+            .inOrder()
     }
 
     @Test
@@ -102,21 +118,23 @@ class CallSubjectDialogTest {
     fun theCounterShowsLengthAgainstTheLimit() {
         show()
         compose.onNode(hasSetTextAction()).performTextInput("Hi")
-        compose.onNodeWithText("2 / 16", substring = true).assertTextContains("2 / 16", substring = true)
+        compose
+            .onNodeWithText("2 / 16", substring = true)
+            .assertTextContains("2 / 16", substring = true)
     }
 
-    @Test
-    fun screenshotDark() = screenshot("call_subject_dark")
+    @Test fun screenshotDark() = screenshot("call_subject_dark")
 
-    @Test
-    @Config(qualifiers = "+notnight")
-    fun screenshotLight() = screenshot("call_subject_light")
+    @Test @Config(qualifiers = "+notnight") fun screenshotLight() = screenshot("call_subject_light")
 
     private fun screenshot(name: String) {
         show(history = listOf("Running late"))
         compose.onNode(hasSetTextAction()).performTextInput("At the door")
         compose.waitForIdle()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/dialogs/$name.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/dialogs/$name.png")
     }
 
     private fun show(
@@ -126,7 +144,15 @@ class CallSubjectDialogTest {
     ) {
         compose.setContent {
             PvotAppTheme {
-                CallSubjectContent("Alex Doe", "Mobile +1 555-123-4567", limits, history, onSend, onDismiss = {}, photo = null)
+                CallSubjectContent(
+                    "Alex Doe",
+                    "Mobile +1 555-123-4567",
+                    limits,
+                    history,
+                    onSend,
+                    onDismiss = {},
+                    photo = null,
+                )
             }
         }
     }

@@ -22,7 +22,6 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.prauga.phone.incallui.R
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.TestTags
 import org.robolectric.RobolectricTestRunner
@@ -45,7 +44,12 @@ class InCallDialpadTest {
         digits.setText("12#")
         compose.setContent {
             PhoneScreenTheme {
-                InCallDialpad(digits, endCallSpace, onKey = { code, down -> events += "$code ${if (down) "down" else "up"}" }, onBack = { events += "back" })
+                InCallDialpad(
+                    digits,
+                    endCallSpace,
+                    onKey = { code, down -> events += "$code ${if (down) "down" else "up"}" },
+                    onBack = { events += "back" },
+                )
             }
         }
     }
@@ -63,14 +67,18 @@ class InCallDialpadTest {
     fun aKeySendsItsToneWhileHeld() {
         show()
         compose.onNodeWithTag(TestTags.dialpadKey("7")).performClick()
-        assertThat(events).containsExactly("${KeyEvent.KEYCODE_7} down", "${KeyEvent.KEYCODE_7} up").inOrder()
+        assertThat(events)
+            .containsExactly("${KeyEvent.KEYCODE_7} down", "${KeyEvent.KEYCODE_7} up")
+            .inOrder()
     }
 
     @Test
     fun holdingZeroIsNotAPlusDuringACall() {
         show()
         compose.onNodeWithTag(TestTags.dialpadKey("0")).performTouchInput { longClick() }
-        assertThat(events).containsExactly("${KeyEvent.KEYCODE_0} down", "${KeyEvent.KEYCODE_0} up").inOrder()
+        assertThat(events)
+            .containsExactly("${KeyEvent.KEYCODE_0} down", "${KeyEvent.KEYCODE_0} up")
+            .inOrder()
     }
 
     @Test
@@ -83,6 +91,9 @@ class InCallDialpadTest {
     @Test
     fun screenshotDark() {
         show()
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/incall/incall_dialpad_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/incall/incall_dialpad_dark.png")
     }
 }

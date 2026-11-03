@@ -69,7 +69,7 @@ object FragmentUtils {
                     " that implements " +
                     callbackInterface.name +
                     ". Instead found " +
-                    parent,
+                    parent
             )
         }
     }

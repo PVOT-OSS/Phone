@@ -29,7 +29,9 @@ import com.prauga.pvot.designsystem.components.PvotDialogDefaults
  *
  * Every action closes the dialog; a [cancels] action cancels it, as the old negative buttons did.
  */
-class PvotAlertDialog @JvmOverloads constructor(
+class PvotAlertDialog
+@JvmOverloads
+constructor(
     context: Context,
     private val title: CharSequence?,
     private val message: CharSequence?,
@@ -38,7 +40,9 @@ class PvotAlertDialog @JvmOverloads constructor(
 ) : ComponentDialog(context) {
 
     /** A button of the dialog. [onClick] runs before the dialog closes. */
-    class Action @JvmOverloads constructor(
+    class Action
+    @JvmOverloads
+    constructor(
         val label: CharSequence,
         val style: PvotDialogActionStyle = PvotDialogActionStyle.Neutral,
         val onClick: Runnable? = null,
@@ -61,12 +65,17 @@ class PvotAlertDialog @JvmOverloads constructor(
                             content = content?.let { { it() } },
                         ) {
                             for (action in actions) {
-                                PvotDialogAction(action.label.toString(), onClick = { act(action) }, style = action.style, enabled = action.enabled())
+                                PvotDialogAction(
+                                    action.label.toString(),
+                                    onClick = { act(action) },
+                                    style = action.style,
+                                    enabled = action.enabled(),
+                                )
                             }
                         }
                     }
                 }
-            },
+            }
         )
         window?.run {
             // The card draws its own surface; the window only dims what is behind it.

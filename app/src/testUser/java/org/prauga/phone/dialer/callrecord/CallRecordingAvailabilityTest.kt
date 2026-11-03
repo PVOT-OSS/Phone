@@ -17,6 +17,7 @@ import org.robolectric.RobolectricTestRunner
 class CallRecordingAvailabilityTest {
     @Test
     fun recordingIsOff() {
-        assertThat(CallRecorderService.isEnabled(ApplicationProvider.getApplicationContext())).isFalse()
+        assertThat(CallRecorderService.isEnabled(ApplicationProvider.getApplicationContext()))
+            .isFalse()
     }
 }

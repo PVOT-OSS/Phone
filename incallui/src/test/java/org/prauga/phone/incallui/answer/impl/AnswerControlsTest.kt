@@ -46,25 +46,45 @@ class AnswerControlsTest {
 
     /** Whether the fragment takes the next answer or decline; false stands for one that failed. */
     private var settles = true
-    private val actions = object : AnswerActions {
-        override fun onAnswer(): Boolean { events += "answer"; return settles }
-        override fun onReject(): Boolean { events += "reject"; return settles }
-        override fun onSecondary(): Boolean { events += "secondary"; return false }
-        override fun onAnswerAndRelease(): Boolean { events += "answer and release"; return true }
-    }
+    private val actions =
+        object : AnswerActions {
+            override fun onAnswer(): Boolean {
+                events += "answer"
+                return settles
+            }
 
-    private fun show(state: AnswerUiState) = compose.setContent {
-        PhoneScreenTheme {
-            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) { AnswerControls(state, actions) }
+            override fun onReject(): Boolean {
+                events += "reject"
+                return settles
+            }
+
+            override fun onSecondary(): Boolean {
+                events += "secondary"
+                return false
+            }
+
+            override fun onAnswerAndRelease(): Boolean {
+                events += "answer and release"
+                return true
+            }
         }
-    }
 
-    private fun fullState() = AnswerUiState().apply {
-        secondary = AnswerFragment.REJECT_WITH_SMS
-        secondaryVisible = true
-        answerAndRelease = AnswerFragment.ANSWER_AND_RELEASE
-        answerAndReleaseVisible = true
-    }
+    private fun show(state: AnswerUiState) =
+        compose.setContent {
+            PhoneScreenTheme {
+                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
+                    AnswerControls(state, actions)
+                }
+            }
+        }
+
+    private fun fullState() =
+        AnswerUiState().apply {
+            secondary = AnswerFragment.REJECT_WITH_SMS
+            secondaryVisible = true
+            answerAndRelease = AnswerFragment.ANSWER_AND_RELEASE
+            answerAndReleaseVisible = true
+        }
 
     @Test
     fun tappingAnswerAnswers() {
@@ -87,7 +107,9 @@ class AnswerControlsTest {
         compose.onNodeWithTag(TestTags.ANSWER_ACCEPT).performClick()
         compose.onNodeWithTag(TestTags.ANSWER_DECLINE).performClick()
         compose.onNodeWithTag(TestTags.ANSWER_AND_RELEASE).performClick()
-        compose.onNodeWithTag(TestTags.ANSWER_ACCEPT).performSemanticsAction(SemanticsActions.OnClick)
+        compose
+            .onNodeWithTag(TestTags.ANSWER_ACCEPT)
+            .performSemanticsAction(SemanticsActions.OnClick)
         assertThat(events).containsExactly("answer")
     }
 
@@ -121,9 +143,17 @@ class AnswerControlsTest {
     fun talkBackReadsAnswerAndDeclineAsButtons() {
         show(fullState())
         val button = SemanticsMatcher.expectValue(SemanticsProperties.Role, Role.Button)
-        compose.onNodeWithTag(TestTags.ANSWER_ACCEPT).assert(button).assertContentDescriptionEquals("Answer")
-        compose.onNodeWithTag(TestTags.ANSWER_DECLINE).assert(button).assertContentDescriptionEquals("Decline")
-        compose.onNodeWithTag(TestTags.ANSWER_DECLINE).performSemanticsAction(SemanticsActions.OnClick)
+        compose
+            .onNodeWithTag(TestTags.ANSWER_ACCEPT)
+            .assert(button)
+            .assertContentDescriptionEquals("Answer")
+        compose
+            .onNodeWithTag(TestTags.ANSWER_DECLINE)
+            .assert(button)
+            .assertContentDescriptionEquals("Decline")
+        compose
+            .onNodeWithTag(TestTags.ANSWER_DECLINE)
+            .performSemanticsAction(SemanticsActions.OnClick)
         assertThat(events).containsExactly("reject")
     }
 
@@ -132,12 +162,19 @@ class AnswerControlsTest {
         show(fullState())
         compose.onNodeWithText("Message").assertExists()
         compose.onNodeWithText("Answer and end current").assertExists()
-        compose.onNodeWithTag(TestTags.ANSWER_SECONDARY).assertContentDescriptionEquals("Reject with message")
+        compose
+            .onNodeWithTag(TestTags.ANSWER_SECONDARY)
+            .assertContentDescriptionEquals("Reject with message")
     }
 
     @Test
     fun aVideoCallOffersAnsweringAsAudio() {
-        show(AnswerUiState().apply { secondary = AnswerFragment.ANSWER_VIDEO_AS_AUDIO; secondaryVisible = true })
+        show(
+            AnswerUiState().apply {
+                secondary = AnswerFragment.ANSWER_VIDEO_AS_AUDIO
+                secondaryVisible = true
+            }
+        )
         compose.onNodeWithText("Answer as audio").assertExists()
         compose.onNodeWithTag(TestTags.ANSWER_SECONDARY).performClick()
         assertThat(events).containsExactly("secondary")
@@ -156,14 +193,22 @@ class AnswerControlsTest {
             state.answerAndReleaseVisible = true
         }
         compose.onNodeWithTag(TestTags.ANSWER_SECONDARY).assertExists()
-        assertThat(compose.onNodeWithTag(TestTags.ANSWER_ACCEPT).getUnclippedBoundsInRoot()).isEqualTo(before)
+        assertThat(compose.onNodeWithTag(TestTags.ANSWER_ACCEPT).getUnclippedBoundsInRoot())
+            .isEqualTo(before)
     }
 
     @Test
     fun screenshotDark() {
-        show(fullState().apply { incomingWillDisconnectText = "Answering this call will end your other call" })
+        show(
+            fullState().apply {
+                incomingWillDisconnectText = "Answering this call will end your other call"
+            }
+        )
         compose.mainClock.autoAdvance = false
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/incall/answer_controls_dark.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/incall/answer_controls_dark.png")
     }
 
     @Test
@@ -171,6 +216,9 @@ class AnswerControlsTest {
     fun screenshotLight() {
         show(fullState())
         compose.mainClock.autoAdvance = false
-        compose.onAllNodes(isRoot()).onFirst().captureRoboImage("src/test/screenshots/incall/answer_controls_light.png")
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/incall/answer_controls_light.png")
     }
 }

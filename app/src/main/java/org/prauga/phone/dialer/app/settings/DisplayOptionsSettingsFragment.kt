@@ -41,7 +41,9 @@ class DisplayOptionsSettingsFragment : SettingsComposeFragment() {
     }
 }
 
-/** The theme, the call screen's rotation, and how contacts are sorted and named, stored in [prefs]. */
+/**
+ * The theme, the call screen's rotation, and how contacts are sorted and named, stored in [prefs].
+ */
 @Composable
 internal fun DisplayOptionsList(prefs: SharedPreferences) {
     val context = LocalContext.current
@@ -109,8 +111,12 @@ internal fun StringChoiceRow(
 ) {
     val keyName = stringResource(key)
     val defaultValue = stringResource(default)
-    val choices = stringArrayResource(values).zip(stringArrayResource(entries)) { value, label -> Choice(value, label) }
-    var selected by remember(keyName) { mutableStateOf(prefs.getString(keyName, defaultValue) ?: defaultValue) }
+    val choices =
+        stringArrayResource(values).zip(stringArrayResource(entries)) { value, label ->
+            Choice(value, label)
+        }
+    var selected by
+        remember(keyName) { mutableStateOf(prefs.getString(keyName, defaultValue) ?: defaultValue) }
     ChoiceRow(
         title = stringResource(title),
         choices = choices,
