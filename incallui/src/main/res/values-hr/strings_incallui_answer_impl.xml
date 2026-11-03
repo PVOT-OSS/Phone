@@ -18,4 +18,5 @@
   <string name="call_incoming_video_is_off">Videokamera je isključena</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Prijeđite dvama prstima prema gore za odgovor, a dvama prstima prema dolje za odbijanje.</string>
   <string name="call_incoming_important">Važno</string>
+  <string name="call_incoming_message">Poruka</string>
 </resources>

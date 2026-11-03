@@ -18,4 +18,5 @@
   <string name="call_incoming_video_is_off">Video dimatikan</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Leret dua jari ke atas untuk menjawab. Leret dua jari ke bawah untuk menolak.</string>
   <string name="call_incoming_important">Penting</string>
+  <string name="call_incoming_message">Mesej</string>
 </resources>

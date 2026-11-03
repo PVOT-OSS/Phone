@@ -18,4 +18,5 @@
   <string name="call_incoming_video_is_off">ವೀಡಿಯೊ ಆಫ್ ಆಗಿದೆ</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">ಉತ್ತರಿಸಲು ಎರಡು ಬೆರಳಿನಿಂದ ಮೇಲಕ್ಕೆ ಸ್ವೈಪ್ ಮಾಡಿ. ನಿರಾಕರಿಸಲು ಎರಡು ಬೆರಳಿನಿಂದ ಕೆಳಗೆ ಸ್ವೈಪ್ ಮಾಡಿ.</string>
   <string name="call_incoming_important">ಪ್ರಮುಖ</string>
+  <string name="call_incoming_message">ಸಂದೇಶ</string>
 </resources>

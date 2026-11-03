@@ -18,4 +18,5 @@
   <string name="call_incoming_video_is_off">வீடியோ முடக்கப்பட்டுள்ளது</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">பதிலளிக்க, இரு விரல்களால் மேலே ஸ்வைப் செய்யவும். நிராகரிக்க, இரு விரல்களால் கீழே ஸ்வைப் செய்யவும்.</string>
   <string name="call_incoming_important">முக்கிய அழைப்பு</string>
+  <string name="call_incoming_message">செய்தி</string>
 </resources>

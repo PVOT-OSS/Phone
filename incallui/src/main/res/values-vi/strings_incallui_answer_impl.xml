@@ -18,4 +18,5 @@
   <string name="call_incoming_video_is_off">Video đã tắt</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Vuốt hai ngón tay lên để trả lời. Vuốt hai ngón tay xuống để từ chối.</string>
   <string name="call_incoming_important">Quan trọng</string>
+  <string name="call_incoming_message">Tin nhắn</string>
 </resources>

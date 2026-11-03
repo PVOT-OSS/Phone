@@ -18,4 +18,5 @@
   <string name="call_incoming_video_is_off">Video is off</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Swipe up with two fingers to answer. Swipe down with two fingers to decline.</string>
   <string name="call_incoming_important">Important</string>
+  <string name="call_incoming_message">Message</string>
 </resources>

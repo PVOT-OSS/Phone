@@ -18,4 +18,5 @@
   <string name="call_incoming_video_is_off">వీడియో ఆఫ్‌లో ఉంది</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">సమాధానం ఇవ్వడానికి రెండు వేళ్లతో పైకి స్వైప్ చేయండి. తిరస్కరించడానికి రెండు వేళ్లతో క్రిందికి స్వైప్ చేయండి.</string>
   <string name="call_incoming_important">ముఖ్యమైనది</string>
+  <string name="call_incoming_message">సందేశం</string>
 </resources>

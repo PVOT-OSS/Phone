@@ -18,4 +18,5 @@
   <string name="call_incoming_video_is_off">Video deaktiviert</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Zum Annehmen mit zwei Fingern nach oben wischen. Zum Ablehnen mit zwei Fingern nach unten wischen.</string>
   <string name="call_incoming_important">Wichtig</string>
+  <string name="call_incoming_message">Nachricht</string>
 </resources>

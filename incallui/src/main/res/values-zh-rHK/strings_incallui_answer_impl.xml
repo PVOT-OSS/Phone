@@ -18,4 +18,5 @@
   <string name="call_incoming_video_is_off">視像已關閉</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">兩指向上滑動可接聽，向下滑動則可拒接。</string>
   <string name="call_incoming_important">重要事項</string>
+  <string name="call_incoming_message">訊息</string>
 </resources>

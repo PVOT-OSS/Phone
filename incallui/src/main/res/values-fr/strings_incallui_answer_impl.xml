@@ -18,4 +18,5 @@
   <string name="call_incoming_video_is_off">La vidéo est désactivée.</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Balayez l\'écran avec deux doigts vers le haut pour répondre, ou vers le bas pour refuser l\'appel.</string>
   <string name="call_incoming_important">Importants</string>
+  <string name="call_incoming_message">Message</string>
 </resources>

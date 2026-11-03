@@ -14,6 +14,7 @@ import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -22,8 +23,10 @@ import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -61,14 +64,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.customActions
+import androidx.compose.ui.semantics.hideFromAccessibility
 import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import com.prauga.pvot.designsystem.components.button.PvotIconButton
 import com.prauga.pvot.designsystem.components.call.PvotCallAction
 import com.prauga.pvot.designsystem.components.call.PvotCallActionButton
 import com.prauga.pvot.designsystem.components.pvotGlassSurface
@@ -84,22 +91,38 @@ import kotlin.math.hypot
 import kotlin.math.roundToInt
 import kotlinx.coroutines.launch
 import org.prauga.phone.dialer.ui.TestTags
+import org.prauga.phone.dialer.ui.appearance.AppearanceSettings
 import org.prauga.phone.incallui.R
 
 /**
- * A button beside the answer control: decline with a message, answer as audio, or answer and end
- * the other call.
+ * Where a side action sits in the row above the pickup pills; a hidden one leaves its place empty.
+ */
+enum class AnswerSideSlot {
+    Message,
+    AnswerAsAudio,
+    AnswerAndRelease,
+}
+
+/**
+ * A side action of an incoming call: decline with a message, answer as audio, or answer and end the
+ * other call. It sits beside the swipe, or above the pickup pills.
  */
 data class AnswerSideAction(
     @DrawableRes val icon: Int,
+    /** The short label under the button above the pills. */
+    @StringRes val label: Int,
+    /** What TalkBack reads for the button. */
     @StringRes val description: Int,
+    /** What TalkBack says a double tap does. */
     @StringRes val accessibilityLabel: Int,
+    /** What the line above the swipe says when the button is tapped instead of swiped. */
     @StringRes val hint: Int,
+    val slot: AnswerSideSlot,
 )
 
 /** What the answer controls show; the answer fragment sets it. */
 class AnswerUiState {
-    /** Two plain buttons instead of the swipe, for TalkBack and split screen. */
+    /** The Decline and Answer pills instead of the swipe: single tap, TalkBack and split screen. */
     var twoButtons by mutableStateOf(false)
     @get:DrawableRes var answerIcon by mutableIntStateOf(R.drawable.ic_call_filled)
 
@@ -114,18 +137,22 @@ class AnswerUiState {
     var answerAndReleaseVisible by mutableStateOf(false)
 }
 
-/** What the answer controls do; the answer fragment implements it. */
+/**
+ * What the answer controls do; the answer fragment implements it. Answering and declining return
+ * whether they settled the call, so the pills can take further taps again when one did not.
+ */
 interface AnswerActions {
-    fun onAnswer()
+    fun onAnswer(): Boolean
 
-    fun onReject()
+    fun onReject(): Boolean
 
     /** How far the answer control is pulled: up to 1 toward answer, down to -1 toward decline. */
     fun onProgress(progress: Float)
 
-    fun onSecondary()
+    /** Decline with a message, or answer a video call as audio. */
+    fun onSecondary(): Boolean
 
-    fun onAnswerAndRelease()
+    fun onAnswerAndRelease(): Boolean
 
     /** A side button was tapped rather than swiped; its hint shows for a moment. */
     fun onSideHint(action: AnswerSideAction)
@@ -134,9 +161,16 @@ interface AnswerActions {
     fun onAnswerTouch(event: MotionEvent) = Unit
 }
 
-/** The bottom of the incoming call screen: the side buttons and the answer control. */
+/**
+ * The bottom of the incoming call screen: the side buttons and the swipe, or with
+ * [AnswerUiState.twoButtons] the Decline and Answer pills under the side actions.
+ */
 @Composable
 fun AnswerControls(state: AnswerUiState, actions: AnswerActions, modifier: Modifier = Modifier) {
+    if (state.twoButtons) {
+        PickupControls(state, actions, modifier)
+        return
+    }
     Column(modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         state.incomingWillDisconnectText?.let { text ->
             Text(
@@ -147,49 +181,191 @@ fun AnswerControls(state: AnswerUiState, actions: AnswerActions, modifier: Modif
                 modifier = Modifier.padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.S),
             )
         }
-        if (state.twoButtons) {
-            // The side actions stay beside the two buttons, as they do beside the swipe.
-            Row(
-                Modifier.fillMaxWidth().padding(horizontal = PvotSpacing.L),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                SideButton(
-                    state.secondary.takeIf { state.secondaryVisible },
-                    actions::onSecondary,
-                    actions,
-                    TestTags.ANSWER_SECONDARY,
-                )
-                TwoButtons(state, actions, Modifier.weight(1f))
-                SideButton(
-                    state.answerAndRelease.takeIf { state.answerAndReleaseVisible },
-                    actions::onAnswerAndRelease,
-                    actions,
-                    TestTags.ANSWER_AND_RELEASE,
-                )
+        Row(
+            Modifier.fillMaxWidth().padding(horizontal = PvotSpacing.L),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            // The side buttons line up with the answer button between its two hints.
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            SideButton(
+                state.secondary.takeIf { state.secondaryVisible },
+                { actions.onSecondary() },
+                actions,
+                TestTags.ANSWER_SECONDARY,
+            )
+            SwipeToAnswer(state, actions, Modifier.weight(1f))
+            SideButton(
+                state.answerAndRelease.takeIf { state.answerAndReleaseVisible },
+                { actions.onAnswerAndRelease() },
+                actions,
+                TestTags.ANSWER_AND_RELEASE,
+            )
+        }
+    }
+}
+
+/**
+ * The side actions in a row, each in its own place, and the Decline and Answer pills under them,
+ * side by side. Once a tap settles the call the controls ignore further taps, including TalkBack's.
+ */
+@Composable
+private fun PickupControls(state: AnswerUiState, actions: AnswerActions, modifier: Modifier) {
+    var done by remember { mutableStateOf(false) }
+    fun settle(action: () -> Boolean) {
+        if (done) return
+        done = true
+        // Taps work again when the action did not take the call, such as a reply sheet dismissed.
+        if (!action()) done = false
+    }
+    val sideActions =
+        listOfNotNull(
+            state.secondary.takeIf { state.secondaryVisible },
+            state.answerAndRelease.takeIf { state.answerAndReleaseVisible },
+        )
+    Column(
+        modifier.fillMaxWidth().padding(horizontal = PvotSpacing.L),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(PvotSpacing.L),
+    ) {
+        state.incomingWillDisconnectText?.let { text ->
+            Text(
+                text.toString(),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+            )
+        }
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+            for (slot in AnswerSideSlot.entries) {
+                val action = sideActions.firstOrNull { it.slot == slot }
+                SidePlace(action) {
+                    when (slot) {
+                        AnswerSideSlot.AnswerAndRelease -> settle(actions::onAnswerAndRelease)
+                        else -> settle(actions::onSecondary)
+                    }
+                }
             }
-        } else {
-            Row(
-                Modifier.fillMaxWidth().padding(horizontal = PvotSpacing.L),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                // The side buttons line up with the answer button between its two hints.
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                SideButton(
-                    state.secondary.takeIf { state.secondaryVisible },
-                    actions::onSecondary,
-                    actions,
-                    TestTags.ANSWER_SECONDARY,
-                )
-                SwipeToAnswer(state, actions, Modifier.weight(1f))
-                SideButton(
-                    state.answerAndRelease.takeIf { state.answerAndReleaseVisible },
-                    actions::onAnswerAndRelease,
-                    actions,
-                    TestTags.ANSWER_AND_RELEASE,
+        }
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(PvotSpacing.M)) {
+            PickupPill(
+                action = PvotCallAction.Decline,
+                icon = R.drawable.ic_call_end,
+                label = stringResource(R.string.call_incoming_decline),
+                onClick = { settle(actions::onReject) },
+                modifier = Modifier.testTag(TestTags.ANSWER_DECLINE),
+            )
+            PickupPill(
+                action = PvotCallAction.Answer,
+                icon = state.answerIcon,
+                label = stringResource(R.string.call_incoming_answer),
+                onClick = { settle(actions::onAnswer) },
+                pulse = !done,
+                modifier = Modifier.testTag(TestTags.ANSWER_ACCEPT),
+            )
+        }
+    }
+}
+
+/**
+ * A Decline or Answer pill, half the row wide; the Answer one breathes until a tap settles the
+ * call.
+ */
+@Composable
+private fun RowScope.PickupPill(
+    action: PvotCallAction,
+    @DrawableRes icon: Int,
+    label: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    pulse: Boolean = false,
+) {
+    val scale = if (pulse) pulseScale() else 1f
+    BoxWithConstraints(
+        Modifier.weight(1f).graphicsLayer {
+            scaleX = scale
+            scaleY = scale
+        }
+    ) {
+        PvotCallActionButton(
+            action = action,
+            icon = painterResource(icon),
+            label = label,
+            onClick = onClick,
+            width = maxWidth,
+            labelInside = true,
+            modifier = modifier,
+        )
+    }
+}
+
+/** A gentle, endless breath for the Answer pill; still while the user has animations off. */
+@Composable
+private fun pulseScale(): Float {
+    val appearance by AppearanceSettings.rememberAppearance()
+    if (appearance.animationsOff) return 1f
+    val scale by
+        rememberInfiniteTransition(label = "answerPulse")
+            .animateFloat(
+                initialValue = 1f,
+                targetValue = PulseScale,
+                animationSpec =
+                    infiniteRepeatable(
+                        tween(PulseMillis, easing = PvotMotion.Settle),
+                        RepeatMode.Reverse,
+                    ),
+                label = "pulse",
+            )
+    return scale
+}
+
+/**
+ * A place for a side action above the pills: its button with the label under, or, with no [action],
+ * the same room left empty so the pills stay where they are whatever the call offers.
+ */
+@Composable
+private fun SidePlace(action: AnswerSideAction?, onClick: () -> Unit) {
+    Column(Modifier.width(SideWidth), horizontalAlignment = Alignment.CenterHorizontally) {
+        Box(Modifier.size(SideSize), contentAlignment = Alignment.Center) {
+            if (action != null) {
+                val accessibilityLabel = stringResource(action.accessibilityLabel)
+                PvotIconButton(
+                    icon = painterResource(action.icon),
+                    contentDescription = stringResource(action.description),
+                    onClick = onClick,
+                    size = SideSize,
+                    modifier =
+                        Modifier.semantics {
+                                onClick(accessibilityLabel) {
+                                    onClick()
+                                    true
+                                }
+                            }
+                            .testTag(
+                                if (action.slot == AnswerSideSlot.AnswerAndRelease)
+                                    TestTags.ANSWER_AND_RELEASE
+                                else TestTags.ANSWER_SECONDARY
+                            ),
                 )
             }
         }
+        Text(
+            text = if (action != null) stringResource(action.label) else "",
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textAlign = TextAlign.Center,
+            // Two lines, taken or not, so the pills under the row stay put whatever the call
+            // offers.
+            minLines = 2,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+            // The button already says this to TalkBack; an empty place says nothing.
+            modifier =
+                Modifier.padding(top = PvotSpacing.S)
+                    .then(
+                        if (action == null) Modifier.alpha(0f).clearAndSetSemantics {}
+                        else Modifier.semantics { hideFromAccessibility() }
+                    ),
+        )
     }
 }
 
@@ -440,40 +616,6 @@ private fun TrackEnd(
 }
 
 /**
- * Decline and answer as two labelled buttons, for TalkBack, split screen and single tap answering.
- */
-@Composable
-private fun TwoButtons(
-    state: AnswerUiState,
-    actions: AnswerActions,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier.padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.L),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-    ) {
-        PvotCallActionButton(
-            action = PvotCallAction.Decline,
-            icon = painterResource(R.drawable.ic_call_end),
-            label = stringResource(R.string.call_incoming_decline),
-            onClick = actions::onReject,
-            size = PuckSize,
-            showLabel = true,
-            modifier = Modifier.testTag(TestTags.ANSWER_DECLINE),
-        )
-        PvotCallActionButton(
-            action = PvotCallAction.Answer,
-            icon = painterResource(state.answerIcon),
-            label = stringResource(R.string.call_incoming_answer),
-            onClick = actions::onAnswer,
-            size = PuckSize,
-            showLabel = true,
-            modifier = Modifier.testTag(TestTags.ANSWER_ACCEPT),
-        )
-    }
-}
-
-/**
  * A side button: swiping away from it does its action, so a pocket tap cannot; a tap shows its hint
  * instead. TalkBack users get a plain click.
  */
@@ -542,6 +684,13 @@ private fun SideButton(
 private val PuckSize = 80.dp
 private val PuckIconSize = 34.dp
 private val SideSize = 56.dp
+
+/** The room each side action keeps above the pills for its label. */
+private val SideWidth = 112.dp
+
+/** How far the Answer pill grows on each breath, and how long one takes. */
+private const val PulseScale = 1.04f
+private const val PulseMillis = 1200
 
 /**
  * How far the button can go each way in its track; it does its action past [ThresholdFraction] of

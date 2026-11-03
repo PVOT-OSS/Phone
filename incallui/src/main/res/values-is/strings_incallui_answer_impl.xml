@@ -18,4 +18,5 @@
   <string name="call_incoming_video_is_off">Slökkt á myndavél</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Strjúktu upp með tveimur fingrum til að svara. Strjúktu niður með tveimur fingrum til að hafna.</string>
   <string name="call_incoming_important">Mikilvægt</string>
+  <string name="call_incoming_message">Skilaboð</string>
 </resources>

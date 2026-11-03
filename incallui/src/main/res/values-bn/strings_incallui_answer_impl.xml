@@ -18,4 +18,5 @@
   <string name="call_incoming_video_is_off">ভিডিও বন্ধ আছে</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">উত্তর দিতে উপরের দিকে, প্রত্যাখ্যান করতে নিচের দিকে দুই আঙুল দিয়ে সোয়াইপ করুন৷</string>
   <string name="call_incoming_important">গুরুত্বপূর্ণ</string>
+  <string name="call_incoming_message">মেসেজ পাঠান</string>
 </resources>
