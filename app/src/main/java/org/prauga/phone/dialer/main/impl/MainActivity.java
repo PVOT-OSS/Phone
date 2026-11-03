@@ -24,10 +24,8 @@ import android.os.Bundle;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.core.splashscreen.SplashScreen;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.prauga.phone.dialer.R;
-import org.prauga.phone.dialer.blockreportspam.ShowBlockReportSpamDialogReceiver;
 import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.main.MainActivityPeer;
 import org.prauga.phone.dialer.onboarding.OnboardingRouter;
@@ -40,12 +38,6 @@ public class MainActivity extends TransactionSafeActivity
     implements MainActivityPeer.PeerSupplier {
 
   private MainActivityPeer activePeer;
-
-  /**
-   * {@link android.content.BroadcastReceiver} that shows a dialog to block a number and/or report
-   * it as spam when notified.
-   */
-  private ShowBlockReportSpamDialogReceiver showBlockReportSpamDialogReceiver;
 
   /** Whether READ_PHONE_NUMBERS was asked for already, so a refusal isn't asked again on resume. */
   private boolean askedForPhoneNumbers;
@@ -76,9 +68,6 @@ public class MainActivity extends TransactionSafeActivity
                 setEnabled(true);
               }
             });
-
-    showBlockReportSpamDialogReceiver =
-        new ShowBlockReportSpamDialogReceiver(getSupportFragmentManager());
   }
 
   @Override
@@ -101,10 +90,6 @@ public class MainActivity extends TransactionSafeActivity
 
     activePeer.onActivityResume();
     requestPhoneNumbersPermissionIfImplied();
-
-    LocalBroadcastManager.getInstance(this)
-        .registerReceiver(
-            showBlockReportSpamDialogReceiver, ShowBlockReportSpamDialogReceiver.getIntentFilter());
   }
 
   /**
@@ -131,8 +116,6 @@ public class MainActivity extends TransactionSafeActivity
   protected void onPause() {
     super.onPause();
     activePeer.onActivityPause();
-
-    LocalBroadcastManager.getInstance(this).unregisterReceiver(showBlockReportSpamDialogReceiver);
   }
 
   @Override
