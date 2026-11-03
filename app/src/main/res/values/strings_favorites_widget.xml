@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+  -->
+<resources>
+  <!-- Launcher shortcut that opens the dialpad. [CHAR LIMIT=25] -->
+  <string name="dialer_shortcut_dialpad">Dialpad</string>
+</resources>
