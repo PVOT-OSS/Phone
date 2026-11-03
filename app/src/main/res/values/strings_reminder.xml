@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+  -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- Action on a missed call that sets a reminder to call the number back. [CHAR LIMIT=20] -->
+  <string name="callback_reminder_action">Remind me</string>
+  <!-- Title of the dialog asking when to be reminded to call someone back. -->
+  <string name="callback_reminder_dialog_title">Remind me to call <xliff:g id="name" example="Ada Lovelace">%1$s</xliff:g></string>
+  <string name="callback_reminder_in_fifteen_minutes">In 15 minutes</string>
+  <string name="callback_reminder_in_an_hour">In an hour</string>
+  <string name="callback_reminder_this_evening">This evening</string>
+  <string name="callback_reminder_tomorrow_morning">Tomorrow morning</string>
+  <!-- Confirms a reminder was set, with the time it is due. -->
+  <string name="callback_reminder_set">Reminder set for <xliff:g id="time" example="6:00 PM">%1$s</xliff:g></string>
+  <!-- Title of the reminder notification. -->
+  <string name="callback_reminder_title">Call <xliff:g id="name" example="Ada Lovelace">%1$s</xliff:g> back</string>
+  <!-- Text of the reminder notification when only the number is known. -->
+  <string name="callback_reminder_text">You asked to be reminded.</string>
+  <!-- Notification action that moves the reminder an hour later. [CHAR LIMIT=20] -->
+  <string name="callback_reminder_snooze">In an hour</string>
+  <!-- Settings switch for the "Remind me" action on missed calls. [CHAR LIMIT=40] -->
+  <string name="callback_reminders_title">Call-back reminders</string>
+  <string name="callback_reminders_summary">Offer to remind you later about calls you missed</string>
+</resources>

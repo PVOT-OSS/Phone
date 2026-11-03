@@ -14,6 +14,7 @@ import android.telecom.PhoneAccountHandle
 import android.telephony.PhoneNumberUtils
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.calllog.calllogcache.CallLogCache
+import org.prauga.phone.dialer.app.settings.IncomingCallSettings
 import org.prauga.phone.dialer.calllogutils.CallbackActionHelper.CallbackAction
 import org.prauga.phone.dialer.calllogutils.PhoneCallDetails
 import org.prauga.phone.dialer.contacts.ContactsComponent
@@ -29,7 +30,7 @@ import java.util.concurrent.TimeUnit
 enum class PrimaryAction { NONE, CALL, VIDEO_CALL, CALL_VOICEMAIL, PLAY_VOICEMAIL }
 
 /** Actions shown when a call history row is opened. */
-enum class RowAction { CALL, VIDEO_CALL, SEND_MESSAGE, CALL_WITH_NOTE, CREATE_CONTACT, ADD_TO_CONTACT, BLOCK, UNBLOCK, DETAILS, DELETE }
+enum class RowAction { CALL, VIDEO_CALL, SEND_MESSAGE, CALL_WITH_NOTE, REMIND, CREATE_CONTACT, ADD_TO_CONTACT, BLOCK, UNBLOCK, DETAILS, DELETE }
 
 /** A call history row ready to show. */
 data class CallLogRowUi(
@@ -221,6 +222,9 @@ class CallLogRowResolver(
         if (canCall && !isBlocked && !isVoicemailNumber) actions += RowAction.SEND_MESSAGE
         if (callLogCache.doesAccountSupportCallSubject(accountHandle) && !isVoicemailNumber) {
             actions += RowAction.CALL_WITH_NOTE
+        }
+        if (group.callType == Calls.MISSED_TYPE && canCall && !isBlocked && IncomingCallSettings.callbackReminders(context)) {
+            actions += RowAction.REMIND
         }
         if (!isBlocked && UriUtils.isEncodedContactUri(info.lookupUri)) {
             actions += RowAction.CREATE_CONTACT

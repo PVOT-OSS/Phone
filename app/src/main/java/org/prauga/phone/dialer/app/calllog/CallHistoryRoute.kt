@@ -38,6 +38,7 @@ import org.prauga.phone.dialer.app.voicemail.VoicemailPlaybackPresenter
 import org.prauga.phone.dialer.app.voicemail.VoicemailPlaybackState
 import org.prauga.phone.dialer.app.voicemail.VoicemailStatusCard
 import org.prauga.phone.dialer.app.voicemail.VoicemailTermsScreen
+import org.prauga.phone.dialer.reminder.CallbackReminderActivity
 import org.prauga.phone.dialer.voicemail.listui.error.VoicemailErrorMessage
 import org.prauga.phone.dialer.calldetails.OldCallDetailsActivity
 import org.prauga.phone.dialer.common.LogUtil
@@ -178,6 +179,9 @@ private class CallHistoryIntents(
                     row.accountHandle,
                 )
             }
+            RowAction.REMIND -> context.startActivity(
+                CallbackReminderActivity.newIntent(context, number, row.title.takeIf { !row.titleIsNumber }),
+            )
             RowAction.CREATE_CONTACT, RowAction.ADD_TO_CONTACT -> start(
                 IntentProvider.getAddContactIntentProvider(
                     row.info.lookupUri, row.info.name, row.info.number, row.info.type,

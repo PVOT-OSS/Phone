@@ -115,6 +115,10 @@ object TestTags {
     /** The main toolbar: the collapsed search bar, its buttons and the expanded field. */
     const val APP_MENU = "app_menu"
 
+    /** The list of delays in the call-back reminder dialog. */
+    const val CALLBACK_REMINDER_DELAYS = "callback_reminder_delays"
+    fun callbackReminderDelay(name: String) = "callback_reminder_delay_$name"
+
     /** The search button in a main tab's header, as on the contacts tab. */
     const val TAB_SEARCH = "tab_search"
     const val SEARCH_VOICE = "search_voice"
