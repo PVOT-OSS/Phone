@@ -100,6 +100,15 @@ class CallbackRemindersTest {
     }
 
     @Test
+    fun anAppUpdateSetsTheAlarmsAgain() {
+        val reminder = CallbackReminders.schedule(context, "+15550199", null, 5_000L)
+        alarms.scheduledAlarms.clear()
+        CallbackReminderReceiver().onReceive(context, Intent(Intent.ACTION_MY_PACKAGE_REPLACED))
+
+        assertThat(alarms.scheduledAlarms.single().triggerAtMs).isEqualTo(reminder.atMillis)
+    }
+
+    @Test
     fun aRebootSetsTheAlarmsAgain() {
         val reminder = CallbackReminders.schedule(context, "+15550199", null, 5_000L)
         alarms.scheduledAlarms.clear()
