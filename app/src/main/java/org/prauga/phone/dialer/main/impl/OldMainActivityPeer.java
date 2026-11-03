@@ -275,7 +275,8 @@ public class OldMainActivityPeer implements MainActivityPeer, FragmentUtilListen
    * @return return if voicemail tab should be shown or not depending on what the voicemail state is
    *     for the carrier.
    */
-  private static boolean canVoicemailTabBeShown(Context context) {
+  /** Whether visual voicemail can be shown: a voicemail-capable, enabled account. */
+  public static boolean canVoicemailTabBeShown(Context context) {
     PhoneAccountHandle defaultUserSelectedAccount =
         TelecomUtil.getDefaultOutgoingPhoneAccount(context, PhoneAccount.SCHEME_VOICEMAIL);
 
