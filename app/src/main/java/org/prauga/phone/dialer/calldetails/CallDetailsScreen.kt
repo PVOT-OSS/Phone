@@ -17,22 +17,26 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -47,6 +51,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.style.TextAlign
@@ -60,6 +65,7 @@ import com.prauga.pvot.designsystem.components.PvotCardDefaults
 import com.prauga.pvot.designsystem.components.PvotDialog
 import com.prauga.pvot.designsystem.components.PvotDialogAction
 import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
+import com.prauga.pvot.designsystem.components.PvotGlassCardDefaults
 import com.prauga.pvot.designsystem.components.PvotScreen
 import com.prauga.pvot.designsystem.components.PvotScreenDefaults
 import com.prauga.pvot.designsystem.components.PvotSheetItem
@@ -70,6 +76,7 @@ import com.prauga.pvot.designsystem.components.call.PvotCallButton
 import com.prauga.pvot.designsystem.components.call.PvotCallButtonDefaults
 import com.prauga.pvot.designsystem.components.list.PvotAvatarDefaults
 import com.prauga.pvot.designsystem.components.list.PvotListGroup
+import com.prauga.pvot.designsystem.components.list.PvotListGroupDefaults
 import com.prauga.pvot.designsystem.components.list.PvotListRow
 import com.prauga.pvot.designsystem.components.list.PvotListRowDefaults
 import com.prauga.pvot.designsystem.components.list.PvotPreferenceRow
@@ -155,48 +162,51 @@ internal fun CallDetailsScreen(
                         PvotScreenDefaults.BottomSpacing +
                             WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding(),
                 ),
+            // The calls are separate items on one card, so the screen's own gap would split it.
+            verticalArrangement = Arrangement.Top,
         ) {
-            item(key = "header") {
+            item(key = "header", contentType = "header") {
                 Hero(ui, assistedDialingCountryCode, callWithIntent, actions, avatar)
+                Spacer(Modifier.height(PvotSpacing.M))
             }
-            item(key = "history") {
+            // One lazy item per call, dressed as one PvotListGroup: the title, then each call on
+            // its slice of the card, so a long history composes only what is on screen.
+            item(key = "history_title", contentType = "history_title") {
+                CallHistoryTitle(stringResource(R.string.call_log_activity_title))
+            }
+            itemsIndexed(
+                items = ui.entries,
+                key = { _, entry -> entry.callId },
+                contentType = { _, _ -> "call" },
+            ) { index, entry ->
                 // The card's fill over the background, so a swiped row covers its gap exactly.
                 val rowFill =
                     MaterialTheme.colorScheme.surfaceVariant
                         .copy(alpha = PvotCardDefaults.ContainerAlpha)
                         .compositeOver(MaterialTheme.colorScheme.background)
-                val deleteLabel = stringResource(R.string.delete)
-                val trash = painterResource(R.drawable.ic_trash)
-                PvotListGroup(title = stringResource(R.string.call_log_activity_title)) {
-                    for (entry in ui.entries) {
-                        item {
-                            key(entry.callId) {
-                                // Swiping a call away, either way, asks first; the last call
-                                // means the whole history.
-                                val delete =
-                                    PvotSwipeRowDefaults.destructiveAction(
-                                        label = deleteLabel,
-                                        icon = trash,
-                                        onSwipe = { askDeleteCall = entry },
-                                        removesRow = false,
-                                    )
-                                PvotSwipeRow(
-                                    startAction = delete,
-                                    endAction = delete,
-                                    containerColor = rowFill,
-                                ) {
-                                    Column {
-                                        Entry(
-                                            entry,
-                                            actions,
-                                            onPickRecording = { recordingsToPick = it },
-                                        )
-                                    }
-                                }
-                            }
+                CallHistorySlice(first = index == 0, last = index == ui.entries.lastIndex) {
+                    // Swiping a call away, either way, asks first; the last call means the whole
+                    // history.
+                    val delete =
+                        PvotSwipeRowDefaults.destructiveAction(
+                            label = stringResource(R.string.delete),
+                            icon = painterResource(R.drawable.ic_trash),
+                            onSwipe = { askDeleteCall = entry },
+                            removesRow = false,
+                        )
+                    PvotSwipeRow(
+                        startAction = delete,
+                        endAction = delete,
+                        containerColor = rowFill,
+                    ) {
+                        Column {
+                            Entry(entry, actions, onPickRecording = { recordingsToPick = it })
                         }
                     }
                 }
+            }
+            item(key = "history_end", contentType = "history_end") {
+                Spacer(Modifier.height(PvotSpacing.M))
             }
             item(key = "actions") {
                 val danger =
@@ -317,6 +327,60 @@ internal fun CallDetailsScreen(
                     actions.play(recording)
                 },
             )
+        }
+    }
+}
+
+/** The history group's title, as [PvotListGroup] draws one over its card. */
+@Composable
+private fun CallHistoryTitle(title: String) {
+    Text(
+        text = title,
+        style = MaterialTheme.typography.titleSmall,
+        color = PvotListGroupDefaults.colors().titleColor,
+        modifier =
+            Modifier.fillMaxWidth()
+                .padding(start = PvotSpacing.L, end = PvotSpacing.L, bottom = PvotSpacing.S)
+                .semantics { heading() },
+    )
+}
+
+/**
+ * One call's slice of the history card: the card's corners (the glass card's radius, the same as
+ * `PvotShapes.Card`) on the [first] and [last] slice, a hairline above every slice but the first,
+ * and the card's padding round the rows, so the slices stack into the one card a [PvotListGroup]
+ * would draw.
+ */
+@Composable
+private fun CallHistorySlice(first: Boolean, last: Boolean, content: @Composable () -> Unit) {
+    val corner = PvotGlassCardDefaults.CornerRadius
+    val shape =
+        RoundedCornerShape(
+            topStart = if (first) corner else 0.dp,
+            topEnd = if (first) corner else 0.dp,
+            bottomStart = if (last) corner else 0.dp,
+            bottomEnd = if (last) corner else 0.dp,
+        )
+    val direction = LocalLayoutDirection.current
+    val inner = PvotListGroupDefaults.ContentPadding
+    PvotCard(modifier = Modifier.fillMaxWidth(), shape = shape) {
+        Column(
+            Modifier.padding(
+                start = inner.calculateStartPadding(direction),
+                end = inner.calculateEndPadding(direction),
+                top = if (first) inner.calculateTopPadding() else 0.dp,
+                bottom = if (last) inner.calculateBottomPadding() else 0.dp,
+            )
+        ) {
+            if (!first) {
+                Box(
+                    Modifier.padding(horizontal = PvotListGroupDefaults.DividerInset)
+                        .fillMaxWidth()
+                        .height(PvotListGroupDefaults.DividerThickness)
+                        .background(PvotListGroupDefaults.colors().dividerColor)
+                )
+            }
+            content()
         }
     }
 }
