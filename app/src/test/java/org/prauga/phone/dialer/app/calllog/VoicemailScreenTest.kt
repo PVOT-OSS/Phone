@@ -82,7 +82,12 @@ class VoicemailScreenTest {
                 ),
         )
     private val playback = VoicemailPlaybackState().apply { setClipPosition(12_000, 42_000) }
-    private var pending by mutableStateOf(emptySet<Long>())
+    private var state by
+        mutableStateOf(CallHistoryUiState.Loaded(listOf(first, second), emptySet()))
+
+    private fun hide(ids: Collection<Long>) {
+        state = state.copy(pendingDeletes = state.pendingDeletes + ids)
+    }
 
     private inner class RecordingActions : CallHistoryActions {
         val events = mutableListOf<String>()
@@ -105,7 +110,7 @@ class VoicemailScreenTest {
 
         override fun deleteLater(group: CallLogGroup) {
             events += "delete ${group.rowId}"
-            pending = pending + group.callIds
+            hide(group.callIds)
         }
 
         override fun undoDelete(group: CallLogGroup) {
@@ -118,7 +123,7 @@ class VoicemailScreenTest {
 
         override fun deleteSelected(groups: List<CallLogGroup>) {
             events += "deleteSelected ${groups.map { it.rowId }}"
-            pending = pending + groups.flatMap { it.callIds }
+            hide(groups.flatMap { it.callIds })
         }
 
         override fun selectionModeChanged(enabled: Boolean, exit: () -> Unit) {
@@ -140,8 +145,7 @@ class VoicemailScreenTest {
         compose.setContent {
             PhoneScreenTheme {
                 CallHistoryScreen(
-                    state = CallHistoryUiState.Loaded(listOf(first, second), emptySet()),
-                    pendingDeletes = pending,
+                    state = state,
                     resolve = { group, _, _ -> rows.getValue(group.rowId) },
                     emptyMessage = R.string.call_log_voicemail_empty,
                     showEmptyAction = false,

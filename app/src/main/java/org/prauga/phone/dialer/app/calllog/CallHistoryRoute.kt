@@ -81,7 +81,6 @@ fun CallHistoryRoute(
                 loaded
             }
         }
-    val pendingDeletes by viewModel.pendingDeletes.collectAsStateWithLifecycle()
     val version by viewModel.contactInfoVersion.collectAsStateWithLifecycle()
     val resolver = remember(context) { CallLogRowResolver(context, CallLogCache(context)) }
     val currentOnShowDialpad by rememberUpdatedState(onShowDialpad)
@@ -116,7 +115,6 @@ fun CallHistoryRoute(
 
     CallHistoryScreen(
         state = state,
-        pendingDeletes = pendingDeletes,
         resolve = { group, index, isBlocked ->
             // Reading the version makes rows recompose when a caller lookup finishes.
             version.let {

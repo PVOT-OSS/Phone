@@ -147,7 +147,6 @@ interface CallHistoryActions {
 @Composable
 fun CallHistoryScreen(
     state: CallHistoryUiState,
-    pendingDeletes: Set<Long>,
     resolve: (group: CallLogGroup, index: Int, isBlocked: Boolean) -> CallLogRowUi,
     @StringRes emptyMessage: Int,
     showEmptyAction: Boolean,
@@ -180,10 +179,7 @@ fun CallHistoryScreen(
                 )
             else -> {
                 val loaded = state as? CallHistoryUiState.Loaded
-                val visible =
-                    loaded?.groups.orEmpty().filter { group ->
-                        group.callIds.none { it in pendingDeletes }
-                    }
+                val visible = loaded?.visible.orEmpty()
                 if (visible.isEmpty()) {
                     Column(belowBar.fillMaxSize()) {
                         header?.invoke()
