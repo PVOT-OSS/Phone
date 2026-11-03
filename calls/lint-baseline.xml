@@ -144,15 +144,4 @@
             column="11"/>
     </issue>
 
-    <issue
-        id="Overdraw"
-        message="Possible overdraw: Root element paints background `?android:attr/colorBackground` with a theme that also paints a background (inferred theme is `@android:style/Theme.Holo`)"
-        errorLine1="  android:background=&quot;?android:attr/colorBackground&quot;>"
-        errorLine2="  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/post_call_activity.xml"
-            line="23"
-            column="3"/>
-    </issue>
-
 </issues>
