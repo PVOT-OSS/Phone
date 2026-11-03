@@ -2,39 +2,6 @@
 <issues format="6" by="lint 9.5.0" type="baseline" client="gradle" dependencies="false" name="AGP (9.5.0)" variant="all" version="9.5.0">
 
     <issue
-        id="UseGetLayoutInflater"
-        message="Use of LayoutInflater.from(builder.getContext()) detected. Consider using getLayoutInflater() instead"
-        errorLine1="              LayoutInflater.from(builder.getContext())"
-        errorLine2="              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/org/prauga/phone/contacts/common/widget/SelectPhoneAccountDialogFragment.java"
-            line="142"
-            column="15"/>
-    </issue>
-
-    <issue
-        id="DefaultLocale"
-        message="Implicitly using the default locale is a common source of bugs: Use `toUpperCase(Locale)` instead. For strings meant to be internal use `Locale.ROOT`, otherwise `Locale.getDefault()`."
-        errorLine1="      return info.get().getCountryIso().toUpperCase();"
-        errorLine2="                                        ~~~~~~~~~~~">
-        <location
-            file="src/main/java/org/prauga/phone/contacts/common/widget/SelectPhoneAccountDialogFragment.java"
-            line="298"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="InflateParams"
-        message="Avoid passing `null` as the view root (needed to resolve layout parameters on the inflated layout&apos;s root element)"
-        errorLine1="      View layout = LayoutInflater.from(getContext()).inflate(R.layout.unread_count_tab, null);"
-        errorLine2="                                                                                         ~~~~">
-        <location
-            file="src/main/java/org/prauga/phone/contacts/common/list/ViewPagerTabs.java"
-            line="146"
-            column="90"/>
-    </issue>
-
-    <issue
         id="QueryPermissionsNeeded"
         message="Consider adding a `&lt;queries>` declaration to your manifest when calling this method; see https://g.co/dev/packagevisibility for details"
         errorLine1="    final List&lt;ResolveInfo> intentServices = pm.queryIntentServices(intent,"
@@ -54,105 +21,6 @@
             file="src/main/java/org/prauga/phone/contacts/common/model/account/ExternalAccountType.java"
             line="254"
             column="27"/>
-    </issue>
-
-    <issue
-        id="MissingQuantity"
-        message="For locale &quot;ca&quot; (Catalan) the following quantity should also be defined: `many`"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-ca/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="MissingQuantity"
-        message="For locale &quot;es&quot; (Spanish) the following quantity should also be defined: `many`"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-es-rUS/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="MissingQuantity"
-        message="For locale &quot;es&quot; (Spanish) the following quantity should also be defined: `many`"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-es/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="MissingQuantity"
-        message="For locale &quot;fr&quot; (French) the following quantity should also be defined: `many` (e.g. &quot;1000000 de jours&quot;)"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-fr-rCA/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="MissingQuantity"
-        message="For locale &quot;fr&quot; (French) the following quantity should also be defined: `many` (e.g. &quot;1000000 de jours&quot;)"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-fr/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="MissingQuantity"
-        message="For locale &quot;it&quot; (Italian) the following quantity should also be defined: `many`"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-it/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="MissingQuantity"
-        message="For locale &quot;pt&quot; (Portuguese) the following quantity should also be defined: `many`"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-pt-rBR/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="MissingQuantity"
-        message="For locale &quot;pt&quot; (Portuguese) the following quantity should also be defined: `many`"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-pt-rPT/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="MissingQuantity"
-        message="For locale &quot;pt&quot; (Portuguese) the following quantity should also be defined: `many`"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-pt/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
     </issue>
 
     <issue
@@ -211,157 +79,14 @@
     </issue>
 
     <issue
-        id="UnusedQuantity"
-        message="For language &quot;in&quot; (Indonesian) the following quantities are not relevant: `one`"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
+        id="MissingTranslation"
+        message="&quot;call_subject_recent&quot; is not translated in &quot;de&quot; (German), &quot;hi&quot; (Hindi), &quot;lo&quot; (Lao), &quot;pt&quot; (Portuguese), &quot;lt&quot; (Lithuanian), &quot;hr&quot; (Croatian), &quot;lv&quot; (Latvian), &quot;hu&quot; (Hungarian), &quot;hy&quot; (Armenian), &quot;uk&quot; (Ukrainian), &quot;ur&quot; (Urdu), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;mn&quot; (Mongolian), &quot;af&quot; (Afrikaans), &quot;in&quot; (Indonesian), &quot;mr&quot; (Marathi), &quot;uz&quot; (Uzbek), &quot;ms&quot; (Malay), &quot;el&quot; (Greek), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;it&quot; (Italian), &quot;am&quot; (Amharic), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;iw&quot; (Hebrew), &quot;zh&quot; (Chinese), &quot;et&quot; (Estonian), &quot;eu&quot; (Basque), &quot;ar&quot; (Arabic), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;zu&quot; (Zulu), &quot;ro&quot; (Romanian), &quot;nl&quot; (Dutch), &quot;no&quot; (Norwegian), &quot;be&quot; (Belarusian), &quot;fi&quot; (Finnish), &quot;ru&quot; (Russian), &quot;bg&quot; (Bulgarian), &quot;bn&quot; (Bangla), &quot;fr&quot; (French), &quot;bs&quot; (Bosnian), &quot;ka&quot; (Georgian), &quot;si&quot; (Sinhala), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;ca&quot; (Catalan), &quot;sq&quot; (Albanian), &quot;sr&quot; (Serbian), &quot;kk&quot; (Kazakh), &quot;km&quot; (Khmer), &quot;kn&quot; (Kannada), &quot;sv&quot; (Swedish), &quot;ko&quot; (Korean), &quot;sw&quot; (Swahili), &quot;gl&quot; (Galician), &quot;ta&quot; (Tamil), &quot;gu&quot; (Gujarati), &quot;ky&quot; (Kyrgyz), &quot;cs&quot; (Czech), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;tl&quot; (Tagalog), &quot;pl&quot; (Polish), &quot;da&quot; (Danish), &quot;tr&quot; (Turkish)"
+        errorLine1="    &lt;string name=&quot;call_subject_recent&quot;>Recent notes&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/res/values-in/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="UnusedQuantity"
-        message="For language &quot;iw&quot; (Hebrew) the following quantities are not relevant: `many`"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-iw/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="UnusedQuantity"
-        message="For language &quot;ja&quot; (Japanese) the following quantities are not relevant: `one`"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-ja/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="UnusedQuantity"
-        message="For language &quot;km&quot; (Khmer) the following quantities are not relevant: `one`"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-km/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="UnusedQuantity"
-        message="For language &quot;ko&quot; (Korean) the following quantities are not relevant: `one`"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-ko/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="UnusedQuantity"
-        message="For language &quot;lo&quot; (Lao) the following quantities are not relevant: `one`"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-lo/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="UnusedQuantity"
-        message="For language &quot;ms&quot; (Malay) the following quantities are not relevant: `one`"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-ms/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="UnusedQuantity"
-        message="For language &quot;my&quot; (Burmese) the following quantities are not relevant: `one`"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-my/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="UnusedQuantity"
-        message="For language &quot;th&quot; (Thai) the following quantities are not relevant: `one`"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-th/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="UnusedQuantity"
-        message="For language &quot;vi&quot; (Vietnamese) the following quantities are not relevant: `one`"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-vi/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="UnusedQuantity"
-        message="For language &quot;zh&quot; (Chinese) the following quantities are not relevant: `one`"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-zh-rCN/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="UnusedQuantity"
-        message="For language &quot;zh&quot; (Chinese) the following quantities are not relevant: `one`"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-zh-rHK/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="UnusedQuantity"
-        message="For language &quot;zh&quot; (Chinese) the following quantities are not relevant: `one`"
-        errorLine1="  &lt;plurals name=&quot;tab_title_with_unread_items&quot;>"
-        errorLine2="  ^">
-        <location
-            file="src/main/res/values-zh-rTW/strings_contacts_common.xml"
-            line="100"
-            column="3"/>
-    </issue>
-
-    <issue
-        id="UselessParent"
-        message="This `LinearLayout` layout or its `RelativeLayout` parent is possibly unnecessary; transfer the `background` attribute to the other view"
-        errorLine1="    &lt;LinearLayout"
-        errorLine2="     ~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/dialog_call_subject.xml"
-            line="34"
-            column="6"/>
+            file="src/main/res/values/strings_pvot.xml"
+            line="8"
+            column="13"/>
     </issue>
 
     <issue
@@ -1355,28 +1080,6 @@
     </issue>
 
     <issue
-        id="TextFields"
-        message="This text field does not specify an `inputType`"
-        errorLine1="      &lt;EditText"
-        errorLine2="       ~~~~~~~~">
-        <location
-            file="src/main/res/layout/dialog_call_subject.xml"
-            line="89"
-            column="8"/>
-    </issue>
-
-    <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="      &lt;EditText"
-        errorLine2="       ~~~~~~~~">
-        <location
-            file="src/main/res/layout/dialog_call_subject.xml"
-            line="89"
-            column="8"/>
-    </issue>
-
-    <issue
         id="UseKtx"
         message="Use the KTX extension function `Bitmap.scale` instead?"
         errorLine1="                Bitmap.createScaledBitmap(bitmap, (bitmap.width * scale).roundToInt(), (bitmap.height * scale).roundToInt(), true)"
@@ -1385,83 +1088,6 @@
             file="src/main/java/org/prauga/phone/contacts/common/dialog/ComposerPicture.kt"
             line="49"
             column="17"/>
-    </issue>
-
-    <issue
-        id="ContentDescription"
-        message="Missing `contentDescription` attribute on image"
-        errorLine1="        &lt;ImageView"
-        errorLine2="         ~~~~~~~~~">
-        <location
-            file="src/main/res/layout/dialog_call_subject.xml"
-            line="170"
-            column="10"/>
-    </issue>
-
-    <issue
-        id="ContentDescription"
-        message="Missing `contentDescription` attribute on image"
-        errorLine1="  &lt;ImageView"
-        errorLine2="   ~~~~~~~~~">
-        <location
-            file="src/main/res/layout/select_account_list_item.xml"
-            line="29"
-            column="4"/>
-    </issue>
-
-    <issue
-        id="ContentDescription"
-        message="Missing `contentDescription` attribute on image"
-        errorLine1="  &lt;ImageView"
-        errorLine2="   ~~~~~~~~~">
-        <location
-            file="src/main/res/layout/unread_count_tab.xml"
-            line="21"
-            column="4"/>
-    </issue>
-
-    <issue
-        id="ContentDescription"
-        message="Missing `contentDescription` attribute on image"
-        errorLine1="  &lt;ImageView"
-        errorLine2="   ~~~~~~~~~">
-        <location
-            file="src/main/res/layout-ldrtl/unread_count_tab.xml"
-            line="25"
-            column="4"/>
-    </issue>
-
-    <issue
-        id="SetTextI18n"
-        message="Number formatting does not take into account locale settings. Consider using `String.format` instead."
-        errorLine1="        textView.setText(Integer.toString(mUnreadCounts[position]));"
-        errorLine2="                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/org/prauga/phone/contacts/common/list/ViewPagerTabs.java"
-            line="152"
-            column="26"/>
-    </issue>
-
-    <issue
-        id="RelativeOverlap"
-        message="`@id/send_and_call_button` can overlap `@id/history_button` if @string/send_and_call_button grows due to localized text expansion"
-        errorLine1="        &lt;TextView"
-        errorLine2="         ~~~~~~~~">
-        <location
-            file="src/main/res/layout/dialog_call_subject.xml"
-            line="179"
-            column="10"/>
-    </issue>
-
-    <issue
-        id="RelativeOverlap"
-        message="`@id/count` can overlap `@id/icon` if @id/count grows due to localized text expansion"
-        errorLine1="  &lt;TextView"
-        errorLine2="   ~~~~~~~~">
-        <location
-            file="src/main/res/layout-ldrtl/unread_count_tab.xml"
-            line="30"
-            column="4"/>
     </issue>
 
 </issues>
