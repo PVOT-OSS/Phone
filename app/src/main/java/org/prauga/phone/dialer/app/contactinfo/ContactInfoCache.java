@@ -259,6 +259,15 @@ public class ContactInfoCache {
   }
 
   /**
+   * Marks every cached contact as stale, so the rows ask for it again, without stopping the
+   * lookups: unlike {@link #invalidate()} it keeps the thread, and the delayed request to start
+   * it, so the stale rows are refreshed instead of waiting for the next {@link #start()}.
+   */
+  public void expireAll() {
+    cache.expireAll();
+  }
+
+  /**
    * Stops the background thread that processes updates and cancels any pending requests to start
    * it.
    */
