@@ -17,11 +17,17 @@
 <resources>
   <!-- Tab text to show users their call log/call history [CHAR LIMIT=10] -->
   <string name="tab_title_call_history">Recents</string>
-  <!-- Tab text to show users their favorite contacts that they can call in 1 click [CHAR LIMIT=10] -->
-  <string name="tab_title_speed_dial">Favorites</string>
+  <!-- Tab text for the dialpad, with the favorites to call in one tap above it [CHAR LIMIT=10] -->
+  <string name="tab_title_dialpad">Dialpad</string>
   <!-- Tab text to show users their voicemails  [CHAR LIMIT=10] -->
   <string name="tab_title_voicemail">Voicemail</string>
 
+  <!-- Label of the selected dialpad tab, which places the call when tapped [CHAR LIMIT=10] -->
+  <string name="nav_bar_action_dial">Dial</string>
+  <!-- Label of the selected recents tab, which opens search when tapped [CHAR LIMIT=10] -->
+  <string name="nav_bar_action_search">Search</string>
+  <!-- Label of the selected contacts tab, which creates a contact when tapped [CHAR LIMIT=10] -->
+  <string name="nav_bar_action_add">Add</string>
+
   <!-- Notification badge indicating that there are more than 9 notifications for the user [CHAR LIMIT=3] -->
-  <string name="bottom_nav_count_9_plus">9+</string>
 </resources>

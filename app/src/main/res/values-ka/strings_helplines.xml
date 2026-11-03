@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">ცხელი ხაზი</string>
-    <string name="helplines_loading">იტვირთება\u2026</string>
     <string name="helplines_empty">ცხელი ხაზები არ მოიძებნა.\nჩადეთ SIM-ბარათი და კვლავ სცადეთ</string>
     <string name="helplines_help">დახმარება</string>
     <string name="helplines_help_title">უსაფრთხოა დასარეკად</string>

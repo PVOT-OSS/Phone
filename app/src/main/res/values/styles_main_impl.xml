@@ -16,15 +16,6 @@
   -->
 <resources>
 
-  <style name="LaunchTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
-    <item name="android:colorPrimary">@color/dialer_primary_color</item>
-    <item name="colorPrimary">@color/dialer_primary_color</item>
-    <item name="android:colorPrimaryDark">@color/dialer_theme_color_dark</item>
-    <item name="colorPrimaryDark">@color/dialer_theme_color_dark</item>
-    <item name="android:windowLightStatusBar">true</item>
-    <item name="android:windowSplashScreenBackground">@color/splash_background</item>
-    <item name="android:windowSplashScreenIconBackgroundColor">@color/splash_icon_background</item>
-  </style>
 
   <!-- Activities should use this theme as their style -->
   <style name="MainActivityTheme" parent="MainActivityThemeBase">

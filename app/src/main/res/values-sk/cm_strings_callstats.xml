@@ -23,22 +23,8 @@
     <string name="call_stats_blocked">Blokované: <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_percent"><xliff:g id="percent">%d</xliff:g>%%</string>
     <string name="call_stats_header_total">Celkovo:  <xliff:g id="call_count">%1$s</xliff:g>, <xliff:g id="duration">%2$s</xliff:g></string>
-    <string name="call_stats_header_total_callsonly">Celkovo: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Dátum začiatku</string>
-    <string name="call_stats_filter_to">Dátum konca</string>
-    <string name="call_stats_filter_picker_title">Rozsah filtra</string>
-    <string name="date_quick_selection">Rýchly výber</string>
-    <string name="date_qs_currentmonth">Aktuálny mesiac</string>
-    <string name="date_qs_currentquarter">Aktuálny štvrťrok</string>
-    <string name="date_qs_currentyear">Aktuálny rok</string>
-    <string name="date_qs_lastweek">Posledný týždeň</string>
-    <string name="date_qs_lastmonth">Posledný mesiac</string>
-    <string name="date_qs_lastquarter">Posledný štvrťrok</string>
-    <string name="date_qs_lastyear">Posledný rok</string>
     <string name="call_stats_date_filter">Nastaviť časový rozsah</string>
     <string name="call_stats_reset_filter">Resetovať časový rozsah</string>
-    <string name="call_stats_sort_by_duration">Zoradiť podľa dĺžky hovoru</string>
-    <string name="call_stats_sort_by_count">Zoradiť podľa počtu hovorov</string>
     <string name="call_stats_title_for_number">Toto číslo</string>
     <string name="call_stats_title_of_total">Z celkových</string>
     <string name="call_stats_title_durations">Dĺžka hovorov</string>

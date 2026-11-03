@@ -32,5 +32,4 @@
   <string name="description_via_number">%1$s এর মাধ্যমে</string>
   <string name="description_via_number_phone_account">%1$s এ, %2$s এর মাধ্যমে</string>
   <string name="voicemail_string">ভয়েসমেল</string>
-  <string name="just_now">এখনই</string>
 </resources>

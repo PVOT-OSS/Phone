@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dial_button">bel</string>
   <string name="dialog_voicemail_airplane_mode_message">Om stemboodskapdiens te bel, skakel eers vliegtuigmodus af.</string>
   <string name="dialog_voicemail_not_ready_message">Om stemboodskapdiens op te stel, gaan na Kieslys &gt; Instellings.</string>
-  <string name="add_2sec_pause">Voeg 2-sek.-pouse by</string>
-  <string name="add_wait">Voeg wagtyd by</string>
-  <string name="dialer_useDtmfDialpad">Gebruik raak-nommerbord</string>
-  <string name="dialer_returnToInCallScreen">Keer terug na oproep wat besig is</string>
-  <string name="dialer_addAnotherCall">Voeg oproep by</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">Laai tans van SIM-kaart af …</string>

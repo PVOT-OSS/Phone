@@ -2,17 +2,6 @@
 <issues format="6" by="lint 9.5.0" type="baseline" client="gradle" dependencies="false" name="AGP (9.5.0)" variant="all" version="9.5.0">
 
     <issue
-        id="MissingSuperCall"
-        message="Overriding method should call `super.draw`"
-        errorLine1="  public void draw(Canvas canvas) {"
-        errorLine2="              ~~~~">
-        <location
-            file="src/main/java/org/prauga/phone/dialer/dialpadview/DialpadTextView.java"
-            line="47"
-            column="15"/>
-    </issue>
-
-    <issue
         id="ResourceType"
         message="Expected resource of type fraction"
         errorLine1="    letterToTileRatio = res.getFraction(R.dimen.letter_to_tile_ratio, 1, 1);"
@@ -21,17 +10,6 @@
             file="src/main/java/org/prauga/phone/dialer/lettertile/LetterTileDrawable.java"
             line="127"
             column="41"/>
-    </issue>
-
-    <issue
-        id="CustomViewStyleable"
-        message="By convention, the custom view (`DialpadView`) and the declare-styleable (`Dialpad`) should have the same name (various editor features rely on this convention)"
-        errorLine1="    TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Dialpad);"
-        errorLine2="                                                         ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/org/prauga/phone/dialer/dialpadview/DialpadView.java"
-            line="109"
-            column="58"/>
     </issue>
 
     <issue
@@ -46,25 +24,25 @@
     </issue>
 
     <issue
-        id="InflateParams"
-        message="Avoid passing `null` as the view root (needed to resolve layout parameters on the inflated layout&apos;s root element)"
-        errorLine1="      TextView textView = (TextView) inflater.inflate(R.layout.selectable_text_view, null);"
-        errorLine2="                                                                                     ~~~~">
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier,"
+        errorLine2="    ~~~~~~~~">
         <location
-            file="src/main/java/org/prauga/phone/dialer/widget/MessageFragment.java"
-            line="102"
-            column="86"/>
+            file="src/main/java/org/prauga/phone/dialer/ui/PhoneScaffold.kt"
+            line="46"
+            column="5"/>
     </issue>
 
     <issue
-        id="UseCompatLoadingForDrawables"
-        message="Use `AppCompatResources.getDrawable()`"
-        errorLine1="          (RippleDrawable) getContext().getDrawable(R.drawable.btn_dialpad_key);"
-        errorLine2="                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier,"
+        errorLine2="    ~~~~~~~~">
         <location
-            file="src/main/java/org/prauga/phone/dialer/dialpadview/DialpadView.java"
-            line="198"
-            column="28"/>
+            file="src/main/java/org/prauga/phone/dialer/ui/PhoneScreenTheme.kt"
+            line="53"
+            column="5"/>
     </issue>
 
     <issue
@@ -123,47 +101,168 @@
     </issue>
 
     <issue
-        id="UseCompoundDrawables"
-        message="This tag and its children can be replaced by one `&lt;TextView/>` and a compound drawable"
-        errorLine1="    &lt;LinearLayout"
-        errorLine2="     ~~~~~~~~~~~~">
+        id="MissingTranslation"
+        message="&quot;call_via&quot; is not translated in &quot;hi&quot; (Hindi), &quot;lo&quot; (Lao), &quot;lt&quot; (Lithuanian), &quot;hr&quot; (Croatian), &quot;lv&quot; (Latvian), &quot;hy&quot; (Armenian), &quot;uk&quot; (Ukrainian), &quot;ur&quot; (Urdu), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;mn&quot; (Mongolian), &quot;af&quot; (Afrikaans), &quot;mr&quot; (Marathi), &quot;uz&quot; (Uzbek), &quot;ms&quot; (Malay), &quot;am&quot; (Amharic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;zu&quot; (Zulu), &quot;no&quot; (Norwegian), &quot;bn&quot; (Bangla), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;kk&quot; (Kazakh), &quot;km&quot; (Khmer), &quot;sw&quot; (Swahili), &quot;gu&quot; (Gujarati), &quot;ky&quot; (Kyrgyz), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;tl&quot; (Tagalog)"
+        errorLine1="    &lt;string name=&quot;call_via&quot;>Call via&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~">
         <location
-            file="src/main/res/layout/fragment_message.xml"
-            line="65"
-            column="6"/>
+            file="src/main/res/values/cm_strings.xml"
+            line="7"
+            column="13"/>
     </issue>
 
     <issue
-        id="Overdraw"
-        message="Possible overdraw: Root element paints background `?android:attr/colorBackground` with a theme that also paints a background (inferred theme is `@android:style/Theme.Holo`)"
-        errorLine1="  android:background=&quot;?android:attr/colorBackground&quot;>"
-        errorLine2="  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        id="MissingTranslation"
+        message="&quot;description_quick_contact_for&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;description_quick_contact_for&quot;>Quick contact for &lt;xliff:g id=&quot;name&quot;>%1$s&lt;/xliff:g>&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/res/layout/fragment_message.xml"
+            file="src/main/res/values/strings_contactphoto.xml"
             line="23"
-            column="3"/>
+            column="11"/>
     </issue>
 
     <issue
-        id="Overdraw"
-        message="Possible overdraw: Root element paints background `?android:selectableItemBackground` with a theme that also paints a background (inferred theme is `@android:style/Theme.Holo`)"
-        errorLine1="  android:background=&quot;?android:selectableItemBackground&quot;/>"
-        errorLine2="  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        id="MissingTranslation"
+        message="&quot;call_with_a_note&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;call_with_a_note&quot;>Call with a note&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/res/layout/selectable_text_view.xml"
-            line="24"
-            column="3"/>
+            file="src/main/res/values/strings_contacts_resources.xml"
+            line="10"
+            column="11"/>
     </issue>
 
     <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="    &lt;EditText"
-        errorLine2="     ~~~~~~~~">
+        id="MissingTranslation"
+        message="&quot;description_image_button_plus&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;description_image_button_plus&quot;>dial plus&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/main/res/layout/fragment_message.xml"
-            line="50"
-            column="6"/>
+            file="src/main/res/values/strings_dialpadview.xml"
+            line="22"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;description_voicemail_button&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;description_voicemail_button&quot;>call voicemail&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_dialpadview.xml"
+            line="27"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;add_2sec_pause&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;add_2sec_pause&quot;>Add 2-sec pause&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_dialpadview.xml"
+            line="29"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;add_wait&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;add_wait&quot;>Add wait&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_dialpadview.xml"
+            line="30"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;description_delete_button&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;description_delete_button&quot;>backspace&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_dialpadview.xml"
+            line="34"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;description_dialpad_overflow&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;description_dialpad_overflow&quot;>More options&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_dialpadview.xml"
+            line="36"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;dialpad_call_rate&quot; is not translated in &quot;de&quot; (German), &quot;hi&quot; (Hindi), &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;lo&quot; (Lao), &quot;pt&quot; (Portuguese), &quot;lt&quot; (Lithuanian), &quot;hr&quot; (Croatian), &quot;lv&quot; (Latvian), &quot;hu&quot; (Hungarian), &quot;hy&quot; (Armenian), &quot;ug&quot; (Uyghur), &quot;uk&quot; (Ukrainian), &quot;ur&quot; (Urdu), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;mn&quot; (Mongolian), &quot;af&quot; (Afrikaans), &quot;in&quot; (Indonesian), &quot;mr&quot; (Marathi), &quot;uz&quot; (Uzbek), &quot;ms&quot; (Malay), &quot;el&quot; (Greek), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;it&quot; (Italian), &quot;am&quot; (Amharic), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;iw&quot; (Hebrew), &quot;zh&quot; (Chinese), &quot;et&quot; (Estonian), &quot;eu&quot; (Basque), &quot;ar&quot; (Arabic), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;zu&quot; (Zulu), &quot;ro&quot; (Romanian), &quot;nl&quot; (Dutch), &quot;nn&quot; (Norwegian Nynorsk), &quot;no&quot; (Norwegian), &quot;be&quot; (Belarusian), &quot;fi&quot; (Finnish), &quot;ru&quot; (Russian), &quot;bg&quot; (Bulgarian), &quot;bn&quot; (Bangla), &quot;fr&quot; (French), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;bs&quot; (Bosnian), &quot;fy&quot; (Western Frisian), &quot;ka&quot; (Georgian), &quot;si&quot; (Sinhala), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;ca&quot; (Catalan), &quot;sq&quot; (Albanian), &quot;sr&quot; (Serbian), &quot;kk&quot; (Kazakh), &quot;km&quot; (Khmer), &quot;kn&quot; (Kannada), &quot;sv&quot; (Swedish), &quot;ko&quot; (Korean), &quot;sw&quot; (Swahili), &quot;gl&quot; (Galician), &quot;ta&quot; (Tamil), &quot;gu&quot; (Gujarati), &quot;ky&quot; (Kyrgyz), &quot;cs&quot; (Czech), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;tl&quot; (Tagalog), &quot;ckb&quot;, &quot;pl&quot; (Polish), &quot;da&quot; (Danish), &quot;tr&quot; (Turkish)"
+        errorLine1="  &lt;string name=&quot;dialpad_call_rate&quot;>&quot;%1$s  %2$s&quot;&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_dialpadview.xml"
+            line="38"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;a11y_glide_photo_manager_contact_photo_description&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;a11y_glide_photo_manager_contact_photo_description&quot;>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_glidephotomanager_impl.xml"
+            line="23"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;action_menu_overflow_description&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        errorLine1="  &lt;string msgid=&quot;2295659037509008453&quot; name=&quot;action_menu_overflow_description&quot;>More options&lt;/string>"
+        errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_main_impl_toolbar.xml"
+            line="11"
+            column="39"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;custom_message_hint&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;custom_message_hint&quot;>Write a custom message&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_widget.xml"
+            line="19"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;toolbar_close&quot; is not translated in &quot;fur&quot; (Friulian), &quot;ast&quot; (Asturian; Bable; Leonese; Asturleonese), &quot;ug&quot; (Uyghur), &quot;nn&quot; (Norwegian Nynorsk), &quot;kab&quot; (Kabyle), &quot;sc&quot; (Sardinian), &quot;fy&quot; (Western Frisian), &quot;ga&quot; (Irish), &quot;gd&quot; (Scottish Gaelic), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        errorLine1="  &lt;string name=&quot;toolbar_close&quot;>Close&lt;/string>"
+        errorLine2="          ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings_widget.xml"
+            line="22"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `Int.toDrawable` instead?"
+        errorLine1="                activity.window.setBackgroundDrawable(ColorDrawable(color.toArgb()))"
+        errorLine2="                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/prauga/phone/dialer/ui/PhoneScreenTheme.kt"
+            line="127"
+            column="55"/>
     </issue>
 
     <issue
@@ -175,72 +274,6 @@
             file="src/main/java/org/prauga/phone/dialer/dialpadview/DigitsEditText.java"
             line="49"
             column="18"/>
-    </issue>
-
-    <issue
-        id="ClickableViewAccessibility"
-        message="Custom view `LockableViewPager` overrides `onTouchEvent` but not `performClick`"
-        errorLine1="  public boolean onTouchEvent(MotionEvent motionEvent) {"
-        errorLine2="                 ~~~~~~~~~~~~">
-        <location
-            file="src/main/java/org/prauga/phone/dialer/widget/LockableViewPager.java"
-            line="49"
-            column="18"/>
-    </issue>
-
-    <issue
-        id="ContentDescription"
-        message="Missing `contentDescription` attribute on image"
-        errorLine1="  &lt;ImageView"
-        errorLine2="   ~~~~~~~~~">
-        <location
-            file="src/main/res/layout-land/empty_content_view.xml"
-            line="18"
-            column="4"/>
-    </issue>
-
-    <issue
-        id="ContentDescription"
-        message="Missing `contentDescription` attribute on image"
-        errorLine1="  &lt;ImageView"
-        errorLine2="   ~~~~~~~~~">
-        <location
-            file="src/main/res/layout/empty_content_view.xml"
-            line="18"
-            column="4"/>
-    </issue>
-
-    <issue
-        id="ContentDescription"
-        message="Missing `contentDescription` attribute on image"
-        errorLine1="      &lt;ImageView"
-        errorLine2="       ~~~~~~~~~">
-        <location
-            file="src/main/res/layout/fragment_message.xml"
-            line="75"
-            column="8"/>
-    </issue>
-
-    <issue
-        id="SetTextI18n"
-        message="Number formatting does not take into account locale settings. Consider using `String.format` instead."
-        errorLine1="      remainingChar.setText(Integer.toString(charLimit));"
-        errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/org/prauga/phone/dialer/widget/MessageFragment.java"
-            line="96"
-            column="29"/>
-    </issue>
-
-    <issue
-        id="SetTextI18n"
-        message="Number formatting does not take into account locale settings. Consider using `String.format` instead."
-        errorLine1="      remainingChar.setText(Integer.toString(charLimit - s.length()));"
-        errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/org/prauga/phone/dialer/widget/MessageFragment.java"
-            line="136"
-            column="29"/>
     </issue>
 
 </issues>

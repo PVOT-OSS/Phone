@@ -32,5 +32,4 @@
   <string name="description_via_number">%1$s மூலம்</string>
   <string name="description_via_number_phone_account">%1$s இல் %2$s மூலம்</string>
   <string name="voicemail_string">குரலஞ்சல்</string>
-  <string name="just_now">சற்றுமுன்</string>
 </resources>

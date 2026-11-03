@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">El RTT brinda asistencia a las personas sordas o hipoacúsicas, que tienen algún trastorno del habla o necesitan una transcripción además de la voz.</string>
   <string name="rtt_button_decline_request">No, gracias</string>
   <string name="rtt_button_accept_request">Unirse a RTT</string>
+  <string name="manageConferenceLabel">Administrar conferencia</string>
 </resources>

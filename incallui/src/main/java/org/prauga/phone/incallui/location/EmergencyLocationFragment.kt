@@ -20,12 +20,32 @@ import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.prauga.pvot.designsystem.components.PvotCard
+import com.prauga.pvot.designsystem.theme.PvotSpacing
 import java.util.Locale
 import java.util.concurrent.Executor
 import org.prauga.phone.dialer.common.LogUtil
+import org.prauga.phone.dialer.ui.PhoneScreenTheme
+import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.incallui.R
 
 /**
@@ -34,24 +54,25 @@ import org.prauga.phone.incallui.R
  */
 class EmergencyLocationFragment : Fragment(), LocationListener {
 
-    private lateinit var title: TextView
-    private lateinit var address: TextView
-    private lateinit var plusCode: TextView
-    private lateinit var coordinates: TextView
+    private var title by mutableIntStateOf(R.string.emergency_location_loading)
+    private var address by mutableStateOf<String?>(null)
+    private var plusCode by mutableStateOf<String?>(null)
+    private var coordinates by mutableStateOf<String?>(null)
     private var listening = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View {
-        val view = inflater.inflate(R.layout.emergency_location, container, false)
-        title = view.findViewById(R.id.emergency_location_title)
-        address = view.findViewById(R.id.emergency_location_address)
-        plusCode = view.findViewById(R.id.emergency_location_plus_code)
-        coordinates = view.findViewById(R.id.emergency_location_coordinates)
-        return view
-    }
+    ): View =
+        ComposeView(inflater.context).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                PhoneScreenTheme(fillBackground = false) {
+                    EmergencyLocationCard(stringResource(title), address, plusCode, coordinates)
+                }
+            }
+        }
 
     override fun onStart() {
         super.onStart()
@@ -103,20 +124,18 @@ class EmergencyLocationFragment : Fragment(), LocationListener {
 
     override fun onLocationChanged(location: Location) {
         if (!isUsable(location) || !isAdded) return
-        title.setText(R.string.emergency_location_title)
-        plusCode.text =
+        title = R.string.emergency_location_title
+        plusCode =
             getString(
                 R.string.emergency_location_plus_code,
                 OpenLocationCode.encode(location.latitude, location.longitude),
             )
-        plusCode.visibility = View.VISIBLE
-        coordinates.text =
+        coordinates =
             getString(
                 R.string.emergency_location_coordinates,
                 location.latitude,
                 location.longitude,
             )
-        coordinates.visibility = View.VISIBLE
         lookUpAddress(location)
     }
 
@@ -148,17 +167,16 @@ class EmergencyLocationFragment : Fragment(), LocationListener {
     private fun showAddress(line: String) {
         if (!isAdded) return
         val comma = line.indexOf(',')
-        address.text =
+        address =
             if (comma < 0) line
             else line.substring(0, comma).trim() + "\n" + line.substring(comma + 1).trim()
-        address.visibility = View.VISIBLE
     }
 
     private fun showError(message: Int) {
-        title.setText(message)
-        address.visibility = View.GONE
-        plusCode.visibility = View.GONE
-        coordinates.visibility = View.GONE
+        title = message
+        address = null
+        plusCode = null
+        coordinates = null
     }
 
     private companion object {
@@ -181,5 +199,50 @@ class EmergencyLocationFragment : Fragment(), LocationListener {
             context
                 .getSystemService(BatteryManager::class.java)
                 ?.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY) ?: 100
+    }
+}
+
+/**
+ * Where the phone is, for the user to read out to the operator; the codes can be selected and
+ * copied.
+ */
+@Composable
+private fun EmergencyLocationCard(
+    title: String,
+    address: String?,
+    plusCode: String?,
+    coordinates: String?,
+) {
+    PvotCard(
+        Modifier.fillMaxWidth()
+            .padding(horizontal = PvotSpacing.L)
+            .testTag(TestTags.EMERGENCY_LOCATION)
+    ) {
+        SelectionContainer {
+            Column(
+                Modifier.padding(PvotSpacing.L),
+                verticalArrangement = Arrangement.spacedBy(PvotSpacing.XS),
+            ) {
+                Text(
+                    title,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                address?.let {
+                    Text(
+                        it,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+                }
+                for (line in listOfNotNull(plusCode, coordinates)) {
+                    Text(
+                        line,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        }
     }
 }

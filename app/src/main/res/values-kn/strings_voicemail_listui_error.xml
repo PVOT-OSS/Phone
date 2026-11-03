@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">ಹೊಸತು! ನಿಮ್ಮ ಧ್ವನಿಮೇಲ್‌ ಅನ್ನು ಓದಿ</string>
   <string name="dialer_terms_and_conditions_1.0">ಧ್ವನಿಮೇಲ್‌ಗೆ ಕರೆ ಮಾಡದೆಯೇ ನಿಮ್ಮ ಸಂದೇಶಗಳನ್ನು ನೋಡಿ ಮತ್ತು ಆಲಿಸಿಬಹುದು. ನಿಮ್ಮ ಧ್ವನಿಮೇಲ್‌ನ ಪ್ರತಿಲೇಖನಗಳನ್ನು Google ನ ಉಚಿತ ಪ್ರತಿಲೇಖನ ಸೇವೆಯ ಮೂಲಕ ಒದಗಿಸಲಾಗುತ್ತದೆ. ನೀವು ಯಾವುದೇ ಸಮಯದಲ್ಲಾದರೂ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಆಫ್ ಮಾಡಬಹುದು. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">ನಿಮ್ಮ ಧ್ವನಿಮೇಲ್‌ನ ಪ್ರತಿಲೇಖನಗಳನ್ನು Google ನ ಉಚಿತ ಪ್ರತಿಲೇಖನ ಸೇವೆಯ ಮೂಲಕ ಒದಗಿಸಲಾಗುತ್ತದೆ. ನೀವು ಯಾವುದೇ ಸಮಯದಲ್ಲಾದರೂ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಇದನ್ನು ಆಫ್ ಮಾಡಬಹುದು. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">ಸರಿ, ಅರ್ಥವಾಯಿತು</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">ಬೇಡ</string>
 </resources>

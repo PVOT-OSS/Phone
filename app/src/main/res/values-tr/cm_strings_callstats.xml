@@ -23,22 +23,8 @@
     <string name="call_stats_blocked">Engellenen: <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_percent"><xliff:g id="percent">%d</xliff:g>%%</string>
     <string name="call_stats_header_total">Toplam: <xliff:g id="call_count">%1$s</xliff:g>, <xliff:g id="duration">%2$s</xliff:g></string>
-    <string name="call_stats_header_total_callsonly">Toplam: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Başlangıç tarihi</string>
-    <string name="call_stats_filter_to">Bitiş tarihi</string>
-    <string name="call_stats_filter_picker_title">Filtreleme aralığı</string>
-    <string name="date_quick_selection">Hızlı seçim</string>
-    <string name="date_qs_currentmonth">Bu ay</string>
-    <string name="date_qs_currentquarter">Şu anki çeyrek</string>
-    <string name="date_qs_currentyear">Bu yıl</string>
-    <string name="date_qs_lastweek">Geçen hafta</string>
-    <string name="date_qs_lastmonth">Geçen ay</string>
-    <string name="date_qs_lastquarter">Geçen çeyrek</string>
-    <string name="date_qs_lastyear">Geçen yıl</string>
     <string name="call_stats_date_filter">Zaman aralığını ayarla</string>
     <string name="call_stats_reset_filter">Zaman aralığını sıfırla</string>
-    <string name="call_stats_sort_by_duration">Arama süresine göre sırala</string>
-    <string name="call_stats_sort_by_count">Arama sayısına göre sırala</string>
     <string name="call_stats_title_for_number">Bu numara</string>
     <string name="call_stats_title_of_total">Toplam</string>
     <string name="call_stats_title_durations">Arama süreleri</string>

@@ -30,6 +30,8 @@ import androidx.car.app.model.TabTemplate
 import androidx.car.app.model.Template
 import androidx.car.app.validation.HostValidator
 import androidx.core.graphics.drawable.IconCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import java.util.concurrent.Executors
 import org.prauga.phone.dialer.R
 
@@ -63,9 +65,20 @@ private class PhoneCarScreen(carContext: CarContext) : Screen(carContext) {
     private var entries: List<CarEntry>? = null
     private val loader = Executors.newSingleThreadExecutor()
 
+    /** The tab a load is running for, so a redraw while it runs does not start another. */
+    private var loadingTab: String? = null
+
+    init {
+        lifecycle.addObserver(
+            LifecycleEventObserver { _, event ->
+                if (event == Lifecycle.Event.ON_DESTROY) loader.shutdownNow()
+            }
+        )
+    }
+
     override fun onGetTemplate(): Template {
         val list = entries
-        if (list == null) load(activeTab)
+        if (list == null && loadingTab != activeTab) load(activeTab)
         val content =
             ListTemplate.Builder()
                 .apply {
@@ -113,27 +126,9 @@ private class PhoneCarScreen(carContext: CarContext) : Screen(carContext) {
             )
             .apply {
                 setHeaderAction(Action.APP_ICON)
-                addTab(
-                    tab(
-                        TAB_FAVORITES,
-                        R.string.tab_title_speed_dial,
-                        R.drawable.quantum_ic_star_vd_theme_24,
-                    )
-                )
-                addTab(
-                    tab(
-                        TAB_RECENTS,
-                        R.string.tab_title_call_history,
-                        R.drawable.quantum_ic_history_vd_theme_24,
-                    )
-                )
-                addTab(
-                    tab(
-                        TAB_CONTACTS,
-                        R.string.tab_all_contacts,
-                        R.drawable.quantum_ic_people_vd_theme_24,
-                    )
-                )
+                addTab(tab(TAB_FAVORITES, R.string.quick_dial_header, R.drawable.ic_star))
+                addTab(tab(TAB_RECENTS, R.string.tab_title_call_history, R.drawable.ic_history))
+                addTab(tab(TAB_CONTACTS, R.string.tab_all_contacts, R.drawable.ic_users))
                 setActiveTabContentId(activeTab)
                 setTabContents(TabContents.Builder(content).build())
             }
@@ -148,6 +143,7 @@ private class PhoneCarScreen(carContext: CarContext) : Screen(carContext) {
             .build()
 
     private fun load(tab: String) {
+        loadingTab = tab
         loader.execute {
             val loaded =
                 runCatching {
@@ -159,6 +155,7 @@ private class PhoneCarScreen(carContext: CarContext) : Screen(carContext) {
                     }
                     .getOrDefault(emptyList())
             carContext.mainExecutor.execute {
+                if (loadingTab == tab) loadingTab = null
                 if (tab == activeTab) {
                     entries = loaded
                     invalidate()

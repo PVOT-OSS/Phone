@@ -107,9 +107,7 @@ public class FetchVoicemailReceiver extends BroadcastReceiver {
           uid = cursor.getString(SOURCE_DATA);
           String accountId = cursor.getString(PHONE_ACCOUNT_ID);
           if (TextUtils.isEmpty(accountId)) {
-            TelephonyManager telephonyManager =
-                (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            accountId = telephonyManager.getSimSerialNumber();
+            accountId = getSimSerialNumber(context);
 
             if (TextUtils.isEmpty(accountId)) {
               VvmLog.e(TAG, "Account null and no default sim found.");
@@ -227,5 +225,19 @@ public class FetchVoicemailReceiver extends BroadcastReceiver {
         }
       }
     });
+  }
+
+  /**
+   * Returns the default SIM's serial number, or null without READ_PRIVILEGED_PHONE_STATE, which
+   * only the system build holds.
+   */
+  @SuppressLint({"HardwareIds", "MissingPermission"})
+  private static String getSimSerialNumber(Context context) {
+    try {
+      return context.getSystemService(TelephonyManager.class).getSimSerialNumber();
+    } catch (SecurityException e) {
+      VvmLog.w(TAG, "No permission to read the SIM serial number");
+      return null;
+    }
   }
 }

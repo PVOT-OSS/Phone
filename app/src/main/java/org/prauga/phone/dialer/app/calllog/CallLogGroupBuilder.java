@@ -55,7 +55,6 @@ public class CallLogGroupBuilder {
   /** Day grouping for calls which occurred before last week. */
   public static final int DAY_GROUP_OTHER = 2;
   /** Instance of the time object used for time calculations. */
-  private static final ZoneId TIME_ZONE = ZoneId.systemDefault();
 
   /** The object on which the groups are created. */
   private final GroupCreator groupCreator;
@@ -131,7 +130,7 @@ public class CallLogGroupBuilder {
         cursor.getInt(CallLogQuery.NUMBER_PRESENTATION),
         cursor.getInt(CallLogQuery.CALL_TYPE),
         CallLogGrouping.dayBucket(
-            DateUtils.getDayDifference(TIME_ZONE, cursor.getLong(CallLogQuery.DATE), now)));
+            DateUtils.getDayDifference(ZoneId.systemDefault(), cursor.getLong(CallLogQuery.DATE), now)));
   }
 
   private static int callbackActionOf(Cursor cursor) {
@@ -168,7 +167,7 @@ public class CallLogGroupBuilder {
    * @return The date group the call belongs in.
    */
   private int getDayGroup(long date, long now) {
-    int days = DateUtils.getDayDifference(TIME_ZONE, date, now);
+    int days = DateUtils.getDayDifference(ZoneId.systemDefault(), date, now);
 
     if (days == 0) {
       return DAY_GROUP_TODAY;

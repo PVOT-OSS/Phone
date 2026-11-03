@@ -25,6 +25,12 @@
                 <action android:name="org.prauga.phone.testing.HANG_UP" />
                 <action android:name="org.prauga.phone.testing.SET_SCREENING" />
                 <action android:name="org.prauga.phone.testing.DUMP" />
+                <action android:name="org.prauga.phone.testing.REGISTER_CARRIER" />
+                <action android:name="org.prauga.phone.testing.UNREGISTER_CARRIER" />
+                <action android:name="org.prauga.phone.testing.RING" />
+                <action android:name="org.prauga.phone.testing.PLACE" />
+                <action android:name="org.prauga.phone.testing.FAR_END_ANSWER" />
+                <action android:name="org.prauga.phone.testing.FAR_END_HANG_UP" />
             </intent-filter>
         </receiver>
     </application>

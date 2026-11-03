@@ -75,8 +75,12 @@ class CallLogScreenTest {
                 CallTests.TIMEOUT_MILLIS,
             ),
         )
-        checkNotNull(device.findObject(By.res(context.packageName, "call_log_filter_missed"))) {
-                "no Missed chip"
+        val filter =
+            checkNotNull(device.findObject(By.res("recents_filter"))) { "no All / Missed filter" }
+        checkNotNull(
+                filter.findObject(By.text(context.getString(R.string.call_log_missed_title)))
+            ) {
+                "no Missed choice"
             }
             .click()
 

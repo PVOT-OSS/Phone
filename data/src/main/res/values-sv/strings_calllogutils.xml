@@ -32,5 +32,4 @@
   <string name="description_via_number">med %1$s</string>
   <string name="description_via_number_phone_account">på %1$s, med %2$s</string>
   <string name="voicemail_string">Röstbrevlåda</string>
-  <string name="just_now">Nyss</string>
 </resources>

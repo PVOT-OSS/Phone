@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT қызметі мүлдем естімейтін, есту немесе сөйлеу қабілеті нашар немесе дыбысқа қосымша басқа қызметтерді қажет ететін адамдарға көмек ретінде қолданылады.</string>
   <string name="rtt_button_decline_request">Жоқ, рақмет</string>
   <string name="rtt_button_accept_request">RTT қызметіне қосылу</string>
+  <string name="manageConferenceLabel">Конференциялық қоңырауды басқару</string>
 </resources>

@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Direktorijum za Work</string>
-  <string name="chat_aim">Započni ćaskanje preko AIM-a</string>
-  <string name="chat_msn">Započni ćaskanje preko Windows Live-a</string>
-  <string name="chat_yahoo">Započni ćaskanje preko Yahoo-a</string>
-  <string name="chat_skype">Započni ćaskanje preko Skype-a</string>
-  <string name="chat_qq">Započni ćaskanje preko QQ-a</string>
-  <string name="chat_gtalk">Započni ćaskanje preko Google Talk-a</string>
-  <string name="chat_icq">Započni ćaskanje preko ICQ-a</string>
-  <string name="chat_jabber">Započni ćaskanje preko Jabber-a</string>
   <string name="display_options_sort_list_by">Sortiraj prema</string>
   <string name="display_options_sort_by_given_name">Imenu</string>
   <string name="display_options_sort_by_family_name">Prezimenu</string>
@@ -18,6 +10,5 @@
   <string name="menu_clear_frequents">Obriši često kontaktirane</string>
   <string name="action_menu_back_from_search">zaustavljanje pretraživanja</string>
   <string name="description_clear_search">Brisanje pretrage</string>
-  <string name="call_with_a_note">Poziv sa beleškom</string>
   <string name="description_search_video_call">Video poziv</string>
 </resources>

@@ -16,16 +16,10 @@
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-  <string name="dialer_terms_and_conditions_existing_user_title">New! Read your voicemail</string>
 
   <string name="dialer_terms_and_conditions_1.0">
   See and listen to your messages, without having to call voicemail. Transcripts of your voicemail are provided by Google’s free transcription service. You can turn either off in Settings any time. <xliff:g>%s</xliff:g>
   </string>
 
-  <string name="dialer_terms_and_conditions_existing_user">
-  Transcripts of your voicemail are now provided by Google’s free transcription service. You can turn this off in Settings any time. %s
-  </string>
 
-  <string name="dialer_terms_and_conditions_existing_user_ack">Ok, got it</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">No Thanks</string>
 </resources>

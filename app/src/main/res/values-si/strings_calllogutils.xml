@@ -1,7 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="new_call_log_carrier_video">වාහක වීඩියෝව</string>
-  <string name="new_call_log_unknown">නොදන්නා</string>
-  <string name="new_call_log_secondary_blocked">අවහිර කරන ලදි</string>
-  <string name="new_call_log_secondary_spam">අයාචිත</string>
 </resources>

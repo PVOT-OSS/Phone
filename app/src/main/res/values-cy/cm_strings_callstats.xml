@@ -23,22 +23,8 @@
     <string name="call_stats_blocked">Wedi\'u rhwystro: <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_percent"><xliff:g id="percent">%d</xliff:g>%%</string>
     <string name="call_stats_header_total">Cyfanswm: <xliff:g id="call_count">%1$s</xliff:g>, <xliff:g id="duration">%2$s</xliff:g></string>
-    <string name="call_stats_header_total_callsonly">Cyfanswm: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Dyddiad dechrau</string>
-    <string name="call_stats_filter_to">Dyddiad gorffen</string>
-    <string name="call_stats_filter_picker_title">Ystod hidlydd</string>
-    <string name="date_quick_selection">Dewis cyflym</string>
-    <string name="date_qs_currentmonth">Mis presennol</string>
-    <string name="date_qs_currentquarter">Chwarter presennol</string>
-    <string name="date_qs_currentyear">Blwyddyn bresennol</string>
-    <string name="date_qs_lastweek">Wythnos diwethaf</string>
-    <string name="date_qs_lastmonth">Mis diwethaf</string>
-    <string name="date_qs_lastquarter">Chwarter diwethaf</string>
-    <string name="date_qs_lastyear">Blwyddyn ddiwethaf</string>
     <string name="call_stats_date_filter">Addasu ystod amser</string>
     <string name="call_stats_reset_filter">Ailosod y cyfnod amser</string>
-    <string name="call_stats_sort_by_duration">Trefnu yn ôl hyd alwadau</string>
-    <string name="call_stats_sort_by_count">Trefnu yn ôl nifer galwadau</string>
     <string name="call_stats_title_for_number">Y rhif hwn</string>
     <string name="call_stats_title_of_total">O\'r cyfanswm</string>
     <string name="call_stats_title_durations">Hyd alwadau</string>

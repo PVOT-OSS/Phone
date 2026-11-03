@@ -4,8 +4,6 @@
   SPDX-License-Identifier: Apache-2.0
 -->
 <resources>
-    <!-- Behind the launcher icon while the app opens; values-night holds the dark one. -->
-    <color name="splash_background">#FFFFFFFF</color>
     <!-- The launcher icon's tile, so the icon opens looking as it does on the home screen. -->
     <color name="splash_icon_background">#FFFFFFFF</color>
 </resources>

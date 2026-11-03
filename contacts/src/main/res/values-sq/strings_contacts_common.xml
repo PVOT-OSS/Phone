@@ -96,9 +96,4 @@
   <string name="send_and_call_button">DËRGO DHE TELEFONO</string>
   <string name="call_subject_limit">%1$s / %2$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">Skeda %1$s.</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="one"> Skeda %1$s. %2$d artikull i palexuar. </item>
-    <item quantity="other"> Skeda %1$s. %2$d artikuj të palexuar. </item>
-  </plurals>
 </resources>

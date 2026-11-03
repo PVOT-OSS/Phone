@@ -26,7 +26,6 @@ import org.prauga.phone.dialer.common.concurrent.Annotations.LightweightExecutor
 import org.prauga.phone.dialer.common.concurrent.Annotations.NonUiParallel;
 import org.prauga.phone.dialer.common.concurrent.Annotations.Ui;
 import org.prauga.phone.dialer.inject.HasRootComponent;
-import org.prauga.phone.dialer.inject.IncludeInDialerRoot;
 
 import com.google.common.util.concurrent.ListeningExecutorService;
 
@@ -68,7 +67,6 @@ public abstract class DialerExecutorComponent {
   }
 
   /** Used to refer to the root application component. */
-  @IncludeInDialerRoot
   public interface HasComponent {
     DialerExecutorComponent dialerExecutorComponent();
   }

@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">कार्य निर्देशिका</string>
-  <string name="chat_aim">AIM का उपयोग करके बातचीत करें</string>
-  <string name="chat_msn">Windows Live का उपयोग करके बातचीत करें</string>
-  <string name="chat_yahoo">Yahoo का उपयोग करके बातचीत करें</string>
-  <string name="chat_skype">Skype का उपयोग करके बातचीत करें</string>
-  <string name="chat_qq">QQ का उपयोग करके बातचीत करें</string>
-  <string name="chat_gtalk">Google टॉक का उपयोग करके बातचीत करें</string>
-  <string name="chat_icq">ICQ का उपयोग करके बातचीत करें</string>
-  <string name="chat_jabber">Jabber का उपयोग करके बातचीत करें</string>
   <string name="display_options_sort_list_by">इससे क्रमित करें</string>
   <string name="display_options_sort_by_given_name">नाम</string>
   <string name="display_options_sort_by_family_name">उपनाम</string>
@@ -18,6 +10,5 @@
   <string name="menu_clear_frequents">अक्सर किए जाने वाले साफ़ करें</string>
   <string name="action_menu_back_from_search">खोजना बंद करें</string>
   <string name="description_clear_search">खोज साफ़ करें</string>
-  <string name="call_with_a_note">नोट के साथ कॉल करें</string>
   <string name="description_search_video_call">वीडियो कॉल</string>
 </resources>

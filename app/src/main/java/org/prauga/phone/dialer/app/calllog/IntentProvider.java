@@ -127,20 +127,18 @@ public abstract class IntentProvider {
    *
    * @param callDetailsEntries The call details of the other calls grouped together with the call.
    * @param contact The contact with which this call details intent pertains to.
-   * @param canReportCallerId Whether reporting a caller ID is supported.
    * @param canSupportAssistedDialing Whether assisted dialing is supported.
    * @return The call details intent provider.
    */
   public static IntentProvider getCallDetailIntentProvider(
       CallDetailsEntries callDetailsEntries,
       DialerContact contact,
-      boolean canReportCallerId,
       boolean canSupportAssistedDialing) {
     return new IntentProvider() {
       @Override
       public Intent getClickIntent(Context context) {
         return OldCallDetailsActivity.newInstance(
-            context, callDetailsEntries, contact, canReportCallerId, canSupportAssistedDialing);
+            context, callDetailsEntries, contact, canSupportAssistedDialing);
       }
     };
   }

@@ -28,9 +28,7 @@
     <string name="deny">Diúltaigh</string>
     <string name="call_recording_category_title">Taifeadadh glaonna</string>
     <string name="call_recording_format">Formáid fuaime</string>
-    <string name="call_via">Glaoigh tríd</string>
     <string name="call_via_dialog_title">Glaoigh ar\u2026</string>
     <string name="call_log_stats_title">Staitisticí</string>
     <string name="action_menu_helplines">Línte cabhrach</string>
-    <string name="default_dialer_action">Socraigh mar réamhshocrú</string>
 </resources>

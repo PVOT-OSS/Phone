@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Vinnuskrá</string>
-  <string name="chat_aim">Spjalla með AIM</string>
-  <string name="chat_msn">Spjalla með Windows Live</string>
-  <string name="chat_yahoo">Spjalla með Yahoo</string>
-  <string name="chat_skype">Spjalla með Skype</string>
-  <string name="chat_qq">Spjalla með QQ</string>
-  <string name="chat_gtalk">Spjalla með Google spjalli</string>
-  <string name="chat_icq">Spjalla með ICQ</string>
-  <string name="chat_jabber">Spjalla með Jabber</string>
   <string name="display_options_sort_list_by">Raða eftir</string>
   <string name="display_options_sort_by_given_name">Fornafn</string>
   <string name="display_options_sort_by_family_name">Eftirnafn</string>
@@ -18,6 +10,5 @@
   <string name="menu_clear_frequents">Hreinsa algenga tengiliði</string>
   <string name="action_menu_back_from_search">hætta leit</string>
   <string name="description_clear_search">Hreinsa leit</string>
-  <string name="call_with_a_note">Símtal með texta</string>
   <string name="description_search_video_call">Hringja myndsímtal</string>
 </resources>

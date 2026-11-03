@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">Segélyvonalak</string>
-    <string name="helplines_loading">Betöltés\u2026</string>
     <string name="helplines_empty">Nem található segélyvonal.\nHelyezzen be egy SIM-kártyát és próbálja újra</string>
     <string name="helplines_help">Súgó</string>
     <string name="helplines_help_title">Az alábbiakkal biztonságos a hívás</string>

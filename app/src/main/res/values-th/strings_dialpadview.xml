@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dial_button">หมุนหมายเลข</string>
   <string name="dialog_voicemail_airplane_mode_message">หากต้องการฟังข้อความเสียง ให้ปิดโหมดใช้งานบนเครื่องบินก่อน</string>
   <string name="dialog_voicemail_not_ready_message">หากต้องการตั้งค่าข้อความเสียง ให้ไปที่เมนู &gt; การตั้งค่า</string>
-  <string name="add_2sec_pause">เพิ่มช่วงคั่น 2 วินาที</string>
-  <string name="add_wait">เพิ่มการรอ</string>
-  <string name="dialer_useDtmfDialpad">ใช้ปุ่มกดแบบมีเสียง</string>
-  <string name="dialer_returnToInCallScreen">กลับไปคุยสายต่อ</string>
-  <string name="dialer_addAnotherCall">เพิ่มการโทร</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">กำลังโหลดจากซิมการ์ด…</string>

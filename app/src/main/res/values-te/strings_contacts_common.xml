@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">కార్యాలయ డైరెక్టరీ</string>
-  <string name="chat_aim">AIMని ఉపయోగించి చాట్ చేయండి</string>
-  <string name="chat_msn">Windows Liveని ఉపయోగించి చాట్ చేయండి</string>
-  <string name="chat_yahoo">Yahooని ఉపయోగించి చాట్ చేయండి</string>
-  <string name="chat_skype">Skypeని ఉపయోగించి చాట్ చేయండి</string>
-  <string name="chat_qq">QQని ఉపయోగించి చాట్ చేయండి</string>
-  <string name="chat_gtalk">Google Talkని ఉపయోగించి చాట్ చేయండి</string>
-  <string name="chat_icq">ICQని ఉపయోగించి చాట్ చేయండి</string>
-  <string name="chat_jabber">Jabberని ఉపయోగించి చాట్ చేయండి</string>
   <string name="display_options_sort_list_by">ఇలా క్రమబద్ధీకరించు</string>
   <string name="display_options_sort_by_given_name">మొదటి పేరు</string>
   <string name="display_options_sort_by_family_name">చివరి పేరు</string>
@@ -18,6 +10,5 @@
   <string name="menu_clear_frequents">తరచుగా ఉన్నవాటిని క్లియర్ చేయి</string>
   <string name="action_menu_back_from_search">శోధించడం ఆపివేయి</string>
   <string name="description_clear_search">శోధనను క్లియర్ చేయి</string>
-  <string name="call_with_a_note">గమనికతో కాల్ చేయి</string>
   <string name="description_search_video_call">వీడియో కాల్</string>
 </resources>

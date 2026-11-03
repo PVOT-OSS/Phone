@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Nuut! Lees jou stemboodskap</string>
   <string name="dialer_terms_and_conditions_1.0">Kyk en luister na jou boodskappe sonder dat jy stemboodskap hoef te bel. Transkripsies van jou stemboodskap word deur Google se gratis transkripsiediens verskaf. Jy kan beide enige tyd in Instellings afskakel. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Transkripsies van jou stemboodskap word deur Google se gratis transkripsiediens verskaf. Jy kan dit enige tyd in Instellings afskakel. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">OK, het dit</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Nee, dankie</string>
 </resources>

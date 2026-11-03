@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">STT er til hjelp for anropsdeltakere som er døve eller tunghørte, har talefunksjonshemninger eller trenger mer enn bare tale.</string>
   <string name="rtt_button_decline_request">Nei takk</string>
   <string name="rtt_button_accept_request">Bli med i STT</string>
+  <string name="manageConferenceLabel">Administrer konferansesamtale</string>
 </resources>

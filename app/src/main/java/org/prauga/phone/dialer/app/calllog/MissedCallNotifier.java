@@ -16,6 +16,8 @@
  */
 package org.prauga.phone.dialer.app.calllog;
 
+import org.prauga.phone.dialer.app.settings.IncomingCallSettings;
+import org.prauga.phone.dialer.reminder.CallbackReminderActivity;
 import static org.prauga.phone.dialer.app.DevicePolicyResources.NOTIFICATION_MISSED_WORK_CALL_TITLE;
 
 import android.annotation.SuppressLint;
@@ -385,6 +387,16 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
                       createSendSmsFromNotificationPendingIntent(call.number, call.callsUri))
                   .build());
         }
+        if (IncomingCallSettings.callbackReminders(context)) {
+          boolean nameIsNumber = TextUtils.equals(contactInfo.name, contactInfo.formattedNumber)
+              || TextUtils.equals(contactInfo.name, contactInfo.number);
+          builder.addAction(
+              new Notification.Action.Builder(
+                      Icon.createWithResource(context, R.drawable.ic_bell),
+                      context.getString(R.string.callback_reminder_action),
+                      createRemindPendingIntent(call.number, nameIsNumber ? null : contactInfo.name))
+                  .build());
+        }
       }
     }
 
@@ -484,6 +496,14 @@ public class MissedCallNotifier implements Worker<Pair<Integer, String>, Void> {
     // Use FLAG_UPDATE_CURRENT to make sure any previous pending intent is updated with the new
     // extra.
     return PendingIntent.getService(context, 0, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+  }
+
+  private PendingIntent createRemindPendingIntent(String number, @Nullable String name) {
+    Intent intent = CallbackReminderActivity.newIntent(context, number, name);
+    // Each number gets its own pending intent, as the request code is shared.
+    intent.setData(Uri.fromParts("reminder", number, null));
+    return PendingIntent.getActivity(context, 0, intent,
             PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
   }
 

@@ -36,5 +36,4 @@
   <string name="description_via_number">на номер %1$s</string>
   <string name="description_via_number_phone_account">на %1$s на номер %2$s</string>
   <string name="voicemail_string">Голосова пошта</string>
-  <string name="just_now">Щойно</string>
 </resources>

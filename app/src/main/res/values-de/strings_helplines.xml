@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">Hilfe-Hotlines</string>
-    <string name="helplines_loading">Wird geladen\u2026</string>
     <string name="helplines_empty">Keine Hilfe-Hotlines gefunden.\nLege eine SIM-Karte ein und versuche es erneut</string>
     <string name="helplines_help">Hilfe</string>
     <string name="helplines_help_title">Folgende Angebote sind sicher anzurufen</string>

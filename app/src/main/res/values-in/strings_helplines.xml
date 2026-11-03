@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">Saluran bantuan</string>
-    <string name="helplines_loading">Memuat\u2026</string>
     <string name="helplines_empty">Tidak ada saluran bantuan yang ditemukan.\nMasukkan kartu SIM dan coba lagi</string>
     <string name="helplines_help">Bantuan</string>
     <string name="helplines_help_title">Ini aman untuk dihubungi</string>

@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dial_button">formo numrin</string>
   <string name="dialog_voicemail_airplane_mode_message">Për të telefonuar postën zanore, në fillim çaktivizo modalitetin \"në aeroplan\".</string>
   <string name="dialog_voicemail_not_ready_message">Për të konfiguruar postën zanore, shko te \"Menyja\" &gt; \"Cilësimet\".</string>
-  <string name="add_2sec_pause">Shto një ndërprerje 2-sekondëshe</string>
-  <string name="add_wait">Shto një pritje</string>
-  <string name="dialer_useDtmfDialpad">Përdor bllokun e tasteve me tone të prekjes</string>
-  <string name="dialer_returnToInCallScreen">Kthehu te telefonata në vazhdim</string>
-  <string name="dialer_addAnotherCall">Shto telefonatë</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">Po ngarkon nga karta SIM…</string>

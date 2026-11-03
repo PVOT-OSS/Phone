@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">جدید! پست صوتی‌تان را بخوانید</string>
   <string name="dialer_terms_and_conditions_1.0">‏بدون نیاز به تماس گرفتن با پست صوتی، پیام‌هایتان را ببینید و به آن‌ها گوش دهید. ترانویسی پست صوتی‌تان توسط سرویس رایگان ترانویسی Google ارائه می‌شود. هرزمان خواستید می‌توانید هرکدام را در «تنظیمات» خاموش کنید. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">‏درحال‌حاضر ترانویسی پست صوتی‌تان توسط سرویس رایگان ترانویسی Google ارائه می‌شود. هرزمان خواستید می‌توانید این گزینه را در «تنظیمات» خاموش کنید. ‎%s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">بله، متوجه شدم</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">نه متشکرم</string>
 </resources>

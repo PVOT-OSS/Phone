@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">新功能！阅读语音邮件</string>
   <string name="dialer_terms_and_conditions_1.0">无需呼叫语音信箱便可查看和收听您的语音邮件。Google 的转录服务会免费为您提供语音邮件的转录文本。您可以随时在“设置”中停用任一功能。%s</string>
-  <string name="dialer_terms_and_conditions_existing_user">现在，Google 的转录服务会免费为您提供语音邮件的转录文本。您可以随时在“设置”中停用此功能。%s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">知道了</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">不用了</string>
 </resources>

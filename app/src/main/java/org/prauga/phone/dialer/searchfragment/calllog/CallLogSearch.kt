@@ -11,16 +11,8 @@ import android.database.Cursor
 import android.provider.CallLog.Calls
 import android.provider.ContactsContract.Directory
 import android.telephony.PhoneNumberUtils
-import android.view.View
-import android.widget.QuickContactBadge
-import android.widget.TextView
 import androidx.loader.content.AsyncTaskLoader
-import androidx.recyclerview.widget.RecyclerView
 import org.prauga.phone.dialer.R
-import org.prauga.phone.dialer.contactphoto.ContactPhotoManager
-import org.prauga.phone.dialer.lettertile.LetterTileDrawable
-import org.prauga.phone.dialer.searchfragment.common.QueryBoldingUtil
-import org.prauga.phone.dialer.searchfragment.common.RowClickListener
 import org.prauga.phone.dialer.searchfragment.common.SearchCursor
 
 /** A number from the call history that isn't saved as a contact. */
@@ -140,42 +132,5 @@ class CallLogSearchCursorLoader(context: Context) : AsyncTaskLoader<Cursor>(cont
 
     private companion object {
         const val QUERY_LIMIT = 500
-    }
-}
-
-/** A "Not in your contacts" row: tapping it calls the number. */
-class CallLogSearchViewHolder(view: View, private val listener: RowClickListener) :
-    RecyclerView.ViewHolder(view), View.OnClickListener {
-
-    private val photo: QuickContactBadge = view.findViewById(R.id.photo)
-    private val number: TextView = view.findViewById(R.id.primary)
-    private val location: TextView = view.findViewById(R.id.secondary)
-    private var dialNumber: String? = null
-
-    init {
-        view.setOnClickListener(this)
-    }
-
-    fun bind(cursor: SearchCursor, query: String) {
-        val context = itemView.context
-        dialNumber = cursor.getString(CallLogSearchCursor.NUMBER)
-        val formatted = cursor.getString(CallLogSearchCursor.FORMATTED_NUMBER)
-        number.text = QueryBoldingUtil.getNumberWithQueryBolded(query, formatted)
-        val place = cursor.getString(CallLogSearchCursor.LOCATION)
-        location.text = place
-        location.visibility = if (place.isNullOrEmpty()) View.GONE else View.VISIBLE
-        ContactPhotoManager.getInstance(context)
-            .loadDialerThumbnailOrPhoto(
-                photo,
-                null,
-                0,
-                null,
-                formatted,
-                LetterTileDrawable.TYPE_DEFAULT,
-            )
-    }
-
-    override fun onClick(view: View) {
-        dialNumber?.let { listener.placeVoiceCall(it, bindingAdapterPosition) }
     }
 }

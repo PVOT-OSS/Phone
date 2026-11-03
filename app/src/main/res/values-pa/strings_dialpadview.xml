@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dial_button">ਡਾਇਲ ਕਰੋ</string>
   <string name="dialog_voicemail_airplane_mode_message">ਵੌਇਸਮੇਲ ਨੂੰ ਕਾਲ ਕਰਨ ਲਈ, ਪਹਿਲਾਂ ਜਹਾਜ਼ ਮੋਡ ਬੰਦ ਕਰੋ।</string>
   <string name="dialog_voicemail_not_ready_message">ਵੌਇਸਮੇਲ ਸਥਾਪਤ ਕਰਨ ਲਈ, ਮੀਨੂ &gt; ਸੈਟਿੰਗਾਂ \'ਤੇ ਜਾਓ।</string>
-  <string name="add_2sec_pause">2-ਸਕਿੰਟ ਦਾ ਵਿਰਾਮ ਸ਼ਾਮਲ ਕਰੋ</string>
-  <string name="add_wait">ਉਡੀਕ ਦਾ ਸਮਾਂ ਸ਼ਾਮਲ ਕਰੋ</string>
-  <string name="dialer_useDtmfDialpad">ਸਪਰੱਸ਼ ਧੁਨੀ ਕੀ-ਪੈਡ ਵਰਤੋ</string>
-  <string name="dialer_returnToInCallScreen">ਜਾਰੀ ਕਾਲ \'ਤੇ ਵਾਪਸ ਜਾਓ</string>
-  <string name="dialer_addAnotherCall">ਕਾਲ ਸ਼ਾਮਲ ਕਰੋ</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">ਸਿਮ ਕਾਰਡ ਤੋਂ ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ…</string>

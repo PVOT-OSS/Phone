@@ -23,22 +23,8 @@
     <string name="call_stats_blocked">Cuộc gọi bị chặn: <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_percent"><xliff:g id="percent">%d</xliff:g>%%</string>
     <string name="call_stats_header_total">Tổng cộng: <xliff:g id="call_count">%1$s</xliff:g>, <xliff:g id="duration">%2$s</xliff:g></string>
-    <string name="call_stats_header_total_callsonly">Tổng: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Ngày bắt đầu</string>
-    <string name="call_stats_filter_to">Ngày kết thúc</string>
-    <string name="call_stats_filter_picker_title">Phạm vi lọc</string>
-    <string name="date_quick_selection">Chọn nhanh</string>
-    <string name="date_qs_currentmonth">Tháng hiện tại</string>
-    <string name="date_qs_currentquarter">Quý hiện tại</string>
-    <string name="date_qs_currentyear">Năm hiện tại</string>
-    <string name="date_qs_lastweek">Tuần trước</string>
-    <string name="date_qs_lastmonth">Tháng trước</string>
-    <string name="date_qs_lastquarter">Quý trước</string>
-    <string name="date_qs_lastyear">Năm trước</string>
     <string name="call_stats_date_filter">Điều chỉnh khoảng thời gian</string>
     <string name="call_stats_reset_filter">Đặt lại khoảng thời gian</string>
-    <string name="call_stats_sort_by_duration">Sắp xếp theo thời lượng cuộc gọi</string>
-    <string name="call_stats_sort_by_count">Sắp xếp theo số lượng cuộc gọi</string>
     <string name="call_stats_title_for_number">Số này</string>
     <string name="call_stats_title_of_total">Trong tổng số</string>
     <string name="call_stats_title_durations">Thời gian gọi</string>

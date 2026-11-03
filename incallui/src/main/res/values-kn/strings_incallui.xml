@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">ಯಾರು ಕಿವುಡರು, ಆಲಿಸಲು ಕಷ್ಟಪಡುವವರು, ಆಲಿಸಲು ಅಸಾಮರ್ಥ್ಯವಾಗಿರುವವರು, ಮಾತಿನ ಸಮಸ್ಯೆಯನ್ನು ಹೊಂದಿರುವವರು ಅಥವಾ ಧ್ವನಿಗಿಂತ ಇನ್ನಷ್ಟು ಬಯಸುವವರು RTT ಸಹಾಯಕ ಕರೆಮಾಡುವವರು.</string>
   <string name="rtt_button_decline_request">ಬೇಡ</string>
   <string name="rtt_button_accept_request">RTT ಅನ್ನು ಸೇರಿ</string>
+  <string name="manageConferenceLabel">ಕಾನ್ಫರೆನ್ಸ್ ಕರೆಯನ್ನು ನಿರ್ವಹಿಸಿ</string>
 </resources>

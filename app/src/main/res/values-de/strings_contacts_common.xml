@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Verzeichnis geschäftlicher Kontakte</string>
-  <string name="chat_aim">Über AIM chatten</string>
-  <string name="chat_msn">Über Windows Live chatten</string>
-  <string name="chat_yahoo">Über Yahoo! chatten</string>
-  <string name="chat_skype">Über Skype chatten</string>
-  <string name="chat_qq">Über QQ chatten</string>
-  <string name="chat_gtalk">Über Google Talk chatten</string>
-  <string name="chat_icq">Über ICQ chatten</string>
-  <string name="chat_jabber">Über Jabber chatten</string>
   <string name="display_options_sort_list_by">Sortieren nach</string>
   <string name="display_options_sort_by_given_name">Vorname</string>
   <string name="display_options_sort_by_family_name">Nachname</string>
@@ -18,6 +10,5 @@
   <string name="menu_clear_frequents">\"Häufig kontaktiert\" löschen</string>
   <string name="action_menu_back_from_search">Suche beenden</string>
   <string name="description_clear_search">Suche zurücksetzen</string>
-  <string name="call_with_a_note">Mit einer Notiz anrufen</string>
   <string name="description_search_video_call">Videoanruf</string>
 </resources>

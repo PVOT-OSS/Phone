@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dial_button">набор номера</string>
   <string name="dialog_voicemail_airplane_mode_message">Сначала отключите режим полета.</string>
   <string name="dialog_voicemail_not_ready_message">Чтобы настроить голосовую почту, выберите \"Меню &gt; Настройки\".</string>
-  <string name="add_2sec_pause">Добавить двухсекундную паузу</string>
-  <string name="add_wait">Добавить паузу</string>
-  <string name="dialer_useDtmfDialpad">Панель тонального набора</string>
-  <string name="dialer_returnToInCallScreen">Вернуться к текущему вызову</string>
-  <string name="dialer_addAnotherCall">Добавить вызов</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">Загрузка с SIM…</string>

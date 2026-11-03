@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="call_incoming_swipe_to_answer">Swipe up to answer</string>
-  <string name="call_incoming_swipe_to_reject">Swipe down to reject</string>
-  <string name="a11y_incoming_call_swipe_to_answer">Swipe up with two fingers to answer or down to reject the call</string>
   <!-- Shown on an incoming call when answering it will end the ongoing call. -->
   <string name="call_incoming_will_disconnect">Answering this call will end your other call</string>
   <!-- Shown on an incoming call when answering it will end the ongoing call in another app, named. -->
   <string name="call_incoming_will_disconnect_app">Answering will end your <xliff:g id="app_name" example="Meet">%1$s</xliff:g> call</string>
 
-  <string name="a11y_call_incoming_decline_description">Decline</string>
   <string name="call_incoming_decline">Decline</string>
 
-  <string name="a11y_call_incoming_answer_description">Answer</string>
   <string name="call_incoming_answer">Answer</string>
 
 </resources>

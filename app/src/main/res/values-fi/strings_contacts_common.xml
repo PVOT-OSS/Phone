@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Työhakemisto</string>
-  <string name="chat_aim">Keskustele AIM:n avulla</string>
-  <string name="chat_msn">Keskustele Windows Liven avulla</string>
-  <string name="chat_yahoo">Keskustele Yahoon avulla</string>
-  <string name="chat_skype">Keskustele Skypen avulla</string>
-  <string name="chat_qq">Keskustele QQ:n avulla</string>
-  <string name="chat_gtalk">Keskustele Google Talkin avulla</string>
-  <string name="chat_icq">Keskustele ICQ:n avulla</string>
-  <string name="chat_jabber">Keskustele Jabberin avulla</string>
   <string name="display_options_sort_list_by">Lajitteluperuste</string>
   <string name="display_options_sort_by_given_name">Etunimi</string>
   <string name="display_options_sort_by_family_name">Sukunimi</string>
@@ -18,6 +10,5 @@
   <string name="menu_clear_frequents">Tyhjennä usein käytetyt</string>
   <string name="action_menu_back_from_search">lopeta hakeminen</string>
   <string name="description_clear_search">Tyhjennä haku</string>
-  <string name="call_with_a_note">Soita ja lähetä muistiinpano</string>
   <string name="description_search_video_call">Videopuhelu</string>
 </resources>

@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">نیا! اپنی صوتی میل پڑھیں</string>
   <string name="dialer_terms_and_conditions_1.0">‏صوتی میل میں کال کئے بغیر، اپنے پیغامات دیکھیں اور سنیں۔ آپ کے صوتی میل کی ٹرانسکرپٹس Google کی مفت نقل حرفی کی سروس کے ذریعے فراہم کی جاتی ہیں۔ آپ ترتیبات میں اسے کسی بھی وقت آف بھی کر سکتے ہیں۔ %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">‏آپ کے صوتی میل کی ٹرانسکرپٹس Google کی مفت نقل حرفی کی سروس کے ذریعے فراہم کی جاتی ہیں۔ آپ اسے کسی بھی وقت ترتیبات میں آف کر سکتے ہیں۔ ‎%s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">ٹھیک ہے، سمجھ آ گئی</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">نہیں شکریہ</string>
 </resources>

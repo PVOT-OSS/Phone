@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">ໃໝ່! ອ່ານຂໍ້ຄວາມສຽງຂອງທ່ານ</string>
   <string name="dialer_terms_and_conditions_1.0">ເບິ່ງ ແລະ ຟັງຂໍ້ຄວາມຂອງທ່ານ, ໂດຍບໍ່ຕ້ອງໂທຫາເບີຂໍ້ຄວາມສຽງ. ການຖອດຂໍ້ຄວາມສຽງຂອງທ່ານແມ່ນສະໜອງໃຫ້ໂດຍບໍລິການຖອດຂໍ້ຄວາມຟຣີຂອງ Google. ທ່ານສາມາດປິດ ຫຼື ເປີດໄດ້ຕະຫຼອດເວລາໃນການຕັ້ງຄ່າ. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">ການຖອດຂໍ້ຄວາມສຽງຂອງທ່ານແມ່ນສະໜອງໃຫ້ໂດຍບໍລິການຖອດຂໍ້ຄວາມຟຣີຂອງ Google. ທ່ານສາມາດປິດຄຸນສົມບັດນີ້ໄດ້ຕະຫຼອດເວລາໃນການຕັ້ງຄ່າ. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">ຕົກລົງ, ເຂົ້າໃຈແລ້ວ</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">ບໍ່, ຂອບໃຈ</string>
 </resources>

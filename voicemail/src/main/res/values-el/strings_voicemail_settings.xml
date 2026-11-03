@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">Αυτόματος τηλεφωνητής</string>
   <string name="voicemail_notifications_preference_title">Ειδοποιήσεις</string>
   <string name="voicemail_change_greeting_preference_title">Χαιρετισμός αυτόματου τηλεφωνητή</string>
   <string name="change_greeting_text">Πατήστε για εγγραφή</string>

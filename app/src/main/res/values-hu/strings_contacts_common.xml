@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Munkahelyi névjegyek címtára</string>
-  <string name="chat_aim">Csevegés AIM-on</string>
-  <string name="chat_msn">Csevegés a Windows Live-on</string>
-  <string name="chat_yahoo">Csevegés a Yahoon</string>
-  <string name="chat_skype">Csevegés Skype használatával</string>
-  <string name="chat_qq">Csevegés a QQ-n</string>
-  <string name="chat_gtalk">Csevegés a Google Csevegő használatával</string>
-  <string name="chat_icq">Csevegés az ICQ-n</string>
-  <string name="chat_jabber">Csevegés Jabberen</string>
   <string name="display_options_sort_list_by">Rendezés alapja</string>
   <string name="display_options_sort_by_given_name">Utónév</string>
   <string name="display_options_sort_by_family_name">Vezetéknév</string>
@@ -18,6 +10,5 @@
   <string name="menu_clear_frequents">Gyakran keresettek törlése</string>
   <string name="action_menu_back_from_search">keresés leállítása</string>
   <string name="description_clear_search">Keresés törlése</string>
-  <string name="call_with_a_note">Hívás üzenettel</string>
   <string name="description_search_video_call">Videohívás</string>
 </resources>

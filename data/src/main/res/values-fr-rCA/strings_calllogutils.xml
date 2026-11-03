@@ -32,5 +32,4 @@
   <string name="description_via_number">au %1$s</string>
   <string name="description_via_number_phone_account">sur %1$s, au %2$s</string>
   <string name="voicemail_string">Messagerie vocale</string>
-  <string name="just_now">À l\'instant</string>
 </resources>

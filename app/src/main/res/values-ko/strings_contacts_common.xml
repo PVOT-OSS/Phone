@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">직장 디렉토리</string>
-  <string name="chat_aim">AIM으로 채팅</string>
-  <string name="chat_msn">Windows Live로 채팅</string>
-  <string name="chat_yahoo">Yahoo로 채팅</string>
-  <string name="chat_skype">Skype로 채팅</string>
-  <string name="chat_qq">QQ로 채팅</string>
-  <string name="chat_gtalk">Google 토크로 채팅</string>
-  <string name="chat_icq">ICQ로 채팅</string>
-  <string name="chat_jabber">Jabber로 채팅</string>
   <string name="display_options_sort_list_by">정렬 기준:</string>
   <string name="display_options_sort_by_given_name">이름</string>
   <string name="display_options_sort_by_family_name">성</string>
@@ -18,6 +10,5 @@
   <string name="menu_clear_frequents">자주 연락하는 사람 목록 삭제</string>
   <string name="action_menu_back_from_search">검색 중지</string>
   <string name="description_clear_search">검색창 지우기</string>
-  <string name="call_with_a_note">메모가 포함된 통화</string>
   <string name="description_search_video_call">화상 통화</string>
 </resources>

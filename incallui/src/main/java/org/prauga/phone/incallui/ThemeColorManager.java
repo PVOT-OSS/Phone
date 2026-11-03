@@ -16,6 +16,9 @@
 
 package org.prauga.phone.incallui;
 
+import androidx.compose.runtime.IntState;
+import androidx.compose.runtime.MutableIntState;
+import androidx.compose.runtime.SnapshotIntStateKt;
 import static android.telecom.PhoneAccount.NO_HIGHLIGHT_COLOR;
 
 import android.content.Context;
@@ -25,6 +28,8 @@ import androidx.annotation.Nullable;
 
 import org.prauga.phone.contacts.common.util.MaterialColorMapUtils;
 import org.prauga.phone.contacts.common.util.MaterialColorMapUtils.MaterialPalette;
+import org.prauga.phone.dialer.ui.PhoneColors;
+import org.prauga.phone.dialer.ui.appearance.AppearanceSettings;
 import org.prauga.phone.incallui.R;
 import org.prauga.phone.incallui.call.DialerCall;
 
@@ -34,6 +39,7 @@ import org.prauga.phone.incallui.call.DialerCall;
  */
 public class ThemeColorManager {
   private final MaterialColorMapUtils colorMap;
+  private final MutableIntState windowBackgroundVersion = SnapshotIntStateKt.mutableIntStateOf(0);
   @ColorInt private int primaryColor;
   @ColorInt private int secondaryColor;
   @ColorInt private int backgroundColorTop;
@@ -62,6 +68,13 @@ public class ThemeColorManager {
       backgroundColorMiddle = context.getColor(R.color.incall_background_gradient_spam_middle);
       backgroundColorBottom = context.getColor(R.color.incall_background_gradient_spam_bottom);
       backgroundColorSolid = context.getColor(R.color.incall_background_multiwindow_spam);
+    } else if (AppearanceSettings.INSTANCE.isDynamicColor(context)) {
+      // Material You colors: the call screen sits on the same background as the other screens.
+      palette = colorMap.calculatePrimaryAndSecondaryColor(NO_HIGHLIGHT_COLOR);
+      backgroundColorTop = PhoneColors.background(context);
+      backgroundColorMiddle = backgroundColorTop;
+      backgroundColorBottom = backgroundColorTop;
+      backgroundColorSolid = backgroundColorTop;
     } else {
       palette = colorMap.calculatePrimaryAndSecondaryColor(NO_HIGHLIGHT_COLOR);
       backgroundColorTop = context.getColor(R.color.incall_background_gradient_top);
@@ -102,5 +115,17 @@ public class ThemeColorManager {
   @ColorInt
   public int getBackgroundColorSolid() {
     return backgroundColorSolid;
+  }
+
+  /**
+   * Bumped each time the in-call window's background is replaced or recolored, so a Compose part
+   * drawing a copy of it, as the glass does, draws it again.
+   */
+  public IntState getWindowBackgroundVersion() {
+    return windowBackgroundVersion;
+  }
+
+  public void onWindowBackgroundChanged() {
+    windowBackgroundVersion.setIntValue(windowBackgroundVersion.getIntValue() + 1);
   }
 }

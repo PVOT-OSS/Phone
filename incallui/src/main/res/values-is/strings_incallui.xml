@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT (símtöl með texta í rauntíma) aðstoðar heyrnarlausa og fólk með heyrnarskerðingu eða skerta talgetu og þá sem þurfa að styðja sig við meira en bara hljóð.</string>
   <string name="rtt_button_decline_request">Nei, takk</string>
   <string name="rtt_button_accept_request">Taka þátt í RTT</string>
+  <string name="manageConferenceLabel">Stjórna símafundi</string>
 </resources>

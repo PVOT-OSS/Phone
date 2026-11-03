@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dial_button">теру</string>
   <string name="dialog_voicemail_airplane_mode_message">Дауыстық поштаға қоңырау шалу мүмкін болуы үшін, ұшақ режимін өшіру қажет.</string>
   <string name="dialog_voicemail_not_ready_message">Дауыстық поштаны орнату үшін, \"Mәзір &gt; Параметрлер\" тармағына өтіңіз.</string>
-  <string name="add_2sec_pause">2 секундтық үзіліс қосу</string>
-  <string name="add_wait">\"Күту\" мүмкіндігін қосу</string>
-  <string name="dialer_useDtmfDialpad">Сенсорлы және дыбысты пернетақта</string>
-  <string name="dialer_returnToInCallScreen">Басталған қоңырауға оралу</string>
-  <string name="dialer_addAnotherCall">Жаңа қоңырау қосу</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">SIM картасынан жүктелуде...</string>

@@ -62,7 +62,7 @@
       style="@style/Incall.Button.VideoCall"
       android:layout_marginEnd="24dp"
       android:checked="true"
-      android:src="@drawable/quantum_ic_volume_up_vd_theme_24"
+      android:src="@drawable/ic_volume"
       app:contentDescriptionChecked="@string/incall_content_description_speaker"
       app:contentDescriptionUnchecked="@string/incall_content_description_earpiece"
       />
@@ -70,7 +70,7 @@
       android:id="@+id/videocall_mute_button"
       style="@style/Incall.Button.VideoCall"
       android:layout_marginEnd="24dp"
-      android:src="@drawable/quantum_ic_mic_off_vd_theme_24"
+      android:src="@drawable/ic_microphone_off"
       app:contentDescriptionChecked="@string/incall_content_description_muted"
       app:contentDescriptionUnchecked="@string/incall_content_description_unmuted"
       />
@@ -78,7 +78,7 @@
       android:id="@+id/videocall_mute_video"
       style="@style/Incall.Button.VideoCall"
       android:layout_marginEnd="24dp"
-      android:src="@drawable/quantum_ic_videocam_off_vd_theme_24"
+      android:src="@drawable/ic_video_off"
       app:contentDescriptionChecked="@string/incall_content_description_video_off"
       app:contentDescriptionUnchecked="@string/incall_content_description_video_on"
       />
@@ -103,7 +103,7 @@
       android:layout_width="@dimen/videocall_button_size"
       android:layout_height="@dimen/videocall_button_size"
       android:contentDescription="@string/incall_content_description_swap_calls"
-      android:src="@drawable/quantum_ic_swap_calls_vd_theme_24"
+      android:src="@drawable/ic_arrows_exchange"
       android:visibility="gone"
       tools:visibility="visible"
       />

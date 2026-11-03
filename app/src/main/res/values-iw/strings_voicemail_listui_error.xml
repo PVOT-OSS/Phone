@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">חדש! אפשר לקרוא הודעות קוליות</string>
   <string name="dialer_terms_and_conditions_1.0">‏אפשר להציג את ההודעות הקוליות ולהאזין להן בלי להתקשר לתא הקולי. תמלול ההודעות מבוצע בחינם על ידי שירות התמלול של Google. אפשר להשבית את השירות מתי שרוצים באמצעות ההגדרות. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">‏תמלילים של ההודעות הקוליות מסופקים עכשיו בחינם על ידי שירות התמלול של Google.‏ אפשר להשבית את השירות מתי שרוצים באמצעות ההגדרות. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">הבנתי</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">לא, תודה</string>
 </resources>

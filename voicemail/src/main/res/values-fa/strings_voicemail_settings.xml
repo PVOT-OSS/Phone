@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="voicemail_settings_title">پست صوتی</string>
   <string name="voicemail_notifications_preference_title">اعلان‌ها</string>
   <string name="voicemail_change_greeting_preference_title">خوشامدگویی پست صوتی</string>
   <string name="change_greeting_text">ضربه برای ضبط</string>

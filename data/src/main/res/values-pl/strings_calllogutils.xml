@@ -36,5 +36,4 @@
   <string name="description_via_number">przez %1$s</string>
   <string name="description_via_number_phone_account">na koncie %1$s, przez %2$s</string>
   <string name="voicemail_string">Poczta głosowa</string>
-  <string name="just_now">Przed chwilą</string>
 </resources>

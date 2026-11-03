@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Каталог контактов из рабочего профиля</string>
-  <string name="chat_aim">Чат через AIM</string>
-  <string name="chat_msn">Чат через Windows Live</string>
-  <string name="chat_yahoo">Чат через Yahoo</string>
-  <string name="chat_skype">Чат через Skype</string>
-  <string name="chat_qq">Чат через QQ</string>
-  <string name="chat_gtalk">Чат через Google Talk</string>
-  <string name="chat_icq">Чат через ICQ</string>
-  <string name="chat_jabber">Чат через Jabber</string>
   <string name="display_options_sort_list_by">Сортировка</string>
   <string name="display_options_sort_by_given_name">По имени</string>
   <string name="display_options_sort_by_family_name">По фамилии</string>
@@ -18,6 +10,5 @@
   <string name="menu_clear_frequents">Очистить популярные</string>
   <string name="action_menu_back_from_search">прекратить поиск</string>
   <string name="description_clear_search">Очистить условия поиска</string>
-  <string name="call_with_a_note">Написать сообщение абоненту</string>
   <string name="description_search_video_call">Видеовызов</string>
 </resources>

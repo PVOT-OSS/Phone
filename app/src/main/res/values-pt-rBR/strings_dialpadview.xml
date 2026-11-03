@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dial_button">discar</string>
   <string name="dialog_voicemail_airplane_mode_message">Para ligar para o correio de voz, primeiro desative o modo avião.</string>
   <string name="dialog_voicemail_not_ready_message">Para configurar o correio de voz, acesse Menu &gt; Configurações.</string>
-  <string name="add_2sec_pause">Adicionar pausa de 2 segundos</string>
-  <string name="add_wait">Adicionar espera</string>
-  <string name="dialer_useDtmfDialpad">Usar teclado multifrequencial</string>
-  <string name="dialer_returnToInCallScreen">Retornar para a chamada em espera</string>
-  <string name="dialer_addAnotherCall">Nova chamada</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">Carregando do cartão SIM...</string>

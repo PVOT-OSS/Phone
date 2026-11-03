@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="description_dialpad_back">အနောက်သို့ ပြန်သွားပါ</string>
-  <string name="description_dialpad_overflow">ပိုမိုရွေးချယ်စရာများ</string>
-  <string name="description_delete_button">နောက်ပြန်ဖျက်ခလုတ်</string>
 </resources>

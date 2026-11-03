@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dial_button">composer</string>
   <string name="dialog_voicemail_airplane_mode_message">Pour pouvoir appeler la messagerie vocale, vous devez désactiver le mode Avion.</string>
   <string name="dialog_voicemail_not_ready_message">Pour configurer la messagerie vocale, accédez à Menu &gt; Paramètres.</string>
-  <string name="add_2sec_pause">Ajouter une pause de 2 s</string>
-  <string name="add_wait">Ajouter une attente</string>
-  <string name="dialer_useDtmfDialpad">Utiliser le clavier DTMF</string>
-  <string name="dialer_returnToInCallScreen">Reprendre l\'appel en cours</string>
-  <string name="dialer_addAnotherCall">Ajouter un appel</string>
   <string name="imei">Code IMEI</string>
   <string name="meid">Code MEID</string>
   <string name="simContacts_emptyLoading">Chargement depuis la carte SIM...</string>

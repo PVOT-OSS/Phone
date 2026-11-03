@@ -486,7 +486,7 @@ public class CallButtonPresenter
     }
 
     final boolean isEnabled =
-        state.isConnectingOrConnected() && !state.isIncoming() && call != null;
+        state.isConnectingOrConnected() && !state.isIncoming() && call != null && !isEnded(call);
     inCallButtonUi.setEnabled(isEnabled);
 
     if (call == null) {
@@ -504,6 +504,12 @@ public class CallButtonPresenter
   @SuppressWarnings(value = {"MissingPermission"})
   private void updateButtonsState(DialerCall call) {
     LogUtil.v("CallButtonPresenter.updateButtonsState", "");
+    if (isEnded(call)) {
+      // The call is over: nothing here can act on it any more.
+      inCallButtonUi.setEnabled(false);
+      inCallButtonUi.updateButtonStates();
+      return;
+    }
     final boolean isVideo = call.isVideoCall();
 
     // Common functionality (audio, hold, etc).
@@ -623,10 +629,29 @@ public class CallButtonPresenter
   }
 
   @Override
-  public void onDialerCallDisconnect() {}
+  public void onDialerCallDisconnect() {
+    disableIfEnded();
+  }
 
   @Override
-  public void onDialerCallUpdate() {}
+  public void onDialerCallUpdate() {
+    disableIfEnded();
+  }
+
+  /** Turns every button off once the call is over, however it ended. */
+  private void disableIfEnded() {
+    if (inCallButtonUi != null && call != null && isEnded(call)) {
+      inCallButtonUi.setEnabled(false);
+      inCallButtonUi.updateButtonStates();
+    }
+  }
+
+  private static boolean isEnded(DialerCall call) {
+    int state = call.getState();
+    return state == DialerCallState.DISCONNECTING
+        || state == DialerCallState.DISCONNECTED
+        || state == DialerCallState.IDLE;
+  }
 
   @Override
   public void onDialerCallChildNumberChange() {}

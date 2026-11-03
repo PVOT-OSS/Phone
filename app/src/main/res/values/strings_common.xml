@@ -18,5 +18,4 @@
   <!-- Text for undo button in snackbar for voicemail deletion/blocking/unblocking number. [CHAR LIMIT=10] -->
   <string name="snackbar_undo">UNDO</string>
   <!-- Text on button of "OK, got it". [CHAR_LIMIT=30] -->
-  <string name="ok_got_it">OK, got it</string>
 </resources>

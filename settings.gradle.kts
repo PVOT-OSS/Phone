@@ -4,7 +4,6 @@
  */
 
 pluginManagement {
-    includeBuild("PvotLib/build-logic")
     repositories {
         google {
             content {
@@ -28,6 +27,7 @@ dependencyResolutionManagement {
     }
 }
 
+// PvotLib is a submodule, built from source: `git submodule update --init` after cloning.
 includeBuild("PvotLib")
 
 rootProject.name = "Phone"
@@ -49,7 +49,3 @@ include(":voicemail")
 include(":calls")
 
 include(":incallui")
-
-include(":annotations")
-
-include(":processor")

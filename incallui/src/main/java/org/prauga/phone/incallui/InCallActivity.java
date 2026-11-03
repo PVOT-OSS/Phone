@@ -20,7 +20,6 @@ package org.prauga.phone.incallui;
 import android.app.ActivityManager;
 import android.app.ActivityManager.AppTask;
 import android.app.ActivityManager.TaskDescription;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.KeyguardManager;
 import android.content.Context;
@@ -43,9 +42,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.CheckBox;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.ColorInt;
 import androidx.annotation.FloatRange;
 import androidx.annotation.IntDef;
@@ -180,6 +179,21 @@ public class InCallActivity extends TransactionSafeFragmentActivity
   protected void onCreate(Bundle bundle) {
     Trace.beginSection("InCallActivity.onCreate");
     super.onCreate(bundle);
+    getOnBackPressedDispatcher()
+        .addCallback(
+            this,
+            new OnBackPressedCallback(true) {
+              @Override
+              public void handleOnBackPressed() {
+                if (handleBackPressed()) {
+                  return;
+                }
+                // Nothing special to do. Fall back to the default behavior.
+                setEnabled(false);
+                getOnBackPressedDispatcher().onBackPressed();
+                setEnabled(true);
+              }
+            });
 
     preferredAccountWorkerResultListener =
         DialerExecutorComponent.get(this)
@@ -629,40 +643,38 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     }
   }
 
-  @Override
-  public void onBackPressed() {
+  /** Handles a press of back; true when it was consumed, false to let the system handle it. */
+  private boolean handleBackPressed() {
     LogUtil.enterBlock("InCallActivity.onBackPressed");
 
     if (!isVisible) {
-      return;
+      return true;
     }
 
     if (!getCallCardFragmentVisible()) {
-      return;
+      return true;
     }
 
     DialpadFragment dialpadFragment = getDialpadFragment();
     if (dialpadFragment != null && dialpadFragment.isVisible()) {
       showDialpadFragment(false /* show */, true /* animate */);
-      return;
+      return true;
     }
 
     if (CallList.getInstance().getIncomingCall() != null) {
       LogUtil.i(
           "InCallActivity.onBackPressed",
           "Ignore the press of the back key when an incoming call is ringing");
-      return;
+      return true;
     }
-
-    // Nothing special to do. Fall back to the default behavior.
-    super.onBackPressed();
+    return false;
   }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     LogUtil.i("InCallActivity.onOptionsItemSelected", "item: " + item);
     if (item.getItemId() == android.R.id.home) {
-      onBackPressed();
+      getOnBackPressedDispatcher().onBackPressed();
       return true;
     }
     return super.onOptionsItemSelected(item);
@@ -775,7 +787,6 @@ public class InCallActivity extends TransactionSafeFragmentActivity
     } else {
       if (show) {
         showDialpadFragment();
-        getDialpadFragment().animateShowDialpad();
       }
       getDialpadFragment()
           .getView()
@@ -918,6 +929,7 @@ public class InCallActivity extends TransactionSafeFragmentActivity
 
     if (backgroundDirty) {
       getWindow().setBackgroundDrawable(backgroundDrawable);
+      themeColorManager.onWindowBackgroundChanged();
     }
   }
 
@@ -1116,32 +1128,12 @@ public class InCallActivity extends TransactionSafeFragmentActivity
 
     dismissPendingDialogs();
 
-    AlertDialog.Builder builder =
-        new AlertDialog.Builder(this).setTitle(R.string.video_call_lte_to_wifi_failed_title);
-
-    // This allows us to use the theme of the dialog instead of the activity
-    View dialogCheckBoxView =
-        View.inflate(builder.getContext(), R.layout.video_call_lte_to_wifi_failed, null /* root */);
-    CheckBox wifiHandoverFailureCheckbox =
-        (CheckBox) dialogCheckBoxView.findViewById(R.id.video_call_lte_to_wifi_failed_checkbox);
-    wifiHandoverFailureCheckbox.setChecked(false);
-
     InCallUiLock lock = InCallPresenter.getInstance().acquireInCallUiLock("WifiFailedDialog");
     errorDialog =
-        builder
-            .setView(dialogCheckBoxView)
-            .setMessage(R.string.video_call_lte_to_wifi_failed_message)
-            .setOnCancelListener(dialogInterface -> onDialogDismissed())
-            .setPositiveButton(
-                android.R.string.ok,
-                (dialogInterface, id) -> {
-                  call.setDoNotShowDialogForHandoffToWifiFailure(
-                      wifiHandoverFailureCheckbox.isChecked());
-                  dialogInterface.cancel();
-                  onDialogDismissed();
-                })
-            .setOnDismissListener(dialogInterface -> lock.release())
-            .create();
+        InCallDialogs.wifiHandoverFailed(
+            this, doNotShow -> call.setDoNotShowDialogForHandoffToWifiFailure(doNotShow));
+    errorDialog.setOnCancelListener(dialogInterface -> onDialogDismissed());
+    errorDialog.setOnDismissListener(dialogInterface -> lock.release());
     errorDialog.show();
   }
 

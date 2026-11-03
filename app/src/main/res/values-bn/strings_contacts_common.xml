@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">কাজের সংগ্রহ</string>
-  <string name="chat_aim">AIM ব্যবহার করে চ্যাট করুন</string>
-  <string name="chat_msn">Windows Live ব্যবহার করে চ্যাট করুন</string>
-  <string name="chat_yahoo">Yahoo ব্যবহার করে চ্যাট করুন</string>
-  <string name="chat_skype">Skype ব্যবহার করে চ্যাট করুন</string>
-  <string name="chat_qq">QQ ব্যবহার করে চ্যাট করুন</string>
-  <string name="chat_gtalk">Google Talk ব্যবহার করে চ্যাট করুন</string>
-  <string name="chat_icq">ICQ ব্যবহার করে চ্যাট করুন</string>
-  <string name="chat_jabber">Jabber ব্যবহার করে চ্যাট করুন</string>
   <string name="display_options_sort_list_by">এই অনুসারে বাছুন</string>
   <string name="display_options_sort_by_given_name">প্রথম নাম</string>
   <string name="display_options_sort_by_family_name">পদবি</string>
@@ -18,6 +10,5 @@
   <string name="menu_clear_frequents">পুনরাবৃত্তি সাফ করুন</string>
   <string name="action_menu_back_from_search">সার্চ বন্ধ করুন</string>
   <string name="description_clear_search">সার্চ সাফ করুন</string>
-  <string name="call_with_a_note">একটি নোট সহ কল করুন</string>
   <string name="description_search_video_call">ভিডিও কল</string>
 </resources>

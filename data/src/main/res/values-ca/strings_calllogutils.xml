@@ -32,5 +32,4 @@
   <string name="description_via_number">al número %1$s</string>
   <string name="description_via_number_phone_account">a %1$s, al número %2$s</string>
   <string name="voicemail_string">Bústia de veu</string>
-  <string name="just_now">Ara mateix</string>
 </resources>

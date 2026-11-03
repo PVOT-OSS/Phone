@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">নতুন! আপনার ভয়েসমেল শুনুন</string>
   <string name="dialer_terms_and_conditions_1.0">ভয়েসমেলে কল না করেই মেসেজ পড়ুন এবং শুনুন। Google-এর ফ্রি ট্রান্সক্রিপশন পরিষেবার মাধ্যমে ভয়েসমেলের ট্রান্সক্রিপ্ট পান। আপনি যেকোনও সময় সেটিংসে গিয়ে দুটির মধ্যে যেকোনওটি বন্ধ করে দিতে পারেন। %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">এখন Google-এর ফ্রি ট্রান্সক্রিপশন পরিষেবার মাধ্যমে ভয়েসমেলের ট্রান্সক্রিপ্ট দেওয়া হয়। আপনি যেকোনও সময় সেটিংস থেকে এটি বন্ধ করে দিতে পারেন। %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">ঠিক আছে, বুঝেছি</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">না থাক</string>
 </resources>

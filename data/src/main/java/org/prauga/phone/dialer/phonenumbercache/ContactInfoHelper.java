@@ -33,16 +33,12 @@ import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.WorkerThread;
 
 import org.prauga.phone.contacts.common.ContactsUtils;
 import org.prauga.phone.contacts.common.ContactsUtils.UserType;
 import org.prauga.phone.contacts.common.util.Constants;
-import org.prauga.phone.dialer.common.Assert;
 import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.logging.ContactSource;
-import org.prauga.phone.dialer.oem.CequintCallerIdManager;
-import org.prauga.phone.dialer.oem.CequintCallerIdManager.CequintCallerIdContact;
 import org.prauga.phone.dialer.phonenumbercache.CachedNumberLookupService.CachedContactInfo;
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper;
 import org.prauga.phone.dialer.telecom.TelecomUtil;
@@ -611,37 +607,5 @@ public class ContactInfoHelper {
   public boolean canReportAsInvalid(ContactSource.Type sourceType, String objectId) {
     return cachedNumberLookupService != null
         && cachedNumberLookupService.canReportAsInvalid(sourceType, objectId);
-  }
-
-  /**
-   * Update ContactInfo by querying to Cequint Caller ID. Only name, geoDescription and photo uri
-   * will be updated if available.
-   */
-  @WorkerThread
-  public void updateFromCequintCallerId(
-      @Nullable CequintCallerIdManager cequintCallerIdManager, ContactInfo info, String number) {
-    Assert.isWorkerThread();
-    if (!CequintCallerIdManager.isCequintCallerIdEnabled(context)) {
-      return;
-    }
-    if (cequintCallerIdManager == null) {
-      return;
-    }
-    CequintCallerIdContact cequintCallerIdContact =
-        cequintCallerIdManager.getCachedCequintCallerIdContact(context, number);
-    if (cequintCallerIdContact == null) {
-      return;
-    }
-    if (TextUtils.isEmpty(info.name) && !TextUtils.isEmpty(cequintCallerIdContact.name())) {
-      info.name = cequintCallerIdContact.name();
-    }
-    if (!TextUtils.isEmpty(cequintCallerIdContact.geolocation())) {
-      info.geoDescription = cequintCallerIdContact.geolocation();
-      info.sourceType = ContactSource.Type.SOURCE_TYPE_CEQUINT_CALLER_ID;
-    }
-    // Only update photo if local lookup has no result.
-    if (!info.contactExists && info.photoUri == null && cequintCallerIdContact.photoUri() != null) {
-      info.photoUri = UriUtils.parseUriOrNull(cequintCallerIdContact.photoUri());
-    }
   }
 }

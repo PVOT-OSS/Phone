@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT membantu pemanggil yang pekak, kurang pendengaran, mengalami kesukaran bertutur atau memerlukan ciri selain suara.</string>
   <string name="rtt_button_decline_request">Tidak perlu</string>
   <string name="rtt_button_accept_request">Sertai RTT</string>
+  <string name="manageConferenceLabel">Urus panggilan sidang</string>
 </resources>

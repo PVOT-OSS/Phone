@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dial_button">birajte broj</string>
   <string name="dialog_voicemail_airplane_mode_message">Da biste pozvali govornu poštu, prvo isključite režim rada u avionu.</string>
   <string name="dialog_voicemail_not_ready_message">Da biste podesili govornu poštu, idite u Meni &gt; Podešavanja.</string>
-  <string name="add_2sec_pause">Dodaj pauzu od 2 sekunde</string>
-  <string name="add_wait">Dodaj čekanje</string>
-  <string name="dialer_useDtmfDialpad">Koristi tastaturu za tonsko biranje</string>
-  <string name="dialer_returnToInCallScreen">Nazad u poziv koji je u toku</string>
-  <string name="dialer_addAnotherCall">Dodaj poziv</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">Učitava se sa SIM kartice…</string>

@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">فهرست کار</string>
-  <string name="chat_aim">‏گپ با استفاده از AIM</string>
-  <string name="chat_msn">‏گپ با استفاده از Windows Live</string>
-  <string name="chat_yahoo">‏گپ با استفاده از Yahoo</string>
-  <string name="chat_skype">‏گپ با استفاده از Skype</string>
-  <string name="chat_qq">‏گپ با استفاده از QQ</string>
-  <string name="chat_gtalk">‏گپ با استفاده از Google Talk</string>
-  <string name="chat_icq">‏گپ با استفاده از ICQ</string>
-  <string name="chat_jabber">‏گپ با استفاده از Jabber</string>
   <string name="display_options_sort_list_by">مرتب‌سازی براساس</string>
   <string name="display_options_sort_by_given_name">نام</string>
   <string name="display_options_sort_by_family_name">نام خانوادگی</string>
@@ -18,6 +10,5 @@
   <string name="menu_clear_frequents">پاک کردن مکرراً تماس‌گرفته</string>
   <string name="action_menu_back_from_search">توقف جستجو</string>
   <string name="description_clear_search">پاک کردن جستجو</string>
-  <string name="call_with_a_note">تماس به همراه یادداشت</string>
   <string name="description_search_video_call">تماس ویدیویی</string>
 </resources>

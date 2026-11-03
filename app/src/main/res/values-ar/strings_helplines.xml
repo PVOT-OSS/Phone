@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">خطوط المساعدة</string>
-    <string name="helplines_loading">جارٍ التحميل\u2026</string>
     <string name="helplines_empty">لم يُعثر على خطوط مساعدة.\nأدخل بطاقة SIM وحاول مرة أخرى</string>
     <string name="helplines_help">المساعدة</string>
     <string name="helplines_help_title">هذه آمنة للمكالمة</string>

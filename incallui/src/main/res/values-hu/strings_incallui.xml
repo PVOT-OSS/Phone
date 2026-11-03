@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">Az RTT funkció a siket, hallássérült, beszédzavaros vagy a hangalapú kommunikáción kívül más kommunikációt is igénylő hívóknak lehet segítségére.</string>
   <string name="rtt_button_decline_request">Nem, köszönöm</string>
   <string name="rtt_button_accept_request">Csatlakozás</string>
+  <string name="manageConferenceLabel">Konferenciahívás kezelése</string>
 </resources>

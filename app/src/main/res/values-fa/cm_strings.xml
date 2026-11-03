@@ -28,10 +28,7 @@
     <string name="deny">رد کن</string>
     <string name="call_recording_category_title">ضبط تماس</string>
     <string name="call_recording_format">فرمت صوتی</string>
-    <string name="call_via">تماس از طریق</string>
     <string name="call_via_dialog_title">تماس از طریق\u2026</string>
     <string name="call_log_stats_title">آمار</string>
     <string name="action_menu_helplines">خطوط راهنما</string>
-    <string name="default_dialer_text">برای استفاده از آن باید شماره‌گیر را به عنوان برنامه پیش فرض تلفن تنظیم کنید.</string>
-    <string name="default_dialer_action">تنظیم به حالت پیش‌فرض</string>
 </resources>

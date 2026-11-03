@@ -18,7 +18,6 @@
 package org.prauga.phone.dialer.main.impl.toolbar;
 
 import android.app.Activity;
-import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,7 +37,7 @@ public interface SearchBarListener {
   void onVoiceButtonClicked(VoiceSearchResultCallback voiceSearchResultCallback);
 
   /** Called when a toolbar menu item is clicked. */
-  boolean onMenuItemClicked(MenuItem menuItem);
+  void onMenuItemClicked(MainMenuItem item);
 
   /** Called when {@link Activity#onPause()} is called. */
   void onActivityPause();

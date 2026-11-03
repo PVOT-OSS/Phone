@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT membantu penelepon yang tunarungu, kesulitan mendengar, memiliki gangguan berbicara, atau memerlukan lebih dari sekadar suara.</string>
   <string name="rtt_button_decline_request">Tidak</string>
   <string name="rtt_button_accept_request">Bergabung ke RTT</string>
+  <string name="manageConferenceLabel">Kelola telewicara</string>
 </resources>

@@ -13,20 +13,32 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract.CommonDataKinds.Phone
-import android.telephony.PhoneNumberFormattingTextWatcher
-import android.text.InputType
-import android.view.Gravity
 import android.view.WindowManager
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
-import org.prauga.phone.dialer.common.DpUtil
+import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
+import com.prauga.pvot.designsystem.components.textfield.PvotTextField
 import org.prauga.phone.dialer.common.LogUtil
+import org.prauga.phone.dialer.ui.PvotAlertDialog
+import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.incallui.call.CallList
 
 /**
@@ -42,14 +54,14 @@ class NumberPromptDialogFragment : DialogFragment() {
         ADD_PARTICIPANT(R.string.number_prompt_add_title, R.string.number_prompt_add_confirm),
     }
 
-    private lateinit var numberField: EditText
+    private val number = mutableStateOf("")
 
     private val pickContact =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             val uri = result.data?.data
             if (result.resultCode != Activity.RESULT_OK || uri == null)
                 return@registerForActivityResult
-            val number =
+            val picked =
                 runCatching {
                         requireContext()
                             .contentResolver
@@ -59,61 +71,43 @@ class NumberPromptDialogFragment : DialogFragment() {
                             }
                     }
                     .getOrNull()
-            if (!number.isNullOrBlank()) numberField.setText(number)
+            if (!picked.isNullOrBlank()) number.value = picked
         }
 
     private val action: Action
         get() = Action.valueOf(requireArguments().getString(ARG_ACTION)!!)
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val context = requireContext()
-        val padding = DpUtil.dpToPx(context, 20f).toInt()
-        numberField =
-            EditText(context).apply {
-                id = R.id.number_prompt_field
-                inputType = InputType.TYPE_CLASS_PHONE
-                setHint(R.string.number_prompt_hint)
-                addTextChangedListener(PhoneNumberFormattingTextWatcher())
-                layoutParams =
-                    LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-            }
-        val pick =
-            ImageButton(context).apply {
-                id = R.id.number_prompt_pick_contact
-                setImageResource(R.drawable.quantum_ic_person_vd_theme_24)
-                contentDescription = getString(R.string.number_prompt_pick_contact)
-                val attrs =
-                    context.obtainStyledAttributes(
-                        intArrayOf(android.R.attr.selectableItemBackgroundBorderless)
-                    )
-                background = attrs.getDrawable(0)
-                attrs.recycle()
-                setOnClickListener {
-                    runCatching {
-                            pickContact.launch(Intent(Intent.ACTION_PICK, Phone.CONTENT_URI))
-                        }
-                        .onFailure {
-                            LogUtil.e("NumberPromptDialogFragment", "no contacts picker", it)
-                        }
-                }
-            }
-        val content =
-            LinearLayout(context).apply {
-                orientation = LinearLayout.HORIZONTAL
-                gravity = Gravity.CENTER_VERTICAL
-                setPadding(padding, padding / 2, padding / 2, 0)
-                addView(numberField)
-                addView(pick)
-            }
+        savedInstanceState?.getString(STATE_NUMBER)?.let { number.value = it }
         val dialog =
-            AlertDialog.Builder(context)
-                .setTitle(action.title)
-                .setView(content)
-                .setPositiveButton(action.confirm) { _, _ -> perform(numberField.text.toString()) }
-                .setNegativeButton(android.R.string.cancel, null)
-                .create()
+            PvotAlertDialog(
+                requireContext(),
+                getString(action.title),
+                null,
+                listOf(
+                    PvotAlertDialog.Action(
+                        getString(action.confirm),
+                        PvotDialogActionStyle.Primary,
+                        { perform(number.value) },
+                        enabled = { number.value.isNotBlank() },
+                    ),
+                    PvotAlertDialog.Action(getString(android.R.string.cancel), cancels = true),
+                ),
+            ) {
+                NumberField(number, ::pickFromContacts)
+            }
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         return dialog
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(STATE_NUMBER, number.value)
+    }
+
+    private fun pickFromContacts() {
+        runCatching { pickContact.launch(Intent(Intent.ACTION_PICK, Phone.CONTENT_URI)) }
+            .onFailure { LogUtil.e("NumberPromptDialogFragment", "no contacts picker", it) }
     }
 
     private fun perform(number: String) {
@@ -137,6 +131,7 @@ class NumberPromptDialogFragment : DialogFragment() {
         const val TAG = "tag_number_prompt"
         private const val ARG_ACTION = "action"
         private const val ARG_CALL_ID = "call_id"
+        private const val STATE_NUMBER = "number"
         private const val PHONE_SCHEME = "tel"
 
         /**
@@ -168,4 +163,28 @@ class NumberPromptDialogFragment : DialogFragment() {
             )
         }
     }
+}
+
+/** The number to use, typed or picked from contacts, focused so the keypad opens at once. */
+@Composable
+private fun NumberField(number: MutableState<String>, onPickContact: () -> Unit) {
+    val focus = remember { FocusRequester() }
+    PvotTextField(
+        value = number.value,
+        onValueChange = { number.value = it },
+        placeholder = stringResource(R.string.number_prompt_hint),
+        singleLine = true,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+        modifier =
+            Modifier.fillMaxWidth().focusRequester(focus).testTag(TestTags.NUMBER_PROMPT_FIELD),
+        trailingIcon = {
+            IconButton(onClick = onPickContact) {
+                Icon(
+                    painterResource(R.drawable.ic_user),
+                    stringResource(R.string.number_prompt_pick_contact),
+                )
+            }
+        },
+    )
+    LaunchedEffect(Unit) { runCatching { focus.requestFocus() } }
 }

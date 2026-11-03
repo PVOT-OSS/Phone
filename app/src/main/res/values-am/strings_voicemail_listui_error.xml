@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">አዲስ! የድምጽ መልዕክትዎን ያንብቡ</string>
   <string name="dialer_terms_and_conditions_1.0">ወደ ድምጽ መልዕክት መደወል ሳያስፈልግዎ መልዕክቶችዎን ይመልከቱ እንዲሁም ያዳምጡ። የድምጽ መልዕክትዎ የጽሁፍ ግልባጮች በGoogle ነጻ ወደ ጽሁፍ የመገልበጥ አገልግሎት ይቀርባሉ። የትኛውንም በማንኛውም ጊዜ በቅንብሮች ውስጥ ማጥፋት ይችላሉ። %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">የድምጽ መልዕክትዎ የጽሁፍ ግልባጮች አሁን በGoogle ነጻ ወደ ጽሁፍ የመገልበጥ አገልግሎት ይቀርባሉ። ይህን በማንኛውም ጊዜ ማጥፋት ይችላሉ። %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">እሺ፣ ገባኝ</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">አይ አመሰግናለሁ</string>
 </resources>

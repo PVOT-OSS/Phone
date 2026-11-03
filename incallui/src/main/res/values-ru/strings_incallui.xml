@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">Функция RTT предназначена для пользователей с нарушениями слуха и речи.</string>
   <string name="rtt_button_decline_request">Нет</string>
   <string name="rtt_button_accept_request">Присоединиться</string>
+  <string name="manageConferenceLabel">Настройка конференц-связи</string>
 </resources>

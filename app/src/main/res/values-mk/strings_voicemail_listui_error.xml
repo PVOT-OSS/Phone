@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Ново! Читајте ја вашата говорна пошта</string>
   <string name="dialer_terms_and_conditions_1.0">Гледајте и слушајте ги вашите пораки без да треба да ја повикате говорната пошта. Бесплатната услуга за транскрипција на Google обезбедува преписи од вашата говорна пошта. Може да ја исклучите во „Поставки“ во секое време. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Бесплатната услуга за транскрипција на Google обезбедува преписи од вашата говорна пошта. Тоа може да го исклучите во секое време. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">Во ред, сфатив</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Не, фала</string>
 </resources>

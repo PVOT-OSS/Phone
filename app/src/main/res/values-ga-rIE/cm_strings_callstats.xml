@@ -23,22 +23,8 @@
     <string name="call_stats_blocked">Blocáilte: <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_percent"><xliff:g id="percent">%d</xliff:g>%%</string>
     <string name="call_stats_header_total">Iomlán: <xliff:g id="call_count">%1$s</xliff:g>, <xliff:g id="duration">%2$s</xliff:g></string>
-    <string name="call_stats_header_total_callsonly">Iomlán: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">Dáta tosaigh</string>
-    <string name="call_stats_filter_to">Dáta deiridh</string>
-    <string name="call_stats_filter_picker_title">Raon scagaire</string>
-    <string name="date_quick_selection">Roghnú tapa</string>
-    <string name="date_qs_currentmonth">Mí reatha</string>
-    <string name="date_qs_currentquarter">Ráithe reatha</string>
-    <string name="date_qs_currentyear">Bliain reatha</string>
-    <string name="date_qs_lastweek">Seachtain seo caite</string>
-    <string name="date_qs_lastmonth">Mí seo caite</string>
-    <string name="date_qs_lastquarter">Ráithe seo caite</string>
-    <string name="date_qs_lastyear">Anuraidh</string>
     <string name="call_stats_date_filter">Coigeartaigh raon ama</string>
     <string name="call_stats_reset_filter">Athshocraigh raon ama</string>
-    <string name="call_stats_sort_by_duration">Sórtáil de réir ré an ghlao</string>
-    <string name="call_stats_sort_by_count">Sórtáil de réir comhaireamh glaonna</string>
     <string name="call_stats_title_for_number">An uimhir seo</string>
     <string name="call_stats_title_of_total">Den iomlán</string>
     <string name="call_stats_title_durations">Fad glaonna</string>

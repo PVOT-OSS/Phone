@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Thư mục công việc</string>
-  <string name="chat_aim">Trò chuyện sử dụng AIM</string>
-  <string name="chat_msn">Trò chuyện sử dụng Windows Live</string>
-  <string name="chat_yahoo">Trò chuyện sử dụng Yahoo</string>
-  <string name="chat_skype">Trò chuyện sử dụng Skype</string>
-  <string name="chat_qq">Trò chuyện sử dụng QQ</string>
-  <string name="chat_gtalk">Trò chuyện sử dụng Google Talk</string>
-  <string name="chat_icq">Trò chuyện sử dụng ICQ</string>
-  <string name="chat_jabber">Trò chuyện sử dụng Jabber</string>
   <string name="display_options_sort_list_by">Sắp xếp theo</string>
   <string name="display_options_sort_by_given_name">Tên</string>
   <string name="display_options_sort_by_family_name">Họ</string>
@@ -18,6 +10,5 @@
   <string name="menu_clear_frequents">Xóa DS liên hệ thường xuyên</string>
   <string name="action_menu_back_from_search">ngừng tìm kiếm</string>
   <string name="description_clear_search">Xóa tìm kiếm</string>
-  <string name="call_with_a_note">Gọi điện kèm theo ghi chú</string>
   <string name="description_search_video_call">Gọi điện video</string>
 </resources>

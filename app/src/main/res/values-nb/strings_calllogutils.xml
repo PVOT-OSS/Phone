@@ -1,7 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="new_call_log_carrier_video">Video via mobiloperatør</string>
-  <string name="new_call_log_unknown">Ukjent</string>
-  <string name="new_call_log_secondary_blocked">Blokkert</string>
-  <string name="new_call_log_secondary_spam">Nettsøppel</string>
 </resources>

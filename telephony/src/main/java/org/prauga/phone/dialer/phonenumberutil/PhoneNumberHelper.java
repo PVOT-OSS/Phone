@@ -36,7 +36,6 @@ import org.prauga.phone.dialer.common.Assert;
 import org.prauga.phone.dialer.common.LogUtil;
 import org.prauga.phone.dialer.compat.telephony.TelephonyManagerCompat;
 import org.prauga.phone.dialer.i18n.LocaleUtils;
-import org.prauga.phone.dialer.oem.MotorolaUtils;
 import org.prauga.phone.dialer.phonenumbergeoutil.PhoneNumberGeoUtilComponent;
 import org.prauga.phone.dialer.telecom.TelecomUtil;
 
@@ -227,10 +226,6 @@ public class PhoneNumberHelper {
     // The number can be null e.g. schema is voicemail and uri content is empty.
     if (number == null) {
       return null;
-    }
-
-    if (MotorolaUtils.shouldDisablePhoneNumberFormatting(context)) {
-      return number;
     }
 
     String formattedNumber = PhoneNumberUtils.formatNumber(number, numberE164, countryIso);

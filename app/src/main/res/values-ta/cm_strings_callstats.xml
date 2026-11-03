@@ -23,22 +23,8 @@
     <string name="call_stats_blocked">தடுக்கப்பட்டவை: <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_percent"><xliff:g id="percent">%d</xliff:g>%%</string>
     <string name="call_stats_header_total">மொத்தம்: <xliff:g id="call_count">%1$s</xliff:g>, <xliff:g id="duration">%2$s</xliff:g></string>
-    <string name="call_stats_header_total_callsonly">மொத்தம்: <xliff:g id="call_count">%s</xliff:g></string>
-    <string name="call_stats_filter_from">தொடக்க நாள்</string>
-    <string name="call_stats_filter_to">முடிவு நாள்</string>
-    <string name="call_stats_filter_picker_title">வரம்பை வடிக்க</string>
-    <string name="date_quick_selection">விரைந்த தேர்வுசெய்தல்</string>
-    <string name="date_qs_currentmonth">நடப்புத் திங்கள்</string>
-    <string name="date_qs_currentquarter">நடப்புக் காலாண்டு</string>
-    <string name="date_qs_currentyear">நடப்பு ஆண்டு</string>
-    <string name="date_qs_lastweek">கடந்த கிழமை</string>
-    <string name="date_qs_lastmonth">கடந்த திங்கள்</string>
-    <string name="date_qs_lastquarter">கடந்த காலாண்டு</string>
-    <string name="date_qs_lastyear">கடந்த ஆண்டு</string>
     <string name="call_stats_date_filter">நேர வரம்பைச் சரிசெய்க</string>
     <string name="call_stats_reset_filter">நேர வரம்பை மீளமைக்க</string>
-    <string name="call_stats_sort_by_duration">அழைப்புக் காலத்தின்படி வரிசையாக்குக</string>
-    <string name="call_stats_sort_by_count">அழைப்பு எண்ணிக்கையின்படி வரிசையாக்குக</string>
     <string name="call_stats_title_for_number">இவ்வெண்</string>
     <string name="call_stats_title_of_total">மொத்தத்தில்</string>
     <string name="call_stats_title_durations">அழைப்புக் காலம்</string>

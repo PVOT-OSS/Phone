@@ -23,6 +23,7 @@ import androidx.test.uiautomator.UiObject2
 import androidx.test.uiautomator.Until
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
+import java.util.regex.Pattern
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Rule
@@ -213,15 +214,7 @@ class CarrierFeaturesTest {
             InCall.onMain { EmergencySatellite.onEvent(call.id, extras) }
 
             showsText(context.getString(R.string.emergency_satellite_title))
-            checkNotNull(
-                    deviceRule.device.wait(
-                        Until.findObject(By.res("android", "button1")),
-                        CallTests.TIMEOUT_MILLIS,
-                    )
-                ) {
-                    "no satellite button"
-                }
-                .click()
+            button(context.getString(R.string.emergency_satellite_open_sos)).click()
             check(opened.await(CallTests.TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)) {
                 "satellite app not opened"
             }
@@ -306,17 +299,21 @@ class CarrierFeaturesTest {
                 "no number field"
             }
         field.text = number
-        // The dialog's own button; its text can be styled in capitals.
-        checkNotNull(
-                deviceRule.device.wait(
-                    Until.findObject(By.res("android", "button1")),
-                    CallTests.TIMEOUT_MILLIS,
-                )
-            ) {
-                "no \"$confirm\" button"
-            }
-            .click()
+        button(confirm).click()
     }
+
+    /** A dialog button by its label, in any case, as buttons may be shown in capitals. */
+    private fun button(label: String): UiObject2 =
+        checkNotNull(
+            deviceRule.device.wait(
+                Until.findObject(
+                    By.text(Pattern.compile(Pattern.quote(label), Pattern.CASE_INSENSITIVE))
+                ),
+                CallTests.TIMEOUT_MILLIS,
+            )
+        ) {
+            "no \"$label\" button"
+        }
 
     private fun showsText(text: String): UiObject2 =
         checkNotNull(

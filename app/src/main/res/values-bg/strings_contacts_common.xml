@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Служебен указател</string>
-  <string name="chat_aim">Чат по AIM</string>
-  <string name="chat_msn">Чат по Windows Live</string>
-  <string name="chat_yahoo">Чат по Yahoo</string>
-  <string name="chat_skype">Чат по Skype</string>
-  <string name="chat_qq">Чат по QQ</string>
-  <string name="chat_gtalk">Чат по Google Talk</string>
-  <string name="chat_icq">Чат по ICQ</string>
-  <string name="chat_jabber">Чат по Jabber</string>
   <string name="display_options_sort_list_by">Сортиране по</string>
   <string name="display_options_sort_by_given_name">Собствено име</string>
   <string name="display_options_sort_by_family_name">Фамилно име</string>
@@ -18,6 +10,5 @@
   <string name="menu_clear_frequents">Изчистване на често търсените</string>
   <string name="action_menu_back_from_search">спиране на търсенето</string>
   <string name="description_clear_search">Изчистване на търсенето</string>
-  <string name="call_with_a_note">Обаждане, включващо бележка</string>
   <string name="description_search_video_call">Видеообаждане</string>
 </resources>

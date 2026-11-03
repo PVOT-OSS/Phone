@@ -9,20 +9,21 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Bundle
 import android.os.OutcomeReceiver
 import android.os.ParcelUuid
 import android.telecom.PhoneAccount
 import android.telecom.PhoneAccountHandle
 import android.telecom.TelecomManager
 import android.telephony.TelephonyManager
-import android.view.View
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.ComponentActivity
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.core.os.BundleCompat
 import java.io.ByteArrayInputStream
 import org.prauga.phone.contacts.R
 import org.prauga.phone.dialer.callintent.CallIntentBuilder
@@ -31,12 +32,11 @@ import org.prauga.phone.dialer.telecom.TelecomUtil
 
 /**
  * Call composer in the "call with a note" dialog: when the SIM supports it, the call can also be
- * marked urgent and carry a picture, which the network sends ahead of the call.
- *
- * Create it in the activity's onCreate, after its content view is set.
+ * marked urgent and carry a picture, which the network sends ahead of the call. The dialog shows
+ * [urgent] and [picture] and calls [pickPicture]; create this in the activity's onCreate.
  */
 class CallComposerOptions(
-    private val activity: AppCompatActivity,
+    private val activity: ComponentActivity,
     accountHandle: PhoneAccountHandle?,
 ) {
 
@@ -45,31 +45,36 @@ class CallComposerOptions(
     /** Whether the SIM the call goes out on supports call composer. */
     val isSupported: Boolean = handle != null && supportsComposer(activity, handle)
 
-    private val urgent: CheckBox = activity.findViewById(R.id.composer_urgent)
-    private val addPicture: TextView = activity.findViewById(R.id.composer_add_picture)
-    private val preview: ImageView = activity.findViewById(R.id.composer_picture_preview)
-    private var picture: Uri? = null
+    /** Whether the call goes out marked urgent. */
+    var urgent by mutableStateOf(false)
+
+    /** The picture to send with the call, if the user chose one. */
+    var picture by mutableStateOf<Uri?>(null)
+        private set
+
     private var sending = false
 
-    private val pickPicture =
+    private val picker =
         activity.registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             picture = uri
-            preview.setImageURI(uri)
-            preview.visibility = if (uri == null) View.GONE else View.VISIBLE
-            addPicture.setText(
-                if (uri == null) R.string.call_composer_add_picture
-                else R.string.call_composer_change_picture
-            )
         }
 
-    init {
-        activity.findViewById<View>(R.id.composer_options).visibility =
-            if (isSupported) View.VISIBLE else View.GONE
-        addPicture.setOnClickListener {
-            pickPicture.launch(
-                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-            )
-        }
+    /** Keeps the choices across a recreation; [restore] reads them back. */
+    fun save(outState: Bundle) {
+        outState.putBoolean(STATE_URGENT, urgent)
+        outState.putParcelable(STATE_PICTURE, picture)
+    }
+
+    /** Reads back what [save] kept. */
+    fun restore(state: Bundle?) {
+        if (state == null) return
+        urgent = state.getBoolean(STATE_URGENT, false)
+        picture = BundleCompat.getParcelable(state, STATE_PICTURE, Uri::class.java)
+    }
+
+    /** Lets the user choose a picture to send with the call. */
+    fun pickPicture() {
+        picker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
     /**
@@ -82,7 +87,7 @@ class CallComposerOptions(
             place.run()
             return true
         }
-        if (urgent.isChecked) {
+        if (urgent) {
             builder.placeCallExtras.putInt(
                 TelecomManager.EXTRA_PRIORITY,
                 TelecomManager.PRIORITY_URGENT,
@@ -138,6 +143,9 @@ class CallComposerOptions(
                             TelephonyManager.getMaximumCallComposerPictureSize(),
                         )
                     activity.mainExecutor.execute {
+                        // The dialog may have been closed meanwhile; then there is no call to
+                        // place.
+                        if (activity.isFinishing || activity.isDestroyed) return@execute
                         if (bytes == null) {
                             LogUtil.e(
                                 "CallComposerOptions.upload",
@@ -167,6 +175,8 @@ class CallComposerOptions(
 
     companion object {
         private const val PICTURE_TYPE = "image/jpeg"
+        private const val STATE_URGENT = "composer_urgent"
+        private const val STATE_PICTURE = "composer_picture"
 
         /** Whether the SIM [handle] stands for supports call composer. */
         @JvmStatic

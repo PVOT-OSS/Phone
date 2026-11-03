@@ -16,7 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="helplines_name">Llinellau Cymorth</string>
-    <string name="helplines_loading">Yn llwytho\u2026</string>
     <string name="helplines_empty">Heb ddarganfod llinellau cymorth.\nGosodwch gerdyn SIM a rhoi cynnig arall arni</string>
     <string name="helplines_help">Cymorth</string>
     <string name="helplines_help_title">Mae\'r rhain yn ddiogel i\'w galw</string>

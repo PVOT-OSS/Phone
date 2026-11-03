@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Darbo katalogas</string>
-  <string name="chat_aim">Kalbėti naudojant AIM</string>
-  <string name="chat_msn">Kalbėti naudojant „Windows Live“</string>
-  <string name="chat_yahoo">Kalbėti naudojant „Yahoo“</string>
-  <string name="chat_skype">Kalbėti naudojant „Skype“</string>
-  <string name="chat_qq">Kalbėti naudojant QQ</string>
-  <string name="chat_gtalk">Kalbėti naudojant „Google“ pokalbius</string>
-  <string name="chat_icq">Kalbėti naudojant ICQ</string>
-  <string name="chat_jabber">Kalbėti naudojant „Jabber“</string>
   <string name="display_options_sort_list_by">Rūšiuoti pagal</string>
   <string name="display_options_sort_by_given_name">Vardas</string>
   <string name="display_options_sort_by_family_name">Pavardė</string>
@@ -18,6 +10,5 @@
   <string name="menu_clear_frequents">Valyti dažniausiai naudojamus</string>
   <string name="action_menu_back_from_search">sustabdyti paiešką</string>
   <string name="description_clear_search">Išvalyti paiešką</string>
-  <string name="call_with_a_note">Skambutis su užrašu</string>
   <string name="description_search_video_call">Vaizdo skambutis</string>
 </resources>

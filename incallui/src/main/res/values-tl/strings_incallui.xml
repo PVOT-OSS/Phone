@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">Tinutulungan ng RTT ang mga tumatawag na bingi, mahina ang pandinig, mayroong kapansanan sa pagsasalita, o kailangan ng higit pa sa boses lang.</string>
   <string name="rtt_button_decline_request">Hindi, salamat</string>
   <string name="rtt_button_accept_request">Sumali sa RTT</string>
+  <string name="manageConferenceLabel">Pamahalaan ang conference call</string>
 </resources>

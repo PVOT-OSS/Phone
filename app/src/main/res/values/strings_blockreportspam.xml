@@ -21,11 +21,6 @@
     Block <xliff:g example="(555) 555-5555" id="number">%1$s</xliff:g>?
   </string>
 
-  <!-- Confirmation dialog message for blocking a number with new filtering enabled.
-       [CHAR LIMIT=NONE] -->
-  <string name="block_number_confirmation_message_new_filtering">
-    You will no longer receive calls or texts from this number.
-  </string>
 
   <!-- Block number alert dialog button [CHAR LIMIT=32] -->
   <string name="block_number_ok">BLOCK</string>
@@ -33,33 +28,17 @@
   <!-- Unblock number alert dialog button [CHAR LIMIT=32] -->
   <string name="unblock_number_ok">UNBLOCK</string>
 
-  <!-- Title of alert dialog after clicking on Block/report as spam.  [CHAR LIMIT=100] -->
-  <string name="block_report_number_alert_title">Block <xliff:g id="number">%1$s</xliff:g>?</string>
 
   <!-- Text in alert dialog after clicking on Block/report as spam.  [CHAR LIMIT=100] -->
   <string name="block_report_number_alert_details">You will no longer receive calls from this number.</string>
 
-  <!-- Text in alert dialog after clicking on Unblock.  [CHAR LIMIT=100] -->
-  <string name="unblock_number_alert_details">This number will be unblocked and reported as not spam. Future calls won\'t be identified as spam.</string>
 
   <!-- Title of alert dialog after clicking on Unblock.  [CHAR LIMIT=100] -->
   <string name="unblock_report_number_alert_title">Unblock <xliff:g id="number">%1$s</xliff:g>?</string>
 
-  <!-- Report not spam number alert dialog button [CHAR LIMIT=32] -->
-  <string name="report_not_spam_alert_button">Report</string>
 
-  <!-- Title of alert dialog after clicking on Report as not spam.  [CHAR LIMIT=100] -->
-  <string name="report_not_spam_alert_title">Report a mistake?</string>
 
-  <!-- Text in alert dialog after clicking on Report as not spam.  [CHAR LIMIT=100] -->
-  <string name="report_not_spam_alert_details">Future calls from <xliff:g id="number">%1$s</xliff:g> will no longer be identified as spam.</string>
 
-  <!-- Label for checkbox in the Alert dialog to allow the user to report the number as spam as well.  [CHAR LIMIT=30] -->
-  <string name="checkbox_report_as_spam_action">Report call as spam</string>
 
-  <!-- Toast if the user clicked the block button but it failed. [CHAR LIMIT=100] -->
-  <string name="block_number_failed_toast">Problem blocking this number</string>
 
-  <!-- Toast if the user clicked the unblock button but it failed. [CHAR LIMIT=100] -->
-  <string name="unblock_number_failed_toast">Problem unblocking this number</string>
 </resources>

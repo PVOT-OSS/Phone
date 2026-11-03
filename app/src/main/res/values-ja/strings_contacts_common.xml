@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">仕事用の連絡先リスト</string>
-  <string name="chat_aim">AIMでチャット</string>
-  <string name="chat_msn">Windows Liveでチャット</string>
-  <string name="chat_yahoo">Yahooでチャット</string>
-  <string name="chat_skype">Skypeでチャット</string>
-  <string name="chat_qq">QQでチャット</string>
-  <string name="chat_gtalk">Googleトークでチャット</string>
-  <string name="chat_icq">ICQでチャット</string>
-  <string name="chat_jabber">Jabberでチャット</string>
   <string name="display_options_sort_list_by">並べ替え順序</string>
   <string name="display_options_sort_by_given_name">名</string>
   <string name="display_options_sort_by_family_name">姓</string>
@@ -18,6 +10,5 @@
   <string name="menu_clear_frequents">よく使う連絡先のクリア</string>
   <string name="action_menu_back_from_search">検索を停止</string>
   <string name="description_clear_search">検索をクリア</string>
-  <string name="call_with_a_note">メモを添付して発信</string>
   <string name="description_search_video_call">ビデオ通話</string>
 </resources>

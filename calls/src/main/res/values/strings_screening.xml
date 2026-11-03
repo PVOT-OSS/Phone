@@ -19,6 +19,10 @@
   <string name="screening_category_first_time">First-time callers</string>
   <!-- Explains the first-time callers category -->
   <string name="screening_category_first_time_description">Numbers that are not in your call history.</string>
+  <!-- Category of callers whose number is not saved as a contact. [CHAR LIMIT=40] -->
+  <string name="screening_category_not_in_contacts">Callers not in your contacts</string>
+  <!-- Explains the category of callers whose number is not saved as a contact. -->
+  <string name="screening_category_not_in_contacts_description">Numbers that are not saved in your contacts.</string>
 
   <!-- What happens to a call: it rings as usual [CHAR LIMIT=30] -->
   <string name="screening_action_ring">Ring</string>

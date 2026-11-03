@@ -22,13 +22,13 @@ import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.settings.DisplayOptions
-import org.prauga.phone.dialer.app.settings.IncomingCallSettings
 import org.prauga.phone.dialer.testing.FakeCallSpec
 import org.prauga.phone.dialer.testing.FakeCarrier
+import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.incallui.InCallPresenter
 import org.prauga.phone.incallui.call.state.DialerCallState
 
-/** Display options and incoming call settings take effect. */
+/** Display options take effect, and an incoming call offers its Answer pill. */
 @RunWith(AndroidJUnit4::class)
 class CallSettingsTest {
 
@@ -39,7 +39,6 @@ class CallSettingsTest {
         listOf(
             context.getString(R.string.display_options_theme_key),
             context.getString(R.string.display_options_force_portrait_key),
-            IncomingCallSettings.KEY_ANSWER_GESTURE,
         )
     private val saved = prefs.all.filterKeys { it in keys }
 
@@ -112,10 +111,7 @@ class CallSettingsTest {
     }
 
     @Test
-    fun singleTapGestureShowsAnswerButtons() {
-        prefs.edit {
-            putString(IncomingCallSettings.KEY_ANSWER_GESTURE, IncomingCallSettings.GESTURE_TAP)
-        }
+    fun anIncomingCallShowsTheAnswerPill() {
         FakeCarrier.ring(context, FakeCallSpec(CallTests.freshNumber()))
         CallTests.waitForRinging()
         InCall.onMain { InCallPresenter.getInstance().showInCall(false, false) }
@@ -123,7 +119,7 @@ class CallSettingsTest {
         assertNotNull(
             "answer button not shown",
             deviceRule.device.wait(
-                Until.findObject(By.res(context.packageName, "two_button_answer_button")),
+                Until.findObject(By.res(context.packageName, TestTags.ANSWER_ACCEPT)),
                 CallTests.TIMEOUT_MILLIS,
             ),
         )

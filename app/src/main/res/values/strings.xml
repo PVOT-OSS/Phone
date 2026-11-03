@@ -42,7 +42,6 @@
   <string name="call_log_delete_all">Clear call history</string>
 
   <!-- Menu item used to delete a voicemail. [CHAR LIMIT=30] -->
-  <string name="call_log_trash_voicemail">Delete voicemail</string>
 
   <!-- Title of the confirmation dialog for clearing the call log. [CHAR LIMIT=37]  -->
   <string name="clearCallLogConfirmation_title">Clear call history?</string>
@@ -67,7 +66,6 @@
   <string name="car_cannot_call">Can\'t place the call. Open Phone on your phone.</string>
 
   <!-- Title of the "Clearing call log" progress-dialog [CHAR LIMIT=35] -->
-  <string name="clearCallLogProgress_title">Clearing call history\u2026</string>
 
   <!-- Notification strings -->
   <!-- Missed call notification label, used when there's exactly one missed call -->
@@ -149,13 +147,11 @@
 
        Used by AccessibilityService to announce the purpose of the view.
   -->
-  <string name="description_playback_speakerphone">Switch on or off speakerphone</string>
 
   <!-- String describing the seekbar in the voicemail playback to seek playback position.
 
        Used by AccessibilityService to announce the purpose of the view.
   -->
-  <string name="description_playback_seek">Seek playback position</string>
 
   <!-- Content description for the fake action menu button that brings up the call history
        activity -->
@@ -169,35 +165,30 @@
     Note: AccessibilityServices use this attribute to announce what the view represents.
           This is especially valuable for views without textual representation like ImageView.
 -->
-  <string name="description_entering_bulk_action_mode">Entering bulk action mode</string>
 
   <!-- String describing the user leaving bulk action mode.
 
     Note: AccessibilityServices use this attribute to announce what the view represents.
           This is especially valuable for views without textual representation like ImageView.
 -->
-  <string name="description_leaving_bulk_action_mode">Left bulk action mode</string>
 
   <!-- String describing the button to select an entry for bulk action.
 
       Note: AccessibilityServices use this attribute to announce what the view represents.
             This is especially valuable for views without textual representation like ImageView.
   -->
-  <string name="description_selecting_bulk_action_mode">Selected <xliff:g id="nameOrNumber">%1$s</xliff:g></string>
 
   <!-- String describing the button to unselect an entry for bulk action.
 
       Note: AccessibilityServices use this attribute to announce what the view represents.
             This is especially valuable for views without textual representation like ImageView.
   -->
-  <string name="description_unselecting_bulk_action_mode">Unselected <xliff:g id="nameOrNumber">%1$s</xliff:g></string>
 
   <!-- String describing the button to access the contact details for a name or number.
 
       Note: AccessibilityServices use this attribute to announce what the view represents.
             This is especially valuable for views without textual representation like ImageView.
   -->
-  <string name="description_contact_details">Contact details for <xliff:g id="nameOrNumber">%1$s</xliff:g></string>
 
   <!-- String describing the button to access the contact details for a name or number when the
        when the number is a suspected spam.
@@ -205,25 +196,14 @@
       Note: AccessibilityServices use this attribute to announce what the view represents.
             This is especially valuable for views without textual representation like ImageView.
   -->
-  <string name="description_spam_contact_details">Contact details for suspected spam caller <xliff:g id="nameOrNumber">%1$s</xliff:g></string>
 
   <!-- String indicating the number of calls to/from a caller in the call log.
 
   Note: AccessibilityServices use this attribute to announce what the view represents.
         This is especially valuable for views without textual representation like ImageView.
   -->
-  <string name="description_num_calls"><xliff:g id="numberOfCalls">%1$s</xliff:g> calls.</string>
 
-  <!-- String indicating a call log entry had video capabilities.
 
-  Note: AccessibilityServices use this attribute to announce what the view represents.
-        This is especially valuable for views without textual representation like ImageView.
-        [CHAR LIMIT=NONE]
-  -->
-  <string name="description_video_call">Video call.</string>
-
-  <!-- String used for displaying calls to the voicemail number in the call log -->
-  <string name="voicemail">Voicemail</string>
 
   <string name="voicemailMultiSelectDeleteConfirm">Delete</string>
   <string name="voicemailMultiSelectDeleteCancel">Cancel</string>
@@ -271,6 +251,12 @@
        [CHAR LIMIT=30] -->
   <string name="call_log_missed_title">Missed</string>
 
+  <!-- Title for the call log tab with calls from people in the contacts only [CHAR LIMIT=30] -->
+  <string name="call_log_contacts_title">Contacts</string>
+
+  <!-- Title for the call log tab with calls from blocked numbers only [CHAR LIMIT=30] -->
+  <string name="call_log_blocked_title">Blocked</string>
+
   <!-- Accessibility text for the tab showing the user's contacts. [CHAR LIMIT=40] -->
   <string name="tab_all_contacts">Contacts</string>
 
@@ -289,7 +275,6 @@
   <string name="search_shortcut_make_video_call">Make video call</string>
 
   <!-- Select all text that shows up when in multi select mode. [CHAR LIMIT=NONE] -->
-  <string name="select_all">Select all</string>
 
   <!-- Button text for the "video call" displayed underneath an entry in the call log.
        Tapping causes a video call to be placed to the caller represented by the call log entry.
@@ -319,27 +304,22 @@
   <!-- String describing an incoming missed call entry in the call log.
      Note: AccessibilityServices uses this attribute to announce what the view represents.
      [CHAR LIMIT=NONE] -->
-  <string name="description_incoming_missed_call">Missed call from <xliff:g example="John Smith" id="nameOrNumber">^1</xliff:g>, <xliff:g example="Mobile" id="typeOrLocation">^2</xliff:g>, <xliff:g example="2 min ago" id="timeOfCall">^3</xliff:g>, <xliff:g example="on SIM 1" id="phoneAccount">^4</xliff:g>.</string>
 
   <!-- String describing an incoming answered call entry in the call log.
        Note: AccessibilityServices uses this attribute to announce what the view represents.
        [CHAR LIMIT=NONE] -->
-  <string name="description_incoming_answered_call">Answered call from <xliff:g example="John Smith" id="nameOrNumber">^1</xliff:g>, <xliff:g example="Mobile" id="typeOrLocation">^2</xliff:g>, <xliff:g example="2 min ago" id="timeOfCall">^3</xliff:g>, <xliff:g example="on SIM 1" id="phoneAccount">^4</xliff:g>.</string>
 
   <!-- String describing an "unread" voicemail entry in the voicemails tab.
        Note: AccessibilityServices use this attribute to announce what the view represents.
        [CHAR LIMIT=NONE] -->
-  <string name="description_unread_voicemail">Unread voicemail from <xliff:g example="John Smith" id="nameOrNumber">^1</xliff:g>, <xliff:g example="Mobile" id="typeOrLocation">^2</xliff:g>, <xliff:g example="2 min ago" id="timeOfCall">^3</xliff:g>, <xliff:g example="on SIM 1" id="phoneAccount">^4</xliff:g>.</string>
 
   <!-- String describing a "read" voicemail entry in the voicemails tab.
    Note: AccessibilityServices use this attribute to announce what the view represents.
    [CHAR LIMIT=NONE] -->
-  <string name="description_read_voicemail">Voicemail from <xliff:g example="John Smith" id="nameOrNumber">^1</xliff:g>, <xliff:g example="Mobile" id="typeOrLocation">^2</xliff:g>, <xliff:g example="2 min ago" id="timeOfCall">^3</xliff:g>, <xliff:g example="on SIM 1" id="phoneAccount">^4</xliff:g>.</string>
 
   <!-- String describing an outgoing call entry in the call log.
        Note: AccessibilityServices uses this attribute to announce what the view represents.
        [CHAR LIMIT=NONE] -->
-  <string name="description_outgoing_call">Call to <xliff:g example="John Smith" id="nameOrNumber">^1</xliff:g>, <xliff:g example="Mobile" id="typeOrLocation">^2</xliff:g>, <xliff:g example="2 min ago" id="timeOfCall">^3</xliff:g>, <xliff:g example="on SIM 1" id="phoneAccount">^4</xliff:g>.</string>
 
   <!-- TextView text item showing the secondary line number the call was received via.
        [CHAR LIMIT=NONE]-->
@@ -377,24 +357,15 @@
 
   <!-- Description for the "create new contact" action for an entry in the call log. This action
        opens a screen for creating a new contact for this name or number. [CHAR LIMIT=NONE] -->
-  <string name="description_create_new_contact_action">
-        Create contact for <xliff:g example="John Smith" id="nameOrNumber">^1</xliff:g>
-    </string>
 
   <!-- Description for the "add to existing contact" action for an entry in the call log. This
        action opens a screen for adding this name or number to an existing contact.
        [CHAR LIMIT=NONE] -->
-  <string name="description_add_to_existing_contact_action">
-        Add <xliff:g example="John Smith" id="nameOrNumber">^1</xliff:g> to existing contact
-    </string>
 
   <!-- String describing the "details" action for an entry in the call log.  The details action
        displays the call details screen for an entry in the call log.  This shows the calls to
        and from the specified number associated with the call log entry.
        [CHAR LIMIT=NONE] -->
-  <string name="description_details_action">
-        Call details for <xliff:g example="John Smith" id="nameOrNumber">^1</xliff:g>
-    </string>
 
   <!-- String used as a header in the call log above calls which occurred today.
        [CHAR LIMIT=65] -->
@@ -458,10 +429,6 @@
     <item>Normal</item>
     <item>Long</item>
   </string-array>
-  <string-array name="dtmf_tone_length_entry_values" translatable="false">
-    <item>0</item>
-    <item>1</item>
-  </string-array>
 
   <!-- Title of settings screen for managing the "Respond via SMS" feature. [CHAR LIMIT=30] -->
   <string name="respond_via_sms_setting_title">Quick responses</string>
@@ -479,13 +446,9 @@
   <string name="phone_account_settings_label">Calling accounts</string>
 
   <!-- Internal key for ringtone preference. -->
-  <string name="ringtone_preference_key" translatable="false">button_ringtone_key</string>
   <!-- Internal key for vibrate when ringing preference. -->
-  <string name="vibrate_on_preference_key" translatable="false">button_vibrate_on_ring</string>
   <!-- Internal key for vibrate when ringing preference. -->
-  <string name="play_dtmf_preference_key" translatable="false">button_play_dtmf_tone</string>
   <!-- Internal key for DTMF tone length preference. -->
-  <string name="dtmf_tone_length_preference_key" translatable="false">button_dtmf_settings</string>
 
   <!-- Shown as a prompt to turn on the phone permission to enable the call log [CHAR LIMIT=NONE]-->
   <string name="permission_no_calllog">To see your call log, turn on the Phone permission.</string>
@@ -499,7 +462,6 @@
   <!-- Button text for a button displayed underneath an entry in the call log, which marks the
            phone number represented by the call log entry as a Spam number.
            [CHAR LIMIT=30] -->
-  <string name="call_log_action_block_report_number">Block/report spam</string>
 
   <!-- Button text for a button displayed underneath an entry in the call log, which marks the
        phone number represented by the call log entry as a Spam number.
@@ -509,7 +471,6 @@
   <!-- Button text for a button displayed underneath an entry in the call log, which removes the
        phone number represented by the call log entry from the Spam numbers list.
        [CHAR LIMIT=30] -->
-  <string name="call_log_action_remove_spam">Not spam</string>
 
   <!-- Button text for a button displayed underneath an entry in the call log, which removes the
        phone number represented by the call log entry from the blacklisted numbers.

@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">ТСРВ подпомага обаждащите се, които са глухи, с влошен слух, имат проблеми с говора или се нуждаят от повече от само глас.</string>
   <string name="rtt_button_decline_request">Не, благодаря</string>
   <string name="rtt_button_accept_request">Присъединяване</string>
+  <string name="manageConferenceLabel">Управление на конф. обаждане</string>
 </resources>

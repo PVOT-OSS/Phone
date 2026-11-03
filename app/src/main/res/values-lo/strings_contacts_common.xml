@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">ໄດເຣັກທໍຣີບ່ອນເຮັດວຽກ</string>
-  <string name="chat_aim">ສົນທະນາໂດຍໃຊ້ AIM</string>
-  <string name="chat_msn">ສົນທະນາໂດຍໃຊ້ Windows Live</string>
-  <string name="chat_yahoo">ສົນທະນາໂດຍໃຊ້ Yahoo</string>
-  <string name="chat_skype">ສົນທະນາໂດຍໃຊ້ Skype</string>
-  <string name="chat_qq">ສົນທະນາໂດຍໃຊ້ QQ</string>
-  <string name="chat_gtalk">ສົນທະນາໂດຍໃຊ້ Google Talk</string>
-  <string name="chat_icq">ສົນທະນາໂດຍໃຊ້ ICQ</string>
-  <string name="chat_jabber">ສົນທະນາໂດຍໃຊ້ Jabber</string>
   <string name="display_options_sort_list_by">ຮຽງຕາມ</string>
   <string name="display_options_sort_by_given_name">ຊື່</string>
   <string name="display_options_sort_by_family_name">ນາມສະກຸນ</string>
@@ -18,6 +10,5 @@
   <string name="menu_clear_frequents">ລຶບລາຍຊື່ຄົນທີ່ຕິດຕໍ່ຫາເລື້ອຍໆ</string>
   <string name="action_menu_back_from_search">ຢຸດ​ການ​ຊອກ​ຫາ</string>
   <string name="description_clear_search">ລຶບ​ການ​ຊອກ​ຫາ</string>
-  <string name="call_with_a_note">ໂທ​ດ້ວຍ​ບັນ​ທຶກ</string>
   <string name="description_search_video_call">ໂທວິດີໂອ</string>
 </resources>

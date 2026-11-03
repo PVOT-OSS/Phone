@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">အသစ်။ သင့်အသံမေးလ်ကို ဖတ်လိုက်ပါ</string>
   <string name="dialer_terms_and_conditions_1.0">အသံမေးလ်ခေါ်ဆိုစရာမလိုဘဲ သင့်မက်ဆေ့ဂျ်များကို ကြည့်ရှုနားဆင်ပါ။ သင့်အသံမေးလ်၏ စာသားမှတ်တမ်းများကို Google အခမဲ့ စာသားမှတ်တမ်းဝန်ဆောင်မှုက ပံ့ပိုးပေးပါသည်။ \'ဆက်တင်များ\' တွင် အချိန်မရွေး ပိတ်နိုင်ပါသည်။ %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">သင့်အသံမေးလ်၏ စာသားမှတ်တမ်းများကို Google အခမဲ့ စာသားမှတ်တမ်းဝန်ဆောင်မှုက ပံ့ပိုးပေးနေပါပြီ။ ဤအရာကို \'ဆက်တင်များ\' တွင်အချိန်မရွေး ပိတ်နိုင်ပါသည်။ %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">OK</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">မလိုတော့ပါ</string>
 </resources>

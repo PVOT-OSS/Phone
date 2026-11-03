@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT функциясы угуу жана сүйлөө жөндөмдүүлүгү бузулган адамдарга арналат.</string>
   <string name="rtt_button_decline_request">Жок, рахмат</string>
   <string name="rtt_button_accept_request">RTT чалууга кошулуу</string>
+  <string name="manageConferenceLabel">Конференц-чалууну башкаруу</string>
 </resources>

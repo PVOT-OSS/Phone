@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT သည် နားမကြားသူ၊ နားလေးသူ၊ စကားချို့ယွင်းသူ (သို့) အသံတစ်မျိုးတည်းထက် ပိုမို၍ လိုအပ်သူများကို ကူညီပေးပါသည်။</string>
   <string name="rtt_button_decline_request">မလိုပါ</string>
   <string name="rtt_button_accept_request">RTT ကို ချိတ်ဆက်ရန်</string>
+  <string name="manageConferenceLabel">အစည်းအဝေးခေါ်ဆိုမှုကို စီမံခန့်ခွဲပါ</string>
 </resources>

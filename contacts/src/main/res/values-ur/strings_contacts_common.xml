@@ -96,9 +96,4 @@
   <string name="send_and_call_button">بھیجیں اور کال کریں</string>
   <string name="call_subject_limit">%1$s / %2$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">%1$s ٹیب۔</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="one"> %1$s ٹیب۔ %2$d بغیر پڑھی ہوئی آئٹم۔ </item>
-    <item quantity="other"> %1$s ٹیب۔ %2$d بغیر پڑھی ہوئی آئٹمز۔ </item>
-  </plurals>
 </resources>

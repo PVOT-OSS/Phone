@@ -2,4 +2,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="description_image_button_plus">ចុច​សញ្ញា​បូក</string>
   <string name="description_voicemail_button">ហៅ​ជា​សារ​សំឡេង</string>
+  <string name="add_2sec_pause">បញ្ចូល​ការផ្អាក 2 វិនាទី</string>
+  <string name="add_wait">បញ្ចូល​ការ​រង់ចាំ</string>
+  <string name="description_delete_button">លុប​ថយក្រោយ</string>
+  <string name="description_dialpad_overflow">ជម្រើស​បន្ថែម</string>
 </resources>

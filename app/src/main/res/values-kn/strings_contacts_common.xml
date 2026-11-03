@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">ಕೆಲಸದ ಡೈರೆಕ್ಟರಿ</string>
-  <string name="chat_aim">AIM ಬಳಸಿಕೊಂಡು ಚಾಟ್‌ ಮಾಡಿ</string>
-  <string name="chat_msn">Windows Live ಬಳಸಿಕೊಂಡು ಚಾಟ್‌ ಮಾಡಿ</string>
-  <string name="chat_yahoo">Yahoo ಬಳಸಿಕೊಂಡು ಚಾಟ್‌ ಮಾಡಿ</string>
-  <string name="chat_skype">Skype ಬಳಸಿಕೊಂಡು ಚಾಟ್‌ ಮಾಡಿ</string>
-  <string name="chat_qq">QQ ಬಳಸಿಕೊಂಡು ಚಾಟ್‌ ಮಾಡಿ</string>
-  <string name="chat_gtalk">Google Talk ಬಳಸಿಕೊಂಡು ಚಾಟ್‌ ಮಾಡಿ</string>
-  <string name="chat_icq">ICQ ಬಳಸಿಕೊಂಡು ಚಾಟ್‌ ಮಾಡಿ</string>
-  <string name="chat_jabber">Jabber ಬಳಸಿಕೊಂಡು ಚಾಟ್‌ ಮಾಡಿ</string>
   <string name="display_options_sort_list_by">ಈ ಪ್ರಕಾರ ವಿಂಗಡಿಸು</string>
   <string name="display_options_sort_by_given_name">ಮೊದಲ ಹೆಸರು</string>
   <string name="display_options_sort_by_family_name">ಕೊನೆಯ ಹೆಸರು</string>
@@ -18,6 +10,5 @@
   <string name="menu_clear_frequents">ಪುನರಾವರ್ತನೆಗಳನ್ನು ತೆರುವುಗೊಳಿಸಿ</string>
   <string name="action_menu_back_from_search">ಹುಡುಕಾಟವನ್ನು ನಿಲ್ಲಿಸಿ</string>
   <string name="description_clear_search">ಹುಡುಕಾಟವನ್ನು ತೆರವುಗೊಳಿಸಿ</string>
-  <string name="call_with_a_note">ಟಿಪ್ಪಣಿಯೊಂದಿಗೆ ಕರೆ</string>
   <string name="description_search_video_call">ವೀಡಿಯೊ ಕರೆ</string>
 </resources>

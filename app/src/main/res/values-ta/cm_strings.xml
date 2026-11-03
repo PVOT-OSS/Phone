@@ -28,10 +28,7 @@
     <string name="deny">மறுக்க</string>
     <string name="call_recording_category_title">அழைப்பு பதிவித்தல்</string>
     <string name="call_recording_format">ஒலி வடிவமைப்பு</string>
-    <string name="call_via">இதன்வழி அழைக்க</string>
     <string name="call_via_dialog_title">\u2026இதன்வழி அழைக்க</string>
     <string name="call_log_stats_title">புள்ளிவிவரம்</string>
     <string name="action_menu_helplines">உதவி எண்கள்</string>
-    <string name="default_dialer_text">அழைப்பியைப் பயன்படுத்தக் கண்டிப்பாக, இயல்புநிலை பேசிச் செயலியாக, நீங்கள் அமைக்க வேண்டும்.</string>
-    <string name="default_dialer_action">இயல்பாக்குக</string>
 </resources>

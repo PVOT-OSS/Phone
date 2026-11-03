@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">RTT-ն օգնում է այն բաժանորդներին, ովքեր լսողության և խոսքի դժվարություններ ունեն, կամ ովքեր լոկ ձայնով չեն բավարարվում:</string>
   <string name="rtt_button_decline_request">Ոչ</string>
   <string name="rtt_button_accept_request">Միանալ RTT-ին</string>
+  <string name="manageConferenceLabel">Կառավարել կոնֆերանս զանգը</string>
 </resources>

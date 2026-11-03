@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Katalog służbowy</string>
-  <string name="chat_aim">Czat w AIM</string>
-  <string name="chat_msn">Czat w Windows Live</string>
-  <string name="chat_yahoo">Czat w Yahoo</string>
-  <string name="chat_skype">Czat w Skype</string>
-  <string name="chat_qq">Czat w QQ</string>
-  <string name="chat_gtalk">Czat w Google Talk</string>
-  <string name="chat_icq">Czat w ICQ</string>
-  <string name="chat_jabber">Czat w Jabberze</string>
   <string name="display_options_sort_list_by">Sortuj według</string>
   <string name="display_options_sort_by_given_name">Imię</string>
   <string name="display_options_sort_by_family_name">Nazwisko</string>
@@ -18,6 +10,5 @@
   <string name="menu_clear_frequents">Wyczyść częste kontakty</string>
   <string name="action_menu_back_from_search">zatrzymaj wyszukiwanie</string>
   <string name="description_clear_search">Wyczyść wyszukiwanie</string>
-  <string name="call_with_a_note">Połącz i wyślij notatkę</string>
   <string name="description_search_video_call">Rozmowa wideo</string>
 </resources>

@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Novità. Lettura della segreteria</string>
   <string name="dialer_terms_and_conditions_1.0">Visualizza e ascolta i tuoi messaggi senza dover chiamare la segreteria. Le trascrizioni dei messaggi vocali sono fornite dal servizio gratuito di trascrizione di Google. Puoi disattivare questa opzione in qualsiasi momento. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Le trascrizioni dei messaggi vocali sono ora fornite dal servizio gratuito di trascrizione di Google. Puoi disattivare questa opzione in qualsiasi momento. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">OK</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">No grazie</string>
 </resources>

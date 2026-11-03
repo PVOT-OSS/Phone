@@ -96,9 +96,4 @@
   <string name="send_and_call_button">SEND OG RING</string>
   <string name="call_subject_limit">%1$s/%2$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">Fanen %1$s.</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="one"> Fanen %1$s. %2$d ulæst element. </item>
-    <item quantity="other"> Fanen %1$s. %2$d ulæste elementer. </item>
-  </plurals>
 </resources>

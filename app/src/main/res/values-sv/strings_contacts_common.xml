@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Jobbkatalog</string>
-  <string name="chat_aim">Chatta med AIM</string>
-  <string name="chat_msn">Chatta med Windows Live</string>
-  <string name="chat_yahoo">Chatta med Yahoo</string>
-  <string name="chat_skype">Chatta med Skype</string>
-  <string name="chat_qq">Chatta med QQ</string>
-  <string name="chat_gtalk">Chatta med Google Talk</string>
-  <string name="chat_icq">Chatta med ICQ</string>
-  <string name="chat_jabber">Chatta med Jabber</string>
   <string name="display_options_sort_list_by">Sortera efter</string>
   <string name="display_options_sort_by_given_name">Förnamn</string>
   <string name="display_options_sort_by_family_name">Efternamn</string>
@@ -18,6 +10,5 @@
   <string name="menu_clear_frequents">Rensa listan över kontakter</string>
   <string name="action_menu_back_from_search">avbryt sökning</string>
   <string name="description_clear_search">Rensa sökning</string>
-  <string name="call_with_a_note">Ring med anteckning</string>
   <string name="description_search_video_call">Videosamtal</string>
 </resources>

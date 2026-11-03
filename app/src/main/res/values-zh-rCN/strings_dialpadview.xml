@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dial_button">拨号</string>
   <string name="dialog_voicemail_airplane_mode_message">要呼叫语音信箱，请先关闭飞行模式。</string>
   <string name="dialog_voicemail_not_ready_message">要设置语音信箱，请转到“菜单”&gt;“设置”。</string>
-  <string name="add_2sec_pause">加入 2 秒暂停时间</string>
-  <string name="add_wait">加入等待时间</string>
-  <string name="dialer_useDtmfDialpad">使用按键式键盘</string>
-  <string name="dialer_returnToInCallScreen">返回正在进行的通话</string>
-  <string name="dialer_addAnotherCall">添加通话</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">正从 SIM 卡中加载…</string>

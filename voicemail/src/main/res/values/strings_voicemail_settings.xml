@@ -16,10 +16,8 @@
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Call settings screen, setting option name -->
-  <string name="voicemail_settings_title">Voicemail</string>
 
   <!-- DO NOT TRANSLATE. Internal key for a voicemail notification preference. -->
-  <string name="voicemail_notifications_key" translatable="false">voicemail_notification_key</string>
 
   <!-- Voicemail notifications title. The user clicks on this preference to select
          which sound to play and whether to vibrate when a voicemail notification is received.
@@ -44,19 +42,15 @@
   <!-- Text shown on redo button in record voicemail activity [CHAR LIMIT=20] -->
   <string name="redo_button_text">Try Again</string>
 
-  <string name="voicemail_advanced_settings_key" translatable="false">voicemail_advanced_settings_key</string>
 
   <!-- Title for advanced settings in the voicemail settings -->
   <string name="voicemail_advanced_settings_title">Advanced Settings</string>
 
   <!-- DO NOT TRANSLATE. Internal key for a visual voicemail preference. -->
-  <string name="voicemail_visual_voicemail_key" translatable="false">voicemail_visual_voicemail_key</string>
 
   <!-- DO NOT TRANSLATE. Internal key for a visual voicemail archive preference. -->
-  <string name="voicemail_visual_voicemail_archive_key" translatable="false">archive_is_enabled</string>
 
   <!-- DO NOT TRANSLATE. Internal key for a voicemail change pin preference. -->
-  <string name="voicemail_change_pin_key" translatable="false">voicemail_change_pin_key</string>
 
   <!-- Visual voicemail on/off title [CHAR LIMIT=40] -->
   <string name="voicemail_visual_voicemail_switch_title">Visual voicemail</string>

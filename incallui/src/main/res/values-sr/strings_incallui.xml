@@ -43,4 +43,5 @@
   <string name="rtt_request_dialog_more_information">Текст у реалном времену (RTT) помаже позиваоцима који су глуви, слабо чују, имају тешкоће у говору или којима није довољан само глас.</string>
   <string name="rtt_button_decline_request">Не, хвала</string>
   <string name="rtt_button_accept_request">Уђите у RTT</string>
+  <string name="manageConferenceLabel">Управљај конференцијским позивом</string>
 </resources>

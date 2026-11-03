@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dial_button">ഡയൽ ചെയ്യുക</string>
   <string name="dialog_voicemail_airplane_mode_message">വോയ്‌സ്‌മെയിൽ വിളിക്കാൻ ആദ്യം ഫ്ലൈറ്റ് മോഡ് ഓഫാക്കുക.</string>
   <string name="dialog_voicemail_not_ready_message">വോയ്‌സ്‌മെയിൽ സജ്ജീകരിക്കുന്നതിന്, മെനു &gt; ക്രമീകരണങ്ങൾ എന്നതിലേക്ക് പോകുക.</string>
-  <string name="add_2sec_pause">2 സെക്കൻഡ് താൽക്കാലികമായി നിർത്തൽ ചേർക്കുക</string>
-  <string name="add_wait">കാത്തിരിക്കൽ ചേർക്കുക</string>
-  <string name="dialer_useDtmfDialpad">ടച്ച് ടോൺ കീപാഡ് ഉപയോഗിക്കുക</string>
-  <string name="dialer_returnToInCallScreen">വിളിച്ചുകൊണ്ടിരിക്കുന്ന കോളിലേക്ക് മടങ്ങുക</string>
-  <string name="dialer_addAnotherCall">കോൾ ചേർക്കുക</string>
   <string name="imei">IMEI</string>
   <string name="meid">MEID</string>
   <string name="simContacts_emptyLoading">സിം കാർഡിൽ നിന്നും ലോഡുചെയ്യുന്നു…</string>

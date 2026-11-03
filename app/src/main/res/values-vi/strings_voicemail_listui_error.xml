@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Mới! Đọc thư thoại của bạn</string>
   <string name="dialer_terms_and_conditions_1.0">Xem và nghe tin nhắn của bạn mà không phải gọi số dịch vụ thư thoại. Bản chép lời của thư thoại do dịch vụ chép lời miễn phí của Google cung cấp. Bạn có thể tắt dịch vụ này trong phần Cài đặt bất cứ lúc nào. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Bản chép lời của thư thoại hiện do dịch vụ chép lời miễn phí của Google cung cấp. Bạn có thể tắt dịch vụ này trong phần Cài đặt bất cứ lúc nào. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">OK, tôi đã hiểu</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Không, cảm ơn</string>
 </resources>

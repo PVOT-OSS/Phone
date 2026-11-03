@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Töökontaktide kataloog</string>
-  <string name="chat_aim">Vestlus AIM-i kasutades</string>
-  <string name="chat_msn">Vestlus Windows Live\'i kasutades</string>
-  <string name="chat_yahoo">Vestlus Yahood kasutades</string>
-  <string name="chat_skype">Vestlus Skype\'i kasutades</string>
-  <string name="chat_qq">Vestlus QQ kasutades</string>
-  <string name="chat_gtalk">Vestlus Google Talki kasutades</string>
-  <string name="chat_icq">Vestlus ICQ-d kasutades</string>
-  <string name="chat_jabber">Vestlus Jabberit kasutades</string>
   <string name="display_options_sort_list_by">Sortimisalus</string>
   <string name="display_options_sort_by_given_name">Eesnimi</string>
   <string name="display_options_sort_by_family_name">Perekonnanimi</string>
@@ -18,6 +10,5 @@
   <string name="menu_clear_frequents">Sagedaste kustutamine</string>
   <string name="action_menu_back_from_search">otsimise peatamine</string>
   <string name="description_clear_search">Otsingu kustutamine</string>
-  <string name="call_with_a_note">Kõne koos märkusega</string>
   <string name="description_search_video_call">Videokõne</string>
 </resources>
