@@ -70,16 +70,20 @@ class RttRequestDialogFragment : DialogFragment() {
     private fun onPositiveButtonClick() {
         LogUtil.enterBlock("RttRequestDialogFragment.onPositiveButtonClick")
 
-        val call = CallList.getInstance().getCallById(requireArguments().getString(ARG_CALL_ID))
-        call!!.respondToRttRequest(true, requireArguments().getInt(ARG_RTT_REQUEST_ID))
+        // The call may have ended while the dialog was up; there is nothing left to answer then.
+        CallList.getInstance()
+            .getCallById(requireArguments().getString(ARG_CALL_ID))
+            ?.respondToRttRequest(true, requireArguments().getInt(ARG_RTT_REQUEST_ID))
         dismiss()
     }
 
     private fun onNegativeButtonClick() {
         LogUtil.enterBlock("RttRequestDialogFragment.onNegativeButtonClick")
 
-        val call = CallList.getInstance().getCallById(requireArguments().getString(ARG_CALL_ID))
-        call!!.respondToRttRequest(false, requireArguments().getInt(ARG_RTT_REQUEST_ID))
+        // The call may have ended while the dialog was up; there is nothing left to answer then.
+        CallList.getInstance()
+            .getCallById(requireArguments().getString(ARG_CALL_ID))
+            ?.respondToRttRequest(false, requireArguments().getInt(ARG_RTT_REQUEST_ID))
         dismiss()
     }
 
