@@ -9,6 +9,7 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Bundle
 import android.os.OutcomeReceiver
 import android.os.ParcelUuid
 import android.telecom.PhoneAccount
@@ -22,6 +23,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.os.BundleCompat
 import java.io.ByteArrayInputStream
 import org.prauga.phone.contacts.R
 import org.prauga.phone.dialer.callintent.CallIntentBuilder
@@ -56,6 +58,19 @@ class CallComposerOptions(
         activity.registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             picture = uri
         }
+
+    /** Keeps the choices across a recreation; [restore] reads them back. */
+    fun save(outState: Bundle) {
+        outState.putBoolean(STATE_URGENT, urgent)
+        outState.putParcelable(STATE_PICTURE, picture)
+    }
+
+    /** Reads back what [save] kept. */
+    fun restore(state: Bundle?) {
+        if (state == null) return
+        urgent = state.getBoolean(STATE_URGENT, false)
+        picture = BundleCompat.getParcelable(state, STATE_PICTURE, Uri::class.java)
+    }
 
     /** Lets the user choose a picture to send with the call. */
     fun pickPicture() {
@@ -128,6 +143,9 @@ class CallComposerOptions(
                             TelephonyManager.getMaximumCallComposerPictureSize(),
                         )
                     activity.mainExecutor.execute {
+                        // The dialog may have been closed meanwhile; then there is no call to
+                        // place.
+                        if (activity.isFinishing || activity.isDestroyed) return@execute
                         if (bytes == null) {
                             LogUtil.e(
                                 "CallComposerOptions.upload",
@@ -157,6 +175,8 @@ class CallComposerOptions(
 
     companion object {
         private const val PICTURE_TYPE = "image/jpeg"
+        private const val STATE_URGENT = "composer_urgent"
+        private const val STATE_PICTURE = "composer_picture"
 
         /** Whether the SIM [handle] stands for supports call composer. */
         @JvmStatic
