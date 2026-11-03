@@ -12,7 +12,6 @@ import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.telecom.PhoneAccount
 import android.telecom.PhoneAccountHandle
 import android.telephony.PhoneNumberUtils
-import android.telephony.TelephonyManager
 import java.util.concurrent.TimeUnit
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.calllog.calllogcache.CallLogCache
@@ -24,7 +23,6 @@ import org.prauga.phone.dialer.logging.ContactSource
 import org.prauga.phone.dialer.phonenumbercache.ContactInfo
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper
 import org.prauga.phone.dialer.telecom.TelecomUtil
-import org.prauga.phone.dialer.util.CallUtil
 import org.prauga.phone.dialer.util.UriUtils
 
 /** What the button at the end of a call history row does. */
@@ -77,7 +75,9 @@ data class CallLogRowUi(
 
 /**
  * Turns a [CallLogGroup] and its contact into a [CallLogRowUi], with the same text and actions the
- * call history has always offered. Main thread; it reads the call log cache.
+ * call history has always offered. What it asks telephony comes through [callLogCache], once per
+ * number or account, so it can run for every row of a list off the main thread; one list at a time,
+ * as the details helper it uses is not thread safe.
  */
 class CallLogRowResolver(
     private val context: Context,
@@ -142,7 +142,8 @@ class CallLogRowResolver(
 
         val preferredName = details.preferredName?.toString()
         val displayNumber = details.displayNumber.orEmpty()
-        val isEmergencyName = preferredName.isNullOrEmpty() && isEmergency(displayNumber)
+        val isEmergencyName =
+            preferredName.isNullOrEmpty() && callLogCache.isEmergencyNumber(displayNumber)
         val title =
             when {
                 !preferredName.isNullOrEmpty() -> preferredName
@@ -151,7 +152,7 @@ class CallLogRowResolver(
             }
 
         val canCall = PhoneNumberHelper.canPlaceCallsTo(group.number, group.presentation)
-        val isEmergencyNumber = PhoneNumberHelper.isEmergencyNumber(context, group.number)
+        val isEmergencyNumber = callLogCache.isEmergencyNumber(group.number)
         val accountLabel = accountLabel(accountHandle, group.viaNumber)
         val color =
             callLogCache.getAccountColor(accountHandle).takeIf {
@@ -183,13 +184,6 @@ class CallLogRowResolver(
                 ),
         )
     }
-
-    private fun isEmergency(number: String): Boolean =
-        try {
-            context.getSystemService(TelephonyManager::class.java).isEmergencyNumber(number)
-        } catch (e: RuntimeException) {
-            false
-        }
 
     private fun accountLabel(accountHandle: PhoneAccountHandle?, viaNumber: String?): String? {
         val label = callLogCache.getAccountLabel(accountHandle)
@@ -279,7 +273,7 @@ class CallLogRowResolver(
         if (
             canCall &&
                 group.callbackAction == CallbackAction.VOICE &&
-                CallUtil.isVideoEnabled(context) &&
+                callLogCache.isVideoEnabled() &&
                 (hasPlacedCarrierVideoCall(group, accountHandle) || canCarrierVideoCall(info))
         ) {
             actions += RowAction.VIDEO_CALL
@@ -296,7 +290,9 @@ class CallLogRowResolver(
             canCall &&
                 !isVoicemailNumber &&
                 canBlockNumbers &&
-                !PhoneNumberHelper.isEmergencyNumber(context, group.number, group.countryIso)
+                !callLogCache.isEmergencyNumber(
+                    PhoneNumberUtils.formatNumberToE164(group.number, group.countryIso)
+                )
         ) {
             actions += if (isBlocked) RowAction.UNBLOCK else RowAction.BLOCK
         }
