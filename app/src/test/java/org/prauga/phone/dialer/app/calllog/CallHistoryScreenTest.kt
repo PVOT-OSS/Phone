@@ -69,7 +69,6 @@ class CallHistoryScreenTest {
         override fun selectionModeChanged(enabled: Boolean, exit: () -> Unit) { events += "selecting $enabled" }
         override fun deleteLater(group: CallLogGroup) { events += "delete ${group.rowId}"; hide { it + group.callIds } }
         override fun undoDelete(group: CallLogGroup) { events += "undo ${group.rowId}"; hide { it - group.callIds.toSet() } }
-        override fun commitDelete(group: CallLogGroup) { events += "commit ${group.rowId}" }
         override fun block(row: CallLogRowUi) { events += "block ${row.group.rowId}" }
         override fun unblock(row: CallLogRowUi) { events += "unblock ${row.group.rowId}" }
         override fun turnOnPermission() { events += "permission" }

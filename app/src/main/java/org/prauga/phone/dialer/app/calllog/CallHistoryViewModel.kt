@@ -19,13 +19,21 @@ import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.contactinfo.ContactInfoCache
 import org.prauga.phone.dialer.app.contactinfo.ExpirableCacheHeadlessFragment
 import org.prauga.phone.dialer.common.LogUtil
@@ -134,8 +142,23 @@ class CallHistoryViewModel(
     private val _contactInfoVersion = MutableStateFlow(0)
     val contactInfoVersion: StateFlow<Int> = _contactInfoVersion.asStateFlow()
 
+    /** What went wrong, as a string resource to show once. */
+    private val _errors = MutableSharedFlow<Int>(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    val errors: SharedFlow<Int> = _errors.asSharedFlow()
+
     /** Rows deleted with a swipe, hidden until the delete is undone or committed. */
     private var pendingDeletes: Set<Long> = emptySet()
+
+    /** Swiped rows whose undo window is still open, by row id, each with the timer that commits it. */
+    private val undoTimers = mutableMapOf<Long, PendingDelete>()
+
+    private class PendingDelete(val group: CallLogGroup, val timer: Job)
+
+    /**
+     * Runs the deletes still pending when this is cleared. [viewModelScope] is closed by then,
+     * and a delete the user did not undo must land even as the screen goes.
+     */
+    private val commitScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     /** Calls deleted from the call log that a load may still have shown, until it no longer does. */
     private val deleted = mutableSetOf<Long>()
@@ -197,6 +220,11 @@ class CallHistoryViewModel(
             } catch (e: SecurityException) {
                 LogUtil.e("CallHistoryViewModel.refresh", "permission revoked while loading", e)
                 _state.value = CallHistoryUiState.NeedsPermission
+            } catch (e: Exception) {
+                // The provider can fail in other ways too; the list keeps what it had and says so.
+                LogUtil.e("CallHistoryViewModel.refresh", "loading the call log failed", e)
+                if (_state.value is CallHistoryUiState.Loading) _state.value = CallHistoryUiState.Empty
+                _errors.tryEmit(R.string.call_history_load_failed)
             }
         }
     }
@@ -231,42 +259,79 @@ class CallHistoryViewModel(
     /** Stops caller lookups, when the list is left. */
     fun stop() = contactInfoCache.stop()
 
-    /** Hides [group] at once; the delete happens on [commitDelete] unless [undoDelete] comes first. */
-    fun deleteLater(group: CallLogGroup) = updatePendingDeletes { it + group.callIds }
-
-    fun undoDelete(group: CallLogGroup) = updatePendingDeletes { it - group.callIds.toSet() }
-
-    fun commitDelete(group: CallLogGroup) {
-        if (group.callIds.none { it in pendingDeletes }) return
-        // The calls stay hidden until a reload no longer has them; showing them again as soon as
-        // the delete is done would bring the row back until then.
-        viewModelScope.launch {
-            repository.delete(listOf(group))
-            deleted += group.callIds
+    /**
+     * Hides [group] at once and deletes it once the undo window closes, unless [undoDelete] comes
+     * first. The timer runs here, not on the screen, so leaving the list, rotating or switching
+     * tabs while the snackbar shows still ends in the delete.
+     */
+    fun deleteLater(group: CallLogGroup) {
+        undoTimers.remove(group.rowId)?.timer?.cancel()
+        updatePendingDeletes { it + group.callIds }
+        val timer = viewModelScope.launch {
+            delay(UNDO_WINDOW_MS)
+            undoTimers -= group.rowId
+            delete(listOf(group))
         }
+        undoTimers[group.rowId] = PendingDelete(group, timer)
+    }
+
+    fun undoDelete(group: CallLogGroup) {
+        undoTimers.remove(group.rowId)?.timer?.cancel()
+        updatePendingDeletes { it - group.callIds.toSet() }
+    }
+
+    /** Deletes [group] now rather than when its undo window closes. */
+    fun commitDelete(group: CallLogGroup) {
+        undoTimers.remove(group.rowId)?.timer?.cancel()
+        if (group.callIds.none { it in pendingDeletes }) return
+        viewModelScope.launch { delete(listOf(group)) }
     }
 
     /** Deletes [groups] at once, for voicemails the user selected and confirmed. */
     fun deleteNow(groups: List<CallLogGroup>) {
         if (groups.isEmpty()) return
         updatePendingDeletes { it + groups.flatMap { group -> group.callIds } }
-        viewModelScope.launch {
+        viewModelScope.launch { delete(groups) }
+    }
+
+    /**
+     * Deletes [groups]' calls. They stay hidden until a reload no longer has them; showing them
+     * again as soon as the delete is done would bring the rows back until then. When the delete
+     * fails they show again, with a message.
+     */
+    private suspend fun delete(groups: List<CallLogGroup>) {
+        val ids = groups.flatMap { it.callIds }
+        try {
             repository.delete(groups)
-            deleted += groups.flatMap { it.callIds }
+            deleted += ids
+        } catch (e: Exception) {
+            LogUtil.e("CallHistoryViewModel.delete", "deleting calls failed", e)
+            updatePendingDeletes { it - ids.toSet() }
+            _errors.tryEmit(R.string.call_history_delete_failed)
         }
     }
 
     fun block(number: String, countryIso: String?) {
         viewModelScope.launch {
-            repository.block(number, countryIso)
-            updateBlocked { it + number }
+            try {
+                repository.block(number, countryIso)
+                updateBlocked { it + number }
+            } catch (e: Exception) {
+                LogUtil.e("CallHistoryViewModel.block", "blocking failed", e)
+                _errors.tryEmit(R.string.call_history_block_failed)
+            }
         }
     }
 
     fun unblock(number: String) {
         viewModelScope.launch {
-            repository.unblock(number)
-            updateBlocked { it - number }
+            try {
+                repository.unblock(number)
+                updateBlocked { it - number }
+            } catch (e: Exception) {
+                LogUtil.e("CallHistoryViewModel.unblock", "unblocking failed", e)
+                _errors.tryEmit(R.string.call_history_unblock_failed)
+            }
         }
     }
 
@@ -278,5 +343,26 @@ class CallHistoryViewModel(
     override fun onCleared() {
         contactInfoCache.stop()
         getApplication<Application>().contentResolver.unregisterContentObserver(observer)
+        // Undo is gone with the screen, so what it was waiting on is deleted now.
+        val pending = undoTimers.values.map { it.group }
+        undoTimers.values.forEach { it.timer.cancel() }
+        undoTimers.clear()
+        if (pending.isNotEmpty()) {
+            commitScope.launch {
+                try {
+                    repository.delete(pending)
+                } catch (e: Exception) {
+                    LogUtil.e("CallHistoryViewModel.onCleared", "deleting calls failed", e)
+                }
+            }
+        }
+    }
+
+    companion object {
+        /**
+         * How long a swiped row can be brought back, in ms: the Short snackbar that offers Undo
+         * shows for 4 s, plus a margin so a tap at its last moment still lands.
+         */
+        const val UNDO_WINDOW_MS = 4_500L
     }
 }

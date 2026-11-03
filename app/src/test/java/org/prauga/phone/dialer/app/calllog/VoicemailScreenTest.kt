@@ -69,7 +69,6 @@ class VoicemailScreenTest {
         override fun closed(row: CallLogRowUi) { events += "closed ${row.group.rowId}" }
         override fun deleteLater(group: CallLogGroup) { events += "delete ${group.rowId}"; hide(group.callIds) }
         override fun undoDelete(group: CallLogGroup) { events += "undo ${group.rowId}" }
-        override fun commitDelete(group: CallLogGroup) { events += "commit ${group.rowId}" }
         override fun deleteSelected(groups: List<CallLogGroup>) {
             events += "deleteSelected ${groups.map { it.rowId }}"
             hide(groups.flatMap { it.callIds })

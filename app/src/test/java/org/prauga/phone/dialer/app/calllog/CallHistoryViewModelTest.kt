@@ -6,11 +6,14 @@
 package org.prauga.phone.dialer.app.calllog
 
 import android.app.Application
+import androidx.lifecycle.ViewModelStore
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -18,6 +21,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.database.CallLogQueryHandler
 import org.robolectric.RobolectricTestRunner
 
@@ -31,6 +35,8 @@ class CallHistoryViewModelTest {
         val deleted = mutableListOf<Long>()
         val loadedTypes = mutableListOf<Int>()
         var failWith: Exception? = null
+        var deleteFailsWith: Exception? = null
+        var blockFailsWith: Exception? = null
 
         /** When set, [blocked] waits on it, as the real lookup waits on the provider. */
         var blockedGate: CompletableDeferred<Unit>? = null
@@ -44,11 +50,15 @@ class CallHistoryViewModelTest {
             return blockedNumbers.intersect(numbers.toSet())
         }
         override suspend fun delete(groups: Collection<CallLogGroup>) {
+            deleteFailsWith?.let { throw it }
             val ids = groups.flatMap { it.callIds }
             deleted += ids
             this.groups = this.groups.filter { group -> group.callIds.none { it in ids } }
         }
-        override suspend fun block(number: String, countryIso: String?) { blockedNumbers = blockedNumbers + number }
+        override suspend fun block(number: String, countryIso: String?) {
+            blockFailsWith?.let { throw it }
+            blockedNumbers = blockedNumbers + number
+        }
         override suspend fun unblock(number: String) { blockedNumbers = blockedNumbers - number }
     }
 
@@ -56,8 +66,9 @@ class CallHistoryViewModelTest {
     private val bea = callLogGroup(20, "+15550199", callTypes = listOf(1, 3))
     private val repository = FakeRepository(listOf(ada, bea))
     private var permitted = true
+    private val dispatcher = UnconfinedTestDispatcher()
 
-    @Before fun setUp() = Dispatchers.setMain(UnconfinedTestDispatcher())
+    @Before fun setUp() = Dispatchers.setMain(dispatcher)
 
     @After fun tearDown() = Dispatchers.resetMain()
 
@@ -67,6 +78,10 @@ class CallHistoryViewModelTest {
 
     private val CallHistoryViewModel.loaded get() = state.value as CallHistoryUiState.Loaded
     private val CallHistoryViewModel.pendingDeletes get() = loaded.pendingDeletes
+
+    /** The messages [CallHistoryViewModel.errors] sends, as they come. */
+    private fun CallHistoryViewModel.errorsShown(): List<Int> =
+        mutableListOf<Int>().also { shown -> CoroutineScope(Dispatchers.Main).launch { errors.collect { shown += it } } }
 
     @Test
     fun loadsTheRequestedCallType() {
@@ -115,6 +130,73 @@ class CallHistoryViewModelTest {
         vm.refresh()
         assertThat(vm.pendingDeletes).isEmpty()
         assertThat(vm.loaded.groups).containsExactly(ada)
+    }
+
+    @Test
+    fun theDeleteHappensOnceTheUndoWindowCloses() {
+        val vm = viewModel()
+        vm.deleteLater(bea)
+        dispatcher.scheduler.advanceTimeBy(CallHistoryViewModel.UNDO_WINDOW_MS - 1)
+        assertThat(repository.deleted).isEmpty()
+
+        dispatcher.scheduler.advanceTimeBy(2)
+
+        assertThat(repository.deleted).containsExactly(20L, 21L)
+        assertThat(vm.loaded.visible).containsExactly(ada)
+    }
+
+    @Test
+    fun undoWithinTheWindowKeepsTheCalls() {
+        val vm = viewModel()
+        vm.deleteLater(bea)
+        dispatcher.scheduler.advanceTimeBy(CallHistoryViewModel.UNDO_WINDOW_MS - 1)
+        vm.undoDelete(bea)
+        dispatcher.scheduler.advanceTimeBy(CallHistoryViewModel.UNDO_WINDOW_MS)
+        assertThat(repository.deleted).isEmpty()
+        assertThat(vm.loaded.visible).containsExactly(ada, bea).inOrder()
+    }
+
+    @Test
+    fun clearingDeletesWhatWasStillWaitingOnUndo() {
+        val vm = viewModel()
+        vm.deleteLater(ada)
+        vm.deleteLater(bea)
+        vm.undoDelete(ada)
+
+        ViewModelStore().apply { put("history", vm) }.clear()
+
+        assertThat(repository.deleted).containsExactly(20L, 21L)
+    }
+
+    @Test
+    fun aFailedDeleteShowsTheCallsAgainWithAMessage() {
+        val vm = viewModel()
+        val errors = vm.errorsShown()
+        repository.deleteFailsWith = SecurityException("not the default dialer")
+        vm.deleteLater(bea)
+        vm.commitDelete(bea)
+        assertThat(vm.loaded.visible).containsExactly(ada, bea).inOrder()
+        assertThat(errors).containsExactly(R.string.call_history_delete_failed)
+    }
+
+    @Test
+    fun aFailedBlockSaysSo() {
+        val vm = viewModel()
+        val errors = vm.errorsShown()
+        repository.blockFailsWith = SecurityException("not the default dialer")
+        vm.block("+15550100", "US")
+        assertThat(vm.loaded.blockedNumbers).isEmpty()
+        assertThat(errors).containsExactly(R.string.call_history_block_failed)
+    }
+
+    @Test
+    fun aFailedLoadKeepsTheListAndSaysSo() {
+        val vm = viewModel()
+        val errors = vm.errorsShown()
+        repository.failWith = IllegalStateException("provider died")
+        vm.refresh()
+        assertThat(vm.loaded.groups).containsExactly(ada, bea).inOrder()
+        assertThat(errors).containsExactly(R.string.call_history_load_failed)
     }
 
     @Test
