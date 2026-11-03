@@ -76,6 +76,7 @@ class CallHistoryViewModelTest {
     private val repository = FakeRepository(listOf(ada, bea))
     private var permitted = true
     private val dispatcher = UnconfinedTestDispatcher()
+    private var resolved = 0
 
     @Before fun setUp() = Dispatchers.setMain(dispatcher)
 
@@ -87,6 +88,11 @@ class CallHistoryViewModelTest {
                 callType,
                 repository,
                 hasPermission = { permitted },
+                resolveRow = { group, _, isBlocked ->
+                    resolved++
+                    row(group).copy(isBlocked = isBlocked)
+                },
+                resolveDispatcher = dispatcher,
             )
             .apply { refresh() }
 
@@ -108,6 +114,32 @@ class CallHistoryViewModelTest {
         assertThat(repository.loadedTypes)
             .containsExactly(android.provider.CallLog.Calls.MISSED_TYPE)
         assertThat(vm.loaded.groups).containsExactly(ada, bea).inOrder()
+    }
+
+    @Test
+    fun theRowsAreResolvedWithTheList() {
+        val vm = viewModel()
+        assertThat(vm.loaded.rows.keys).containsExactly(10L, 20L)
+        assertThat(vm.loaded.rows.getValue(20L).group).isEqualTo(bea)
+        assertThat(resolved).isEqualTo(2)
+    }
+
+    @Test
+    fun rowsAreResolvedAgainOnlyWhenTheirCallersOrBlockedNumbersChange() {
+        val vm = viewModel()
+        assertThat(resolved).isEqualTo(2)
+
+        // Hiding a row, and anything else that only changes the state, keeps the rows.
+        vm.deleteLater(ada)
+        vm.undoDelete(ada)
+        assertThat(resolved).isEqualTo(2)
+
+        vm.contactInfoChanged()
+        assertThat(resolved).isEqualTo(4)
+
+        vm.block("+15550199", "US")
+        assertThat(resolved).isEqualTo(6)
+        assertThat(vm.loaded.rows.getValue(20L).isBlocked).isTrue()
     }
 
     @Test

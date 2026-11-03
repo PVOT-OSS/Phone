@@ -66,7 +66,7 @@ class CallHistoryScreenTest {
 
     private var state by
         mutableStateOf<CallHistoryUiState>(
-            CallHistoryUiState.Loaded(listOf(missed, incoming, older), emptySet())
+            CallHistoryUiState.Loaded(listOf(missed, incoming, older), emptySet(), rows = rows)
         )
 
     private fun hide(change: (Set<Long>) -> Set<Long>) {
@@ -135,7 +135,6 @@ class CallHistoryScreenTest {
             PhoneScreenTheme {
                 CallHistoryScreen(
                     state = state,
-                    resolve = { group, _, _ -> rows.getValue(group.rowId) },
                     emptyMessage = R.string.call_log_all_empty,
                     showEmptyAction = showEmptyAction,
                     actions = actions,

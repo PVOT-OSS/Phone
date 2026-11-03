@@ -36,6 +36,7 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.prauga.phone.dialer.R
+import org.prauga.phone.dialer.app.calllog.calllogcache.CallLogCache
 import org.prauga.phone.dialer.app.contactinfo.ContactInfoCache
 import org.prauga.phone.dialer.app.contactinfo.ExpirableCacheHeadlessFragment
 import org.prauga.phone.dialer.common.LogUtil
@@ -58,11 +59,13 @@ sealed interface CallHistoryUiState {
     /**
      * @param pendingDeletes Calls hidden until their delete is undone or done; part of the state so
      *   a reload publishes the rows and what hides them together
+     * @param rows Each group's row, ready to show, by row id
      */
     data class Loaded(
         val groups: List<CallLogGroup>,
         val blockedNumbers: Set<String>,
         val pendingDeletes: Set<Long> = emptySet(),
+        val rows: Map<Long, CallLogRowUi> = emptyMap(),
     ) : CallHistoryUiState {
         /** The rows to show: [groups] without the ones waiting on a delete. */
         val visible: List<CallLogGroup>
@@ -160,7 +163,13 @@ class DefaultCallHistoryRepository(
  *
  * The rows show as soon as they are grouped; which of them are blocked follows, from a lookup that
  * is slow (one call into the blocked numbers provider per number) and so is kept across reloads
- * until the blocked numbers change.
+ * until the blocked numbers change. Each row's text and actions are resolved here, off the main
+ * thread, and again only when the groups, their callers or the blocked numbers change.
+ *
+ * @param resolveRow Turns a group, its index and whether it is blocked into its row; by default the
+ *   [CallLogRowResolver] with the caller from [contactInfoCache]
+ * @param resolveDispatcher Where rows are resolved: one thread at a time, as the resolver is not
+ *   thread safe
  */
 @OptIn(FlowPreview::class)
 class CallHistoryViewModel(
@@ -170,14 +179,12 @@ class CallHistoryViewModel(
     private val hasPermission: () -> Boolean = {
         PermissionsUtil.hasCallLogReadPermissions(application)
     },
+    resolveRow: ((group: CallLogGroup, index: Int, isBlocked: Boolean) -> CallLogRowUi)? = null,
+    private val resolveDispatcher: CoroutineDispatcher = Dispatchers.Default.limitedParallelism(1),
 ) : AndroidViewModel(application) {
 
     private val _state = MutableStateFlow<CallHistoryUiState>(CallHistoryUiState.Loading)
     val state: StateFlow<CallHistoryUiState> = _state.asStateFlow()
-
-    /** Bumped each time a caller lookup finishes, so rows can read their new contact. */
-    private val _contactInfoVersion = MutableStateFlow(0)
-    val contactInfoVersion: StateFlow<Int> = _contactInfoVersion.asStateFlow()
 
     /** What went wrong, as a string resource to show once. */
     private val _errors =
@@ -231,10 +238,28 @@ class CallHistoryViewModel(
             ExpirableCache.create(ExpirableCacheHeadlessFragment.CONTACT_INFO_CACHE_SIZE),
             ContactInfoHelper(application, GeoUtil.getCurrentCountryIso(application)),
         ) {
-            _contactInfoVersion.value++
+            contactInfoChanged()
         }
 
+    private val resolveRow: (CallLogGroup, Int, Boolean) -> CallLogRowUi =
+        resolveRow
+            ?: run {
+                val resolver = CallLogRowResolver(application, CallLogCache(application))
+                val remoteLookups = REMOTE_LOOKUP_ROWS
+                ({ group, index, isBlocked ->
+                    val info =
+                        contactInfoCache.getValue(
+                            group.number + group.postDialDigits,
+                            group.countryIso,
+                            group.cachedInfo,
+                            index < remoteLookups,
+                        )
+                    resolver.resolve(group, info, isBlocked)
+                })
+            }
+
     private var loadJob: Job? = null
+    private var rowsJob: Job? = null
 
     private val observer =
         object : ContentObserver(Handler(Looper.getMainLooper())) {
@@ -269,6 +294,9 @@ class CallHistoryViewModel(
         knownBlocked.clear()
         contentChanged()
     }
+
+    /** A caller lookup finished: the rows read their callers again. */
+    internal fun contactInfoChanged() = resolveRows()
 
     private fun observe() {
         val application = getApplication<Application>()
@@ -344,13 +372,12 @@ class CallHistoryViewModel(
                     val numbers = groups.mapTo(LinkedHashSet()) { it.number }
                     val previous =
                         (_state.value as? CallHistoryUiState.Loaded)?.blockedNumbers.orEmpty()
+                    val blockedNow =
+                        numbers.filterTo(HashSet()) { knownBlocked[it] ?: (it in previous) }
+                    val rows = resolveRows(groups, blockedNow)
                     forgetDeleted(groups)
                     _state.value =
-                        CallHistoryUiState.Loaded(
-                            groups,
-                            numbers.filterTo(HashSet()) { knownBlocked[it] ?: (it in previous) },
-                            pendingDeletes,
-                        )
+                        CallHistoryUiState.Loaded(groups, blockedNow, pendingDeletes, rows)
                     loadedOnce = true
 
                     val unknown = numbers.filter { it !in knownBlocked }
@@ -383,6 +410,38 @@ class CallHistoryViewModel(
         val gone = deleted.filterTo(HashSet()) { it !in loaded }
         deleted -= gone
         pendingDeletes -= gone
+    }
+
+    private suspend fun resolveRows(
+        groups: List<CallLogGroup>,
+        blocked: Set<String>,
+    ): Map<Long, CallLogRowUi> =
+        withContext(resolveDispatcher) {
+            groups
+                .mapIndexed { index, group ->
+                    group.rowId to resolveRow(group, index, group.number in blocked)
+                }
+                .toMap()
+        }
+
+    /**
+     * Resolves the loaded rows again, for a caller that was just looked up or a change to the
+     * blocked numbers, and publishes them if the list has not moved on meanwhile.
+     */
+    private fun resolveRows() {
+        val loaded = _state.value as? CallHistoryUiState.Loaded ?: return
+        rowsJob?.cancel()
+        rowsJob =
+            viewModelScope.launch {
+                val rows = resolveRows(loaded.groups, loaded.blockedNumbers)
+                val current = _state.value as? CallHistoryUiState.Loaded ?: return@launch
+                if (
+                    current.groups === loaded.groups &&
+                        current.blockedNumbers == loaded.blockedNumbers
+                ) {
+                    _state.value = current.copy(rows = rows)
+                }
+            }
     }
 
     /** Hides or shows calls at once, in the state the list reads. */
@@ -488,7 +547,11 @@ class CallHistoryViewModel(
 
     private fun updateBlocked(change: (Set<String>) -> Set<String>) {
         val loaded = _state.value as? CallHistoryUiState.Loaded ?: return
-        _state.value = loaded.copy(blockedNumbers = change(loaded.blockedNumbers))
+        val blocked = change(loaded.blockedNumbers)
+        if (blocked == loaded.blockedNumbers) return
+        _state.value = loaded.copy(blockedNumbers = blocked)
+        // Blocked rows read and offer different things.
+        resolveRows()
     }
 
     override fun onCleared() {
@@ -519,5 +582,8 @@ class CallHistoryViewModel(
 
         /** How long the calls, contacts and blocked numbers must stay quiet before a reload. */
         const val CHANGE_DEBOUNCE_MS = 300L
+
+        /** How many rows from the top also look their caller up in the remote directory. */
+        private const val REMOTE_LOOKUP_ROWS = 5
     }
 }

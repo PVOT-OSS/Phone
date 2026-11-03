@@ -19,8 +19,10 @@ package org.prauga.phone.dialer.app.calllog.calllogcache;
 
 import android.content.Context;
 import android.telecom.PhoneAccountHandle;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.ArrayMap;
+import android.util.Pair;
 
 import androidx.annotation.Nullable;
 
@@ -53,6 +55,9 @@ public class CallLogCache {
   private final Map<PhoneAccountHandle, String> phoneAccountLabelCache = new ArrayMap<>();
   private final Map<PhoneAccountHandle, Integer> phoneAccountColorCache = new ArrayMap<>();
   private final Map<PhoneAccountHandle, Boolean> phoneAccountCallWithNoteCache = new ArrayMap<>();
+  private final Map<Pair<PhoneAccountHandle, String>, Boolean> voicemailNumberCache =
+      new ArrayMap<>();
+  private final Map<String, Boolean> emergencyNumberCache = new ArrayMap<>();
 
   public CallLogCache(Context context) {
     this.context = context;
@@ -62,6 +67,8 @@ public class CallLogCache {
     phoneAccountLabelCache.clear();
     phoneAccountColorCache.clear();
     phoneAccountCallWithNoteCache.clear();
+    voicemailNumberCache.clear();
+    emergencyNumberCache.clear();
     hasCheckedForVideoAvailability = false;
     videoAvailability = 0;
   }
@@ -75,7 +82,42 @@ public class CallLogCache {
     if (TextUtils.isEmpty(number)) {
       return false;
     }
-    return TelecomUtil.isVoicemailNumber(context, accountHandle, number.toString());
+    Pair<PhoneAccountHandle, String> key = Pair.create(accountHandle, number.toString());
+    Boolean cached = voicemailNumberCache.get(key);
+    if (cached == null) {
+      cached = TelecomUtil.isVoicemailNumber(context, accountHandle, number.toString());
+      voicemailNumberCache.put(key, cached);
+    }
+    return cached;
+  }
+
+  /**
+   * Returns true if the given number is an emergency number, asking telephony once per number: the
+   * answer is a call into another process, and the call history asks for every row.
+   */
+  public synchronized boolean isEmergencyNumber(@Nullable String number) {
+    if (TextUtils.isEmpty(number)) {
+      return false;
+    }
+    Boolean cached = emergencyNumberCache.get(number);
+    if (cached == null) {
+      try {
+        cached = context.getSystemService(TelephonyManager.class).isEmergencyNumber(number);
+      } catch (RuntimeException e) {
+        // Telephony is not there, or will not say: a number it cannot vouch for is not one.
+        cached = false;
+      }
+      emergencyNumberCache.put(number, cached);
+    }
+    return cached;
+  }
+
+  private synchronized int getVideoAvailability() {
+    if (!hasCheckedForVideoAvailability) {
+      videoAvailability = CallUtil.getVideoCallingAvailability(context);
+      hasCheckedForVideoAvailability = true;
+    }
+    return videoAvailability;
   }
 
   /**
@@ -83,11 +125,12 @@ public class CallLogCache {
    * {@link android.provider.ContactsContract.CommonDataKinds.Phone#CARRIER_PRESENCE} column.
    */
   public boolean canRelyOnVideoPresence() {
-    if (!hasCheckedForVideoAvailability) {
-      videoAvailability = CallUtil.getVideoCallingAvailability(context);
-      hasCheckedForVideoAvailability = true;
-    }
-    return (videoAvailability & CallUtil.VIDEO_CALLING_PRESENCE) != 0;
+    return (getVideoAvailability() & CallUtil.VIDEO_CALLING_PRESENCE) != 0;
+  }
+
+  /** Returns {@code true} when one of the phone accounts can place video calls; asked once. */
+  public boolean isVideoEnabled() {
+    return (getVideoAvailability() & CallUtil.VIDEO_CALLING_ENABLED) != 0;
   }
 
   /** Extract account label from PhoneAccount object. */
