@@ -194,7 +194,7 @@ private fun NumberRow(state: DialpadUiState, digits: EditText, callbacks: Dialpa
     val textColor = MaterialTheme.colorScheme.onSurface.toArgb()
     state.rateCountry?.let { country ->
         Text(
-            text = "$country  ${state.rateText.orEmpty()}",
+            text = stringResource(R.string.dialpad_call_rate, country, state.rateText.orEmpty()),
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )

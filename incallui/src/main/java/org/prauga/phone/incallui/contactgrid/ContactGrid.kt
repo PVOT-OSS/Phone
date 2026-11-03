@@ -37,6 +37,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -299,7 +300,7 @@ private fun BottomLine(info: BottomRow.Info, connectTimeMillis: Long?) {
             )
         if (info.isHdIconVisible || info.isHdAttemptingIconVisible) {
             Text(
-                "HD",
+                stringResource(R.string.incall_hd_badge),
                 style = MaterialTheme.typography.labelSmall,
                 color = if (info.isHdIconVisible) MaterialTheme.colorScheme.primary else color,
             )
@@ -314,8 +315,9 @@ private fun BottomLine(info: BottomRow.Info, connectTimeMillis: Long?) {
         val label = info.label?.toString().orEmpty()
         val text =
             when {
-                info.isTimerVisible && info.isForwardIconVisible ->
-                    listOfNotNull(label.takeIf { it.isNotEmpty() }, elapsed).joinToString(" • ")
+                info.isTimerVisible && info.isForwardIconVisible && label.isNotEmpty() ->
+                    stringResource(R.string.incall_label_and_timer, label, elapsed.orEmpty())
+                info.isTimerVisible && info.isForwardIconVisible -> elapsed.orEmpty()
                 info.isTimerVisible -> elapsed.orEmpty()
                 else -> label
             }
