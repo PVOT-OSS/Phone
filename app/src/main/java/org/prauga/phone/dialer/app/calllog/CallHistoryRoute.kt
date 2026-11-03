@@ -81,8 +81,6 @@ fun CallHistoryRoute(
             loaded
         }
     }
-    val version by viewModel.contactInfoVersion.collectAsStateWithLifecycle()
-    val resolver = remember(context) { CallLogRowResolver(context, CallLogCache(context)) }
     val currentOnShowDialpad by rememberUpdatedState(onShowDialpad)
     val currentOnMissedCallRead by rememberUpdatedState(onMissedCallRead)
     val currentOnSelectionModeChanged by rememberUpdatedState(onSelectionModeChanged)
@@ -117,14 +115,6 @@ fun CallHistoryRoute(
 
     CallHistoryScreen(
         state = state,
-        resolve = { group, index, isBlocked ->
-            // Reading the version makes rows recompose when a caller lookup finishes.
-            version.let {
-                val info = viewModel.contactInfoCache.getValue(
-                    group.number + group.postDialDigits, group.countryIso, group.cachedInfo, index < 5)
-                resolver.resolve(group, info, isBlocked)
-            }
-        },
         emptyMessage = when (callType) {
             Calls.MISSED_TYPE -> R.string.call_log_missed_empty
             Calls.VOICEMAIL_TYPE -> R.string.call_log_voicemail_empty

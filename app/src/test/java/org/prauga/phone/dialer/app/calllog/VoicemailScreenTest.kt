@@ -55,7 +55,7 @@ class VoicemailScreenTest {
         2L to row(second, "+15550199", listOf(RowAction.CALL, RowAction.DELETE), PrimaryAction.PLAY_VOICEMAIL),
     )
     private val playback = VoicemailPlaybackState().apply { setClipPosition(12_000, 42_000) }
-    private var state by mutableStateOf(CallHistoryUiState.Loaded(listOf(first, second), emptySet()))
+    private var state by mutableStateOf(CallHistoryUiState.Loaded(listOf(first, second), emptySet(), rows = rows))
 
     private fun hide(ids: Collection<Long>) {
         state = state.copy(pendingDeletes = state.pendingDeletes + ids)
@@ -86,7 +86,6 @@ class VoicemailScreenTest {
         PhoneScreenTheme {
             CallHistoryScreen(
                 state = state,
-                resolve = { group, _, _ -> rows.getValue(group.rowId) },
                 emptyMessage = R.string.call_log_voicemail_empty,
                 showEmptyAction = false,
                 actions = actions,
