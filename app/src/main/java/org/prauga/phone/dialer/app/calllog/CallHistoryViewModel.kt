@@ -21,6 +21,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.BufferOverflow
@@ -31,6 +32,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.prauga.phone.dialer.R
@@ -155,7 +157,12 @@ class DefaultCallHistoryRepository(
 /**
  * Loads one call history list (all calls, or missed calls), reloads it when calls or contacts
  * change, and looks up callers in the background through [contactInfoCache].
+ *
+ * The rows show as soon as they are grouped; which of them are blocked follows, from a lookup that
+ * is slow (one call into the blocked numbers provider per number) and so is kept across reloads
+ * until the blocked numbers change.
  */
+@OptIn(FlowPreview::class)
 class CallHistoryViewModel(
     application: Application,
     private val callType: Int,
@@ -201,6 +208,24 @@ class CallHistoryViewModel(
      */
     private val deleted = mutableSetOf<Long>()
 
+    /** Whether each number looked up so far is blocked; cleared when the blocked numbers change. */
+    private val knownBlocked = mutableMapOf<String, Boolean>()
+
+    /** A change to the calls, contacts or blocked numbers; the list reloads once they settle. */
+    private val changes =
+        MutableSharedFlow<Unit>(
+            extraBufferCapacity = 1,
+            onBufferOverflow = BufferOverflow.DROP_OLDEST,
+        )
+
+    /**
+     * Whether a load has finished since the observers were registered, so a resume can skip one.
+     */
+    private var loadedOnce = false
+
+    /** Whether the list is showing, so caller lookups may run. */
+    private var lookingUp = false
+
     val contactInfoCache =
         ContactInfoCache(
             ExpirableCache.create(ExpirableCacheHeadlessFragment.CONTACT_INFO_CACHE_SIZE),
@@ -213,16 +238,36 @@ class CallHistoryViewModel(
 
     private val observer =
         object : ContentObserver(Handler(Looper.getMainLooper())) {
-            override fun onChange(selfChange: Boolean) = refresh()
+            override fun onChange(selfChange: Boolean) = contentChanged()
+        }
+
+    private val blockedObserver =
+        object : ContentObserver(Handler(Looper.getMainLooper())) {
+            override fun onChange(selfChange: Boolean) = blockedNumbersChanged()
         }
 
     // Each observer is registered once its permission is there: without it, registering throws.
     private var observingCalls = false
     private var observingContacts = false
+    private var observingBlocked = false
 
     init {
         if (!PermissionsUtil.hasContactsReadPermissions(application))
             contactInfoCache.disableRequestProcessing()
+        // A burst of changes (a call ends, its caller is looked up and written back, a contact is
+        // edited) becomes one reload once it has settled, rather than a load restarted each time.
+        viewModelScope.launch { changes.debounce(CHANGE_DEBOUNCE_MS).collect { load() } }
+    }
+
+    /** The calls or contacts changed; the list reloads once the changes settle. */
+    internal fun contentChanged() {
+        changes.tryEmit(Unit)
+    }
+
+    /** The blocked numbers changed: they are looked up again with the next reload. */
+    internal fun blockedNumbersChanged() {
+        knownBlocked.clear()
+        contentChanged()
     }
 
     private fun observe() {
@@ -239,16 +284,43 @@ class CallHistoryViewModel(
             )
             observingContacts = true
         }
+        if (!observingBlocked) {
+            try {
+                application.contentResolver.registerContentObserver(
+                    BlockedNumbers.CONTENT_URI,
+                    true,
+                    blockedObserver,
+                )
+                observingBlocked = true
+            } catch (e: SecurityException) {
+                // Not the default phone app: it cannot read blocked numbers either, so none show.
+                LogUtil.i("CallHistoryViewModel.observe", "cannot watch the blocked numbers", e)
+            }
+        }
+    }
+
+    /**
+     * The list came back into view. Reloads it unless a load already finished and the observers
+     * have kept it current since, in which case the rows are already what a reload would give.
+     */
+    fun resumed() {
+        if (loadedOnce && observingCalls && hasPermission()) return
+        refresh()
     }
 
     /** Reloads the calls, or asks for the permission when it is missing. */
     fun refresh() {
         if (!hasPermission()) {
             loadJob?.cancel()
+            loadedOnce = false
             _state.value = CallHistoryUiState.NeedsPermission
             return
         }
         observe()
+        load()
+    }
+
+    private fun load() {
         loadJob?.cancel()
         loadJob =
             viewModelScope.launch {
@@ -257,13 +329,35 @@ class CallHistoryViewModel(
                     if (groups.isEmpty()) {
                         forgetDeleted(groups)
                         _state.value = CallHistoryUiState.Empty
-                    } else {
-                        contactInfoCache.invalidate()
-                        val blocked = repository.blocked(groups.map { it.number }.toSet())
-                        // Everything is known now: the rows, what hides them and the blocked set go
-                        // out together, so a row waiting on undo never shows between two states.
-                        forgetDeleted(groups)
-                        _state.value = CallHistoryUiState.Loaded(groups, blocked, pendingDeletes)
+                        loadedOnce = true
+                        return@launch
+                    }
+                    // The rows show now, with the blocked numbers as last known (a number not
+                    // looked
+                    // up yet keeps what the last list said of it); the lookup follows. The rows,
+                    // what
+                    // hides them and the blocked set go out together, so a row waiting on undo
+                    // never
+                    // shows between two states.
+                    contactInfoCache.expireAll()
+                    if (lookingUp) contactInfoCache.start()
+                    val numbers = groups.mapTo(LinkedHashSet()) { it.number }
+                    val previous =
+                        (_state.value as? CallHistoryUiState.Loaded)?.blockedNumbers.orEmpty()
+                    forgetDeleted(groups)
+                    _state.value =
+                        CallHistoryUiState.Loaded(
+                            groups,
+                            numbers.filterTo(HashSet()) { knownBlocked[it] ?: (it in previous) },
+                            pendingDeletes,
+                        )
+                    loadedOnce = true
+
+                    val unknown = numbers.filter { it !in knownBlocked }
+                    if (unknown.isNotEmpty()) {
+                        val blocked = repository.blocked(unknown)
+                        unknown.forEach { knownBlocked[it] = it in blocked }
+                        updateBlocked { it - unknown.toSet() + blocked }
                     }
                 } catch (e: SecurityException) {
                     LogUtil.e("CallHistoryViewModel.refresh", "permission revoked while loading", e)
@@ -304,10 +398,14 @@ class CallHistoryViewModel(
         // Lookups were turned off if the permission was missing when this was created.
         contactInfoCache.enableRequestProcessing()
         contactInfoCache.start()
+        lookingUp = true
     }
 
     /** Stops caller lookups, when the list is left. */
-    fun stop() = contactInfoCache.stop()
+    fun stop() {
+        lookingUp = false
+        contactInfoCache.stop()
+    }
 
     /**
      * Hides [group] at once and deletes it once the undo window closes, unless [undoDelete] comes
@@ -366,6 +464,7 @@ class CallHistoryViewModel(
         viewModelScope.launch {
             try {
                 repository.block(number, countryIso)
+                knownBlocked[number] = true
                 updateBlocked { it + number }
             } catch (e: Exception) {
                 LogUtil.e("CallHistoryViewModel.block", "blocking failed", e)
@@ -378,6 +477,7 @@ class CallHistoryViewModel(
         viewModelScope.launch {
             try {
                 repository.unblock(number)
+                knownBlocked[number] = false
                 updateBlocked { it - number }
             } catch (e: Exception) {
                 LogUtil.e("CallHistoryViewModel.unblock", "unblocking failed", e)
@@ -394,6 +494,7 @@ class CallHistoryViewModel(
     override fun onCleared() {
         contactInfoCache.stop()
         getApplication<Application>().contentResolver.unregisterContentObserver(observer)
+        getApplication<Application>().contentResolver.unregisterContentObserver(blockedObserver)
         // Undo is gone with the screen, so what it was waiting on is deleted now.
         val pending = undoTimers.values.map { it.group }
         undoTimers.values.forEach { it.timer.cancel() }
@@ -415,5 +516,8 @@ class CallHistoryViewModel(
          * shows for 4 s, plus a margin so a tap at its last moment still lands.
          */
         const val UNDO_WINDOW_MS = 4_500L
+
+        /** How long the calls, contacts and blocked numbers must stay quiet before a reload. */
+        const val CHANGE_DEBOUNCE_MS = 300L
     }
 }
