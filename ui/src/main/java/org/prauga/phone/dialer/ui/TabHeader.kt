@@ -29,6 +29,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
+import androidx.lifecycle.compose.LifecycleResumeEffect
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -97,7 +101,13 @@ fun TabHeader(
 @Composable
 fun ProfileButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    val profile by produceState<Profile?>(initialValue = null, context) {
+    // Read again each time the screen comes back: the contacts permission may have been granted.
+    var resumes by remember { mutableIntStateOf(0) }
+    LifecycleResumeEffect(Unit) {
+        resumes++
+        onPauseOrDispose {}
+    }
+    val profile by produceState<Profile?>(initialValue = null, context, resumes) {
         value = withContext(Dispatchers.IO) { loadProfile(context) }
     }
     Box(
