@@ -117,10 +117,6 @@ class VoicemailScreenTest {
             events += "undo ${group.rowId}"
         }
 
-        override fun commitDelete(group: CallLogGroup) {
-            events += "commit ${group.rowId}"
-        }
-
         override fun deleteSelected(groups: List<CallLogGroup>) {
             events += "deleteSelected ${groups.map { it.rowId }}"
             hide(groups.flatMap { it.callIds })

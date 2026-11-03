@@ -10,6 +10,14 @@
     <string name="call_history_deleted">Removed from call history</string>
     <!-- Swipe action that removes a row from the call history. -->
     <string name="call_history_delete">Delete</string>
+    <!-- Snackbar when the call history could not be read. -->
+    <string name="call_history_load_failed">Couldn\'t load your call history</string>
+    <!-- Snackbar when calls could not be deleted from the call history. -->
+    <string name="call_history_delete_failed">Couldn\'t delete from your call history</string>
+    <!-- Snackbar when a number could not be blocked. -->
+    <string name="call_history_block_failed">Couldn\'t block this number</string>
+    <!-- Snackbar when a number could not be unblocked. -->
+    <string name="call_history_unblock_failed">Couldn\'t unblock this number</string>
     <!-- Call statistics sort option: by how long the calls lasted. -->
     <string name="call_stats_by_duration">Duration</string>
     <!-- Call statistics sort option: by how many calls. -->

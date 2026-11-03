@@ -16,12 +16,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
@@ -97,6 +100,14 @@ fun CallHistoryRoute(
         onPauseOrDispose { viewModel.stop() }
     }
 
+    val snackbarHostState = remember { SnackbarHostState() }
+    val resources = LocalResources.current
+    LaunchedEffect(viewModel) {
+        viewModel.errors.collect { message ->
+            snackbarHostState.showSnackbar(resources.getString(message))
+        }
+    }
+
     val actions =
         remember(viewModel, context) {
             CallHistoryIntents(
@@ -153,6 +164,7 @@ fun CallHistoryRoute(
                 ?.let { message -> { VoicemailTermsScreen(message) } },
         voicemailPlayback = voicemail?.playbackState,
         selectable = true,
+        snackbarHostState = snackbarHostState,
     )
 }
 
@@ -268,8 +280,6 @@ private class CallHistoryIntents(
     override fun deleteLater(group: CallLogGroup) = viewModel.deleteLater(group)
 
     override fun undoDelete(group: CallLogGroup) = viewModel.undoDelete(group)
-
-    override fun commitDelete(group: CallLogGroup) = viewModel.commitDelete(group)
 
     override fun block(row: CallLogRowUi) = viewModel.block(row.group.number, row.group.countryIso)
 

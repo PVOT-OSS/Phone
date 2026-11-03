@@ -109,11 +109,10 @@ interface CallHistoryActions {
     /** The open row was closed. */
     fun closed(row: CallLogRowUi) = Unit
 
+    /** The row was swiped away: hide it, and delete it unless [undoDelete] follows. */
     fun deleteLater(group: CallLogGroup)
 
     fun undoDelete(group: CallLogGroup)
-
-    fun commitDelete(group: CallLogGroup)
 
     /** Deletes the selected voicemails at once, after the user confirmed. */
     fun deleteSelected(groups: List<CallLogGroup>) = Unit
@@ -165,6 +164,24 @@ fun CallHistoryScreen(
 ) {
     // Only the list scrolls under a bar over the screen; the other states start below it.
     val belowBar = Modifier.padding(top = topPadding)
+    // The Undo snackbar outlives the list: swiping the last row away swaps the list for the empty
+    // state, and Undo must still be there to bring the row back.
+    val scope = rememberCoroutineScope()
+    val deletedMessage = stringResource(R.string.call_history_deleted)
+    val undoLabel = stringResource(R.string.snackbar_undo)
+    val onDeleted: (CallLogGroup) -> Unit = { group ->
+        actions.deleteLater(group)
+        scope.launch {
+            snackbarHostState.currentSnackbarData?.dismiss()
+            val result =
+                snackbarHostState.showSnackbar(
+                    message = deletedMessage,
+                    actionLabel = undoLabel,
+                    duration = SnackbarDuration.Short,
+                )
+            if (result == SnackbarResult.ActionPerformed) actions.undoDelete(group)
+        }
+    }
     Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         when {
             fullScreen != null -> Box(belowBar) { fullScreen() }
@@ -196,11 +213,11 @@ fun CallHistoryScreen(
                         blockedNumbers = loaded?.blockedNumbers.orEmpty(),
                         resolve = resolve,
                         actions = actions,
+                        onDeleted = onDeleted,
                         header = header,
                         voicemailPlayback = voicemailPlayback,
                         selectable = selectable,
                         listState = listState,
-                        snackbarHostState = snackbarHostState,
                         topPadding = topPadding,
                         bottomPadding = bottomPadding,
                     )
@@ -238,11 +255,11 @@ private fun HistoryList(
     blockedNumbers: Set<String>,
     resolve: (CallLogGroup, Int, Boolean) -> CallLogRowUi,
     actions: CallHistoryActions,
+    onDeleted: (CallLogGroup) -> Unit,
     header: (@Composable () -> Unit)?,
     voicemailPlayback: VoicemailPlaybackState?,
     selectable: Boolean,
     listState: LazyListState,
-    snackbarHostState: SnackbarHostState,
     topPadding: Dp,
     bottomPadding: Dp,
 ) {
@@ -252,9 +269,6 @@ private fun HistoryList(
     var confirmDelete by remember { mutableStateOf<CallLogRowUi?>(null) }
     var confirmUnblock by remember { mutableStateOf<CallLogRowUi?>(null) }
     var confirmDeleteSelected by remember { mutableStateOf(false) }
-    val scope = rememberCoroutineScope()
-    val deletedMessage = stringResource(R.string.call_history_deleted)
-    val undoLabel = stringResource(R.string.snackbar_undo)
     // Rows vanish once deleted; keep only selections that are still on screen.
     val selection = selected.filterTo(mutableSetOf()) { id -> groups.any { it.rowId == id } }
     val selecting = selection.isNotEmpty()
@@ -340,21 +354,7 @@ private fun HistoryList(
                                 expandedRowId = null
                                 actions.closed(row)
                             }
-                            actions.deleteLater(group)
-                            scope.launch {
-                                snackbarHostState.currentSnackbarData?.dismiss()
-                                val result =
-                                    snackbarHostState.showSnackbar(
-                                        message = deletedMessage,
-                                        actionLabel = undoLabel,
-                                        duration = SnackbarDuration.Short,
-                                    )
-                                if (result == SnackbarResult.ActionPerformed) {
-                                    actions.undoDelete(group)
-                                } else {
-                                    actions.commitDelete(group)
-                                }
-                            }
+                            onDeleted(group)
                         }
                         // The Delete button removes every call in the row, so it asks first.
                         val onRowAction = { action: RowAction ->
