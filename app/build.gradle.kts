@@ -207,6 +207,7 @@ dependencies {
     implementation(libs.libphonenumber)
     implementation(libs.material)
     implementation(libs.androidx.car.app)
+    implementation(libs.androidx.glance.appwidget)
     implementation(libs.pvot.core.ui)
     implementation(libs.pvot.design.system)
     compileOnly(libs.auto.value.annotations)

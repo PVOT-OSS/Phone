@@ -32,6 +32,7 @@ import org.prauga.phone.dialer.speeddial.database.SpeedDialEntryDatabaseHelper
 import org.prauga.phone.dialer.speeddial.loader.SpeedDialUiItem
 import org.prauga.phone.dialer.speeddial.loader.UiItemLoaderComponent
 import org.prauga.phone.dialer.util.PermissionsUtil
+import org.prauga.phone.dialer.widget.FavoritesWidget
 
 /** What the favorites tab shows. */
 sealed interface SpeedDialUiState {
@@ -179,6 +180,7 @@ class SpeedDialViewModel @JvmOverloads constructor(
             try {
                 repository.savePositions(items)
                 onSaved(items)
+                refreshWidget()
             } catch (e: Exception) {
                 LogUtil.e("SpeedDialViewModel.savePositions", "could not save the order", e)
             }
@@ -191,6 +193,11 @@ class SpeedDialViewModel @JvmOverloads constructor(
             repository.setDefaultChannel(item, channel)
             repository.load()
         }
+    }
+
+    /** Redraws the home screen widget, apart from the list so a slow redraw never holds it up. */
+    private fun refreshWidget() {
+        viewModelScope.launch { FavoritesWidget.update(getApplication()) }
     }
 
     private fun update(block: suspend () -> List<SpeedDialUiItem>) {
@@ -207,6 +214,7 @@ class SpeedDialViewModel @JvmOverloads constructor(
                 // What is on screen stays; a first load that fails shows the empty state.
                 if (_state.value is SpeedDialUiState.Loading) SpeedDialUiState.Empty else _state.value
             }
+            if (_state.value is SpeedDialUiState.Loaded) refreshWidget()
         }
     }
 
