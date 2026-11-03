@@ -8,6 +8,7 @@ package org.prauga.phone.dialer.app.calllog
 import android.app.Application
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -30,12 +31,18 @@ class CallHistoryViewModelTest {
         val deleted = mutableListOf<Long>()
         val loadedTypes = mutableListOf<Int>()
         var failWith: Exception? = null
+
+        /** When set, [blocked] waits on it, as the real lookup waits on the provider. */
+        var blockedGate: CompletableDeferred<Unit>? = null
         override suspend fun load(callType: Int): List<CallLogGroup> {
             loadedTypes += callType
             failWith?.let { throw it }
             return groups
         }
-        override suspend fun blocked(numbers: Collection<String>) = blockedNumbers.intersect(numbers.toSet())
+        override suspend fun blocked(numbers: Collection<String>): Set<String> {
+            blockedGate?.await()
+            return blockedNumbers.intersect(numbers.toSet())
+        }
         override suspend fun delete(groups: Collection<CallLogGroup>) {
             val ids = groups.flatMap { it.callIds }
             deleted += ids
@@ -59,6 +66,7 @@ class CallHistoryViewModelTest {
     ).apply { refresh() }
 
     private val CallHistoryViewModel.loaded get() = state.value as CallHistoryUiState.Loaded
+    private val CallHistoryViewModel.pendingDeletes get() = loaded.pendingDeletes
 
     @Test
     fun loadsTheRequestedCallType() {
@@ -96,16 +104,16 @@ class CallHistoryViewModelTest {
     fun deletingHidesAtOnceAndDeletesOnCommit() {
         val vm = viewModel()
         vm.deleteLater(bea)
-        assertThat(vm.pendingDeletes.value).containsExactly(20L, 21L)
+        assertThat(vm.pendingDeletes).containsExactly(20L, 21L)
         assertThat(repository.deleted).isEmpty()
 
         vm.commitDelete(bea)
 
         assertThat(repository.deleted).containsExactly(20L, 21L)
         // Still hidden until a reload no longer has the calls, or the row would come back meanwhile.
-        assertThat(vm.pendingDeletes.value).containsExactly(20L, 21L)
+        assertThat(vm.pendingDeletes).containsExactly(20L, 21L)
         vm.refresh()
-        assertThat(vm.pendingDeletes.value).isEmpty()
+        assertThat(vm.pendingDeletes).isEmpty()
         assertThat(vm.loaded.groups).containsExactly(ada)
     }
 
@@ -115,7 +123,26 @@ class CallHistoryViewModelTest {
         vm.deleteLater(bea)
         repository.groups = listOf(ada)
         vm.refresh()
-        assertThat(vm.pendingDeletes.value).containsExactly(20L, 21L)
+        assertThat(vm.pendingDeletes).containsExactly(20L, 21L)
+    }
+
+    @Test
+    fun aDeletedRowStaysHiddenWhileAReloadIsInFlight() {
+        val vm = viewModel()
+        vm.deleteLater(bea)
+        vm.commitDelete(bea)
+        assertThat(vm.loaded.visible).containsExactly(ada)
+
+        // The reload no longer has the deleted calls, but is still waiting on the blocked
+        // numbers: the old rows must not show again meanwhile.
+        val gate = CompletableDeferred<Unit>()
+        repository.blockedGate = gate
+        vm.refresh()
+        assertThat(vm.loaded.visible).containsExactly(ada)
+
+        gate.complete(Unit)
+        assertThat(vm.loaded.visible).containsExactly(ada)
+        assertThat(vm.pendingDeletes).isEmpty()
     }
 
     @Test
@@ -123,8 +150,18 @@ class CallHistoryViewModelTest {
         val vm = viewModel()
         vm.deleteNow(listOf(ada, bea))
         assertThat(repository.deleted).containsExactly(10L, 20L, 21L)
+        // Nothing is left: the list is empty, not a list of hidden rows.
         vm.refresh()
-        assertThat(vm.pendingDeletes.value).isEmpty()
+        assertThat(vm.state.value).isEqualTo(CallHistoryUiState.Empty)
+    }
+
+    @Test
+    fun aReloadWithoutTheDeletedCallsShowsTheRest() {
+        val vm = viewModel()
+        vm.deleteNow(listOf(bea))
+        vm.refresh()
+        assertThat(vm.pendingDeletes).isEmpty()
+        assertThat(vm.loaded.groups).containsExactly(ada)
     }
 
     @Test
@@ -134,7 +171,7 @@ class CallHistoryViewModelTest {
         vm.undoDelete(ada)
         vm.commitDelete(ada)
         assertThat(repository.deleted).isEmpty()
-        assertThat(vm.pendingDeletes.value).isEmpty()
+        assertThat(vm.pendingDeletes).isEmpty()
     }
 
     @Test

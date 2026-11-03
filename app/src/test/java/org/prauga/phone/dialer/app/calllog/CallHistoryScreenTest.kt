@@ -53,7 +53,11 @@ class CallHistoryScreenTest {
     )
 
     private var state by mutableStateOf<CallHistoryUiState>(CallHistoryUiState.Loaded(listOf(missed, incoming, older), emptySet()))
-    private var pending by mutableStateOf(emptySet<Long>())
+
+    private fun hide(change: (Set<Long>) -> Set<Long>) {
+        val loaded = state as CallHistoryUiState.Loaded
+        state = loaded.copy(pendingDeletes = change(loaded.pendingDeletes))
+    }
 
     private inner class RecordingActions : CallHistoryActions {
         val events = mutableListOf<String>()
@@ -63,8 +67,8 @@ class CallHistoryScreenTest {
         override fun closed(row: CallLogRowUi) { events += "closed ${row.group.rowId}" }
         override fun deleteSelected(groups: List<CallLogGroup>) { events += "deleteSelected ${groups.map { it.rowId }}" }
         override fun selectionModeChanged(enabled: Boolean, exit: () -> Unit) { events += "selecting $enabled" }
-        override fun deleteLater(group: CallLogGroup) { events += "delete ${group.rowId}"; pending = pending + group.callIds }
-        override fun undoDelete(group: CallLogGroup) { events += "undo ${group.rowId}"; pending = pending - group.callIds.toSet() }
+        override fun deleteLater(group: CallLogGroup) { events += "delete ${group.rowId}"; hide { it + group.callIds } }
+        override fun undoDelete(group: CallLogGroup) { events += "undo ${group.rowId}"; hide { it - group.callIds.toSet() } }
         override fun commitDelete(group: CallLogGroup) { events += "commit ${group.rowId}" }
         override fun block(row: CallLogRowUi) { events += "block ${row.group.rowId}" }
         override fun unblock(row: CallLogRowUi) { events += "unblock ${row.group.rowId}" }
@@ -78,7 +82,6 @@ class CallHistoryScreenTest {
         PhoneScreenTheme {
             CallHistoryScreen(
                 state = state,
-                pendingDeletes = pending,
                 resolve = { group, _, _ -> rows.getValue(group.rowId) },
                 emptyMessage = R.string.call_log_all_empty,
                 showEmptyAction = showEmptyAction,
