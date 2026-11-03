@@ -14,6 +14,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
+import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Arrangement
@@ -26,12 +27,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -59,6 +60,8 @@ import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.onLongClick
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.prauga.pvot.designsystem.components.PvotBottomSheet
@@ -157,6 +160,7 @@ fun DialpadScreen(
                 modifier = Modifier.weight(1f).fillMaxHeight(),
                 keys = keys,
                 compact = true,
+                haptics = false,
             )
         }
     } else {
@@ -168,13 +172,21 @@ fun DialpadScreen(
                 onKey = callbacks::onKey,
                 onKeyLongPress = callbacks::onKeyLongPress,
                 keys = keys,
+                haptics = false,
             )
         }
     }
     if (state.menuOpen) DialpadMenu(state, callbacks)
 }
 
-private val KeySize = 72.dp
+/** Each key takes a third of the row, so the whole column is a target, and this much height. */
+private val KeyHeight = 76.dp
+
+/** The ripple under a pressed key: a circle that fits the key's height, whatever its width. */
+private val KeyRippleRadius = KeyHeight / 2
+
+/** The delete key's target, round, a little smaller than a digit. */
+private val DeleteSize = 56.dp
 
 /** The call rate, the number between the menu and delete buttons, and any warning under it. */
 @Composable
@@ -220,6 +232,8 @@ private fun NumberRow(state: DialpadUiState, digits: EditText, callbacks: Dialpa
 /**
  * The twelve dialpad keys. A key reports going down and up through [onKey], so its tone plays while
  * held; [onKeyLongPress] answers whether a held 0 or 1 did something.
+ *
+ * @param haptics Whether a key going down is felt; off where the host already taps for it
  */
 @Composable
 fun DialpadKeyGrid(
@@ -229,20 +243,25 @@ fun DialpadKeyGrid(
     longPressKeys: Boolean = true,
     keys: List<DialpadKeySpec> = rememberKeys(),
     compact: Boolean = false,
+    haptics: Boolean = true,
 ) {
-    Column(modifier) {
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(PvotSpacing.XS)) {
         for (row in keys.chunked(3)) {
             // Compact rows share the grid's height, so the keys fit a short screen.
             val rowModifier =
                 if (compact) Modifier.fillMaxWidth().weight(1f) else Modifier.fillMaxWidth()
-            Row(rowModifier, horizontalArrangement = Arrangement.SpaceEvenly) {
-                for (key in row) DialpadKey(
-                    key,
-                    onKey,
-                    if (longPressKeys) onKeyLongPress else { _ -> false },
-                    longPressKeys,
-                    compact,
-                )
+            Row(rowModifier) {
+                for (key in row) {
+                    DialpadKey(
+                        key = key,
+                        onKey = onKey,
+                        onKeyLongPress = if (longPressKeys) onKeyLongPress else { _ -> false },
+                        longPressKeys = longPressKeys,
+                        compact = compact,
+                        haptics = haptics,
+                        modifier = Modifier.weight(1f),
+                    )
+                }
             }
         }
     }
@@ -285,7 +304,10 @@ private fun rememberKeys(): List<DialpadKeySpec> {
     }
 }
 
-/** One key: it plays its tone while held, as the old keys did, and 0 and 1 have long presses. */
+/**
+ * One key: it plays its tone while held, as the old keys did, and 0 and 1 have long presses. The
+ * ripple is a circle at the key's centre, so a wide key still reads as a round one.
+ */
 @Composable
 private fun DialpadKey(
     key: DialpadKeySpec,
@@ -293,8 +315,11 @@ private fun DialpadKey(
     onKeyLongPress: (Int) -> Boolean,
     longPressKeys: Boolean,
     compact: Boolean,
+    haptics: Boolean,
+    modifier: Modifier = Modifier,
 ) {
     val source = remember { MutableInteractionSource() }
+    val haptic = LocalHapticFeedback.current
     val longPressDescription =
         if (!longPressKeys) null
         else
@@ -308,16 +333,23 @@ private fun DialpadKey(
             .joinToString(",")
     Column(
         modifier =
-            Modifier.then(
-                    if (compact) Modifier.width(KeySize).fillMaxHeight() else Modifier.size(KeySize)
-                )
+            modifier
+                .then(if (compact) Modifier.fillMaxHeight() else Modifier.height(KeyHeight))
                 .pvotPressScale(source)
-                .clip(CircleShape)
-                .pointerInput(key.keyCode) {
+                .indication(
+                    source,
+                    ripple(
+                        bounded = false,
+                        radius = KeyRippleRadius,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    ),
+                )
+                .pointerInput(key.keyCode, haptics) {
                     awaitEachGesture {
                         val down = awaitFirstDown()
                         val press = PressInteraction.Press(down.position)
                         source.tryEmit(press)
+                        if (haptics) haptic.performHapticFeedback(HapticFeedbackType.KeyboardTap)
                         onKey(key.keyCode, true)
                         var released = false
                         try {
@@ -353,7 +385,7 @@ private fun DialpadKey(
     ) {
         Text(
             text = key.number,
-            style = MaterialTheme.typography.headlineMedium,
+            style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.colorScheme.onSurface,
         )
         // The "+" under 0 is a long press, so it only shows where long presses work.
@@ -364,14 +396,14 @@ private fun DialpadKey(
             if (letters != null) {
                 Text(
                     text = letters,
-                    style = MaterialTheme.typography.labelSmall,
+                    style = LettersStyle,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
             key.secondaryLetters?.let {
                 Text(
                     text = it,
-                    style = MaterialTheme.typography.labelSmall,
+                    style = LettersStyle,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
@@ -379,18 +411,29 @@ private fun DialpadKey(
     }
 }
 
+/** The letters under a digit, bolder than a caption so they read at a glance. */
+private val LettersStyle: TextStyle
+    @Composable get() = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold)
+
 @Composable
 private fun DeleteButton(enabled: Boolean, callbacks: DialpadCallbacks) {
     val description = stringResource(R.string.description_delete_button)
     val haptics = LocalHapticFeedback.current
+    val source = remember { MutableInteractionSource() }
     Box(
         modifier =
-            Modifier.size(48.dp)
+            Modifier.size(DeleteSize)
                 .clip(CircleShape)
+                .indication(
+                    source,
+                    ripple(bounded = true, color = MaterialTheme.colorScheme.onSurface),
+                )
                 .pointerInput(enabled) {
                     if (!enabled) return@pointerInput
                     awaitEachGesture {
-                        awaitFirstDown()
+                        val down = awaitFirstDown()
+                        val press = PressInteraction.Press(down.position)
+                        source.tryEmit(press)
                         try {
                             withTimeout(viewConfiguration.longPressTimeoutMillis) {
                                 if (waitForUpOrCancellation() != null) callbacks.onDelete()
@@ -401,6 +444,7 @@ private fun DeleteButton(enabled: Boolean, callbacks: DialpadCallbacks) {
                             callbacks.onDeleteLongPress()
                             waitForUpOrCancellation()
                         }
+                        source.tryEmit(PressInteraction.Release(press))
                     }
                 }
                 .semantics {
