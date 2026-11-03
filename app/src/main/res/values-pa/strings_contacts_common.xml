@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">ਕੰਮ ਡਾਇਰੈਕਟਰੀ</string>
-  <string name="chat_aim">AIM ਵਰਤਦੇ ਹੋਏ ਚੈਟ ਕਰੋ</string>
-  <string name="chat_msn">Windows Live ਵਰਤਦੇ ਹੋਏ ਚੈਟ ਕਰੋ</string>
-  <string name="chat_yahoo">Yahoo ਵਰਤਦੇ ਹੋਏ ਚੈਟ ਕਰੋ</string>
-  <string name="chat_skype">Skype ਵਰਤਦੇ ਹੋਏ ਚੈਟ ਕਰੋ</string>
-  <string name="chat_qq">QQ ਵਰਤਦੇ ਹੋਏ ਚੈਟ ਕਰੋ</string>
-  <string name="chat_gtalk">Google Talk ਵਰਤਦੇ ਹੋਏ ਚੈਟ ਕਰੋ</string>
-  <string name="chat_icq">ICQ ਵਰਤਦੇ ਹੋਏ ਚੈਟ ਕਰੋ</string>
-  <string name="chat_jabber">Jabber ਵਰਤਦੇ ਹੋਏ ਚੈਟ ਕਰੋ</string>
   <string name="display_options_sort_list_by">ਇਸ ਮੁਤਾਬਕ ਛਾਂਟੋ</string>
   <string name="display_options_sort_by_given_name">ਪਹਿਲਾ ਨਾਮ</string>
   <string name="display_options_sort_by_family_name">ਆਖਰੀ ਨਾਮ</string>

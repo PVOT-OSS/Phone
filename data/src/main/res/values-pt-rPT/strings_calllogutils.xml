@@ -32,5 +32,4 @@
   <string name="description_via_number">através do número %1$s</string>
   <string name="description_via_number_phone_account">em %1$s, através do número %2$s</string>
   <string name="voicemail_string">Correio de voz</string>
-  <string name="just_now">Agora mesmo</string>
 </resources>

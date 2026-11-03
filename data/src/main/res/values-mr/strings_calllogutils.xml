@@ -32,5 +32,4 @@
   <string name="description_via_number">%1$s द्वारे</string>
   <string name="description_via_number_phone_account">%1$s वर, %2$s द्वारे</string>
   <string name="voicemail_string">व्हॉइसमेल</string>
-  <string name="just_now">आत्ताच</string>
 </resources>

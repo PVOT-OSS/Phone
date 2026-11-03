@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">通話履歴</string>
   <string name="dialer_settings_label">設定</string>
   <string name="description_start_voice_search">音声検索を開始</string>
-  <string name="voicemail">ボイスメール</string>
   <string name="voicemailMultiSelectDeleteConfirm">削除</string>
   <string name="voicemailMultiSelectDeleteCancel">キャンセル</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s 件選択済み</string>

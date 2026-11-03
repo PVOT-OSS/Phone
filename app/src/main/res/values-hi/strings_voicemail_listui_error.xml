@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">नया! अपना वॉइसमेल पढ़ें</string>
   <string name="dialer_terms_and_conditions_1.0">वॉइसमेल पर कॉल किए बिना अपने मैसेज देखें और सुनें. Google की वॉइसमेल को लेख में बदलने वाली मुफ़्त सेवा आपके वॉइसमेल को लिखकर देती है. आप जब चाहें सेटिंग में जा कर इसे बंद भी कर सकते हैं. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">अब Google की वॉइसमेल को लेख में बदलने वाली मुफ़्त सेवा आपके वॉइसमेल को लिखकर देती है. आप जब चाहें सेटिंग में जा कर इसे बंद कर सकते हैं. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">ठीक है</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">नहीं, धन्यवाद</string>
 </resources>

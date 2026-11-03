@@ -32,5 +32,4 @@
   <string name="description_via_number">í gegnum %1$s</string>
   <string name="description_via_number_phone_account">á %1$s, í gegnum %2$s</string>
   <string name="voicemail_string">Talhólf</string>
-  <string name="just_now">Rétt í þessu</string>
 </resources>

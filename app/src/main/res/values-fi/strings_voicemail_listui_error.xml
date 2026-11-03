@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Uutta! Lue vastaajaviestisi</string>
   <string name="dialer_terms_and_conditions_1.0">Voit tarkistaa ja kuunnella viestisi soittamatta vastaajaan. Googlen maksuton transkriptiopalvelu tarjoaa vastaajaviestiesi transkriptiot. Voit poistaa vastaajan tai transkriptiot käytöstä milloin tahansa Asetuksista. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Googlen maksuton transkriptiopalvelu tarjoaa vastaajaviestiesi transkriptiot. Voit poistaa palvelun käytöstä milloin tahansa Asetuksista. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">Selvä</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Ei kiitos</string>
 </resources>

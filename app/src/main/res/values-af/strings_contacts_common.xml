@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Werkgids</string>
-  <string name="chat_aim">Klets met AIM</string>
-  <string name="chat_msn">Klets met Windows Live</string>
-  <string name="chat_yahoo">Klets met Yahoo</string>
-  <string name="chat_skype">Klets met Skype</string>
-  <string name="chat_qq">Klets met QQ</string>
-  <string name="chat_gtalk">Klets met Google Talk</string>
-  <string name="chat_icq">Klets met ICQ</string>
-  <string name="chat_jabber">Klets met Jabber</string>
   <string name="display_options_sort_list_by">Sorteer volgens</string>
   <string name="display_options_sort_by_given_name">Voornaam</string>
   <string name="display_options_sort_by_family_name">Van</string>

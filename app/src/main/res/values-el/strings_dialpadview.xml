@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dial_button">κλήση</string>
   <string name="dialog_voicemail_airplane_mode_message">Για κλήση αυτόματου τηλεφωνητή, πρώτα απενεργοποιήστε τη λειτουργία πτήσης.</string>
   <string name="dialog_voicemail_not_ready_message">Για τη ρύθμιση του αυτόματου τηλεφωνητή, μεταβείτε στο στοιχείο Μενού &gt; Ρυθμίσεις.</string>
   <string name="imei">IMEI</string>

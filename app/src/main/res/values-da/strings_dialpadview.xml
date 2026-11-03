@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dial_button">ring op</string>
   <string name="dialog_voicemail_airplane_mode_message">Hvis du vil ringe til telefonsvareren, skal du først slå Flytilstand fra.</string>
   <string name="dialog_voicemail_not_ready_message">Gå til Menu &gt; Indstillinger for at konfigurere telefonsvareren.</string>
   <string name="imei">IMEI-nummer</string>

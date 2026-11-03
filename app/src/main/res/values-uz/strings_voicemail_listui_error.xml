@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Yangi! Endi ovozli xabarlarni o‘qish mumkin!</string>
   <string name="dialer_terms_and_conditions_1.0">Ovozli pochta raqamiga termasdan turib, ovozli xabarlarni ko‘rish va tinglash imkoniyati paydo bo‘ldi. Ovozli xabarlar transkripsiyasi Googlening bepul transkripsiya xizmati tomonidan taqdim etiladi. Bu funksiyani Sozlamalar orqali o‘chirishingiz yoki yoqishingiz mumkin. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Ovozli xabarlar transkripsiyasi endi Googlening bepul transkripsiya xizmati tomonidan taqdim etiladi. Bu funksiyani xohlagan vaqtda Sozlamalardan o‘chirib qo‘yish mumkin. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">OK</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Kerak emas</string>
 </resources>

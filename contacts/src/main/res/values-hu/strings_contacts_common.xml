@@ -96,9 +96,4 @@
   <string name="send_and_call_button">KÜLDÉS ÉS HÍVÁS</string>
   <string name="call_subject_limit">%2$s/%1$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">%1$s lap.</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="one"> %1$s lap. %2$d olvasatlan elem. </item>
-    <item quantity="other"> %1$s lap. %2$d olvasatlan elem. </item>
-  </plurals>
 </resources>

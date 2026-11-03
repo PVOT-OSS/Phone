@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Jobbkatalog</string>
-  <string name="chat_aim">Nettprat med AIM</string>
-  <string name="chat_msn">Nettprat med Windows Live</string>
-  <string name="chat_yahoo">Nettprat med Yahoo</string>
-  <string name="chat_skype">Nettprat med Skype</string>
-  <string name="chat_qq">Nettprat med QQ</string>
-  <string name="chat_gtalk">Nettprat med Google Talk</string>
-  <string name="chat_icq">Nettprat med ICQ</string>
-  <string name="chat_jabber">Nettprat med Jabber</string>
   <string name="display_options_sort_list_by">Sortér etter</string>
   <string name="display_options_sort_by_given_name">Fornavn</string>
   <string name="display_options_sort_by_family_name">Etternavn</string>

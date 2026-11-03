@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">ไดเรกทอรีที่ทำงาน</string>
-  <string name="chat_aim">แชทโดยใช้ AIM</string>
-  <string name="chat_msn">แชทโดยใช้ Windows Live</string>
-  <string name="chat_yahoo">แชทโดยใช้ Yahoo</string>
-  <string name="chat_skype">แชทโดยใช้ Skype</string>
-  <string name="chat_qq">แชทโดยใช้ QQ</string>
-  <string name="chat_gtalk">แชทโดยใช้ Google Talk</string>
-  <string name="chat_icq">แชทโดยใช้ ICQ</string>
-  <string name="chat_jabber">แชทโดยใช้ Jabber</string>
   <string name="display_options_sort_list_by">จัดเรียงตาม</string>
   <string name="display_options_sort_by_given_name">ชื่อ</string>
   <string name="display_options_sort_by_family_name">นามสกุล</string>

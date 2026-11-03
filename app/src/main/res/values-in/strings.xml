@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Histori panggilan</string>
   <string name="dialer_settings_label">Setelan</string>
   <string name="description_start_voice_search">Memulai penelusuran suara</string>
-  <string name="voicemail">Kotak Pesan</string>
   <string name="voicemailMultiSelectDeleteConfirm">Hapus</string>
   <string name="voicemailMultiSelectDeleteCancel">Batal</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s dipilih</string>

@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Anropslogg</string>
   <string name="dialer_settings_label">Innstillinger</string>
   <string name="description_start_voice_search">Start talesøk</string>
-  <string name="voicemail">Telefonsvarer</string>
   <string name="voicemailMultiSelectDeleteConfirm">Slett</string>
   <string name="voicemailMultiSelectDeleteCancel">Avbryt</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s er valgt</string>

@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Historial de llamadas</string>
   <string name="dialer_settings_label">Configuración</string>
   <string name="description_start_voice_search">Iniciar búsqueda por voz</string>
-  <string name="voicemail">Correo de voz</string>
   <string name="voicemailMultiSelectDeleteConfirm">Borrar</string>
   <string name="voicemailMultiSelectDeleteCancel">Cancelar</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s seleccionada(s)</string>

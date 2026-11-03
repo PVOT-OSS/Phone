@@ -32,5 +32,4 @@
   <string name="description_via_number">über %1$s</string>
   <string name="description_via_number_phone_account">mit %1$s, über %2$s</string>
   <string name="voicemail_string">Mailbox</string>
-  <string name="just_now">Gerade eben</string>
 </resources>

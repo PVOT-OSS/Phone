@@ -23,6 +23,4 @@
   <color name="notification_action_dismiss">#A52714</color>
   <color name="notification_action_answer_video">#097138</color>
 
-  <!-- Legacy -->
-  <color name="blue_grey_100">#CFD8DC</color>
 </resources>

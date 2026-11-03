@@ -31,7 +31,6 @@
   <string name="action_menu_call_history_description">História hovorov</string>
   <string name="dialer_settings_label">Nastavenia</string>
   <string name="description_start_voice_search">Spustenie hlasového vyhľadávania</string>
-  <string name="voicemail">Hlasová schránka</string>
   <string name="voicemailMultiSelectDeleteConfirm">Odstrániť</string>
   <string name="voicemailMultiSelectDeleteCancel">Zrušiť</string>
   <string name="voicemailMultiSelectActionBarTitle">Vybraté: %1$s</string>

@@ -32,5 +32,4 @@
   <string name="description_via_number">numbri %1$s kaudu</string>
   <string name="description_via_number_phone_account">kontol %1$s, numbri %2$s kaudu</string>
   <string name="voicemail_string">Kõnepost</string>
-  <string name="just_now">Äsja</string>
 </resources>

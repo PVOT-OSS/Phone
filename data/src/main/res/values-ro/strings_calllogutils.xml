@@ -34,5 +34,4 @@
   <string name="description_via_number">prin %1$s</string>
   <string name="description_via_number_phone_account">pe %1$s, prin %2$s</string>
   <string name="voicemail_string">Mesagerie vocală</string>
-  <string name="just_now">Adineauri</string>
 </resources>

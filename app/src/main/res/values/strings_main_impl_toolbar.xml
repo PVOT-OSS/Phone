@@ -30,8 +30,6 @@
        [CHAR LIMIT=30] -->
   <string name="dialer_hint_find_contact">Search contacts</string>
 
-  <!-- Show users their settings [CHAR LIMIT=20] -->
-  <string name="settings">Settings</string>
 
   <!-- Remove button that shows up when contact is long-pressed. [CHAR LIMIT=NONE] -->
 

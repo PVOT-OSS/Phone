@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">नयाँ! आफ्नो भ्वाइस मेल पढ्नुहोस्</string>
   <string name="dialer_terms_and_conditions_1.0">भ्वाइस मेलमा कल नगरिकनै आफ्ना सन्देशहरू हेर्नुहोस् र सुन्नुहोस्। तपाईंको भ्वाइस मेलका ट्रान्स्क्रिप्टहरू Google को निःशुल्क ट्रान्स्क्रिप्सन सेवाले उपलब्ध गराउँछ। तपाईं सेटिङहरूमा गई यसलाई जुनसुकै बेला निष्क्रिय पार्न सक्नुहुन्छ। %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">तपाईंको भ्वाइस मेलका ट्रान्स्क्रिप्टहरू अब Google को निःशुल्क ट्रान्स्क्रिप्सन सेवाले उपलब्ध गराउँछ। तपाईं सेटिङहरूमा गई यसलाई जुनसुकै बेला निष्क्रिय पार्न सक्नुहुन्छ। %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">ठिक छ, बुझेँ</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">पर्दैन, धन्यवाद</string>
 </resources>

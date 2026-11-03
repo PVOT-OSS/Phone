@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Новинка! Читайте свою голосову пошту</string>
   <string name="dialer_terms_and_conditions_1.0">Переглядайте та прослуховуйте повідомлення, не телефонуючи на номер голосової пошти. Тексти голосових повідомлень надаються безкоштовною службою транскрипції Google. Ці функції можна будь-коли вимкнути в налаштуваннях. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Тепер тексти голосових повідомлень надаються безкоштовною службою транскрипції Google. Цю функцію можна будь-коли вимкнути в налаштуваннях. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">OK</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Ні, дякую</string>
 </resources>

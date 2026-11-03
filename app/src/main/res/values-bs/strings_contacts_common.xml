@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Poslovni imenik</string>
-  <string name="chat_aim">Chat putem aplikacije AIM</string>
-  <string name="chat_msn">Chat putem aplikacije Windows Live</string>
-  <string name="chat_yahoo">Chat putem aplikacije Yahoo</string>
-  <string name="chat_skype">Chat putem aplikacije Skype</string>
-  <string name="chat_qq">Chat putem aplikacije QQ</string>
-  <string name="chat_gtalk">Chat putem aplikacije Google Talk</string>
-  <string name="chat_icq">Chat putem aplikacije ICQ</string>
-  <string name="chat_jabber">Chat putem aplikacije Jabber</string>
   <string name="display_options_sort_list_by">Poredaj po</string>
   <string name="display_options_sort_by_given_name">Ime</string>
   <string name="display_options_sort_by_family_name">Prezime</string>

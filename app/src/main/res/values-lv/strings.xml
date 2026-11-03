@@ -30,7 +30,6 @@
   <string name="action_menu_call_history_description">Zvanu vēsture</string>
   <string name="dialer_settings_label">Iestatījumi</string>
   <string name="description_start_voice_search">Sākt meklēšanu ar balsi</string>
-  <string name="voicemail">Balss pasts</string>
   <string name="voicemailMultiSelectDeleteConfirm">Dzēst</string>
   <string name="voicemailMultiSelectDeleteCancel">Atcelt</string>
   <string name="voicemailMultiSelectActionBarTitle">Atlasīti: %1$s</string>

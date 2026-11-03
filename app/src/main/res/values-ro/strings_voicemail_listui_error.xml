@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Nou! Citiți mesajele vocale</string>
   <string name="dialer_terms_and_conditions_1.0">Vedeți și ascultați mesajele, fără să fie necesar să apelați mesageria vocală. Transcrierile mesajelor vocale sunt oferite de serviciul gratuit de transcriere de la Google. Puteți dezactiva opțiunea oricând în Setări. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Transcrierile mesajelor vocale sunt oferite de serviciul gratuit de transcriere de la Google. Puteți dezactiva opțiunea oricând în Setări. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">Ok, am înțeles</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Nu, mulțumesc</string>
 </resources>

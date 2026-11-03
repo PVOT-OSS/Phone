@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">¡Nuevo! Lee tus mensajes de voz</string>
   <string name="dialer_terms_and_conditions_1.0">Lee y escucha tus mensajes sin necesidad de llamar al buzón de voz. El servicio de transcripción gratuito de Google te proporciona las transcripciones del buzón de voz. Puedes desactivarlas en cualquier momento desde la configuración. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">El servicio de transcripción gratuito de Google ahora te proporciona las transcripciones del buzón de voz. Puedes desactivar esta opción en cualquier momento desde la configuración. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">Entendido</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">No, gracias</string>
 </resources>

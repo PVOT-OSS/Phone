@@ -18,6 +18,4 @@
   <!-- Format for duration of voicemails which are displayed when viewing voicemail. For example "01:22" -->
   <string name="voicemailDurationFormat"><xliff:g example="10" id="minutes">%1$02d</xliff:g>:<xliff:g example="20" id="seconds">%2$02d</xliff:g></string>
 
-  <!-- Text for snackbar to undo a voicemail delete. [CHAR LIMIT=30] -->
-  <string name="snackbar_voicemail_deleted">Voicemail deleted</string>
 </resources>

@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Indeks for arbejde</string>
-  <string name="chat_aim">Chat ved hjælp af AIM</string>
-  <string name="chat_msn">Chat ved hjælp af Windows Live</string>
-  <string name="chat_yahoo">Chat ved hjælp af Yahoo</string>
-  <string name="chat_skype">Chat ved hjælp af Skype</string>
-  <string name="chat_qq">Chat ved hjælp af QQ</string>
-  <string name="chat_gtalk">Chat ved hjælp af Google Talk</string>
-  <string name="chat_icq">Chat ved hjælp af ICQ</string>
-  <string name="chat_jabber">Chat ved hjælp af Jabber</string>
   <string name="display_options_sort_list_by">Sortér efter</string>
   <string name="display_options_sort_by_given_name">Fornavn</string>
   <string name="display_options_sort_by_family_name">Efternavn</string>

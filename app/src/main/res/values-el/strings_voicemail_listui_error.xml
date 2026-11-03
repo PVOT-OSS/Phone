@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Νέο! Διαβάστε τα μηνύματα από τον αυτόματο τηλεφωνητή σας</string>
   <string name="dialer_terms_and_conditions_1.0">Δείτε και ακούστε τα μηνύματα αυτόματου τηλεφωνητή, χωρίς να χρειάζεται να τον καλέσετε. Οι μεταγραφές των φωνητικών μηνυμάτων του αυτόματου τηλεφωνητή παρέχονται από τη δωρεάν υπηρεσία μεταγραφής της Google. Μπορείτε να απενεργοποιήσετε οποιοδήποτε από τα δύο ανά πάσα στιγμή, από τις Ρυθμίσεις. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Οι μεταγραφές των φωνητικών μηνυμάτων του αυτόματου τηλεφωνητή παρέχονται από τη δωρεάν υπηρεσία μεταγραφής της Google. Μπορείτε να απενεργοποιήσετε αυτήν τη λειτουργία ανά πάσα στιγμή, από τις Ρυθμίσεις. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">Εντάξει, το κατάλαβα</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Όχι, ευχαριστώ</string>
 </resources>

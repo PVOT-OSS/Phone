@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Laneko kontaktuak</string>
-  <string name="chat_aim">Txateatu AIM bidez</string>
-  <string name="chat_msn">Txateatu Windows Live bidez</string>
-  <string name="chat_yahoo">Txateatu Yahoo bidez</string>
-  <string name="chat_skype">Txateatu Skype bidez</string>
-  <string name="chat_qq">Txateatu QQ bidez</string>
-  <string name="chat_gtalk">Txateatu Google Talk bidez</string>
-  <string name="chat_icq">Txateatu ICQ bidez</string>
-  <string name="chat_jabber">Txateatu Jabber bidez</string>
   <string name="display_options_sort_list_by">Ordenatzeko irizpidea</string>
   <string name="display_options_sort_by_given_name">Izena</string>
   <string name="display_options_sort_by_family_name">Abizena</string>

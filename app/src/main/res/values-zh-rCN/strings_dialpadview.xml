@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dial_button">拨号</string>
   <string name="dialog_voicemail_airplane_mode_message">要呼叫语音信箱，请先关闭飞行模式。</string>
   <string name="dialog_voicemail_not_ready_message">要设置语音信箱，请转到“菜单”&gt;“设置”。</string>
   <string name="imei">IMEI</string>

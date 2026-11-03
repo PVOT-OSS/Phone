@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Nouveau ! Recevez vos messages vocaux par écrit</string>
   <string name="dialer_terms_and_conditions_1.0">Affichez et écoutez vos messages, sans avoir à appeler la messagerie vocale. La transcription des messages vocaux est un service fourni gratuitement par Google. Vous pouvez à tout moment désactiver l\'une ou l\'autre des fonctionnalités dans les paramètres. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">La transcription des messages vocaux est un nouveau service fourni gratuitement par Google. Vous pouvez désactiver la fonctionnalité à tout moment dans les paramètres. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">OK</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Non, merci</string>
 </resources>

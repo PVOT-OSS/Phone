@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">പുതിയത്! വോയ്‌സ്മെയിൽ വായിക്കുക</string>
   <string name="dialer_terms_and_conditions_1.0">വോയ്‌സ്‌മെയിലിൽ ‌വിളിക്കാതെ തന്നെ, സന്ദേശങ്ങൾ കാണുക, കേൾക്കുക. Google-ന്‍റെ സൗജന്യ ട്രാൻസ്‌ക്രിപ്ഷൻ സേവനമാണ് നിങ്ങളുടെ വോയ്‌സ്‌മെയിലിന്‍റെ ട്രാൻസ്‌ക്രിപ്റ്റുകൾ നൽകുന്നത്. ഇവയിലേതും ഏത് സമയത്തും ക്രമീകരണത്തിൽ ഓഫാക്കാവുന്നതാണ്. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Google-ന്‍റെ സൗജന്യ ട്രാൻസ്‌ക്രിപ്ഷൻ സേവനമാണ് നിങ്ങളുടെ വോയ്‌സ്‌മെയിലിന്‍റെ ട്രാൻസ്‌ക്രിപ്റ്റുകൾ നൽകുന്നത്. ഏത് സമയത്തും ഇത് ക്രമീകരണത്തിൽ ഓഫാക്കാവുന്നതാണ്. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">മനസ്സിലായി</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">വേണ്ട</string>
 </resources>

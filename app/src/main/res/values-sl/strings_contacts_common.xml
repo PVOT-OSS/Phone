@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Delovni imenik</string>
-  <string name="chat_aim">Klepet s storitvijo AIM</string>
-  <string name="chat_msn">Klepet s storitvijo Windows Live</string>
-  <string name="chat_yahoo">Klepet s storitvijo Yahoo</string>
-  <string name="chat_skype">Klepet s storitvijo Skype</string>
-  <string name="chat_qq">Klepet s storitvijo QQ</string>
-  <string name="chat_gtalk">Klepet s storitvijo Google Talk</string>
-  <string name="chat_icq">Klepet s storitvijo ICQ</string>
-  <string name="chat_jabber">Klepet s storitvijo Jabber</string>
   <string name="display_options_sort_list_by">Razvrsti glede na</string>
   <string name="display_options_sort_by_given_name">Ime</string>
   <string name="display_options_sort_by_family_name">Priimek</string>

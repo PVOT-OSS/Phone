@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Berria! Irakurri ahots-mezuak</string>
   <string name="dialer_terms_and_conditions_1.0">Ikusi eta entzun mezuak, erantzungailura deitu beharrik gabe. Google-ren doako transkripzio-zerbitzuaren bidez egiten dira ahots-mezuen transkripzioak. Aukera hau desaktibatzeko, joan Ezarpenak atalera. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Google-ren doako transkripzio-zerbitzuaren bidez egiten dira ahots-mezuen transkripzioak. Aukera hau desaktibatzeko, joan Ezarpenak atalera. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">Ados</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Ez, eskerrik asko</string>
 </resources>

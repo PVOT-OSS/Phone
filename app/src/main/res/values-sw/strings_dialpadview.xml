@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dial_button">piga simu</string>
   <string name="dialog_voicemail_airplane_mode_message">Ili usikilize ujumbe wa sauti, kwanza zima Hali ya Ndegeni.</string>
   <string name="dialog_voicemail_not_ready_message">Ili uweke mipangilio ya ujumbe wa sauti, nenda kwenye Menyu &gt; Mipangilio.</string>
   <string name="imei">IMEI</string>

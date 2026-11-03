@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">பணிக் கோப்பகம்</string>
-  <string name="chat_aim">AIM இல் அரட்டையடி</string>
-  <string name="chat_msn">Windows Live இல் அரட்டையடி</string>
-  <string name="chat_yahoo">Yahoo இல் அரட்டையடி</string>
-  <string name="chat_skype">Skype இல் அரட்டையடி</string>
-  <string name="chat_qq">QQ இல் அரட்டையடி</string>
-  <string name="chat_gtalk">Google Talk இல் அரட்டையடி</string>
-  <string name="chat_icq">ICQ இல் அரட்டையடி</string>
-  <string name="chat_jabber">Jabber இல் அரட்டையடி</string>
   <string name="display_options_sort_list_by">வரிசைப்படுத்து</string>
   <string name="display_options_sort_by_given_name">முதல் பெயர்</string>
   <string name="display_options_sort_by_family_name">இறுதிப் பெயர்</string>

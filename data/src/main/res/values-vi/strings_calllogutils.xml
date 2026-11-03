@@ -32,5 +32,4 @@
   <string name="description_via_number">qua %1$s</string>
   <string name="description_via_number_phone_account">trên %1$s, qua %2$s</string>
   <string name="voicemail_string">Thư thoại</string>
-  <string name="just_now">Vừa xong</string>
 </resources>

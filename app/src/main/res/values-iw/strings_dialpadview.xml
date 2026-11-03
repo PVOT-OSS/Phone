@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dial_button">חיוג</string>
   <string name="dialog_voicemail_airplane_mode_message">כדי להתקשר לתא הקולי, קודם עליך להשבית את מצב הטיסה.</string>
   <string name="dialog_voicemail_not_ready_message">כדי להגדיר את התא הקולי, עליך להיכנס לתפריט &gt; הגדרות.</string>
   <string name="imei">IMEI</string>

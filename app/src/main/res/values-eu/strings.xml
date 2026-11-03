@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Deien historia</string>
   <string name="dialer_settings_label">Ezarpenak</string>
   <string name="description_start_voice_search">Hasi ahozko bilaketa</string>
-  <string name="voicemail">Erantzungailua</string>
   <string name="voicemailMultiSelectDeleteConfirm">Ezabatu</string>
   <string name="voicemailMultiSelectDeleteCancel">Utzi</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s hautatu dira</string>

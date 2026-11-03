@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Historial de trucades</string>
   <string name="dialer_settings_label">Configuració</string>
   <string name="description_start_voice_search">Inicia la cerca per veu</string>
-  <string name="voicemail">Bústia de veu</string>
   <string name="voicemailMultiSelectDeleteConfirm">Suprimeix</string>
   <string name="voicemailMultiSelectDeleteCancel">Cancel·la</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s seleccionades</string>

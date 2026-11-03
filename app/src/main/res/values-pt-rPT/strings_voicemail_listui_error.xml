@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Novidade! Leia o seu correio de voz</string>
   <string name="dialer_terms_and_conditions_1.0">Veja e ouça as suas mensagens sem ter de ligar para o correio de voz. As transcrições do seu correio de voz são fornecidas pelo serviço de transcrição gratuito da Google. Pode desativar estas duas opções nas Definições a qualquer momento. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">As transcrições do seu correio de voz são agora fornecidas pelo serviço de transcrição gratuito da Google. Pode desativar esta opção nas Definições a qualquer momento. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">Ok, compreendi</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Não, obrigado</string>
 </resources>

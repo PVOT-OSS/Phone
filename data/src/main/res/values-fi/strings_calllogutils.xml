@@ -32,5 +32,4 @@
   <string name="description_via_number">numerosta %1$s</string>
   <string name="description_via_number_phone_account">tililtä %1$s numerosta %2$s</string>
   <string name="voicemail_string">Vastaaja</string>
-  <string name="just_now">Juuri äsken</string>
 </resources>

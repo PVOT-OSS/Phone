@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Дуудлагын түүх</string>
   <string name="dialer_settings_label">Тохиргоо</string>
   <string name="description_start_voice_search">Дуун хайлтыг эхлүүлэх</string>
-  <string name="voicemail">Дуут шуудан</string>
   <string name="voicemailMultiSelectDeleteConfirm">Устгах</string>
   <string name="voicemailMultiSelectDeleteCancel">Цуцлах</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s сонгосон</string>

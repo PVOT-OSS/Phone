@@ -96,11 +96,4 @@
   <string name="send_and_call_button">ODOSLAŤ A VOLAŤ</string>
   <string name="call_subject_limit">%1$s / %2$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">Karta %1$s.</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="one"> Karta %1$s. %2$d neprečítaná položka. </item>
-    <item quantity="few"> Karta %1$s. %2$d neprečítané položky. </item>
-    <item quantity="many"> Karta %1$s. %2$d neprečítanej položky. </item>
-    <item quantity="other"> Karta %1$s. %2$d neprečítaných položiek. </item>
-  </plurals>
 </resources>

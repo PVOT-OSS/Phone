@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dial_button">marcar</string>
   <string name="dialog_voicemail_airplane_mode_message">Para efetuar uma chamada para o correio de voz, desative primeiro o modo de avião.</string>
   <string name="dialog_voicemail_not_ready_message">Para configurar o correio de voz, aceda a Menu &gt; Definições.</string>
   <string name="imei">IMEI</string>

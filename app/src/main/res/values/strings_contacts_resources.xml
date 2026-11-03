@@ -19,22 +19,6 @@
   <!-- The label in section header in the contact list for a work contact directory [CHAR LIMIT=128] -->
   <string name="directory_search_label_work">Work directory</string>
 
-  <!-- Action string for starting an IM chat with the AIM protocol -->
-  <string name="chat_aim">Chat using AIM</string>
-  <!-- Action string for starting an IM chat with the MSN or Windows Live protocol -->
-  <string name="chat_msn">Chat using Windows Live</string>
-  <!-- Action string for starting an IM chat with the Yahoo protocol -->
-  <string name="chat_yahoo">Chat using Yahoo</string>
-  <!-- Action string for starting an IM chat with the Skype protocol -->
-  <string name="chat_skype">Chat using Skype</string>
-  <!-- Action string for starting an IM chat with the QQ protocol -->
-  <string name="chat_qq">Chat using QQ</string>
-  <!-- Action string for starting an IM chat with the Google Talk protocol -->
-  <string name="chat_gtalk">Chat using Google Talk</string>
-  <!-- Action string for starting an IM chat with the ICQ protocol -->
-  <string name="chat_icq">Chat using ICQ</string>
-  <!-- Action string for starting an IM chat with the Jabber protocol -->
-  <string name="chat_jabber">Chat using Jabber</string>
 
   <!-- Label of the "sort by" display option -->
   <string name="display_options_sort_list_by">Sort by</string>
