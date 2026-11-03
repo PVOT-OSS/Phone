@@ -17,31 +17,31 @@
 
 package org.prauga.phone.dialer.calldetails
 
-import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.CallLog.Calls
 import android.provider.MediaStore
 import android.text.format.DateFormat
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.google.i18n.phonenumbers.NumberParseException
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.prauga.pvot.designsystem.platform.enablePvotEdgeToEdge
@@ -50,30 +50,21 @@ import com.prauga.pvot.designsystem.theme.PvotSpacing
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.guava.await
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.AccountSelectionActivity
 import org.prauga.phone.dialer.callintent.CallInitiationType
 import org.prauga.phone.dialer.callintent.CallIntentBuilder
-import org.prauga.phone.dialer.calllogutils.CallbackActionHelper
 import org.prauga.phone.dialer.callrecord.CallRecording
-import org.prauga.phone.dialer.callrecord.CallRecordingDataStore
-import org.prauga.phone.dialer.callrecord.impl.CallRecorderService
 import org.prauga.phone.dialer.clipboard.ClipboardUtils
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.dialercontact.DialerContact
 import org.prauga.phone.dialer.glidephotomanager.PhotoInfo
 import org.prauga.phone.dialer.lettertile.LetterTileDrawable
 import org.prauga.phone.dialer.main.impl.SnackbarPrompt
-import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper
 import org.prauga.phone.dialer.postcall.PostCall
 import org.prauga.phone.dialer.precall.PreCall
 import org.prauga.phone.dialer.protos.ProtoParsers
 import org.prauga.phone.dialer.rtt.RttTranscriptActivity
-import org.prauga.phone.dialer.rtt.RttTranscriptUtil
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.PhoneSnackbarHost
 import org.prauga.phone.dialer.ui.QuickContactAvatar
@@ -87,24 +78,34 @@ import org.prauga.phone.dialer.util.IntentUtil
  */
 class OldCallDetailsActivity : ComponentActivity() {
 
-    private lateinit var contact: DialerContact
-    private var entries: CallDetailsEntries = CallDetailsEntries.getDefaultInstance()
-    private var ui by mutableStateOf<CallDetailsUi?>(null)
-    private var assistedDialingCountryCode by mutableStateOf<Int?>(null)
-    private val recordingStore = CallRecordingDataStore()
+    private val viewModel: CallDetailsViewModel by viewModels {
+        viewModelFactory {
+            initializer { CallDetailsViewModel(application, createSavedStateHandle()) }
+        }
+    }
+    private val contact: DialerContact
+        get() = viewModel.contact
+
     private val snackbars = SnackbarHostState()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enablePvotEdgeToEdge()
         super.onCreate(savedInstanceState)
-        handleIntent(intent)
+        // On recreation the view model already has the calls, less any the user deleted since.
+        if (savedInstanceState == null) handleIntent(intent)
+        if (!viewModel.hasEntries) {
+            finish()
+            return
+        }
         setPvotContent {
             PhoneScreenTheme {
-                val ui = ui ?: return@PhoneScreenTheme
+                val finished = viewModel.finished
+                LaunchedEffect(finished) { if (finished) finish() }
+                val ui = viewModel.ui ?: return@PhoneScreenTheme
                 Box(Modifier.fillMaxSize()) {
                     CallDetailsScreen(
                         ui = ui,
-                        assistedDialingCountryCode = assistedDialingCountryCode,
+                        assistedDialingCountryCode = viewModel.assistedDialingCountryCode,
                         callWithIntent =
                             AccountSelectionActivity.createIntent(
                                 this@OldCallDetailsActivity,
@@ -139,6 +140,7 @@ class OldCallDetailsActivity : ComponentActivity() {
         super.onNewIntent(intent)
         setIntent(intent)
         handleIntent(intent)
+        if (!viewModel.hasEntries) finish()
     }
 
     override fun onResume() {
@@ -146,76 +148,17 @@ class OldCallDetailsActivity : ComponentActivity() {
         PostCall.promptUserForMessageIfNecessary(this, SnackbarPrompt(lifecycleScope, snackbars))
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        recordingStore.close()
-    }
-
     private fun handleIntent(intent: Intent) {
-        contact = ProtoParsers.getTrusted(intent, EXTRA_CONTACT, DialerContact.getDefaultInstance())
-        entries =
-            ProtoParsers.getTrusted(
-                intent,
-                EXTRA_CALL_DETAILS_ENTRIES,
-                CallDetailsEntries.getDefaultInstance(),
-            )
-        if (entries.entriesCount == 0) {
-            finish()
-            return
-        }
-        ui = map()
-        lifecycleScope.launch {
-            val recordings = withContext(Dispatchers.IO) { loadRecordings() }
-            val transcripts =
-                runCatching {
-                        RttTranscriptUtil.getAvailableRttTranscriptIds(
-                                this@OldCallDetailsActivity,
-                                entries.entriesList
-                                    .map { it.callMappingId }
-                                    .toSet()
-                                    .let { com.google.common.collect.ImmutableSet.copyOf(it) },
-                            )
-                            .await()
-                    }
-                    .getOrDefault(emptySet())
-            ui = map(recordings, transcripts)
-        }
-        if (ui?.header?.usedAssistedDialing == true) {
-            lifecycleScope.launch {
-                assistedDialingCountryCode =
-                    withContext(Dispatchers.Default) { countryCodeOf(contact.number) }
-            }
-        }
-    }
-
-    private fun map(
-        recordings: Map<Long, List<CallRecording>> = emptyMap(),
-        transcripts: Set<String> = emptySet(),
-    ) =
-        CallDetailsMapper.map(
-            contact = contact,
-            entries = entries,
-            isEmergencyNumber = PhoneNumberHelper.isEmergencyNumber(this, contact.number),
-            callbackAction =
-                CallbackActionHelper.getCallbackAction(
-                    contact.number,
-                    entries.getEntries(0).features,
+        viewModel.show(
+            contact =
+                ProtoParsers.getTrusted(intent, EXTRA_CONTACT, DialerContact.getDefaultInstance()),
+            entries =
+                ProtoParsers.getTrusted(
+                    intent,
+                    EXTRA_CALL_DETAILS_ENTRIES,
+                    CallDetailsEntries.getDefaultInstance(),
                 ),
-            numberLabelAndNumber = { label, number ->
-                getString(R.string.call_subject_type_and_number, label, number)
-            },
-            emergencyTitle = getString(R.string.emergency_number),
-            recordingsFor = { recordings[it.callId].orEmpty() },
-            rttTranscriptIds = transcripts,
         )
-
-    /** Recordings of each call, by call log ID; read up front so they don't pop in later. */
-    private fun loadRecordings(): Map<Long, List<CallRecording>> {
-        if (!CallRecorderService.isEnabled(this)) return emptyMap()
-        recordingStore.open(this) // opens unless already open
-        return entries.entriesList.associate {
-            it.callId to recordingStore.getRecordings(contact.number, it.date).orEmpty()
-        }
     }
 
     private val actions =
@@ -260,31 +203,9 @@ class OldCallDetailsActivity : ComponentActivity() {
                     Intent(Intent.ACTION_DIAL, CallUtil.getCallUri(contact.number)),
                 )
 
-            override fun delete() {
-                val ids = entries.entriesList.map { it.callId.toString() }
-                lifecycleScope.launch {
-                    withContext(Dispatchers.IO) { deleteCalls(ids) }
-                    finish()
-                }
-            }
+            override fun delete() = viewModel.deleteAll()
 
-            override fun deleteCall(entry: CallDetailsEntryUi) {
-                entries =
-                    entries
-                        .toBuilder()
-                        .apply {
-                            val index = entriesList.indexOfFirst { it.callId == entry.callId }
-                            if (index >= 0) removeEntries(index)
-                        }
-                        .build()
-                ui =
-                    ui?.let {
-                        it.copy(entries = it.entries.filterNot { e -> e.callId == entry.callId })
-                    }
-                lifecycleScope.launch {
-                    withContext(Dispatchers.IO) { deleteCalls(listOf(entry.callId.toString())) }
-                }
-            }
+            override fun deleteCall(entry: CallDetailsEntryUi) = viewModel.deleteCall(entry.callId)
 
             override fun showTranscript(entry: CallDetailsEntryUi) =
                 startActivity(
@@ -335,14 +256,6 @@ class OldCallDetailsActivity : ComponentActivity() {
                     .format(Date(recording.startRecordingTime))
             }
         }
-
-    // The user can't see call log entries without WRITE_CALL_LOG, so it's held whenever this runs.
-    @SuppressLint("MissingPermission")
-    private fun deleteCalls(ids: List<String>) {
-        val selection = "${Calls._ID} IN (${ids.joinToString(",") { "?" }})"
-        contentResolver.delete(Calls.CONTENT_URI, selection, ids.toTypedArray())
-        contentResolver.notifyChange(Calls.CONTENT_URI, null)
-    }
 
     private fun photoInfo(): PhotoInfo =
         PhotoInfo.newBuilder()
