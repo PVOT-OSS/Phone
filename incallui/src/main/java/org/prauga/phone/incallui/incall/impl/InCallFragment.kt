@@ -105,8 +105,9 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
 
     private val bluetoothPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
-            inCallButtonUiDelegate.showAudioRouteSelector()
+            // Noted first: the selector asks for the permission again unless the refusal is known.
             if (!results.values.all { it }) userDeniedBluetooth = true
+            inCallButtonUiDelegate.showAudioRouteSelector()
         }
 
     override fun onAttach(context: Context) {
