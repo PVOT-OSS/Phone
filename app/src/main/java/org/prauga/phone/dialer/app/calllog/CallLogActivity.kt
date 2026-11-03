@@ -287,7 +287,8 @@ internal fun CallLogTopBar(
         )
         // The Recents filters and Statistics; five tabs scroll rather than squeeze.
         PvotTabRow(
-            tabs = recentsFilterLabels() + stringResource(R.string.call_log_stats_title),
+            // No voicemail here: the screen has no player, so its tabs skip that filter.
+            tabs = recentsFilterLabels(CallLogFilter.entries - CallLogFilter.VOICEMAIL) + stringResource(R.string.call_log_stats_title),
             selectedIndex = tab,
             onSelect = onTabSelected,
             scrollable = true,

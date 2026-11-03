@@ -311,6 +311,9 @@ enum class CallLogFilter {
     /** Missed and rejected calls; the list's view model queries these. */
     MISSED,
 
+    /** Voicemails, played in place; the list's view model queries these. */
+    VOICEMAIL,
+
     /** Calls with someone in the contacts. */
     CONTACTS,
 
@@ -322,7 +325,7 @@ enum class CallLogFilter {
 
     /** Whether [group] shows under this filter, given the [blockedNumbers]. */
     fun matches(group: CallLogGroup, blockedNumbers: Set<String>): Boolean = when (this) {
-        ALL, MISSED -> true
+        ALL, MISSED, VOICEMAIL -> true
         // A number that is not a contact can still cache an "encoded" lookup URI, a temporary contact.
         CONTACTS -> !group.cachedInfo.lookupKey.isNullOrEmpty() ||
             (group.cachedInfo.lookupUri != null && !UriUtils.isEncodedContactUri(group.cachedInfo.lookupUri))
