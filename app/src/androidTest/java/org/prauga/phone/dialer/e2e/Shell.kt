@@ -12,7 +12,11 @@ import androidx.test.platform.app.InstrumentationRegistry
 object Shell {
 
     fun run(command: String): String {
-        val fd = InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand(command)
-        return ParcelFileDescriptor.AutoCloseInputStream(fd).bufferedReader().use { it.readText() }.trim()
+        val fd =
+            InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand(command)
+        return ParcelFileDescriptor.AutoCloseInputStream(fd)
+            .bufferedReader()
+            .use { it.readText() }
+            .trim()
     }
 }

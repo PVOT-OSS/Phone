@@ -35,15 +35,17 @@ class CallSettingsTest {
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
     private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
     private val deviceRule = DeviceRule()
-    private val keys = listOf(
-        context.getString(R.string.display_options_theme_key),
-        context.getString(R.string.display_options_force_portrait_key),
-        IncomingCallSettings.KEY_ANSWER_GESTURE,
-    )
+    private val keys =
+        listOf(
+            context.getString(R.string.display_options_theme_key),
+            context.getString(R.string.display_options_force_portrait_key),
+            IncomingCallSettings.KEY_ANSWER_GESTURE,
+        )
     private val saved = prefs.all.filterKeys { it in keys }
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
+    val rules: RuleChain =
+        RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
 
     @After
     fun restore() {
@@ -61,42 +63,69 @@ class CallSettingsTest {
 
     @Test
     fun themeChoiceSetsTheNightMode() {
-        prefs.edit { putString(context.getString(R.string.display_options_theme_key), DisplayOptions.THEME_DARK) }
+        prefs.edit {
+            putString(
+                context.getString(R.string.display_options_theme_key),
+                DisplayOptions.THEME_DARK,
+            )
+        }
         InCall.onMain { DisplayOptions.applyTheme(context) }
         assertEquals(AppCompatDelegate.MODE_NIGHT_YES, AppCompatDelegate.getDefaultNightMode())
 
-        prefs.edit { putString(context.getString(R.string.display_options_theme_key), DisplayOptions.THEME_LIGHT) }
+        prefs.edit {
+            putString(
+                context.getString(R.string.display_options_theme_key),
+                DisplayOptions.THEME_LIGHT,
+            )
+        }
         InCall.onMain { DisplayOptions.applyTheme(context) }
         assertEquals(AppCompatDelegate.MODE_NIGHT_NO, AppCompatDelegate.getDefaultNightMode())
 
         prefs.edit { remove(context.getString(R.string.display_options_theme_key)) }
         InCall.onMain { DisplayOptions.applyTheme(context) }
-        assertEquals(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM, AppCompatDelegate.getDefaultNightMode())
+        assertEquals(
+            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM,
+            AppCompatDelegate.getDefaultNightMode(),
+        )
     }
 
     @Test
     fun callScreenStaysInPortraitOnlyWhenAsked() {
-        prefs.edit { putBoolean(context.getString(R.string.display_options_force_portrait_key), true) }
+        prefs.edit {
+            putBoolean(context.getString(R.string.display_options_force_portrait_key), true)
+        }
         connectedCall()
-        CallTests.waitFor { if (requestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) true else null }
+        CallTests.waitFor {
+            if (requestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) true else null
+        }
         CallTests.waitFor { FakeCarrier.connections.firstOrNull() }.hangUpFromFarEnd()
         InCall.waitForNoCalls()
 
-        prefs.edit { putBoolean(context.getString(R.string.display_options_force_portrait_key), false) }
+        prefs.edit {
+            putBoolean(context.getString(R.string.display_options_force_portrait_key), false)
+        }
         connectedCall()
-        CallTests.waitFor { if (requestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) true else null }
+        CallTests.waitFor {
+            if (requestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) true
+            else null
+        }
     }
 
     @Test
     fun singleTapGestureShowsAnswerButtons() {
-        prefs.edit { putString(IncomingCallSettings.KEY_ANSWER_GESTURE, IncomingCallSettings.GESTURE_TAP) }
+        prefs.edit {
+            putString(IncomingCallSettings.KEY_ANSWER_GESTURE, IncomingCallSettings.GESTURE_TAP)
+        }
         FakeCarrier.ring(context, FakeCallSpec(CallTests.freshNumber()))
         CallTests.waitForRinging()
         InCall.onMain { InCallPresenter.getInstance().showInCall(false, false) }
 
         assertNotNull(
             "answer button not shown",
-            deviceRule.device.wait(Until.findObject(By.res(context.packageName, "two_button_answer_button")), CallTests.TIMEOUT_MILLIS),
+            deviceRule.device.wait(
+                Until.findObject(By.res(context.packageName, "two_button_answer_button")),
+                CallTests.TIMEOUT_MILLIS,
+            ),
         )
     }
 
@@ -107,5 +136,6 @@ class CallSettingsTest {
         InCall.waitForState(DialerCallState.ACTIVE)
     }
 
-    private fun requestedOrientation(): Int? = InCall.onMain { InCallPresenter.getInstance().activity?.requestedOrientation }
+    private fun requestedOrientation(): Int? =
+        InCall.onMain { InCallPresenter.getInstance().activity?.requestedOrientation }
 }

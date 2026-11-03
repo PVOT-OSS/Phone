@@ -15,7 +15,11 @@ class FlipDetectorTest {
     private val faceDown = Triple(0f, 0f, -9.8f)
 
     /** Feeds [reading] every 20 ms for [millis], starting at [start]; returns whether it fired. */
-    private fun FlipDetector.hold(reading: Triple<Float, Float, Float>, start: Long, millis: Long): Boolean {
+    private fun FlipDetector.hold(
+        reading: Triple<Float, Float, Float>,
+        start: Long,
+        millis: Long,
+    ): Boolean {
         var fired = false
         var t = start
         while (t <= start + millis) {

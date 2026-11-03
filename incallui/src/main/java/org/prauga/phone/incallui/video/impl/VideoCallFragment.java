@@ -1280,4 +1280,3 @@ public class VideoCallFragment extends Fragment
     }
   }
 }
-

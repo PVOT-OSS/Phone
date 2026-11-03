@@ -26,10 +26,10 @@
   <string name="voicemail_error_inbox_full_title">Жаңы үн каттары алынбай жатат</string>
   <string name="voicemail_error_inbox_full_message">\"Келген каттар\" кутуңуз толуп калды. Үн каттарын алуу үчүн айрым билдирүүлөрдү өчүрүңүз.</string>
   <string name="voicemail_error_inbox_full_turn_archive_on_title">Кошумча мейкиндик талап кылынат</string>
-  <string name="voicemail_error_inbox_full_turn_archive_on_message">Үн почтаңызда бош орун жок. 
+  <string name="voicemail_error_inbox_full_turn_archive_on_message">Үн почтаңызда бош орун жок.
 Үн каттарыңызды башкаруу жана алардын камдык көчүрмөлөрүн сактоо үчүн кошумча мейкиндикти күйгүзүп коюңуз.</string>
   <string name="voicemail_error_inbox_almost_full_turn_archive_on_title">Кошумча мейкиндик талап кылынат</string>
-  <string name="voicemail_error_inbox_almost_full_turn_archive_on_message">Үн почтаңыз толуп калды. 
+  <string name="voicemail_error_inbox_almost_full_turn_archive_on_message">Үн почтаңыз толуп калды.
 Үн каттарыңызды башкаруу жана алардын камдык көчүрмөлөрүн сактоо үчүн кошумча мейкиндикти күйгүзүп коюңуз.</string>
   <string name="voicemail_error_pin_not_set_title">Үн почтаңыздын PIN-кодун орнотуңуз</string>
   <string name="voicemail_error_pin_not_set_message">PIN-код ар чалган сайын үн почтаңызды угуу үчүн керек.</string>

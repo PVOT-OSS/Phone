@@ -34,7 +34,10 @@ class TwoCallsTest {
 
     @get:Rule
     val rules: RuleChain =
-        RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule).around(toasts)
+        RuleChain.outerRule(DefaultDialerRule())
+            .around(FakeCarrierRule())
+            .around(deviceRule)
+            .around(toasts)
 
     @Test
     fun answeringAWaitingCallHoldsTheFirst() {
@@ -57,13 +60,24 @@ class TwoCallsTest {
         val active = InCall.waitForState(DialerCallState.ACTIVE)
 
         InCall.onMain { TelecomAdapter.getInstance().merge(active.id) }
-        val conference = CallTests.waitFor {
-            InCall.onMain { CallList.getInstance().allCalls.firstOrNull { it.isConferenceCall && it.childCallIds.size == 2 } }
-        }
+        val conference =
+            CallTests.waitFor {
+                InCall.onMain {
+                    CallList.getInstance().allCalls.firstOrNull {
+                        it.isConferenceCall && it.childCallIds.size == 2
+                    }
+                }
+            }
 
-        val participant = InCall.onMain { checkNotNull(CallList.getInstance().getCallById(conference.childCallIds.first())) }
+        val participant =
+            InCall.onMain {
+                checkNotNull(CallList.getInstance().getCallById(conference.childCallIds.first()))
+            }
         InCall.onMain { participant.splitFromConference() }
-        CallTests.waitFor { if (InCall.onMain { CallList.getInstance().allCalls.none { it.isConferenceCall } }) true else null }
+        CallTests.waitFor {
+            if (InCall.onMain { CallList.getInstance().allCalls.none { it.isConferenceCall } }) true
+            else null
+        }
     }
 
     @Test
@@ -85,16 +99,19 @@ class TwoCallsTest {
         InCall.onMain { TelecomAdapter.getInstance().merge(active.id) }
 
         toasts.waitFor(context.getString(R.string.incall_merge_failed))
-        check(InCall.onMain { CallList.getInstance().allCalls.none { it.isConferenceCall } }) { "calls were merged" }
+        check(InCall.onMain { CallList.getInstance().allCalls.none { it.isConferenceCall } }) {
+            "calls were merged"
+        }
     }
 
     @Test
     fun ringingCallSaysAnsweringEndsTheOtherAppsCall() {
         connectedCall()
-        val extras = Bundle().apply {
-            putBoolean(EXTRA_ANSWERING_DROPS_FG_CALL, true)
-            putString(EXTRA_ANSWERING_DROPS_FG_CALL_APP_NAME, "Meet")
-        }
+        val extras =
+            Bundle().apply {
+                putBoolean(EXTRA_ANSWERING_DROPS_FG_CALL, true)
+                putString(EXTRA_ANSWERING_DROPS_FG_CALL_APP_NAME, "Meet")
+            }
 
         FakeCarrier.ring(context, FakeCallSpec(number = CallTests.freshNumber(), extras = extras))
 
@@ -121,14 +138,21 @@ class TwoCallsTest {
 
             showsText(context.getString(R.string.incall_label_transfer)).click()
             showsText(context.getString(R.string.incall_transfer_dialog_title))
-            checkNotNull(deviceRule.device.wait(Until.findObject(By.res("android", "button1")), CallTests.TIMEOUT_MILLIS)) {
-                "no transfer button in the dialog"
-            }.click()
+            checkNotNull(
+                    deviceRule.device.wait(
+                        Until.findObject(By.res("android", "button1")),
+                        CallTests.TIMEOUT_MILLIS,
+                    )
+                ) {
+                    "no transfer button in the dialog"
+                }
+                .click()
 
             CallTests.waitFor { active.transferredTo?.takeIf { it === held } }
             InCall.waitForNoCalls()
         } finally {
-            if (original.contains("true")) Shell.run("cmd phone cc set-value $KEY_ALLOW_TRANSFER true")
+            if (original.contains("true"))
+                Shell.run("cmd phone cc set-value $KEY_ALLOW_TRANSFER true")
             else Shell.run("cmd phone cc clear-values")
         }
     }
@@ -140,7 +164,11 @@ class TwoCallsTest {
             twoCalls()
             InCall.onMain { InCallPresenter.getInstance().showInCall(false, false) }
             showsText(context.getString(R.string.incall_label_mute))
-            check(deviceRule.device.findObject(By.text(context.getString(R.string.incall_label_transfer))) == null) {
+            check(
+                deviceRule.device.findObject(
+                    By.text(context.getString(R.string.incall_label_transfer))
+                ) == null
+            ) {
                 "transfer shown although the carrier doesn't allow it"
             }
         } finally {
@@ -158,7 +186,11 @@ class TwoCallsTest {
     }
 
     private fun showsText(text: String): UiObject2 =
-        checkNotNull(deviceRule.device.wait(Until.findObject(By.text(text)), CallTests.TIMEOUT_MILLIS)) { "\"$text\" not shown" }
+        checkNotNull(
+            deviceRule.device.wait(Until.findObject(By.text(text)), CallTests.TIMEOUT_MILLIS)
+        ) {
+            "\"$text\" not shown"
+        }
 
     private fun twoCalls(): Pair<FakeConnection, FakeConnection> {
         InCall.place(context, CallTests.freshNumber())
@@ -182,7 +214,8 @@ class TwoCallsTest {
 
     private companion object {
         const val EXTRA_ANSWERING_DROPS_FG_CALL = "android.telecom.extra.ANSWERING_DROPS_FG_CALL"
-        const val EXTRA_ANSWERING_DROPS_FG_CALL_APP_NAME = "android.telecom.extra.ANSWERING_DROPS_FG_CALL_APP_NAME"
+        const val EXTRA_ANSWERING_DROPS_FG_CALL_APP_NAME =
+            "android.telecom.extra.ANSWERING_DROPS_FG_CALL_APP_NAME"
         const val KEY_ALLOW_TRANSFER = "carrier_allow_transfer_ims_call_bool"
     }
 }

@@ -45,4 +45,3 @@
     android:textColor="?android:attr/colorAccent"
     android:textSize="@dimen/tab_unread_count_text_size"/>
 </RelativeLayout>
-

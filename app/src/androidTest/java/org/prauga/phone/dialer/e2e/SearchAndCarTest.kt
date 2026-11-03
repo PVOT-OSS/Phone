@@ -32,12 +32,15 @@ class SearchAndCarTest {
     private val deviceRule = DeviceRule()
     private val numbers = mutableListOf<String>()
 
-    @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(deviceRule)
+    @get:Rule val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(deviceRule)
 
     @After
     fun removeCalls() {
-        for (number in numbers) context.contentResolver.delete(Calls.CONTENT_URI, "${Calls.NUMBER} = ?", arrayOf(number))
+        for (number in numbers) context.contentResolver.delete(
+            Calls.CONTENT_URI,
+            "${Calls.NUMBER} = ?",
+            arrayOf(number),
+        )
     }
 
     @Test
@@ -46,13 +49,15 @@ class SearchAndCarTest {
         context.startActivity(
             Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + number.takeLast(7)))
                 .setPackage(context.packageName)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         )
 
         assertNotNull(
             "no \"Not in your contacts\" section",
             deviceRule.device.wait(
-                Until.findObject(By.text(context.getString(R.string.call_log_search_result_header))),
+                Until.findObject(
+                    By.text(context.getString(R.string.call_log_search_result_header))
+                ),
                 CallTests.TIMEOUT_MILLIS,
             ),
         )
@@ -67,10 +72,15 @@ class SearchAndCarTest {
 
     @Test
     fun appIsACarCallingApp() {
-        val intent = Intent("androidx.car.app.CarAppService")
-            .addCategory("androidx.car.app.category.CALLING")
-            .setPackage(context.packageName)
-        val services = context.packageManager.queryIntentServices(intent, PackageManager.ResolveInfoFlags.of(0))
+        val intent =
+            Intent("androidx.car.app.CarAppService")
+                .addCategory("androidx.car.app.category.CALLING")
+                .setPackage(context.packageName)
+        val services =
+            context.packageManager.queryIntentServices(
+                intent,
+                PackageManager.ResolveInfoFlags.of(0),
+            )
         assertEquals(1, services.size)
     }
 
@@ -78,12 +88,13 @@ class SearchAndCarTest {
     private fun addCall(): String {
         val number = CallTests.freshNumber()
         numbers += number
-        val values = ContentValues().apply {
-            put(Calls.NUMBER, number)
-            put(Calls.TYPE, Calls.INCOMING_TYPE)
-            put(Calls.DATE, System.currentTimeMillis() - 1_000)
-            put(Calls.DURATION, 30)
-        }
+        val values =
+            ContentValues().apply {
+                put(Calls.NUMBER, number)
+                put(Calls.TYPE, Calls.INCOMING_TYPE)
+                put(Calls.DATE, System.currentTimeMillis() - 1_000)
+                put(Calls.DURATION, 30)
+            }
         checkNotNull(context.contentResolver.insert(Calls.CONTENT_URI, values))
         return number
     }

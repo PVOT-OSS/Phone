@@ -25,12 +25,17 @@ class IncomingCallSettingsFragment : PreferenceFragmentCompat() {
                 key = IncomingCallSettings.KEY_ANSWER_GESTURE
                 setTitle(R.string.answer_method_settings_title)
                 setDialogTitle(R.string.answer_method_settings_title)
-                entries = arrayOf(getString(R.string.answer_method_swipe_entry), getString(R.string.answer_method_tap_entry))
-                entryValues = arrayOf(IncomingCallSettings.GESTURE_SWIPE, IncomingCallSettings.GESTURE_TAP)
+                entries =
+                    arrayOf(
+                        getString(R.string.answer_method_swipe_entry),
+                        getString(R.string.answer_method_tap_entry),
+                    )
+                entryValues =
+                    arrayOf(IncomingCallSettings.GESTURE_SWIPE, IncomingCallSettings.GESTURE_TAP)
                 setDefaultValue(IncomingCallSettings.GESTURE_SWIPE)
                 summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
                 isIconSpaceReserved = false
-            },
+            }
         )
 
         // Flip to silence needs an accelerometer to tell the phone is face down.
@@ -43,7 +48,7 @@ class IncomingCallSettingsFragment : PreferenceFragmentCompat() {
                     setSummary(R.string.flip_to_silence_summary)
                     setDefaultValue(false)
                     isIconSpaceReserved = false
-                },
+                }
             )
         }
 
@@ -52,27 +57,29 @@ class IncomingCallSettingsFragment : PreferenceFragmentCompat() {
                 key = IncomingCallSettings.KEY_ANNOUNCE_CALLER
                 setTitle(R.string.call_announcer_title)
                 setDialogTitle(R.string.call_announcer_title)
-                entries = arrayOf(
-                    getString(R.string.call_announcer_always),
-                    getString(R.string.call_announcer_headset),
-                    getString(R.string.call_announcer_never),
-                )
-                entryValues = arrayOf(
-                    IncomingCallSettings.ANNOUNCE_ALWAYS,
-                    IncomingCallSettings.ANNOUNCE_HEADSET,
-                    IncomingCallSettings.ANNOUNCE_NEVER,
-                )
+                entries =
+                    arrayOf(
+                        getString(R.string.call_announcer_always),
+                        getString(R.string.call_announcer_headset),
+                        getString(R.string.call_announcer_never),
+                    )
+                entryValues =
+                    arrayOf(
+                        IncomingCallSettings.ANNOUNCE_ALWAYS,
+                        IncomingCallSettings.ANNOUNCE_HEADSET,
+                        IncomingCallSettings.ANNOUNCE_NEVER,
+                    )
                 setDefaultValue(IncomingCallSettings.ANNOUNCE_NEVER)
                 summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
                 isIconSpaceReserved = false
-            },
+            }
         )
         screen.addPreference(
             androidx.preference.Preference(context).apply {
                 setSummary(R.string.call_announcer_footer)
                 isSelectable = false
                 isIconSpaceReserved = false
-            },
+            }
         )
 
         preferenceScreen = screen

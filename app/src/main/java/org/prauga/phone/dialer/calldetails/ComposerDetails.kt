@@ -21,7 +21,8 @@ object ComposerDetails {
     fun describe(context: Context, entry: CallDetailsEntry): CharSequence? {
         val note = entry.subject.takeIf { it.isNotBlank() }
         return when {
-            entry.isUrgent && note != null -> context.getString(R.string.call_details_composer_urgent_note, note)
+            entry.isUrgent && note != null ->
+                context.getString(R.string.call_details_composer_urgent_note, note)
             entry.isUrgent -> context.getString(R.string.call_details_composer_urgent)
             note != null -> context.getString(R.string.call_details_composer_note, note)
             else -> null

@@ -31,16 +31,17 @@ object CallLogGrouping {
         return previous.presentation == call.presentation &&
             isMissed(previous.type) == isMissed(call.type) &&
             previous.dayBucket == call.dayBucket &&
-            !previousNumber.isNullOrEmpty() && !number.isNullOrEmpty() &&
+            !previousNumber.isNullOrEmpty() &&
+            !number.isNullOrEmpty() &&
             previous.postDialDigits.orEmpty() == call.postDialDigits.orEmpty() &&
-            previous.type != Calls.VOICEMAIL_TYPE && call.type != Calls.VOICEMAIL_TYPE &&
+            previous.type != Calls.VOICEMAIL_TYPE &&
+            call.type != Calls.VOICEMAIL_TYPE &&
             (previous.type == Calls.BLOCKED_TYPE) == (call.type == Calls.BLOCKED_TYPE) &&
             numbersMatch(previousNumber, number)
     }
 
     /** The day bucket for a call [daysAgo] days before today. */
-    @JvmStatic
-    fun dayBucket(daysAgo: Int): Int = daysAgo.coerceIn(0, 2)
+    @JvmStatic fun dayBucket(daysAgo: Int): Int = daysAgo.coerceIn(0, 2)
 
     /** Missed and rejected calls are told apart from calls that were answered or made. */
     @JvmStatic

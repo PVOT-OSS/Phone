@@ -25,16 +25,28 @@ object InCall {
     }
 
     /** The first call the app knows in [state], one of the DialerCallState constants. */
-    fun callIn(state: Int): DialerCall? = onMain { CallList.getInstance().allCalls.firstOrNull { it.state == state } }
+    fun callIn(state: Int): DialerCall? = onMain {
+        CallList.getInstance().allCalls.firstOrNull { it.state == state }
+    }
 
     fun waitForState(state: Int): DialerCall = CallTests.waitFor { callIn(state) }
 
-    fun waitForNoCalls() = CallTests.waitFor { if (onMain { CallList.getInstance().allCalls.isEmpty() }) true else null }
+    fun waitForNoCalls() =
+        CallTests.waitFor {
+            if (onMain { CallList.getInstance().allCalls.isEmpty() }) true else null
+        }
 
     /** Dials [number] on the fake carrier, as if the user had dialled it. */
     fun place(context: Context, number: String) {
-        val extras = Bundle().apply { putParcelable(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, FakeCarrier.accountHandle(context)) }
-        context.getSystemService(TelecomManager::class.java)
+        val extras =
+            Bundle().apply {
+                putParcelable(
+                    TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE,
+                    FakeCarrier.accountHandle(context),
+                )
+            }
+        context
+            .getSystemService(TelecomManager::class.java)
             .placeCall(Uri.fromParts(PhoneAccount.SCHEME_TEL, number, null), extras)
     }
 }

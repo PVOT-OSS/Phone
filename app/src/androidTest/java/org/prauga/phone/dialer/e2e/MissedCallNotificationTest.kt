@@ -36,7 +36,8 @@ class MissedCallNotificationTest {
     private val notifications = context.getSystemService(NotificationManager::class.java)
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
+    val rules: RuleChain =
+        RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
 
     @Before
     fun startWithNoMissedCalls() {
@@ -50,11 +51,21 @@ class MissedCallNotificationTest {
 
         val notification = notificationFor(number).notification
         assertEquals(Notification.CATEGORY_MISSED_CALL, notification.category)
-        assertEquals(Notification.MessagingStyle::class.java.name, notification.extras.getString(Notification.EXTRA_TEMPLATE))
-        assertEquals(context.getString(R.string.notification_missedCallTitle), notification.extras.getCharSequence(Notification.EXTRA_TEXT)?.toString())
+        assertEquals(
+            Notification.MessagingStyle::class.java.name,
+            notification.extras.getString(Notification.EXTRA_TEMPLATE),
+        )
+        assertEquals(
+            context.getString(R.string.notification_missedCallTitle),
+            notification.extras.getCharSequence(Notification.EXTRA_TEXT)?.toString(),
+        )
         val actions = notification.actions.orEmpty().map { it.title.toString() }
-        check(context.getString(R.string.notification_missedCall_call_back) in actions) { "no call back action in $actions" }
-        check(context.getString(R.string.notification_missedCall_message) in actions) { "no message action in $actions" }
+        check(context.getString(R.string.notification_missedCall_call_back) in actions) {
+            "no call back action in $actions"
+        }
+        check(context.getString(R.string.notification_missedCall_message) in actions) {
+            "no message action in $actions"
+        }
     }
 
     @Test
@@ -102,34 +113,52 @@ class MissedCallNotificationTest {
         return number
     }
 
-    private fun missedCallNotifications(): List<StatusBarNotification> = notifications.activeNotifications.filter {
-        it.notification.channelId == NotificationChannelId.MISSED_CALL && it.tag?.startsWith(TAG_PREFIX) == true
-    }
+    private fun missedCallNotifications(): List<StatusBarNotification> =
+        notifications.activeNotifications.filter {
+            it.notification.channelId == NotificationChannelId.MISSED_CALL &&
+                it.tag?.startsWith(TAG_PREFIX) == true
+        }
 
     /** The missed call notification for [number]. */
-    private fun notificationFor(number: String): StatusBarNotification = CallTests.waitFor {
-        missedCallNotifications().firstOrNull {
-            it.notification.extras.getCharSequence(Notification.EXTRA_TITLE)?.filter(Char::isDigit)?.endsWith(number.takeLast(7)) == true
+    private fun notificationFor(number: String): StatusBarNotification =
+        CallTests.waitFor {
+            missedCallNotifications().firstOrNull {
+                it.notification.extras
+                    .getCharSequence(Notification.EXTRA_TITLE)
+                    ?.filter(Char::isDigit)
+                    ?.endsWith(number.takeLast(7)) == true
+            }
         }
-    }
 
-    private fun isRead(number: String): Boolean = context.contentResolver.query(
-        CallLog.Calls.CONTENT_URI,
-        arrayOf(CallLog.Calls.IS_READ, CallLog.Calls.NEW),
-        "${CallLog.Calls.NUMBER} = ?",
-        arrayOf(number),
-        "${CallLog.Calls.DATE} DESC",
-    )?.use { it.moveToFirst() && it.getInt(0) == 1 && it.getInt(1) == 0 } ?: false
+    private fun isRead(number: String): Boolean =
+        context.contentResolver
+            .query(
+                CallLog.Calls.CONTENT_URI,
+                arrayOf(CallLog.Calls.IS_READ, CallLog.Calls.NEW),
+                "${CallLog.Calls.NUMBER} = ?",
+                arrayOf(number),
+                "${CallLog.Calls.DATE} DESC",
+            )
+            ?.use { it.moveToFirst() && it.getInt(0) == 1 && it.getInt(1) == 0 } ?: false
 
     private fun openRecents() {
-        context.startActivity(MainComponent.getShowCallLogIntent(context).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-        checkNotNull(deviceRule.device.wait(Until.findObject(By.text(context.getString(R.string.tab_title_speed_dial))), CallTests.TIMEOUT_MILLIS)) {
+        context.startActivity(
+            MainComponent.getShowCallLogIntent(context).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
+        checkNotNull(
+            deviceRule.device.wait(
+                Until.findObject(By.text(context.getString(R.string.tab_title_speed_dial))),
+                CallTests.TIMEOUT_MILLIS,
+            )
+        ) {
             "main screen not shown"
         }
     }
 
     private fun switchAwayFromRecents() {
-        deviceRule.device.findObject(By.text(context.getString(R.string.tab_title_speed_dial))).click()
+        deviceRule.device
+            .findObject(By.text(context.getString(R.string.tab_title_speed_dial)))
+            .click()
     }
 
     private companion object {

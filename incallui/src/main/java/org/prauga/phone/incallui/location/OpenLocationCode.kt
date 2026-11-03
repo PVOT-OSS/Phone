@@ -24,7 +24,10 @@ object OpenLocationCode {
     @JvmStatic
     fun encode(latitude: Double, longitude: Double): String {
         val maxLatitudeUnits = 180 * UNITS_PER_DEGREE - 1
-        var lat = floor((latitude.coerceIn(-90.0, 90.0) + 90) * UNITS_PER_DEGREE).toLong().coerceAtMost(maxLatitudeUnits)
+        var lat =
+            floor((latitude.coerceIn(-90.0, 90.0) + 90) * UNITS_PER_DEGREE)
+                .toLong()
+                .coerceAtMost(maxLatitudeUnits)
         var lng = floor((normalizeLongitude(longitude) + 180) * UNITS_PER_DEGREE).toLong()
 
         val latDigits = CharArray(PAIRS)

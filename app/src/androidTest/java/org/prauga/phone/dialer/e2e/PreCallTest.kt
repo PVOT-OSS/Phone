@@ -33,12 +33,17 @@ class PreCallTest {
     private val blocked = mutableListOf<String>()
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
+    val rules: RuleChain =
+        RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
 
     @After
     fun unblock() {
         for (number in blocked) {
-            context.contentResolver.delete(BlockedNumbers.CONTENT_URI, "${BlockedNumbers.COLUMN_ORIGINAL_NUMBER} = ?", arrayOf(number))
+            context.contentResolver.delete(
+                BlockedNumbers.CONTENT_URI,
+                "${BlockedNumbers.COLUMN_ORIGINAL_NUMBER} = ?",
+                arrayOf(number),
+            )
         }
     }
 
@@ -47,14 +52,27 @@ class PreCallTest {
         val number = blockedNumber()
         dial(number)
 
-        val title = checkNotNull(deviceRule.device.wait(Until.findObject(By.res("android", "alertTitle")), CallTests.TIMEOUT_MILLIS)) {
-            "no warning shown"
+        val title =
+            checkNotNull(
+                deviceRule.device.wait(
+                    Until.findObject(By.res("android", "alertTitle")),
+                    CallTests.TIMEOUT_MILLIS,
+                )
+            ) {
+                "no warning shown"
+            }
+        check(title.text.filter(Char::isDigit).endsWith(number.takeLast(7))) {
+            "warning names ${title.text}"
         }
-        check(title.text.filter(Char::isDigit).endsWith(number.takeLast(7))) { "warning names ${title.text}" }
-        checkNotNull(deviceRule.device.findObject(By.res("android", "button1"))) { "no Call button" }.click()
+        checkNotNull(deviceRule.device.findObject(By.res("android", "button1"))) {
+                "no Call button"
+            }
+            .click()
 
         val far = CallTests.waitFor { FakeCarrier.connections.firstOrNull() }
-        check(far.spec.number.orEmpty().endsWith(number.takeLast(7))) { "placed ${far.spec.number}" }
+        check(far.spec.number.orEmpty().endsWith(number.takeLast(7))) {
+            "placed ${far.spec.number}"
+        }
         far.hangUpFromFarEnd()
         InCall.waitForNoCalls()
     }
@@ -63,9 +81,15 @@ class PreCallTest {
     fun callingABlockedNumberCanBeCancelled() {
         dial(blockedNumber())
 
-        checkNotNull(deviceRule.device.wait(Until.findObject(By.res("android", "button2")), CallTests.TIMEOUT_MILLIS)) {
-            "no warning shown"
-        }.click()
+        checkNotNull(
+                deviceRule.device.wait(
+                    Until.findObject(By.res("android", "button2")),
+                    CallTests.TIMEOUT_MILLIS,
+                )
+            ) {
+                "no warning shown"
+            }
+            .click()
 
         Thread.sleep(SETTLE_MILLIS)
         check(FakeCarrier.connections.isEmpty()) { "call placed after cancelling" }
@@ -77,7 +101,9 @@ class PreCallTest {
         dial(number)
 
         val far = CallTests.waitFor { FakeCarrier.connections.firstOrNull() }
-        check(far.spec.number.orEmpty().endsWith(number.takeLast(7))) { "placed ${far.spec.number}" }
+        check(far.spec.number.orEmpty().endsWith(number.takeLast(7))) {
+            "placed ${far.spec.number}"
+        }
         far.hangUpFromFarEnd()
         InCall.waitForNoCalls()
     }
@@ -85,19 +111,27 @@ class PreCallTest {
     private fun blockedNumber(): String {
         // The block list is only there for users who can block numbers (not every user on a
         // phone with a headless system user).
-        assumeTrue("this user can't block numbers", BlockedNumberContract.canCurrentUserBlockNumbers(context))
+        assumeTrue(
+            "this user can't block numbers",
+            BlockedNumberContract.canCurrentUserBlockNumbers(context),
+        )
         val number = CallTests.freshNumber()
         val values = ContentValues().apply { put(BlockedNumbers.COLUMN_ORIGINAL_NUMBER, number) }
-        checkNotNull(context.contentResolver.insert(BlockedNumbers.CONTENT_URI, values)) { "could not block $number" }
+        checkNotNull(context.contentResolver.insert(BlockedNumbers.CONTENT_URI, values)) {
+            "could not block $number"
+        }
         blocked += number
         return number
     }
 
     /** Dials [number] the way the app's own screens do. */
     private fun dial(number: String) {
-        val builder = CallIntentBuilder(number, CallInitiationType.Type.DIALPAD)
-            .setPhoneAccountHandle(FakeCarrier.accountHandle(context))
-        val intent = InCall.onMain { PreCall.getIntent(context, builder) }.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        val builder =
+            CallIntentBuilder(number, CallInitiationType.Type.DIALPAD)
+                .setPhoneAccountHandle(FakeCarrier.accountHandle(context))
+        val intent =
+            InCall.onMain { PreCall.getIntent(context, builder) }
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
     }
 

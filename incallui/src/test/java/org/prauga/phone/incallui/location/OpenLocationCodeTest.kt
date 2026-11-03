@@ -21,7 +21,8 @@ class OpenLocationCodeTest {
     fun northPoleStaysInRange() = assertTrue(OpenLocationCode.encode(90.0, 0.0).startsWith("C"))
 
     @Test
-    fun longitudeWrapsAround() = assertEquals(OpenLocationCode.encode(10.0, -170.0), OpenLocationCode.encode(10.0, 190.0))
+    fun longitudeWrapsAround() =
+        assertEquals(OpenLocationCode.encode(10.0, -170.0), OpenLocationCode.encode(10.0, 190.0))
 
     @Test
     fun shape() {
@@ -33,5 +34,8 @@ class OpenLocationCodeTest {
 
     @Test
     fun nearbyPointsShareTheirStart() =
-        assertEquals(OpenLocationCode.encode(12.97160, 77.59460).take(8), OpenLocationCode.encode(12.97161, 77.59461).take(8))
+        assertEquals(
+            OpenLocationCode.encode(12.97160, 77.59460).take(8),
+            OpenLocationCode.encode(12.97161, 77.59461).take(8),
+        )
 }

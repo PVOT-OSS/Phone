@@ -25,8 +25,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import java.util.Locale
 import java.util.concurrent.Executor
-import org.prauga.phone.incallui.R
 import org.prauga.phone.dialer.common.LogUtil
+import org.prauga.phone.incallui.R
 
 /**
  * Shows where the phone is during an emergency call, so the user can read it out: the address when
@@ -40,7 +40,11 @@ class EmergencyLocationFragment : Fragment(), LocationListener {
     private lateinit var coordinates: TextView
     private var listening = false
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         val view = inflater.inflate(R.layout.emergency_location, container, false)
         title = view.findViewById(R.id.emergency_location_title)
         address = view.findViewById(R.id.emergency_location_address)
@@ -53,7 +57,8 @@ class EmergencyLocationFragment : Fragment(), LocationListener {
         super.onStart()
         val context = requireContext()
         when {
-            batteryPercent(context) < BATTERY_THRESHOLD_PERCENT -> showError(R.string.emergency_location_battery_too_low)
+            batteryPercent(context) < BATTERY_THRESHOLD_PERCENT ->
+                showError(R.string.emergency_location_battery_too_low)
             ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED -> showError(R.string.emergency_location_error)
             else -> startUpdates(context)
@@ -71,24 +76,46 @@ class EmergencyLocationFragment : Fragment(), LocationListener {
     @Suppress("MissingPermission") // Checked in onStart.
     private fun startUpdates(context: Context) {
         val locations = context.getSystemService(LocationManager::class.java)
-        val provider = listOf(LocationManager.FUSED_PROVIDER, LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER)
-            .firstOrNull { locations?.isProviderEnabled(it) == true }
+        val provider =
+            listOf(
+                    LocationManager.FUSED_PROVIDER,
+                    LocationManager.GPS_PROVIDER,
+                    LocationManager.NETWORK_PROVIDER,
+                )
+                .firstOrNull { locations?.isProviderEnabled(it) == true }
         if (locations == null || provider == null) {
             showError(R.string.emergency_location_error)
             return
         }
         locations.getLastKnownLocation(provider)?.let(::onLocationChanged)
-        val request = LocationRequest.Builder(UPDATE_INTERVAL_MILLIS).setQuality(LocationRequest.QUALITY_HIGH_ACCURACY).build()
-        locations.requestLocationUpdates(provider, request, ContextCompat.getMainExecutor(context), this)
+        val request =
+            LocationRequest.Builder(UPDATE_INTERVAL_MILLIS)
+                .setQuality(LocationRequest.QUALITY_HIGH_ACCURACY)
+                .build()
+        locations.requestLocationUpdates(
+            provider,
+            request,
+            ContextCompat.getMainExecutor(context),
+            this,
+        )
         listening = true
     }
 
     override fun onLocationChanged(location: Location) {
         if (!isUsable(location) || !isAdded) return
         title.setText(R.string.emergency_location_title)
-        plusCode.text = getString(R.string.emergency_location_plus_code, OpenLocationCode.encode(location.latitude, location.longitude))
+        plusCode.text =
+            getString(
+                R.string.emergency_location_plus_code,
+                OpenLocationCode.encode(location.latitude, location.longitude),
+            )
         plusCode.visibility = View.VISIBLE
-        coordinates.text = getString(R.string.emergency_location_coordinates, location.latitude, location.longitude)
+        coordinates.text =
+            getString(
+                R.string.emergency_location_coordinates,
+                location.latitude,
+                location.longitude,
+            )
         coordinates.visibility = View.VISIBLE
         lookUpAddress(location)
     }
@@ -96,28 +123,34 @@ class EmergencyLocationFragment : Fragment(), LocationListener {
     private fun lookUpAddress(location: Location) {
         if (!Geocoder.isPresent()) return
         val main: Executor = ContextCompat.getMainExecutor(requireContext())
-        Geocoder(requireContext(), Locale.getDefault()).getFromLocation(
-            location.latitude,
-            location.longitude,
-            1,
-            object : Geocoder.GeocodeListener {
-                override fun onGeocode(addresses: MutableList<Address>) {
-                    val line = addresses.firstOrNull()?.getAddressLine(0) ?: return
-                    main.execute { showAddress(line) }
-                }
+        Geocoder(requireContext(), Locale.getDefault())
+            .getFromLocation(
+                location.latitude,
+                location.longitude,
+                1,
+                object : Geocoder.GeocodeListener {
+                    override fun onGeocode(addresses: MutableList<Address>) {
+                        val line = addresses.firstOrNull()?.getAddressLine(0) ?: return
+                        main.execute { showAddress(line) }
+                    }
 
-                override fun onError(errorMessage: String?) {
-                    LogUtil.i("EmergencyLocationFragment.lookUpAddress", "no address: $errorMessage")
-                }
-            },
-        )
+                    override fun onError(errorMessage: String?) {
+                        LogUtil.i(
+                            "EmergencyLocationFragment.lookUpAddress",
+                            "no address: $errorMessage",
+                        )
+                    }
+                },
+            )
     }
 
     /** The address on two lines, split at its first comma. */
     private fun showAddress(line: String) {
         if (!isAdded) return
         val comma = line.indexOf(',')
-        address.text = if (comma < 0) line else line.substring(0, comma).trim() + "\n" + line.substring(comma + 1).trim()
+        address.text =
+            if (comma < 0) line
+            else line.substring(0, comma).trim() + "\n" + line.substring(comma + 1).trim()
         address.visibility = View.VISIBLE
     }
 
@@ -136,13 +169,17 @@ class EmergencyLocationFragment : Fragment(), LocationListener {
 
         /** A fix is shown only when it is recent, close enough and real. */
         fun isUsable(location: Location): Boolean {
-            val ageMillis = (SystemClock.elapsedRealtimeNanos() - location.elapsedRealtimeNanos) / 1_000_000
+            val ageMillis =
+                (SystemClock.elapsedRealtimeNanos() - location.elapsedRealtimeNanos) / 1_000_000
             return ageMillis <= MAX_AGE_MILLIS &&
-                location.hasAccuracy() && location.accuracy <= MAX_ACCURACY_METERS &&
+                location.hasAccuracy() &&
+                location.accuracy <= MAX_ACCURACY_METERS &&
                 !location.isMock
         }
 
         fun batteryPercent(context: Context): Int =
-            context.getSystemService(BatteryManager::class.java)?.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY) ?: 100
+            context
+                .getSystemService(BatteryManager::class.java)
+                ?.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY) ?: 100
     }
 }

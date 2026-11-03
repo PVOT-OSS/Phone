@@ -13,7 +13,9 @@ import android.telecom.Connection.RttTextStream
 import android.telecom.DisconnectCause
 import android.telecom.PhoneAccount
 
-/** A call on the fake carrier; the user's side acts through Telecom, the far end through this class. */
+/**
+ * A call on the fake carrier; the user's side acts through Telecom, the far end through this class.
+ */
 class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connection() {
 
     /** DTMF tones the user played, in order, including post-dial digits they chose to send. */
@@ -34,8 +36,7 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
     var rttRequestAccepted: Boolean? = null
         private set
 
-    @Volatile
-    private var rttStream: RttTextStream? = null
+    @Volatile private var rttStream: RttTextStream? = null
 
     private val postDialDigits = spec.number?.substringAfter(';', "").orEmpty()
 
@@ -45,15 +46,16 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
         setCallerDisplayName(null, spec.presentation)
         setCallerNumberVerificationStatus(spec.verificationStatus)
         setVideoState(spec.videoState)
-        connectionCapabilities = CAPABILITY_HOLD or
-            CAPABILITY_SUPPORT_HOLD or
-            CAPABILITY_MUTE or
-            CAPABILITY_SEPARATE_FROM_CONFERENCE or
-            CAPABILITY_DISCONNECT_FROM_CONFERENCE or
-            CAPABILITY_SUPPORTS_VT_LOCAL_BIDIRECTIONAL or
-            CAPABILITY_SUPPORTS_VT_REMOTE_BIDIRECTIONAL or
-            CAPABILITY_TRANSFER_CONSULTATIVE or
-            spec.capabilities
+        connectionCapabilities =
+            CAPABILITY_HOLD or
+                CAPABILITY_SUPPORT_HOLD or
+                CAPABILITY_MUTE or
+                CAPABILITY_SEPARATE_FROM_CONFERENCE or
+                CAPABILITY_DISCONNECT_FROM_CONFERENCE or
+                CAPABILITY_SUPPORTS_VT_LOCAL_BIDIRECTIONAL or
+                CAPABILITY_SUPPORTS_VT_REMOTE_BIDIRECTIONAL or
+                CAPABILITY_TRANSFER_CONSULTATIVE or
+                spec.capabilities
         videoProvider = video
         connectionProperties = spec.properties
         if (!spec.extras.isEmpty) putExtras(spec.extras)
@@ -103,23 +105,25 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
     }
 
     /** The network shows [message] under [id] on the user's call screen. */
-    fun showDiagnosticMessage(id: Int, message: String) = FakeCarrier.onMain {
-        sendConnectionEvent(
-            android.telecom.Call.EVENT_DISPLAY_DIAGNOSTIC_MESSAGE,
-            Bundle().apply {
-                putInt(android.telecom.Call.EXTRA_DIAGNOSTIC_MESSAGE_ID, id)
-                putCharSequence(android.telecom.Call.EXTRA_DIAGNOSTIC_MESSAGE, message)
-            },
-        )
-    }
+    fun showDiagnosticMessage(id: Int, message: String) =
+        FakeCarrier.onMain {
+            sendConnectionEvent(
+                android.telecom.Call.EVENT_DISPLAY_DIAGNOSTIC_MESSAGE,
+                Bundle().apply {
+                    putInt(android.telecom.Call.EXTRA_DIAGNOSTIC_MESSAGE_ID, id)
+                    putCharSequence(android.telecom.Call.EXTRA_DIAGNOSTIC_MESSAGE, message)
+                },
+            )
+        }
 
     /** The network takes the message under [id] off the user's call screen. */
-    fun clearDiagnosticMessage(id: Int) = FakeCarrier.onMain {
-        sendConnectionEvent(
-            android.telecom.Call.EVENT_CLEAR_DIAGNOSTIC_MESSAGE,
-            Bundle().apply { putInt(android.telecom.Call.EXTRA_DIAGNOSTIC_MESSAGE_ID, id) },
-        )
-    }
+    fun clearDiagnosticMessage(id: Int) =
+        FakeCarrier.onMain {
+            sendConnectionEvent(
+                android.telecom.Call.EVENT_CLEAR_DIAGNOSTIC_MESSAGE,
+                Bundle().apply { putInt(android.telecom.Call.EXTRA_DIAGNOSTIC_MESSAGE_ID, id) },
+            )
+        }
 
     override fun onDisconnect() = end(DisconnectCause(DisconnectCause.LOCAL))
 
@@ -172,10 +176,11 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
     }
 
     /** The far end picks up an outgoing call; digits after a wait (;) then wait for the user. */
-    fun answerFromFarEnd() = FakeCarrier.onMain {
-        setActive()
-        if (postDialDigits.isNotEmpty()) setPostDialWait(postDialDigits)
-    }
+    fun answerFromFarEnd() =
+        FakeCarrier.onMain {
+            setActive()
+            if (postDialDigits.isNotEmpty()) setPostDialWait(postDialDigits)
+        }
 
     /** Starts the call with RTT on, as a network does for a call that was RTT from the start. */
     fun startRtt(stream: RttTextStream?) {
@@ -184,36 +189,41 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
     }
 
     /** The far end agrees to the user's request to switch to RTT. */
-    fun acceptRttRequest() = FakeCarrier.onMain {
-        check(rttRequestedByUser) { "no RTT request" }
-        rttRequestedByUser = false
-        connectionProperties = connectionProperties or PROPERTY_IS_RTT
-        sendRttInitiationSuccess()
-    }
+    fun acceptRttRequest() =
+        FakeCarrier.onMain {
+            check(rttRequestedByUser) { "no RTT request" }
+            rttRequestedByUser = false
+            connectionProperties = connectionProperties or PROPERTY_IS_RTT
+            sendRttInitiationSuccess()
+        }
 
     /** The far end turns the user's request to switch to RTT down. */
-    fun rejectRttRequest() = FakeCarrier.onMain {
-        check(rttRequestedByUser) { "no RTT request" }
-        rttRequestedByUser = false
-        rttStream = null
-        sendRttInitiationFailure(RttModifyStatus.SESSION_MODIFY_REQUEST_REJECTED_BY_REMOTE)
-    }
+    fun rejectRttRequest() =
+        FakeCarrier.onMain {
+            check(rttRequestedByUser) { "no RTT request" }
+            rttRequestedByUser = false
+            rttStream = null
+            sendRttInitiationFailure(RttModifyStatus.SESSION_MODIFY_REQUEST_REJECTED_BY_REMOTE)
+        }
 
     /** The far end asks the user to switch the call to RTT. */
-    fun requestRtt() = FakeCarrier.onMain {
-        rttRequestAccepted = null
-        sendRemoteRttRequest()
-    }
+    fun requestRtt() =
+        FakeCarrier.onMain {
+            rttRequestAccepted = null
+            sendRemoteRttRequest()
+        }
 
     /** The far end turns RTT off; the call carries on as a voice call. */
-    fun stopRttFromFarEnd() = FakeCarrier.onMain {
-        rttStream = null
-        connectionProperties = connectionProperties and PROPERTY_IS_RTT.inv()
-        sendRttSessionRemotelyTerminated()
-    }
+    fun stopRttFromFarEnd() =
+        FakeCarrier.onMain {
+            rttStream = null
+            connectionProperties = connectionProperties and PROPERTY_IS_RTT.inv()
+            sendRttSessionRemotelyTerminated()
+        }
 
     /** Whether the call still has RTT on, as the network sees it. */
-    val isRtt: Boolean get() = connectionProperties and PROPERTY_IS_RTT != 0
+    val isRtt: Boolean
+        get() = connectionProperties and PROPERTY_IS_RTT != 0
 
     /** The far end types [text] over RTT. */
     fun typeRtt(text: String) = checkNotNull(rttStream) { "RTT is off" }.write(text)
@@ -228,10 +238,13 @@ class FakeConnection(val spec: FakeCallSpec, val isIncoming: Boolean) : Connecti
      * The far end or the network ends the call with [cause]. By default a call that is still
      * ringing ends as missed, as a real network reports it, and any other call as remote.
      */
-    fun hangUpFromFarEnd(cause: Int = if (state == STATE_RINGING) DisconnectCause.MISSED else DisconnectCause.REMOTE) =
-        hangUpFromFarEnd(DisconnectCause(cause))
+    fun hangUpFromFarEnd(
+        cause: Int = if (state == STATE_RINGING) DisconnectCause.MISSED else DisconnectCause.REMOTE
+    ) = hangUpFromFarEnd(DisconnectCause(cause))
 
-    /** The network ends the call with [cause], which can carry a reason and a message for the user. */
+    /**
+     * The network ends the call with [cause], which can carry a reason and a message for the user.
+     */
     fun hangUpFromFarEnd(cause: DisconnectCause) = FakeCarrier.onMain { end(cause) }
 
     private fun end(cause: DisconnectCause) {

@@ -23,31 +23,15 @@ android {
         warning += "MissingTranslation"
     }
 
-    buildFeatures {
-        aidl = true
-    }
+    buildFeatures { aidl = true }
 
     // Ship the .proto files so modules above can import them.
-    sourceSets {
-        getByName("main") {
-            resources.directories.add("src/main/proto")
-        }
-    }
+    sourceSets { getByName("main") { resources.directories.add("src/main/proto") } }
 }
 
 protobuf {
-    protoc {
-        artifact = libs.protoc.get().toString()
-    }
-    generateProtoTasks {
-        all().configureEach {
-            builtins {
-                create("java") {
-                    option("lite")
-                }
-            }
-        }
-    }
+    protoc { artifact = libs.protoc.get().toString() }
+    generateProtoTasks { all().configureEach { builtins { create("java") { option("lite") } } } }
 }
 
 dependencies {

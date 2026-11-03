@@ -3,9 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-plugins {
-    `java-library`
-}
+plugins { `java-library` }
 
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)

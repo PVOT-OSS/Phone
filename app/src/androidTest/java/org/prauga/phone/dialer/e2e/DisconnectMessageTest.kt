@@ -34,11 +34,13 @@ class DisconnectMessageTest {
     private val deviceRule = DeviceRule()
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
+    val rules: RuleChain =
+        RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
 
     @Test
     fun networkErrorShowsTheNetworksMessage() {
-        dialing().hangUpFromFarEnd(DisconnectCause(DisconnectCause.ERROR, null, NETWORK_MESSAGE, null))
+        dialing()
+            .hangUpFromFarEnd(DisconnectCause(DisconnectCause.ERROR, null, NETWORK_MESSAGE, null))
 
         findText(NETWORK_MESSAGE)
         findButton(POSITIVE, context.getString(android.R.string.cancel)).click()
@@ -47,14 +49,18 @@ class DisconnectMessageTest {
 
     @Test
     fun restrictedCallShowsTheNetworksMessage() {
-        dialing().hangUpFromFarEnd(DisconnectCause(DisconnectCause.RESTRICTED, null, RESTRICTED_MESSAGE, null))
+        dialing()
+            .hangUpFromFarEnd(
+                DisconnectCause(DisconnectCause.RESTRICTED, null, RESTRICTED_MESSAGE, null)
+            )
 
         findText(RESTRICTED_MESSAGE)
     }
 
     @Test
     fun wifiCallingOffOffersToTurnItOn() {
-        val cause = DisconnectCause(DisconnectCause.ERROR, null, WIFI_MESSAGE, "REASON_WIFI_ON_BUT_WFC_OFF")
+        val cause =
+            DisconnectCause(DisconnectCause.ERROR, null, WIFI_MESSAGE, "REASON_WIFI_ON_BUT_WFC_OFF")
         dialing().hangUpFromFarEnd(cause)
 
         findText(WIFI_MESSAGE)
@@ -64,21 +70,40 @@ class DisconnectMessageTest {
     @Test
     fun blockedVideoCallOffersAVoiceCall() {
         val number = CallTests.freshNumber()
-        val extras = Bundle().apply {
-            putParcelable(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, FakeCarrier.accountHandle(context))
-            putInt(TelecomManager.EXTRA_START_CALL_WITH_VIDEO_STATE, VideoProfile.STATE_BIDIRECTIONAL)
-        }
-        context.getSystemService(TelecomManager::class.java).placeCall(Uri.fromParts(PhoneAccount.SCHEME_TEL, number, null), extras)
+        val extras =
+            Bundle().apply {
+                putParcelable(
+                    TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE,
+                    FakeCarrier.accountHandle(context),
+                )
+                putInt(
+                    TelecomManager.EXTRA_START_CALL_WITH_VIDEO_STATE,
+                    VideoProfile.STATE_BIDIRECTIONAL,
+                )
+            }
+        context
+            .getSystemService(TelecomManager::class.java)
+            .placeCall(Uri.fromParts(PhoneAccount.SCHEME_TEL, number, null), extras)
         val videoCall = CallTests.waitFor { FakeCarrier.connections.firstOrNull() }
         InCall.waitForState(DialerCallState.DIALING)
 
-        videoCall.hangUpFromFarEnd(DisconnectCause(DisconnectCause.ERROR, null, null, DisconnectCause.REASON_IMS_ACCESS_BLOCKED))
+        videoCall.hangUpFromFarEnd(
+            DisconnectCause(
+                DisconnectCause.ERROR,
+                null,
+                null,
+                DisconnectCause.REASON_IMS_ACCESS_BLOCKED,
+            )
+        )
         findText(context.getString(R.string.video_call_not_available_title))
         findButton(POSITIVE, context.getString(R.string.voice_call)).click()
 
-        val voiceCall = CallTests.waitFor { FakeCarrier.connections.firstOrNull()?.takeIf { it !== videoCall } }
+        val voiceCall =
+            CallTests.waitFor { FakeCarrier.connections.firstOrNull()?.takeIf { it !== videoCall } }
         check(voiceCall.spec.number == number) { "voice call went to ${voiceCall.spec.number}" }
-        check(voiceCall.videoState == VideoProfile.STATE_AUDIO_ONLY) { "voice call has video state ${voiceCall.videoState}" }
+        check(voiceCall.videoState == VideoProfile.STATE_AUDIO_ONLY) {
+            "voice call has video state ${voiceCall.videoState}"
+        }
     }
 
     @Test
@@ -86,7 +111,10 @@ class DisconnectMessageTest {
         dialing().hangUpFromFarEnd(DisconnectCause.REMOTE)
 
         InCall.waitForNoCalls()
-        assertNull("a message was shown", deviceRule.device.wait(Until.findObject(By.res("android", "message")), QUIET_MILLIS))
+        assertNull(
+            "a message was shown",
+            deviceRule.device.wait(Until.findObject(By.res("android", "message")), QUIET_MILLIS),
+        )
     }
 
     private fun dialing(): FakeConnection {
@@ -96,14 +124,28 @@ class DisconnectMessageTest {
     }
 
     private fun findText(text: String): UiObject2 =
-        checkNotNull(deviceRule.device.wait(Until.findObject(By.text(text)), CallTests.TIMEOUT_MILLIS)) { "\"$text\" not shown" }
-
-    /** A dialog button; its label is compared ignoring case, as buttons may be shown in capitals. */
-    private fun findButton(id: String, label: String): UiObject2 {
-        val button = checkNotNull(deviceRule.device.wait(Until.findObject(By.res("android", id)), CallTests.TIMEOUT_MILLIS)) {
-            "button \"$label\" not shown"
+        checkNotNull(
+            deviceRule.device.wait(Until.findObject(By.text(text)), CallTests.TIMEOUT_MILLIS)
+        ) {
+            "\"$text\" not shown"
         }
-        check(button.text.equals(label, ignoreCase = true)) { "button says \"${button.text}\", expected \"$label\"" }
+
+    /**
+     * A dialog button; its label is compared ignoring case, as buttons may be shown in capitals.
+     */
+    private fun findButton(id: String, label: String): UiObject2 {
+        val button =
+            checkNotNull(
+                deviceRule.device.wait(
+                    Until.findObject(By.res("android", id)),
+                    CallTests.TIMEOUT_MILLIS,
+                )
+            ) {
+                "button \"$label\" not shown"
+            }
+        check(button.text.equals(label, ignoreCase = true)) {
+            "button says \"${button.text}\", expected \"$label\""
+        }
         return button
     }
 

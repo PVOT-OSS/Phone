@@ -57,4 +57,3 @@
         android:summary="@string/lookup_disclaimer"
         app:iconSpaceReserved="false" />
 </PreferenceScreen>
-

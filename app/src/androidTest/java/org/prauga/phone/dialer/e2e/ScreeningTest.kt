@@ -30,18 +30,25 @@ class ScreeningTest {
     private val contacts = TestContactRule()
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule())
-        .around(FakeCarrierRule())
-        .around(DeviceRule())
-        .around(screening)
-        .around(contacts)
+    val rules: RuleChain =
+        RuleChain.outerRule(DefaultDialerRule())
+            .around(FakeCarrierRule())
+            .around(DeviceRule())
+            .around(screening)
+            .around(contacts)
 
     @Test
     fun hiddenCallerIsDeclined() {
         screening.set(CallerCategory.PRIVATE_OR_HIDDEN, CategoryAction.DECLINE)
         val since = System.currentTimeMillis()
 
-        FakeCarrier.ring(context, FakeCallSpec(number = CallTests.freshNumber(), presentation = TelecomManager.PRESENTATION_RESTRICTED))
+        FakeCarrier.ring(
+            context,
+            FakeCallSpec(
+                number = CallTests.freshNumber(),
+                presentation = TelecomManager.PRESENTATION_RESTRICTED,
+            ),
+        )
 
         assertDeclined(CallTests.waitFor { CallTests.latestCall(context, since) })
     }
@@ -52,7 +59,13 @@ class ScreeningTest {
         val number = CallTests.freshNumber()
         val since = System.currentTimeMillis()
 
-        FakeCarrier.ring(context, FakeCallSpec(number = number, verificationStatus = Connection.VERIFICATION_STATUS_FAILED))
+        FakeCarrier.ring(
+            context,
+            FakeCallSpec(
+                number = number,
+                verificationStatus = Connection.VERIFICATION_STATUS_FAILED,
+            ),
+        )
         CallTests.waitForRinging().hangUpFromFarEnd()
 
         val row = CallTests.waitFor { CallTests.latestCall(context, number, since) }
@@ -86,7 +99,10 @@ class ScreeningTest {
 
         val row = CallTests.waitFor { CallTests.latestCall(context, number, since) }
         assertEquals(CallLog.Calls.MISSED_TYPE, row.type)
-        assertEquals(0L, row.missedReason and CallLog.Calls.USER_MISSED_CALL_SCREENING_SERVICE_SILENCED)
+        assertEquals(
+            0L,
+            row.missedReason and CallLog.Calls.USER_MISSED_CALL_SCREENING_SERVICE_SILENCED,
+        )
     }
 
     @Test
@@ -104,7 +120,12 @@ class ScreeningTest {
         val number = CallTests.freshNumber()
         CallTests.addRecentOutgoingCall(context, number)
 
-        assertRings(FakeCallSpec(number = number, verificationStatus = Connection.VERIFICATION_STATUS_FAILED))
+        assertRings(
+            FakeCallSpec(
+                number = number,
+                verificationStatus = Connection.VERIFICATION_STATUS_FAILED,
+            )
+        )
     }
 
     @Test
@@ -114,26 +135,47 @@ class ScreeningTest {
         CallTests.answerRingingCall()
         val since = System.currentTimeMillis()
 
-        FakeCarrier.ring(context, FakeCallSpec(number = CallTests.freshNumber(), presentation = TelecomManager.PRESENTATION_RESTRICTED))
+        FakeCarrier.ring(
+            context,
+            FakeCallSpec(
+                number = CallTests.freshNumber(),
+                presentation = TelecomManager.PRESENTATION_RESTRICTED,
+            ),
+        )
         CallTests.waitFor { if (FakeCarrier.connections.size == 2) true else null }
-        CallTests.waitFor { FakeCarrier.connections.lastOrNull()?.takeIf { it.state == Connection.STATE_RINGING } }
+        CallTests.waitFor {
+                FakeCarrier.connections.lastOrNull()?.takeIf {
+                    it.state == Connection.STATE_RINGING
+                }
+            }
             .hangUpFromFarEnd()
 
-        assertEquals(CallLog.Calls.MISSED_TYPE, CallTests.waitFor { CallTests.latestCall(context, since) }.type)
+        assertEquals(
+            CallLog.Calls.MISSED_TYPE,
+            CallTests.waitFor { CallTests.latestCall(context, since) }.type,
+        )
     }
 
     private fun assertRings(spec: FakeCallSpec) {
         val since = System.currentTimeMillis()
         FakeCarrier.ring(context, spec)
         CallTests.waitForRinging().hangUpFromFarEnd()
-        val row = CallTests.waitFor { CallTests.latestCall(context, checkNotNull(spec.number), since) }
+        val row =
+            CallTests.waitFor { CallTests.latestCall(context, checkNotNull(spec.number), since) }
         assertEquals(CallLog.Calls.MISSED_TYPE, row.type)
-        assertEquals(0L, row.missedReason and CallLog.Calls.USER_MISSED_CALL_SCREENING_SERVICE_SILENCED)
+        assertEquals(
+            0L,
+            row.missedReason and CallLog.Calls.USER_MISSED_CALL_SCREENING_SERVICE_SILENCED,
+        )
     }
 
     private fun assertDeclined(row: CallLogRow) {
         assertEquals(CallLog.Calls.BLOCKED_TYPE, row.type)
         assertEquals(CallLog.Calls.BLOCK_REASON_CALL_SCREENING_SERVICE, row.blockReason)
-        assertNotEquals("declined call is still on the carrier", true, FakeCarrier.connections.isNotEmpty())
+        assertNotEquals(
+            "declined call is still on the carrier",
+            true,
+            FakeCarrier.connections.isNotEmpty(),
+        )
     }
 }

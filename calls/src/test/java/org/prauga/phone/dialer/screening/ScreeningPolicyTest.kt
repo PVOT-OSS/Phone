@@ -12,18 +12,19 @@ import org.junit.Test
 
 class ScreeningPolicyTest {
 
-    private val knownCaller = IncomingCallFacts(
-        number = "+919000000000",
-        presentation = TelecomManager.PRESENTATION_ALLOWED,
-        verificationStatus = Connection.VERIFICATION_STATUS_NOT_VERIFIED,
-        isEmergencyNumber = false,
-        hasRecentEmergencyCall = false,
-        isContact = false,
-        hasCallLogHistory = true,
-        hasRecentOutgoingCall = false,
-        isMarkedDoNotScreen = false,
-        hasActiveCall = false,
-    )
+    private val knownCaller =
+        IncomingCallFacts(
+            number = "+919000000000",
+            presentation = TelecomManager.PRESENTATION_ALLOWED,
+            verificationStatus = Connection.VERIFICATION_STATUS_NOT_VERIFIED,
+            isEmergencyNumber = false,
+            hasRecentEmergencyCall = false,
+            isContact = false,
+            hasCallLogHistory = true,
+            hasRecentOutgoingCall = false,
+            isMarkedDoNotScreen = false,
+            hasActiveCall = false,
+        )
 
     private val declineAll: (CallerCategory) -> CategoryAction = { CategoryAction.DECLINE }
     private val ringAll: (CallerCategory) -> CategoryAction = { CategoryAction.RING }
@@ -33,26 +34,40 @@ class ScreeningPolicyTest {
 
     @Test
     fun ringsWhenEveryCategoryRings() {
-        val hidden = knownCaller.copy(number = null, presentation = TelecomManager.PRESENTATION_RESTRICTED)
-        assertEquals(ScreeningDecision(CategoryAction.RING, ScreeningReason.None), ScreeningPolicy.decide(hidden, ringAll))
+        val hidden =
+            knownCaller.copy(number = null, presentation = TelecomManager.PRESENTATION_RESTRICTED)
+        assertEquals(
+            ScreeningDecision(CategoryAction.RING, ScreeningReason.None),
+            ScreeningPolicy.decide(hidden, ringAll),
+        )
     }
 
     @Test
     fun ringsWhenNoCategoryApplies() {
-        assertEquals(ScreeningDecision(CategoryAction.RING, ScreeningReason.None), ScreeningPolicy.decide(knownCaller, declineAll))
+        assertEquals(
+            ScreeningDecision(CategoryAction.RING, ScreeningReason.None),
+            ScreeningPolicy.decide(knownCaller, declineAll),
+        )
     }
 
     @Test
     fun hiddenNumbersArePrivate() {
-        for (presentation in listOf(
-            TelecomManager.PRESENTATION_RESTRICTED,
-            TelecomManager.PRESENTATION_UNKNOWN,
-            TelecomManager.PRESENTATION_PAYPHONE,
-        )) {
+        for (presentation in
+            listOf(
+                TelecomManager.PRESENTATION_RESTRICTED,
+                TelecomManager.PRESENTATION_UNKNOWN,
+                TelecomManager.PRESENTATION_PAYPHONE,
+            )) {
             val facts = knownCaller.copy(presentation = presentation)
-            assertEquals(listOf(CallerCategory.PRIVATE_OR_HIDDEN), ScreeningPolicy.categoriesOf(facts))
+            assertEquals(
+                listOf(CallerCategory.PRIVATE_OR_HIDDEN),
+                ScreeningPolicy.categoriesOf(facts),
+            )
         }
-        assertEquals(listOf(CallerCategory.PRIVATE_OR_HIDDEN), ScreeningPolicy.categoriesOf(knownCaller.copy(number = "")))
+        assertEquals(
+            listOf(CallerCategory.PRIVATE_OR_HIDDEN),
+            ScreeningPolicy.categoriesOf(knownCaller.copy(number = "")),
+        )
     }
 
     @Test
@@ -79,52 +94,72 @@ class ScreeningPolicyTest {
     fun appliesTheChosenAction() {
         val facts = knownCaller.copy(hasCallLogHistory = false)
         assertEquals(
-            ScreeningDecision(CategoryAction.SILENCE, ScreeningReason.Category(CallerCategory.FIRST_TIME)),
+            ScreeningDecision(
+                CategoryAction.SILENCE,
+                ScreeningReason.Category(CallerCategory.FIRST_TIME),
+            ),
             decide(facts, mapOf(CallerCategory.FIRST_TIME to CategoryAction.SILENCE)),
         )
     }
 
     @Test
     fun strictestActionWinsAcrossCategories() {
-        val facts = knownCaller.copy(
-            verificationStatus = Connection.VERIFICATION_STATUS_FAILED,
-            hasCallLogHistory = false,
-        )
-        val actions = mapOf(
-            CallerCategory.POSSIBLY_FAKED to CategoryAction.SILENCE,
-            CallerCategory.FIRST_TIME to CategoryAction.DECLINE,
-        )
+        val facts =
+            knownCaller.copy(
+                verificationStatus = Connection.VERIFICATION_STATUS_FAILED,
+                hasCallLogHistory = false,
+            )
+        val actions =
+            mapOf(
+                CallerCategory.POSSIBLY_FAKED to CategoryAction.SILENCE,
+                CallerCategory.FIRST_TIME to CategoryAction.DECLINE,
+            )
         assertEquals(
-            ScreeningDecision(CategoryAction.DECLINE, ScreeningReason.Category(CallerCategory.FIRST_TIME)),
+            ScreeningDecision(
+                CategoryAction.DECLINE,
+                ScreeningReason.Category(CallerCategory.FIRST_TIME),
+            ),
             decide(facts, actions),
         )
     }
 
     @Test
     fun moreSpecificCategoryExplainsATie() {
-        val facts = knownCaller.copy(
-            verificationStatus = Connection.VERIFICATION_STATUS_FAILED,
-            hasCallLogHistory = false,
-        )
+        val facts =
+            knownCaller.copy(
+                verificationStatus = Connection.VERIFICATION_STATUS_FAILED,
+                hasCallLogHistory = false,
+            )
         assertEquals(
-            ScreeningDecision(CategoryAction.DECLINE, ScreeningReason.Category(CallerCategory.POSSIBLY_FAKED)),
+            ScreeningDecision(
+                CategoryAction.DECLINE,
+                ScreeningReason.Category(CallerCategory.POSSIBLY_FAKED),
+            ),
             ScreeningPolicy.decide(facts, declineAll),
         )
     }
 
     @Test
     fun exemptionsAlwaysRing() {
-        val stranger = knownCaller.copy(hasCallLogHistory = false, verificationStatus = Connection.VERIFICATION_STATUS_FAILED)
-        val cases = mapOf(
-            stranger.copy(isEmergencyNumber = true) to ScreeningReason.Emergency,
-            stranger.copy(hasRecentEmergencyCall = true) to ScreeningReason.RecentEmergency,
-            stranger.copy(isContact = true) to ScreeningReason.Contact,
-            stranger.copy(hasRecentOutgoingCall = true) to ScreeningReason.RecentOutgoing,
-            stranger.copy(isMarkedDoNotScreen = true) to ScreeningReason.DoNotScreen,
-            stranger.copy(hasActiveCall = true) to ScreeningReason.AnotherActiveCall,
-        )
+        val stranger =
+            knownCaller.copy(
+                hasCallLogHistory = false,
+                verificationStatus = Connection.VERIFICATION_STATUS_FAILED,
+            )
+        val cases =
+            mapOf(
+                stranger.copy(isEmergencyNumber = true) to ScreeningReason.Emergency,
+                stranger.copy(hasRecentEmergencyCall = true) to ScreeningReason.RecentEmergency,
+                stranger.copy(isContact = true) to ScreeningReason.Contact,
+                stranger.copy(hasRecentOutgoingCall = true) to ScreeningReason.RecentOutgoing,
+                stranger.copy(isMarkedDoNotScreen = true) to ScreeningReason.DoNotScreen,
+                stranger.copy(hasActiveCall = true) to ScreeningReason.AnotherActiveCall,
+            )
         for ((facts, reason) in cases) {
-            assertEquals(ScreeningDecision(CategoryAction.RING, reason), ScreeningPolicy.decide(facts, declineAll))
+            assertEquals(
+                ScreeningDecision(CategoryAction.RING, reason),
+                ScreeningPolicy.decide(facts, declineAll),
+            )
         }
     }
 

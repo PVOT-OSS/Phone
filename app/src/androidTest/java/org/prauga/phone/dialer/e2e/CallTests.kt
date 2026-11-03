@@ -27,7 +27,9 @@ object CallTests {
     fun <T : Any> waitFor(timeoutMillis: Long = TIMEOUT_MILLIS, block: () -> T?): T {
         val deadline = System.currentTimeMillis() + timeoutMillis
         while (System.currentTimeMillis() < deadline) {
-            block()?.let { return it }
+            block()?.let {
+                return it
+            }
             Thread.sleep(POLL_MILLIS)
         }
         return checkNotNull(block()) { "timed out" }
@@ -45,14 +47,18 @@ object CallTests {
 
     private fun hasIncomingCall(): Boolean {
         var incoming = false
-        InstrumentationRegistry.getInstrumentation().runOnMainSync { incoming = CallList.getInstance().incomingCall != null }
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            incoming = CallList.getInstance().incomingCall != null
+        }
         return incoming
     }
 
     /** A number no call log row uses yet, in the reserved 555-01xx range. */
     fun freshNumber(): String = "+1555" + (1_000_000..9_999_999).random()
 
-    /** Adds a finished incoming call from [number] to the call log, as if it happened a month ago. */
+    /**
+     * Adds a finished incoming call from [number] to the call log, as if it happened a month ago.
+     */
     fun addPastIncomingCall(context: Context, number: String) =
         addPastCall(context, number, CallLog.Calls.INCOMING_TYPE, MONTH_MILLIS)
 
@@ -75,34 +81,54 @@ object CallTests {
 
     private fun hasActiveCall(): Boolean {
         var active = false
-        InstrumentationRegistry.getInstrumentation().runOnMainSync { active = CallList.getInstance().activeCall != null }
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            active = CallList.getInstance().activeCall != null
+        }
         return active
     }
 
     private fun addPastCall(context: Context, number: String, type: Int, ageMillis: Long) {
-        val values = ContentValues().apply {
-            put(CallLog.Calls.NUMBER, number)
-            put(CallLog.Calls.TYPE, type)
-            put(CallLog.Calls.DATE, System.currentTimeMillis() - ageMillis)
-            put(CallLog.Calls.DURATION, 30)
+        val values =
+            ContentValues().apply {
+                put(CallLog.Calls.NUMBER, number)
+                put(CallLog.Calls.TYPE, type)
+                put(CallLog.Calls.DATE, System.currentTimeMillis() - ageMillis)
+                put(CallLog.Calls.DURATION, 30)
+            }
+        checkNotNull(context.contentResolver.insert(CallLog.Calls.CONTENT_URI, values)) {
+            "could not add call log row"
         }
-        checkNotNull(context.contentResolver.insert(CallLog.Calls.CONTENT_URI, values)) { "could not add call log row" }
     }
 
     /** The newest call log row logged at or after [since], whatever its number. */
-    fun latestCall(context: Context, since: Long): CallLogRow? = query(context, "${CallLog.Calls.DATE} >= ?", arrayOf(since.toString()))
+    fun latestCall(context: Context, since: Long): CallLogRow? =
+        query(context, "${CallLog.Calls.DATE} >= ?", arrayOf(since.toString()))
 
     /** The newest call log row for [number] logged at or after [since]. */
     fun latestCall(context: Context, number: String, since: Long): CallLogRow? =
-        query(context, "${CallLog.Calls.DATE} >= ? AND ${CallLog.Calls.NUMBER} = ?", arrayOf(since.toString(), number))
+        query(
+            context,
+            "${CallLog.Calls.DATE} >= ? AND ${CallLog.Calls.NUMBER} = ?",
+            arrayOf(since.toString(), number),
+        )
 
-    private fun query(context: Context, selection: String, args: Array<String>): CallLogRow? = context.contentResolver.query(
-        CallLog.Calls.CONTENT_URI,
-        arrayOf(CallLog.Calls.TYPE, CallLog.Calls.BLOCK_REASON, CallLog.Calls.MISSED_REASON),
-        selection,
-        args,
-        "${CallLog.Calls.DATE} DESC",
-    )?.use { if (it.moveToFirst()) CallLogRow(it.getInt(0), it.getInt(1), it.getLong(2)) else null }
+    private fun query(context: Context, selection: String, args: Array<String>): CallLogRow? =
+        context.contentResolver
+            .query(
+                CallLog.Calls.CONTENT_URI,
+                arrayOf(
+                    CallLog.Calls.TYPE,
+                    CallLog.Calls.BLOCK_REASON,
+                    CallLog.Calls.MISSED_REASON,
+                ),
+                selection,
+                args,
+                "${CallLog.Calls.DATE} DESC",
+            )
+            ?.use {
+                if (it.moveToFirst()) CallLogRow(it.getInt(0), it.getInt(1), it.getLong(2))
+                else null
+            }
 
     private const val DAY_MILLIS = 24L * 60 * 60 * 1000
     private const val MONTH_MILLIS = 30 * DAY_MILLIS

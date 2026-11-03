@@ -3,9 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-plugins {
-    id("pvot.android.library")
-}
+plugins { id("pvot.android.library") }
 
 android {
     namespace = "org.prauga.phone.incallui"

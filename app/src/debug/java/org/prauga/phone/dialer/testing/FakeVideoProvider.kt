@@ -41,28 +41,36 @@ class FakeVideoProvider(private val connection: FakeConnection) : Connection.Vid
     }
 
     /** The far end agrees to the user's pending request. */
-    fun acceptRequest() = FakeCarrier.onMain {
-        val request = checkNotNull(pendingRequest) { "no pending request" }
-        pendingRequest = null
-        receiveSessionModifyResponse(SESSION_MODIFY_REQUEST_SUCCESS, request, request)
-        connection.setVideoState(request.videoState)
-    }
+    fun acceptRequest() =
+        FakeCarrier.onMain {
+            val request = checkNotNull(pendingRequest) { "no pending request" }
+            pendingRequest = null
+            receiveSessionModifyResponse(SESSION_MODIFY_REQUEST_SUCCESS, request, request)
+            connection.setVideoState(request.videoState)
+        }
 
     /** The far end turns the user's pending request down. */
-    fun rejectRequest() = FakeCarrier.onMain {
-        val request = checkNotNull(pendingRequest) { "no pending request" }
-        pendingRequest = null
-        receiveSessionModifyResponse(SESSION_MODIFY_REQUEST_REJECTED_BY_REMOTE, request, VideoProfile(connection.videoState))
-    }
+    fun rejectRequest() =
+        FakeCarrier.onMain {
+            val request = checkNotNull(pendingRequest) { "no pending request" }
+            pendingRequest = null
+            receiveSessionModifyResponse(
+                SESSION_MODIFY_REQUEST_REJECTED_BY_REMOTE,
+                request,
+                VideoProfile(connection.videoState),
+            )
+        }
 
     /** The far end asks to change the call to [videoState], for example to upgrade it to video. */
-    fun request(videoState: Int) = FakeCarrier.onMain { receiveSessionModifyRequest(VideoProfile(videoState)) }
+    fun request(videoState: Int) =
+        FakeCarrier.onMain { receiveSessionModifyRequest(VideoProfile(videoState)) }
 
     /** The far end drops video; the call carries on as a voice call. */
-    fun downgradeToAudio() = FakeCarrier.onMain {
-        receiveSessionModifyRequest(VideoProfile(VideoProfile.STATE_AUDIO_ONLY))
-        connection.setVideoState(VideoProfile.STATE_AUDIO_ONLY)
-    }
+    fun downgradeToAudio() =
+        FakeCarrier.onMain {
+            receiveSessionModifyRequest(VideoProfile(VideoProfile.STATE_AUDIO_ONLY))
+            connection.setVideoState(VideoProfile.STATE_AUDIO_ONLY)
+        }
 
     override fun onSetCamera(cameraId: String?) {
         this.cameraId = cameraId

@@ -13,7 +13,9 @@ import org.prauga.phone.dialer.app.calllog.CallLogGrouping.Call
 
 class CallLogGroupingTest {
 
-    private val sameDigits: (String, String) -> Boolean = { a, b -> a.filter(Char::isDigit) == b.filter(Char::isDigit) }
+    private val sameDigits: (String, String) -> Boolean = { a, b ->
+        a.filter(Char::isDigit) == b.filter(Char::isDigit)
+    }
 
     private fun call(
         number: String? = "+16505550100",
@@ -23,7 +25,8 @@ class CallLogGroupingTest {
         postDial: String? = null,
     ) = Call(number, postDial, presentation, type, day)
 
-    private fun joins(previous: Call, next: Call) = CallLogGrouping.joins(previous, next, sameDigits)
+    private fun joins(previous: Call, next: Call) =
+        CallLogGrouping.joins(previous, next, sameDigits)
 
     @Test
     fun incomingAndOutgoingFromTheSameNumberShareARow() =
@@ -37,15 +40,20 @@ class CallLogGroupingTest {
     fun rejectedCallsCountAsMissed() =
         assertTrue(joins(call(type = Calls.MISSED_TYPE), call(type = Calls.REJECTED_TYPE)))
 
-    @Test
-    fun todayAndYesterdayAreSeparate() = assertFalse(joins(call(day = 0), call(day = 1)))
+    @Test fun todayAndYesterdayAreSeparate() = assertFalse(joins(call(day = 0), call(day = 1)))
 
     @Test
     fun olderCallsShareARowAcrossDays() =
-        assertTrue(joins(call(day = CallLogGrouping.dayBucket(3)), call(day = CallLogGrouping.dayBucket(9))))
+        assertTrue(
+            joins(
+                call(day = CallLogGrouping.dayBucket(3)),
+                call(day = CallLogGrouping.dayBucket(9)),
+            )
+        )
 
     @Test
-    fun differentNumbersAreSeparate() = assertFalse(joins(call(number = "+16505550100"), call(number = "+16505550199")))
+    fun differentNumbersAreSeparate() =
+        assertFalse(joins(call(number = "+16505550100"), call(number = "+16505550199")))
 
     @Test
     fun privateCallersNeverShareARow() {
@@ -56,10 +64,16 @@ class CallLogGroupingTest {
 
     @Test
     fun differentPresentationsAreSeparate() =
-        assertFalse(joins(call(presentation = Calls.PRESENTATION_ALLOWED), call(presentation = Calls.PRESENTATION_PAYPHONE)))
+        assertFalse(
+            joins(
+                call(presentation = Calls.PRESENTATION_ALLOWED),
+                call(presentation = Calls.PRESENTATION_PAYPHONE),
+            )
+        )
 
     @Test
-    fun differentPostDialDigitsAreSeparate() = assertFalse(joins(call(postDial = ",1"), call(postDial = ",2")))
+    fun differentPostDialDigitsAreSeparate() =
+        assertFalse(joins(call(postDial = ",1"), call(postDial = ",2")))
 
     @Test
     fun voicemailsAreNeverGrouped() =

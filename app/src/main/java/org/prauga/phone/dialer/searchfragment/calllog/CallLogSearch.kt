@@ -24,7 +24,11 @@ import org.prauga.phone.dialer.searchfragment.common.RowClickListener
 import org.prauga.phone.dialer.searchfragment.common.SearchCursor
 
 /** A number from the call history that isn't saved as a contact. */
-data class CallLogSearchEntry(val number: String, val formattedNumber: String, val location: String?)
+data class CallLogSearchEntry(
+    val number: String,
+    val formattedNumber: String,
+    val location: String?,
+)
 
 /**
  * The "Not in your contacts" search section: numbers from the call history with no contact name,
@@ -39,11 +43,14 @@ class CallLogSearchCursor(
 
     override fun updateQuery(query: String): Boolean {
         val digits = query.filter(Char::isDigit)
-        val matches = if (digits.isEmpty()) {
-            emptyList()
-        } else {
-            entries.filter { it.number.filter(Char::isDigit).contains(digits) }.take(MAX_RESULTS)
-        }
+        val matches =
+            if (digits.isEmpty()) {
+                emptyList()
+            } else {
+                entries
+                    .filter { it.number.filter(Char::isDigit).contains(digits) }
+                    .take(MAX_RESULTS)
+            }
         if (matches == shown) return false
         shown = matches
         return true
@@ -97,24 +104,38 @@ class CallLogSearchCursorLoader(context: Context) : AsyncTaskLoader<Cursor>(cont
     override fun loadInBackground(): Cursor {
         val entries = LinkedHashMap<String, CallLogSearchEntry>()
         runCatching {
-            context.contentResolver.query(
-                Calls.CONTENT_URI.buildUpon().appendQueryParameter(Calls.LIMIT_PARAM_KEY, QUERY_LIMIT.toString()).build(),
-                arrayOf(Calls.NUMBER, Calls.CACHED_NORMALIZED_NUMBER, Calls.CACHED_FORMATTED_NUMBER, Calls.GEOCODED_LOCATION),
-                "(${Calls.CACHED_NAME} IS NULL OR ${Calls.CACHED_NAME} = '') AND ${Calls.NUMBER} IS NOT NULL AND ${Calls.NUMBER} != ''",
-                null,
-                "${Calls.DATE} DESC",
-            )?.use { cursor ->
-                while (cursor.moveToNext()) {
-                    val number = cursor.getString(0) ?: continue
-                    val key = cursor.getString(1)?.takeIf { it.isNotEmpty() } ?: number
-                    if (key in entries) continue
-                    val formatted = cursor.getString(2)?.takeIf { it.isNotEmpty() }
-                        ?: PhoneNumberUtils.formatNumber(number, null) ?: number
-                    entries[key] = CallLogSearchEntry(number, formatted, cursor.getString(3))
+            context.contentResolver
+                .query(
+                    Calls.CONTENT_URI.buildUpon()
+                        .appendQueryParameter(Calls.LIMIT_PARAM_KEY, QUERY_LIMIT.toString())
+                        .build(),
+                    arrayOf(
+                        Calls.NUMBER,
+                        Calls.CACHED_NORMALIZED_NUMBER,
+                        Calls.CACHED_FORMATTED_NUMBER,
+                        Calls.GEOCODED_LOCATION,
+                    ),
+                    "(${Calls.CACHED_NAME} IS NULL OR ${Calls.CACHED_NAME} = '') AND ${Calls.NUMBER} IS NOT NULL AND ${Calls.NUMBER} != ''",
+                    null,
+                    "${Calls.DATE} DESC",
+                )
+                ?.use { cursor ->
+                    while (cursor.moveToNext()) {
+                        val number = cursor.getString(0) ?: continue
+                        val key = cursor.getString(1)?.takeIf { it.isNotEmpty() } ?: number
+                        if (key in entries) continue
+                        val formatted =
+                            cursor.getString(2)?.takeIf { it.isNotEmpty() }
+                                ?: PhoneNumberUtils.formatNumber(number, null)
+                                ?: number
+                        entries[key] = CallLogSearchEntry(number, formatted, cursor.getString(3))
+                    }
                 }
-            }
         }
-        return CallLogSearchCursor(context.getString(R.string.call_log_search_result_header), entries.values.toList())
+        return CallLogSearchCursor(
+            context.getString(R.string.call_log_search_result_header),
+            entries.values.toList(),
+        )
     }
 
     private companion object {
@@ -143,14 +164,15 @@ class CallLogSearchViewHolder(view: View, private val listener: RowClickListener
         val place = cursor.getString(CallLogSearchCursor.LOCATION)
         location.text = place
         location.visibility = if (place.isNullOrEmpty()) View.GONE else View.VISIBLE
-        ContactPhotoManager.getInstance(context).loadDialerThumbnailOrPhoto(
-            photo,
-            null,
-            0,
-            null,
-            formatted,
-            LetterTileDrawable.TYPE_DEFAULT,
-        )
+        ContactPhotoManager.getInstance(context)
+            .loadDialerThumbnailOrPhoto(
+                photo,
+                null,
+                0,
+                null,
+                formatted,
+                LetterTileDrawable.TYPE_DEFAULT,
+            )
     }
 
     override fun onClick(view: View) {

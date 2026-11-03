@@ -26,7 +26,8 @@ class InCallControlsTest {
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(DeviceRule())
+    val rules: RuleChain =
+        RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(DeviceRule())
 
     @Test
     fun holdAndResume() {
@@ -57,10 +58,16 @@ class InCallControlsTest {
         connectedCall()
 
         InCall.onMain { TelecomAdapter.getInstance().setAudioRoute(CallAudioState.ROUTE_SPEAKER) }
-        CallTests.waitFor { if (audioState()?.route == CallAudioState.ROUTE_SPEAKER) true else null }
+        CallTests.waitFor {
+            if (audioState()?.route == CallAudioState.ROUTE_SPEAKER) true else null
+        }
 
-        InCall.onMain { TelecomAdapter.getInstance().setAudioRoute(CallAudioState.ROUTE_WIRED_OR_EARPIECE) }
-        CallTests.waitFor { if (audioState()?.route != CallAudioState.ROUTE_SPEAKER) true else null }
+        InCall.onMain {
+            TelecomAdapter.getInstance().setAudioRoute(CallAudioState.ROUTE_WIRED_OR_EARPIECE)
+        }
+        CallTests.waitFor {
+            if (audioState()?.route != CallAudioState.ROUTE_SPEAKER) true else null
+        }
     }
 
     @Test
@@ -85,5 +92,6 @@ class InCallControlsTest {
         return InCall.waitForState(DialerCallState.ACTIVE) to far
     }
 
-    private fun audioState(): CallAudioState? = InCall.onMain { AudioModeProvider.getInstance().audioState }
+    private fun audioState(): CallAudioState? =
+        InCall.onMain { AudioModeProvider.getInstance().audioState }
 }

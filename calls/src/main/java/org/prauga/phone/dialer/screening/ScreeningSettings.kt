@@ -10,7 +10,9 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 
-/** The user's chosen [CategoryAction] for each [CallerCategory], kept in the default preferences. */
+/**
+ * The user's chosen [CategoryAction] for each [CallerCategory], kept in the default preferences.
+ */
 class ScreeningSettings(private val prefs: SharedPreferences) {
 
     /** The action for [category]; [CategoryAction.RING] until the user picks another. */
@@ -28,7 +30,8 @@ class ScreeningSettings(private val prefs: SharedPreferences) {
             ScreeningSettings(PreferenceManager.getDefaultSharedPreferences(context))
 
         /** The preference key holding the action for [category]. */
-        fun keyFor(category: CallerCategory): String = "screening_action_" + category.name.lowercase()
+        fun keyFor(category: CallerCategory): String =
+            "screening_action_" + category.name.lowercase()
 
         /** The stored value for [action]. */
         fun valueOf(action: CategoryAction): String = action.name.lowercase()

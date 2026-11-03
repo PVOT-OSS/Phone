@@ -7,7 +7,9 @@ package org.prauga.phone.dialer.screening
 
 /** Kinds of unknown incoming caller the user can choose to ring, silence or decline. */
 enum class CallerCategory {
-    /** The caller hides their number: restricted, unknown or payphone presentation, or no number. */
+    /**
+     * The caller hides their number: restricted, unknown or payphone presentation, or no number.
+     */
     PRIVATE_OR_HIDDEN,
 
     /** The network reported that the caller's number failed verification and may be altered. */

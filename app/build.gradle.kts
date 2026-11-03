@@ -28,18 +28,20 @@ android {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
         }
     }
 
-    buildFeatures {
-        buildConfig = true
-    }
+    buildFeatures { buildConfig = true }
 
     packaging {
         resources {
             excludes += "META-INF/DEPENDENCIES"
-            // Libraries ship their .proto files for each other's imports; the app doesn't need them.
+            // Libraries ship their .proto files for each other's imports; the app doesn't need
+            // them.
             excludes += "org/prauga/**/*.proto"
         }
     }
@@ -56,18 +58,8 @@ android {
 }
 
 protobuf {
-    protoc {
-        artifact = libs.protoc.get().toString()
-    }
-    generateProtoTasks {
-        all().configureEach {
-            builtins {
-                create("java") {
-                    option("lite")
-                }
-            }
-        }
-    }
+    protoc { artifact = libs.protoc.get().toString() }
+    generateProtoTasks { all().configureEach { builtins { create("java") { option("lite") } } } }
 }
 
 dependencies {

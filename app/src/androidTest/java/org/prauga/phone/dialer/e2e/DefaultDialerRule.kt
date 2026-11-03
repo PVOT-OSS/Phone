@@ -27,7 +27,9 @@ class DefaultDialerRule : ExternalResource() {
     }
 
     private fun holders(): List<String> =
-        Shell.run("cmd role get-role-holders --user $userId $ROLE").lines().filter { it.isNotBlank() }
+        Shell.run("cmd role get-role-holders --user $userId $ROLE").lines().filter {
+            it.isNotBlank()
+        }
 
     private companion object {
         const val ROLE = "android.app.role.DIALER"

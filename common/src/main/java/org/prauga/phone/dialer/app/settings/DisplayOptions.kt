@@ -22,11 +22,12 @@ object DisplayOptions {
 
     /** The AppCompat night mode for a theme preference value. */
     @JvmStatic
-    fun nightModeOf(value: String?): Int = when (value) {
-        THEME_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
-        THEME_DARK -> AppCompatDelegate.MODE_NIGHT_YES
-        else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-    }
+    fun nightModeOf(value: String?): Int =
+        when (value) {
+            THEME_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+            THEME_DARK -> AppCompatDelegate.MODE_NIGHT_YES
+            else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        }
 
     /**
      * Whether the voice call screen should stay in portrait: when the user asked for it, and always

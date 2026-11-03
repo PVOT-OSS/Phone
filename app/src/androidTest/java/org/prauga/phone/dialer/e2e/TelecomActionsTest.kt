@@ -34,14 +34,16 @@ class TelecomActionsTest {
 
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
     private val missedCounts = LinkedBlockingQueue<Int>()
-    private val missedCallReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            missedCounts += intent.getIntExtra(TelecomManager.EXTRA_NOTIFICATION_COUNT, -1)
+    private val missedCallReceiver =
+        object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                missedCounts += intent.getIntExtra(TelecomManager.EXTRA_NOTIFICATION_COUNT, -1)
+            }
         }
-    }
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(DeviceRule())
+    val rules: RuleChain =
+        RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(DeviceRule())
 
     @Before
     fun listenForMissedCallCounts() {
@@ -52,8 +54,7 @@ class TelecomActionsTest {
         )
     }
 
-    @After
-    fun stopListening() = context.unregisterReceiver(missedCallReceiver)
+    @After fun stopListening() = context.unregisterReceiver(missedCallReceiver)
 
     @Test
     fun silencingTheRingerReachesTelecom() {
@@ -96,12 +97,16 @@ class TelecomActionsTest {
     private fun nextMissedCount(): Int {
         // Telecom may first send a count of 0 when the earlier calls were read.
         while (true) {
-            val count = checkNotNull(missedCounts.poll(CallTests.TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)) { "no missed call broadcast" }
+            val count =
+                checkNotNull(missedCounts.poll(CallTests.TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)) {
+                    "no missed call broadcast"
+                }
             if (count != 0) return count
         }
     }
 
-    private fun silenceEvents(): Int = Regex(" - SILENCE\\b").findAll(Shell.run("dumpsys telecom")).count()
+    private fun silenceEvents(): Int =
+        Regex(" - SILENCE\\b").findAll(Shell.run("dumpsys telecom")).count()
 
     private companion object {
         const val SETTLE_MILLIS = 2_000L

@@ -9,15 +9,22 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
 /** Lets the user swipe a single call off a number's call details, either way. */
-class SwipeToDeleteCall(private val onSwiped: Listener) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+class SwipeToDeleteCall(private val onSwiped: Listener) :
+    ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 
-    /** Told which call was swiped away; [restore] puts the row back if the user changes their mind. */
+    /**
+     * Told which call was swiped away; [restore] puts the row back if the user changes their mind.
+     */
     fun interface Listener {
         fun onCallSwiped(entryIndex: Int, restore: Runnable)
     }
 
-    override fun getSwipeDirs(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int =
-        if (viewHolder is CallDetailsEntryViewHolder) super.getSwipeDirs(recyclerView, viewHolder) else 0
+    override fun getSwipeDirs(
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+    ): Int =
+        if (viewHolder is CallDetailsEntryViewHolder) super.getSwipeDirs(recyclerView, viewHolder)
+        else 0
 
     override fun onMove(
         recyclerView: RecyclerView,

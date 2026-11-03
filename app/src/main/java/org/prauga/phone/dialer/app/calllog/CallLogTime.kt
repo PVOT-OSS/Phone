@@ -60,25 +60,37 @@ object CallLogTime {
             Style.JUST_NOW -> context.getString(R.string.call_log_time_just_now)
             Style.MINUTES_AGO ->
                 DateUtils.getRelativeTimeSpanString(
-                    callMillis,
-                    nowMillis,
-                    DateUtils.MINUTE_IN_MILLIS,
-                    DateUtils.FORMAT_ABBREV_RELATIVE,
-                ).toString().replace(".", "")
+                        callMillis,
+                        nowMillis,
+                        DateUtils.MINUTE_IN_MILLIS,
+                        DateUtils.FORMAT_ABBREV_RELATIVE,
+                    )
+                    .toString()
+                    .replace(".", "")
             Style.TIME -> DateUtils.formatDateTime(context, callMillis, time)
             Style.WEEKDAY_AND_TIME ->
-                DateUtils.formatDateTime(context, callMillis, time or DateUtils.FORMAT_SHOW_WEEKDAY or DateUtils.FORMAT_ABBREV_WEEKDAY)
+                DateUtils.formatDateTime(
+                    context,
+                    callMillis,
+                    time or DateUtils.FORMAT_SHOW_WEEKDAY or DateUtils.FORMAT_ABBREV_WEEKDAY,
+                )
             Style.DATE_AND_TIME ->
                 DateUtils.formatDateTime(
                     context,
                     callMillis,
-                    time or DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_NO_YEAR or DateUtils.FORMAT_ABBREV_MONTH,
+                    time or
+                        DateUtils.FORMAT_SHOW_DATE or
+                        DateUtils.FORMAT_NO_YEAR or
+                        DateUtils.FORMAT_ABBREV_MONTH,
                 )
             Style.FULL_DATE_AND_TIME ->
                 DateUtils.formatDateTime(
                     context,
                     callMillis,
-                    time or DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR or DateUtils.FORMAT_ABBREV_MONTH,
+                    time or
+                        DateUtils.FORMAT_SHOW_DATE or
+                        DateUtils.FORMAT_SHOW_YEAR or
+                        DateUtils.FORMAT_ABBREV_MONTH,
                 )
         }
     }

@@ -10,8 +10,8 @@ package org.prauga.phone.dialer.screening
  *
  * @param number The caller's number, or null when it was not delivered
  * @param presentation The handle presentation, one of the TelecomManager PRESENTATION_ constants
- * @param verificationStatus The network's caller number verification result, one of the
- * Connection VERIFICATION_STATUS_ constants
+ * @param verificationStatus The network's caller number verification result, one of the Connection
+ *   VERIFICATION_STATUS_ constants
  * @param isEmergencyNumber Whether the number is an emergency number
  * @param hasRecentEmergencyCall Whether the user called emergency services recently
  * @param isContact Whether the number belongs to a contact

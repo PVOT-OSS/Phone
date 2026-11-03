@@ -17,10 +17,13 @@ class CallLogTimeTest {
     private val now = LocalDateTime.of(2026, 11, 1, 18, 30)
 
     private fun styleOf(call: LocalDateTime): Style =
-        CallLogTime.styleOf(call.atZone(zone).toInstant().toEpochMilli(), now.atZone(zone).toInstant().toEpochMilli(), zone)
+        CallLogTime.styleOf(
+            call.atZone(zone).toInstant().toEpochMilli(),
+            now.atZone(zone).toInstant().toEpochMilli(),
+            zone,
+        )
 
-    @Test
-    fun underAMinuteIsJustNow() = assertEquals(Style.JUST_NOW, styleOf(now.minusSeconds(40)))
+    @Test fun underAMinuteIsJustNow() = assertEquals(Style.JUST_NOW, styleOf(now.minusSeconds(40)))
 
     @Test
     fun underAnHourIsMinutesAgo() = assertEquals(Style.MINUTES_AGO, styleOf(now.minusMinutes(59)))
@@ -29,17 +32,19 @@ class CallLogTimeTest {
     fun earlierTodayIsTheTime() = assertEquals(Style.TIME, styleOf(now.withHour(0).withMinute(5)))
 
     @Test
-    fun yesterdayLateIsTheWeekday() = assertEquals(Style.WEEKDAY_AND_TIME, styleOf(now.minusDays(1).withHour(23)))
+    fun yesterdayLateIsTheWeekday() =
+        assertEquals(Style.WEEKDAY_AND_TIME, styleOf(now.minusDays(1).withHour(23)))
 
     @Test
     fun sixDaysAgoIsTheWeekday() = assertEquals(Style.WEEKDAY_AND_TIME, styleOf(now.minusDays(6)))
 
-    @Test
-    fun aWeekAgoIsTheDate() = assertEquals(Style.DATE_AND_TIME, styleOf(now.minusDays(7)))
+    @Test fun aWeekAgoIsTheDate() = assertEquals(Style.DATE_AND_TIME, styleOf(now.minusDays(7)))
 
     @Test
-    fun lastYearWithinTwelveMonthsHasNoYear() = assertEquals(Style.DATE_AND_TIME, styleOf(now.minusMonths(11)))
+    fun lastYearWithinTwelveMonthsHasNoYear() =
+        assertEquals(Style.DATE_AND_TIME, styleOf(now.minusMonths(11)))
 
     @Test
-    fun overAYearAgoHasTheYear() = assertEquals(Style.FULL_DATE_AND_TIME, styleOf(now.minusMonths(13)))
+    fun overAYearAgoHasTheYear() =
+        assertEquals(Style.FULL_DATE_AND_TIME, styleOf(now.minusMonths(13)))
 }

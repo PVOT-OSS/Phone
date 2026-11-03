@@ -13,14 +13,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
-import org.prauga.phone.incallui.R
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.incallui.call.CallList
 
 /**
- * When an emergency call can't find a mobile network, Android offers to reach emergency services
- * by satellite instead and hands the phone app the app to open for it. The call screen asks the
- * user, bringing itself forward if needed.
+ * When an emergency call can't find a mobile network, Android offers to reach emergency services by
+ * satellite instead and hands the phone app the app to open for it. The call screen asks the user,
+ * bringing itself forward if needed.
  */
 object EmergencySatellite {
 
@@ -33,20 +32,31 @@ object EmergencySatellite {
     /** The offer waiting for the call screen to come forward. */
     private var pending: Bundle? = null
 
-    /** Telephony's [TelephonyManager.EVENT_DISPLAY_EMERGENCY_MESSAGE] arrived for the call [callId]. */
+    /**
+     * Telephony's [TelephonyManager.EVENT_DISPLAY_EMERGENCY_MESSAGE] arrived for the call [callId].
+     */
     @JvmStatic
     fun onEvent(callId: String, extras: Bundle?) {
-        val intent = extras?.let {
-            runCatching {
-                it.getParcelable(TelephonyManager.EXTRA_EMERGENCY_CALL_TO_SATELLITE_LAUNCH_INTENT, PendingIntent::class.java)
-            }.getOrNull()
-        }
+        val intent =
+            extras?.let {
+                runCatching {
+                        it.getParcelable(
+                            TelephonyManager.EXTRA_EMERGENCY_CALL_TO_SATELLITE_LAUNCH_INTENT,
+                            PendingIntent::class.java,
+                        )
+                    }
+                    .getOrNull()
+            }
         if (intent == null) {
             // Nothing to open: the device has no app for it.
             LogUtil.i("EmergencySatellite.onEvent", "no app to hand over to")
             return
         }
-        val type = extras.getInt(TelephonyManager.EXTRA_EMERGENCY_CALL_TO_SATELLITE_HANDOVER_TYPE, HANDOVER_TYPE_SOS)
+        val type =
+            extras.getInt(
+                TelephonyManager.EXTRA_EMERGENCY_CALL_TO_SATELLITE_HANDOVER_TYPE,
+                HANDOVER_TYPE_SOS,
+            )
         pending = bundleOf(ARG_INTENT to intent, ARG_TYPE to type, ARG_CALL_ID to callId)
         val presenter = InCallPresenter.getInstance()
         val activity = presenter.activity
@@ -57,7 +67,9 @@ object EmergencySatellite {
         }
     }
 
-    /** Shows the offer waiting for the call screen, if any; the call screen calls this on resume. */
+    /**
+     * Shows the offer waiting for the call screen, if any; the call screen calls this on resume.
+     */
     @JvmStatic
     fun showPending(activity: FragmentActivity) {
         val args = pending ?: return
@@ -79,10 +91,18 @@ object EmergencySatellite {
             val textTo911 = args.getInt(ARG_TYPE) == HANDOVER_TYPE_T911
             return AlertDialog.Builder(requireContext())
                 .setTitle(R.string.emergency_satellite_title)
-                .setMessage(if (textTo911) R.string.emergency_satellite_message_t911 else R.string.emergency_satellite_message_sos)
-                .setPositiveButton(if (textTo911) R.string.emergency_satellite_open_t911 else R.string.emergency_satellite_open_sos) { _, _ ->
+                .setMessage(
+                    if (textTo911) R.string.emergency_satellite_message_t911
+                    else R.string.emergency_satellite_message_sos
+                )
+                .setPositiveButton(
+                    if (textTo911) R.string.emergency_satellite_open_t911
+                    else R.string.emergency_satellite_open_sos
+                ) { _, _ ->
                     runCatching { intent?.send() }
-                        .onFailure { LogUtil.e("EmergencySatellite", "can't open the satellite app", it) }
+                        .onFailure {
+                            LogUtil.e("EmergencySatellite", "can't open the satellite app", it)
+                        }
                 }
                 .setNegativeButton(R.string.emergency_satellite_keep_trying, null)
                 .create()

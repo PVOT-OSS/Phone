@@ -26,15 +26,18 @@ object IncomingCallSettings {
 
     /** Whether incoming calls are answered with buttons instead of a swipe. */
     @JvmStatic
-    fun answerWithSingleTap(context: Context): Boolean = prefs(context)?.getString(KEY_ANSWER_GESTURE, GESTURE_SWIPE) == GESTURE_TAP
+    fun answerWithSingleTap(context: Context): Boolean =
+        prefs(context)?.getString(KEY_ANSWER_GESTURE, GESTURE_SWIPE) == GESTURE_TAP
 
     /** Whether turning the phone face down silences the ringer. */
     @JvmStatic
-    fun flipToSilence(context: Context): Boolean = prefs(context)?.getBoolean(KEY_FLIP_TO_SILENCE, false) == true
+    fun flipToSilence(context: Context): Boolean =
+        prefs(context)?.getBoolean(KEY_FLIP_TO_SILENCE, false) == true
 
     /** When the caller is announced: [ANNOUNCE_ALWAYS], [ANNOUNCE_HEADSET] or [ANNOUNCE_NEVER]. */
     @JvmStatic
-    fun announceCaller(context: Context): String = prefs(context)?.getString(KEY_ANNOUNCE_CALLER, ANNOUNCE_NEVER) ?: ANNOUNCE_NEVER
+    fun announceCaller(context: Context): String =
+        prefs(context)?.getString(KEY_ANNOUNCE_CALLER, ANNOUNCE_NEVER) ?: ANNOUNCE_NEVER
 
     /** The settings, or null before the first unlock, when they can't be read. */
     private fun prefs(context: Context): SharedPreferences? {

@@ -12,13 +12,18 @@ import android.telecom.TelecomManager
 object ScreeningPolicy {
 
     /**
-     * Calls that must always ring come first: emergency numbers, callbacks after an emergency
-     * call, contacts, numbers the user called recently, numbers marked never to screen and calls
-     * that arrive while the user is in another call. Other
-     * calls take the strictest action the user chose among the categories they fall into.
+     * Calls that must always ring come first: emergency numbers, callbacks after an emergency call,
+     * contacts, numbers the user called recently, numbers marked never to screen and calls that
+     * arrive while the user is in another call. Other calls take the strictest action the user
+     * chose among the categories they fall into.
      */
-    fun decide(facts: IncomingCallFacts, actionFor: (CallerCategory) -> CategoryAction): ScreeningDecision {
-        exemption(facts)?.let { return ScreeningDecision(CategoryAction.RING, it) }
+    fun decide(
+        facts: IncomingCallFacts,
+        actionFor: (CallerCategory) -> CategoryAction,
+    ): ScreeningDecision {
+        exemption(facts)?.let {
+            return ScreeningDecision(CategoryAction.RING, it)
+        }
         return categoriesOf(facts)
             .map { ScreeningDecision(actionFor(it), ScreeningReason.Category(it)) }
             .filter { it.action != CategoryAction.RING }
@@ -40,13 +45,14 @@ object ScreeningPolicy {
         }
     }
 
-    private fun exemption(facts: IncomingCallFacts): ScreeningReason? = when {
-        facts.isEmergencyNumber -> ScreeningReason.Emergency
-        facts.hasRecentEmergencyCall -> ScreeningReason.RecentEmergency
-        facts.isContact -> ScreeningReason.Contact
-        facts.hasRecentOutgoingCall -> ScreeningReason.RecentOutgoing
-        facts.isMarkedDoNotScreen -> ScreeningReason.DoNotScreen
-        facts.hasActiveCall -> ScreeningReason.AnotherActiveCall
-        else -> null
-    }
+    private fun exemption(facts: IncomingCallFacts): ScreeningReason? =
+        when {
+            facts.isEmergencyNumber -> ScreeningReason.Emergency
+            facts.hasRecentEmergencyCall -> ScreeningReason.RecentEmergency
+            facts.isContact -> ScreeningReason.Contact
+            facts.hasRecentOutgoingCall -> ScreeningReason.RecentOutgoing
+            facts.isMarkedDoNotScreen -> ScreeningReason.DoNotScreen
+            facts.hasActiveCall -> ScreeningReason.AnotherActiveCall
+            else -> null
+        }
 }

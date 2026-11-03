@@ -28,15 +28,22 @@ class CallLogActionsTest {
 
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
     private val deviceRule = DeviceRule()
-    private val device get() = deviceRule.device
+    private val device
+        get() = deviceRule.device
+
     private val numbers = mutableListOf<String>()
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
+    val rules: RuleChain =
+        RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
 
     @After
     fun removeCalls() {
-        for (number in numbers) context.contentResolver.delete(Calls.CONTENT_URI, "${Calls.NUMBER} = ?", arrayOf(number))
+        for (number in numbers) context.contentResolver.delete(
+            Calls.CONTENT_URI,
+            "${Calls.NUMBER} = ?",
+            arrayOf(number),
+        )
     }
 
     @Test
@@ -45,7 +52,11 @@ class CallLogActionsTest {
         openRecents()
 
         val row = findText(number.takeLast(4))
-        checkNotNull(row.parent.parent.findObject(By.textStartsWith(context.getString(R.string.call_log_label_video)))) {
+        checkNotNull(
+            row.parent.parent.findObject(
+                By.textStartsWith(context.getString(R.string.call_log_label_video))
+            )
+        ) {
             "row doesn't say Video"
         }
     }
@@ -84,38 +95,53 @@ class CallLogActionsTest {
     /** Adds [count] answered calls from a fresh number a few seconds ago, at the top of the log. */
     @Test
     fun callDetailsShowWhatWasSentWithTheCall() {
-        val number = addCalls(1) {
-            put(Calls.SUBJECT, NOTE)
-            put(Calls.PRIORITY, Calls.PRIORITY_URGENT)
-        }
+        val number =
+            addCalls(1) {
+                put(Calls.SUBJECT, NOTE)
+                put(Calls.PRIORITY, Calls.PRIORITY_URGENT)
+            }
         openDetails(number)
 
         findText(context.getString(R.string.call_details_composer_urgent_note, NOTE))
     }
 
-    private fun addCalls(count: Int, features: Int = 0, more: ContentValues.() -> Unit = {}): String {
+    private fun addCalls(
+        count: Int,
+        features: Int = 0,
+        more: ContentValues.() -> Unit = {},
+    ): String {
         val number = CallTests.freshNumber()
         numbers += number
         repeat(count) { i ->
-            val values = ContentValues().apply {
-                put(Calls.NUMBER, number)
-                put(Calls.TYPE, Calls.INCOMING_TYPE)
-                put(Calls.DATE, System.currentTimeMillis() - (i + 1) * SECOND)
-                put(Calls.DURATION, 30)
-                put(Calls.FEATURES, features)
-                more()
-            }
+            val values =
+                ContentValues().apply {
+                    put(Calls.NUMBER, number)
+                    put(Calls.TYPE, Calls.INCOMING_TYPE)
+                    put(Calls.DATE, System.currentTimeMillis() - (i + 1) * SECOND)
+                    put(Calls.DURATION, 30)
+                    put(Calls.FEATURES, features)
+                    more()
+                }
             checkNotNull(context.contentResolver.insert(Calls.CONTENT_URI, values))
         }
         return number
     }
 
     private fun callCount(number: String): Int =
-        context.contentResolver.query(Calls.CONTENT_URI, arrayOf(Calls._ID), "${Calls.NUMBER} = ?", arrayOf(number), null)
+        context.contentResolver
+            .query(
+                Calls.CONTENT_URI,
+                arrayOf(Calls._ID),
+                "${Calls.NUMBER} = ?",
+                arrayOf(number),
+                null,
+            )
             ?.use { it.count } ?: 0
 
     private fun openRecents() {
-        context.startActivity(MainComponent.getShowCallLogIntent(context).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        context.startActivity(
+            MainComponent.getShowCallLogIntent(context).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
     }
 
     private fun longPressMenuDelete(number: String) {
@@ -130,31 +156,61 @@ class CallLogActionsTest {
         val details = By.res(context.packageName, "details_action")
         val list = checkNotNull(device.findObject(By.res(context.packageName, "recycler_view")))
         list.scrollUntil(Direction.DOWN, Until.findObject(details))
-        checkNotNull(device.wait(Until.findObject(details), CallTests.TIMEOUT_MILLIS)) { "no call details action" }.click()
-        device.wait(Until.findObject(By.res(context.packageName, "recycler_view")), CallTests.TIMEOUT_MILLIS)
+        checkNotNull(device.wait(Until.findObject(details), CallTests.TIMEOUT_MILLIS)) {
+                "no call details action"
+            }
+            .click()
+        device.wait(
+            Until.findObject(By.res(context.packageName, "recycler_view")),
+            CallTests.TIMEOUT_MILLIS,
+        )
     }
 
     /** Swipes the first call entry in call details (the row under the header). */
     private fun swipeFirstCall() {
-        val callTime = checkNotNull(device.wait(Until.findObject(By.res(context.packageName, "call_time")), CallTests.TIMEOUT_MILLIS)) {
-            "no call entries"
-        }
+        val callTime =
+            checkNotNull(
+                device.wait(
+                    Until.findObject(By.res(context.packageName, "call_time")),
+                    CallTests.TIMEOUT_MILLIS,
+                )
+            ) {
+                "no call entries"
+            }
         // Swipe the whole entry row the call time sits in.
         var entry = callTime
-        while (entry.parent != null && entry.parent.resourceName != "${context.packageName}:id/recycler_view") entry = entry.parent
+        while (
+            entry.parent != null &&
+                entry.parent.resourceName != "${context.packageName}:id/recycler_view"
+        ) entry = entry.parent
         entry.swipe(Direction.RIGHT, SWIPE_PERCENT)
     }
 
     private fun findText(text: String): UiObject2 =
-        checkNotNull(device.wait(Until.findObject(By.textContains(text)), CallTests.TIMEOUT_MILLIS)) { "\"$text\" not shown" }
+        checkNotNull(
+            device.wait(Until.findObject(By.textContains(text)), CallTests.TIMEOUT_MILLIS)
+        ) {
+            "\"$text\" not shown"
+        }
 
-    private fun findDialogTitle(title: String) = check(
-        device.wait(Until.findObject(By.res("android", "alertTitle").text(title)), CallTests.TIMEOUT_MILLIS) != null ||
-            device.wait(Until.findObject(By.text(title)), CallTests.TIMEOUT_MILLIS) != null,
-    ) { "dialog \"$title\" not shown" }
+    private fun findDialogTitle(title: String) =
+        check(
+            device.wait(
+                Until.findObject(By.res("android", "alertTitle").text(title)),
+                CallTests.TIMEOUT_MILLIS,
+            ) != null ||
+                device.wait(Until.findObject(By.text(title)), CallTests.TIMEOUT_MILLIS) != null
+        ) {
+            "dialog \"$title\" not shown"
+        }
 
     private fun clickDialogButton(id: String) =
-        checkNotNull(device.wait(Until.findObject(By.res("android", id)), CallTests.TIMEOUT_MILLIS)) { "no $id" }.click()
+        checkNotNull(
+                device.wait(Until.findObject(By.res("android", id)), CallTests.TIMEOUT_MILLIS)
+            ) {
+                "no $id"
+            }
+            .click()
 
     private companion object {
         const val SECOND = 1_000L

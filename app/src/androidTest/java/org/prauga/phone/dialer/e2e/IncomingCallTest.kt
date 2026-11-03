@@ -30,19 +30,27 @@ class IncomingCallTest {
     private val deviceRule = DeviceRule()
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
+    val rules: RuleChain =
+        RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
 
     @Test
     fun ringingCallShowsCallerAndBecomesMissed() {
         val since = System.currentTimeMillis()
         FakeCarrier.ring(context, FakeCallSpec(number = NUMBER))
 
-        val caller = deviceRule.device.wait(Until.findObject(By.textContains(NUMBER_TAIL)), CallTests.TIMEOUT_MILLIS)
+        val caller =
+            deviceRule.device.wait(
+                Until.findObject(By.textContains(NUMBER_TAIL)),
+                CallTests.TIMEOUT_MILLIS,
+            )
         assertNotNull("incoming call screen did not show the caller", caller)
 
         CallTests.waitForRinging().hangUpFromFarEnd()
 
-        assertEquals(CallLog.Calls.MISSED_TYPE, CallTests.waitFor { CallTests.latestCall(context, NUMBER, since) }.type)
+        assertEquals(
+            CallLog.Calls.MISSED_TYPE,
+            CallTests.waitFor { CallTests.latestCall(context, NUMBER, since) }.type,
+        )
     }
 
     @Test
@@ -52,11 +60,19 @@ class IncomingCallTest {
         FakeCarrier.ring(context, FakeCallSpec(number = number))
 
         CallTests.answerRingingCall()
-        val call = CallTests.waitFor { FakeCarrier.connections.firstOrNull()?.takeIf { it.state == Connection.STATE_ACTIVE } }
+        val call =
+            CallTests.waitFor {
+                FakeCarrier.connections.firstOrNull()?.takeIf {
+                    it.state == Connection.STATE_ACTIVE
+                }
+            }
         call.hangUpFromFarEnd()
 
         InCall.waitForNoCalls()
-        assertEquals(CallLog.Calls.INCOMING_TYPE, CallTests.waitFor { CallTests.latestCall(context, number, since) }.type)
+        assertEquals(
+            CallLog.Calls.INCOMING_TYPE,
+            CallTests.waitFor { CallTests.latestCall(context, number, since) }.type,
+        )
     }
 
     @Test
@@ -69,7 +85,10 @@ class IncomingCallTest {
         InCall.onMain { checkNotNull(CallList.getInstance().incomingCall).reject(false, null) }
 
         InCall.waitForNoCalls()
-        assertEquals(CallLog.Calls.REJECTED_TYPE, CallTests.waitFor { CallTests.latestCall(context, number, since) }.type)
+        assertEquals(
+            CallLog.Calls.REJECTED_TYPE,
+            CallTests.waitFor { CallTests.latestCall(context, number, since) }.type,
+        )
     }
 
     @Test
@@ -79,7 +98,9 @@ class IncomingCallTest {
 
         val notifications = context.getSystemService(NotificationManager::class.java)
         CallTests.waitFor {
-            notifications.activeNotifications.firstOrNull { it.notification.channelId == NotificationChannelId.MISSED_CALL }
+            notifications.activeNotifications.firstOrNull {
+                it.notification.channelId == NotificationChannelId.MISSED_CALL
+            }
         }
     }
 

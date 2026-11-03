@@ -19,8 +19,13 @@ class FakeCarrierRule : ExternalResource() {
     override fun before() {
         FakeCarrier.register(context)
         val handle = FakeCarrier.accountHandle(context)
-        val serial = context.getSystemService(UserManager::class.java).getSerialNumberForUser(Process.myUserHandle())
-        Shell.run("telecom set-phone-account-enabled ${handle.componentName.flattenToString()} ${handle.id} $serial")
+        val serial =
+            context
+                .getSystemService(UserManager::class.java)
+                .getSerialNumberForUser(Process.myUserHandle())
+        Shell.run(
+            "telecom set-phone-account-enabled ${handle.componentName.flattenToString()} ${handle.id} $serial"
+        )
     }
 
     override fun after() {

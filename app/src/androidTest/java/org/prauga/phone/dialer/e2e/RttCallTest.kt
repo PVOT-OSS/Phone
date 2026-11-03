@@ -29,7 +29,11 @@ class RttCallTest {
     private val toasts = ToastWatcher()
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule).around(toasts)
+    val rules: RuleChain =
+        RuleChain.outerRule(DefaultDialerRule())
+            .around(FakeCarrierRule())
+            .around(deviceRule)
+            .around(toasts)
 
     @Test
     fun rttCallShowsTheChatAndCarriesTextBothWays() {
@@ -41,7 +45,12 @@ class RttCallTest {
 
         val input = findView("rtt_chat_input")
         far.typeRtt("hello from far")
-        checkNotNull(deviceRule.device.wait(Until.findObject(By.textContains("hello from far")), CallTests.TIMEOUT_MILLIS)) {
+        checkNotNull(
+            deviceRule.device.wait(
+                Until.findObject(By.textContains("hello from far")),
+                CallTests.TIMEOUT_MILLIS,
+            )
+        ) {
             "far end's text not shown"
         }
 
@@ -117,7 +126,11 @@ class RttCallTest {
         toasts.waitFor(context.getString(R.string.rtt_call_downgraded_toast))
 
         CallTests.waitFor { if (InCall.onMain { !call.isActiveRttCall }) true else null }
-        CallTests.waitFor { if (deviceRule.device.findObject(By.res(context.packageName, "rtt_chat_input")) == null) true else null }
+        CallTests.waitFor {
+            if (deviceRule.device.findObject(By.res(context.packageName, "rtt_chat_input")) == null)
+                true
+            else null
+        }
         InCall.waitForState(DialerCallState.ACTIVE)
     }
 
@@ -130,7 +143,9 @@ class RttCallTest {
         repeat(MENU_ATTEMPTS) {
             deviceRule.device.waitForIdle()
             findView("rtt_overflow_button").click()
-            deviceRule.device.wait(Until.findObject(switchToVoice), MENU_WAIT_MILLIS)?.let { return it }
+            deviceRule.device.wait(Until.findObject(switchToVoice), MENU_WAIT_MILLIS)?.let {
+                return it
+            }
         }
         error("RTT menu did not open")
     }
@@ -153,10 +168,16 @@ class RttCallTest {
         return InCall.waitForState(DialerCallState.ACTIVE) to far
     }
 
-    private fun waitForRtt(call: DialerCall) = CallTests.waitFor { if (InCall.onMain { call.isActiveRttCall }) true else null }
+    private fun waitForRtt(call: DialerCall) =
+        CallTests.waitFor { if (InCall.onMain { call.isActiveRttCall }) true else null }
 
     private fun findView(id: String): UiObject2 =
-        checkNotNull(deviceRule.device.wait(Until.findObject(By.res(context.packageName, id)), CallTests.TIMEOUT_MILLIS)) {
+        checkNotNull(
+            deviceRule.device.wait(
+                Until.findObject(By.res(context.packageName, id)),
+                CallTests.TIMEOUT_MILLIS,
+            )
+        ) {
             "$id not shown"
         }
 
