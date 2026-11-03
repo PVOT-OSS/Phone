@@ -434,6 +434,8 @@ class AnswerFragment :
         LogUtil.i("AnswerFragment.setCallState", primaryCallState.toString())
         this.primaryCallState = primaryCallState
         contactGrid?.setCallState(primaryCallState)
+        // The caller gave up, or the call failed: there is nothing left to answer or decline.
+        ui.enabled = primaryCallState.state() !in ENDED_STATES
     }
 
     override fun setEndCallButtonEnabled(enabled: Boolean, animate: Boolean) = Unit
@@ -615,6 +617,9 @@ class AnswerFragment :
     }
 
     companion object {
+        private val ENDED_STATES =
+            setOf(DialerCallState.DISCONNECTING, DialerCallState.DISCONNECTED, DialerCallState.IDLE)
+
         private const val ARG_CALL_ID = "call_id"
         private const val ARG_IS_RTT_CALL = "is_rtt_call"
         private const val ARG_IS_VIDEO_CALL = "is_video_call"

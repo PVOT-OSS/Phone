@@ -269,6 +269,7 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
     }
 
     override fun setEndCallButtonEnabled(enabled: Boolean, animate: Boolean) {
+        LogUtil.i("InCallFragment.setEndCallButtonEnabled", "enabled: $enabled")
         endCallEnabled = enabled
     }
 

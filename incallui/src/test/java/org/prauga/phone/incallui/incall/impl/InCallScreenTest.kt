@@ -11,7 +11,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsOn
 import androidx.compose.ui.test.getUnclippedBoundsInRoot
 import androidx.compose.ui.test.hasAnyAncestor
@@ -176,6 +181,33 @@ class InCallScreenTest {
         showControls()
         compose.onNodeWithText("Hold").performClick()
         assertThat(calls).contains("holdClicked true")
+    }
+
+    @Test
+    fun onceTheCallIsOverMoreIsOffWithTheRest() {
+        val controllers = manyControllers()
+        showControls(controllers)
+        compose.onNodeWithTag(TestTags.INCALL_MORE).assertIsEnabled()
+        compose.runOnIdle { controllers.forEach { it.isEnabled = false } }
+        compose.onNodeWithTag(TestTags.INCALL_MORE).assertIsNotEnabled()
+        compose.onNodeWithContentDescription("Keypad").assertIsNotEnabled()
+    }
+
+    @Test
+    fun theEndPillIsOffOnceTheCallIsOver() {
+        val slots = InCallButtonSlots(context)
+        slots.place(controllers(), null, 0, 0)
+        var enabled by mutableStateOf(true)
+        compose.setContent {
+            PhoneScreenTheme {
+                InCallControls(slots, endCallEnabled = enabled, onEndCall = { ended++ })
+            }
+        }
+        compose.onNodeWithTag(TestTags.INCALL_END_CALL).assertIsEnabled()
+        compose.runOnIdle { enabled = false }
+        compose.onNodeWithTag(TestTags.INCALL_END_CALL).assertIsNotEnabled()
+        compose.onNodeWithTag(TestTags.INCALL_END_CALL).performClick()
+        assertThat(ended).isEqualTo(0)
     }
 
     @Test
