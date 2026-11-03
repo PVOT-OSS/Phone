@@ -151,3 +151,7 @@
 -keepclassmembers class * extends com.google.protobuf.GeneratedMessageLite {
     <fields>;
 }
+
+# Glance brings in WorkManager 2.7, whose Room 2.2 rules keep its database class but not its no-arg
+# constructor; R8 strips it and the release build then dies at startup creating WorkDatabase.
+-keep class * extends androidx.room.RoomDatabase { <init>(); }
