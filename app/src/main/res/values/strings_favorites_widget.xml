@@ -4,6 +4,12 @@
   SPDX-License-Identifier: Apache-2.0
   -->
 <resources>
+  <!-- Name of the home screen widget that shows the favorite contacts. [CHAR LIMIT=30] -->
+  <string name="favorites_widget_label">Favorites</string>
+  <!-- Describes the widget in the widget picker. -->
+  <string name="favorites_widget_description">Call your favorites with a tap.</string>
+  <!-- Shown in the widget when no contact is starred. -->
+  <string name="favorites_widget_empty">Star contacts to see them here.</string>
   <!-- Launcher shortcut that opens the dialpad. [CHAR LIMIT=25] -->
   <string name="dialer_shortcut_dialpad">Dialpad</string>
 </resources>
