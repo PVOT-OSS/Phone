@@ -64,7 +64,7 @@ object CallLogTime {
                     nowMillis,
                     DateUtils.MINUTE_IN_MILLIS,
                     DateUtils.FORMAT_ABBREV_RELATIVE,
-                ).toString().replace(".", "")
+                ).toString().removeSuffix(".")
             Style.TIME -> DateUtils.formatDateTime(context, callMillis, time)
             Style.WEEKDAY_AND_TIME ->
                 DateUtils.formatDateTime(context, callMillis, time or DateUtils.FORMAT_SHOW_WEEKDAY or DateUtils.FORMAT_ABBREV_WEEKDAY)
