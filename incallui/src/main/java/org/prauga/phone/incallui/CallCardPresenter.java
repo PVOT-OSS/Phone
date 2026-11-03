@@ -388,9 +388,7 @@ public class CallCardPresenter
     }
     getUi()
         .setEndCallButtonEnabled(
-            primary.getVideoTech().getSessionModificationState()
-                != SessionModificationState.RECEIVED_UPGRADE_TO_VIDEO_REQUEST,
-            true /* shouldAnimate */);
+            shouldShowEndCallButton(primary, primary.getState()), true /* shouldAnimate */);
     updatePrimaryCallState();
   }
 
@@ -899,6 +897,9 @@ public class CallCardPresenter
 
   private boolean shouldShowEndCallButton(DialerCall primary, int callState) {
     if (primary == null) {
+      return false;
+    }
+    if (callState == DialerCallState.DISCONNECTING || callState == DialerCallState.DISCONNECTED) {
       return false;
     }
     if ((!DialerCallState.isConnectingOrConnected(callState)

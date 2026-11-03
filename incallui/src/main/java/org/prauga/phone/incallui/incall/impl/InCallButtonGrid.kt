@@ -196,7 +196,14 @@ fun InCallControls(
                             PanelPlace(
                                 cell =
                                     place?.let {
-                                        if (it == MORE_CELL) moreCell(moreLabel)
+                                        if (it == MORE_CELL)
+                                            moreCell(
+                                                moreLabel,
+                                                enabled =
+                                                    layout.more.any {
+                                                        slots.buttons[it].enabledState
+                                                    },
+                                            )
                                         else slotCell(slots, it)
                                     },
                                 onClick = { cell ->
@@ -270,7 +277,7 @@ private fun slotCell(slots: InCallButtonSlots, slot: Int): PanelCell {
     )
 }
 
-private fun moreCell(label: String) =
+private fun moreCell(label: String, enabled: Boolean) =
     PanelCell(
         id = MORE_CELL,
         slot = MORE_CELL,
@@ -278,7 +285,7 @@ private fun moreCell(label: String) =
         label = label,
         description = label,
         checked = null,
-        enabled = true,
+        enabled = enabled,
         hiddenFromAccessibility = false,
     )
 
