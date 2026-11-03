@@ -16,6 +16,7 @@ import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertContentDescriptionEquals
+import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.getUnclippedBoundsInRoot
 import androidx.compose.ui.test.isRoot
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -222,7 +223,7 @@ class AnswerControlsTest {
     }
 
     @Test
-    fun onceSettledThePillsIgnoreFurtherTaps() {
+    fun onceSettledTheButtonsIgnoreFurtherTaps() {
         show(tapState())
         compose.onNodeWithTag(TestTags.ANSWER_ACCEPT).performClick()
         compose.onNodeWithTag(TestTags.ANSWER_ACCEPT).performClick()
@@ -245,7 +246,7 @@ class AnswerControlsTest {
     }
 
     @Test
-    fun tappingASideActionAboveThePillsDoesIt() {
+    fun tappingAChipDoesIt() {
         show(tapState())
         compose.onNodeWithTag(TestTags.ANSWER_SECONDARY).performClick()
         compose.onNodeWithTag(TestTags.ANSWER_AND_RELEASE).performClick()
@@ -279,7 +280,7 @@ class AnswerControlsTest {
     }
 
     @Test
-    fun theSideActionsHaveLabelsUnderThem() {
+    fun theChipsSayWhatTheyDo() {
         show(tapState())
         compose.onNodeWithText("Message").assertExists()
         compose.onNodeWithText("Answer and end current").assertExists()
@@ -303,7 +304,7 @@ class AnswerControlsTest {
     }
 
     @Test
-    fun hiddenSideActionsKeepTheirPlaceSoThePillsStayPut() {
+    fun hiddenChipsKeepTheirRoomSoTheButtonsStayPut() {
         val state = AnswerUiState().apply { twoButtons = true }
         show(state)
         compose.onNodeWithTag(TestTags.ANSWER_SECONDARY).assertDoesNotExist()
@@ -317,6 +318,38 @@ class AnswerControlsTest {
         compose.onNodeWithTag(TestTags.ANSWER_SECONDARY).assertExists()
         assertThat(compose.onNodeWithTag(TestTags.ANSWER_ACCEPT).getUnclippedBoundsInRoot())
             .isEqualTo(before)
+    }
+
+    @Test
+    fun onceTheCallIsGoneTheButtonsDoNothing() {
+        val state = tapState()
+        show(state)
+        compose.runOnIdle { state.enabled = false }
+        compose.onNodeWithTag(TestTags.ANSWER_ACCEPT).assertIsNotEnabled()
+        compose.onNodeWithTag(TestTags.ANSWER_DECLINE).assertIsNotEnabled()
+        compose.onNodeWithTag(TestTags.ANSWER_SECONDARY).assertIsNotEnabled()
+        compose.onNodeWithTag(TestTags.ANSWER_AND_RELEASE).assertIsNotEnabled()
+        compose.onNodeWithTag(TestTags.ANSWER_ACCEPT).performClick()
+        compose.onNodeWithTag(TestTags.ANSWER_DECLINE).performClick()
+        compose.onNodeWithTag(TestTags.ANSWER_SECONDARY).performClick()
+        compose
+            .onNodeWithTag(TestTags.ANSWER_AND_RELEASE)
+            .performSemanticsAction(SemanticsActions.OnClick)
+        assertThat(events).isEmpty()
+    }
+
+    @Test
+    fun onceTheCallIsGoneTheSwipeDoesNothing() {
+        val state = swipeState()
+        show(state)
+        compose.runOnIdle { state.enabled = false }
+        compose.onNodeWithTag(TestTags.ANSWER_PUCK).performTouchInput {
+            swipe(center, center - Offset(0f, 900f), 300)
+        }
+        compose
+            .onNodeWithTag(TestTags.ANSWER_SECONDARY)
+            .performSemanticsAction(SemanticsActions.OnClick)
+        assertThat(events).isEmpty()
     }
 
     @Test
