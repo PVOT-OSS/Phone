@@ -68,7 +68,11 @@ class CallHistoryScreenTest {
         mutableStateOf<CallHistoryUiState>(
             CallHistoryUiState.Loaded(listOf(missed, incoming, older), emptySet())
         )
-    private var pending by mutableStateOf(emptySet<Long>())
+
+    private fun hide(change: (Set<Long>) -> Set<Long>) {
+        val loaded = state as CallHistoryUiState.Loaded
+        state = loaded.copy(pendingDeletes = change(loaded.pendingDeletes))
+    }
 
     private inner class RecordingActions : CallHistoryActions {
         val events = mutableListOf<String>()
@@ -99,12 +103,12 @@ class CallHistoryScreenTest {
 
         override fun deleteLater(group: CallLogGroup) {
             events += "delete ${group.rowId}"
-            pending = pending + group.callIds
+            hide { it + group.callIds }
         }
 
         override fun undoDelete(group: CallLogGroup) {
             events += "undo ${group.rowId}"
-            pending = pending - group.callIds.toSet()
+            hide { it - group.callIds.toSet() }
         }
 
         override fun commitDelete(group: CallLogGroup) {
@@ -135,7 +139,6 @@ class CallHistoryScreenTest {
             PhoneScreenTheme {
                 CallHistoryScreen(
                     state = state,
-                    pendingDeletes = pending,
                     resolve = { group, _, _ -> rows.getValue(group.rowId) },
                     emptyMessage = R.string.call_log_all_empty,
                     showEmptyAction = showEmptyAction,

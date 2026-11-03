@@ -45,8 +45,21 @@ sealed interface CallHistoryUiState {
 
     data object Empty : CallHistoryUiState
 
-    data class Loaded(val groups: List<CallLogGroup>, val blockedNumbers: Set<String>) :
-        CallHistoryUiState
+    /**
+     * @param pendingDeletes Calls hidden until their delete is undone or done; part of the state so
+     *   a reload publishes the rows and what hides them together
+     */
+    data class Loaded(
+        val groups: List<CallLogGroup>,
+        val blockedNumbers: Set<String>,
+        val pendingDeletes: Set<Long> = emptySet(),
+    ) : CallHistoryUiState {
+        /** The rows to show: [groups] without the ones waiting on a delete. */
+        val visible: List<CallLogGroup>
+            get() =
+                if (pendingDeletes.isEmpty()) groups
+                else groups.filter { group -> group.callIds.none { it in pendingDeletes } }
+    }
 }
 
 /** Reads, filters and changes the call log for a call history list. */
@@ -152,13 +165,12 @@ class CallHistoryViewModel(
     val contactInfoVersion: StateFlow<Int> = _contactInfoVersion.asStateFlow()
 
     /** Rows deleted with a swipe, hidden until the delete is undone or committed. */
-    private val _pendingDeletes = MutableStateFlow<Set<Long>>(emptySet())
+    private var pendingDeletes: Set<Long> = emptySet()
 
     /**
      * Calls deleted from the call log that a load may still have shown, until it no longer does.
      */
     private val deleted = mutableSetOf<Long>()
-    val pendingDeletes: StateFlow<Set<Long>> = _pendingDeletes.asStateFlow()
 
     val contactInfoCache =
         ContactInfoCache(
@@ -211,39 +223,43 @@ class CallHistoryViewModel(
         loadJob?.cancel()
         loadJob =
             viewModelScope.launch {
-                _state.value =
-                    try {
-                        val groups = repository.load(callType)
+                try {
+                    val groups = repository.load(callType)
+                    if (groups.isEmpty()) {
                         forgetDeleted(groups)
-                        if (groups.isEmpty()) {
-                            CallHistoryUiState.Empty
-                        } else {
-                            contactInfoCache.invalidate()
-                            CallHistoryUiState.Loaded(
-                                groups,
-                                repository.blocked(groups.map { it.number }.toSet()),
-                            )
-                        }
-                    } catch (e: SecurityException) {
-                        LogUtil.e(
-                            "CallHistoryViewModel.refresh",
-                            "permission revoked while loading",
-                            e,
-                        )
-                        CallHistoryUiState.NeedsPermission
+                        _state.value = CallHistoryUiState.Empty
+                    } else {
+                        contactInfoCache.invalidate()
+                        val blocked = repository.blocked(groups.map { it.number }.toSet())
+                        // Everything is known now: the rows, what hides them and the blocked set go
+                        // out together, so a row waiting on undo never shows between two states.
+                        forgetDeleted(groups)
+                        _state.value = CallHistoryUiState.Loaded(groups, blocked, pendingDeletes)
                     }
+                } catch (e: SecurityException) {
+                    LogUtil.e("CallHistoryViewModel.refresh", "permission revoked while loading", e)
+                    _state.value = CallHistoryUiState.NeedsPermission
+                }
             }
     }
 
     /**
      * Stops hiding deleted calls once a load no longer has them. Calls still waiting on undo stay
-     * hidden even when a filtered load leaves them out.
+     * hidden even when a filtered load leaves them out. Not suspending: it runs right before the
+     * state that shows the result is published.
      */
     private fun forgetDeleted(groups: List<CallLogGroup>) {
         val loaded = groups.flatMapTo(HashSet()) { it.callIds }
         val gone = deleted.filterTo(HashSet()) { it !in loaded }
         deleted -= gone
-        _pendingDeletes.value -= gone
+        pendingDeletes -= gone
+    }
+
+    /** Hides or shows calls at once, in the state the list reads. */
+    private fun updatePendingDeletes(change: (Set<Long>) -> Set<Long>) {
+        pendingDeletes = change(pendingDeletes)
+        val loaded = _state.value as? CallHistoryUiState.Loaded ?: return
+        _state.value = loaded.copy(pendingDeletes = pendingDeletes)
     }
 
     /** Starts caller lookups, while the list shows. */
@@ -260,16 +276,12 @@ class CallHistoryViewModel(
     /**
      * Hides [group] at once; the delete happens on [commitDelete] unless [undoDelete] comes first.
      */
-    fun deleteLater(group: CallLogGroup) {
-        _pendingDeletes.value += group.callIds
-    }
+    fun deleteLater(group: CallLogGroup) = updatePendingDeletes { it + group.callIds }
 
-    fun undoDelete(group: CallLogGroup) {
-        _pendingDeletes.value -= group.callIds.toSet()
-    }
+    fun undoDelete(group: CallLogGroup) = updatePendingDeletes { it - group.callIds.toSet() }
 
     fun commitDelete(group: CallLogGroup) {
-        if (group.callIds.none { it in _pendingDeletes.value }) return
+        if (group.callIds.none { it in pendingDeletes }) return
         // The calls stay hidden until a reload no longer has them; showing them again as soon as
         // the delete is done would bring the row back until then.
         viewModelScope.launch {
@@ -281,7 +293,7 @@ class CallHistoryViewModel(
     /** Deletes [groups] at once, for voicemails the user selected and confirmed. */
     fun deleteNow(groups: List<CallLogGroup>) {
         if (groups.isEmpty()) return
-        _pendingDeletes.value += groups.flatMap { it.callIds }
+        updatePendingDeletes { it + groups.flatMap { group -> group.callIds } }
         viewModelScope.launch {
             repository.delete(groups)
             deleted += groups.flatMap { it.callIds }
