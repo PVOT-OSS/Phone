@@ -752,6 +752,7 @@ internal fun labelAndIcon(action: RowAction, row: CallLogRowUi): Pair<String, In
             stringResource(R.string.call_log_action_send_message) to R.drawable.ic_message
         RowAction.CALL_WITH_NOTE ->
             stringResource(R.string.call_with_a_note) to R.drawable.ic_call_note
+        RowAction.REMIND -> stringResource(R.string.callback_reminder_action) to R.drawable.ic_bell
         RowAction.CREATE_CONTACT ->
             stringResource(R.string.search_shortcut_create_new_contact) to R.drawable.ic_user_plus
         RowAction.ADD_TO_CONTACT ->

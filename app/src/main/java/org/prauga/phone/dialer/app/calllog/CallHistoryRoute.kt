@@ -44,6 +44,7 @@ import org.prauga.phone.dialer.database.CallLogQueryHandler
 import org.prauga.phone.dialer.dialercontact.DialerContact
 import org.prauga.phone.dialer.dialercontact.SimDetails
 import org.prauga.phone.dialer.lettertile.LetterTileDrawable
+import org.prauga.phone.dialer.reminder.CallbackReminderActivity
 import org.prauga.phone.dialer.util.DialerUtils
 import org.prauga.phone.dialer.util.PermissionsUtil
 import org.prauga.phone.dialer.util.UriUtils
@@ -205,6 +206,14 @@ private class CallHistoryIntents(
                         row.accountHandle,
                     )
                 }
+            RowAction.REMIND ->
+                context.startActivity(
+                    CallbackReminderActivity.newIntent(
+                        context,
+                        number,
+                        row.title.takeIf { !row.titleIsNumber },
+                    )
+                )
             RowAction.CREATE_CONTACT,
             RowAction.ADD_TO_CONTACT ->
                 start(

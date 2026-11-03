@@ -51,6 +51,7 @@
     <uses-permission android:name="com.android.voicemail.permission.WRITE_VOICEMAIL" />
     <uses-permission android:name="com.android.voicemail.permission.READ_VOICEMAIL" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -166,6 +167,20 @@
         <service
             android:name="org.prauga.phone.dialer.app.calllog.VoicemailNotificationJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <receiver
+            android:name="org.prauga.phone.dialer.reminder.CallbackReminderReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="org.prauga.phone.dialer.reminder.CallbackReminderActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:theme="@style/Theme.Pvot.Transparent" />
 
         <receiver
             android:name="org.prauga.phone.dialer.app.calllog.MissedCallNotificationReceiver"
