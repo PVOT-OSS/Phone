@@ -15,4 +15,7 @@ enum class CallerCategory {
 
     /** The number has no entry in the call log. */
     FIRST_TIME,
+
+    /** The number belongs to none of the user's contacts. */
+    NOT_IN_CONTACTS,
 }

@@ -80,12 +80,14 @@ private fun titleOf(category: CallerCategory) = when (category) {
     CallerCategory.PRIVATE_OR_HIDDEN -> R.string.screening_category_private_or_hidden
     CallerCategory.POSSIBLY_FAKED -> R.string.screening_category_possibly_faked
     CallerCategory.FIRST_TIME -> R.string.screening_category_first_time
+    CallerCategory.NOT_IN_CONTACTS -> R.string.screening_category_not_in_contacts
 }
 
 private fun descriptionOf(category: CallerCategory) = when (category) {
     CallerCategory.PRIVATE_OR_HIDDEN -> R.string.screening_category_private_or_hidden_description
     CallerCategory.POSSIBLY_FAKED -> R.string.screening_category_possibly_faked_description
     CallerCategory.FIRST_TIME -> R.string.screening_category_first_time_description
+    CallerCategory.NOT_IN_CONTACTS -> R.string.screening_category_not_in_contacts_description
 }
 
 private fun labelOf(action: CategoryAction) = when (action) {
