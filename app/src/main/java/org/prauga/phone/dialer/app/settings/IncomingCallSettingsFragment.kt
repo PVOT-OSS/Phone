@@ -97,6 +97,26 @@ internal fun IncomingCallSettingsList(prefs: SharedPreferences, hasAccelerometer
                         iconStyle = PvotRowIconStyle.Plain,
                     )
                 }
+                var reminders by remember {
+                    mutableStateOf(
+                        prefs.getBoolean(IncomingCallSettings.KEY_CALLBACK_REMINDERS, true)
+                    )
+                }
+                PvotSwitchRow(
+                    title = stringResource(R.string.callback_reminders_title),
+                    summary = stringResource(R.string.callback_reminders_summary),
+                    checked = reminders,
+                    onCheckedChange = {
+                        reminders = it
+                        prefs.edit { putBoolean(IncomingCallSettings.KEY_CALLBACK_REMINDERS, it) }
+                    },
+                    modifier =
+                        Modifier.testTag(
+                            TestTags.settingsRow(IncomingCallSettings.KEY_CALLBACK_REMINDERS)
+                        ),
+                    icon = settingsIcon(R.drawable.ic_bell),
+                    iconStyle = PvotRowIconStyle.Plain,
+                )
                 StoredChoiceRow(
                     prefs = prefs,
                     key = IncomingCallSettings.KEY_ANNOUNCE_CALLER,

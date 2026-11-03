@@ -15,6 +15,7 @@ import android.telephony.PhoneNumberUtils
 import java.util.concurrent.TimeUnit
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.calllog.calllogcache.CallLogCache
+import org.prauga.phone.dialer.app.settings.IncomingCallSettings
 import org.prauga.phone.dialer.calllogutils.CallbackActionHelper.CallbackAction
 import org.prauga.phone.dialer.calllogutils.PhoneCallDetails
 import org.prauga.phone.dialer.contacts.ContactsComponent
@@ -40,6 +41,7 @@ enum class RowAction {
     VIDEO_CALL,
     SEND_MESSAGE,
     CALL_WITH_NOTE,
+    REMIND,
     CREATE_CONTACT,
     ADD_TO_CONTACT,
     BLOCK,
@@ -281,6 +283,14 @@ class CallLogRowResolver(
         if (canCall && !isBlocked && !isVoicemailNumber) actions += RowAction.SEND_MESSAGE
         if (callLogCache.doesAccountSupportCallSubject(accountHandle) && !isVoicemailNumber) {
             actions += RowAction.CALL_WITH_NOTE
+        }
+        if (
+            group.callType == Calls.MISSED_TYPE &&
+                canCall &&
+                !isBlocked &&
+                IncomingCallSettings.callbackReminders(context)
+        ) {
+            actions += RowAction.REMIND
         }
         if (!isBlocked && UriUtils.isEncodedContactUri(info.lookupUri)) {
             actions += RowAction.CREATE_CONTACT

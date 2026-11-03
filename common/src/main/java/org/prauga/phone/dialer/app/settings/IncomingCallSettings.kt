@@ -16,6 +16,7 @@ object IncomingCallSettings {
     const val KEY_ANSWER_GESTURE = "answer_method_preference_list_key"
     const val KEY_FLIP_TO_SILENCE = "flip_to_silence_key"
     const val KEY_ANNOUNCE_CALLER = "call_announcer_enable_list_key"
+    const val KEY_CALLBACK_REMINDERS = "callback_reminders_key"
 
     const val GESTURE_SWIPE = "swipe"
     const val GESTURE_TAP = "tap"
@@ -38,6 +39,11 @@ object IncomingCallSettings {
     @JvmStatic
     fun announceCaller(context: Context): String =
         prefs(context)?.getString(KEY_ANNOUNCE_CALLER, ANNOUNCE_NEVER) ?: ANNOUNCE_NEVER
+
+    /** Whether missed calls offer "Remind me"; on until the user turns it off. */
+    @JvmStatic
+    fun callbackReminders(context: Context): Boolean =
+        prefs(context)?.getBoolean(KEY_CALLBACK_REMINDERS, true) != false
 
     /** The settings, or null before the first unlock, when they can't be read. */
     private fun prefs(context: Context): SharedPreferences? {
