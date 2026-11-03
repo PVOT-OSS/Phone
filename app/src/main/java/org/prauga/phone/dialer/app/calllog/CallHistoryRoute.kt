@@ -92,7 +92,7 @@ fun CallHistoryRoute(
 
     LifecycleResumeEffect(viewModel) {
         viewModel.start()
-        viewModel.refresh()
+        viewModel.resumed()
         onPauseOrDispose { viewModel.stop() }
     }
 

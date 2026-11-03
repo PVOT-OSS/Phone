@@ -34,6 +34,7 @@ class CallHistoryViewModelTest {
         var blockedNumbers = setOf<String>()
         val deleted = mutableListOf<Long>()
         val loadedTypes = mutableListOf<Int>()
+        val blockedLookups = mutableListOf<Set<String>>()
         var failWith: Exception? = null
         var deleteFailsWith: Exception? = null
         var blockFailsWith: Exception? = null
@@ -46,6 +47,7 @@ class CallHistoryViewModelTest {
             return groups
         }
         override suspend fun blocked(numbers: Collection<String>): Set<String> {
+            blockedLookups += numbers.toSet()
             blockedGate?.await()
             return blockedNumbers.intersect(numbers.toSet())
         }
@@ -113,6 +115,91 @@ class CallHistoryViewModelTest {
     fun blockedNumbersAreKnown() {
         repository.blockedNumbers = setOf("+15550199")
         assertThat(viewModel().loaded.blockedNumbers).containsExactly("+15550199")
+    }
+
+    @Test
+    fun theRowsShowBeforeTheBlockedNumbersAreKnown() {
+        repository.blockedNumbers = setOf("+15550199")
+        val gate = CompletableDeferred<Unit>()
+        repository.blockedGate = gate
+        val vm = viewModel()
+        assertThat(vm.loaded.groups).containsExactly(ada, bea).inOrder()
+        assertThat(vm.loaded.blockedNumbers).isEmpty()
+
+        gate.complete(Unit)
+
+        assertThat(vm.loaded.blockedNumbers).containsExactly("+15550199")
+    }
+
+    @Test
+    fun blockedNumbersAreKeptAcrossReloadsUntilTheyChange() {
+        repository.blockedNumbers = setOf("+15550199")
+        val vm = viewModel()
+        assertThat(repository.blockedLookups).containsExactly(setOf("+15550100", "+15550199"))
+
+        vm.refresh()
+        assertThat(repository.blockedLookups).hasSize(1)
+        assertThat(vm.loaded.blockedNumbers).containsExactly("+15550199")
+
+        // A new number is looked up on its own; the rest are still known.
+        val cy = callLogGroup(30, "+15550177")
+        repository.groups = listOf(cy, ada, bea)
+        vm.refresh()
+        assertThat(repository.blockedLookups.last()).containsExactly("+15550177")
+
+        vm.block("+15550177", "US")
+        vm.refresh()
+        assertThat(repository.blockedLookups).hasSize(2)
+        assertThat(vm.loaded.blockedNumbers).containsExactly("+15550177", "+15550199")
+    }
+
+    @Test
+    fun aChangeToTheBlockedNumbersLooksThemUpAgainWithoutAFlash() {
+        repository.blockedNumbers = setOf("+15550199")
+        val vm = viewModel()
+        val gate = CompletableDeferred<Unit>()
+        repository.blockedGate = gate
+        repository.blockedNumbers = setOf("+15550100")
+
+        vm.blockedNumbersChanged()
+        dispatcher.scheduler.advanceTimeBy(CallHistoryViewModel.CHANGE_DEBOUNCE_MS + 1)
+        // Looked up again, but until that returns the rows keep what was known.
+        assertThat(repository.blockedLookups).hasSize(2)
+        assertThat(vm.loaded.blockedNumbers).containsExactly("+15550199")
+
+        gate.complete(Unit)
+        assertThat(vm.loaded.blockedNumbers).containsExactly("+15550100")
+    }
+
+    @Test
+    fun changesReloadOnceTheySettle() {
+        val vm = viewModel()
+        vm.contentChanged()
+        vm.contentChanged()
+        vm.contentChanged()
+        assertThat(repository.loadedTypes).hasSize(1)
+
+        dispatcher.scheduler.advanceTimeBy(CallHistoryViewModel.CHANGE_DEBOUNCE_MS + 1)
+
+        assertThat(repository.loadedTypes).hasSize(2)
+        assertThat(vm.loaded.groups).containsExactly(ada, bea).inOrder()
+    }
+
+    @Test
+    fun comingBackDoesNotReloadWhatTheObserversKeptCurrent() {
+        val vm = viewModel()
+        vm.resumed()
+        assertThat(repository.loadedTypes).hasSize(1)
+    }
+
+    @Test
+    fun comingBackReloadsOnceThePermissionIsThere() {
+        permitted = false
+        val vm = viewModel()
+        assertThat(vm.state.value).isEqualTo(CallHistoryUiState.NeedsPermission)
+        permitted = true
+        vm.resumed()
+        assertThat(vm.loaded.groups).containsExactly(ada, bea).inOrder()
     }
 
     @Test
