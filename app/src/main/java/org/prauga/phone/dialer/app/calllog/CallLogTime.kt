@@ -66,7 +66,7 @@ object CallLogTime {
                         DateUtils.FORMAT_ABBREV_RELATIVE,
                     )
                     .toString()
-                    .replace(".", "")
+                    .removeSuffix(".")
             Style.TIME -> DateUtils.formatDateTime(context, callMillis, time)
             Style.WEEKDAY_AND_TIME ->
                 DateUtils.formatDateTime(
