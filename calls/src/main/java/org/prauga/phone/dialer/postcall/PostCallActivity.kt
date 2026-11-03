@@ -61,18 +61,24 @@ import org.prauga.phone.dialer.util.PermissionsUtil
 class PostCallActivity : ComponentActivity() {
 
     private val smsPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
             PermissionsUtil.permissionRequested(this, permission.SEND_SMS)
-            sendMessage(intent.getStringExtra(KEY_MESSAGE)!!)
+            // A refusal leaves the sheet up, so the user can try again or let it go.
+            val message = pendingMessage
+            if (granted && message != null) sendMessage(message)
         }
 
     private var useRcs = false
+
+    /** The message waiting on the SMS permission, kept across a recreation. */
+    private var pendingMessage: String? = null
 
     override fun onCreate(bundle: Bundle?) {
         enablePvotEdgeToEdge()
         super.onCreate(bundle)
 
         useRcs = intent.getBooleanExtra(KEY_RCS_POST_CALL, false)
+        pendingMessage = bundle?.getString(KEY_MESSAGE)
         LogUtil.i("PostCallActivity.onCreate", "useRcs: %b", useRcs)
 
         val postCallCharLimit =
@@ -95,9 +101,14 @@ class PostCallActivity : ComponentActivity() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(KEY_MESSAGE, pendingMessage)
+    }
+
     private fun sendMessage(message: String) {
         val number = Assert.isNotNull(intent.getStringExtra(KEY_PHONE_NUMBER))
-        intent.putExtra(KEY_MESSAGE, message)
+        pendingMessage = message
 
         if (useRcs) {
             LogUtil.i("PostCallActivity.onMessageFragmentSendMessage", "sending post call Rcs.")
