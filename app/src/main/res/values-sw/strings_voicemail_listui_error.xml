@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Mpya! Soma ujumbe wako wa sauti</string>
   <string name="dialer_terms_and_conditions_1.0">Angalia na usikilize ujumbe wako bila kulazimika kupiga kupitia ujumbe wa sauti. Nukuu za ujumbe wako wa sauti zinatolewa kupitia huduma ya Google ya kutoa nukuu bila malipo. Unaweza kuzima kila mojawapo ya huduma hizi kwenye Mipangilio wakati wowote. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Nukuu za ujumbe wako wa sauti zinatolewa kupitia huduma ya Google ya kutoa nukuu bila malipo. Unaweza kuzima huduma hii kwenye Mipangilio wakati wowote. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">Sawa, nimeelewa</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Hapana, asante</string>
 </resources>

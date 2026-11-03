@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Nyhet! Les taleposten din</string>
   <string name="dialer_terms_and_conditions_1.0">Se og hør på meldingene dine uten å måtte ringe talepostkassen. Transkripsjoner av talemeldingene dine leveres av Googles gratistjeneste for transkripsjoner. Du kan slå av begge deler i innstillingene når som helst. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Transkripsjoner av talemeldingene dine leveres nå av Googles gratistjeneste for transkripsjoner. Du kan slå av dette i innstillingene når som helst. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">Greit</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Nei takk</string>
 </resources>

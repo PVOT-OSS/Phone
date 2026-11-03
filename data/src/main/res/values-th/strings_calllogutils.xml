@@ -32,5 +32,4 @@
   <string name="description_via_number">ผ่าน %1$s</string>
   <string name="description_via_number_phone_account">ใน %1$s ผ่าน %2$s</string>
   <string name="voicemail_string">ข้อความเสียง</string>
-  <string name="just_now">เมื่อสักครู่</string>
 </resources>

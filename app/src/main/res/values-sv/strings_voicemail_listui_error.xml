@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Nyhet! Lyssna på din röstbrevlåda</string>
   <string name="dialer_terms_and_conditions_1.0">Visa och lyssna på röstmeddelanden utan att ringa röstbrevlådan. Transkription av röstmeddelanden tillhandahålls av Googles kostnadsfria transkriberingstjänst. Funktionerna kan inaktiveras i Inställningar när som helst. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Transkription av röstmeddelanden tillhandahålls av Googles kostnadsfria transkriberingstjänst. Funktionen kan inaktiveras i Inställningar när som helst. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">Jag förstår</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Nej tack</string>
 </resources>

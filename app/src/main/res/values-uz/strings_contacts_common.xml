@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Ishchi katalogi</string>
-  <string name="chat_aim">AIM’da suhbatlashish</string>
-  <string name="chat_msn">Windows Live orqali chat</string>
-  <string name="chat_yahoo">Yahoo’da suhbatlashish</string>
-  <string name="chat_skype">Skype’da suhbatlashish</string>
-  <string name="chat_qq">QQ’da suhbatlashish</string>
-  <string name="chat_gtalk">Google Talk’da suhbatlashish</string>
-  <string name="chat_icq">ICQ’da suhbatlashish</string>
-  <string name="chat_jabber">Jabber’da suhbatlashish</string>
   <string name="display_options_sort_list_by">Saralash</string>
   <string name="display_options_sort_by_given_name">Ismi asosida</string>
   <string name="display_options_sort_by_family_name">Familiyasi asosida</string>

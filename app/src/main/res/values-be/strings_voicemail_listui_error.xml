@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Навінка! Чытайце галасавую пошту</string>
   <string name="dialer_terms_and_conditions_1.0">Праглядайце і праслухоўвайце паведамленні без званкоў на галасавую пошту. Google бясплатна расшыфруе іх і запіша як тэкст. Любую з гэтых функцый можна адключыць у любы час у наладах. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Цяпер Google бясплатна расшыфруе паведамленні галасавой пошты і запіша іх як тэкст. Гэту функцыю можна адключыць у любы час у наладах. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">OK</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Не, дзякуй</string>
 </resources>

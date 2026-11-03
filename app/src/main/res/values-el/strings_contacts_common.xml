@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Κατάλογος εργασίας</string>
-  <string name="chat_aim">Συζήτηση μέσω AIM</string>
-  <string name="chat_msn">Συζήτηση μέσω Windows Live</string>
-  <string name="chat_yahoo">Συζήτηση μέσω Yahoo</string>
-  <string name="chat_skype">Συζήτηση μέσω Skype</string>
-  <string name="chat_qq">Συζήτηση μέσω QQ</string>
-  <string name="chat_gtalk">Συζήτηση μέσω Google Talk</string>
-  <string name="chat_icq">Συζήτηση μέσω ICQ</string>
-  <string name="chat_jabber">Συζήτηση μέσω Jabber</string>
   <string name="display_options_sort_list_by">Ταξινόμηση κατά</string>
   <string name="display_options_sort_by_given_name">Όνομα</string>
   <string name="display_options_sort_by_family_name">Επώνυμο</string>

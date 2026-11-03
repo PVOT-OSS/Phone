@@ -32,5 +32,4 @@
   <string name="description_via_number">%1$s번으로 수신</string>
   <string name="description_via_number_phone_account">%1$s에서 %2$s번으로 수신</string>
   <string name="voicemail_string">음성사서함</string>
-  <string name="just_now">조금 전</string>
 </resources>

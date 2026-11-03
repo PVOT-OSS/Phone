@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Директоријум за Work</string>
-  <string name="chat_aim">Започни ћаскање преко AIM-а</string>
-  <string name="chat_msn">Започни ћаскање преко Windows Live-а</string>
-  <string name="chat_yahoo">Започни ћаскање преко Yahoo-а</string>
-  <string name="chat_skype">Започни ћаскање преко Skype-а</string>
-  <string name="chat_qq">Започни ћаскање преко QQ-а</string>
-  <string name="chat_gtalk">Започни ћаскање преко Google Talk-а</string>
-  <string name="chat_icq">Започни ћаскање преко ICQ-а</string>
-  <string name="chat_jabber">Започни ћаскање преко Jabber-а</string>
   <string name="display_options_sort_list_by">Сортирај према</string>
   <string name="display_options_sort_by_given_name">Имену</string>
   <string name="display_options_sort_by_family_name">Презимену</string>

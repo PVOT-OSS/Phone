@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Oproepgeschiedenis</string>
   <string name="dialer_settings_label">Instellingen</string>
   <string name="description_start_voice_search">Gesproken zoekopdracht</string>
-  <string name="voicemail">Voicemail</string>
   <string name="voicemailMultiSelectDeleteConfirm">Verwijderen</string>
   <string name="voicemailMultiSelectDeleteCancel">Annuleren</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s geselecteerd</string>

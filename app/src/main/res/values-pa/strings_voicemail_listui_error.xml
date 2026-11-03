@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">ਨਵਾਂ! ਆਪਣੀ ਵੌਇਸਮੇਲ ਪੜ੍ਹੋ</string>
   <string name="dialer_terms_and_conditions_1.0">ਵੌਇਸਮੇਲ \'ਤੇ ਕਾਲ ਕੀਤੇ ਬਿਨਾਂ, ਆਪਣੇ ਸੁਨੇਹੇ ਦੇਖੋ ਅਤੇ ਸੁਣੋ। ਤੁਹਾਡੀ ਵੌਇਸਮੇਲ ਦੀਆਂ ਪ੍ਰਤਿਲਿਪੀਆਂ Google ਦੀ ਮੁਫ਼ਤ ਪ੍ਰਤਿਲਿਪੀ ਸੇਵਾ ਵੱਲੋਂ ਮੁਹੱਈਆ ਕਰਵਾਈਆਂ ਜਾਂਦੀਆਂ ਹਨ। ਤੁਸੀਂ ਕਿਸੇ ਸਮੇਂ ਵੀ ਇਸਨੂੰ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਬੰਦ ਕਰ ਸਕਦੇ ਹੋ। %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">ਹੁਣ ਤੁਹਾਡੀ ਵੌਇਸਮੇਲ ਦੀਆਂ ਪ੍ਰਤੀਲਿਪੀਆਂ Google ਦੀ ਮੁਫ਼ਤ ਪ੍ਰਤੀਲਿਪੀ ਸੇਵਾ ਵੱਲੋਂ ਮੁਹੱਈਆ ਕਰਵਾਈਆਂ ਜਾਂਦੀਆਂ ਹਨ। ਤੁਸੀਂ ਕਿਸੇ ਵੇਲੇ ਵੀ ਇਸਨੂੰ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਬੰਦ ਕਰ ਸਕਦੇ ਹੋ। %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">ਠੀਕ, ਸਮਝ ਲਿਆ</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">ਨਹੀਂ ਧੰਨਵਾਦ</string>
 </resources>

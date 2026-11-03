@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">कार्यको निर्देशिका</string>
-  <string name="chat_aim">AIM को प्रयोग गरेर च्याट गर्नुहोस्</string>
-  <string name="chat_msn">विन्डोज लाइभ चलाई कुराकानी गर्नुहोस्</string>
-  <string name="chat_yahoo">याहुको प्रयोग गरेर च्याट गर्नुहोस्</string>
-  <string name="chat_skype">स्काइप चलाएर कुराकानी गर्नुहोस्</string>
-  <string name="chat_qq">QQ चलाएर कुराकानी गर्नुहोस्</string>
-  <string name="chat_gtalk">Google टक चलाएर कुराकानी गर्नुहोस्</string>
-  <string name="chat_icq">ICQको प्रयोग गरेर च्याट गर्नुहोस्</string>
-  <string name="chat_jabber">जाब्बरको प्रयोग गरेर च्याट गर्नुहोस्</string>
   <string name="display_options_sort_list_by">क्रमवद्घ गर्नुहोस्</string>
   <string name="display_options_sort_by_given_name">नाम</string>
   <string name="display_options_sort_by_family_name">थर</string>

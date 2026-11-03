@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Soittohistoria</string>
   <string name="dialer_settings_label">Asetukset</string>
   <string name="description_start_voice_search">Aloita puhehaku</string>
-  <string name="voicemail">Vastaaja</string>
   <string name="voicemailMultiSelectDeleteConfirm">Poista</string>
   <string name="voicemailMultiSelectDeleteCancel">Peruuta</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s valittu</string>

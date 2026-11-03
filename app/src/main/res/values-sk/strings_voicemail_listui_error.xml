@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Novinka! Svoju hlasovú správu si môžete prečítať.</string>
   <string name="dialer_terms_and_conditions_1.0">Zobrazte a vypočujte si správy bez toho, aby ste museli zavolať do hlasovej schránky. Prepisy vašich hlasových správ poskytuje bezplatná prepisovacia služba Googlu. Tieto funkcie môžete kedykoľvek vypnúť v nastaveniach. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Bezplatná prepisovacia služba Googlu teraz poskytuje prepisy vašich hlasových správ. Kedykoľvek ich môžete vypnúť v nastaveniach. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">OK, dobre</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Nie, ďakujem</string>
 </resources>

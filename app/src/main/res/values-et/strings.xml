@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Kõneajalugu</string>
   <string name="dialer_settings_label">Seaded</string>
   <string name="description_start_voice_search">Häälotsingu alustamine</string>
-  <string name="voicemail">Kõnepost</string>
   <string name="voicemailMultiSelectDeleteConfirm">Kustuta</string>
   <string name="voicemailMultiSelectDeleteCancel">Tühista</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s on valitud</string>

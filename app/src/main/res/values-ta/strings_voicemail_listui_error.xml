@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">புதியது! உங்கள் குரலஞ்சலைப் படிக்கலாம்</string>
   <string name="dialer_terms_and_conditions_1.0">குரலஞ்சலை அழைக்காமலே, உங்கள் செய்திகளைப் பார்க்கலாம், கேட்கலாம். உங்கள் குரலஞ்சலின் டிரான்ஸ்கிரிப்ட்டுகளை, Google இன் இலவச டிரான்ஸ்கிரிப்ஷன் சேவை வழங்குகிறது. அமைப்புகளில் இதை எப்போது வேண்டுமானாலும் நீங்கள் முடக்கலாம். %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">உங்கள் குரலஞ்சலின் டிரான்ஸ்கிரிப்ட்டுகளை, இப்போது Google இன் இலவச டிரான்ஸ்கிரிப்ஷன் சேவை வழங்குகிறது. அமைப்புகளில் இதை எப்போது வேண்டுமானாலும் நீங்கள் முடக்கலாம். %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">சரி</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">வேண்டாம்</string>
 </resources>

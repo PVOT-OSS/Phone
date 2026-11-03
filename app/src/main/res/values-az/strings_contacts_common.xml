@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">İş kataloqu</string>
-  <string name="chat_aim">AIM üzərindən çat</string>
-  <string name="chat_msn">Windows Live üzərindən çat</string>
-  <string name="chat_yahoo">Yahoo üzərindən çat</string>
-  <string name="chat_skype">Skype üzərindən çat</string>
-  <string name="chat_qq">QQ üzərindən çat</string>
-  <string name="chat_gtalk">Google Söhbət üzərindən çat</string>
-  <string name="chat_icq">ICQ üzərindən çat</string>
-  <string name="chat_jabber">Jabber üzərindən çat</string>
   <string name="display_options_sort_list_by">Bunlardan biri üzrə sırala</string>
   <string name="display_options_sort_by_given_name">Ad</string>
   <string name="display_options_sort_by_family_name">Soyad</string>

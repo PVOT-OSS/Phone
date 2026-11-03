@@ -96,9 +96,4 @@
   <string name="send_and_call_button">GỬI và GỌI</string>
   <string name="call_subject_limit">%1$s / %2$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">Tab %1$s.</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="one"> Tab %1$s. %2$d mục chưa đọc. </item>
-    <item quantity="other"> Tab %1$s. %2$d mục chưa đọc. </item>
-  </plurals>
 </resources>

@@ -32,5 +32,4 @@
   <string name="description_via_number">melalui %1$s</string>
   <string name="description_via_number_phone_account">di %1$s, melalui %2$s</string>
   <string name="voicemail_string">Pesan suara</string>
-  <string name="just_now">Baru saja</string>
 </resources>

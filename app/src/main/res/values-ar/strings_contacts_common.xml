@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">دليل العمل</string>
-  <string name="chat_aim">‏المحادثة باستخدام AIM</string>
-  <string name="chat_msn">‏المحادثة باستخدام Windows Live</string>
-  <string name="chat_yahoo">‏المحادثة باستخدام Yahoo</string>
-  <string name="chat_skype">‏المحادثة باستخدام Skype</string>
-  <string name="chat_qq">‏المحادثة باستخدام QQ</string>
-  <string name="chat_gtalk">‏المحادثة باستخدام Google Talk</string>
-  <string name="chat_icq">‏المحادثة باستخدام ICQ</string>
-  <string name="chat_jabber">‏المحادثة باستخدام Jabber</string>
   <string name="display_options_sort_list_by">الترتيب بحسب</string>
   <string name="display_options_sort_by_given_name">الاسم الأول</string>
   <string name="display_options_sort_by_family_name">اسم العائلة</string>

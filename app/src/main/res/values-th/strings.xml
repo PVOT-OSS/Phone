@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">ประวัติการโทร</string>
   <string name="dialer_settings_label">การตั้งค่า</string>
   <string name="description_start_voice_search">เริ่มต้นการค้นหาด้วยเสียง</string>
-  <string name="voicemail">ข้อความเสียง</string>
   <string name="voicemailMultiSelectDeleteConfirm">ลบ</string>
   <string name="voicemailMultiSelectDeleteCancel">ยกเลิก</string>
   <string name="voicemailMultiSelectActionBarTitle">เลือกไว้ %1$s รายการ</string>

@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Anrufliste</string>
   <string name="dialer_settings_label">Einstellungen</string>
   <string name="description_start_voice_search">Sprachsuche starten</string>
-  <string name="voicemail">Mailbox</string>
   <string name="voicemailMultiSelectDeleteConfirm">Löschen</string>
   <string name="voicemailMultiSelectDeleteCancel">Abbrechen</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s ausgewählt</string>

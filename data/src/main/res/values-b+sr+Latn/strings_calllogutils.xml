@@ -34,5 +34,4 @@
   <string name="description_via_number">preko %1$s</string>
   <string name="description_via_number_phone_account">na %1$s, preko %2$s</string>
   <string name="voicemail_string">Govorna pošta</string>
-  <string name="just_now">Malopre</string>
 </resources>

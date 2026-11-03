@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Nhật ký cuộc gọi</string>
   <string name="dialer_settings_label">Cài đặt</string>
   <string name="description_start_voice_search">Bắt đầu tìm kiếm bằng giọng nói</string>
-  <string name="voicemail">Thư thoại</string>
   <string name="voicemailMultiSelectDeleteConfirm">Xóa</string>
   <string name="voicemailMultiSelectDeleteCancel">Hủy</string>
   <string name="voicemailMultiSelectActionBarTitle">Đã chọn %1$s</string>

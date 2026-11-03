@@ -22,7 +22,6 @@
   <dimen name="tab_unread_count_background_radius">2dp</dimen>
   <dimen name="tab_unread_count_margin_left">0dp</dimen>
   <dimen name="tab_unread_count_margin_top">2dp</dimen>
-  <dimen name="tab_unread_count_text_size">12sp</dimen>
   <dimen name="tab_unread_count_text_padding">2dp</dimen>
 
   <!-- Padding used around the periphery of the call subject dialog, as well as in between the

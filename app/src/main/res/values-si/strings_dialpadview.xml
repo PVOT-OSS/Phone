@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dial_button">අමතන්න</string>
   <string name="dialog_voicemail_airplane_mode_message">හඬ තැපෑල ඇමතීමට, මුලින්ම ගුවන්යානා ප්‍රකාරය වසන්න.</string>
   <string name="dialog_voicemail_not_ready_message">හඬ තැපෑල පිහිටුවීමට, මෙනුව &gt; සැකසීම් වෙත යන්න.</string>
   <string name="imei">IMEI</string>

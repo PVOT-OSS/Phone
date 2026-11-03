@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">New! 음성사서함 메시지 듣기</string>
   <string name="dialer_terms_and_conditions_1.0">음성사서함을 직접 확인하지 않아도 메시지를 확인하고 들을 수 있습니다. Google의 무료 텍스트 변환 서비스를 통해 음성사서함 메시지가 스크립트로 제공됩니다. 설정에서 언제든지 사용 중지할 수 있습니다. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">이제 Google의 무료 텍스트 변환 서비스를 통해 음성사서함 메시지가 스크립트로 제공됩니다. 설정에서 언제든지 사용 중지할 수 있습니다. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">확인</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">아니요</string>
 </resources>

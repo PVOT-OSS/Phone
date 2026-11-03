@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Զանգերի պատմություն</string>
   <string name="dialer_settings_label">Կարգավորումներ</string>
   <string name="description_start_voice_search">Սկսկեք ձայնային որոնումը</string>
-  <string name="voicemail">Ձայնային փոստ</string>
   <string name="voicemailMultiSelectDeleteConfirm">Ջնջել</string>
   <string name="voicemailMultiSelectDeleteCancel">Չեղարկել</string>
   <string name="voicemailMultiSelectActionBarTitle">Ընտրվել է՝ %1$s</string>

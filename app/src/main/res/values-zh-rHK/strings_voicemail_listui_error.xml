@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">新功能登場：閱讀留言</string>
   <string name="dialer_terms_and_conditions_1.0">查看及聆聽訊息，無需致電留言信箱。您的留言轉錄內容是由 Google 的免費轉錄服務所提供。您可以隨時在「設定」中關閉這項功能。%s</string>
-  <string name="dialer_terms_and_conditions_existing_user">您的留言轉錄內容現在是由 Google 的免費轉錄服務所提供。您可以隨時在「設定」中關閉這項功能。%s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">好，知道了</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">不用了，謝謝</string>
 </resources>

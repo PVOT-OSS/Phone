@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">ඇමතුම් ඉතිහාසය</string>
   <string name="dialer_settings_label">සැකසීම්</string>
   <string name="description_start_voice_search">හඬ සෙවීම අරඹන්න</string>
-  <string name="voicemail">හඬ තැපෑල</string>
   <string name="voicemailMultiSelectDeleteConfirm">මකන්න</string>
   <string name="voicemailMultiSelectDeleteCancel">අවලංගු කරන්න</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s තෝරා ගන්නා ලදි</string>

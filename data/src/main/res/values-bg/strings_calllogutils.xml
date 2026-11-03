@@ -32,5 +32,4 @@
   <string name="description_via_number">през %1$s</string>
   <string name="description_via_number_phone_account">в/ъв %1$s, през %2$s</string>
   <string name="voicemail_string">Гласова поща</string>
-  <string name="just_now">Току-що</string>
 </resources>

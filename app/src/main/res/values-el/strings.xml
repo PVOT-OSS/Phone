@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Ιστορικό κλήσεων</string>
   <string name="dialer_settings_label">Ρυθμίσεις</string>
   <string name="description_start_voice_search">Έναρξη φωνητικής αναζήτησης</string>
-  <string name="voicemail">Αυτόματος τηλεφωνητής</string>
   <string name="voicemailMultiSelectDeleteConfirm">Διαγραφή</string>
   <string name="voicemailMultiSelectDeleteCancel">Ακύρωση</string>
   <string name="voicemailMultiSelectActionBarTitle">Έχουν επιλεγεί %1$s</string>

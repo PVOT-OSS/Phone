@@ -40,5 +40,4 @@
   <string name="description_via_number">من خلال %1$s</string>
   <string name="description_via_number_phone_account">على %1$s من خلال %2$s</string>
   <string name="voicemail_string">البريد الصوتي</string>
-  <string name="just_now">للتو</string>
 </resources>

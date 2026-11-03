@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Direktori kerja</string>
-  <string name="chat_aim">Sembang menggunakan AIM</string>
-  <string name="chat_msn">Sembang menggunakan Windows Live</string>
-  <string name="chat_yahoo">Sembang menggunakan Yahoo</string>
-  <string name="chat_skype">Sembang menggunakan Skype</string>
-  <string name="chat_qq">Sembang menggunakan QQ</string>
-  <string name="chat_gtalk">Sembang menggunakan Bual Google</string>
-  <string name="chat_icq">Sembang menggunakan ICQ</string>
-  <string name="chat_jabber">Sembang menggunakan Jabber</string>
   <string name="display_options_sort_list_by">Isih mengikut</string>
   <string name="display_options_sort_by_given_name">Nama pertama</string>
   <string name="display_options_sort_by_family_name">Nama keluarga</string>

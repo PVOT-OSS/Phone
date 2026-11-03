@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Novo. Branje sporočil v odzivniku.</string>
   <string name="dialer_terms_and_conditions_1.0">Oglejte si sporočila in jih poslušajte, ne da bi vam bilo treba klicati odzivnik. Prepise sporočil v odzivniku zagotavlja Googlova brezplačna storitev za prepise. Obe možnosti lahko kadar koli izklopite v nastavitvah. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Prepise sporočil v odzivniku zdaj zagotavlja Googlova brezplačna storitev za prepise. To možnost lahko kadar koli izklopite v nastavitvah. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">V redu, razumem</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Ne, hvala</string>
 </resources>

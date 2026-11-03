@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Uhla lwemibhalo lomsebenzi</string>
-  <string name="chat_aim">Xoxa usebenzisa i-AIM</string>
-  <string name="chat_msn">Xoxa usebenzisa i-Windows Live</string>
-  <string name="chat_yahoo">Xoxa usebenzisa i-Yahoo</string>
-  <string name="chat_skype">Xoxa usebenzisa i-Skype</string>
-  <string name="chat_qq">Xoxa usebenzisa i-QQ</string>
-  <string name="chat_gtalk">Xoxa usebenzisa i-Google Talk</string>
-  <string name="chat_icq">Xoxa usebenzisa i-ICQ</string>
-  <string name="chat_jabber">Xoxa usebenzisa i-Jabber</string>
   <string name="display_options_sort_list_by">Hlunga nge-</string>
   <string name="display_options_sort_by_given_name">Igama lokuqala</string>
   <string name="display_options_sort_by_family_name">Isibongo</string>

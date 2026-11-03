@@ -32,5 +32,4 @@
   <string name="description_via_number">%1$s-р</string>
   <string name="description_via_number_phone_account">%1$s дээр, %2$s-р</string>
   <string name="voicemail_string">Дуут шуудан</string>
-  <string name="just_now">Дөнгөж сая</string>
 </resources>

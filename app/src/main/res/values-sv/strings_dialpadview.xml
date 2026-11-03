@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="description_dial_button">ring</string>
   <string name="dialog_voicemail_airplane_mode_message">Om du vill ringa röstbrevlådan måste du först inaktivera flygplansläget.</string>
   <string name="dialog_voicemail_not_ready_message">Välj Meny &gt; Inställningar om du vill konfigurera röstbrevlådan.</string>
   <string name="imei">IMEI-kod</string>

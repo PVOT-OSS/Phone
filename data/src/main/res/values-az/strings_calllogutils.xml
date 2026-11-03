@@ -32,5 +32,4 @@
   <string name="description_via_number">%1$s vasitəsilə</string>
   <string name="description_via_number_phone_account">%2$s vasitəsilə %1$s hesabında</string>
   <string name="voicemail_string">Səsli e-məktub</string>
-  <string name="just_now">İndicə</string>
 </resources>

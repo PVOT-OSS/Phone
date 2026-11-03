@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">სიახლე! წაიკითხეთ თქვენი ხმოვანი ფოსტა</string>
   <string name="dialer_terms_and_conditions_1.0">იხილეთ და მოისმინეთ თქვენი შეტყობინებები ხმოვან ფოსტაში დარეკვის გარეშე. თქვენი ხმოვანი ფოსტის ტრანსკრიპტებს Google-ის უფასო ტრანსკრიბირების სერვისი გაწვდით. ორივე ფუნქციის გამორთვა ნებისმიერ დროს შეგიძლიათ პარამეტრებიდან. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">ახლა ხმოვანი ფოსტის ტრანსკრიპტებს Google-ის უფასო ტრანსკრიბირების სერვისი გაწვდით. მისი გამორთვა ნებისმიერ დროს შეგიძლიათ პარამეტრებიდან. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">კარგი, გასაგებია</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">არა, გმადლობთ</string>
 </resources>

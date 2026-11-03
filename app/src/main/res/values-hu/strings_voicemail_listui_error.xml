@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Új! Olvassa el hangpostaüzeneteit</string>
   <string name="dialer_terms_and_conditions_1.0">Telefonálás nélkül tekintheti meg és hallgathatja vissza hangpostafiókja tartalmát. A hangpostaüzenetek átiratát a Google ingyenes átírási szolgáltatása biztosítja. A funkciót bármikor kikapcsolhatja a beállításoknál. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">A hangpostaüzenetek átiratát a Google ingyenes átírási szolgáltatása biztosítja. A funkciót bármikor kikapcsolhatja a beállításoknál. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">Rendben, értem</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Nem, köszönöm</string>
 </resources>

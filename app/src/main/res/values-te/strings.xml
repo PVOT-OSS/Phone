@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">కాల్ చరిత్ర</string>
   <string name="dialer_settings_label">సెట్టింగ్‌లు</string>
   <string name="description_start_voice_search">వాయిస్ శోధనను ప్రారంభించండి</string>
-  <string name="voicemail">వాయిస్ మెయిల్</string>
   <string name="voicemailMultiSelectDeleteConfirm">తొలగించు</string>
   <string name="voicemailMultiSelectDeleteCancel">రద్దు చేయి</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s ఎంచుకోబడ్డాయి</string>

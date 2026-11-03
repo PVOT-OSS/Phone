@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Chaqiruvlar tarixi</string>
   <string name="dialer_settings_label">Sozlamalar</string>
   <string name="description_start_voice_search">Ovozli qidiruvni boshlash</string>
-  <string name="voicemail">Ovozli pochta</string>
   <string name="voicemailMultiSelectDeleteConfirm">O‘chirish</string>
   <string name="voicemailMultiSelectDeleteCancel">Bekor qilish</string>
   <string name="voicemailMultiSelectActionBarTitle">Tanlandi: %1$s</string>

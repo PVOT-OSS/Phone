@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">नवीन! तुमचा व्‍हॉइसमेल वाचा</string>
   <string name="dialer_terms_and_conditions_1.0">व्‍हॉइसमेलवर कॉल करावा न लागता, तुमचे मेसेज पाहा आणि ऐका. Google च्या मोफत प्रतिलेखन सेवेद्वारे तुमच्‍या व्‍हॉइसमेलचे प्रतिलेख पुरवले जातात. तुम्ही सेटिंग्जमध्ये दोन्ही कधीही बंद करू शकता %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">आता Google च्या मोफत प्रतिलेखन सेवेद्वारे तुमच्‍या व्‍हॉइसमेलचे प्रतिलेख पुरवले जातात. तुम्‍ही हे सेटिंग्जमध्ये कधीही बंद करू शकता. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">ठीक आहे, समजले</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">नाही नको</string>
 </resources>

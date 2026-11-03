@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Шинэ! Өөрийн дуут шууданг уншина уу</string>
   <string name="dialer_terms_and_conditions_1.0">Дуут шуудан руу залгахгүйгээр зурвасуудаа харах, сонсох боломжтой. Таны дуут шуудангийн сийрүүлгийг Google-н үнэгүй орчуулгын үйлчилгээ үзүүлж байна. Та хүссэн үедээ Тохиргоо дотроос унтрааж болно. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Таны дуут шуудангийн сийрүүлгийг Google-н үнэгүй орчуулгын үйлчилгээ үзүүлж байна. Та хүссэн үедээ Тохиргоо дотроос үүнийг унтрааж болно. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">За, ойлголоо</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Үгүй, баярлалаа</string>
 </resources>

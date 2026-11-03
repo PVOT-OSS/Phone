@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Працоўны каталог</string>
-  <string name="chat_aim">Чат у AIM</string>
-  <string name="chat_msn">Чат у Windows Live</string>
-  <string name="chat_yahoo">Чат у Yahoo</string>
-  <string name="chat_skype">Чат у Skype</string>
-  <string name="chat_qq">Чат у QQ</string>
-  <string name="chat_gtalk">Чат у Google Talk</string>
-  <string name="chat_icq">Чат праз ICQ</string>
-  <string name="chat_jabber">Чат у Jabber</string>
   <string name="display_options_sort_list_by">Сартаваць па</string>
   <string name="display_options_sort_by_given_name">Імені</string>
   <string name="display_options_sort_by_family_name">Прозвішчы</string>

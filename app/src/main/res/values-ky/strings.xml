@@ -29,7 +29,6 @@
   <string name="action_menu_call_history_description">Чалуулар таржымалы</string>
   <string name="dialer_settings_label">Жөндөөлөр</string>
   <string name="description_start_voice_search">Үн менен издеп баштоо</string>
-  <string name="voicemail">Үн почтасы</string>
   <string name="voicemailMultiSelectDeleteConfirm">Жок кылуу</string>
   <string name="voicemailMultiSelectDeleteCancel">Жокко чыгаруу</string>
   <string name="voicemailMultiSelectActionBarTitle">%1$s тандалды</string>

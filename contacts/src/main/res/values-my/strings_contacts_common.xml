@@ -96,9 +96,4 @@
   <string name="send_and_call_button">ပေးပို့ပြီး ခေါ်ပါ</string>
   <string name="call_subject_limit">%1$s / %2$s</string>
   <string name="old_call_subject_type_and_number">%1$s %2$s</string>
-  <string name="tab_title">%1$s တဘ်။</string>
-  <plurals name="tab_title_with_unread_items">
-    <item quantity="one"> %1$s တဘ်။ မဖတ်ရသေးသည့် အရာ %2$d ခု။ </item>
-    <item quantity="other"> %1$s တဘ်။ မဖတ်ရသေးသည့် အရာ %2$d ခု။ </item>
-  </plurals>
 </resources>

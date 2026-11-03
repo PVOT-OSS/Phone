@@ -32,5 +32,4 @@
   <string name="description_via_number">pelo número %1$s</string>
   <string name="description_via_number_phone_account">em %1$s, pelo número %2$s</string>
   <string name="voicemail_string">Correio de voz</string>
-  <string name="just_now">Agora</string>
 </resources>

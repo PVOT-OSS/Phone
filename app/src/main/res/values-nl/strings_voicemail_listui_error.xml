@@ -1,7 +1,3 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="dialer_terms_and_conditions_existing_user_title">Nieuw! Je voicemail lezen</string>
   <string name="dialer_terms_and_conditions_1.0">Bekijk en beluister je berichten, zonder dat je je voicemail hoeft te bellen. Transcripten van je voicemail worden geleverd via de gratis transcriptieservice van Google. Je kunt deze op elk gewenst moment bij Instellingen uitschakelen. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user">Transcripten van je voicemail worden nu geleverd via de gratis transcriptieservice van Google. Je kunt deze op elk gewenst moment bij Instellingen uitschakelen. %s</string>
-  <string name="dialer_terms_and_conditions_existing_user_ack">OK</string>
-  <string name="dialer_terms_and_conditions_existing_user_decline">Nee, bedankt</string>
 </resources>

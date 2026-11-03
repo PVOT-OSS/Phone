@@ -32,5 +32,4 @@
   <string name="description_via_number">por medio de %1$s</string>
   <string name="description_via_number_phone_account">en %1$s por medio de %2$s</string>
   <string name="voicemail_string">Correo de voz</string>
-  <string name="just_now">Recién</string>
 </resources>

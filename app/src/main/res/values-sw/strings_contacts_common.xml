@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="directory_search_label_work">Anwani za kazi</string>
-  <string name="chat_aim">Piga gumzo kutumia AIM</string>
-  <string name="chat_msn">Piga gumzo kutumia Windows Live</string>
-  <string name="chat_yahoo">Piga gumzo kutumia Yahoo</string>
-  <string name="chat_skype">Piga gumzo kutumia Skype</string>
-  <string name="chat_qq">Piga gumzo kutumia QQ</string>
-  <string name="chat_gtalk">Piga gumzo kutumia Google Talk</string>
-  <string name="chat_icq">Piga gumzo kutumia ICQ</string>
-  <string name="chat_jabber">Piga gumzo kutumia Jabber</string>
   <string name="display_options_sort_list_by">Panga kulingana na</string>
   <string name="display_options_sort_by_given_name">Jina la kwanza</string>
   <string name="display_options_sort_by_family_name">Jina la mwisho</string>
