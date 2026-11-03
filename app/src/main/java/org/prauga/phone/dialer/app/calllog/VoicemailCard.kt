@@ -148,7 +148,11 @@ internal fun VoicemailCard(
                     }
                     Text(
                         text =
-                            if (row.group.transcription != null) "  ·  " + row.details
+                            if (row.group.transcription != null)
+                                stringResource(
+                                    R.string.voicemail_details_after_transcript,
+                                    row.details,
+                                )
                             else row.details,
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,

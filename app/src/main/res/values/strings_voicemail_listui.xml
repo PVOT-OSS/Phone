@@ -18,4 +18,6 @@
   <!-- Format for duration of voicemails which are displayed when viewing voicemail. For example "01:22" -->
   <string name="voicemailDurationFormat"><xliff:g example="10" id="minutes">%1$02d</xliff:g>:<xliff:g example="20" id="seconds">%2$02d</xliff:g></string>
 
+  <!-- The caller details after a transcript's first line, set off by a dot. -->
+  <string name="voicemail_details_after_transcript">"  ·  %1$s"</string>
 </resources>

@@ -103,4 +103,8 @@
   <!-- In-call screen: phone number of the device shown to the users so that users can give their
       number to emergency responders. -->
   <string name="contact_grid_callback_number">This phone\'s number: <xliff:g id="light_number">%1$s</xliff:g></string>
+  <!-- Shown next to the caller's name on a high definition call. [CHAR LIMIT=4] -->
+  <string name="incall_hd_badge">HD</string>
+  <!-- The number's label and the call timer on one line, e.g. "Mobile • 1:05". -->
+  <string name="incall_label_and_timer">%1$s • %2$s</string>
 </resources>
