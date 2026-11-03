@@ -8,6 +8,14 @@ package org.prauga.phone.incallui.incall.impl
 import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.collection.ArraySet
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,25 +23,29 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.hideFromAccessibility
 import androidx.compose.ui.semantics.semantics
@@ -49,6 +61,8 @@ import com.prauga.pvot.designsystem.components.call.PvotCallAction
 import com.prauga.pvot.designsystem.components.call.PvotCallActionButton
 import com.prauga.pvot.designsystem.components.pvotGlassSurface
 import com.prauga.pvot.designsystem.effects.LocalPvotGlassBackdrop
+import com.prauga.pvot.designsystem.motion.PvotDurations
+import com.prauga.pvot.designsystem.motion.PvotMotion
 import com.prauga.pvot.designsystem.theme.PvotCallEnd
 import com.prauga.pvot.designsystem.theme.PvotOnCallEnd
 import com.prauga.pvot.designsystem.theme.PvotSpacing
@@ -126,6 +140,11 @@ class InCallButtonSlots(context: Context) {
  * The call's controls: a glass panel of labelled round buttons, three to a row, and the End pill
  * under it. The first row is audio route, mute and keypad; the second the call's next buttons in
  * the order the chooser prefers, with More for the rest, which opens them in a sheet.
+ *
+ * The panel has a place for every button it can hold from its first frame, so it is as tall before
+ * the call offers any buttons as after, and the contact grid above it stays put. A button fades and
+ * grows into its place, a button that leaves fades out, and a place that changes buttons crossfades
+ * between them.
  */
 @Composable
 fun InCallControls(
@@ -140,34 +159,52 @@ fun InCallControls(
             slots.ids[it] != InCallButtonSlots.NO_BUTTON && slots.buttons[it].visible
         }
     val layout = ControlsLayout.of(placed) { slots.ids[it] }
+    val moreLabel = stringResource(R.string.incall_label_more)
+    // One entry per place on the panel: a slot index, MORE_CELL, or null while the place is empty.
+    val filled: List<Int?> =
+        layout.panel + if (layout.more.isNotEmpty()) listOf(MORE_CELL) else emptyList()
+    val places = filled + List((ControlsLayout.PANEL_SIZE - filled.size).coerceAtLeast(0)) { null }
     Column(
         modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(ControlsGap),
     ) {
-        if (layout.panel.isNotEmpty() || layout.more.isNotEmpty()) {
-            // Each cell is a slot index, or MORE_CELL for the More button.
-            val cells =
-                layout.panel + if (layout.more.isNotEmpty()) listOf(MORE_CELL) else emptyList()
-            Column(
-                Modifier.fillMaxWidth()
-                    .pvotGlassSurface(LocalPvotGlassBackdrop.current, PanelCorner, role = null)
-                    .padding(vertical = PvotSpacing.L, horizontal = PvotSpacing.S)
-                    .testTag(TestTags.INCALL_CAPSULE),
-                verticalArrangement = Arrangement.spacedBy(PvotSpacing.L),
-            ) {
-                for (row in cells.chunked(ColumnsPerRow)) {
-                    Row(Modifier.fillMaxWidth()) {
-                        // A short last row sits centred under the full rows.
-                        val gap = (ColumnsPerRow - row.size) / 2f
-                        if (gap > 0f) Spacer(Modifier.weight(gap))
-                        for (cell in row) {
-                            Box(Modifier.weight(1f), contentAlignment = Alignment.TopCenter) {
-                                if (cell == MORE_CELL) MoreCell { moreOpen = true }
-                                else ControlCell(slots, cell)
+        Column(
+            Modifier.fillMaxWidth()
+                .pvotGlassSurface(LocalPvotGlassBackdrop.current, PanelCorner, role = null)
+                .animateContentSize(tween(PvotDurations.Medium, easing = PvotMotion.Settle))
+                .padding(vertical = PvotSpacing.L, horizontal = PvotSpacing.S)
+                .testTag(TestTags.INCALL_CAPSULE),
+            verticalArrangement = Arrangement.spacedBy(PvotSpacing.L),
+        ) {
+            for (row in places.chunked(ColumnsPerRow)) {
+                Row(Modifier.fillMaxWidth()) {
+                    for (place in row) {
+                        Box(Modifier.weight(1f), contentAlignment = Alignment.TopCenter) {
+                            // Gives the place its height, so an empty one is as tall as a full one.
+                            Column(
+                                Modifier.alpha(0f).clearAndSetSemantics {},
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
+                                Spacer(Modifier.height(ControlSize + PvotSpacing.S))
+                                Text(
+                                    text = moreLabel,
+                                    style = MaterialTheme.typography.labelMedium,
+                                    maxLines = 1,
+                                )
                             }
+                            PanelPlace(
+                                cell =
+                                    place?.let {
+                                        if (it == MORE_CELL) moreCell(moreLabel)
+                                        else slotCell(slots, it)
+                                    },
+                                onClick = { cell ->
+                                    if (cell.slot == MORE_CELL) moreOpen = true
+                                    else slots.buttons[cell.slot].performClick()
+                                },
+                            )
                         }
-                        if (gap > 0f) Spacer(Modifier.weight(gap))
                     }
                 }
             }
@@ -197,6 +234,75 @@ fun InCallControls(
                     modifier = Modifier.testTag(TestTags.incallButton(index)),
                 )
             }
+        }
+    }
+}
+
+/**
+ * What one place on the panel shows, taken from its button so a place that changes buttons can keep
+ * drawing the old one while it fades out.
+ */
+@Immutable
+private data class PanelCell(
+    /** The button's [InCallButtonIds] id, or [MORE_CELL]. */
+    val id: Int,
+    /** The slot the button is in, or [MORE_CELL]. */
+    val slot: Int,
+    @DrawableRes val iconRes: Int,
+    val label: String,
+    val description: String,
+    val checked: Boolean?,
+    val enabled: Boolean,
+    val hiddenFromAccessibility: Boolean,
+)
+
+private fun slotCell(slots: InCallButtonSlots, slot: Int): PanelCell {
+    val button = slots.buttons[slot]
+    return PanelCell(
+        id = slots.ids[slot],
+        slot = slot,
+        iconRes = panelIconFor(button.iconRes),
+        label = button.label.toString(),
+        description = (button.description ?: button.label).toString(),
+        checked = button.checkedState,
+        enabled = button.enabledState,
+        hiddenFromAccessibility = button.hiddenFromAccessibility,
+    )
+}
+
+private fun moreCell(label: String) =
+    PanelCell(
+        id = MORE_CELL,
+        slot = MORE_CELL,
+        iconRes = R.drawable.ic_dots_filled,
+        label = label,
+        description = label,
+        checked = null,
+        enabled = true,
+        hiddenFromAccessibility = false,
+    )
+
+/**
+ * One place on the panel: its [cell] fades and grows in, fades out when the place empties, and
+ * crossfades when another button takes the place.
+ */
+@Composable
+private fun PanelPlace(cell: PanelCell?, onClick: (PanelCell) -> Unit) {
+    // The last button stays while it fades out.
+    var shown by remember { mutableStateOf(cell) }
+    if (cell != null) shown = cell
+    // What each button last showed, by id, so one fading out keeps its own look under the next.
+    val latest = remember { mutableStateMapOf<Int, PanelCell>() }
+    if (cell != null) latest[cell.id] = cell
+    AnimatedVisibility(
+        visible = cell != null,
+        enter = fadeIn(CellSpec) + scaleIn(CellSpec, initialScale = CellEnterScale),
+        exit = fadeOut(CellSpec) + scaleOut(CellSpec, targetScale = CellEnterScale),
+    ) {
+        val current = shown ?: return@AnimatedVisibility
+        // Keyed by the button's id: its state changes in place, another button fades in over it.
+        Crossfade(targetState = current.id, animationSpec = CellSpec, label = "panelPlace") { id ->
+            latest[id]?.let { c -> ControlCell(c) { onClick(c) } }
         }
     }
 }
@@ -247,18 +353,16 @@ internal data class ControlsLayout(val panel: List<Int>, val more: List<Int>) {
 
 /** A labelled round button; mute turns red while on, the others the accent. The label taps too. */
 @Composable
-private fun ControlCell(slots: InCallButtonSlots, index: Int) {
-    val button = slots.buttons[index]
-    val isMute = slots.ids[index] == InCallButtonIds.BUTTON_MUTE
+private fun ControlCell(cell: PanelCell, onClick: () -> Unit) {
     LabelledControl(
-        icon = painterResource(panelIconFor(button.iconRes)),
-        label = button.label.toString(),
-        description = (button.description ?: button.label).toString(),
-        onClick = button::performClick,
-        checked = button.checkedState,
-        enabled = button.enabledState,
+        icon = painterResource(cell.iconRes),
+        label = cell.label,
+        description = cell.description,
+        onClick = onClick,
+        checked = cell.checked,
+        enabled = cell.enabled,
         colors =
-            if (isMute) {
+            if (cell.id == InCallButtonIds.BUTTON_MUTE) {
                 // Muted is the call's one warning: the same red as End.
                 PvotIconButtonDefaults.tonalColors(
                     checkedContainerColor = PvotCallEnd,
@@ -269,26 +373,13 @@ private fun ControlCell(slots: InCallButtonSlots, index: Int) {
             },
         modifier =
             Modifier.then(
-                    if (button.hiddenFromAccessibility)
-                        Modifier.semantics { hideFromAccessibility() }
+                    if (cell.hiddenFromAccessibility) Modifier.semantics { hideFromAccessibility() }
                     else Modifier
                 )
-                .testTag(TestTags.incallButton(index)),
-    )
-}
-
-@Composable
-private fun MoreCell(onClick: () -> Unit) {
-    val label = stringResource(R.string.incall_label_more)
-    LabelledControl(
-        icon = painterResource(R.drawable.ic_dots_filled),
-        label = label,
-        description = label,
-        onClick = onClick,
-        checked = null,
-        enabled = true,
-        colors = PvotIconButtonDefaults.tonalColors(),
-        modifier = Modifier.testTag(TestTags.INCALL_MORE),
+                .testTag(
+                    if (cell.slot == MORE_CELL) TestTags.INCALL_MORE
+                    else TestTags.incallButton(cell.slot)
+                ),
     )
 }
 
@@ -390,6 +481,10 @@ private val ControlIconSize = 28.dp
 private val CellWidth = 88.dp
 private const val ColumnsPerRow = 3
 private const val MORE_CELL = -2
+
+/** How a button comes and goes from its place. */
+private val CellSpec = tween<Float>(PvotDurations.Medium, easing = PvotMotion.Settle)
+private const val CellEnterScale = 0.8f
 
 /** Corner of the panel round the buttons. */
 private val PanelCorner = 32.dp

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsOn
+import androidx.compose.ui.test.getUnclippedBoundsInRoot
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
@@ -24,6 +25,7 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.unit.height
 import androidx.test.core.app.ApplicationProvider
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.google.common.truth.Truth.assertThat
@@ -148,6 +150,25 @@ class InCallScreenTest {
         compose.onNodeWithText("Hold").assertExists()
         compose.onNodeWithText("Add call").assertExists()
         compose.onNodeWithTag(TestTags.INCALL_MORE).assertDoesNotExist()
+    }
+
+    @Test
+    fun thePanelIsAsTallBeforeTheCallOffersButtonsAsAfter() {
+        // An outgoing call shows the screen before it has any buttons; the panel must not grow
+        // later.
+        val slots = InCallButtonSlots(context)
+        val none = controllers().onEach { it.isAllowed = false }
+        slots.place(none, null, 0, 0)
+        compose.setContent {
+            PhoneScreenTheme { InCallControls(slots, endCallEnabled = true, onEndCall = {}) }
+        }
+        val empty = compose.onNodeWithTag(TestTags.INCALL_CAPSULE).getUnclippedBoundsInRoot()
+        compose.onNodeWithContentDescription("Keypad").assertDoesNotExist()
+        compose.runOnIdle { slots.place(controllers(), null, 0, 0) }
+        compose.onNodeWithContentDescription("Keypad").assertExists()
+        val full = compose.onNodeWithTag(TestTags.INCALL_CAPSULE).getUnclippedBoundsInRoot()
+        assertThat(full.height).isEqualTo(empty.height)
+        assertThat(full.top).isEqualTo(empty.top)
     }
 
     @Test
