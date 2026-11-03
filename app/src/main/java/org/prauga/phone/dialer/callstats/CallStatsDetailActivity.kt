@@ -83,6 +83,7 @@ import org.prauga.phone.dialer.lettertile.LetterTileDrawable
 import org.prauga.phone.dialer.location.GeoUtil
 import org.prauga.phone.dialer.phonenumbercache.ContactInfoHelper
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper
+import org.prauga.phone.dialer.precall.PreCall
 import org.prauga.phone.dialer.ui.PhoneScaffold
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.QuickContactAvatar
@@ -138,9 +139,9 @@ class CallStatsDetailActivity : ComponentActivity() {
                     dateRange = dateRange,
                     onBack = ::finish,
                     onCall = {
-                        startActivity(
-                            CallIntentBuilder(details.number, CallInitiationType.Type.CALL_LOG)
-                                .build()
+                        PreCall.start(
+                            this,
+                            CallIntentBuilder(details.number, CallInitiationType.Type.CALL_LOG),
                         )
                     },
                     callWithIntent =
