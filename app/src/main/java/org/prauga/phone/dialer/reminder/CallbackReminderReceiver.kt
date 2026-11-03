@@ -29,7 +29,9 @@ class CallbackReminderReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
-            Intent.ACTION_BOOT_COMPLETED -> CallbackReminders.rescheduleAll(context)
+            // A reboot or an app update drops every alarm; the stored reminders set them again.
+            Intent.ACTION_BOOT_COMPLETED,
+            Intent.ACTION_MY_PACKAGE_REPLACED -> CallbackReminders.rescheduleAll(context)
             ACTION_DUE -> show(context, intent.getIntExtra(EXTRA_ID, 0))
             ACTION_SNOOZE -> snooze(context, intent.getIntExtra(EXTRA_ID, 0))
             ACTION_DONE -> CallbackReminders.cancel(context, intent.getIntExtra(EXTRA_ID, 0))
