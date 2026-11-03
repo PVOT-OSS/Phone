@@ -41,9 +41,11 @@ import com.prauga.pvot.designsystem.effects.rememberPvotGlassBackdrop
  *
  * @param behind The view under this part, such as the container of a screen's lists; never a
  *     view that holds this part
+ * @param backgroundKey A value that changes whenever the window's background drawable is replaced
+ *     or recolored, such as a version the screen bumps then; the copy is drawn again when it does
  */
 @Composable
-fun WindowBackdrop(behind: View? = null, content: @Composable () -> Unit) {
+fun WindowBackdrop(behind: View? = null, backgroundKey: Any? = null, content: @Composable () -> Unit) {
     val backdrop = rememberPvotGlassBackdrop()
     val root = LocalView.current.rootView
     var inWindow by remember { mutableStateOf(Offset.Zero) }
@@ -66,6 +68,7 @@ fun WindowBackdrop(behind: View? = null, content: @Composable () -> Unit) {
                 .pvotGlassBackdrop(backdrop)
                 .drawBehind {
                     layouts
+                    backgroundKey
                     drawIntoCanvas { canvas ->
                         val native = canvas.nativeCanvas
                         root.background?.let { background ->

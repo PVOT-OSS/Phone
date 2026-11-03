@@ -47,6 +47,7 @@ import com.prauga.pvot.designsystem.components.call.PvotCallAction
 import com.prauga.pvot.designsystem.components.call.PvotCallActionButton
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import org.prauga.phone.incallui.InCallPresenter
 import org.prauga.phone.incallui.R
 import org.prauga.phone.dialer.common.Assert
 import org.prauga.phone.dialer.common.FragmentUtils
@@ -116,7 +117,6 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
     @SuppressLint("MissingPermission")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         LogUtil.i("InCallFragment.onCreateView", null)
-        requireActivity().setTheme(R.style.Theme_InCallScreen)
         val context = requireContext()
         val grid = ContactGridState(context).apply { isInMultiWindowMode = requireActivity().isInMultiWindowMode }
         val buttons = InCallButtonSlots(context)
@@ -411,7 +411,13 @@ object InCallScreenHost {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 PhoneScreenTheme(fillBackground = false) {
-                    if (glass) WindowBackdrop(content = content) else content()
+                    if (glass) {
+                        // The window's gradient changes with the call's colors; the glass redraws its copy then.
+                        val background = InCallPresenter.getInstance().themeColorManager?.windowBackgroundVersion?.intValue
+                        WindowBackdrop(backgroundKey = background, content = content)
+                    } else {
+                        content()
+                    }
                 }
             }
         }
