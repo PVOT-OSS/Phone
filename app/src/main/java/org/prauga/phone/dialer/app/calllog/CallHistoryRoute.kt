@@ -14,7 +14,9 @@ import android.provider.CallLog.Calls
 import android.telephony.TelephonyManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.navigationBars
@@ -23,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleResumeEffect
@@ -78,9 +81,6 @@ fun CallHistoryRoute(
             loaded
         }
     }
-    val pendingDeletes by viewModel.pendingDeletes.collectAsStateWithLifecycle()
-    val version by viewModel.contactInfoVersion.collectAsStateWithLifecycle()
-    val resolver = remember(context) { CallLogRowResolver(context, CallLogCache(context)) }
     val currentOnShowDialpad by rememberUpdatedState(onShowDialpad)
     val currentOnMissedCallRead by rememberUpdatedState(onMissedCallRead)
     val currentOnSelectionModeChanged by rememberUpdatedState(onSelectionModeChanged)
@@ -90,8 +90,14 @@ fun CallHistoryRoute(
 
     LifecycleResumeEffect(viewModel) {
         viewModel.start()
-        viewModel.refresh()
+        viewModel.resumed()
         onPauseOrDispose { viewModel.stop() }
+    }
+
+    val snackbarHostState = remember { SnackbarHostState() }
+    val resources = LocalResources.current
+    LaunchedEffect(viewModel) {
+        viewModel.errors.collect { message -> snackbarHostState.showSnackbar(resources.getString(message)) }
     }
 
     val actions = remember(viewModel, context) {
@@ -109,15 +115,6 @@ fun CallHistoryRoute(
 
     CallHistoryScreen(
         state = state,
-        pendingDeletes = pendingDeletes,
-        resolve = { group, index, isBlocked ->
-            // Reading the version makes rows recompose when a caller lookup finishes.
-            version.let {
-                val info = viewModel.contactInfoCache.getValue(
-                    group.number + group.postDialDigits, group.countryIso, group.cachedInfo, index < 5)
-                resolver.resolve(group, info, isBlocked)
-            }
-        },
         emptyMessage = when (callType) {
             Calls.MISSED_TYPE -> R.string.call_log_missed_empty
             Calls.VOICEMAIL_TYPE -> R.string.call_log_voicemail_empty
@@ -133,6 +130,7 @@ fun CallHistoryRoute(
         fullScreen = statusMessage?.takeIf { it.isModal }?.let { message -> { VoicemailTermsScreen(message) } },
         voicemailPlayback = voicemail?.playbackState,
         selectable = true,
+        snackbarHostState = snackbarHostState,
     )
 }
 
@@ -224,7 +222,6 @@ private class CallHistoryIntents(
 
     override fun deleteLater(group: CallLogGroup) = viewModel.deleteLater(group)
     override fun undoDelete(group: CallLogGroup) = viewModel.undoDelete(group)
-    override fun commitDelete(group: CallLogGroup) = viewModel.commitDelete(group)
     override fun block(row: CallLogRowUi) = viewModel.block(row.group.number, row.group.countryIso)
     override fun unblock(row: CallLogRowUi) = viewModel.unblock(row.group.number)
 

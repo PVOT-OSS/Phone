@@ -55,7 +55,11 @@ class VoicemailScreenTest {
         2L to row(second, "+15550199", listOf(RowAction.CALL, RowAction.DELETE), PrimaryAction.PLAY_VOICEMAIL),
     )
     private val playback = VoicemailPlaybackState().apply { setClipPosition(12_000, 42_000) }
-    private var pending by mutableStateOf(emptySet<Long>())
+    private var state by mutableStateOf(CallHistoryUiState.Loaded(listOf(first, second), emptySet(), rows = rows))
+
+    private fun hide(ids: Collection<Long>) {
+        state = state.copy(pendingDeletes = state.pendingDeletes + ids)
+    }
 
     private inner class RecordingActions : CallHistoryActions {
         val events = mutableListOf<String>()
@@ -63,12 +67,11 @@ class VoicemailScreenTest {
         override fun rowAction(row: CallLogRowUi, action: RowAction) { events += "${action.name} ${row.group.rowId}" }
         override fun opened(row: CallLogRowUi, playNow: Boolean) { events += "opened ${row.group.rowId}${if (playNow) " play" else ""}" }
         override fun closed(row: CallLogRowUi) { events += "closed ${row.group.rowId}" }
-        override fun deleteLater(group: CallLogGroup) { events += "delete ${group.rowId}"; pending = pending + group.callIds }
+        override fun deleteLater(group: CallLogGroup) { events += "delete ${group.rowId}"; hide(group.callIds) }
         override fun undoDelete(group: CallLogGroup) { events += "undo ${group.rowId}" }
-        override fun commitDelete(group: CallLogGroup) { events += "commit ${group.rowId}" }
         override fun deleteSelected(groups: List<CallLogGroup>) {
             events += "deleteSelected ${groups.map { it.rowId }}"
-            pending = pending + groups.flatMap { it.callIds }
+            hide(groups.flatMap { it.callIds })
         }
         override fun selectionModeChanged(enabled: Boolean, exit: () -> Unit) { events += "selecting $enabled" }
         override fun block(row: CallLogRowUi) = Unit
@@ -82,9 +85,7 @@ class VoicemailScreenTest {
     private fun show(header: VoicemailErrorMessage? = null) = compose.setContent {
         PhoneScreenTheme {
             CallHistoryScreen(
-                state = CallHistoryUiState.Loaded(listOf(first, second), emptySet()),
-                pendingDeletes = pending,
-                resolve = { group, _, _ -> rows.getValue(group.rowId) },
+                state = state,
                 emptyMessage = R.string.call_log_voicemail_empty,
                 showEmptyAction = false,
                 actions = actions,

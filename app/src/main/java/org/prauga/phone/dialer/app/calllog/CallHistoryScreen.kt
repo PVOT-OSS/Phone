@@ -47,7 +47,6 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -108,9 +107,9 @@ interface CallHistoryActions {
     /** The open row was closed. */
     fun closed(row: CallLogRowUi) = Unit
 
+    /** The row was swiped away: hide it, and delete it unless [undoDelete] follows. */
     fun deleteLater(group: CallLogGroup)
     fun undoDelete(group: CallLogGroup)
-    fun commitDelete(group: CallLogGroup)
 
     /** Deletes the selected voicemails at once, after the user confirmed. */
     fun deleteSelected(groups: List<CallLogGroup>) = Unit
@@ -130,7 +129,6 @@ interface CallHistoryActions {
  * A call history list: calls under Today, Yesterday and Older, grouped by caller. Tapping a row
  * opens its actions; swiping it calls back or deletes it, with Undo.
  *
- * @param resolve Turns a group into its row; called while composing, so it must be quick
  * @param emptyMessage What to say when there are no calls
  * @param showEmptyAction Whether the empty list offers "Make a call"
  * @param emptyIcon The empty list's icon
@@ -142,8 +140,6 @@ interface CallHistoryActions {
 @Composable
 fun CallHistoryScreen(
     state: CallHistoryUiState,
-    pendingDeletes: Set<Long>,
-    resolve: (group: CallLogGroup, index: Int, isBlocked: Boolean) -> CallLogRowUi,
     @StringRes emptyMessage: Int,
     showEmptyAction: Boolean,
     actions: CallHistoryActions,
@@ -160,6 +156,23 @@ fun CallHistoryScreen(
 ) {
     // Only the list scrolls under a bar over the screen; the other states start below it.
     val belowBar = Modifier.padding(top = topPadding)
+    // The Undo snackbar outlives the list: swiping the last row away swaps the list for the empty
+    // state, and Undo must still be there to bring the row back.
+    val scope = rememberCoroutineScope()
+    val deletedMessage = stringResource(R.string.call_history_deleted)
+    val undoLabel = stringResource(R.string.snackbar_undo)
+    val onDeleted: (CallLogGroup) -> Unit = { group ->
+        actions.deleteLater(group)
+        scope.launch {
+            snackbarHostState.currentSnackbarData?.dismiss()
+            val result = snackbarHostState.showSnackbar(
+                message = deletedMessage,
+                actionLabel = undoLabel,
+                duration = SnackbarDuration.Short,
+            )
+            if (result == SnackbarResult.ActionPerformed) actions.undoDelete(group)
+        }
+    }
     Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         when {
             fullScreen != null -> Box(belowBar) { fullScreen() }
@@ -173,7 +186,7 @@ fun CallHistoryScreen(
             )
             else -> {
                 val loaded = state as? CallHistoryUiState.Loaded
-                val visible = loaded?.groups.orEmpty().filter { group -> group.callIds.none { it in pendingDeletes } }
+                val visible = loaded?.visible.orEmpty()
                 if (visible.isEmpty()) {
                     Column(belowBar.fillMaxSize()) {
                         header?.invoke()
@@ -184,14 +197,13 @@ fun CallHistoryScreen(
                 } else {
                     HistoryList(
                         groups = visible,
-                        blockedNumbers = loaded?.blockedNumbers.orEmpty(),
-                        resolve = resolve,
+                        rows = loaded?.rows.orEmpty(),
                         actions = actions,
+                        onDeleted = onDeleted,
                         header = header,
                         voicemailPlayback = voicemailPlayback,
                         selectable = selectable,
                         listState = listState,
-                        snackbarHostState = snackbarHostState,
                         topPadding = topPadding,
                         bottomPadding = bottomPadding,
                     )
@@ -221,26 +233,23 @@ private fun EmptyHistory(@StringRes message: Int, @DrawableRes icon: Int, showAc
 @Composable
 private fun HistoryList(
     groups: List<CallLogGroup>,
-    blockedNumbers: Set<String>,
-    resolve: (CallLogGroup, Int, Boolean) -> CallLogRowUi,
+    rows: Map<Long, CallLogRowUi>,
     actions: CallHistoryActions,
+    onDeleted: (CallLogGroup) -> Unit,
     header: (@Composable () -> Unit)?,
     voicemailPlayback: VoicemailPlaybackState?,
     selectable: Boolean,
     listState: LazyListState,
-    snackbarHostState: SnackbarHostState,
     topPadding: Dp,
     bottomPadding: Dp,
 ) {
     var expandedRowId by rememberSaveable { mutableStateOf<Long?>(null) }
     var selected by rememberSaveable { mutableStateOf(emptySet<Long>()) }
-    var confirmBlock by remember { mutableStateOf<CallLogRowUi?>(null) }
-    var confirmDelete by remember { mutableStateOf<CallLogRowUi?>(null) }
-    var confirmUnblock by remember { mutableStateOf<CallLogRowUi?>(null) }
-    var confirmDeleteSelected by remember { mutableStateOf(false) }
-    val scope = rememberCoroutineScope()
-    val deletedMessage = stringResource(R.string.call_history_deleted)
-    val undoLabel = stringResource(R.string.snackbar_undo)
+    // The dialogs name a row by id, so they come back after a rotation with the row's new state.
+    var confirmBlockId by rememberSaveable { mutableStateOf<Long?>(null) }
+    var confirmDeleteId by rememberSaveable { mutableStateOf<Long?>(null) }
+    var confirmUnblockId by rememberSaveable { mutableStateOf<Long?>(null) }
+    var confirmDeleteSelected by rememberSaveable { mutableStateOf(false) }
     // Rows vanish once deleted; keep only selections that are still on screen.
     val selection = selected.filterTo(mutableSetOf()) { id -> groups.any { it.rowId == id } }
     val selecting = selection.isNotEmpty()
@@ -296,9 +305,10 @@ private fun HistoryList(
                         DayHeader(group.dayGroup, Modifier.animateItem())
                     }
                 }
+                // A row that is not resolved yet (the list moved on) shows with the next state.
+                val row = rows[group.rowId] ?: return@forEachIndexed
                 item(key = group.rowId, contentType = "row") {
                     Column(Modifier.animateItem()) {
-                        val row = resolve(group, index, group.number in blockedNumbers)
                         val expanded = expandedRowId == group.rowId && !selecting
                         val onClick: () -> Unit = { if (selecting) select(selection.toggled(group.rowId)) else toggle(row) }
                         val onLongClick: (() -> Unit)? = if (selectable) {
@@ -313,57 +323,42 @@ private fun HistoryList(
                                 expandedRowId = null
                                 actions.closed(row)
                             }
-                            actions.deleteLater(group)
-                            scope.launch {
-                                snackbarHostState.currentSnackbarData?.dismiss()
-                                val result = snackbarHostState.showSnackbar(
-                                    message = deletedMessage,
-                                    actionLabel = undoLabel,
-                                    duration = SnackbarDuration.Short,
-                                )
-                                if (result == SnackbarResult.ActionPerformed) {
-                                    actions.undoDelete(group)
-                                } else {
-                                    actions.commitDelete(group)
-                                }
-                            }
+                            onDeleted(group)
                         }
                         // The Delete button removes every call in the row, so it asks first.
                         val onRowAction = { action: RowAction ->
                             when (action) {
-                                RowAction.BLOCK -> confirmBlock = row
-                                RowAction.UNBLOCK -> confirmUnblock = row
-                                RowAction.DELETE -> confirmDelete = row
+                                RowAction.BLOCK -> confirmBlockId = group.rowId
+                                RowAction.UNBLOCK -> confirmUnblockId = group.rowId
+                                RowAction.DELETE -> confirmDeleteId = group.rowId
                                 else -> actions.rowAction(row, action)
                             }
                         }
-                        key(group.rowId) {
-                            if (voicemailPlayback != null && group.voicemailUri != null) {
-                                VoicemailCard(
-                                    row = row,
-                                    playback = voicemailPlayback,
-                                    expanded = expanded,
-                                    isSelected = group.rowId in selection,
-                                    onClick = onClick,
-                                    onLongClick = onLongClick,
-                                    onPlay = onPlay,
-                                    onDelete = onDelete,
-                                    actions = actions,
-                                    onRowAction = onRowAction,
-                                )
-                            } else {
-                                HistoryRow(
-                                    row = row,
-                                    expanded = expanded,
-                                    isSelected = group.rowId in selection,
-                                    onClick = onClick,
-                                    onLongClick = onLongClick,
-                                    onPlay = onPlay,
-                                    onDelete = onDelete,
-                                    actions = actions,
-                                    onRowAction = onRowAction,
-                                )
-                            }
+                        if (voicemailPlayback != null && group.voicemailUri != null) {
+                            VoicemailCard(
+                                row = row,
+                                playback = voicemailPlayback,
+                                expanded = expanded,
+                                isSelected = group.rowId in selection,
+                                onClick = onClick,
+                                onLongClick = onLongClick,
+                                onPlay = onPlay,
+                                onDelete = onDelete,
+                                actions = actions,
+                                onRowAction = onRowAction,
+                            )
+                        } else {
+                            HistoryRow(
+                                row = row,
+                                expanded = expanded,
+                                isSelected = group.rowId in selection,
+                                onClick = onClick,
+                                onLongClick = onLongClick,
+                                onPlay = onPlay,
+                                onDelete = onDelete,
+                                actions = actions,
+                                onRowAction = onRowAction,
+                            )
                         }
                     }
                 }
@@ -371,17 +366,17 @@ private fun HistoryList(
         }
     }
 
-    confirmDelete?.let { row ->
+    confirmDeleteId?.let(rows::get)?.let { row ->
         PvotDialog(
             visible = true,
-            onDismissRequest = { confirmDelete = null },
+            onDismissRequest = { confirmDeleteId = null },
             title = stringResource(R.string.call_log_delete_entry_title),
             destructive = true,
         ) {
             PvotDialogAction(
                 label = stringResource(R.string.delete),
                 onClick = {
-                    confirmDelete = null
+                    confirmDeleteId = null
                     if (expandedRowId == row.group.rowId) {
                         expandedRowId = null
                         actions.closed(row)
@@ -390,37 +385,37 @@ private fun HistoryList(
                 },
                 style = PvotDialogActionStyle.Destructive,
             )
-            PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = { confirmDelete = null })
+            PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = { confirmDeleteId = null })
         }
     }
-    confirmBlock?.let { row ->
+    confirmBlockId?.let(rows::get)?.let { row ->
         PvotDialog(
             visible = true,
-            onDismissRequest = { confirmBlock = null },
+            onDismissRequest = { confirmBlockId = null },
             title = stringResource(R.string.block_number_confirmation_title, row.displayNumber),
             message = stringResource(R.string.block_report_number_alert_details),
             destructive = true,
         ) {
             PvotDialogAction(
                 label = stringResource(R.string.block_number_ok),
-                onClick = { confirmBlock = null; actions.block(row) },
+                onClick = { confirmBlockId = null; actions.block(row) },
                 style = PvotDialogActionStyle.Destructive,
             )
-            PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = { confirmBlock = null })
+            PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = { confirmBlockId = null })
         }
     }
-    confirmUnblock?.let { row ->
+    confirmUnblockId?.let(rows::get)?.let { row ->
         PvotDialog(
             visible = true,
-            onDismissRequest = { confirmUnblock = null },
+            onDismissRequest = { confirmUnblockId = null },
             title = stringResource(R.string.unblock_report_number_alert_title, row.displayNumber),
         ) {
             PvotDialogAction(
                 label = stringResource(R.string.unblock_number_ok),
-                onClick = { confirmUnblock = null; actions.unblock(row) },
+                onClick = { confirmUnblockId = null; actions.unblock(row) },
                 style = PvotDialogActionStyle.Primary,
             )
-            PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = { confirmUnblock = null })
+            PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = { confirmUnblockId = null })
         }
     }
     if (confirmDeleteSelected) {
