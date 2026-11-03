@@ -11,6 +11,7 @@ import android.media.AudioManager
 import android.os.Bundle
 import android.provider.CallLog.Calls
 import android.provider.VoicemailContract
+import android.telecom.TelecomManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -107,9 +108,11 @@ class VoicemailFragment : Fragment() {
     override fun onPause() {
         presenter.onPause()
         statusMonitor.onPause()
+        // Playback put the speaker on; a call in progress owns it now.
         val audioManager = requireContext().getSystemService(AudioManager::class.java)
+        val inCall = requireContext().getSystemService(TelecomManager::class.java).isInCall
         @Suppress("DEPRECATION")
-        if (audioManager.isSpeakerphoneOn) audioManager.isSpeakerphoneOn = false
+        if (!inCall && audioManager.isSpeakerphoneOn) audioManager.isSpeakerphoneOn = false
         if (!isHidden) onNotVisible()
         super.onPause()
     }
