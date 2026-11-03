@@ -111,10 +111,6 @@ class CallHistoryScreenTest {
             hide { it - group.callIds.toSet() }
         }
 
-        override fun commitDelete(group: CallLogGroup) {
-            events += "commit ${group.rowId}"
-        }
-
         override fun block(row: CallLogRowUi) {
             events += "block ${row.group.rowId}"
         }
