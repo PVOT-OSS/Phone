@@ -5,7 +5,10 @@
 
 package org.prauga.phone.dialer.ui
 
+import android.content.ContentUris
 import android.content.Context
+import android.graphics.BitmapFactory
+import android.provider.ContactsContract
 import android.util.LruCache
 import android.util.Size
 import androidx.compose.foundation.Image
@@ -106,5 +109,36 @@ internal object ContactPhotoCache {
             }
         }
 
+    /** The thumbnail stored in a contact's photo row, if it has been loaded before. */
+    fun cachedThumbnail(photoId: Long): ImageBitmap? =
+        if (photoId == 0L) null else cache.get(thumbnailKey(photoId))
+
+    /** The thumbnail stored in a contact's photo row, kept once read. */
+    suspend fun loadThumbnail(context: Context, photoId: Long): ImageBitmap? =
+        withContext(Dispatchers.IO) {
+            try {
+                context.contentResolver
+                    .query(
+                        ContentUris.withAppendedId(ContactsContract.Data.CONTENT_URI, photoId),
+                        arrayOf(ContactsContract.CommonDataKinds.Photo.PHOTO),
+                        null,
+                        null,
+                        null,
+                    )
+                    ?.use { cursor ->
+                        if (!cursor.moveToFirst()) return@use null
+                        val bytes = cursor.getBlob(0) ?: return@use null
+                        BitmapFactory.decodeByteArray(bytes, 0, bytes.size)?.asImageBitmap()
+                    }
+                    ?.also { cache.put(thumbnailKey(photoId), it) }
+            } catch (e: Exception) {
+                // A deleted contact or a missing permission falls back to the letter tile.
+                LogUtil.w("ContactPhotoCache.loadThumbnail", "no photo: %s", e.javaClass.simpleName)
+                null
+            }
+        }
+
     private fun key(photoUri: String, sizePx: Int) = "$sizePx:$photoUri"
+
+    private fun thumbnailKey(photoId: Long) = "photo:$photoId"
 }
