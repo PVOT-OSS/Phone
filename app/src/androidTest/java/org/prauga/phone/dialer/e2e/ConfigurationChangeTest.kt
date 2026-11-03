@@ -18,7 +18,10 @@ import org.prauga.phone.dialer.testing.FakeCallSpec
 import org.prauga.phone.dialer.testing.FakeCarrier
 import org.prauga.phone.incallui.call.state.DialerCallState
 
-/** The call screen keeps the call and what it shows when the device rotates or the screen is rebuilt. */
+/**
+ * The call screen keeps the call and what it shows when the device rotates or the screen is
+ * rebuilt.
+ */
 @RunWith(AndroidJUnit4::class)
 class ConfigurationChangeTest {
 
@@ -26,7 +29,8 @@ class ConfigurationChangeTest {
     private val deviceRule = DeviceRule()
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
+    val rules: RuleChain =
+        RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
 
     @Test
     fun callCarriesOnWhenTheDeviceRotates() {
@@ -65,9 +69,15 @@ class ConfigurationChangeTest {
 
             far.typeRtt(" and after")
             showsText("before and after")
-            val input = checkNotNull(
-                deviceRule.device.wait(Until.findObject(By.res(context.packageName, "rtt_chat_input")), CallTests.TIMEOUT_MILLIS),
-            ) { "RTT input not shown" }
+            val input =
+                checkNotNull(
+                    deviceRule.device.wait(
+                        Until.findObject(By.res(context.packageName, "rtt_chat_input")),
+                        CallTests.TIMEOUT_MILLIS,
+                    )
+                ) {
+                    "RTT input not shown"
+                }
             input.text = "still here"
             CallTests.waitFor { far.readRtt().takeIf { it.contains("still here") } }
         } finally {
@@ -75,10 +85,14 @@ class ConfigurationChangeTest {
         }
     }
 
-    private fun showsText(text: String) = assertNotNull(
-        "\"$text\" not shown",
-        deviceRule.device.wait(Until.findObject(By.textContains(text)), CallTests.TIMEOUT_MILLIS),
-    )
+    private fun showsText(text: String) =
+        assertNotNull(
+            "\"$text\" not shown",
+            deviceRule.device.wait(
+                Until.findObject(By.textContains(text)),
+                CallTests.TIMEOUT_MILLIS,
+            ),
+        )
 
     private companion object {
         const val SETTLE_MILLIS = 2_000L

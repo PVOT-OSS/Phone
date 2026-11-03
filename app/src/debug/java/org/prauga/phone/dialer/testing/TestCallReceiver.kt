@@ -33,32 +33,59 @@ class TestCallReceiver : BroadcastReceiver() {
         when (intent.action) {
             ACTION_ANSWER -> calls.incomingCall?.answer()
             ACTION_DECLINE -> calls.incomingCall?.reject(false, null)
-            ACTION_HANG_UP -> (calls.activeCall ?: calls.outgoingCall ?: calls.firstCall)?.disconnect()
+            ACTION_HANG_UP ->
+                (calls.activeCall ?: calls.outgoingCall ?: calls.firstCall)?.disconnect()
             ACTION_SET_SCREENING -> {
-                val category = CallerCategory.valueOf(checkNotNull(intent.getStringExtra(EXTRA_CATEGORY)).uppercase())
-                val action = CategoryAction.valueOf(checkNotNull(intent.getStringExtra(EXTRA_ACTION)).uppercase())
+                val category =
+                    CallerCategory.valueOf(
+                        checkNotNull(intent.getStringExtra(EXTRA_CATEGORY)).uppercase()
+                    )
+                val action =
+                    CategoryAction.valueOf(
+                        checkNotNull(intent.getStringExtra(EXTRA_ACTION)).uppercase()
+                    )
                 ScreeningSettings.from(context).setAction(category, action)
             }
             ACTION_REGISTER_CARRIER -> FakeCarrier.register(context)
             ACTION_UNREGISTER_CARRIER -> FakeCarrier.unregister(context)
-            ACTION_RING -> FakeCarrier.ring(
-                context,
-                FakeCallSpec(
-                    number = intent.getStringExtra(EXTRA_NUMBER),
-                    presentation = intent.getIntExtra(EXTRA_PRESENTATION, TelecomManager.PRESENTATION_ALLOWED),
-                ),
-            )
-            ACTION_PLACE -> context.getSystemService(TelecomManager::class.java).placeCall(
-                Uri.fromParts(PhoneAccount.SCHEME_TEL, checkNotNull(intent.getStringExtra(EXTRA_NUMBER)), null),
-                Bundle().apply { putParcelable(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, FakeCarrier.accountHandle(context)) },
-            )
-            ACTION_FAR_END_ANSWER -> FakeCarrier.connections.lastOrNull { !it.isIncoming }?.answerFromFarEnd()
+            ACTION_RING ->
+                FakeCarrier.ring(
+                    context,
+                    FakeCallSpec(
+                        number = intent.getStringExtra(EXTRA_NUMBER),
+                        presentation =
+                            intent.getIntExtra(
+                                EXTRA_PRESENTATION,
+                                TelecomManager.PRESENTATION_ALLOWED,
+                            ),
+                    ),
+                )
+            ACTION_PLACE ->
+                context
+                    .getSystemService(TelecomManager::class.java)
+                    .placeCall(
+                        Uri.fromParts(
+                            PhoneAccount.SCHEME_TEL,
+                            checkNotNull(intent.getStringExtra(EXTRA_NUMBER)),
+                            null,
+                        ),
+                        Bundle().apply {
+                            putParcelable(
+                                TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE,
+                                FakeCarrier.accountHandle(context),
+                            )
+                        },
+                    )
+            ACTION_FAR_END_ANSWER ->
+                FakeCarrier.connections.lastOrNull { !it.isIncoming }?.answerFromFarEnd()
             ACTION_FAR_END_HANG_UP -> FakeCarrier.connections.lastOrNull()?.hangUpFromFarEnd()
             ACTION_DUMP -> Unit
         }
         val tones = FakeCarrier.connections.joinToString("") { it.playedTones.joinToString("") }
-        resultData = calls.allCalls.joinToString("\n") { "${DialerCallState.toString(it.state)} ${it.number}" } +
-            if (tones.isEmpty()) "" else "\ntones $tones"
+        resultData =
+            calls.allCalls.joinToString("\n") {
+                "${DialerCallState.toString(it.state)} ${it.number}"
+            } + if (tones.isEmpty()) "" else "\ntones $tones"
     }
 
     private companion object {

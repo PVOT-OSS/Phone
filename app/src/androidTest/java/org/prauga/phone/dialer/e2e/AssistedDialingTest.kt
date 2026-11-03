@@ -36,22 +36,26 @@ class AssistedDialingTest {
     private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
     private val toggleKey = context.getString(R.string.assisted_dialing_setting_toggle_key)
     private val countryKey = context.getString(R.string.assisted_dialing_setting_cc_key)
-    private val networkCountry = context.getSystemService(TelephonyManager::class.java).networkCountryIso.uppercase()
+    private val networkCountry =
+        context.getSystemService(TelephonyManager::class.java).networkCountryIso.uppercase()
     private val saved = prefs.all.filterKeys { it == toggleKey || it == countryKey }
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(DeviceRule())
+    val rules: RuleChain =
+        RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(DeviceRule())
 
     @Before
-    fun needsANetworkCountryOtherThanTheUs() = assumeTrue("no network country", networkCountry.isNotEmpty() && networkCountry != "US")
+    fun needsANetworkCountryOtherThanTheUs() =
+        assumeTrue("no network country", networkCountry.isNotEmpty() && networkCountry != "US")
 
     @After
-    fun restorePreferences() = prefs.edit {
-        remove(toggleKey)
-        remove(countryKey)
-        (saved[toggleKey] as? Boolean)?.let { putBoolean(toggleKey, it) }
-        (saved[countryKey] as? String)?.let { putString(countryKey, it) }
-    }
+    fun restorePreferences() =
+        prefs.edit {
+            remove(toggleKey)
+            remove(countryKey)
+            (saved[toggleKey] as? Boolean)?.let { putBoolean(toggleKey, it) }
+            (saved[countryKey] as? String)?.let { putString(countryKey, it) }
+        }
 
     @Test
     fun homeNumberGetsTheHomeCountryCodeWhereverThePhoneIs() {
@@ -63,7 +67,10 @@ class AssistedDialingTest {
 
     @Test
     fun onByDefault() {
-        prefs.edit { remove(toggleKey); putString(countryKey, "US") }
+        prefs.edit {
+            remove(toggleKey)
+            putString(countryKey, "US")
+        }
         assertEquals("+16502530000", dialledAs("6502530000"))
     }
 
@@ -91,17 +98,21 @@ class AssistedDialingTest {
         assertEquals("6502530000", dialledAs("6502530000"))
     }
 
-    private fun setHome(country: String, enabled: Boolean = true) = prefs.edit {
-        putBoolean(toggleKey, enabled)
-        putString(countryKey, country)
-    }
+    private fun setHome(country: String, enabled: Boolean = true) =
+        prefs.edit {
+            putBoolean(toggleKey, enabled)
+            putString(countryKey, country)
+        }
 
     /** Dials [number] the way the app's own screens do and returns what reached the network. */
     private fun dialledAs(number: String): String {
-        val builder = CallIntentBuilder(number, CallInitiationType.Type.DIALPAD)
-            .setPhoneAccountHandle(FakeCarrier.accountHandle(context))
-            .setAllowAssistedDial(true)
-        val intent = InCall.onMain { PreCall.getIntent(context, builder) }.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        val builder =
+            CallIntentBuilder(number, CallInitiationType.Type.DIALPAD)
+                .setPhoneAccountHandle(FakeCarrier.accountHandle(context))
+                .setAllowAssistedDial(true)
+        val intent =
+            InCall.onMain { PreCall.getIntent(context, builder) }
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
         val far = CallTests.waitFor { FakeCarrier.connections.firstOrNull() }
         far.hangUpFromFarEnd()

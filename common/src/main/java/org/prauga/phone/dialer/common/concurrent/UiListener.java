@@ -152,4 +152,3 @@ public class UiListener<OutputT> extends Fragment {
     }
   }
 }
-

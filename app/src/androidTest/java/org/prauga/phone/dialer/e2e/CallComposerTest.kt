@@ -21,9 +21,9 @@ import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 import org.prauga.phone.contacts.common.dialog.CallSubjectDialog
 import org.prauga.phone.dialer.R
-import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.testing.FakeCallSpec
 import org.prauga.phone.dialer.testing.FakeCarrier
+import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.incallui.InCallPresenter
 import org.prauga.phone.incallui.call.CallList
 import org.prauga.phone.incallui.call.state.DialerCallState
@@ -36,7 +36,8 @@ class CallComposerTest {
     private val deviceRule = DeviceRule()
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
+    val rules: RuleChain =
+        RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
 
     @Test
     fun callerWithoutANameGetsTheNetworksName() {
@@ -51,7 +52,7 @@ class CallComposerTest {
             Bundle().apply {
                 putString(Call.EXTRA_ASSERTED_DISPLAY_NAME, BUSINESS)
                 putBoolean(Call.EXTRA_IS_BUSINESS_CALL, true)
-            },
+            }
         )
 
         showsText(context.getString(R.string.contact_grid_incoming_verified_business_call))
@@ -61,14 +62,18 @@ class CallComposerTest {
     fun urgentCallGetsTheImportantBadge() {
         // Telecom passes urgency on only for accounts that support call composer.
         FakeCarrier.register(context, callComposer = true)
-        ringWith(Bundle().apply { putInt(TelecomManager.EXTRA_PRIORITY, TelecomManager.PRIORITY_URGENT) })
+        ringWith(
+            Bundle().apply { putInt(TelecomManager.EXTRA_PRIORITY, TelecomManager.PRIORITY_URGENT) }
+        )
 
         checkNotNull(
             deviceRule.device.wait(
                 Until.findObject(By.res(context.packageName, "incall_important_call_badge")),
                 CallTests.TIMEOUT_MILLIS,
-            ),
-        ) { "no important call badge" }
+            )
+        ) {
+            "no important call badge"
+        }
     }
 
     @Test
@@ -76,19 +81,28 @@ class CallComposerTest {
         // Telecom checks the account's capabilities when the call is placed: re-register it.
         FakeCarrier.register(context, callComposer = true)
         val number = CallTests.freshNumber()
-        val intent = Intent(context, CallSubjectDialog::class.java)
-            .putExtras(
-                Bundle().apply {
-                    putString(CallSubjectDialog.ARG_NUMBER, number)
-                    putString(CallSubjectDialog.ARG_NAME_OR_NUMBER, number)
-                    putParcelable(CallSubjectDialog.ARG_PHONE_ACCOUNT_HANDLE, FakeCarrier.accountHandle(context))
-                },
-            )
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        val intent =
+            Intent(context, CallSubjectDialog::class.java)
+                .putExtras(
+                    Bundle().apply {
+                        putString(CallSubjectDialog.ARG_NUMBER, number)
+                        putString(CallSubjectDialog.ARG_NAME_OR_NUMBER, number)
+                        putParcelable(
+                            CallSubjectDialog.ARG_PHONE_ACCOUNT_HANDLE,
+                            FakeCarrier.accountHandle(context),
+                        )
+                    }
+                )
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
 
         showsText(context.getString(R.string.call_composer_urgent)).click()
-        checkNotNull(deviceRule.device.wait(Until.findObject(By.res(context.packageName, TestTags.CALL_SUBJECT_FIELD)), CallTests.TIMEOUT_MILLIS))
+        checkNotNull(
+                deviceRule.device.wait(
+                    Until.findObject(By.res(context.packageName, TestTags.CALL_SUBJECT_FIELD)),
+                    CallTests.TIMEOUT_MILLIS,
+                )
+            )
             .text = NOTE
         showsText(context.getString(R.string.send_and_call_button)).click()
 
@@ -107,15 +121,26 @@ class CallComposerTest {
     }
 
     private fun showsText(text: String): UiObject2 =
-        checkNotNull(deviceRule.device.wait(Until.findObject(By.text(text)), CallTests.TIMEOUT_MILLIS)) {
-            val shown = deviceRule.device.findObjects(By.pkg(context.packageName)).mapNotNull { it.text }.distinct()
-            val extras = InCall.onMain {
-                CallList.getInstance().incomingCall?.let { call ->
-                    // Package-private in DialerCall; only for this message.
-                    val telecomCall = call.javaClass.getDeclaredMethod("getTelecomCall").apply { isAccessible = true }.invoke(call)
-                    (telecomCall as Call).details.extras?.keySet()
+        checkNotNull(
+            deviceRule.device.wait(Until.findObject(By.text(text)), CallTests.TIMEOUT_MILLIS)
+        ) {
+            val shown =
+                deviceRule.device
+                    .findObjects(By.pkg(context.packageName))
+                    .mapNotNull { it.text }
+                    .distinct()
+            val extras =
+                InCall.onMain {
+                    CallList.getInstance().incomingCall?.let { call ->
+                        // Package-private in DialerCall; only for this message.
+                        val telecomCall =
+                            call.javaClass
+                                .getDeclaredMethod("getTelecomCall")
+                                .apply { isAccessible = true }
+                                .invoke(call)
+                        (telecomCall as Call).details.extras?.keySet()
+                    }
                 }
-            }
             "\"$text\" not shown; the app shows: $shown; the call's extras: $extras"
         }
 

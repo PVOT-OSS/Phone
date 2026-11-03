@@ -17,7 +17,6 @@ import android.telephony.SubscriptionManager
 import android.telephony.TelephonyManager
 import androidx.fragment.app.DialogFragment
 import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
-import org.prauga.phone.incallui.R
 import org.prauga.phone.dialer.ui.PvotAlertDialog
 import org.prauga.phone.incallui.call.CallList
 import org.prauga.phone.incallui.call.DialerCall
@@ -59,16 +58,27 @@ object CallTransfer {
         call.isConferenceCall && call.can(Call.Details.CAPABILITY_ADD_PARTICIPANT)
 
     private fun carrierAllowsTransfer(context: Context, call: DialerCall): Boolean {
-        if (context.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+        if (
+            context.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) !=
+                PackageManager.PERMISSION_GRANTED
+        ) {
             return false
         }
-        val subId = call.accountHandle
-            ?.let { context.getSystemService(TelephonyManager::class.java).createForPhoneAccountHandle(it) }
-            ?.subscriptionId
-            ?: SubscriptionManager.getDefaultSubscriptionId()
-        val config = runCatching {
-            context.getSystemService(CarrierConfigManager::class.java).getConfigForSubId(subId)
-        }.getOrNull()
+        val subId =
+            call.accountHandle
+                ?.let {
+                    context
+                        .getSystemService(TelephonyManager::class.java)
+                        .createForPhoneAccountHandle(it)
+                }
+                ?.subscriptionId ?: SubscriptionManager.getDefaultSubscriptionId()
+        val config =
+            runCatching {
+                    context
+                        .getSystemService(CarrierConfigManager::class.java)
+                        .getConfigForSubId(subId)
+                }
+                .getOrNull()
         return config?.getBoolean(KEY_ALLOW_TRANSFER) == true
     }
 
@@ -84,31 +94,41 @@ class CallTransferDialogFragment : DialogFragment() {
         val active = calls.activeCall
         val held = calls.backgroundCall
         val unknown = getString(R.string.unknown)
-        val message = getString(
-            R.string.incall_transfer_dialog_message,
-            active?.let(::nameOf) ?: unknown,
-            held?.let(::nameOf) ?: unknown,
-        )
+        val message =
+            getString(
+                R.string.incall_transfer_dialog_message,
+                active?.let(::nameOf) ?: unknown,
+                held?.let(::nameOf) ?: unknown,
+            )
         return PvotAlertDialog(
             requireContext(),
             getString(R.string.incall_transfer_dialog_title),
             message,
             listOf(
-                PvotAlertDialog.Action(getString(R.string.incall_transfer_dialog_confirm), PvotDialogActionStyle.Primary, {
-                    val from = CallList.getInstance().activeCall
-                    val to = CallList.getInstance().backgroundCall
-                    if (from != null && to != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.CINNAMON_BUN) {
-                        from.consultativeTransfer(to)
-                    }
-                }),
+                PvotAlertDialog.Action(
+                    getString(R.string.incall_transfer_dialog_confirm),
+                    PvotDialogActionStyle.Primary,
+                    {
+                        val from = CallList.getInstance().activeCall
+                        val to = CallList.getInstance().backgroundCall
+                        if (
+                            from != null &&
+                                to != null &&
+                                Build.VERSION.SDK_INT >= Build.VERSION_CODES.CINNAMON_BUN
+                        ) {
+                            from.consultativeTransfer(to)
+                        }
+                    },
+                ),
                 PvotAlertDialog.Action(getString(android.R.string.cancel), cancels = true),
             ),
         )
     }
 
     private fun nameOf(call: DialerCall): String? =
-        ContactInfoCache.getInstance(requireContext()).getInfo(call.id)?.namePrimary?.takeIf { it.isNotBlank() }
-            ?: call.number?.takeIf { it.isNotBlank() }
+        ContactInfoCache.getInstance(requireContext()).getInfo(call.id)?.namePrimary?.takeIf {
+            it.isNotBlank()
+        } ?: call.number?.takeIf { it.isNotBlank() }
 
     companion object {
         const val TAG = "tag_call_transfer_dialog"

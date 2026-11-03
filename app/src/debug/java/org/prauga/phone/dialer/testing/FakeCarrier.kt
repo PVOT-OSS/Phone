@@ -24,30 +24,35 @@ object FakeCarrier {
     private val live = CopyOnWriteArrayList<FakeConnection>()
 
     /** When true the network refuses to merge calls into a conference. */
-    @Volatile
-    var failMerges = false
+    @Volatile var failMerges = false
 
     /** Calls currently on the fake carrier, oldest first. */
-    val connections: List<FakeConnection> get() = live.toList()
+    val connections: List<FakeConnection>
+        get() = live.toList()
 
     fun accountHandle(context: Context) =
-        PhoneAccountHandle(ComponentName(context, FakeCarrierConnectionService::class.java), ACCOUNT_ID)
+        PhoneAccountHandle(
+            ComponentName(context, FakeCarrierConnectionService::class.java),
+            ACCOUNT_ID,
+        )
 
     /**
-     * Registers the account; it still has to be enabled, for example with the telecom shell command.
-     * With [callComposer] the account supports call composer: urgent calls, notes and pictures.
+     * Registers the account; it still has to be enabled, for example with the telecom shell
+     * command. With [callComposer] the account supports call composer: urgent calls, notes and
+     * pictures.
      */
     fun register(context: Context, callComposer: Boolean = false) {
-        val account = PhoneAccount.builder(accountHandle(context), "Fake carrier")
-            .setCapabilities(
-                PhoneAccount.CAPABILITY_CALL_PROVIDER or
-                    PhoneAccount.CAPABILITY_VIDEO_CALLING or
-                    PhoneAccount.CAPABILITY_SUPPORTS_VIDEO_CALLING or
-                    PhoneAccount.CAPABILITY_RTT or
-                    (if (callComposer) PhoneAccount.CAPABILITY_CALL_COMPOSER else 0),
-            )
-            .addSupportedUriScheme(PhoneAccount.SCHEME_TEL)
-            .build()
+        val account =
+            PhoneAccount.builder(accountHandle(context), "Fake carrier")
+                .setCapabilities(
+                    PhoneAccount.CAPABILITY_CALL_PROVIDER or
+                        PhoneAccount.CAPABILITY_VIDEO_CALLING or
+                        PhoneAccount.CAPABILITY_SUPPORTS_VIDEO_CALLING or
+                        PhoneAccount.CAPABILITY_RTT or
+                        (if (callComposer) PhoneAccount.CAPABILITY_CALL_COMPOSER else 0)
+                )
+                .addSupportedUriScheme(PhoneAccount.SCHEME_TEL)
+                .build()
         telecom(context).registerPhoneAccount(account)
     }
 
@@ -59,7 +64,8 @@ object FakeCarrier {
 
     /** Rings the device with a call described by [spec]. */
     fun ring(context: Context, spec: FakeCallSpec) {
-        val extras = Bundle().apply { putBundle(TelecomManager.EXTRA_INCOMING_CALL_EXTRAS, spec.toExtras()) }
+        val extras =
+            Bundle().apply { putBundle(TelecomManager.EXTRA_INCOMING_CALL_EXTRAS, spec.toExtras()) }
         telecom(context).addNewIncomingCall(accountHandle(context), extras)
     }
 

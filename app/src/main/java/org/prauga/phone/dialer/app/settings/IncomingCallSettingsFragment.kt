@@ -43,7 +43,9 @@ class IncomingCallSettingsFragment : SettingsComposeFragment() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         // Flip to silence needs an accelerometer to tell the phone is face down.
         val hasAccelerometer = remember {
-            context.getSystemService(SensorManager::class.java)?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null
+            context
+                .getSystemService(SensorManager::class.java)
+                ?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null
         }
         IncomingCallSettingsList(prefs, hasAccelerometer)
     }
@@ -56,7 +58,11 @@ internal fun IncomingCallSettingsList(prefs: SharedPreferences, hasAccelerometer
         item(key = "incoming_calls") {
             SettingsGroup {
                 if (hasAccelerometer) {
-                    var flip by remember { mutableStateOf(prefs.getBoolean(IncomingCallSettings.KEY_FLIP_TO_SILENCE, false)) }
+                    var flip by remember {
+                        mutableStateOf(
+                            prefs.getBoolean(IncomingCallSettings.KEY_FLIP_TO_SILENCE, false)
+                        )
+                    }
                     PvotSwitchRow(
                         title = stringResource(R.string.flip_to_silence_title),
                         summary = stringResource(R.string.flip_to_silence_summary),
@@ -65,12 +71,19 @@ internal fun IncomingCallSettingsList(prefs: SharedPreferences, hasAccelerometer
                             flip = it
                             prefs.edit { putBoolean(IncomingCallSettings.KEY_FLIP_TO_SILENCE, it) }
                         },
-                        modifier = Modifier.testTag(TestTags.settingsRow(IncomingCallSettings.KEY_FLIP_TO_SILENCE)),
+                        modifier =
+                            Modifier.testTag(
+                                TestTags.settingsRow(IncomingCallSettings.KEY_FLIP_TO_SILENCE)
+                            ),
                         icon = settingsIcon(R.drawable.ic_device_mobile_off),
                         iconStyle = PvotRowIconStyle.Plain,
                     )
                 }
-                var reminders by remember { mutableStateOf(prefs.getBoolean(IncomingCallSettings.KEY_CALLBACK_REMINDERS, true)) }
+                var reminders by remember {
+                    mutableStateOf(
+                        prefs.getBoolean(IncomingCallSettings.KEY_CALLBACK_REMINDERS, true)
+                    )
+                }
                 PvotSwitchRow(
                     title = stringResource(R.string.callback_reminders_title),
                     summary = stringResource(R.string.callback_reminders_summary),
@@ -79,7 +92,10 @@ internal fun IncomingCallSettingsList(prefs: SharedPreferences, hasAccelerometer
                         reminders = it
                         prefs.edit { putBoolean(IncomingCallSettings.KEY_CALLBACK_REMINDERS, it) }
                     },
-                    modifier = Modifier.testTag(TestTags.settingsRow(IncomingCallSettings.KEY_CALLBACK_REMINDERS)),
+                    modifier =
+                        Modifier.testTag(
+                            TestTags.settingsRow(IncomingCallSettings.KEY_CALLBACK_REMINDERS)
+                        ),
                     icon = settingsIcon(R.drawable.ic_bell),
                     iconStyle = PvotRowIconStyle.Plain,
                 )
@@ -88,11 +104,21 @@ internal fun IncomingCallSettingsList(prefs: SharedPreferences, hasAccelerometer
                     key = IncomingCallSettings.KEY_ANNOUNCE_CALLER,
                     default = IncomingCallSettings.ANNOUNCE_NEVER,
                     title = stringResource(R.string.call_announcer_title),
-                    choices = listOf(
-                        Choice(IncomingCallSettings.ANNOUNCE_ALWAYS, stringResource(R.string.call_announcer_always)),
-                        Choice(IncomingCallSettings.ANNOUNCE_HEADSET, stringResource(R.string.call_announcer_headset)),
-                        Choice(IncomingCallSettings.ANNOUNCE_NEVER, stringResource(R.string.call_announcer_never)),
-                    ),
+                    choices =
+                        listOf(
+                            Choice(
+                                IncomingCallSettings.ANNOUNCE_ALWAYS,
+                                stringResource(R.string.call_announcer_always),
+                            ),
+                            Choice(
+                                IncomingCallSettings.ANNOUNCE_HEADSET,
+                                stringResource(R.string.call_announcer_headset),
+                            ),
+                            Choice(
+                                IncomingCallSettings.ANNOUNCE_NEVER,
+                                stringResource(R.string.call_announcer_never),
+                            ),
+                        ),
                     icon = R.drawable.ic_speakerphone,
                 )
             }
@@ -103,7 +129,11 @@ internal fun IncomingCallSettingsList(prefs: SharedPreferences, hasAccelerometer
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 // Lined up with the text of the rows in the card above.
-                modifier = Modifier.padding(horizontal = SettingsGroupDefaults.CardPadding + SettingsGroupDefaults.RowPadding),
+                modifier =
+                    Modifier.padding(
+                        horizontal =
+                            SettingsGroupDefaults.CardPadding + SettingsGroupDefaults.RowPadding
+                    ),
             )
         }
     }

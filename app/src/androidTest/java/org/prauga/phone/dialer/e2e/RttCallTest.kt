@@ -30,7 +30,11 @@ class RttCallTest {
     private val toasts = ToastWatcher()
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule).around(toasts)
+    val rules: RuleChain =
+        RuleChain.outerRule(DefaultDialerRule())
+            .around(FakeCarrierRule())
+            .around(deviceRule)
+            .around(toasts)
 
     @Test
     fun rttCallShowsTheChatAndCarriesTextBothWays() {
@@ -42,7 +46,12 @@ class RttCallTest {
 
         val input = findView("rtt_chat_input")
         far.typeRtt("hello from far")
-        checkNotNull(deviceRule.device.wait(Until.findObject(By.textContains("hello from far")), CallTests.TIMEOUT_MILLIS)) {
+        checkNotNull(
+            deviceRule.device.wait(
+                Until.findObject(By.textContains("hello from far")),
+                CallTests.TIMEOUT_MILLIS,
+            )
+        ) {
             "far end's text not shown"
         }
 
@@ -118,7 +127,11 @@ class RttCallTest {
         toasts.waitFor(context.getString(R.string.rtt_call_downgraded_toast))
 
         CallTests.waitFor { if (InCall.onMain { !call.isActiveRttCall }) true else null }
-        CallTests.waitFor { if (deviceRule.device.findObject(By.res(context.packageName, "rtt_chat_input")) == null) true else null }
+        CallTests.waitFor {
+            if (deviceRule.device.findObject(By.res(context.packageName, "rtt_chat_input")) == null)
+                true
+            else null
+        }
         InCall.waitForState(DialerCallState.ACTIVE)
     }
 
@@ -131,7 +144,9 @@ class RttCallTest {
         repeat(MENU_ATTEMPTS) {
             deviceRule.device.waitForIdle()
             findView(TestTags.RTT_MENU).click()
-            deviceRule.device.wait(Until.findObject(switchToVoice), MENU_WAIT_MILLIS)?.let { return it }
+            deviceRule.device.wait(Until.findObject(switchToVoice), MENU_WAIT_MILLIS)?.let {
+                return it
+            }
         }
         error("RTT menu did not open")
     }
@@ -154,13 +169,26 @@ class RttCallTest {
         return InCall.waitForState(DialerCallState.ACTIVE) to far
     }
 
-    private fun waitForRtt(call: DialerCall) = CallTests.waitFor { if (InCall.onMain { call.isActiveRttCall }) true else null }
+    private fun waitForRtt(call: DialerCall) =
+        CallTests.waitFor { if (InCall.onMain { call.isActiveRttCall }) true else null }
 
-    /** The view with [id], or, for a Compose button, the one labelled with the string of that name. */
+    /**
+     * The view with [id], or, for a Compose button, the one labelled with the string of that name.
+     */
     private fun findView(id: String): UiObject2 {
-        val label = context.resources.getIdentifier(id, "string", context.packageName).takeIf { it != 0 }?.let(context::getString)
-        val selector = if (label != null) By.text(label) else By.res(java.util.regex.Pattern.compile("(.*:id/)?$id"))
-        return checkNotNull(deviceRule.device.wait(Until.findObject(selector), CallTests.TIMEOUT_MILLIS)) { "$id not shown" }
+        val label =
+            context.resources
+                .getIdentifier(id, "string", context.packageName)
+                .takeIf { it != 0 }
+                ?.let(context::getString)
+        val selector =
+            if (label != null) By.text(label)
+            else By.res(java.util.regex.Pattern.compile("(.*:id/)?$id"))
+        return checkNotNull(
+            deviceRule.device.wait(Until.findObject(selector), CallTests.TIMEOUT_MILLIS)
+        ) {
+            "$id not shown"
+        }
     }
 
     private companion object {

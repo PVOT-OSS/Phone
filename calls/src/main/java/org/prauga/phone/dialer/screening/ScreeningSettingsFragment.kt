@@ -26,7 +26,9 @@ import org.prauga.phone.dialer.app.settings.ui.SettingsGroup
 import org.prauga.phone.dialer.app.settings.ui.SettingsGroupDefaults
 import org.prauga.phone.dialer.app.settings.ui.SettingsList
 
-/** Lets the user choose whether each kind of unknown caller rings, rings silently or is declined. */
+/**
+ * Lets the user choose whether each kind of unknown caller rings, rings silently or is declined.
+ */
 class ScreeningSettingsFragment : SettingsComposeFragment() {
 
     @Composable
@@ -67,31 +69,37 @@ fun ScreeningSettingsList(settings: ScreeningSettings) {
                 text = stringResource(R.string.screening_settings_footer),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(
-                    horizontal = SettingsGroupDefaults.CardPadding + SettingsGroupDefaults.RowPadding,
-                    vertical = PvotSpacing.S,
-                ),
+                modifier =
+                    Modifier.padding(
+                        horizontal =
+                            SettingsGroupDefaults.CardPadding + SettingsGroupDefaults.RowPadding,
+                        vertical = PvotSpacing.S,
+                    ),
             )
         }
     }
 }
 
-private fun titleOf(category: CallerCategory) = when (category) {
-    CallerCategory.PRIVATE_OR_HIDDEN -> R.string.screening_category_private_or_hidden
-    CallerCategory.POSSIBLY_FAKED -> R.string.screening_category_possibly_faked
-    CallerCategory.FIRST_TIME -> R.string.screening_category_first_time
-    CallerCategory.NOT_IN_CONTACTS -> R.string.screening_category_not_in_contacts
-}
+private fun titleOf(category: CallerCategory) =
+    when (category) {
+        CallerCategory.PRIVATE_OR_HIDDEN -> R.string.screening_category_private_or_hidden
+        CallerCategory.POSSIBLY_FAKED -> R.string.screening_category_possibly_faked
+        CallerCategory.FIRST_TIME -> R.string.screening_category_first_time
+        CallerCategory.NOT_IN_CONTACTS -> R.string.screening_category_not_in_contacts
+    }
 
-private fun descriptionOf(category: CallerCategory) = when (category) {
-    CallerCategory.PRIVATE_OR_HIDDEN -> R.string.screening_category_private_or_hidden_description
-    CallerCategory.POSSIBLY_FAKED -> R.string.screening_category_possibly_faked_description
-    CallerCategory.FIRST_TIME -> R.string.screening_category_first_time_description
-    CallerCategory.NOT_IN_CONTACTS -> R.string.screening_category_not_in_contacts_description
-}
+private fun descriptionOf(category: CallerCategory) =
+    when (category) {
+        CallerCategory.PRIVATE_OR_HIDDEN ->
+            R.string.screening_category_private_or_hidden_description
+        CallerCategory.POSSIBLY_FAKED -> R.string.screening_category_possibly_faked_description
+        CallerCategory.FIRST_TIME -> R.string.screening_category_first_time_description
+        CallerCategory.NOT_IN_CONTACTS -> R.string.screening_category_not_in_contacts_description
+    }
 
-private fun labelOf(action: CategoryAction) = when (action) {
-    CategoryAction.RING -> R.string.screening_action_ring
-    CategoryAction.SILENCE -> R.string.screening_action_silence
-    CategoryAction.DECLINE -> R.string.screening_action_decline
-}
+private fun labelOf(action: CategoryAction) =
+    when (action) {
+        CategoryAction.RING -> R.string.screening_action_ring
+        CategoryAction.SILENCE -> R.string.screening_action_silence
+        CategoryAction.DECLINE -> R.string.screening_action_decline
+    }

@@ -21,7 +21,8 @@ class DiagnosticMessages {
         if (extras == null || !extras.containsKey(Call.EXTRA_DIAGNOSTIC_MESSAGE_ID)) return false
         val id = extras.getInt(Call.EXTRA_DIAGNOSTIC_MESSAGE_ID)
         return when (event) {
-            Call.EVENT_DISPLAY_DIAGNOSTIC_MESSAGE -> show(id, extras.getCharSequence(Call.EXTRA_DIAGNOSTIC_MESSAGE))
+            Call.EVENT_DISPLAY_DIAGNOSTIC_MESSAGE ->
+                show(id, extras.getCharSequence(Call.EXTRA_DIAGNOSTIC_MESSAGE))
             Call.EVENT_CLEAR_DIAGNOSTIC_MESSAGE -> clear(id)
             else -> false
         }

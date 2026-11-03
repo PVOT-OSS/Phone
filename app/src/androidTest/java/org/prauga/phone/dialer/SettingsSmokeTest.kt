@@ -27,7 +27,8 @@ class SettingsSmokeTest {
     fun settingsListUnknownCallers() {
         device.wakeUp()
         context.startActivity(
-            Intent(context, DialerSettingsActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+            Intent(context, DialerSettingsActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         )
         val title = context.getString(R.string.screening_settings_title)
         assertNotNull(device.wait(Until.findObject(By.text(title)), TIMEOUT_MILLIS))

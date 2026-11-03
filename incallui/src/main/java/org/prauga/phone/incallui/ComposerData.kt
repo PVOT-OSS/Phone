@@ -24,9 +24,10 @@ object ComposerData {
         if (!urgent && picture == null) return null
         val builder = MultimediaData.builder().setImportant(urgent)
         if (picture != null) {
-            val type = runCatching { context.contentResolver.getType(picture) }
-                .onFailure { LogUtil.e("ComposerData.of", "can't read the picture's type", it) }
-                .getOrNull()
+            val type =
+                runCatching { context.contentResolver.getType(picture) }
+                    .onFailure { LogUtil.e("ComposerData.of", "can't read the picture's type", it) }
+                    .getOrNull()
             builder.setImage(picture, type ?: DEFAULT_PICTURE_TYPE)
         }
         return builder.build()

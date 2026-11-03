@@ -13,7 +13,9 @@ import java.io.ByteArrayOutputStream
 import kotlin.math.max
 import kotlin.math.roundToInt
 
-/** Makes a picture small enough for call composer, which caps pictures at a few tens of kilobytes. */
+/**
+ * Makes a picture small enough for call composer, which caps pictures at a few tens of kilobytes.
+ */
 object ComposerPicture {
 
     /** Picture qualities tried at each size, best first. */
@@ -30,24 +32,37 @@ object ComposerPicture {
      * if it can't be read or made small enough. Slow: call it off the main thread.
      */
     fun shrink(context: Context, picture: Uri, maxBytes: Long): ByteArray? {
-        val bitmap = runCatching {
-            ImageDecoder.decodeBitmap(ImageDecoder.createSource(context.contentResolver, picture)) { decoder, info, _ ->
-                val longest = max(info.size.width, info.size.height)
-                if (longest > START_SIDE) {
-                    val scale = START_SIDE.toFloat() / longest
-                    decoder.setTargetSize((info.size.width * scale).roundToInt(), (info.size.height * scale).roundToInt())
+        val bitmap =
+            runCatching {
+                    ImageDecoder.decodeBitmap(
+                        ImageDecoder.createSource(context.contentResolver, picture)
+                    ) { decoder, info, _ ->
+                        val longest = max(info.size.width, info.size.height)
+                        if (longest > START_SIDE) {
+                            val scale = START_SIDE.toFloat() / longest
+                            decoder.setTargetSize(
+                                (info.size.width * scale).roundToInt(),
+                                (info.size.height * scale).roundToInt(),
+                            )
+                        }
+                        // Software bitmaps can be scaled and compressed.
+                        decoder.allocator = ImageDecoder.ALLOCATOR_SOFTWARE
+                    }
                 }
-                // Software bitmaps can be scaled and compressed.
-                decoder.allocator = ImageDecoder.ALLOCATOR_SOFTWARE
-            }
-        }.getOrNull() ?: return null
+                .getOrNull() ?: return null
         return fitUnder(maxBytes, max(bitmap.width, bitmap.height)) { side, quality ->
             val scale = side.toFloat() / max(bitmap.width, bitmap.height)
-            val scaled = if (scale >= 1f) {
-                bitmap
-            } else {
-                Bitmap.createScaledBitmap(bitmap, (bitmap.width * scale).roundToInt(), (bitmap.height * scale).roundToInt(), true)
-            }
+            val scaled =
+                if (scale >= 1f) {
+                    bitmap
+                } else {
+                    Bitmap.createScaledBitmap(
+                        bitmap,
+                        (bitmap.width * scale).roundToInt(),
+                        (bitmap.height * scale).roundToInt(),
+                        true,
+                    )
+                }
             ByteArrayOutputStream().use { out ->
                 scaled.compress(Bitmap.CompressFormat.JPEG, quality, out)
                 out.toByteArray()
@@ -59,7 +74,11 @@ object ComposerPicture {
      * Tries [encode] at the picture's [longestSide] with falling qualities, then at smaller sizes,
      * and returns the first result of at most [maxBytes], or null.
      */
-    internal fun fitUnder(maxBytes: Long, longestSide: Int, encode: (side: Int, quality: Int) -> ByteArray): ByteArray? {
+    internal fun fitUnder(
+        maxBytes: Long,
+        longestSide: Int,
+        encode: (side: Int, quality: Int) -> ByteArray,
+    ): ByteArray? {
         var side = longestSide
         while (side >= MIN_SIDE) {
             for (quality in QUALITIES) {

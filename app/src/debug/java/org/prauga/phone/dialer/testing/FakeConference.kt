@@ -14,19 +14,21 @@ import android.telecom.PhoneAccountHandle
 class FakeConference(account: PhoneAccountHandle) : Conference(account) {
 
     init {
-        connectionCapabilities = Connection.CAPABILITY_HOLD or
-            Connection.CAPABILITY_SUPPORT_HOLD or
-            Connection.CAPABILITY_MUTE or
-            Connection.CAPABILITY_MANAGE_CONFERENCE
+        connectionCapabilities =
+            Connection.CAPABILITY_HOLD or
+                Connection.CAPABILITY_SUPPORT_HOLD or
+                Connection.CAPABILITY_MUTE or
+                Connection.CAPABILITY_MANAGE_CONFERENCE
     }
 
     /** Numbers the user added straight to the conference, in order. */
     val addedParticipants = java.util.concurrent.CopyOnWriteArrayList<android.net.Uri>()
 
     /** Lets the user add people straight to the conference, as a network-hosted one does. */
-    fun acceptParticipants() = FakeCarrier.onMain {
-        connectionCapabilities = connectionCapabilities or Connection.CAPABILITY_ADD_PARTICIPANT
-    }
+    fun acceptParticipants() =
+        FakeCarrier.onMain {
+            connectionCapabilities = connectionCapabilities or Connection.CAPABILITY_ADD_PARTICIPANT
+        }
 
     override fun onAddConferenceParticipants(participants: List<android.net.Uri>) {
         addedParticipants += participants

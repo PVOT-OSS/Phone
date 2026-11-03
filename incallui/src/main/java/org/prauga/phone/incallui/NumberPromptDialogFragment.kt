@@ -36,7 +36,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
 import com.prauga.pvot.designsystem.components.textfield.PvotTextField
-import org.prauga.phone.incallui.R
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.ui.PvotAlertDialog
 import org.prauga.phone.dialer.ui.TestTags
@@ -57,36 +56,46 @@ class NumberPromptDialogFragment : DialogFragment() {
 
     private val number = mutableStateOf("")
 
-    private val pickContact = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        val uri = result.data?.data
-        if (result.resultCode != Activity.RESULT_OK || uri == null) return@registerForActivityResult
-        val picked = runCatching {
-            requireContext().contentResolver.query(uri, arrayOf(Phone.NUMBER), null, null, null)?.use { cursor ->
-                if (cursor.moveToFirst()) cursor.getString(0) else null
-            }
-        }.getOrNull()
-        if (!picked.isNullOrBlank()) number.value = picked
-    }
+    private val pickContact =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            val uri = result.data?.data
+            if (result.resultCode != Activity.RESULT_OK || uri == null)
+                return@registerForActivityResult
+            val picked =
+                runCatching {
+                        requireContext()
+                            .contentResolver
+                            .query(uri, arrayOf(Phone.NUMBER), null, null, null)
+                            ?.use { cursor ->
+                                if (cursor.moveToFirst()) cursor.getString(0) else null
+                            }
+                    }
+                    .getOrNull()
+            if (!picked.isNullOrBlank()) number.value = picked
+        }
 
     private val action: Action
         get() = Action.valueOf(requireArguments().getString(ARG_ACTION)!!)
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         savedInstanceState?.getString(STATE_NUMBER)?.let { number.value = it }
-        val dialog = PvotAlertDialog(
-            requireContext(),
-            getString(action.title),
-            null,
-            listOf(
-                PvotAlertDialog.Action(
-                    getString(action.confirm),
-                    PvotDialogActionStyle.Primary,
-                    { perform(number.value) },
-                    enabled = { number.value.isNotBlank() },
+        val dialog =
+            PvotAlertDialog(
+                requireContext(),
+                getString(action.title),
+                null,
+                listOf(
+                    PvotAlertDialog.Action(
+                        getString(action.confirm),
+                        PvotDialogActionStyle.Primary,
+                        { perform(number.value) },
+                        enabled = { number.value.isNotBlank() },
+                    ),
+                    PvotAlertDialog.Action(getString(android.R.string.cancel), cancels = true),
                 ),
-                PvotAlertDialog.Action(getString(android.R.string.cancel), cancels = true),
-            ),
-        ) { NumberField(number, ::pickFromContacts) }
+            ) {
+                NumberField(number, ::pickFromContacts)
+            }
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         return dialog
     }
@@ -112,7 +121,8 @@ class NumberPromptDialogFragment : DialogFragment() {
         when (action) {
             Action.FORWARD -> call.deflect(uri)
             // Transfer is only offered from Android 17, where Telecom opened it to phone apps.
-            Action.TRANSFER -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CINNAMON_BUN) call.transfer(uri)
+            Action.TRANSFER ->
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CINNAMON_BUN) call.transfer(uri)
             Action.ADD_PARTICIPANT -> call.addConferenceParticipant(uri)
         }
     }
@@ -125,15 +135,18 @@ class NumberPromptDialogFragment : DialogFragment() {
         private const val PHONE_SCHEME = "tel"
 
         /**
-         * Shows the prompt for [action] on the call [callId], once the phone is unlocked: forwarding
-         * or transferring a call, or picking a contact, shouldn't be possible from the lock screen.
+         * Shows the prompt for [action] on the call [callId], once the phone is unlocked:
+         * forwarding or transferring a call, or picking a contact, shouldn't be possible from the
+         * lock screen.
          */
         @JvmStatic
         fun show(activity: FragmentActivity, action: Action, callId: String) {
             val showPrompt = {
                 if (!activity.isFinishing && !activity.supportFragmentManager.isStateSaved) {
                     NumberPromptDialogFragment()
-                        .apply { arguments = bundleOf(ARG_ACTION to action.name, ARG_CALL_ID to callId) }
+                        .apply {
+                            arguments = bundleOf(ARG_ACTION to action.name, ARG_CALL_ID to callId)
+                        }
                         .show(activity.supportFragmentManager, TAG)
                 }
             }
@@ -162,10 +175,14 @@ private fun NumberField(number: MutableState<String>, onPickContact: () -> Unit)
         placeholder = stringResource(R.string.number_prompt_hint),
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-        modifier = Modifier.fillMaxWidth().focusRequester(focus).testTag(TestTags.NUMBER_PROMPT_FIELD),
+        modifier =
+            Modifier.fillMaxWidth().focusRequester(focus).testTag(TestTags.NUMBER_PROMPT_FIELD),
         trailingIcon = {
             IconButton(onClick = onPickContact) {
-                Icon(painterResource(R.drawable.ic_user), stringResource(R.string.number_prompt_pick_contact))
+                Icon(
+                    painterResource(R.drawable.ic_user),
+                    stringResource(R.string.number_prompt_pick_contact),
+                )
             }
         },
     )

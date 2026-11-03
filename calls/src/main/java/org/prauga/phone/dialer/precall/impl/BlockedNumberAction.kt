@@ -34,7 +34,8 @@ class BlockedNumberAction : PreCallAction {
 
     private var dialog: PvotAlertDialog? = null
 
-    override fun requiresUi(context: Context, builder: CallIntentBuilder): Boolean = isBlocked(context, builder)
+    override fun requiresUi(context: Context, builder: CallIntentBuilder): Boolean =
+        isBlocked(context, builder)
 
     override fun runWithoutUi(context: Context, builder: CallIntentBuilder) = Unit
 
@@ -42,36 +43,49 @@ class BlockedNumberAction : PreCallAction {
         val activity = coordinator.activity
         if (!isBlocked(activity, coordinator.builder)) return
 
-        val number = BidiFormatter.getInstance().unicodeWrap(
-            PhoneNumberUtils.formatNumber(numberOf(coordinator.builder), null) ?: numberOf(coordinator.builder),
-            TextDirectionHeuristics.LTR,
-        )
+        val number =
+            BidiFormatter.getInstance()
+                .unicodeWrap(
+                    PhoneNumberUtils.formatNumber(numberOf(coordinator.builder), null)
+                        ?: numberOf(coordinator.builder),
+                    TextDirectionHeuristics.LTR,
+                )
         val pending = coordinator.startPendingAction()
         var answered = false
-        dialog = PvotAlertDialog(
-            activity,
-            activity.getString(R.string.calling_blocked_number_title, number),
-            activity.getString(R.string.calling_blocked_number_message, number),
-            listOf(
-                PvotAlertDialog.Action(activity.getString(R.string.calling_blocked_number_call), PvotDialogActionStyle.Primary, {
-                    answered = true
-                    pending.finish()
-                }),
-                PvotAlertDialog.Action(activity.getString(android.R.string.cancel), onClick = {
-                    answered = true
-                    coordinator.abortCall()
-                    pending.finish()
-                }, cancels = true),
-            ),
-        ).apply {
-            setOnCancelListener {
-                if (!answered) {
-                    coordinator.abortCall()
-                    pending.finish()
+        dialog =
+            PvotAlertDialog(
+                    activity,
+                    activity.getString(R.string.calling_blocked_number_title, number),
+                    activity.getString(R.string.calling_blocked_number_message, number),
+                    listOf(
+                        PvotAlertDialog.Action(
+                            activity.getString(R.string.calling_blocked_number_call),
+                            PvotDialogActionStyle.Primary,
+                            {
+                                answered = true
+                                pending.finish()
+                            },
+                        ),
+                        PvotAlertDialog.Action(
+                            activity.getString(android.R.string.cancel),
+                            onClick = {
+                                answered = true
+                                coordinator.abortCall()
+                                pending.finish()
+                            },
+                            cancels = true,
+                        ),
+                    ),
+                )
+                .apply {
+                    setOnCancelListener {
+                        if (!answered) {
+                            coordinator.abortCall()
+                            pending.finish()
+                        }
+                    }
+                    show()
                 }
-            }
-            show()
-        }
     }
 
     override fun onDiscard() {
@@ -83,7 +97,8 @@ class BlockedNumberAction : PreCallAction {
         val number = numberOf(builder)
         if (number.isEmpty()) return false
         return try {
-            BlockedNumberContract.canCurrentUserBlockNumbers(context) && BlockedNumberContract.isBlocked(context, number)
+            BlockedNumberContract.canCurrentUserBlockNumbers(context) &&
+                BlockedNumberContract.isBlocked(context, number)
         } catch (e: RuntimeException) {
             // Only the default phone app may ask; without that the call simply goes ahead.
             LogUtil.w("BlockedNumberAction.isBlocked", "could not check the block list: $e")
@@ -92,5 +107,6 @@ class BlockedNumberAction : PreCallAction {
     }
 
     private fun numberOf(builder: CallIntentBuilder): String =
-        if (builder.uri.scheme == PhoneAccount.SCHEME_TEL) builder.uri.schemeSpecificPart.orEmpty() else ""
+        if (builder.uri.scheme == PhoneAccount.SCHEME_TEL) builder.uri.schemeSpecificPart.orEmpty()
+        else ""
 }

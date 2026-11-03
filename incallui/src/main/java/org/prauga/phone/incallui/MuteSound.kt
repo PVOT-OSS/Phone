@@ -19,28 +19,32 @@ import kotlin.math.sin
  */
 object MuteSound {
 
-    /** Plays the sound for [muted]; nothing before the first unlock, as the call screen stays quiet then. */
+    /**
+     * Plays the sound for [muted]; nothing before the first unlock, as the call screen stays quiet
+     * then.
+     */
     @JvmStatic
     fun play(context: Context, muted: Boolean) {
         if (context.getSystemService(UserManager::class.java)?.isUserUnlocked == false) return
         val samples = chirp(if (muted) FREQUENCIES_MUTE else FREQUENCIES_UNMUTE)
-        val track = AudioTrack.Builder()
-            .setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .build(),
-            )
-            .setAudioFormat(
-                AudioFormat.Builder()
-                    .setEncoding(AudioFormat.ENCODING_PCM_16BIT)
-                    .setSampleRate(SAMPLE_RATE)
-                    .setChannelMask(AudioFormat.CHANNEL_OUT_MONO)
-                    .build(),
-            )
-            .setTransferMode(AudioTrack.MODE_STATIC)
-            .setBufferSizeInBytes(samples.size * 2)
-            .build()
+        val track =
+            AudioTrack.Builder()
+                .setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .build()
+                )
+                .setAudioFormat(
+                    AudioFormat.Builder()
+                        .setEncoding(AudioFormat.ENCODING_PCM_16BIT)
+                        .setSampleRate(SAMPLE_RATE)
+                        .setChannelMask(AudioFormat.CHANNEL_OUT_MONO)
+                        .build()
+                )
+                .setTransferMode(AudioTrack.MODE_STATIC)
+                .setBufferSizeInBytes(samples.size * 2)
+                .build()
         track.write(samples, 0, samples.size)
         track.setNotificationMarkerPosition(samples.size)
         track.setPlaybackPositionUpdateListener(
@@ -48,7 +52,7 @@ object MuteSound {
                 override fun onMarkerReached(track: AudioTrack) = track.release()
 
                 override fun onPeriodicNotification(track: AudioTrack) = Unit
-            },
+            }
         )
         track.play()
     }

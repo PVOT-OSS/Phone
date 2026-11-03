@@ -34,23 +34,35 @@ class CallLogGroupingTest {
     private val deviceRule = DeviceRule()
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
+    val rules: RuleChain =
+        RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
 
     @Test
     fun rowsFollowTheGroupingRule() {
         val now = System.currentTimeMillis()
-        val rows = rowsOf(
-            // Today: two answered calls share a row, the missed one before them doesn't.
-            Row(NUMBER, Calls.OUTGOING_TYPE, now - MINUTE),
-            Row("(650) 555-0100", Calls.INCOMING_TYPE, now - 2 * MINUTE, account = "other SIM"),
-            Row(NUMBER, Calls.MISSED_TYPE, now - 3 * MINUTE),
-            Row(NUMBER, Calls.REJECTED_TYPE, now - 4 * MINUTE),
-            // Yesterday starts a new row.
-            Row(NUMBER, Calls.MISSED_TYPE, now - DAY),
-            // Private callers each get a row.
-            Row("", Calls.INCOMING_TYPE, now - 3 * DAY, presentation = Calls.PRESENTATION_RESTRICTED),
-            Row("", Calls.INCOMING_TYPE, now - 4 * DAY, presentation = Calls.PRESENTATION_RESTRICTED),
-        )
+        val rows =
+            rowsOf(
+                // Today: two answered calls share a row, the missed one before them doesn't.
+                Row(NUMBER, Calls.OUTGOING_TYPE, now - MINUTE),
+                Row("(650) 555-0100", Calls.INCOMING_TYPE, now - 2 * MINUTE, account = "other SIM"),
+                Row(NUMBER, Calls.MISSED_TYPE, now - 3 * MINUTE),
+                Row(NUMBER, Calls.REJECTED_TYPE, now - 4 * MINUTE),
+                // Yesterday starts a new row.
+                Row(NUMBER, Calls.MISSED_TYPE, now - DAY),
+                // Private callers each get a row.
+                Row(
+                    "",
+                    Calls.INCOMING_TYPE,
+                    now - 3 * DAY,
+                    presentation = Calls.PRESENTATION_RESTRICTED,
+                ),
+                Row(
+                    "",
+                    Calls.INCOMING_TYPE,
+                    now - 4 * DAY,
+                    presentation = Calls.PRESENTATION_RESTRICTED,
+                ),
+            )
 
         assertEquals(listOf(2, 2, 1, 1, 1), rows)
     }
@@ -61,17 +73,24 @@ class CallLogGroupingTest {
         FakeCarrier.ring(context, FakeCallSpec(number))
         CallTests.waitForRinging()
         InCall.onMain { checkNotNull(CallList.getInstance().incomingCall).reject(false, null) }
-        CallTests.waitFor { CallTests.latestCall(context, number, 0)?.takeIf { it.type == CallLog.Calls.REJECTED_TYPE } }
+        CallTests.waitFor {
+            CallTests.latestCall(context, number, 0)?.takeIf {
+                it.type == CallLog.Calls.REJECTED_TYPE
+            }
+        }
 
         context.startActivity(
             Intent(context, CallLogActivity::class.java)
                 .putExtra(CallLog.Calls.EXTRA_CALL_TYPE_FILTER, CallLog.Calls.MISSED_TYPE)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         )
 
         assertNotNull(
             "declined call not listed under Missed",
-            deviceRule.device.wait(Until.findObject(By.textContains(number.takeLast(4))), CallTests.TIMEOUT_MILLIS),
+            deviceRule.device.wait(
+                Until.findObject(By.textContains(number.takeLast(4))),
+                CallTests.TIMEOUT_MILLIS,
+            ),
         )
     }
 
@@ -101,17 +120,20 @@ class CallLogGroupingTest {
             cursor.addRow(values)
         }
         val sizes = mutableListOf<Int>()
-        CallLogGroupBuilder(object : CallLogGroupBuilder.GroupCreator {
-            override fun addGroup(cursorPosition: Int, size: Int) {
-                sizes += size
-            }
+        CallLogGroupBuilder(
+                object : CallLogGroupBuilder.GroupCreator {
+                    override fun addGroup(cursorPosition: Int, size: Int) {
+                        sizes += size
+                    }
 
-            override fun setCallbackAction(rowId: Long, callbackAction: Int) = Unit
+                    override fun setCallbackAction(rowId: Long, callbackAction: Int) = Unit
 
-            override fun setDayGroup(rowId: Long, dayGroup: Int) = Unit
+                    override fun setDayGroup(rowId: Long, dayGroup: Int) = Unit
 
-            override fun clearDayGroups() = Unit
-        }).addGroups(cursor)
+                    override fun clearDayGroups() = Unit
+                }
+            )
+            .addGroups(cursor)
         return sizes
     }
 

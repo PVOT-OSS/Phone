@@ -31,13 +31,19 @@ class VideoCallTest {
     private val toasts = ToastWatcher()
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule).around(toasts)
+    val rules: RuleChain =
+        RuleChain.outerRule(DefaultDialerRule())
+            .around(FakeCarrierRule())
+            .around(deviceRule)
+            .around(toasts)
 
     @Test
     fun answerVideoCallWithVideo() {
         val far = ringWithVideo()
 
-        InCall.onMain { CallList.getInstance().incomingCall.answer(VideoProfile.STATE_BIDIRECTIONAL) }
+        InCall.onMain {
+            CallList.getInstance().incomingCall.answer(VideoProfile.STATE_BIDIRECTIONAL)
+        }
 
         val call = InCall.waitForState(DialerCallState.ACTIVE)
         waitForVideoState(far, VideoProfile.STATE_BIDIRECTIONAL)
@@ -101,15 +107,21 @@ class VideoCallTest {
         waitForSessionState(call, SessionModificationState.RECEIVED_UPGRADE_TO_VIDEO_REQUEST)
 
         InCall.onMain { call.videoTech.declineVideoRequest() }
-        CallTests.waitFor { far.video.lastResponse?.takeIf { it.videoState == VideoProfile.STATE_AUDIO_ONLY } }
+        CallTests.waitFor {
+            far.video.lastResponse?.takeIf { it.videoState == VideoProfile.STATE_AUDIO_ONLY }
+        }
         waitForSessionState(call, SessionModificationState.NO_REQUEST)
-        check(far.videoState == VideoProfile.STATE_AUDIO_ONLY) { "far end video state ${far.videoState}" }
+        check(far.videoState == VideoProfile.STATE_AUDIO_ONLY) {
+            "far end video state ${far.videoState}"
+        }
     }
 
     @Test
     fun farEndDropsVideo() {
         val far = ringWithVideo()
-        InCall.onMain { CallList.getInstance().incomingCall.answer(VideoProfile.STATE_BIDIRECTIONAL) }
+        InCall.onMain {
+            CallList.getInstance().incomingCall.answer(VideoProfile.STATE_BIDIRECTIONAL)
+        }
         val call = InCall.waitForState(DialerCallState.ACTIVE)
         CallTests.waitFor { if (InCall.onMain { call.isVideoCall }) true else null }
 
@@ -127,13 +139,18 @@ class VideoCallTest {
         val call = InCall.waitForState(DialerCallState.ACTIVE)
         waitForVideoState(far, VideoProfile.STATE_BIDIRECTIONAL)
 
-        val button = deviceRule.device.wait(
-            Until.findObject(By.desc(context.getString(R.string.incall_content_description_downgrade_call))),
-            CallTests.TIMEOUT_MILLIS,
-        )
+        val button =
+            deviceRule.device.wait(
+                Until.findObject(
+                    By.desc(context.getString(R.string.incall_content_description_downgrade_call))
+                ),
+                CallTests.TIMEOUT_MILLIS,
+            )
         checkNotNull(button) { "no audio only button" }.click()
 
-        CallTests.waitFor { far.video.pendingRequest?.takeIf { it.videoState == VideoProfile.STATE_AUDIO_ONLY } }
+        CallTests.waitFor {
+            far.video.pendingRequest?.takeIf { it.videoState == VideoProfile.STATE_AUDIO_ONLY }
+        }
         far.video.acceptRequest()
         waitForVideoState(far, VideoProfile.STATE_AUDIO_ONLY)
         CallTests.waitFor { if (InCall.onMain { !call.isVideoCall }) true else null }
@@ -143,25 +160,34 @@ class VideoCallTest {
     @Test
     fun turnCameraOffAndOnAgain() {
         val far = ringWithVideo()
-        InCall.onMain { CallList.getInstance().incomingCall.answer(VideoProfile.STATE_BIDIRECTIONAL) }
+        InCall.onMain {
+            CallList.getInstance().incomingCall.answer(VideoProfile.STATE_BIDIRECTIONAL)
+        }
         val call = InCall.waitForState(DialerCallState.ACTIVE)
         waitForVideoState(far, VideoProfile.STATE_BIDIRECTIONAL)
 
         InCall.onMain { call.videoTech.stopTransmission() }
-        CallTests.waitFor { far.video.pendingRequest?.takeIf { it.videoState == VideoProfile.STATE_RX_ENABLED } }
+        CallTests.waitFor {
+            far.video.pendingRequest?.takeIf { it.videoState == VideoProfile.STATE_RX_ENABLED }
+        }
         far.video.acceptRequest()
         waitForVideoState(far, VideoProfile.STATE_RX_ENABLED)
         CallTests.waitFor { if (InCall.onMain { !call.videoTech.isTransmitting }) true else null }
 
         InCall.onMain { call.videoTech.resumeTransmission(context) }
-        CallTests.waitFor { far.video.pendingRequest?.takeIf { it.videoState == VideoProfile.STATE_BIDIRECTIONAL } }
+        CallTests.waitFor {
+            far.video.pendingRequest?.takeIf { it.videoState == VideoProfile.STATE_BIDIRECTIONAL }
+        }
         far.video.acceptRequest()
         waitForVideoState(far, VideoProfile.STATE_BIDIRECTIONAL)
         CallTests.waitFor { if (InCall.onMain { call.videoTech.isTransmitting }) true else null }
     }
 
     private fun ringWithVideo(): FakeConnection {
-        FakeCarrier.ring(context, FakeCallSpec(CallTests.freshNumber(), videoState = VideoProfile.STATE_BIDIRECTIONAL))
+        FakeCarrier.ring(
+            context,
+            FakeCallSpec(CallTests.freshNumber(), videoState = VideoProfile.STATE_BIDIRECTIONAL),
+        )
         return CallTests.waitForRinging()
     }
 
@@ -177,5 +203,7 @@ class VideoCallTest {
         CallTests.waitFor { if (far.videoState == videoState) true else null }
 
     private fun waitForSessionState(call: DialerCall, state: Int) =
-        CallTests.waitFor { if (InCall.onMain { call.videoTech.sessionModificationState } == state) true else null }
+        CallTests.waitFor {
+            if (InCall.onMain { call.videoTech.sessionModificationState } == state) true else null
+        }
 }

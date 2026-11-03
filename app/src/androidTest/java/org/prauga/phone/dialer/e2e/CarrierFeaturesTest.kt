@@ -21,10 +21,12 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiObject2
 import androidx.test.uiautomator.Until
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+import java.util.regex.Pattern
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Rule
-import java.util.regex.Pattern
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
@@ -40,8 +42,6 @@ import org.prauga.phone.incallui.NumberPromptDialogFragment
 import org.prauga.phone.incallui.call.CallList
 import org.prauga.phone.incallui.call.TelecomAdapter
 import org.prauga.phone.incallui.call.state.DialerCallState
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
 
 /** Calling features the network offers through Telecom: decline reasons, forwarding, transfer, … */
 @RunWith(AndroidJUnit4::class)
@@ -51,7 +51,8 @@ class CarrierFeaturesTest {
     private val deviceRule = DeviceRule()
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
+    val rules: RuleChain =
+        RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
 
     @Test
     fun decliningTellsTheNetworkTheCallWasDeclined() {
@@ -75,29 +76,57 @@ class CarrierFeaturesTest {
 
     @Test
     fun ringingCallIsForwardedToTheNumberEntered() {
-        FakeCarrier.ring(context, FakeCallSpec(CallTests.freshNumber(), capabilities = Connection.CAPABILITY_SUPPORT_DEFLECT))
+        FakeCarrier.ring(
+            context,
+            FakeCallSpec(
+                CallTests.freshNumber(),
+                capabilities = Connection.CAPABILITY_SUPPORT_DEFLECT,
+            ),
+        )
         val far = CallTests.waitForRinging()
         val call = InCall.waitForState(DialerCallState.INCOMING)
-        check(InCall.onMain { call.can(Call.Details.CAPABILITY_SUPPORT_DEFLECT) }) { "call can't be forwarded" }
+        check(InCall.onMain { call.can(Call.Details.CAPABILITY_SUPPORT_DEFLECT) }) {
+            "call can't be forwarded"
+        }
         InCall.onMain { InCallPresenter.getInstance().showInCall(false, false) }
-        val activity = CallTests.waitFor { InCall.onMain { InCallPresenter.getInstance().activity } }
+        val activity =
+            CallTests.waitFor { InCall.onMain { InCallPresenter.getInstance().activity } }
 
-        InCall.onMain { NumberPromptDialogFragment.show(activity, NumberPromptDialogFragment.Action.FORWARD, call.id) }
+        InCall.onMain {
+            NumberPromptDialogFragment.show(
+                activity,
+                NumberPromptDialogFragment.Action.FORWARD,
+                call.id,
+            )
+        }
         enterNumberAndConfirm(context.getString(R.string.number_prompt_forward_confirm), TARGET)
 
-        assertEquals(TARGET, CallTests.waitFor { far.deflectedTo }.schemeSpecificPart.filter { it.isDigit() || it == '+' })
+        assertEquals(
+            TARGET,
+            CallTests.waitFor { far.deflectedTo }
+                .schemeSpecificPart
+                .filter { it.isDigit() || it == '+' },
+        )
     }
 
     @Test
     fun transferButtonSendsTheCallToTheNumberEntered() = withTransferAllowed {
-        val far = connectedCall(FakeCallSpec(CallTests.freshNumber(), capabilities = Connection.CAPABILITY_TRANSFER))
+        val far =
+            connectedCall(
+                FakeCallSpec(CallTests.freshNumber(), capabilities = Connection.CAPABILITY_TRANSFER)
+            )
         InCall.onMain { InCallPresenter.getInstance().showInCall(false, false) }
 
         showsText(context.getString(R.string.incall_label_transfer)).click()
         showsText(context.getString(R.string.number_prompt_transfer_title))
         enterNumberAndConfirm(context.getString(R.string.number_prompt_transfer_confirm), TARGET)
 
-        assertEquals(TARGET, CallTests.waitFor { far.transferredToNumber }.schemeSpecificPart.filter { it.isDigit() || it == '+' })
+        assertEquals(
+            TARGET,
+            CallTests.waitFor { far.transferredToNumber }
+                .schemeSpecificPart
+                .filter { it.isDigit() || it == '+' },
+        )
         InCall.waitForNoCalls()
     }
 
@@ -107,13 +136,22 @@ class CarrierFeaturesTest {
         FakeCarrier.ring(context, FakeCallSpec(CallTests.freshNumber()))
         InCall.waitForState(DialerCallState.INCOMING)
         InCall.onMain { checkNotNull(CallList.getInstance().incomingCall).answer() }
-        val active = CallTests.waitFor { InCall.onMain { CallList.getInstance().activeCall?.takeIf { CallList.getInstance().backgroundCall != null } } }
+        val active =
+            CallTests.waitFor {
+                InCall.onMain {
+                    CallList.getInstance().activeCall?.takeIf {
+                        CallList.getInstance().backgroundCall != null
+                    }
+                }
+            }
         InCall.onMain { TelecomAdapter.getInstance().merge(active.id) }
         val conference = CallTests.waitFor { first.conference as? FakeConference }
         conference.acceptParticipants()
         CallTests.waitFor {
             InCall.onMain {
-                CallList.getInstance().activeCall?.takeIf { it.isConferenceCall && it.can(Call.Details.CAPABILITY_ADD_PARTICIPANT) }
+                CallList.getInstance().activeCall?.takeIf {
+                    it.isConferenceCall && it.can(Call.Details.CAPABILITY_ADD_PARTICIPANT)
+                }
             }
         }
         InCall.onMain { InCallPresenter.getInstance().showInCall(false, false) }
@@ -135,37 +173,51 @@ class CarrierFeaturesTest {
         showsText(MESSAGE)
 
         far.clearDiagnosticMessage(7)
-        check(deviceRule.device.wait(Until.gone(By.text(MESSAGE)), CallTests.TIMEOUT_MILLIS)) { "message still shown" }
+        check(deviceRule.device.wait(Until.gone(By.text(MESSAGE)), CallTests.TIMEOUT_MILLIS)) {
+            "message still shown"
+        }
     }
 
     @Test
     fun noNetworkOffersSatelliteMessaging() {
         val opened = CountDownLatch(1)
-        val receiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) = opened.countDown()
-        }
-        context.registerReceiver(receiver, IntentFilter(ACTION_SATELLITE_APP), Context.RECEIVER_NOT_EXPORTED)
+        val receiver =
+            object : BroadcastReceiver() {
+                override fun onReceive(context: Context, intent: Intent) = opened.countDown()
+            }
+        context.registerReceiver(
+            receiver,
+            IntentFilter(ACTION_SATELLITE_APP),
+            Context.RECEIVER_NOT_EXPORTED,
+        )
         try {
             connectedCall(FakeCallSpec(CallTests.freshNumber()))
             val call = InCall.waitForState(DialerCallState.ACTIVE)
-            val app = PendingIntent.getBroadcast(
-                context,
-                0,
-                Intent(ACTION_SATELLITE_APP).setPackage(context.packageName),
-                PendingIntent.FLAG_IMMUTABLE,
-            )
+            val app =
+                PendingIntent.getBroadcast(
+                    context,
+                    0,
+                    Intent(ACTION_SATELLITE_APP).setPackage(context.packageName),
+                    PendingIntent.FLAG_IMMUTABLE,
+                )
 
             // Telecom passes this event on only for emergency calls, and faking one isn't safe on a
             // real phone: hand it to the app the way the call does.
-            val extras = Bundle().apply {
-                putParcelable(TelephonyManager.EXTRA_EMERGENCY_CALL_TO_SATELLITE_LAUNCH_INTENT, app)
-                putInt(TelephonyManager.EXTRA_EMERGENCY_CALL_TO_SATELLITE_HANDOVER_TYPE, 1)
-            }
+            val extras =
+                Bundle().apply {
+                    putParcelable(
+                        TelephonyManager.EXTRA_EMERGENCY_CALL_TO_SATELLITE_LAUNCH_INTENT,
+                        app,
+                    )
+                    putInt(TelephonyManager.EXTRA_EMERGENCY_CALL_TO_SATELLITE_HANDOVER_TYPE, 1)
+                }
             InCall.onMain { EmergencySatellite.onEvent(call.id, extras) }
 
             showsText(context.getString(R.string.emergency_satellite_title))
             button(context.getString(R.string.emergency_satellite_open_sos)).click()
-            check(opened.await(CallTests.TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)) { "satellite app not opened" }
+            check(opened.await(CallTests.TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)) {
+                "satellite app not opened"
+            }
         } finally {
             context.unregisterReceiver(receiver)
         }
@@ -184,12 +236,19 @@ class CarrierFeaturesTest {
 
     @Test
     fun callUsingBackupCallingIsLabelled() {
-        connectedCall(FakeCallSpec(CallTests.freshNumber(), properties = Connection.PROPERTY_CROSS_SIM))
+        connectedCall(
+            FakeCallSpec(CallTests.freshNumber(), properties = Connection.PROPERTY_CROSS_SIM)
+        )
         InCall.onMain { InCallPresenter.getInstance().showInCall(false, false) }
 
         // After the SIM's name when the call screen shows it, as it does for the fake carrier.
         val label = context.getString(R.string.incall_backup_calling)
-        checkNotNull(deviceRule.device.wait(Until.findObject(By.textContains(label)), CallTests.TIMEOUT_MILLIS)) {
+        checkNotNull(
+            deviceRule.device.wait(
+                Until.findObject(By.textContains(label)),
+                CallTests.TIMEOUT_MILLIS,
+            )
+        ) {
             "\"$label\" not shown"
         }
     }
@@ -199,14 +258,23 @@ class CarrierFeaturesTest {
         val extras = Bundle().apply { putBoolean(Call.EXTRA_SILENT_RINGING_REQUESTED, true) }
         FakeCarrier.ring(context, FakeCallSpec(CallTests.freshNumber(), extras = extras))
         CallTests.waitForRinging()
-        CallTests.waitFor { InCall.onMain { CallList.getInstance().incomingCall?.takeIf { it.isSilentRinging } } }
+        CallTests.waitFor {
+            InCall.onMain { CallList.getInstance().incomingCall?.takeIf { it.isSilentRinging } }
+        }
 
         val notifications = context.getSystemService(NotificationManager::class.java)
-        val notification = CallTests.waitFor {
-            notifications.activeNotifications.map { it.notification }.firstOrNull { it.channelId == NotificationChannelId.ONGOING_CALL }
-        }
+        val notification =
+            CallTests.waitFor {
+                notifications.activeNotifications
+                    .map { it.notification }
+                    .firstOrNull { it.channelId == NotificationChannelId.ONGOING_CALL }
+            }
         assertNull("silent call opens the call screen", notification.fullScreenIntent)
-        check(notifications.activeNotifications.none { it.notification.channelId == NotificationChannelId.INCOMING_CALL }) {
+        check(
+            notifications.activeNotifications.none {
+                it.notification.channelId == NotificationChannelId.INCOMING_CALL
+            }
+        ) {
             "silent call posted as a ringing call"
         }
     }
@@ -221,9 +289,15 @@ class CarrierFeaturesTest {
     }
 
     private fun enterNumberAndConfirm(confirm: String, number: String) {
-        val field = checkNotNull(
-            deviceRule.device.wait(Until.findObject(By.res(context.packageName, "number_prompt_field")), CallTests.TIMEOUT_MILLIS),
-        ) { "no number field" }
+        val field =
+            checkNotNull(
+                deviceRule.device.wait(
+                    Until.findObject(By.res(context.packageName, "number_prompt_field")),
+                    CallTests.TIMEOUT_MILLIS,
+                )
+            ) {
+                "no number field"
+            }
         field.text = number
         button(confirm).click()
     }
@@ -232,14 +306,24 @@ class CarrierFeaturesTest {
     private fun button(label: String): UiObject2 =
         checkNotNull(
             deviceRule.device.wait(
-                Until.findObject(By.text(Pattern.compile(Pattern.quote(label), Pattern.CASE_INSENSITIVE))),
+                Until.findObject(
+                    By.text(Pattern.compile(Pattern.quote(label), Pattern.CASE_INSENSITIVE))
+                ),
                 CallTests.TIMEOUT_MILLIS,
-            ),
-        ) { "no \"$label\" button" }
+            )
+        ) {
+            "no \"$label\" button"
+        }
 
     private fun showsText(text: String): UiObject2 =
-        checkNotNull(deviceRule.device.wait(Until.findObject(By.text(text)), CallTests.TIMEOUT_MILLIS)) {
-            val shown = deviceRule.device.findObjects(By.pkg(context.packageName)).mapNotNull { it.text }.distinct()
+        checkNotNull(
+            deviceRule.device.wait(Until.findObject(By.text(text)), CallTests.TIMEOUT_MILLIS)
+        ) {
+            val shown =
+                deviceRule.device
+                    .findObjects(By.pkg(context.packageName))
+                    .mapNotNull { it.text }
+                    .distinct()
             "\"$text\" not shown; the app shows: $shown"
         }
 

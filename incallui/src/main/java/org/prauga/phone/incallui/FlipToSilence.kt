@@ -29,23 +29,35 @@ class FlipDetector {
     private var sawFaceUp = false
     private var fired = false
 
-    /** Feeds one reading ([x], [y], [z] in m/s², [timeMillis]); true once, when the flip is done. */
+    /**
+     * Feeds one reading ([x], [y], [z] in m/s², [timeMillis]); true once, when the flip is done.
+     */
     fun onReading(x: Float, y: Float, z: Float, timeMillis: Long): Boolean {
         if (fired) return false
         val rawHorizontal = x * x + y * y
         val previousHorizontal = horizontal
-        horizontal = if (horizontal.isNaN()) rawHorizontal else SMOOTHING * horizontal + (1 - SMOOTHING) * rawHorizontal
+        horizontal =
+            if (horizontal.isNaN()) rawHorizontal
+            else SMOOTHING * horizontal + (1 - SMOOTHING) * rawHorizontal
         vertical = if (vertical.isNaN()) z else SMOOTHING * vertical + (1 - SMOOTHING) * z
 
-        val still = !previousHorizontal.isNaN() && kotlin.math.abs(horizontal - previousHorizontal) <= STILL_TOLERANCE
+        val still =
+            !previousHorizontal.isNaN() &&
+                kotlin.math.abs(horizontal - previousHorizontal) <= STILL_TOLERANCE
         stillSince = if (still) (if (stillSince < 0) timeMillis else stillSince) else -1
         val heldStill = stillSince >= 0 && timeMillis - stillSince > HOLD_MILLIS
 
-        faceUpSince = if (vertical >= FACE_UP_Z) (if (faceUpSince < 0) timeMillis else faceUpSince) else -1
-        if (heldStill && faceUpSince >= 0 && timeMillis - faceUpSince > HOLD_MILLIS) sawFaceUp = true
+        faceUpSince =
+            if (vertical >= FACE_UP_Z) (if (faceUpSince < 0) timeMillis else faceUpSince) else -1
+        if (heldStill && faceUpSince >= 0 && timeMillis - faceUpSince > HOLD_MILLIS)
+            sawFaceUp = true
 
-        faceDownSince = if (vertical <= FACE_DOWN_Z) (if (faceDownSince < 0) timeMillis else faceDownSince) else -1
-        if (sawFaceUp && heldStill && faceDownSince >= 0 && timeMillis - faceDownSince > HOLD_MILLIS) {
+        faceDownSince =
+            if (vertical <= FACE_DOWN_Z) (if (faceDownSince < 0) timeMillis else faceDownSince)
+            else -1
+        if (
+            sawFaceUp && heldStill && faceDownSince >= 0 && timeMillis - faceDownSince > HOLD_MILLIS
+        ) {
             fired = true
             return true
         }
@@ -65,7 +77,8 @@ class FlipDetector {
  * Silences the ringer when the user turns the ringing phone face down, if they turned Flip To
  * Silence on. Listens to the accelerometer only while a call rings.
  */
-class FlipToSilence(private val context: Context, private val onSilenced: Runnable) : SensorEventListener {
+class FlipToSilence(private val context: Context, private val onSilenced: Runnable) :
+    SensorEventListener {
 
     private val sensors = context.getSystemService(SensorManager::class.java)
     private var detector: FlipDetector? = null
@@ -88,8 +101,18 @@ class FlipToSilence(private val context: Context, private val onSilenced: Runnab
 
     override fun onSensorChanged(event: SensorEvent) {
         val values = event.values
-        if (detector?.onReading(values[0], values[1], values[2], event.timestamp / NANOS_PER_MILLI) == true) {
-            LogUtil.i("FlipToSilence.onSensorChanged", "phone turned face down, silencing the ringer")
+        if (
+            detector?.onReading(
+                values[0],
+                values[1],
+                values[2],
+                event.timestamp / NANOS_PER_MILLI,
+            ) == true
+        ) {
+            LogUtil.i(
+                "FlipToSilence.onSensorChanged",
+                "phone turned face down, silencing the ringer",
+            )
             TelecomUtil.silenceRinger(context)
             onRingingStopped()
             onSilenced.run()

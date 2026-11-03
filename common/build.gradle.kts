@@ -10,9 +10,7 @@ plugins {
 
 android {
     namespace = "org.prauga.phone.common"
-    compileSdk {
-        version = release(37) { minorApiLevel = 1 }
-    }
+    compileSdk { version = release(37) { minorApiLevel = 1 } }
     // Resources keep the names the app always gave them.
     resourcePrefix = null
 

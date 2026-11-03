@@ -14,9 +14,8 @@ import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.incallui.call.CallList
 
 /**
- * Screens incoming calls before they ring, following the user's choice for each
- * [CallerCategory]. Calls only ring differently when the user picked another action; any failure
- * lets the call ring.
+ * Screens incoming calls before they ring, following the user's choice for each [CallerCategory].
+ * Calls only ring differently when the user picked another action; any failure lets the call ring.
  */
 class PhoneCallScreeningService : CallScreeningService() {
 
@@ -25,20 +24,27 @@ class PhoneCallScreeningService : CallScreeningService() {
     override fun onScreenCall(callDetails: Call.Details) {
         if (callDetails.callDirection != Call.Details.DIRECTION_INCOMING) return
         val settings = ScreeningSettings.from(this)
-        if (!isDefaultDialer() || CallerCategory.entries.all { settings.actionFor(it) == CategoryAction.RING }) {
+        if (
+            !isDefaultDialer() ||
+                CallerCategory.entries.all { settings.actionFor(it) == CategoryAction.RING }
+        ) {
             respondToCall(callDetails, responseFor(CategoryAction.RING))
             return
         }
         val provider = IncomingCallFactsProvider(applicationContext)
         val hasActiveCall = CallList.getInstance().activeCall != null
         executor.execute {
-            val decision = runCatching {
-                ScreeningPolicy.decide(provider.factsFor(callDetails, hasActiveCall), settings::actionFor)
-            }
-                .getOrElse {
-                    LogUtil.e(TAG, "screening failed, letting the call ring", it)
-                    ScreeningDecision(CategoryAction.RING, ScreeningReason.None)
-                }
+            val decision =
+                runCatching {
+                        ScreeningPolicy.decide(
+                            provider.factsFor(callDetails, hasActiveCall),
+                            settings::actionFor,
+                        )
+                    }
+                    .getOrElse {
+                        LogUtil.e(TAG, "screening failed, letting the call ring", it)
+                        ScreeningDecision(CategoryAction.RING, ScreeningReason.None)
+                    }
             LogUtil.i(TAG, "action: %s, reason: %s", decision.action, decision.reason)
             respondToCall(callDetails, responseFor(decision.action))
         }
@@ -52,15 +58,17 @@ class PhoneCallScreeningService : CallScreeningService() {
         super.onDestroy()
     }
 
-    private fun responseFor(action: CategoryAction): CallResponse = when (action) {
-        CategoryAction.RING -> CallResponse.Builder().build()
-        CategoryAction.SILENCE -> CallResponse.Builder().setSilenceCall(true).build()
-        CategoryAction.DECLINE -> CallResponse.Builder()
-            .setDisallowCall(true)
-            .setRejectCall(true)
-            .setSkipNotification(true)
-            .build()
-    }
+    private fun responseFor(action: CategoryAction): CallResponse =
+        when (action) {
+            CategoryAction.RING -> CallResponse.Builder().build()
+            CategoryAction.SILENCE -> CallResponse.Builder().setSilenceCall(true).build()
+            CategoryAction.DECLINE ->
+                CallResponse.Builder()
+                    .setDisallowCall(true)
+                    .setRejectCall(true)
+                    .setSkipNotification(true)
+                    .build()
+        }
 
     private companion object {
         const val TAG = "PhoneCallScreeningService"

@@ -30,7 +30,8 @@ class OutgoingCallTest {
     private val deviceRule = DeviceRule()
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
+    val rules: RuleChain =
+        RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
 
     @Test
     fun callPlacedRightAfterAnotherEndsGetsItsCallScreen() {
@@ -61,14 +62,20 @@ class OutgoingCallTest {
         InCall.waitForState(DialerCallState.DIALING)
         assertNotNull(
             "call screen did not show the number",
-            deviceRule.device.wait(Until.findObject(By.textContains(number.takeLast(4))), CallTests.TIMEOUT_MILLIS),
+            deviceRule.device.wait(
+                Until.findObject(By.textContains(number.takeLast(4))),
+                CallTests.TIMEOUT_MILLIS,
+            ),
         )
         CallTests.waitFor { FakeCarrier.connections.firstOrNull() }.answerFromFarEnd()
         val call = InCall.waitForState(DialerCallState.ACTIVE)
         InCall.onMain { call.disconnect() }
 
         InCall.waitForNoCalls()
-        assertEquals(CallLog.Calls.OUTGOING_TYPE, CallTests.waitFor { CallTests.latestCall(context, number, since) }.type)
+        assertEquals(
+            CallLog.Calls.OUTGOING_TYPE,
+            CallTests.waitFor { CallTests.latestCall(context, number, since) }.type,
+        )
     }
 
     @Test
@@ -80,7 +87,9 @@ class OutgoingCallTest {
 
         val notifications = context.getSystemService(NotificationManager::class.java)
         CallTests.waitFor {
-            notifications.activeNotifications.firstOrNull { it.notification.channelId == NotificationChannelId.ONGOING_CALL }
+            notifications.activeNotifications.firstOrNull {
+                it.notification.channelId == NotificationChannelId.ONGOING_CALL
+            }
         }
     }
 
@@ -94,11 +103,16 @@ class OutgoingCallTest {
 
         assertNotNull(
             "no prompt to send the wait digits",
-            deviceRule.device.wait(Until.findObject(By.textContains(POST_DIAL_DIGITS)), CallTests.TIMEOUT_MILLIS),
+            deviceRule.device.wait(
+                Until.findObject(By.textContains(POST_DIAL_DIGITS)),
+                CallTests.TIMEOUT_MILLIS,
+            ),
         )
         InCall.onMain { TelecomAdapter.getInstance().postDialContinue(call.id, true) }
 
-        CallTests.waitFor { if (far.playedTones.joinToString("") == POST_DIAL_DIGITS) true else null }
+        CallTests.waitFor {
+            if (far.playedTones.joinToString("") == POST_DIAL_DIGITS) true else null
+        }
     }
 
     @Test
@@ -108,10 +122,14 @@ class OutgoingCallTest {
 
         InCall.place(context, number)
         InCall.waitForState(DialerCallState.DIALING)
-        CallTests.waitFor { FakeCarrier.connections.firstOrNull() }.hangUpFromFarEnd(DisconnectCause.BUSY)
+        CallTests.waitFor { FakeCarrier.connections.firstOrNull() }
+            .hangUpFromFarEnd(DisconnectCause.BUSY)
 
         InCall.waitForNoCalls()
-        assertEquals(CallLog.Calls.OUTGOING_TYPE, CallTests.waitFor { CallTests.latestCall(context, number, since) }.type)
+        assertEquals(
+            CallLog.Calls.OUTGOING_TYPE,
+            CallTests.waitFor { CallTests.latestCall(context, number, since) }.type,
+        )
     }
 
     private companion object {

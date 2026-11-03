@@ -16,18 +16,16 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
-}
+
+plugins { id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0" }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
         // PvotLib, published with `./gradlew publishToMavenLocal` from its own checkout.
-        mavenLocal {
-            content { includeGroup("com.prauga.pvot") }
-        }
+        mavenLocal { content { includeGroup("com.prauga.pvot") } }
     }
 }
 
@@ -36,12 +34,21 @@ dependencyResolutionManagement {
 providers.gradleProperty("pvot.localPath").orNull?.let { includeBuild(it) }
 
 rootProject.name = "Phone"
+
 include(":app")
+
 include(":common")
+
 include(":telephony")
+
 include(":ui")
+
 include(":contacts")
+
 include(":data")
+
 include(":voicemail")
+
 include(":calls")
+
 include(":incallui")

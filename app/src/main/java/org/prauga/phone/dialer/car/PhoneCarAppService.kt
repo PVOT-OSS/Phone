@@ -35,7 +35,9 @@ import androidx.lifecycle.LifecycleEventObserver
 import java.util.concurrent.Executors
 import org.prauga.phone.dialer.R
 
-/** The app on a car's screen through Android Auto: favourites, recent calls and contacts to call. */
+/**
+ * The app on a car's screen through Android Auto: favourites, recent calls and contacts to call.
+ */
 class PhoneCarAppService : CarAppService() {
 
     override fun createHostValidator(): HostValidator =
@@ -47,9 +49,10 @@ class PhoneCarAppService : CarAppService() {
                 .build()
         }
 
-    override fun onCreateSession(): Session = object : Session() {
-        override fun onCreateScreen(intent: Intent): Screen = PhoneCarScreen(carContext)
-    }
+    override fun onCreateSession(): Session =
+        object : Session() {
+            override fun onCreateScreen(intent: Intent): Screen = PhoneCarScreen(carContext)
+        }
 }
 
 /** Someone to call from the car. */
@@ -67,76 +70,90 @@ private class PhoneCarScreen(carContext: CarContext) : Screen(carContext) {
 
     init {
         lifecycle.addObserver(
-            LifecycleEventObserver { _, event -> if (event == Lifecycle.Event.ON_DESTROY) loader.shutdownNow() },
+            LifecycleEventObserver { _, event ->
+                if (event == Lifecycle.Event.ON_DESTROY) loader.shutdownNow()
+            }
         )
     }
 
     override fun onGetTemplate(): Template {
         val list = entries
         if (list == null && loadingTab != activeTab) load(activeTab)
-        val content = ListTemplate.Builder().apply {
-            if (list == null) {
-                setLoading(true)
-            } else {
-                setSingleList(
-                    ItemList.Builder().apply {
-                        setNoItemsMessage(carContext.getString(R.string.car_no_entries))
-                        list.take(MAX_ROWS).forEach { entry ->
-                            addItem(
-                                Row.Builder()
-                                    .setTitle(entry.title)
-                                    .apply { entry.detail?.let(::addText) }
-                                    .setOnClickListener { call(entry.number) }
-                                    .build(),
-                            )
-                        }
-                    }.build(),
-                )
-            }
-        }.build()
+        val content =
+            ListTemplate.Builder()
+                .apply {
+                    if (list == null) {
+                        setLoading(true)
+                    } else {
+                        setSingleList(
+                            ItemList.Builder()
+                                .apply {
+                                    setNoItemsMessage(carContext.getString(R.string.car_no_entries))
+                                    list.take(MAX_ROWS).forEach { entry ->
+                                        addItem(
+                                            Row.Builder()
+                                                .setTitle(entry.title)
+                                                .apply { entry.detail?.let(::addText) }
+                                                .setOnClickListener { call(entry.number) }
+                                                .build()
+                                        )
+                                    }
+                                }
+                                .build()
+                        )
+                    }
+                }
+                .build()
 
         // Tabs need a newer car host; older ones get the recent calls on their own.
         if (carContext.carAppApiLevel < TABS_API_LEVEL) {
-            return ListTemplate.Builder().apply {
-                if (list == null) setLoading(true) else setSingleList(content.singleList!!)
-                setTitle(carContext.getString(R.string.tab_title_call_history))
-                setHeaderAction(Action.APP_ICON)
-            }.build()
+            return ListTemplate.Builder()
+                .apply {
+                    if (list == null) setLoading(true) else setSingleList(content.singleList!!)
+                    setTitle(carContext.getString(R.string.tab_title_call_history))
+                    setHeaderAction(Action.APP_ICON)
+                }
+                .build()
         }
         return TabTemplate.Builder(
-            object : TabTemplate.TabCallback {
-                override fun onTabSelected(tabContentId: String) {
-                    activeTab = tabContentId
-                    entries = null
-                    invalidate()
+                object : TabTemplate.TabCallback {
+                    override fun onTabSelected(tabContentId: String) {
+                        activeTab = tabContentId
+                        entries = null
+                        invalidate()
+                    }
                 }
-            },
-        ).apply {
-            setHeaderAction(Action.APP_ICON)
-            addTab(tab(TAB_FAVORITES, R.string.quick_dial_header, R.drawable.ic_star))
-            addTab(tab(TAB_RECENTS, R.string.tab_title_call_history, R.drawable.ic_history))
-            addTab(tab(TAB_CONTACTS, R.string.tab_all_contacts, R.drawable.ic_users))
-            setActiveTabContentId(activeTab)
-            setTabContents(TabContents.Builder(content).build())
-        }.build()
+            )
+            .apply {
+                setHeaderAction(Action.APP_ICON)
+                addTab(tab(TAB_FAVORITES, R.string.quick_dial_header, R.drawable.ic_star))
+                addTab(tab(TAB_RECENTS, R.string.tab_title_call_history, R.drawable.ic_history))
+                addTab(tab(TAB_CONTACTS, R.string.tab_all_contacts, R.drawable.ic_users))
+                setActiveTabContentId(activeTab)
+                setTabContents(TabContents.Builder(content).build())
+            }
+            .build()
     }
 
-    private fun tab(id: String, title: Int, icon: Int): Tab = Tab.Builder()
-        .setContentId(id)
-        .setTitle(carContext.getString(title))
-        .setIcon(CarIcon.Builder(IconCompat.createWithResource(carContext, icon)).build())
-        .build()
+    private fun tab(id: String, title: Int, icon: Int): Tab =
+        Tab.Builder()
+            .setContentId(id)
+            .setTitle(carContext.getString(title))
+            .setIcon(CarIcon.Builder(IconCompat.createWithResource(carContext, icon)).build())
+            .build()
 
     private fun load(tab: String) {
         loadingTab = tab
         loader.execute {
-            val loaded = runCatching {
-                when (tab) {
-                    TAB_FAVORITES -> CarCallLists.contacts(carContext, starredOnly = true)
-                    TAB_CONTACTS -> CarCallLists.contacts(carContext, starredOnly = false)
-                    else -> CarCallLists.recents(carContext)
-                }
-            }.getOrDefault(emptyList())
+            val loaded =
+                runCatching {
+                        when (tab) {
+                            TAB_FAVORITES -> CarCallLists.contacts(carContext, starredOnly = true)
+                            TAB_CONTACTS -> CarCallLists.contacts(carContext, starredOnly = false)
+                            else -> CarCallLists.recents(carContext)
+                        }
+                    }
+                    .getOrDefault(emptyList())
             carContext.mainExecutor.execute {
                 if (loadingTab == tab) loadingTab = null
                 if (tab == activeTab) {
@@ -149,7 +166,8 @@ private class PhoneCarScreen(carContext: CarContext) : Screen(carContext) {
 
     private fun call(number: String) {
         try {
-            carContext.getSystemService(TelecomManager::class.java)
+            carContext
+                .getSystemService(TelecomManager::class.java)
                 .placeCall(Uri.fromParts(PhoneAccount.SCHEME_TEL, number, null), null)
         } catch (e: SecurityException) {
             CarToast.makeText(carContext, R.string.car_cannot_call, CarToast.LENGTH_LONG).show()
@@ -173,39 +191,51 @@ internal object CarCallLists {
     fun recents(context: Context): List<CarEntry> {
         val seen = HashSet<String>()
         val out = ArrayList<CarEntry>()
-        context.contentResolver.query(
-            Calls.CONTENT_URI,
-            arrayOf(Calls.NUMBER, Calls.CACHED_NAME, Calls.CACHED_NORMALIZED_NUMBER),
-            "${Calls.NUMBER} IS NOT NULL AND ${Calls.NUMBER} != '' AND ${Calls.TYPE} != ${Calls.VOICEMAIL_TYPE}",
-            null,
-            "${Calls.DATE} DESC",
-        )?.use { c ->
-            while (c.moveToNext() && out.size < MAX_ROWS) {
-                val number = c.getString(0) ?: continue
-                if (!seen.add(c.getString(2)?.takeIf { it.isNotEmpty() } ?: number)) continue
-                val formatted = PhoneNumberUtils.formatNumber(number, null) ?: number
-                val name = c.getString(1)?.takeIf { it.isNotBlank() }
-                out += CarEntry(name ?: formatted, if (name != null) formatted else null, number)
+        context.contentResolver
+            .query(
+                Calls.CONTENT_URI,
+                arrayOf(Calls.NUMBER, Calls.CACHED_NAME, Calls.CACHED_NORMALIZED_NUMBER),
+                "${Calls.NUMBER} IS NOT NULL AND ${Calls.NUMBER} != '' AND ${Calls.TYPE} != ${Calls.VOICEMAIL_TYPE}",
+                null,
+                "${Calls.DATE} DESC",
+            )
+            ?.use { c ->
+                while (c.moveToNext() && out.size < MAX_ROWS) {
+                    val number = c.getString(0) ?: continue
+                    if (!seen.add(c.getString(2)?.takeIf { it.isNotEmpty() } ?: number)) continue
+                    val formatted = PhoneNumberUtils.formatNumber(number, null) ?: number
+                    val name = c.getString(1)?.takeIf { it.isNotBlank() }
+                    out +=
+                        CarEntry(name ?: formatted, if (name != null) formatted else null, number)
+                }
             }
-        }
         return out
     }
 
     fun contacts(context: Context, starredOnly: Boolean): List<CarEntry> {
         val out = ArrayList<CarEntry>()
-        context.contentResolver.query(
-            Phone.CONTENT_URI,
-            arrayOf(Phone.DISPLAY_NAME_PRIMARY, Phone.NUMBER, Phone.TYPE, Phone.LABEL),
-            if (starredOnly) "${Phone.STARRED} = 1" else null,
-            null,
-            "${Phone.DISPLAY_NAME_PRIMARY} COLLATE LOCALIZED ASC",
-        )?.use { c ->
-            while (c.moveToNext() && out.size < MAX_ROWS) {
-                val number = c.getString(1) ?: continue
-                val label = Phone.getTypeLabel(context.resources, c.getInt(2), c.getString(3)).toString()
-                out += CarEntry(c.getString(0) ?: number, "$label · ${PhoneNumberUtils.formatNumber(number, null) ?: number}", number)
+        context.contentResolver
+            .query(
+                Phone.CONTENT_URI,
+                arrayOf(Phone.DISPLAY_NAME_PRIMARY, Phone.NUMBER, Phone.TYPE, Phone.LABEL),
+                if (starredOnly) "${Phone.STARRED} = 1" else null,
+                null,
+                "${Phone.DISPLAY_NAME_PRIMARY} COLLATE LOCALIZED ASC",
+            )
+            ?.use { c ->
+                while (c.moveToNext() && out.size < MAX_ROWS) {
+                    val number = c.getString(1) ?: continue
+                    val label =
+                        Phone.getTypeLabel(context.resources, c.getInt(2), c.getString(3))
+                            .toString()
+                    out +=
+                        CarEntry(
+                            c.getString(0) ?: number,
+                            "$label · ${PhoneNumberUtils.formatNumber(number, null) ?: number}",
+                            number,
+                        )
+                }
             }
-        }
         return out
     }
 }

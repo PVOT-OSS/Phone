@@ -24,50 +24,66 @@ class CallStatusTest {
 
     @Test
     fun ringingSpamWinsOverEverything() =
-        assertEquals(CallStatus.SUSPECTED_SPAM, status(Phase.RINGING, spam = true, rtt = true, video = true, wifi = true, work = true))
+        assertEquals(
+            CallStatus.SUSPECTED_SPAM,
+            status(Phase.RINGING, spam = true, rtt = true, video = true, wifi = true, work = true),
+        )
 
     @Test
-    fun ringingRttComesBeforeVideo() = assertEquals(CallStatus.INCOMING_RTT, status(Phase.RINGING, rtt = true, video = true))
+    fun ringingRttComesBeforeVideo() =
+        assertEquals(CallStatus.INCOMING_RTT, status(Phase.RINGING, rtt = true, video = true))
 
     @Test
-    fun ringingVideoComesBeforeWifi() = assertEquals(CallStatus.INCOMING_VIDEO, status(Phase.RINGING, video = true, wifi = true))
+    fun ringingVideoComesBeforeWifi() =
+        assertEquals(CallStatus.INCOMING_VIDEO, status(Phase.RINGING, video = true, wifi = true))
 
     @Test
-    fun ringingWifiComesBeforeWork() = assertEquals(CallStatus.INCOMING_WIFI, status(Phase.RINGING, wifi = true, work = true))
+    fun ringingWifiComesBeforeWork() =
+        assertEquals(CallStatus.INCOMING_WIFI, status(Phase.RINGING, wifi = true, work = true))
 
     @Test
     fun ringingWork() = assertEquals(CallStatus.INCOMING_WORK, status(Phase.RINGING, work = true))
 
-    @Test
-    fun ringingPlain() = assertEquals(CallStatus.INCOMING, status(Phase.RINGING))
+    @Test fun ringingPlain() = assertEquals(CallStatus.INCOMING, status(Phase.RINGING))
 
     @Test
-    fun heldIsOnHoldWhateverElse() = assertEquals(CallStatus.ON_HOLD, status(Phase.ON_HOLD, video = true, wifi = true))
+    fun heldIsOnHoldWhateverElse() =
+        assertEquals(CallStatus.ON_HOLD, status(Phase.ON_HOLD, video = true, wifi = true))
 
     @Test
     fun dialingIsCalling() = assertEquals(CallStatus.CALLING, status(Phase.DIALING, video = true))
 
     @Test
-    fun videoRequestComesFirstInACall() = assertEquals(CallStatus.VIDEO_REQUEST, status(Phase.IN_CALL, videoRequest = true, video = true))
+    fun videoRequestComesFirstInACall() =
+        assertEquals(
+            CallStatus.VIDEO_REQUEST,
+            status(Phase.IN_CALL, videoRequest = true, video = true),
+        )
 
     @Test
-    fun pausedVideo() = assertEquals(CallStatus.ONGOING_VIDEO_PAUSED, status(Phase.IN_CALL, video = true, paused = true))
+    fun pausedVideo() =
+        assertEquals(
+            CallStatus.ONGOING_VIDEO_PAUSED,
+            status(Phase.IN_CALL, video = true, paused = true),
+        )
 
     @Test
-    fun videoComesBeforeWifi() = assertEquals(CallStatus.ONGOING_VIDEO, status(Phase.IN_CALL, video = true, wifi = true))
+    fun videoComesBeforeWifi() =
+        assertEquals(CallStatus.ONGOING_VIDEO, status(Phase.IN_CALL, video = true, wifi = true))
 
     @Test
-    fun wifiComesBeforeWork() = assertEquals(CallStatus.ONGOING_WIFI, status(Phase.IN_CALL, wifi = true, work = true))
+    fun wifiComesBeforeWork() =
+        assertEquals(CallStatus.ONGOING_WIFI, status(Phase.IN_CALL, wifi = true, work = true))
+
+    @Test fun work() = assertEquals(CallStatus.ONGOING_WORK, status(Phase.IN_CALL, work = true))
+
+    @Test fun plainCall() = assertEquals(CallStatus.ONGOING, status(Phase.IN_CALL))
 
     @Test
-    fun work() = assertEquals(CallStatus.ONGOING_WORK, status(Phase.IN_CALL, work = true))
+    fun spamOnlyMattersWhileRinging() =
+        assertEquals(CallStatus.ONGOING, status(Phase.IN_CALL, spam = true))
 
     @Test
-    fun plainCall() = assertEquals(CallStatus.ONGOING, status(Phase.IN_CALL))
-
-    @Test
-    fun spamOnlyMattersWhileRinging() = assertEquals(CallStatus.ONGOING, status(Phase.IN_CALL, spam = true))
-
-    @Test
-    fun pausedWithoutVideoIsAPlainCall() = assertEquals(CallStatus.ONGOING, status(Phase.IN_CALL, paused = true))
+    fun pausedWithoutVideoIsAPlainCall() =
+        assertEquals(CallStatus.ONGOING, status(Phase.IN_CALL, paused = true))
 }

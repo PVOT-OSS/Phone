@@ -20,11 +20,15 @@ enum class CallStatus {
     ONGOING_VIDEO,
     ONGOING_WIFI,
     ONGOING_WORK,
-    ONGOING,
-    ;
+    ONGOING;
 
     /** Where a call is in its life, as far as the notification text cares. */
-    enum class Phase { RINGING, DIALING, ON_HOLD, IN_CALL }
+    enum class Phase {
+        RINGING,
+        DIALING,
+        ON_HOLD,
+        IN_CALL,
+    }
 
     companion object {
         /** Picks the status from the call's facts; the first matching rule wins. */
@@ -38,25 +42,28 @@ enum class CallStatus {
             hasVideoRequest: Boolean,
             isWifi: Boolean,
             isWork: Boolean,
-        ): CallStatus = when (phase) {
-            Phase.RINGING -> when {
-                isSpam -> SUSPECTED_SPAM
-                isRtt -> INCOMING_RTT
-                isVideo -> INCOMING_VIDEO
-                isWifi -> INCOMING_WIFI
-                isWork -> INCOMING_WORK
-                else -> INCOMING
+        ): CallStatus =
+            when (phase) {
+                Phase.RINGING ->
+                    when {
+                        isSpam -> SUSPECTED_SPAM
+                        isRtt -> INCOMING_RTT
+                        isVideo -> INCOMING_VIDEO
+                        isWifi -> INCOMING_WIFI
+                        isWork -> INCOMING_WORK
+                        else -> INCOMING
+                    }
+                Phase.ON_HOLD -> ON_HOLD
+                Phase.DIALING -> CALLING
+                Phase.IN_CALL ->
+                    when {
+                        hasVideoRequest -> VIDEO_REQUEST
+                        isVideo && isVideoPaused -> ONGOING_VIDEO_PAUSED
+                        isVideo -> ONGOING_VIDEO
+                        isWifi -> ONGOING_WIFI
+                        isWork -> ONGOING_WORK
+                        else -> ONGOING
+                    }
             }
-            Phase.ON_HOLD -> ON_HOLD
-            Phase.DIALING -> CALLING
-            Phase.IN_CALL -> when {
-                hasVideoRequest -> VIDEO_REQUEST
-                isVideo && isVideoPaused -> ONGOING_VIDEO_PAUSED
-                isVideo -> ONGOING_VIDEO
-                isWifi -> ONGOING_WIFI
-                isWork -> ONGOING_WORK
-                else -> ONGOING
-            }
-        }
     }
 }

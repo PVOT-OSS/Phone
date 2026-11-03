@@ -13,9 +13,7 @@ plugins {
 
 android {
     namespace = "org.prauga.phone.data"
-    compileSdk {
-        version = release(37) { minorApiLevel = 1 }
-    }
+    compileSdk { version = release(37) { minorApiLevel = 1 } }
     // Resources keep the names the app always gave them.
     resourcePrefix = null
 
@@ -52,26 +50,12 @@ android {
     }
 
     // Ship the .proto files so modules above can import them.
-    sourceSets {
-        getByName("main") {
-            resources.directories.add("src/main/proto")
-        }
-    }
+    sourceSets { getByName("main") { resources.directories.add("src/main/proto") } }
 }
 
 protobuf {
-    protoc {
-        artifact = libs.protoc.get().toString()
-    }
-    generateProtoTasks {
-        all().configureEach {
-            builtins {
-                create("java") {
-                    option("lite")
-                }
-            }
-        }
-    }
+    protoc { artifact = libs.protoc.get().toString() }
+    generateProtoTasks { all().configureEach { builtins { create("java") { option("lite") } } } }
 }
 
 dependencies {

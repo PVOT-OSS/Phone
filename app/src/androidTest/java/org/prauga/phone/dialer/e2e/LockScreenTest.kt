@@ -30,7 +30,8 @@ class LockScreenTest {
     private val keyguard = context.getSystemService(KeyguardManager::class.java)
 
     @get:Rule
-    val rules: RuleChain = RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
+    val rules: RuleChain =
+        RuleChain.outerRule(DefaultDialerRule()).around(FakeCarrierRule()).around(deviceRule)
 
     @Test
     fun ringingCallWakesThePhoneAndShowsOverTheLockScreen() {
@@ -43,7 +44,10 @@ class LockScreenTest {
 
         assertNotNull(
             "caller not shown over the lock screen",
-            deviceRule.device.wait(Until.findObject(By.textContains(number.takeLast(4))), CallTests.TIMEOUT_MILLIS),
+            deviceRule.device.wait(
+                Until.findObject(By.textContains(number.takeLast(4))),
+                CallTests.TIMEOUT_MILLIS,
+            ),
         )
         check(deviceRule.device.isScreenOn) { "screen stayed off" }
         check(keyguard.isKeyguardLocked) { "phone was unlocked while ringing" }
@@ -63,14 +67,22 @@ class LockScreenTest {
         FakeCarrier.ring(context, FakeCallSpec(number))
         CallTests.waitForRinging().hangUpFromFarEnd()
 
-        assertEquals(CallLog.Calls.MISSED_TYPE, CallTests.waitFor { CallTests.latestCall(context, number, since) }.type)
+        assertEquals(
+            CallLog.Calls.MISSED_TYPE,
+            CallTests.waitFor { CallTests.latestCall(context, number, since) }.type,
+        )
         check(keyguard.isKeyguardLocked) { "phone was unlocked" }
     }
 
-    /** Turns the screen off with the lock screen up, once the unlock from the test's setup has finished. */
+    /**
+     * Turns the screen off with the lock screen up, once the unlock from the test's setup has
+     * finished.
+     */
     private fun lock() {
         CallTests.waitFor { if (!keyguard.isKeyguardLocked) true else null }
         deviceRule.device.sleep()
-        CallTests.waitFor { if (!deviceRule.device.isScreenOn && keyguard.isKeyguardLocked) true else null }
+        CallTests.waitFor {
+            if (!deviceRule.device.isScreenOn && keyguard.isKeyguardLocked) true else null
+        }
     }
 }

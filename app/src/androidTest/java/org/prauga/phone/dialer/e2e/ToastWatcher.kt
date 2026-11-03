@@ -18,12 +18,14 @@ import org.junit.rules.ExternalResource
 class ToastWatcher : ExternalResource() {
 
     private val shown = CopyOnWriteArrayList<String>()
-    private val automation get() = InstrumentationRegistry.getInstrumentation().uiAutomation
+    private val automation
+        get() = InstrumentationRegistry.getInstrumentation().uiAutomation
 
     override fun before() {
         automation.setOnAccessibilityEventListener { event ->
-            if (event.eventType == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED &&
-                event.className == Toast::class.java.name
+            if (
+                event.eventType == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED &&
+                    event.className == Toast::class.java.name
             ) {
                 // The text holds the message and then the app's name.
                 shown += event.text.map { it.toString() }
@@ -34,9 +36,10 @@ class ToastWatcher : ExternalResource() {
     override fun after() = automation.setOnAccessibilityEventListener(null)
 
     /** Waits for a toast saying [text]. */
-    fun waitFor(text: String) = try {
-        CallTests.waitFor { shown.firstOrNull { it == text } }
-    } catch (e: IllegalStateException) {
-        throw IllegalStateException("no toast \"$text\"; saw $shown", e)
-    }
+    fun waitFor(text: String) =
+        try {
+            CallTests.waitFor { shown.firstOrNull { it == text } }
+        } catch (e: IllegalStateException) {
+            throw IllegalStateException("no toast \"$text\"; saw $shown", e)
+        }
 }

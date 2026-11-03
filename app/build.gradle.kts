@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -10,8 +12,6 @@ plugins {
     alias(libs.plugins.protobuf)
     alias(libs.plugins.roborazzi)
 }
-
-import java.util.Properties
 
 /**
  * The release signing key, from keystore.properties at the project root (not in git) or from the
@@ -37,9 +37,7 @@ val versionPatch = 0
 
 android {
     namespace = "org.prauga.phone.dialer"
-    compileSdk {
-        version = release(37) { minorApiLevel = 1 }
-    }
+    compileSdk { version = release(37) { minorApiLevel = 1 } }
 
     defaultConfig {
         applicationId = "org.prauga.phone"
@@ -53,13 +51,9 @@ android {
     flavorDimensions += "distribution"
     productFlavors {
         // Installable from Play and F-Droid: no privileged permissions.
-        create("user") {
-            dimension = "distribution"
-        }
+        create("user") { dimension = "distribution" }
         // Built into the PVOT ROM as a privileged app: call recording and system settings.
-        create("system") {
-            dimension = "distribution"
-        }
+        create("system") { dimension = "distribution" }
     }
 
     compileOptions {
@@ -80,11 +74,16 @@ android {
 
     buildTypes {
         release {
-            // The real key when one is set up, else the debug key so a release build installs for testing.
-            signingConfig = signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
+            // The real key when one is set up, else the debug key so a release build installs for
+            // testing.
+            signingConfig =
+                signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
             isMinifyEnabled = true
             isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
         }
     }
 
@@ -96,7 +95,8 @@ android {
     packaging {
         resources {
             excludes += "META-INF/DEPENDENCIES"
-            // Libraries ship their .proto files for each other's imports; the app doesn't need them.
+            // Libraries ship their .proto files for each other's imports; the app doesn't need
+            // them.
             excludes += "org/prauga/**/*.proto"
         }
     }
@@ -134,17 +134,26 @@ abstract class CheckUserPermissions : DefaultTask() {
     @get:PathSensitive(PathSensitivity.NONE)
     abstract val systemManifest: RegularFileProperty
 
-    @get:OutputFile
-    abstract val report: RegularFileProperty
+    @get:OutputFile abstract val report: RegularFileProperty
 
     @TaskAction
     fun check() {
         val permission = Regex("""<uses-permission[^>]*android:name="([^"]+)"""")
-        val systemOnly = permission.findAll(systemManifest.get().asFile.readText()).map { it.groupValues[1] }.toSet()
-        val requested = permission.findAll(mergedManifest.get().asFile.readText()).map { it.groupValues[1] }.toSet()
+        val systemOnly =
+            permission
+                .findAll(systemManifest.get().asFile.readText())
+                .map { it.groupValues[1] }
+                .toSet()
+        val requested =
+            permission
+                .findAll(mergedManifest.get().asFile.readText())
+                .map { it.groupValues[1] }
+                .toSet()
         val leaked = requested intersect systemOnly
         if (leaked.isNotEmpty()) {
-            throw GradleException("The user build requests system-only permissions: ${leaked.sorted().joinToString()}")
+            throw GradleException(
+                "The user build requests system-only permissions: ${leaked.sorted().joinToString()}"
+            )
         }
         report.get().asFile.writeText(requested.sorted().joinToString("\n"))
     }
@@ -152,32 +161,28 @@ abstract class CheckUserPermissions : DefaultTask() {
 
 androidComponents {
     onVariants(selector().withFlavor("distribution" to "user")) { variant ->
-        val check = tasks.register<CheckUserPermissions>("check${variant.name.replaceFirstChar { it.uppercase() }}Permissions") {
-            mergedManifest.set(variant.artifacts.get(com.android.build.api.artifact.SingleArtifact.MERGED_MANIFEST))
-            systemManifest.set(layout.projectDirectory.file("src/system/AndroidManifest.xml"))
-            report.set(layout.buildDirectory.file("reports/permissions/${variant.name}.txt"))
-        }
+        val check =
+            tasks.register<CheckUserPermissions>(
+                "check${variant.name.replaceFirstChar { it.uppercase() }}Permissions"
+            ) {
+                mergedManifest.set(
+                    variant.artifacts.get(
+                        com.android.build.api.artifact.SingleArtifact.MERGED_MANIFEST
+                    )
+                )
+                systemManifest.set(layout.projectDirectory.file("src/system/AndroidManifest.xml"))
+                report.set(layout.buildDirectory.file("reports/permissions/${variant.name}.txt"))
+            }
         tasks.named("check") { dependsOn(check) }
     }
 }
 
 protobuf {
-    protoc {
-        artifact = libs.protoc.get().toString()
-    }
-    generateProtoTasks {
-        all().configureEach {
-            builtins {
-                create("java") {
-                    option("lite")
-                }
-            }
-        }
-    }
+    protoc { artifact = libs.protoc.get().toString() }
+    generateProtoTasks { all().configureEach { builtins { create("java") { option("lite") } } } }
 }
 
 dependencies {
-
     implementation(platform(libs.androidx.compose.bom))
     debugImplementation(libs.androidx.compose.ui.tooling)
     implementation(project(":common"))
