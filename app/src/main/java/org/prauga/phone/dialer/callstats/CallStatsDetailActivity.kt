@@ -71,6 +71,7 @@ import kotlinx.coroutines.withContext
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.AccountSelectionActivity
 import org.prauga.phone.dialer.callintent.CallInitiationType
+import org.prauga.phone.dialer.precall.PreCall
 import org.prauga.phone.dialer.callintent.CallIntentBuilder
 import org.prauga.phone.dialer.clipboard.ClipboardUtils
 import org.prauga.phone.dialer.contacts.ContactsComponent
@@ -122,7 +123,7 @@ class CallStatsDetailActivity : ComponentActivity() {
                     summary = CallStatsSummary(details, total),
                     dateRange = dateRange,
                     onBack = ::finish,
-                    onCall = { startActivity(CallIntentBuilder(details.number, CallInitiationType.Type.CALL_LOG).build()) },
+                    onCall = { PreCall.start(this, CallIntentBuilder(details.number, CallInitiationType.Type.CALL_LOG)) },
                     callWithIntent = AccountSelectionActivity.createIntent(this, details.number, CallInitiationType.Type.CALL_LOG),
                     onEditNumber = { startActivity(Intent(Intent.ACTION_DIAL, CallUtil.getCallUri(details.number))) },
                     onCopy = { ClipboardUtils.copyText(this, null, details.number, true) },
