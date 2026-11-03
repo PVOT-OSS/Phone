@@ -44,9 +44,22 @@ class ScreeningPolicyTest {
 
     @Test
     fun ringsWhenNoCategoryApplies() {
+        val knownContact = knownCaller.copy(isContact = true)
+        assertEquals(emptyList<CallerCategory>(), ScreeningPolicy.categoriesOf(knownContact))
+    }
+
+    @Test
+    fun strangersAreNotInContacts() {
         assertEquals(
-            ScreeningDecision(CategoryAction.RING, ScreeningReason.None),
-            ScreeningPolicy.decide(knownCaller, declineAll),
+            listOf(CallerCategory.NOT_IN_CONTACTS),
+            ScreeningPolicy.categoriesOf(knownCaller),
+        )
+        assertEquals(
+            ScreeningDecision(
+                CategoryAction.SILENCE,
+                ScreeningReason.Category(CallerCategory.NOT_IN_CONTACTS),
+            ),
+            decide(knownCaller, mapOf(CallerCategory.NOT_IN_CONTACTS to CategoryAction.SILENCE)),
         )
     }
 
@@ -73,15 +86,21 @@ class ScreeningPolicyTest {
     @Test
     fun failedVerificationIsPossiblyFaked() {
         val facts = knownCaller.copy(verificationStatus = Connection.VERIFICATION_STATUS_FAILED)
-        assertEquals(listOf(CallerCategory.POSSIBLY_FAKED), ScreeningPolicy.categoriesOf(facts))
+        assertEquals(
+            listOf(CallerCategory.POSSIBLY_FAKED, CallerCategory.NOT_IN_CONTACTS),
+            ScreeningPolicy.categoriesOf(facts),
+        )
         val passed = knownCaller.copy(verificationStatus = Connection.VERIFICATION_STATUS_PASSED)
-        assertEquals(emptyList<CallerCategory>(), ScreeningPolicy.categoriesOf(passed))
+        assertEquals(listOf(CallerCategory.NOT_IN_CONTACTS), ScreeningPolicy.categoriesOf(passed))
     }
 
     @Test
     fun numbersMissingFromTheCallLogAreFirstTime() {
         val facts = knownCaller.copy(hasCallLogHistory = false)
-        assertEquals(listOf(CallerCategory.FIRST_TIME), ScreeningPolicy.categoriesOf(facts))
+        assertEquals(
+            listOf(CallerCategory.FIRST_TIME, CallerCategory.NOT_IN_CONTACTS),
+            ScreeningPolicy.categoriesOf(facts),
+        )
     }
 
     @Test
