@@ -5,12 +5,8 @@
 
 package org.prauga.phone.dialer.ui
 
-import android.content.ContentUris
-import android.content.Context
-import android.graphics.BitmapFactory
 import android.graphics.Rect
 import android.net.Uri
-import android.provider.ContactsContract
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.provider.ContactsContract.QuickContact
 import androidx.compose.foundation.clickable
@@ -21,18 +17,13 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import com.prauga.pvot.designsystem.components.list.PvotAvatar
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.prauga.phone.ui.R
-import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.util.UriUtils
 
 /**
@@ -57,11 +48,16 @@ fun QuickContactAvatar(
 ) {
     val context = LocalContext.current
     val sizePx = with(LocalDensity.current) { size.roundToPx() }
-    val photo by produceState(ContactPhotoCache.cached(photoUri?.toString(), sizePx), photoUri, photoId, sizePx) {
+    // Start from the cache, so a hero that scrolls back in shows its photo, not a letter tile first.
+    val cached = when {
+        photoUri != null -> ContactPhotoCache.cached(photoUri.toString(), sizePx)
+        else -> ContactPhotoCache.cachedThumbnail(photoId)
+    }
+    val photo by produceState(cached, photoUri, photoId, sizePx) {
         if (value == null) {
             value = when {
                 photoUri != null -> ContactPhotoCache.load(context, photoUri.toString(), sizePx)
-                photoId != 0L -> loadThumbnail(context, photoId)
+                photoId != 0L -> ContactPhotoCache.loadThumbnail(context, photoId)
                 else -> null
             }
         }
@@ -93,25 +89,4 @@ fun QuickContactAvatar(
         // Only a picture that opens Quick Contact is announced; otherwise it is decoration.
         contentDescription = if (contactUri != null) stringResource(R.string.description_quick_contact_for, name) else null,
     )
-}
-
-/** The thumbnail stored in a contact's photo row. */
-private suspend fun loadThumbnail(context: Context, photoId: Long): ImageBitmap? = withContext(Dispatchers.IO) {
-    try {
-        context.contentResolver.query(
-            ContentUris.withAppendedId(ContactsContract.Data.CONTENT_URI, photoId),
-            arrayOf(ContactsContract.CommonDataKinds.Photo.PHOTO),
-            null,
-            null,
-            null,
-        )?.use { cursor ->
-            if (!cursor.moveToFirst()) return@use null
-            val bytes = cursor.getBlob(0) ?: return@use null
-            BitmapFactory.decodeByteArray(bytes, 0, bytes.size)?.asImageBitmap()
-        }
-    } catch (e: Exception) {
-        // A deleted contact or a missing permission falls back to the letter tile.
-        LogUtil.w("QuickContactAvatar.loadThumbnail", "no photo: %s", e.javaClass.simpleName)
-        null
-    }
 }
