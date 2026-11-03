@@ -27,7 +27,6 @@ object TestTags {
     const val CALL_SUBJECT_HISTORY = "call_subject_history"
     const val CALL_SUBJECT_SEND = "call_subject_send"
     const val MAIN_NAV_BAR = "main_nav_bar"
-    const val MAIN_FAB = "main_fab"
     const val CONTACTS_LIST = "contacts_list"
     const val CONTACTS_ADD = "contacts_add"
     const val SPEED_DIAL_GRID = "speed_dial_grid"
