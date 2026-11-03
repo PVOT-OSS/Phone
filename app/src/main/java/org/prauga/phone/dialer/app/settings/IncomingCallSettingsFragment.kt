@@ -55,17 +55,6 @@ internal fun IncomingCallSettingsList(prefs: SharedPreferences, hasAccelerometer
     SettingsList {
         item(key = "incoming_calls") {
             SettingsGroup {
-                StoredChoiceRow(
-                    prefs = prefs,
-                    key = IncomingCallSettings.KEY_ANSWER_GESTURE,
-                    default = IncomingCallSettings.GESTURE_SWIPE,
-                    title = stringResource(R.string.answer_method_settings_title),
-                    choices = listOf(
-                        Choice(IncomingCallSettings.GESTURE_SWIPE, stringResource(R.string.answer_method_swipe_entry)),
-                        Choice(IncomingCallSettings.GESTURE_TAP, stringResource(R.string.answer_method_tap_entry)),
-                    ),
-                    icon = R.drawable.ic_hand_finger,
-                )
                 if (hasAccelerometer) {
                     var flip by remember { mutableStateOf(prefs.getBoolean(IncomingCallSettings.KEY_FLIP_TO_SILENCE, false)) }
                     PvotSwitchRow(

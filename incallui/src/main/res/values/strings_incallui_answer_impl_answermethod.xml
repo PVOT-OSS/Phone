@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="call_incoming_swipe_to_answer">Swipe up to answer</string>
-  <string name="call_incoming_swipe_to_reject">Swipe down to reject</string>
   <!-- Shown on an incoming call when answering it will end the ongoing call. -->
   <string name="call_incoming_will_disconnect">Answering this call will end your other call</string>
   <!-- Shown on an incoming call when answering it will end the ongoing call in another app, named. -->

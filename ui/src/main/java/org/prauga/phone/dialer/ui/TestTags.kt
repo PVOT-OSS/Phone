@@ -159,8 +159,7 @@ object TestTags {
     /** A slot of the in-call button grid, from 0. */
     fun incallButton(slot: Int) = "incall_button_$slot"
 
-    /** The incoming call screen: the swipe button, the two plain buttons and the side buttons. */
-    const val ANSWER_PUCK = "answer_puck"
+    /** The incoming call screen: the Answer and Decline pills and the side buttons above them. */
     /** The Important badge on an urgent incoming call; the old view's id, which the device tests look for. */
     const val IMPORTANT_CALL_BADGE = "incall_important_call_badge"
     const val ANSWER_ACCEPT = "answer_accept"

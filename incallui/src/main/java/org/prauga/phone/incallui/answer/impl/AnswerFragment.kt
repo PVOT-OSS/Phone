@@ -9,8 +9,6 @@ import android.app.KeyguardManager
 import android.app.KeyguardManager.KeyguardDismissCallback
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,7 +31,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -54,10 +51,7 @@ import com.prauga.pvot.designsystem.motion.PvotMotion
 import com.prauga.pvot.designsystem.theme.PvotCallEnd
 import com.prauga.pvot.designsystem.theme.PvotOnCallEnd
 import com.prauga.pvot.designsystem.theme.PvotSpacing
-import kotlin.math.abs
-import kotlin.math.max
 import org.prauga.phone.incallui.R
-import org.prauga.phone.dialer.app.settings.IncomingCallSettings
 import org.prauga.phone.dialer.common.Assert
 import org.prauga.phone.dialer.common.FragmentUtils
 import org.prauga.phone.dialer.common.LogUtil
@@ -81,7 +75,6 @@ import org.prauga.phone.incallui.incall.protocol.PrimaryCallState
 import org.prauga.phone.incallui.incall.protocol.PrimaryInfo
 import org.prauga.phone.incallui.incall.protocol.SecondaryInfo
 import org.prauga.phone.incallui.incalluilock.InCallUiLock
-import org.prauga.phone.incallui.util.AccessibilityUtil
 import org.prauga.phone.incallui.video.protocol.VideoCallScreen
 import org.prauga.phone.incallui.videotech.utils.VideoUtils
 
@@ -104,11 +97,6 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
     private var buttonAcceptClicked = false
     private var buttonRejectClicked = false
     private var hasAnimatedEntry = false
-    private val handler = Handler(Looper.getMainLooper())
-    private val swipeHintRestoreTimer = Runnable(::restoreSwipeHintTexts)
-
-    /** How far the header has faded while the answer control is pulled, from 0 to 1. */
-    private var headerProgress by mutableFloatStateOf(0f)
     private var videoOff by mutableStateOf(false)
     private var showAvatar by mutableStateOf(true)
 
@@ -134,8 +122,6 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
         val grid = ContactGridState(context).apply { isInMultiWindowMode = activity.isInMultiWindowMode }
         contactGrid = grid
         showAvatar = !isVideoCall && !isVideoUpgradeRequest
-        ui.twoButtons = AccessibilityUtil.isTouchExplorationEnabled(context) || activity.isInMultiWindowMode ||
-            IncomingCallSettings.answerWithSingleTap(context)
         ui.answerIcon = when {
             isVideoCall || isVideoUpgradeRequest -> R.drawable.ic_video
             isRttCall -> R.drawable.ic_message
@@ -198,10 +184,7 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
                 ContactGrid(
                     grid,
                     modifier = Modifier.graphicsLayer {
-                        val scale = 1f - 0.25f * headerProgress
-                        alpha = entry.value * (1f - headerProgress)
-                        scaleX = scale
-                        scaleY = scale
+                        alpha = entry.value
                         translationY = (1f - entry.value) * 120.dp.toPx()
                     },
                     avatarSize = if (showAvatar) 112.dp else 0.dp,
@@ -230,7 +213,6 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
     override fun onResume() {
         super.onResume()
         LogUtil.i("AnswerFragment.onResume", null)
-        restoreSwipeHintTexts()
         inCallScreenDelegate.onInCallScreenResumed()
     }
 
@@ -244,7 +226,6 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
     override fun onStop() {
         super.onStop()
         LogUtil.i("AnswerFragment.onStop", null)
-        handler.removeCallbacks(swipeHintRestoreTimer)
         answerVideoCallScreen?.onVideoScreenStop()
     }
 
@@ -391,9 +372,6 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
 
     override fun dispatchPopulateAccessibilityEvent(event: AccessibilityEvent) {
         contactGrid?.accessibilityText()?.forEach { event.text += it }
-        if (AccessibilityUtil.isTouchExplorationEnabled(context)) {
-            event.text += resources.getString(R.string.a11y_incoming_call_swipe_gesture_prompt)
-        }
     }
 
     override fun showNoteSentToast() = Unit
@@ -422,67 +400,44 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
 
     // AnswerActions
 
-    override fun onAnswer() = acceptCallByUser(answerVideoAsAudio = false)
+    override fun onAnswer(): Boolean = acceptCallByUser(answerVideoAsAudio = false)
 
-    override fun onReject() = rejectCall()
+    override fun onReject(): Boolean = rejectCall()
 
-    override fun onProgress(progress: Float) {
-        if (primaryCallState?.state() == DialerCallState.INCOMING && !isVideoCall) {
-            answerScreenDelegate.updateWindowBackgroundColor(progress)
-        }
-        val startDelay = .25f
-        headerProgress = max(0f, (abs(progress) - 1) / (1 - startDelay) + 1)
-        if (abs(progress) >= .0001f) {
-            handler.removeCallbacks(swipeHintRestoreTimer)
-            restoreSwipeHintTexts()
-        }
-        if (progress == 0f) restoreBackgroundMaskColor()
+    /** Answers a video call as audio; otherwise opens the reply sheet, which settles nothing yet. */
+    override fun onSecondary(): Boolean {
+        if (secondaryBehavior == ANSWER_VIDEO_AS_AUDIO) return acceptCallByUser(answerVideoAsAudio = true)
+        showMessageMenu()
+        return false
     }
 
-    override fun onSecondary() {
-        if (secondaryBehavior == ANSWER_VIDEO_AS_AUDIO) acceptCallByUser(answerVideoAsAudio = true) else showMessageMenu()
-    }
-
-    override fun onAnswerAndRelease() {
+    override fun onAnswerAndRelease(): Boolean {
+        if (buttonAcceptClicked) return false
         answerScreenDelegate.onAnswerAndReleaseCall()
         buttonAcceptClicked = true
+        return true
     }
 
-    override fun onSideHint(action: AnswerSideAction) {
-        ui.hint = getText(action.hint)
-        handler.removeCallbacks(swipeHintRestoreTimer)
-        handler.postDelayed(swipeHintRestoreTimer, HINT_SECONDARY_SHOW_DURATION_MILLIS)
-    }
-
-    private fun acceptCallByUser(answerVideoAsAudio: Boolean) {
+    /** Returns whether this answered the call, which only the first tap does. */
+    private fun acceptCallByUser(answerVideoAsAudio: Boolean): Boolean {
         LogUtil.i("AnswerFragment.acceptCallByUser", if (answerVideoAsAudio) " answerVideoAsAudio" else "")
-        if (!buttonAcceptClicked) {
-            answerScreenDelegate.onAnswer(answerVideoAsAudio)
-            buttonAcceptClicked = true
-        }
+        if (buttonAcceptClicked) return false
+        answerScreenDelegate.onAnswer(answerVideoAsAudio)
+        buttonAcceptClicked = true
+        return true
     }
 
-    private fun rejectCall() {
+    private fun rejectCall(): Boolean {
         LogUtil.i("AnswerFragment.rejectCall", null)
-        if (!buttonRejectClicked) {
-            if (context == null) LogUtil.w("AnswerFragment.rejectCall", "Null context when rejecting call")
-            buttonRejectClicked = true
-            answerScreenDelegate.onReject()
-        }
+        if (buttonRejectClicked) return false
+        if (context == null) LogUtil.w("AnswerFragment.rejectCall", "Null context when rejecting call")
+        buttonRejectClicked = true
+        answerScreenDelegate.onReject()
+        return true
     }
 
     private fun restoreBackgroundMaskColor() {
         answerScreenDelegate.updateWindowBackgroundColor(0f)
-    }
-
-    private fun restoreSwipeHintTexts() {
-        val state = primaryCallState
-        ui.hint = when {
-            !allowAnswerAndRelease() -> null
-            hasCallOnHold() -> getText(R.string.call_incoming_default_label_answer_and_release_third)
-            state != null && state.supportsCallOnHold() -> getText(R.string.call_incoming_default_label_answer_and_release_second)
-            else -> ui.hint
-        }
     }
 
     private fun showMessageMenu() {
@@ -573,25 +528,27 @@ class AnswerFragment : Fragment(), AnswerScreen, InCallScreen, SmsSheetHolder, C
         private const val ARG_IS_VIDEO_UPGRADE_REQUEST = "is_video_upgrade_request"
         private const val ARG_IS_SELF_MANAGED_CAMERA = "is_self_managed_camera"
         private const val STATE_HAS_ANIMATED_ENTRY = "hasAnimated"
-        private const val HINT_SECONDARY_SHOW_DURATION_MILLIS = 5000L
 
         val REJECT_WITH_SMS = AnswerSideAction(
-            R.drawable.ic_message,
-            R.string.a11y_description_incoming_call_reject_with_sms,
-            R.string.a11y_incoming_call_reject_with_sms,
-            R.string.call_incoming_swipe_to_decline_with_message,
+            icon = R.drawable.ic_message,
+            label = R.string.call_incoming_message,
+            description = R.string.a11y_description_incoming_call_reject_with_sms,
+            accessibilityLabel = R.string.a11y_incoming_call_reject_with_sms,
+            slot = AnswerSideSlot.Message,
         )
         val ANSWER_VIDEO_AS_AUDIO = AnswerSideAction(
-            R.drawable.ic_video_off,
-            R.string.a11y_description_incoming_call_answer_video_as_audio,
-            R.string.a11y_incoming_call_answer_video_as_audio,
-            R.string.call_incoming_swipe_to_answer_video_as_audio,
+            icon = R.drawable.ic_video_off,
+            label = R.string.call_incoming_answer_as_audio,
+            description = R.string.a11y_description_incoming_call_answer_video_as_audio,
+            accessibilityLabel = R.string.a11y_incoming_call_answer_video_as_audio,
+            slot = AnswerSideSlot.AnswerAsAudio,
         )
         val ANSWER_AND_RELEASE = AnswerSideAction(
-            R.drawable.ic_phone_x,
-            R.string.a11y_description_incoming_call_answer_and_release,
-            R.string.a11y_incoming_call_answer_and_release,
-            R.string.call_incoming_swipe_to_answer_and_release,
+            icon = R.drawable.ic_phone_x,
+            label = R.string.call_incoming_answer_and_end,
+            description = R.string.a11y_description_incoming_call_answer_and_release,
+            accessibilityLabel = R.string.a11y_incoming_call_answer_and_release,
+            slot = AnswerSideSlot.AnswerAndRelease,
         )
 
         @JvmStatic

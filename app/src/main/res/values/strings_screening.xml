@@ -9,10 +9,6 @@
 
     <!-- Settings screen for how incoming calls are answered and announced. [CHAR LIMIT=40] -->
     <string name="incoming_call_settings_title">Incoming calls</string>
-    <!-- How the user answers or declines an incoming call. [CHAR LIMIT=40] -->
-    <string name="answer_method_settings_title">Incoming call gesture</string>
-    <string name="answer_method_swipe_entry">Swipe</string>
-    <string name="answer_method_tap_entry">Single tap</string>
     <!-- Silences the ringer when the phone is turned face down. [CHAR LIMIT=40] -->
     <string name="flip_to_silence_title">Flip To Silence</string>
     <string name="flip_to_silence_summary">To silence an incoming call, place your device face down on a flat surface</string>
