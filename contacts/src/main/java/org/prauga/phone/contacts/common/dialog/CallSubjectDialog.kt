@@ -74,6 +74,13 @@ import org.prauga.phone.dialer.ui.UriThumbnail
 /** Lets the user type a note (call subject) to send with a call, then places the call. */
 class CallSubjectDialog : ComponentActivity() {
 
+    private var composer: CallComposerOptions? = null
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        composer?.save(outState)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         enablePvotEdgeToEdge()
         super.onCreate(savedInstanceState)
@@ -92,7 +99,8 @@ class CallSubjectDialog : ComponentActivity() {
         val contactUri = BundleCompat.getParcelable(args, ARG_CONTACT_URI, Uri::class.java)
 
         val photoUri = BundleCompat.getParcelable(args, ARG_PHOTO_URI, Uri::class.java)
-        val composer = CallComposerOptions(this, account)
+        val composer = CallComposerOptions(this, account).also { it.restore(savedInstanceState) }
+        this.composer = composer
 
         setPvotContent {
             // Not filled: the window is see-through, and the dialog draws its own scrim over the app below.

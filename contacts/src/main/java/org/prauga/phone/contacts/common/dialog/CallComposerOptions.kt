@@ -26,6 +26,8 @@ import org.prauga.phone.contacts.R
 import org.prauga.phone.dialer.callintent.CallIntentBuilder
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.telecom.TelecomUtil
+import android.os.Bundle
+import androidx.core.os.BundleCompat
 import java.io.ByteArrayInputStream
 
 /**
@@ -54,6 +56,19 @@ class CallComposerOptions(
 
     private val picker = activity.registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         picture = uri
+    }
+
+    /** Keeps the choices across a recreation; [restore] reads them back. */
+    fun save(outState: Bundle) {
+        outState.putBoolean(STATE_URGENT, urgent)
+        outState.putParcelable(STATE_PICTURE, picture)
+    }
+
+    /** Reads back what [save] kept. */
+    fun restore(state: Bundle?) {
+        if (state == null) return
+        urgent = state.getBoolean(STATE_URGENT, false)
+        picture = BundleCompat.getParcelable(state, STATE_PICTURE, Uri::class.java)
     }
 
     /** Lets the user choose a picture to send with the call. */
@@ -109,6 +124,8 @@ class CallComposerOptions(
         Thread({
             val bytes = ComposerPicture.shrink(activity, picture, TelephonyManager.getMaximumCallComposerPictureSize())
             activity.mainExecutor.execute {
+                // The dialog may have been closed meanwhile; then there is no call to place.
+                if (activity.isFinishing || activity.isDestroyed) return@execute
                 if (bytes == null) {
                     LogUtil.e("CallComposerOptions.upload", "can't make the picture small enough")
                     done(null)
@@ -126,6 +143,8 @@ class CallComposerOptions(
 
     companion object {
         private const val PICTURE_TYPE = "image/jpeg"
+        private const val STATE_URGENT = "composer_urgent"
+        private const val STATE_PICTURE = "composer_picture"
 
         /** Whether the SIM [handle] stands for supports call composer. */
         @JvmStatic
