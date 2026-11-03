@@ -18,4 +18,5 @@
   <string name="call_incoming_video_is_off">Տեսախցիկն անջատած է</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Պատասխանելու համար երկու մատով սահեցրեք վերև, մերժելու համար՝ ներքև:</string>
   <string name="call_incoming_important">Կարևոր</string>
+  <string name="call_incoming_message">SMS</string>
 </resources>

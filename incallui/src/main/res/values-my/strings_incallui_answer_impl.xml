@@ -18,4 +18,5 @@
   <string name="call_incoming_video_is_off">ဗီဒီယို ပိတ်ထားပါသည်</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">ဖြေကြားရန် လက်နှစ်ချောင်းဖြင့် အပေါ်သို့ ပွတ်ဆွဲပါ။ ငြင်းပယ်ရန် လက်နှစ်ချောင်းဖြင့် အောက်သို့ ပွတ်ဆွဲပါ။</string>
   <string name="call_incoming_important">အရေးကြီး</string>
+  <string name="call_incoming_message">မက်ဆေ့ဂျ်</string>
 </resources>

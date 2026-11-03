@@ -10,7 +10,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assert
+import androidx.compose.ui.test.assertContentDescriptionEquals
+import androidx.compose.ui.test.getUnclippedBoundsInRoot
 import androidx.compose.ui.test.isRoot
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onFirst
@@ -41,26 +47,33 @@ class AnswerControlsTest {
 
     private val events = mutableListOf<String>()
     private val progress = mutableListOf<Float>()
+
+    /** Whether the fragment takes the next answer or decline; false stands for one that failed. */
+    private var settles = true
     private val actions =
         object : AnswerActions {
-            override fun onAnswer() {
+            override fun onAnswer(): Boolean {
                 events += "answer"
+                return settles
             }
 
-            override fun onReject() {
+            override fun onReject(): Boolean {
                 events += "reject"
+                return settles
             }
 
             override fun onProgress(progress: Float) {
                 this@AnswerControlsTest.progress += progress
             }
 
-            override fun onSecondary() {
+            override fun onSecondary(): Boolean {
                 events += "secondary"
+                return false
             }
 
-            override fun onAnswerAndRelease() {
+            override fun onAnswerAndRelease(): Boolean {
                 events += "answer and release"
+                return true
             }
 
             override fun onSideHint(action: AnswerSideAction) {
@@ -191,12 +204,119 @@ class AnswerControlsTest {
         compose.onNodeWithText("Swipe up to answer and hold ongoing call").assertExists()
     }
 
+    /** The pickup pills, as for single tap answering, TalkBack and split screen. */
+    private fun tapState() = swipeState().apply { twoButtons = true }
+
     @Test
-    fun twoButtonsAnswerAndDecline() {
-        show(AnswerUiState().apply { twoButtons = true })
-        compose.onNodeWithTag(TestTags.ANSWER_DECLINE).performClick()
+    fun tappingAnswerAnswers() {
+        show(tapState())
         compose.onNodeWithTag(TestTags.ANSWER_ACCEPT).performClick()
-        assertThat(events).containsExactly("reject", "answer").inOrder()
+        assertThat(events).containsExactly("answer")
+    }
+
+    @Test
+    fun tappingDeclineDeclines() {
+        show(tapState())
+        compose.onNodeWithTag(TestTags.ANSWER_DECLINE).performClick()
+        assertThat(events).containsExactly("reject")
+    }
+
+    @Test
+    fun onceSettledThePillsIgnoreFurtherTaps() {
+        show(tapState())
+        compose.onNodeWithTag(TestTags.ANSWER_ACCEPT).performClick()
+        compose.onNodeWithTag(TestTags.ANSWER_ACCEPT).performClick()
+        compose.onNodeWithTag(TestTags.ANSWER_DECLINE).performClick()
+        compose.onNodeWithTag(TestTags.ANSWER_AND_RELEASE).performClick()
+        compose
+            .onNodeWithTag(TestTags.ANSWER_ACCEPT)
+            .performSemanticsAction(SemanticsActions.OnClick)
+        assertThat(events).containsExactly("answer")
+    }
+
+    @Test
+    fun whenAnsweringFailsTheNextTapTriesAgain() {
+        settles = false
+        show(tapState())
+        compose.onNodeWithTag(TestTags.ANSWER_ACCEPT).performClick()
+        settles = true
+        compose.onNodeWithTag(TestTags.ANSWER_ACCEPT).performClick()
+        assertThat(events).containsExactly("answer", "answer")
+    }
+
+    @Test
+    fun tappingASideActionAboveThePillsDoesIt() {
+        show(tapState())
+        compose.onNodeWithTag(TestTags.ANSWER_SECONDARY).performClick()
+        compose.onNodeWithTag(TestTags.ANSWER_AND_RELEASE).performClick()
+        assertThat(events).containsExactly("secondary", "answer and release").inOrder()
+    }
+
+    @Test
+    fun theMessageSheetLeavesTheCallToBeAnswered() {
+        show(tapState())
+        compose.onNodeWithTag(TestTags.ANSWER_SECONDARY).performClick()
+        compose.onNodeWithTag(TestTags.ANSWER_ACCEPT).performClick()
+        assertThat(events).containsExactly("secondary", "answer").inOrder()
+    }
+
+    @Test
+    fun talkBackReadsAnswerAndDeclineAsButtons() {
+        show(tapState())
+        val button = SemanticsMatcher.expectValue(SemanticsProperties.Role, Role.Button)
+        compose
+            .onNodeWithTag(TestTags.ANSWER_ACCEPT)
+            .assert(button)
+            .assertContentDescriptionEquals("Answer")
+        compose
+            .onNodeWithTag(TestTags.ANSWER_DECLINE)
+            .assert(button)
+            .assertContentDescriptionEquals("Decline")
+        compose
+            .onNodeWithTag(TestTags.ANSWER_DECLINE)
+            .performSemanticsAction(SemanticsActions.OnClick)
+        assertThat(events).containsExactly("reject")
+    }
+
+    @Test
+    fun theSideActionsHaveLabelsUnderThem() {
+        show(tapState())
+        compose.onNodeWithText("Message").assertExists()
+        compose.onNodeWithText("Answer and end current").assertExists()
+        compose
+            .onNodeWithTag(TestTags.ANSWER_SECONDARY)
+            .assertContentDescriptionEquals("Reject with message")
+    }
+
+    @Test
+    fun aVideoCallOffersAnsweringAsAudio() {
+        show(
+            AnswerUiState().apply {
+                twoButtons = true
+                secondary = AnswerFragment.ANSWER_VIDEO_AS_AUDIO
+                secondaryVisible = true
+            }
+        )
+        compose.onNodeWithText("Answer as audio").assertExists()
+        compose.onNodeWithTag(TestTags.ANSWER_SECONDARY).performClick()
+        assertThat(events).containsExactly("secondary")
+    }
+
+    @Test
+    fun hiddenSideActionsKeepTheirPlaceSoThePillsStayPut() {
+        val state = AnswerUiState().apply { twoButtons = true }
+        show(state)
+        compose.onNodeWithTag(TestTags.ANSWER_SECONDARY).assertDoesNotExist()
+        val before = compose.onNodeWithTag(TestTags.ANSWER_ACCEPT).getUnclippedBoundsInRoot()
+        compose.runOnIdle {
+            state.secondary = AnswerFragment.REJECT_WITH_SMS
+            state.secondaryVisible = true
+            state.answerAndRelease = AnswerFragment.ANSWER_AND_RELEASE
+            state.answerAndReleaseVisible = true
+        }
+        compose.onNodeWithTag(TestTags.ANSWER_SECONDARY).assertExists()
+        assertThat(compose.onNodeWithTag(TestTags.ANSWER_ACCEPT).getUnclippedBoundsInRoot())
+            .isEqualTo(before)
     }
 
     @Test
@@ -207,5 +327,30 @@ class AnswerControlsTest {
             .onAllNodes(isRoot())
             .onFirst()
             .captureRoboImage("src/test/screenshots/incall/answer_controls_dark.png")
+    }
+
+    @Test
+    fun screenshotPickupDark() {
+        show(
+            tapState().apply {
+                incomingWillDisconnectText = "Answering this call will end your other call"
+            }
+        )
+        compose.mainClock.autoAdvance = false
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/incall/answer_pickup_dark.png")
+    }
+
+    @Test
+    @Config(qualifiers = "en-rUS-w411dp-h891dp-notnight-xxhdpi")
+    fun screenshotPickupLight() {
+        show(tapState())
+        compose.mainClock.autoAdvance = false
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/incall/answer_pickup_light.png")
     }
 }

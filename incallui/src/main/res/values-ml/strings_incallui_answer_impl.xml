@@ -18,4 +18,5 @@
   <string name="call_incoming_video_is_off">വീഡിയോ ഓഫാണ്</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">മറുപടി നൽകാൻ രണ്ടുവിരലുകൾ ഉപയോഗിച്ച് മുകളിലേക്ക് സ്വൈപ്പുചെയ്യുക. നിരസിക്കാൻ രണ്ടുവിരലുകൾ ഉപയോഗിച്ച് താഴേക്ക് സ്വൈപ്പുചെയ്യുക.</string>
   <string name="call_incoming_important">പ്രധാനപ്പെട്ടവ</string>
+  <string name="call_incoming_message">സന്ദേശം</string>
 </resources>

@@ -18,4 +18,5 @@
   <string name="call_incoming_video_is_off">Видеото е изключено</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">Прекарайте два пръста нагоре за отговаряне, надолу за отхвърляне.</string>
   <string name="call_incoming_important">Важно</string>
+  <string name="call_incoming_message">Съобщение</string>
 </resources>

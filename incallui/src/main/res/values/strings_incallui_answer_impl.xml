@@ -20,6 +20,10 @@
   <string name="call_incoming_default_label_answer_and_release_second">Swipe up to answer and hold ongoing call</string>
   <string name="call_incoming_default_label_answer_and_release_third">Swipe up to answer and end call on hold</string>
   <string name="call_incoming_swipe_to_answer_and_release">Swipe from icon to answer and end ongoing call</string>
+  <!-- Labels under the buttons above the Decline and Answer pills of an incoming call. [CHAR LIMIT=16] -->
+  <string name="call_incoming_message">Message</string>
+  <string name="call_incoming_answer_as_audio">Answer as audio</string>
+  <string name="call_incoming_answer_and_end">Answer and end current</string>
   <string name="call_incoming_message_custom">Write your own…</string>
   <!-- "Respond via SMS" option that lets you compose a custom response. [CHAR LIMIT=30] -->
   <string name="call_incoming_respond_via_sms_custom_message">Write your own…</string>

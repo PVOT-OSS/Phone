@@ -519,9 +519,9 @@ class AnswerFragment :
 
     // AnswerActions
 
-    override fun onAnswer() = acceptCallByUser(answerVideoAsAudio = false)
+    override fun onAnswer(): Boolean = acceptCallByUser(answerVideoAsAudio = false)
 
-    override fun onReject() = rejectCall()
+    override fun onReject(): Boolean = rejectCall()
 
     override fun onProgress(progress: Float) {
         if (primaryCallState?.state() == DialerCallState.INCOMING && !isVideoCall) {
@@ -536,14 +536,21 @@ class AnswerFragment :
         if (progress == 0f) restoreBackgroundMaskColor()
     }
 
-    override fun onSecondary() {
-        if (secondaryBehavior == ANSWER_VIDEO_AS_AUDIO) acceptCallByUser(answerVideoAsAudio = true)
-        else showMessageMenu()
+    /**
+     * Answers a video call as audio; otherwise opens the reply sheet, which settles nothing yet.
+     */
+    override fun onSecondary(): Boolean {
+        if (secondaryBehavior == ANSWER_VIDEO_AS_AUDIO)
+            return acceptCallByUser(answerVideoAsAudio = true)
+        showMessageMenu()
+        return false
     }
 
-    override fun onAnswerAndRelease() {
+    override fun onAnswerAndRelease(): Boolean {
+        if (buttonAcceptClicked) return false
         answerScreenDelegate.onAnswerAndReleaseCall()
         buttonAcceptClicked = true
+        return true
     }
 
     override fun onAnswerTouch(event: MotionEvent) = falsingManager.onTouchEvent(event)
@@ -554,25 +561,26 @@ class AnswerFragment :
         handler.postDelayed(swipeHintRestoreTimer, HINT_SECONDARY_SHOW_DURATION_MILLIS)
     }
 
-    private fun acceptCallByUser(answerVideoAsAudio: Boolean) {
+    /** Returns whether this answered the call, which only the first tap does. */
+    private fun acceptCallByUser(answerVideoAsAudio: Boolean): Boolean {
         LogUtil.i(
             "AnswerFragment.acceptCallByUser",
             if (answerVideoAsAudio) " answerVideoAsAudio" else "",
         )
-        if (!buttonAcceptClicked) {
-            answerScreenDelegate.onAnswer(answerVideoAsAudio)
-            buttonAcceptClicked = true
-        }
+        if (buttonAcceptClicked) return false
+        answerScreenDelegate.onAnswer(answerVideoAsAudio)
+        buttonAcceptClicked = true
+        return true
     }
 
-    private fun rejectCall() {
+    private fun rejectCall(): Boolean {
         LogUtil.i("AnswerFragment.rejectCall", null)
-        if (!buttonRejectClicked) {
-            if (context == null)
-                LogUtil.w("AnswerFragment.rejectCall", "Null context when rejecting call")
-            buttonRejectClicked = true
-            answerScreenDelegate.onReject()
-        }
+        if (buttonRejectClicked) return false
+        if (context == null)
+            LogUtil.w("AnswerFragment.rejectCall", "Null context when rejecting call")
+        buttonRejectClicked = true
+        answerScreenDelegate.onReject()
+        return true
     }
 
     private fun restoreBackgroundMaskColor() {
@@ -696,24 +704,30 @@ class AnswerFragment :
 
         val REJECT_WITH_SMS =
             AnswerSideAction(
-                R.drawable.ic_message,
-                R.string.a11y_description_incoming_call_reject_with_sms,
-                R.string.a11y_incoming_call_reject_with_sms,
-                R.string.call_incoming_swipe_to_decline_with_message,
+                icon = R.drawable.ic_message,
+                label = R.string.call_incoming_message,
+                description = R.string.a11y_description_incoming_call_reject_with_sms,
+                accessibilityLabel = R.string.a11y_incoming_call_reject_with_sms,
+                hint = R.string.call_incoming_swipe_to_decline_with_message,
+                slot = AnswerSideSlot.Message,
             )
         val ANSWER_VIDEO_AS_AUDIO =
             AnswerSideAction(
-                R.drawable.ic_video_off,
-                R.string.a11y_description_incoming_call_answer_video_as_audio,
-                R.string.a11y_incoming_call_answer_video_as_audio,
-                R.string.call_incoming_swipe_to_answer_video_as_audio,
+                icon = R.drawable.ic_video_off,
+                label = R.string.call_incoming_answer_as_audio,
+                description = R.string.a11y_description_incoming_call_answer_video_as_audio,
+                accessibilityLabel = R.string.a11y_incoming_call_answer_video_as_audio,
+                hint = R.string.call_incoming_swipe_to_answer_video_as_audio,
+                slot = AnswerSideSlot.AnswerAsAudio,
             )
         val ANSWER_AND_RELEASE =
             AnswerSideAction(
-                R.drawable.ic_phone_x,
-                R.string.a11y_description_incoming_call_answer_and_release,
-                R.string.a11y_incoming_call_answer_and_release,
-                R.string.call_incoming_swipe_to_answer_and_release,
+                icon = R.drawable.ic_phone_x,
+                label = R.string.call_incoming_answer_and_end,
+                description = R.string.a11y_description_incoming_call_answer_and_release,
+                accessibilityLabel = R.string.a11y_incoming_call_answer_and_release,
+                hint = R.string.call_incoming_swipe_to_answer_and_release,
+                slot = AnswerSideSlot.AnswerAndRelease,
             )
 
         @JvmStatic

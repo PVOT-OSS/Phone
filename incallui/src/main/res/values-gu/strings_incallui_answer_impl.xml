@@ -18,4 +18,5 @@
   <string name="call_incoming_video_is_off">વિડિઓ બંધ છે</string>
   <string name="a11y_incoming_call_swipe_gesture_prompt">જવાબ આપવા માટે બે આંગળી ઉપર સ્વાઇપ કરો. નકારવા માટે બે આંગળી નીચે સ્વાઇપ કરો.</string>
   <string name="call_incoming_important">મહત્વપૂર્ણ</string>
+  <string name="call_incoming_message">સંદેશ</string>
 </resources>
