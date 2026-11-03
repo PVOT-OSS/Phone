@@ -68,6 +68,8 @@ class RecentsFilterTest {
         val group = callLogGroup(1)
         assertThat(CallLogFilter.ALL.matches(group, emptySet())).isTrue()
         assertThat(CallLogFilter.MISSED.matches(group, emptySet())).isTrue()
+        assertThat(CallLogFilter.VOICEMAIL.matches(group, emptySet())).isTrue()
+        assertThat(CallLogFilter.VOICEMAIL.narrows).isFalse()
         assertThat(CallLogFilter.ALL.narrows).isFalse()
         assertThat(CallLogFilter.CONTACTS.narrows).isTrue()
     }
