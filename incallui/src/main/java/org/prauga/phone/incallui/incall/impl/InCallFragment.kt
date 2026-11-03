@@ -57,6 +57,7 @@ import org.prauga.phone.dialer.common.FragmentUtils
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.WindowBackdrop
+import org.prauga.phone.incallui.InCallPresenter
 import org.prauga.phone.incallui.R
 import org.prauga.phone.incallui.audioroute.AudioRouteSelectorDialogFragment
 import org.prauga.phone.incallui.audioroute.AudioRouteSelectorDialogFragment.AudioRouteSelectorPresenter
@@ -127,7 +128,6 @@ class InCallFragment : Fragment(), InCallScreen, InCallButtonUi, AudioRouteSelec
         savedInstanceState: Bundle?,
     ): View {
         LogUtil.i("InCallFragment.onCreateView", null)
-        requireActivity().setTheme(R.style.Theme_InCallScreen)
         val context = requireContext()
         val grid =
             ContactGridState(context).apply {
@@ -473,7 +473,18 @@ object InCallScreenHost {
                 )
                 setContent {
                     PhoneScreenTheme(fillBackground = false) {
-                        if (glass) WindowBackdrop(content = content) else content()
+                        if (glass) {
+                            // The window's gradient changes with the call's colors; the glass
+                            // redraws its copy then.
+                            val background =
+                                InCallPresenter.getInstance()
+                                    .themeColorManager
+                                    ?.windowBackgroundVersion
+                                    ?.intValue
+                            WindowBackdrop(backgroundKey = background, content = content)
+                        } else {
+                            content()
+                        }
                     }
                 }
             }

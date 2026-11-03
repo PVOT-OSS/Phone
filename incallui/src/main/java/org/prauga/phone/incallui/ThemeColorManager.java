@@ -16,6 +16,9 @@
 
 package org.prauga.phone.incallui;
 
+import androidx.compose.runtime.IntState;
+import androidx.compose.runtime.MutableIntState;
+import androidx.compose.runtime.SnapshotIntStateKt;
 import static android.telecom.PhoneAccount.NO_HIGHLIGHT_COLOR;
 
 import android.content.Context;
@@ -36,6 +39,7 @@ import org.prauga.phone.incallui.call.DialerCall;
  */
 public class ThemeColorManager {
   private final MaterialColorMapUtils colorMap;
+  private final MutableIntState windowBackgroundVersion = SnapshotIntStateKt.mutableIntStateOf(0);
   @ColorInt private int primaryColor;
   @ColorInt private int secondaryColor;
   @ColorInt private int backgroundColorTop;
@@ -111,5 +115,17 @@ public class ThemeColorManager {
   @ColorInt
   public int getBackgroundColorSolid() {
     return backgroundColorSolid;
+  }
+
+  /**
+   * Bumped each time the in-call window's background is replaced or recolored, so a Compose part
+   * drawing a copy of it, as the glass does, draws it again.
+   */
+  public IntState getWindowBackgroundVersion() {
+    return windowBackgroundVersion;
+  }
+
+  public void onWindowBackgroundChanged() {
+    windowBackgroundVersion.setIntValue(windowBackgroundVersion.getIntValue() + 1);
   }
 }
