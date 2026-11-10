@@ -95,7 +95,7 @@ class MainToolbarTest {
     fun theHeaderShowsTheSelectedTabsTitle() {
         show()
         compose.runOnUiThread { toolbar.setTitle(R.string.tab_title_call_history) }
-        compose.onNodeWithText("Recents").assertExists()
+        compose.onNodeWithText("Recent").assertExists()
     }
 
     @Test

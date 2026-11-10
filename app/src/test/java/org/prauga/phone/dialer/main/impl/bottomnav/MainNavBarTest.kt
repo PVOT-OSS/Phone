@@ -81,7 +81,7 @@ class MainNavBarTest {
         setChrome()
         compose.onNodeWithText("Dial").assertExists()
 
-        compose.onNodeWithContentDescription("Recents").performClick()
+        compose.onNodeWithContentDescription("Recent").performClick()
 
         compose.onNodeWithText("Search").assertExists()
         compose.onNodeWithText("Dial").assertDoesNotExist()
@@ -93,7 +93,7 @@ class MainNavBarTest {
         setChrome()
 
         compose.onNodeWithContentDescription("Dial").performClick()
-        compose.onNodeWithContentDescription("Recents").performClick()
+        compose.onNodeWithContentDescription("Recent").performClick()
         compose.onNodeWithContentDescription("Search").performClick()
         compose.onNodeWithContentDescription("Contacts").performClick()
         compose.onNodeWithContentDescription("Add").performClick()

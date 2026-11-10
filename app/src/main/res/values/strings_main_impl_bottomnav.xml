@@ -16,7 +16,7 @@
   -->
 <resources>
   <!-- Tab text to show users their call log/call history [CHAR LIMIT=10] -->
-  <string name="tab_title_call_history">Recents</string>
+  <string name="tab_title_call_history">Recent</string>
   <!-- Tab text for the dialpad, with the favorites to call in one tap above it [CHAR LIMIT=10] -->
   <string name="tab_title_dialpad">Dialpad</string>
   <!-- Tab text to show users their voicemails  [CHAR LIMIT=10] -->
