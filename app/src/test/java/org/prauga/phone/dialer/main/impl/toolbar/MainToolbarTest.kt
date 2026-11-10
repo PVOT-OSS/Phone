@@ -168,16 +168,6 @@ class MainToolbarTest {
     }
 
     @Test
-    fun aVoiceResultFillsTheSearch() {
-        show()
-        compose.runOnUiThread { toolbar.expand(false, Optional.empty(), false) }
-        compose.onNodeWithTag(TestTags.SEARCH_VOICE).performClick()
-        compose.runOnUiThread { voiceCallback!!.setResult("carol") }
-        assertThat(toolbar.isExpanded()).isTrue()
-        assertThat(events).containsExactly("voice", "query carol").inOrder()
-    }
-
-    @Test
     fun theAvatarOpensTheMenuWhichOffersClearFrequentsOnlyWithFrequents() {
         show()
         compose.onNodeWithTag(TestTags.APP_MENU).performClick()

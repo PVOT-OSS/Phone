@@ -16,6 +16,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -51,6 +52,7 @@ import com.prauga.pvot.designsystem.components.button.PvotIconButton
 import com.prauga.pvot.designsystem.components.button.PvotIconButtonDefaults
 import com.prauga.pvot.designsystem.components.textfield.PvotTextField
 import com.prauga.pvot.designsystem.motion.PvotDurations
+import com.prauga.pvot.designsystem.theme.PvotShapes
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import java.util.Optional
 import org.prauga.phone.dialer.R
@@ -61,7 +63,7 @@ import org.prauga.phone.dialer.ui.TestTags
 
 /**
  * The main screen's toolbar: the selected tab's title with the options button that opens the app
- * menu, which expands into the search field, with voice search, when search opens.
+ * menu, which expands into the search field when search opens.
  * [org.prauga.phone.dialer.main.impl.MainSearchController] drives it.
  */
 class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
@@ -190,16 +192,6 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         collapse(true)
     }
 
-    private fun onVoiceSearch() {
-        listener?.onVoiceButtonClicked { result ->
-            when {
-                result.isNullOrEmpty() -> Unit
-                expanded -> updateQuery(result)
-                else -> expand(true, Optional.of(result), true)
-            }
-        }
-    }
-
     @Composable
     override fun Content() {
         PhoneScreenTheme(fillBackground = false) {
@@ -256,18 +248,19 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 keyboard?.show()
             }
         }
+        // A pill with the search icon, as iOS has it, and a round close button beside it.
         Row(
             modifier =
                 Modifier.fillMaxSize()
-                    .padding(horizontal = PvotSpacing.S, vertical = PvotSpacing.XS),
+                    .padding(
+                        start = PvotSpacing.L,
+                        end = PvotSpacing.S,
+                        top = PvotSpacing.XS,
+                        bottom = PvotSpacing.XS,
+                    ),
             verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S),
         ) {
-            IconButton(onClick = ::onBack, modifier = Modifier.testTag(TestTags.SEARCH_BACK)) {
-                Icon(
-                    painterResource(R.drawable.ic_arrow_left),
-                    stringResource(R.string.action_menu_back_from_search),
-                )
-            }
             PvotTextField(
                 value = queryText,
                 onValueChange = ::updateQuery,
@@ -277,28 +270,29 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
                         .testTag(TestTags.SEARCH_FIELD),
                 placeholder = stringResource(hintRes),
                 singleLine = true,
+                shape = PvotShapes.Pill,
                 keyboardOptions =
                     KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Search),
-                trailingIcon = {
-                    if (queryText.isNotEmpty()) {
-                        IconButton(onClick = { updateQuery("") }) {
-                            Icon(
-                                painterResource(R.drawable.ic_x),
-                                stringResource(R.string.description_clear_search),
-                            )
-                        }
-                    } else {
-                        IconButton(
-                            onClick = ::onVoiceSearch,
-                            modifier = Modifier.testTag(TestTags.SEARCH_VOICE),
-                        ) {
-                            Icon(
-                                painterResource(R.drawable.ic_microphone),
-                                stringResource(R.string.description_start_voice_search),
-                            )
-                        }
-                    }
+                leadingIcon = {
+                    Icon(painterResource(R.drawable.ic_search), contentDescription = null)
                 },
+                trailingIcon =
+                    if (queryText.isNotEmpty()) {
+                        {
+                            IconButton(onClick = { updateQuery("") }) {
+                                Icon(
+                                    painterResource(R.drawable.ic_x),
+                                    stringResource(R.string.description_clear_search),
+                                )
+                            }
+                        }
+                    } else null,
+            )
+            PvotIconButton(
+                icon = painterResource(R.drawable.ic_x),
+                contentDescription = stringResource(R.string.action_menu_back_from_search),
+                onClick = ::onBack,
+                modifier = Modifier.testTag(TestTags.SEARCH_BACK),
             )
         }
     }

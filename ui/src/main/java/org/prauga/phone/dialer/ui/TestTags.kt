@@ -122,7 +122,6 @@ object TestTags {
 
     /** The search button in a main tab's header, as on the contacts tab. */
     const val TAB_SEARCH = "tab_search"
-    const val SEARCH_VOICE = "search_voice"
     const val SEARCH_BACK = "search_back"
     const val SEARCH_FIELD = "search_field"
 
