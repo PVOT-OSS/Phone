@@ -72,7 +72,7 @@ import org.prauga.phone.dialer.ui.TabHeaderDefaults
 import org.prauga.phone.dialer.ui.TestTags
 
 /**
- * The main screen's toolbar: the selected tab's large title with the avatar that opens the app
+ * The main screen's toolbar: the selected tab's title with the options button that opens the app
  * menu, which expands into the search field, with voice search, when search opens.
  * [org.prauga.phone.dialer.main.impl.MainSearchController] drives it.
  */
@@ -183,7 +183,10 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         titleRes = title
     }
 
-    /** Opens the app menu, as the avatar does; for the dialpad tab, which has its own header. */
+    /**
+     * Opens the app menu, as the options button does; for the dialpad tab, which has its own
+     * header.
+     */
     fun openMenu() {
         menuOpen = true
     }
