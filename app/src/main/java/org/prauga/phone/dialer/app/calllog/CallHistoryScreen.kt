@@ -10,20 +10,10 @@ import android.text.TextUtils
 import androidx.activity.compose.BackHandler
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -54,16 +44,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.hideFromAccessibility
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -83,9 +69,6 @@ import com.prauga.pvot.designsystem.components.list.PvotLetterTileDefaults
 import com.prauga.pvot.designsystem.components.list.PvotListRow
 import com.prauga.pvot.designsystem.components.list.PvotSwipeRow
 import com.prauga.pvot.designsystem.components.list.PvotSwipeRowDefaults
-import com.prauga.pvot.designsystem.motion.PvotDurations
-import com.prauga.pvot.designsystem.motion.PvotMotion
-import com.prauga.pvot.designsystem.theme.PvotShapes
 import com.prauga.pvot.designsystem.theme.PvotSpacing
 import kotlinx.coroutines.launch
 import org.prauga.phone.dialer.R
@@ -130,8 +113,8 @@ interface CallHistoryActions {
 }
 
 /**
- * A call history list: calls under Today, Yesterday and Older, grouped by caller. Tapping a row
- * opens its actions; swiping it calls back or deletes it, with Undo.
+ * A call history list: calls under Today, Yesterday and Older, grouped by caller. Tapping a call
+ * calls back and its info button opens the details; a voicemail opens as a card.
  *
  * @param emptyMessage What to say when there are no calls
  * @param showEmptyAction Whether the empty list offers "Make a call"
@@ -371,14 +354,37 @@ private fun HistoryList(
                         } else {
                             HistoryRow(
                                 row = row,
-                                expanded = expanded,
                                 isSelected = group.rowId in selection,
-                                onClick = onClick,
+                                // Calling back or opening the details reads a missed call, so
+                                // the tab's badge drops; an emergency number only calls from
+                                // its swipe, never from a stray tap.
+                                onClick = {
+                                    when {
+                                        selecting -> select(selection.toggled(group.rowId))
+                                        row.canCallBack && !row.isEmergency -> {
+                                            actions.opened(row)
+                                            actions.primaryAction(row)
+                                        }
+                                        RowAction.DETAILS in row.actions -> {
+                                            actions.opened(row)
+                                            actions.rowAction(row, RowAction.DETAILS)
+                                        }
+                                    }
+                                },
                                 onLongClick = onLongClick,
-                                onPlay = onPlay,
+                                onDetails = {
+                                    if (selecting) {
+                                        select(selection.toggled(group.rowId))
+                                    } else {
+                                        actions.opened(row)
+                                        actions.rowAction(row, RowAction.DETAILS)
+                                    }
+                                },
+                                onCall = {
+                                    actions.opened(row)
+                                    actions.primaryAction(row)
+                                },
                                 onDelete = onDelete,
-                                actions = actions,
-                                onRowAction = onRowAction,
                             )
                         }
                     }
@@ -538,180 +544,104 @@ private fun DayHeader(dayGroup: Int, modifier: Modifier = Modifier) {
     )
 }
 
-@OptIn(ExperimentalLayoutApi::class)
+/** Whether tapping the row calls back: a call, video call or the voicemail number. */
+private val CallLogRowUi.canCallBack: Boolean
+    get() =
+        primaryAction == PrimaryAction.CALL ||
+            primaryAction == PrimaryAction.VIDEO_CALL ||
+            primaryAction == PrimaryAction.CALL_VOICEMAIL
+
+/**
+ * A call: tapping or swiping toward the end calls back, the info button opens the call details, and
+ * swiping toward the start deletes it, with Undo.
+ */
 @Composable
 private fun HistoryRow(
     row: CallLogRowUi,
-    expanded: Boolean,
     isSelected: Boolean,
     onClick: () -> Unit,
     onLongClick: (() -> Unit)?,
-    onPlay: () -> Unit,
+    onDetails: () -> Unit,
+    onCall: () -> Unit,
     onDelete: () -> Unit,
-    actions: CallHistoryActions,
-    onRowAction: (RowAction) -> Unit,
 ) {
-    val canSwipeCall =
-        row.primaryAction == PrimaryAction.CALL ||
-            row.primaryAction == PrimaryAction.VIDEO_CALL ||
-            row.primaryAction == PrimaryAction.CALL_VOICEMAIL
-    // The open row is a card: the row on top, its actions under it.
-    val cardColor by
-        animateColorAsState(
-            if (expanded) MaterialTheme.colorScheme.surfaceContainer
-            else MaterialTheme.colorScheme.background,
-            tween(PvotDurations.Medium, easing = PvotMotion.Settle),
-            label = "openRowCard",
-        )
-    Column(
-        Modifier.fullWidthRow()
-            .padding(vertical = if (expanded) PvotSpacing.XS else 0.dp)
-            .clip(PvotShapes.Card)
-            .background(cardColor)
-    ) {
-        PvotSwipeRow(
-            containerColor = cardColor,
-            thresholdFraction = SwipeThresholdFraction,
-            dragResistance = SwipeDragResistance,
-            startAction =
-                if (canSwipeCall) {
-                    PvotSwipeRowDefaults.action(
-                        label = stringResource(R.string.call),
-                        icon = painterResource(R.drawable.ic_phone),
-                        onSwipe = { actions.primaryAction(row) },
-                    )
-                } else null,
-            endAction =
-                PvotSwipeRowDefaults.destructiveAction(
-                    label = stringResource(R.string.call_history_delete),
-                    icon = painterResource(R.drawable.ic_trash),
-                    onSwipe = onDelete,
-                ),
-        ) {
-            PvotListRow(
-                title = {
-                    Text(
-                        text = row.title,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        fontWeight = if (row.group.isRead) null else FontWeight.Bold,
-                        style =
-                            MaterialTheme.typography.titleMedium.copy(
-                                textDirection =
-                                    if (row.titleIsNumber) TextDirection.Ltr
-                                    else TextDirection.Content
-                            ),
-                        color =
-                            if (row.group.callType == Calls.MISSED_TYPE && !row.group.isRead) {
-                                MaterialTheme.colorScheme.error
-                            } else {
-                                MaterialTheme.colorScheme.onSurface
-                            },
-                    )
-                },
-                modifier = Modifier.testTag(TestTags.callHistoryRow(row.group.rowId)),
-                supportingText = { RowDetails(row) },
-                leading = {
-                    if (isSelected) {
-                        SelectedTile()
-                    } else {
-                        ContactAvatar(
-                            name = row.title,
-                            photoUri = row.info.photoUri?.toString(),
-                            colorKey = row.info.lookupKey ?: row.group.number,
-                        )
-                    }
-                },
-                trailing = { PrimaryButton(row, onPlay, actions) },
-                onClick = onClick,
-                onLongClick = onLongClick,
-                selected = isSelected,
-            )
-        }
-        AnimatedVisibility(
-            visible = expanded && row.actions.isNotEmpty(),
-            enter =
-                expandVertically(tween(PvotDurations.Medium, easing = PvotMotion.Settle)) +
-                    fadeIn(tween(PvotDurations.Medium)),
-            exit =
-                shrinkVertically(tween(PvotDurations.Short)) + fadeOut(tween(PvotDurations.Short)),
-        ) {
-            RowActions(row, onRowAction)
-        }
-    }
-}
-
-/**
- * The open row's actions: round buttons with their labels under them, up to four to a line in equal
- * columns, below a gap that keeps them clear of the row.
- */
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun RowActions(row: CallLogRowUi, onRowAction: (RowAction) -> Unit) {
-    // A few actions share the card's width; more wrap, four to a line.
-    val perLine = row.actions.size.coerceIn(1, ActionsPerLine)
-    FlowRow(
-        modifier =
-            Modifier.fillMaxWidth()
-                .padding(
-                    start = PvotSpacing.S,
-                    end = PvotSpacing.S,
-                    top = PvotSpacing.S,
-                    bottom = PvotSpacing.L,
+    PvotSwipeRow(
+        modifier = Modifier.fullWidthRow(),
+        containerColor = MaterialTheme.colorScheme.background,
+        thresholdFraction = SwipeThresholdFraction,
+        dragResistance = SwipeDragResistance,
+        startAction =
+            if (row.canCallBack) {
+                PvotSwipeRowDefaults.action(
+                    label = stringResource(R.string.call),
+                    icon = painterResource(R.drawable.ic_phone),
+                    onSwipe = onCall,
                 )
-                .testTag(TestTags.callHistoryActions(row.group.rowId)),
-        maxItemsInEachRow = perLine,
-        verticalArrangement = Arrangement.spacedBy(PvotSpacing.L),
+            } else null,
+        endAction =
+            PvotSwipeRowDefaults.destructiveAction(
+                label = stringResource(R.string.call_history_delete),
+                icon = painterResource(R.drawable.ic_trash),
+                onSwipe = onDelete,
+            ),
     ) {
-        for (action in row.actions) {
-            val (label, icon) = labelAndIcon(action, row)
-            val destructive = action == RowAction.DELETE || action == RowAction.BLOCK
-            Column(
-                Modifier.weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(PvotSpacing.S),
-            ) {
-                PvotIconButton(
-                    icon = painterResource(icon),
-                    contentDescription = label,
-                    onClick = { onRowAction(action) },
-                    colors =
-                        if (destructive) {
-                            PvotIconButtonDefaults.tonalColors()
-                                .copy(contentColor = MaterialTheme.colorScheme.error)
-                        } else {
-                            PvotIconButtonDefaults.tonalColors()
-                        },
-                    modifier =
-                        Modifier.testTag(TestTags.callHistoryAction(row.group.rowId, action.name)),
-                )
+        PvotListRow(
+            title = {
                 Text(
-                    text = label,
-                    style = MaterialTheme.typography.labelMedium,
-                    color =
-                        if (destructive) MaterialTheme.colorScheme.error
-                        else MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                    maxLines = 2,
+                    text = row.title,
+                    maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    // The button says this to TalkBack; the label is a bigger target for the
-                    // finger.
-                    modifier =
-                        Modifier.padding(horizontal = PvotSpacing.XS)
-                            .semantics { hideFromAccessibility() }
-                            .clickable(interactionSource = null, indication = null) {
-                                onRowAction(action)
-                            },
+                    fontWeight = if (row.group.isRead) null else FontWeight.Bold,
+                    style =
+                        MaterialTheme.typography.titleMedium.copy(
+                            textDirection =
+                                if (row.titleIsNumber) TextDirection.Ltr else TextDirection.Content
+                        ),
+                    color =
+                        if (row.group.callType == Calls.MISSED_TYPE && !row.group.isRead) {
+                            MaterialTheme.colorScheme.error
+                        } else {
+                            MaterialTheme.colorScheme.onSurface
+                        },
                 )
-            }
-        }
-        // A short last line keeps its buttons under the columns above.
-        repeat((perLine - row.actions.size % perLine) % perLine) { Spacer(Modifier.weight(1f)) }
+            },
+            modifier = Modifier.testTag(TestTags.callHistoryRow(row.group.rowId)),
+            supportingText = { RowDetails(row) },
+            leading = {
+                if (isSelected) {
+                    SelectedTile()
+                } else {
+                    ContactAvatar(
+                        name = row.title,
+                        photoUri = row.info.photoUri?.toString(),
+                        colorKey = row.info.lookupKey ?: row.group.number,
+                    )
+                }
+            },
+            trailing = {
+                if (RowAction.DETAILS in row.actions) {
+                    PvotIconButton(
+                        icon = painterResource(R.drawable.ic_info_small),
+                        contentDescription = stringResource(R.string.call_log_action_details),
+                        onClick = onDetails,
+                        size = PvotIconButtonDefaults.SmallSize,
+                        iconSize = PvotIconButtonDefaults.IconSize,
+                        colors =
+                            PvotIconButtonDefaults.tonalColors()
+                                .copy(contentColor = MaterialTheme.colorScheme.primary),
+                        modifier =
+                            Modifier.testTag(
+                                TestTags.callHistoryAction(row.group.rowId, RowAction.DETAILS.name)
+                            ),
+                    )
+                }
+            },
+            onClick = onClick,
+            onLongClick = onLongClick,
+            selected = isSelected,
+        )
     }
 }
-
-/** The most columns of the open row's actions. */
-private const val ActionsPerLine = 4
 
 // A recents row calls or deletes when swiped, so it takes a firmer, longer swipe than the default.
 private const val SwipeThresholdFraction = 0.45f
@@ -851,36 +781,3 @@ private fun callTypeIcon(type: Int): Pair<Int, Int> =
         Calls.BLOCKED_TYPE -> R.drawable.ic_call_blocked to R.string.type_blocked
         else -> R.drawable.ic_call_missed to R.string.type_missed
     }
-
-@Composable
-private fun PrimaryButton(row: CallLogRowUi, onPlay: () -> Unit, actions: CallHistoryActions) {
-    @DrawableRes val icon: Int
-    @StringRes val description: Int
-    when (row.primaryAction) {
-        PrimaryAction.NONE -> return
-        PrimaryAction.VIDEO_CALL -> {
-            icon = R.drawable.ic_video
-            description = R.string.description_video_call_action
-        }
-        PrimaryAction.PLAY_VOICEMAIL -> {
-            icon = R.drawable.ic_player_play
-            description = R.string.description_voicemail_action
-        }
-        PrimaryAction.CALL,
-        PrimaryAction.CALL_VOICEMAIL -> {
-            icon = R.drawable.ic_phone
-            description = R.string.description_call_action
-        }
-    }
-    PvotIconButton(
-        icon = painterResource(icon),
-        contentDescription =
-            TextUtils.expandTemplate(stringResource(description), row.title).toString(),
-        onClick = {
-            if (row.primaryAction == PrimaryAction.PLAY_VOICEMAIL) onPlay()
-            else actions.primaryAction(row)
-        },
-        modifier = Modifier.testTag(TestTags.callHistoryPrimary(row.group.rowId)),
-        colors = PvotIconButtonDefaults.plainColors(MaterialTheme.colorScheme.primary),
-    )
-}
