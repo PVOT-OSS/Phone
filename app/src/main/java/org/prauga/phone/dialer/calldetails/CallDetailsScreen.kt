@@ -106,6 +106,17 @@ internal interface CallDetailsActions {
 
     fun delete()
 
+    /** Blocks the number, or unblocks it; the screen asks before blocking. */
+    fun setBlocked(block: Boolean) = Unit
+
+    /**
+     * Saves the number as a new contact, or adds it to an existing one when [newContact] is false.
+     */
+    fun addContact(newContact: Boolean) = Unit
+
+    /** Sets a reminder to call back. */
+    fun remind() = Unit
+
     /** Deletes one call; the screen asks first. */
     fun deleteCall(entry: CallDetailsEntryUi)
 
@@ -117,8 +128,9 @@ internal interface CallDetailsActions {
 }
 
 /**
- * The call details: who and how to reach them on a card of glass, each call, then copy, edit and
- * delete. The top bar turns to glass once the list scrolls under it.
+ * The call details: who and how to reach them on a card of glass, each call, then copy, edit, a
+ * call-back reminder, saving the number, block and delete. The top bar turns to glass once the list
+ * scrolls under it.
  *
  * @param avatar The contact's picture at the size given; it opens Quick Contact when tapped
  */
@@ -130,8 +142,12 @@ internal fun CallDetailsScreen(
     callWithIntent: Intent?,
     actions: CallDetailsActions,
     avatar: @Composable (Dp) -> Unit,
+    blocked: Boolean? = null,
+    canAddContact: Boolean = false,
+    canRemind: Boolean = false,
 ) {
     var recordingsToPick by remember { mutableStateOf<List<CallRecording>?>(null) }
+    var askBlock by remember { mutableStateOf(false) }
     var askDeleteCall by remember { mutableStateOf<CallDetailsEntryUi?>(null) }
     var askDeleteAll by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
@@ -238,6 +254,75 @@ internal fun CallDetailsScreen(
                             )
                         }
                     }
+                    if (canRemind) {
+                        item {
+                            PvotPreferenceRow(
+                                title = stringResource(R.string.callback_reminder_action),
+                                onClick = actions::remind,
+                                icon = {
+                                    Icon(
+                                        painterResource(R.drawable.ic_bell),
+                                        contentDescription = null,
+                                    )
+                                },
+                                iconStyle = PvotRowIconStyle.Plain,
+                                showChevron = false,
+                            )
+                        }
+                    }
+                    if (canAddContact) {
+                        item {
+                            PvotPreferenceRow(
+                                title = stringResource(R.string.search_shortcut_create_new_contact),
+                                onClick = { actions.addContact(newContact = true) },
+                                icon = {
+                                    Icon(
+                                        painterResource(R.drawable.ic_user_plus),
+                                        contentDescription = null,
+                                    )
+                                },
+                                iconStyle = PvotRowIconStyle.Plain,
+                                showChevron = false,
+                            )
+                        }
+                        item {
+                            PvotPreferenceRow(
+                                title = stringResource(R.string.search_shortcut_add_to_contact),
+                                onClick = { actions.addContact(newContact = false) },
+                                icon = {
+                                    Icon(
+                                        painterResource(R.drawable.ic_user),
+                                        contentDescription = null,
+                                    )
+                                },
+                                iconStyle = PvotRowIconStyle.Plain,
+                                showChevron = false,
+                            )
+                        }
+                    }
+                    if (ui.hasNumber && blocked != null) {
+                        item {
+                            PvotPreferenceRow(
+                                title =
+                                    stringResource(
+                                        if (blocked) R.string.call_log_action_unblock_number
+                                        else R.string.call_log_action_block_number
+                                    ),
+                                onClick = {
+                                    if (blocked) actions.setBlocked(false) else askBlock = true
+                                },
+                                icon = {
+                                    Icon(
+                                        painterResource(R.drawable.ic_ban),
+                                        contentDescription = null,
+                                    )
+                                },
+                                iconStyle = PvotRowIconStyle.Plain,
+                                showChevron = false,
+                                colors = if (blocked) PvotListRowDefaults.themeColors() else danger,
+                            )
+                        }
+                    }
                     item {
                         PvotPreferenceRow(
                             title = stringResource(R.string.delete),
@@ -282,6 +367,28 @@ internal fun CallDetailsScreen(
             PvotDialogAction(
                 label = stringResource(android.R.string.cancel),
                 onClick = { askDeleteCall = null },
+            )
+        }
+    }
+    if (askBlock) {
+        PvotDialog(
+            visible = true,
+            onDismissRequest = { askBlock = false },
+            title = stringResource(R.string.block_number_confirmation_title, ui.header.title),
+            message = stringResource(R.string.block_report_number_alert_details),
+            destructive = true,
+        ) {
+            PvotDialogAction(
+                label = stringResource(R.string.block_number_ok),
+                onClick = {
+                    askBlock = false
+                    actions.setBlocked(true)
+                },
+                style = PvotDialogActionStyle.Destructive,
+            )
+            PvotDialogAction(
+                label = stringResource(android.R.string.cancel),
+                onClick = { askBlock = false },
             )
         }
     }

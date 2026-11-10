@@ -7,6 +7,7 @@ package org.prauga.phone.dialer.calldetails
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.provider.BlockedNumberContract
 import android.provider.CallLog.Calls
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,6 +23,7 @@ import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.prauga.phone.dialer.R
+import org.prauga.phone.dialer.app.calllog.DefaultCallHistoryRepository
 import org.prauga.phone.dialer.calllogutils.CallbackActionHelper
 import org.prauga.phone.dialer.callrecord.CallRecording
 import org.prauga.phone.dialer.callrecord.CallRecordingDataStore
@@ -30,6 +32,7 @@ import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.dialercontact.DialerContact
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper
 import org.prauga.phone.dialer.rtt.RttTranscriptUtil
+import org.prauga.phone.dialer.telecom.TelecomUtil
 
 /**
  * The call details across recreation: the contact and the calls as the user has left them, so a
@@ -58,6 +61,14 @@ internal class CallDetailsViewModel(
     var assistedDialingCountryCode by mutableStateOf<Int?>(null)
         private set
 
+    /**
+     * Whether the number is blocked; null when this app can't block it (not the default phone app).
+     */
+    var blocked by mutableStateOf<Boolean?>(null)
+        private set
+
+    private val blockedNumbers = DefaultCallHistoryRepository(application)
+
     /** True once the whole history is deleted and the screen has nothing left to show. */
     var finished by mutableStateOf(false)
         private set
@@ -81,6 +92,30 @@ internal class CallDetailsViewModel(
         handle[KEY_ENTRIES] = entries.toByteArray()
         assistedDialingCountryCode = null
         if (hasEntries) load()
+    }
+
+    /** Blocks the number, or unblocks it. */
+    fun setBlocked(block: Boolean) {
+        val number = contact.number
+        if (number.isEmpty()) return
+        blocked = block
+        viewModelScope.launch {
+            if (block) blockedNumbers.block(number, null) else blockedNumbers.unblock(number)
+        }
+    }
+
+    private fun loadBlocked() {
+        val number = contact.number
+        viewModelScope.launch {
+            blocked =
+                withContext(Dispatchers.IO) {
+                    val canBlock =
+                        number.isNotEmpty() &&
+                            TelecomUtil.isDefaultDialer(application) &&
+                            BlockedNumberContract.canCurrentUserBlockNumbers(application)
+                    if (canBlock) BlockedNumberContract.isBlocked(application, number) else null
+                }
+        }
     }
 
     /** Removes one call from the history, here and in the call log. */
@@ -112,6 +147,7 @@ internal class CallDetailsViewModel(
     private fun load() {
         loadJob?.cancel()
         ui = map()
+        loadBlocked()
         loadJob =
             viewModelScope.launch {
                 val recordings = withContext(Dispatchers.IO) { loadRecordings() }
