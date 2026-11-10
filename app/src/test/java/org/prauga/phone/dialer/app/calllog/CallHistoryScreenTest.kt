@@ -151,26 +151,38 @@ class CallHistoryScreenTest {
     }
 
     @Test
-    fun tappingARowOpensItsActions() {
+    fun tappingARowCallsBack() {
         show()
-        compose.onNodeWithTag(TestTags.callHistoryActions(10)).assertDoesNotExist()
-
         compose.onNodeWithTag(TestTags.callHistoryRow(10)).performClick()
-        compose.onNodeWithTag(TestTags.callHistoryAction(10, "DETAILS")).performClick()
+        assertThat(actions.events).containsExactly("opened 10", "call 10").inOrder()
+    }
 
+    @Test
+    fun theInfoButtonOpensTheDetails() {
+        show()
+        compose.onNodeWithTag(TestTags.callHistoryAction(10, "DETAILS")).performClick()
         assertThat(actions.events).containsExactly("opened 10", "DETAILS 10").inOrder()
     }
 
     @Test
-    fun anOpenRowsLabelsRunTheirActionsToo() {
+    fun tappingARowOpensNoActions() {
         show()
         compose.onNodeWithTag(TestTags.callHistoryRow(10)).performClick()
-        compose
-            .onNode(
-                hasText("Call details") and
-                    hasAnyAncestor(hasTestTag(TestTags.callHistoryActions(10)))
+        compose.onNodeWithTag(TestTags.callHistoryActions(10)).assertDoesNotExist()
+    }
+
+    @Test
+    fun tappingAnEmergencyNumberOpensItsDetailsInsteadOfCalling() {
+        val emergency =
+            rows.getValue(10L).copy(isEmergency = true, actions = listOf(RowAction.DETAILS))
+        state =
+            CallHistoryUiState.Loaded(
+                listOf(missed, incoming, older),
+                emptySet(),
+                rows = rows + (10L to emergency),
             )
-            .performClick()
+        show()
+        compose.onNodeWithTag(TestTags.callHistoryRow(10)).performClick()
         assertThat(actions.events).containsExactly("opened 10", "DETAILS 10").inOrder()
     }
 
@@ -193,22 +205,6 @@ class CallHistoryScreenTest {
         assertThat(actions.events)
             .containsExactly("selecting true", "deleteSelected [10, 20]", "selecting false")
             .inOrder()
-    }
-
-    @Test
-    fun theButtonAtTheEndCallsBack() {
-        show()
-        compose.onNodeWithTag(TestTags.callHistoryPrimary(20)).performClick()
-        assertThat(actions.events).containsExactly("call 20")
-    }
-
-    @Test
-    fun blockingAsksFirst() {
-        show()
-        compose.onNodeWithTag(TestTags.callHistoryRow(10)).performClick()
-        compose.onNodeWithTag(TestTags.callHistoryAction(10, "BLOCK")).performClick()
-        compose.onNodeWithText("BLOCK").performClick()
-        assertThat(actions.events).containsExactly("opened 10", "block 10").inOrder()
     }
 
     @Test

@@ -122,6 +122,9 @@ internal interface CallDetailsActions {
     /** Sets a reminder to call back. */
     fun remind() = Unit
 
+    /** Asks for a note, and whether it's urgent, before calling back. */
+    fun callWithNote() = Unit
+
     /** Deletes one call; the screen asks first. */
     fun deleteCall(entry: CallDetailsEntryUi)
 
@@ -133,9 +136,9 @@ internal interface CallDetailsActions {
 }
 
 /**
- * The call details: who and how to reach them on a card of glass, each call, then copy, edit, a
- * call-back reminder, saving the number, block and delete. The top bar turns to glass once the list
- * scrolls under it.
+ * The call details: who and how to reach them on a card of glass, each call, then copy, edit, call
+ * with a note, a call-back reminder, saving the number, block and delete. The top bar turns to
+ * glass once the list scrolls under it.
  *
  * @param avatar The contact's picture at the size given; it opens Quick Contact when tapped
  */
@@ -150,6 +153,7 @@ internal fun CallDetailsScreen(
     blocked: Boolean? = null,
     canAddContact: Boolean = false,
     canRemind: Boolean = false,
+    canCallWithNote: Boolean = false,
 ) {
     var recordingsToPick by remember { mutableStateOf<List<CallRecording>?>(null) }
     var askBlock by remember { mutableStateOf(false) }
@@ -254,6 +258,22 @@ internal fun CallDetailsScreen(
                                 icon = {
                                     Icon(
                                         painterResource(R.drawable.ic_pencil),
+                                        contentDescription = null,
+                                    )
+                                },
+                                iconStyle = PvotRowIconStyle.Plain,
+                                showChevron = false,
+                            )
+                        }
+                    }
+                    if (canCallWithNote) {
+                        item {
+                            PvotPreferenceRow(
+                                title = stringResource(R.string.call_with_a_note),
+                                onClick = actions::callWithNote,
+                                icon = {
+                                    Icon(
+                                        painterResource(R.drawable.ic_call_note),
                                         contentDescription = null,
                                     )
                                 },

@@ -17,6 +17,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import androidx.test.core.app.ApplicationProvider
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.google.common.truth.Truth.assertThat
@@ -225,6 +226,23 @@ class CallDetailsTest {
     }
 
     @Test
+    fun callWithANoteIsHiddenWhenNoAccountTakesNotes() {
+        show(map())
+        compose.onNodeWithText(context.getString(R.string.call_with_a_note)).assertDoesNotExist()
+    }
+
+    @Test
+    fun callWithANoteReachesTheActivity() {
+        val actions = RecordingActions()
+        show(map(), actions, canCallWithNote = true)
+        compose
+            .onNodeWithText(context.getString(R.string.call_with_a_note))
+            .performScrollTo()
+            .performClick()
+        assertThat(actions.calls).containsExactly("callWithNote")
+    }
+
+    @Test
     fun theHeroShowsTheNameAndNumber() {
         show(map())
         compose.onNodeWithText("Alex Doe").assertIsDisplayed()
@@ -247,6 +265,7 @@ class CallDetailsTest {
         ui: CallDetailsUi,
         actions: CallDetailsActions = RecordingActions(),
         callWith: Intent? = null,
+        canCallWithNote: Boolean = false,
     ) {
         compose.setContent {
             SolidGlassTheme {
@@ -256,6 +275,7 @@ class CallDetailsTest {
                     callWithIntent = callWith,
                     actions = actions,
                     avatar = { PvotAvatar(name = "Alex Doe", size = it) },
+                    canCallWithNote = canCallWithNote,
                 )
             }
         }
@@ -287,6 +307,10 @@ class CallDetailsTest {
 
         override fun delete() {
             calls += "delete"
+        }
+
+        override fun callWithNote() {
+            calls += "callWithNote"
         }
 
         override fun deleteCall(entry: CallDetailsEntryUi) {
