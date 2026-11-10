@@ -44,6 +44,8 @@ import com.prauga.pvot.designsystem.components.PvotCard
 import com.prauga.pvot.designsystem.components.PvotScreen
 import com.prauga.pvot.designsystem.components.button.PvotButton
 import com.prauga.pvot.designsystem.components.button.PvotButtonStyle
+import com.prauga.pvot.designsystem.components.button.PvotIconButton
+import com.prauga.pvot.designsystem.components.button.PvotIconButtonDefaults
 import com.prauga.pvot.designsystem.components.list.PvotLetterTileDefaults
 import com.prauga.pvot.designsystem.components.list.PvotListRow
 import com.prauga.pvot.designsystem.theme.PvotSpacing
@@ -194,9 +196,10 @@ private fun NumberRow(row: SearchRow.Number, actions: SearchActions) {
                 Spacer(Modifier.size(PvotLetterTileDefaults.Size))
             }
         },
-        trailing =
-            if (row.canVideoCall) {
-                {
+        // A round call button, as iOS has it; video, when the number takes it, goes before it.
+        trailing = {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                if (row.canVideoCall) {
                     IconButton(onClick = { actions.videoCall(row.number, row.position) }) {
                         Icon(
                             painter = painterResource(R.drawable.ic_video),
@@ -206,7 +209,16 @@ private fun NumberRow(row: SearchRow.Number, actions: SearchActions) {
                         )
                     }
                 }
-            } else null,
+                PvotIconButton(
+                    icon = painterResource(R.drawable.ic_phone),
+                    contentDescription = stringResource(R.string.call),
+                    onClick = { actions.call(row.number, row.position) },
+                    colors =
+                        PvotIconButtonDefaults.tonalColors()
+                            .copy(contentColor = MaterialTheme.colorScheme.primary),
+                )
+            }
+        },
         onClick = { actions.call(row.number, row.position) },
     )
 }

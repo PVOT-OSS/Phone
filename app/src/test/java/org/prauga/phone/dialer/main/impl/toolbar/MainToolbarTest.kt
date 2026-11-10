@@ -92,6 +92,16 @@ class MainToolbarTest {
     }
 
     @Test
+    fun aVoiceResultFillsTheSearch() {
+        show()
+        compose.runOnUiThread { toolbar.expand(false, Optional.empty(), false) }
+        compose.onNodeWithTag(TestTags.SEARCH_VOICE).performClick()
+        compose.runOnUiThread { voiceCallback!!.setResult("carol") }
+        assertThat(toolbar.isExpanded()).isTrue()
+        assertThat(events).containsExactly("voice", "query carol").inOrder()
+    }
+
+    @Test
     fun theHeaderShowsTheSelectedTabsTitle() {
         show()
         compose.runOnUiThread { toolbar.setTitle(R.string.tab_title_call_history) }
@@ -165,16 +175,6 @@ class MainToolbarTest {
         compose.runOnUiThread { toolbar.expand(false, Optional.of("ada"), false) }
         compose.onNodeWithContentDescription("Clear search").performClick()
         assertThat(toolbar.getQuery()).isEmpty()
-    }
-
-    @Test
-    fun aVoiceResultFillsTheSearch() {
-        show()
-        compose.runOnUiThread { toolbar.expand(false, Optional.empty(), false) }
-        compose.onNodeWithTag(TestTags.SEARCH_VOICE).performClick()
-        compose.runOnUiThread { voiceCallback!!.setResult("carol") }
-        assertThat(toolbar.isExpanded()).isTrue()
-        assertThat(events).containsExactly("voice", "query carol").inOrder()
     }
 
     @Test
