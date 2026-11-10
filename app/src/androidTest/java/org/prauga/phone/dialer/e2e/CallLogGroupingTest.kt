@@ -19,7 +19,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
-import org.prauga.phone.dialer.app.calllog.CallLogActivity
+import org.prauga.phone.dialer.R
+import org.prauga.phone.dialer.app.MainComponent
 import org.prauga.phone.dialer.app.calllog.CallLogGroupBuilder
 import org.prauga.phone.dialer.phonenumbercache.CallLogQuery
 import org.prauga.phone.dialer.testing.FakeCallSpec
@@ -79,11 +80,25 @@ class CallLogGroupingTest {
             }
         }
 
+        // The Missed filter of the Recent tab.
         context.startActivity(
-            Intent(context, CallLogActivity::class.java)
-                .putExtra(CallLog.Calls.EXTRA_CALL_TYPE_FILTER, CallLog.Calls.MISSED_TYPE)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            MainComponent.getShowCallLogIntent(context).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         )
+        val filter =
+            checkNotNull(
+                deviceRule.device.wait(
+                    Until.findObject(By.res("recents_filter")),
+                    CallTests.TIMEOUT_MILLIS,
+                )
+            ) {
+                "no All / Missed filter"
+            }
+        checkNotNull(
+                filter.findObject(By.text(context.getString(R.string.call_log_missed_title)))
+            ) {
+                "no Missed choice"
+            }
+            .click()
 
         assertNotNull(
             "declined call not listed under Missed",

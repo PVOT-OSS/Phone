@@ -39,6 +39,7 @@ import androidx.fragment.app.FragmentTransaction;
 import org.prauga.phone.contacts.common.dialog.ClearFrequentsDialog;
 import org.prauga.phone.dialer.R;
 import org.prauga.phone.dialer.app.calllog.CallLogActivity;
+import org.prauga.phone.dialer.app.calllog.ClearCallHistoryDialog;
 import org.prauga.phone.dialer.app.settings.DialerSettingsActivity;
 import org.prauga.phone.dialer.callintent.CallInitiationType;
 import org.prauga.phone.dialer.common.LogUtil;
@@ -559,8 +560,11 @@ public class MainSearchController implements SearchBarListener {
       case CLEAR_FREQUENTS:
         ClearFrequentsDialog.show(activity.getSupportFragmentManager());
         break;
-      case CALL_HISTORY:
+      case CALL_STATS:
         activity.startActivity(new Intent(activity, CallLogActivity.class));
+        break;
+      case CLEAR_CALL_HISTORY:
+        ClearCallHistoryDialog.show(activity.getSupportFragmentManager());
         break;
       case HELPLINES:
         activity.startActivity(new Intent(activity, HelplineActivity.class));
