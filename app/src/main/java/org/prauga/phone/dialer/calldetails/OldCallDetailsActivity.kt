@@ -23,6 +23,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.CallLog.Calls
 import android.provider.MediaStore
 import android.text.format.DateFormat
 import android.webkit.MimeTypeMap
@@ -52,8 +53,11 @@ import java.util.Date
 import java.util.Locale
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.AccountSelectionActivity
+import org.prauga.phone.dialer.app.calllog.IntentProvider
+import org.prauga.phone.dialer.app.settings.IncomingCallSettings
 import org.prauga.phone.dialer.callintent.CallInitiationType
 import org.prauga.phone.dialer.callintent.CallIntentBuilder
+import org.prauga.phone.dialer.calllogutils.CallbackActionHelper.CallbackAction
 import org.prauga.phone.dialer.callrecord.CallRecording
 import org.prauga.phone.dialer.clipboard.ClipboardUtils
 import org.prauga.phone.dialer.common.LogUtil
@@ -64,6 +68,7 @@ import org.prauga.phone.dialer.main.impl.SnackbarPrompt
 import org.prauga.phone.dialer.postcall.PostCall
 import org.prauga.phone.dialer.precall.PreCall
 import org.prauga.phone.dialer.protos.ProtoParsers
+import org.prauga.phone.dialer.reminder.CallbackReminderActivity
 import org.prauga.phone.dialer.rtt.RttTranscriptActivity
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.PhoneSnackbarHost
@@ -72,10 +77,14 @@ import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.util.CallUtil
 import org.prauga.phone.dialer.util.DialerUtils
 import org.prauga.phone.dialer.util.IntentUtil
+import org.prauga.phone.dialer.util.UriUtils
 
 /**
  * The calls with one number, opened from the call history, with call back, copy, edit and delete.
  */
+/** No number type for a contact made from a call, so the contacts app picks its default. */
+private const val NO_NUMBER_TYPE = -1
+
 class OldCallDetailsActivity : ComponentActivity() {
 
     private val viewModel: CallDetailsViewModel by viewModels {
@@ -113,6 +122,9 @@ class OldCallDetailsActivity : ComponentActivity() {
                                 CallInitiationType.Type.CALL_DETAILS,
                             ),
                         actions = actions,
+                        blocked = viewModel.blocked,
+                        canAddContact = ui.hasNumber && !isSavedContact(),
+                        canRemind = canRemind(ui),
                         avatar = { size ->
                             QuickContactAvatar(
                                 name = contact.nameOrNumber,
@@ -147,6 +159,21 @@ class OldCallDetailsActivity : ComponentActivity() {
         super.onResume()
         PostCall.promptUserForMessageIfNecessary(this, SnackbarPrompt(lifecycleScope, snackbars))
     }
+
+    /**
+     * Whether the number belongs to a contact, rather than only to the call log's cached lookup.
+     */
+    private fun isSavedContact(): Boolean {
+        val uri = contact.contactUri.ifEmpty { null }?.let(Uri::parse) ?: return false
+        return !UriUtils.isEncodedContactUri(uri)
+    }
+
+    /** A reminder is offered for a missed call that can be returned, while reminders are on. */
+    private fun canRemind(ui: CallDetailsUi): Boolean =
+        ui.entries.firstOrNull()?.callType == Calls.MISSED_TYPE &&
+            ui.header.callbackAction != CallbackAction.NONE &&
+            viewModel.blocked != true &&
+            IncomingCallSettings.callbackReminders(this)
 
     private fun handleIntent(intent: Intent) {
         viewModel.show(
@@ -204,6 +231,30 @@ class OldCallDetailsActivity : ComponentActivity() {
                 )
 
             override fun delete() = viewModel.deleteAll()
+
+            override fun setBlocked(block: Boolean) = viewModel.setBlocked(block)
+
+            override fun addContact(newContact: Boolean) {
+                val intent =
+                    IntentProvider.getAddContactIntentProvider(
+                            contact.contactUri.ifEmpty { null }?.let(Uri::parse),
+                            null,
+                            contact.number,
+                            NO_NUMBER_TYPE,
+                            newContact,
+                        )
+                        .getClickIntent(this@OldCallDetailsActivity)
+                DialerUtils.startActivityWithErrorToast(this@OldCallDetailsActivity, intent)
+            }
+
+            override fun remind() =
+                startActivity(
+                    CallbackReminderActivity.newIntent(
+                        this@OldCallDetailsActivity,
+                        contact.number,
+                        contact.nameOrNumber.takeIf { isSavedContact() },
+                    )
+                )
 
             override fun deleteCall(entry: CallDetailsEntryUi) = viewModel.deleteCall(entry.callId)
 
