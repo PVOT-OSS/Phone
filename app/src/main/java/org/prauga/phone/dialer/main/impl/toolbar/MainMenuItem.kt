@@ -7,7 +7,7 @@ package org.prauga.phone.dialer.main.impl.toolbar
 
 /** An item of the main screen's options menu. */
 enum class MainMenuItem {
-    CALL_HISTORY,
+    CALL_STATS,
     CLEAR_FREQUENTS,
     HELPLINES,
     SETTINGS,

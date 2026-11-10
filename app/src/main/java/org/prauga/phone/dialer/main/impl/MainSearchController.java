@@ -559,7 +559,7 @@ public class MainSearchController implements SearchBarListener {
       case CLEAR_FREQUENTS:
         ClearFrequentsDialog.show(activity.getSupportFragmentManager());
         break;
-      case CALL_HISTORY:
+      case CALL_STATS:
         activity.startActivity(new Intent(activity, CallLogActivity.class));
         break;
       case HELPLINES:

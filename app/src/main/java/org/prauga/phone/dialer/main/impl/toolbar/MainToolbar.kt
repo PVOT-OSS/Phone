@@ -311,9 +311,11 @@ class MainToolbar @JvmOverloads constructor(context: Context, attrs: AttributeSe
         }
         PvotBottomSheet(visible = true, onDismissRequest = { menuOpen = false }) {
             PvotSheetItem(
-                title = stringResource(R.string.action_menu_call_history_description),
-                icon = { Icon(painterResource(R.drawable.ic_history), contentDescription = null) },
-                onClick = { pick(MainMenuItem.CALL_HISTORY) },
+                title = stringResource(R.string.call_log_stats_title),
+                icon = {
+                    Icon(painterResource(R.drawable.ic_chart_bar), contentDescription = null)
+                },
+                onClick = { pick(MainMenuItem.CALL_STATS) },
             )
             if (clearFrequentsVisible) {
                 PvotSheetItem(

@@ -9,12 +9,9 @@ import android.Manifest.permission.READ_CALL_LOG
 import android.app.Application
 import android.content.Intent
 import android.os.Bundle
-import android.provider.CallLog
-import android.provider.CallLog.Calls
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,10 +25,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,28 +34,23 @@ import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.prauga.pvot.designsystem.components.PvotDialog
 import com.prauga.pvot.designsystem.components.PvotDialogAction
 import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
-import com.prauga.pvot.designsystem.components.PvotTabRow
-import com.prauga.pvot.designsystem.components.PvotTabRowDefaults
 import com.prauga.pvot.designsystem.components.pvotGlassSurface
 import com.prauga.pvot.designsystem.effects.LocalPvotGlassBackdrop
 import com.prauga.pvot.designsystem.effects.PvotGlassDefaults
 import com.prauga.pvot.designsystem.effects.PvotGlassMaterial
 import com.prauga.pvot.designsystem.navigation.PvotTopBar
-import com.prauga.pvot.designsystem.navigation.PvotTopBarAction
 import com.prauga.pvot.designsystem.navigation.PvotTopBarDefaults
 import com.prauga.pvot.designsystem.platform.enablePvotEdgeToEdge
 import com.prauga.pvot.designsystem.platform.setPvotContent
@@ -68,9 +58,6 @@ import com.prauga.pvot.designsystem.theme.PvotSpacing
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZoneOffset
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.callstats.CallStatsActions
 import org.prauga.phone.dialer.callstats.CallStatsDetailActivity
@@ -80,7 +67,6 @@ import org.prauga.phone.dialer.callstats.CallStatsListScreen
 import org.prauga.phone.dialer.callstats.CallStatsListViewModel
 import org.prauga.phone.dialer.clipboard.ClipboardUtils
 import org.prauga.phone.dialer.contacts.ContactsComponent
-import org.prauga.phone.dialer.database.CallLogQueryHandler
 import org.prauga.phone.dialer.phonenumberutil.PhoneNumberHelper
 import org.prauga.phone.dialer.ui.PhoneScaffold
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
@@ -88,251 +74,48 @@ import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.util.CallUtil
 import org.prauga.phone.dialer.util.DialerUtils
 
-/** The call history screen: all calls, missed calls and call statistics. */
+/** The call statistics screen, opened from the main screen's menu. */
 class CallLogActivity : ComponentActivity() {
-
-    private var selectedTab = TAB_ALL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enablePvotEdgeToEdge()
-        val startTab =
-            if (
-                intent?.getIntExtra(CallLog.Calls.EXTRA_CALL_TYPE_FILTER, -1) == Calls.MISSED_TYPE
-            ) {
-                TAB_MISSED
-            } else {
-                TAB_ALL
-            }
-        setPvotContent {
-            PhoneScreenTheme {
-                CallLogContent(
-                    startTab = startTab,
-                    onTabSelected = { tab ->
-                        selectedTab = tab
-                        if (tab != TAB_STATS) markMissedCallsAsRead()
-                    },
-                    onBack = ::goToMain,
-                    onClearHistory = ::clearHistory,
-                )
-            }
-        }
-    }
-
-    override fun onStop() {
-        if (!isChangingConfigurations && selectedTab != TAB_STATS) markMissedCallsAsRead()
-        super.onStop()
-    }
-
-    private fun markMissedCallsAsRead() {
-        if (getSystemService(android.app.KeyguardManager::class.java).isKeyguardLocked) return
-        CallLogQueryHandler(this, contentResolver, null).markMissedCallsAsRead()
-        CallLogNotificationsService.cancelAllMissedCalls(this)
-    }
-
-    private fun goToMain() {
-        startActivity(Intent(ACTION_MAIN).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-    }
-
-    private fun clearHistory() {
-        CallLogNotificationsService.cancelAllMissedCalls(this)
-        val appContext = applicationContext
-        lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                appContext.contentResolver.delete(Calls.CONTENT_URI, null, null)
-                appContext.contentResolver.notifyChange(Calls.CONTENT_URI, null)
-            }
-        }
-    }
-
-    companion object {
-        const val TAB_ALL = 0
-        const val TAB_MISSED = 1
-        const val TAB_CONTACTS = 2
-        const val TAB_BLOCKED = 3
-        const val TAB_STATS = 4
-
-        private const val ACTION_MAIN = "org.prauga.phone.dialer.main.impl.MAIN"
+        setPvotContent { PhoneScreenTheme { CallStatsContent(onBack = ::finish) } }
     }
 }
 
 @Composable
-private fun CallLogContent(
-    startTab: Int,
-    onTabSelected: (Int) -> Unit,
-    onBack: () -> Unit,
-    onClearHistory: () -> Unit,
-) {
-    val context = LocalContext.current
-    val application = context.applicationContext as Application
-    var tab by rememberSaveable { mutableIntStateOf(startTab) }
-    var confirmClear by remember { mutableStateOf(false) }
-    val allCalls: CallHistoryViewModel =
-        viewModel(
-            key = "all",
-            factory =
-                viewModelFactory {
-                    initializer {
-                        CallHistoryViewModel(application, CallLogQueryHandler.CALL_TYPE_ALL)
-                    }
-                },
-        )
-    val missedCalls: CallHistoryViewModel =
-        viewModel(
-            key = "missed",
-            factory =
-                viewModelFactory {
-                    initializer { CallHistoryViewModel(application, Calls.MISSED_TYPE) }
-                },
-        )
+private fun CallStatsContent(onBack: () -> Unit) {
+    val application = LocalContext.current.applicationContext as Application
     val stats: CallStatsListViewModel =
         viewModel(
-            key = "stats",
-            factory = viewModelFactory { initializer { CallStatsListViewModel(application) } },
+            factory = viewModelFactory { initializer { CallStatsListViewModel(application) } }
         )
-    val allState by allCalls.state.collectAsStateWithLifecycle()
-
-    PhoneScaffold(
-        topBar = {
-            CallLogTopBar(
-                tab = tab,
-                onTabSelected = {
-                    tab = it
-                    onTabSelected(it)
-                },
-                canClear = tab == CallLogActivity.TAB_ALL && allState is CallHistoryUiState.Loaded,
-                onBack = onBack,
-                onClear = { confirmClear = true },
-            )
-        }
-    ) { padding ->
-        // The lists scroll under the glass bar, so it frosts the calls as they pass.
-        val modifier = Modifier.fillMaxSize()
-        val topPadding = padding.calculateTopPadding()
-        when (tab) {
-            CallLogActivity.TAB_ALL ->
-                CallHistoryRoute(
-                    viewModel = allCalls,
-                    callType = CallLogQueryHandler.CALL_TYPE_ALL,
-                    showEmptyAction =
-                        showsEmptyAction(
-                            CallLogQueryHandler.CALL_TYPE_ALL,
-                            isCallLogActivity = true,
-                        ),
-                    onShowDialpad = {},
-                    onMissedCallRead = {},
-                    modifier = modifier,
-                    topPadding = topPadding,
-                )
-            CallLogActivity.TAB_MISSED ->
-                CallHistoryRoute(
-                    viewModel = missedCalls,
-                    callType = Calls.MISSED_TYPE,
-                    showEmptyAction = false,
-                    onShowDialpad = {},
-                    onMissedCallRead = {},
-                    modifier = modifier,
-                    topPadding = topPadding,
-                )
-            CallLogActivity.TAB_CONTACTS,
-            CallLogActivity.TAB_BLOCKED ->
-                CallHistoryRoute(
-                    viewModel = allCalls,
-                    callType = CallLogQueryHandler.CALL_TYPE_ALL,
-                    showEmptyAction = false,
-                    onShowDialpad = {},
-                    onMissedCallRead = {},
-                    modifier = modifier,
-                    topPadding = topPadding,
-                    filter =
-                        if (tab == CallLogActivity.TAB_CONTACTS) CallLogFilter.CONTACTS
-                        else CallLogFilter.BLOCKED,
-                )
-            else -> CallStatsRoute(stats, modifier, topPadding)
-        }
-    }
-
-    if (confirmClear) {
-        PvotDialog(
-            visible = true,
-            onDismissRequest = { confirmClear = false },
-            title = stringResource(R.string.clearCallLogConfirmation_title),
-            message = stringResource(R.string.clearCallLogConfirmation),
-            destructive = true,
-        ) {
-            PvotDialogAction(
-                label = stringResource(android.R.string.ok),
-                onClick = {
-                    confirmClear = false
-                    onClearHistory()
-                },
-                style = PvotDialogActionStyle.Destructive,
-            )
-            PvotDialogAction(
-                label = stringResource(android.R.string.cancel),
-                onClick = { confirmClear = false },
-            )
-        }
+    PhoneScaffold(topBar = { CallStatsTopBar(onBack = onBack) }) { padding ->
+        // The list scrolls under the glass bar, so it frosts the rows as they pass.
+        CallStatsRoute(stats, Modifier.fillMaxSize(), padding.calculateTopPadding())
     }
 }
 
-/**
- * The call history's top bar: back, Clear and the All / Missed / Stats choice on one glass pane, so
- * the calls scrolling under show frosted behind both.
- */
+/** The statistics' top bar: back and the title, on glass the list scrolls under. */
 @Composable
-internal fun CallLogTopBar(
-    tab: Int,
-    onTabSelected: (Int) -> Unit,
-    canClear: Boolean,
-    onBack: () -> Unit,
-    onClear: () -> Unit,
-) {
-    Column(
-        Modifier.fillMaxWidth()
-            .pvotGlassSurface(
-                backdrop = LocalPvotGlassBackdrop.current,
-                cornerRadius = 0.dp,
-                // Thick: the tabs' short labels have to read over rows of text passing under them.
-                style = PvotGlassDefaults.materialStyle(PvotGlassMaterial.Thick),
-                rim = false,
-                role = null,
-            )
-    ) {
-        // Compact from the start, so the tabs sit right under the bar on every tab. The pane is the
-        // glass, so the bar itself draws none.
-        PvotTopBar(
-            title = stringResource(R.string.call_log_activity_title),
-            onBack = onBack,
-            compact = true,
-            backdrop = null,
-            colors = PvotTopBarDefaults.glassColors(),
-            actions = {
-                if (canClear) {
-                    PvotTopBarAction(
-                        icon = painterResource(R.drawable.ic_trash),
-                        contentDescription = stringResource(R.string.call_log_delete_all),
-                        onClick = onClear,
-                    )
-                }
-            },
-        )
-        // The Recents filters and Statistics; five tabs scroll rather than squeeze.
-        PvotTabRow(
-            // No voicemail here: the screen has no player, so its tabs skip that filter.
-            tabs =
-                recentsFilterLabels(CallLogFilter.entries - CallLogFilter.VOICEMAIL) +
-                    stringResource(R.string.call_log_stats_title),
-            selectedIndex = tab,
-            onSelect = onTabSelected,
-            scrollable = true,
-            // Each tab pads its label, so this lines the first label up with the screen padding.
-            modifier =
-                Modifier.fillMaxWidth()
-                    .padding(horizontal = PvotSpacing.L - PvotTabRowDefaults.TabHorizontalPadding)
-                    .testTag(TestTags.CALL_HISTORY_TABS),
-        )
-    }
+internal fun CallStatsTopBar(onBack: () -> Unit) {
+    PvotTopBar(
+        title = stringResource(R.string.call_log_stats_title),
+        onBack = onBack,
+        compact = true,
+        backdrop = null,
+        colors = PvotTopBarDefaults.glassColors(),
+        modifier =
+            Modifier.fillMaxWidth()
+                .pvotGlassSurface(
+                    backdrop = LocalPvotGlassBackdrop.current,
+                    cornerRadius = 0.dp,
+                    style = PvotGlassDefaults.materialStyle(PvotGlassMaterial.Thick),
+                    rim = false,
+                    role = null,
+                ),
+    )
 }
 
 /**

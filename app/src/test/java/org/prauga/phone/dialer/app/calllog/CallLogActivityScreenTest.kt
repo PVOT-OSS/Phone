@@ -8,10 +8,6 @@ package org.prauga.phone.dialer.app.calllog
 import android.provider.CallLog.Calls
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.isRoot
@@ -40,7 +36,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
-/** The call history activity's glass top bar with its tabs, and the statistics' range dialog. */
+/** The call statistics' glass top bar and range dialog. */
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(qualifiers = "en-rUS-w411dp-h891dp-night-xxhdpi")
@@ -50,24 +46,11 @@ class CallLogActivityScreenTest {
 
     private val events = mutableListOf<String>()
 
-    private fun show(startTab: Int = CallLogActivity.TAB_STATS, canClear: Boolean = false) {
+    private fun show() {
         compose.setContent {
             SolidGlassTheme {
-                var tab by remember { mutableIntStateOf(startTab) }
-                PhoneScaffold(
-                    topBar = {
-                        CallLogTopBar(
-                            tab = tab,
-                            onTabSelected = {
-                                tab = it
-                                events += "tab $it"
-                            },
-                            canClear = canClear,
-                            onBack = { events += "back" },
-                            onClear = { events += "clear" },
-                        )
-                    }
-                ) { padding ->
+                PhoneScaffold(topBar = { CallStatsTopBar(onBack = { events += "back" }) }) { padding
+                    ->
                     CallStatsListScreen(
                         state = CallStatsUiState.Loaded(entries, total),
                         filter = CallStatsFilter(),
@@ -82,25 +65,10 @@ class CallLogActivityScreenTest {
     }
 
     @Test
-    fun theTabsReportTheChoice() {
-        show(startTab = CallLogActivity.TAB_ALL)
-        compose.onNodeWithText("Missed").performClick()
-        compose.onNodeWithText("Statistics").performClick()
-        assertThat(events).containsExactly("tab 1", "tab 4").inOrder()
-    }
-
-    @Test
-    fun clearIsOfferedOnlyWhenThereIsHistory() {
-        show(canClear = true)
-        compose.onNodeWithContentDescription("Clear call history").performClick()
+    fun backLeavesTheScreen() {
+        show()
         compose.onNodeWithContentDescription("Back").performClick()
-        assertThat(events).containsExactly("clear", "back").inOrder()
-    }
-
-    @Test
-    fun withoutHistoryThereIsNoClear() {
-        show(canClear = false)
-        compose.onNodeWithContentDescription("Clear call history").assertDoesNotExist()
+        assertThat(events).containsExactly("back")
     }
 
     @Test
