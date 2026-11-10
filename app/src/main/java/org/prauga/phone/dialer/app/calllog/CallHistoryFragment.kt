@@ -115,14 +115,15 @@ class CallHistoryFragment : Fragment() {
                 PhoneScreenTheme(
                     modifier = Modifier.nestedScroll(rememberNestedScrollInteropConnection())
                 ) {
-                    // All, Missed, Voicemail (with visual voicemail), Contacts and Blocked on the
-                    // Recents tab; the call history screen also has Statistics.
+                    // All and Missed on the Recents tab, and Voicemail with visual voicemail.
                     val support = voicemail
                     val filters =
                         remember(support) {
-                            CallLogFilter.entries.filter {
-                                it != CallLogFilter.VOICEMAIL || support != null
-                            }
+                            listOfNotNull(
+                                CallLogFilter.ALL,
+                                CallLogFilter.MISSED,
+                                CallLogFilter.VOICEMAIL.takeIf { support != null },
+                            )
                         }
                     var filter by rememberSaveable { mutableStateOf(CallLogFilter.ALL) }
                     if (filter !in filters) filter = CallLogFilter.ALL
