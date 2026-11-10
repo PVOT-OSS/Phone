@@ -51,6 +51,7 @@ import com.prauga.pvot.designsystem.theme.PvotSpacing
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import org.prauga.phone.contacts.common.dialog.CallSubjectDialog
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.AccountSelectionActivity
 import org.prauga.phone.dialer.app.calllog.IntentProvider
@@ -125,6 +126,11 @@ class OldCallDetailsActivity : ComponentActivity() {
                         blocked = viewModel.blocked,
                         canAddContact = ui.hasNumber && !isSavedContact(),
                         canRemind = canRemind(ui),
+                        // As the dialpad offers it: when an account can send a note with a call.
+                        canCallWithNote =
+                            ui.hasNumber &&
+                                ui.header.callbackAction != CallbackAction.NONE &&
+                                CallUtil.isCallWithSubjectSupported(this@OldCallDetailsActivity),
                         avatar = { size ->
                             QuickContactAvatar(
                                 name = contact.nameOrNumber,
@@ -246,6 +252,20 @@ class OldCallDetailsActivity : ComponentActivity() {
                         .getClickIntent(this@OldCallDetailsActivity)
                 DialerUtils.startActivityWithErrorToast(this@OldCallDetailsActivity, intent)
             }
+
+            override fun callWithNote() =
+                CallSubjectDialog.start(
+                    this@OldCallDetailsActivity,
+                    contact.photoId,
+                    contact.photoUri.ifEmpty { null }?.let(Uri::parse),
+                    contact.contactUri.ifEmpty { null }?.let(Uri::parse),
+                    contact.nameOrNumber,
+                    contact.number,
+                    contact.displayNumber.ifEmpty { null },
+                    contact.numberLabel.ifEmpty { null },
+                    contact.contactType,
+                    null,
+                )
 
             override fun remind() =
                 startActivity(
