@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -144,8 +145,6 @@ fun DialpadScreen(
     val panel =
         modifier
             .fillMaxWidth()
-            .clip(MaterialTheme.shapes.extraLarge)
-            .background(MaterialTheme.colorScheme.surfaceContainer)
             .padding(horizontal = PvotSpacing.L, vertical = PvotSpacing.M)
             .testTag(TestTags.DIALPAD)
     if (sideBySide) {
@@ -179,10 +178,16 @@ fun DialpadScreen(
     if (state.menuOpen) DialpadMenu(state, callbacks)
 }
 
-/** Each key takes a third of the row, so the whole column is a target, and this much height. */
+/** A key's height; in landscape each key also takes a third of the row. */
 private val KeyHeight = 76.dp
 
-/** The ripple under a pressed key: a circle that fits the key's height, whatever its width. */
+/** The round face of a key in portrait, which is also its target. */
+private val KeySize = 76.dp
+
+/** The space between keys, across and down, so the twelve sit together as one block. */
+private val KeyGap = 22.dp
+
+/** The ripple under a pressed key in landscape, where keys have no face: a circle of its height. */
 private val KeyRippleRadius = KeyHeight / 2
 
 /** The delete key's target, round, a little smaller than a digit. */
@@ -245,12 +250,20 @@ fun DialpadKeyGrid(
     compact: Boolean = false,
     haptics: Boolean = true,
 ) {
-    Column(modifier, verticalArrangement = Arrangement.spacedBy(PvotSpacing.XS)) {
+    Column(
+        modifier,
+        verticalArrangement = Arrangement.spacedBy(if (compact) PvotSpacing.XS else KeyGap),
+    ) {
         for (row in keys.chunked(3)) {
             // Compact rows share the grid's height, so the keys fit a short screen.
             val rowModifier =
                 if (compact) Modifier.fillMaxWidth().weight(1f) else Modifier.fillMaxWidth()
-            Row(rowModifier) {
+            Row(
+                rowModifier,
+                horizontalArrangement =
+                    if (compact) Arrangement.Start
+                    else Arrangement.spacedBy(KeyGap, Alignment.CenterHorizontally),
+            ) {
                 for (key in row) {
                     DialpadKey(
                         key = key,
@@ -259,7 +272,7 @@ fun DialpadKeyGrid(
                         longPressKeys = longPressKeys,
                         compact = compact,
                         haptics = haptics,
-                        modifier = Modifier.weight(1f),
+                        modifier = if (compact) Modifier.weight(1f) else Modifier.width(KeySize),
                     )
                 }
             }
@@ -331,18 +344,22 @@ private fun DialpadKey(
     val description =
         listOfNotNull(key.number, key.letters?.takeIf { key.keyCode != KeyEvent.KEYCODE_0 })
             .joinToString(",")
-    Column(
+    Box(
         modifier =
             modifier
                 .then(if (compact) Modifier.fillMaxHeight() else Modifier.height(KeyHeight))
-                .pvotPressScale(source)
-                .indication(
-                    source,
-                    ripple(
-                        bounded = false,
-                        radius = KeyRippleRadius,
-                        color = MaterialTheme.colorScheme.onSurface,
-                    ),
+                .then(
+                    if (compact) {
+                        Modifier.pvotPressScale(source)
+                            .indication(
+                                source,
+                                ripple(
+                                    bounded = false,
+                                    radius = KeyRippleRadius,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                ),
+                            )
+                    } else Modifier
                 )
                 .pointerInput(key.keyCode, haptics) {
                     awaitEachGesture {
@@ -380,32 +397,49 @@ private fun DialpadKey(
                         onLongClick(longPressDescription) { onKeyLongPress(key.keyCode) }
                 }
                 .testTag(TestTags.dialpadKey(key.number)),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+        contentAlignment = Alignment.Center,
     ) {
-        Text(
-            text = key.number,
-            style = MaterialTheme.typography.headlineLarge,
-            color = MaterialTheme.colorScheme.onSurface,
-        )
-        // The "+" under 0 is a long press, so it only shows where long presses work.
-        if (!compact) {
-            val letters =
-                key.letters?.takeUnless { key.keyCode == KeyEvent.KEYCODE_0 && !longPressKeys }
-                    ?: if (key.keyCode == KeyEvent.KEYCODE_1) " " else null
-            if (letters != null) {
-                Text(
-                    text = letters,
-                    style = LettersStyle,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-            key.secondaryLetters?.let {
-                Text(
-                    text = it,
-                    style = LettersStyle,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+        // A round face in portrait; in landscape the keys are bare, to fit the height.
+        val face =
+            if (compact) Modifier
+            else
+                Modifier.size(KeySize)
+                    .pvotPressScale(source)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.surfaceContainerHigh)
+                    .indication(
+                        source,
+                        ripple(bounded = true, color = MaterialTheme.colorScheme.onSurface),
+                    )
+        Column(
+            modifier = face,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Text(
+                text = key.number,
+                style = MaterialTheme.typography.headlineLarge,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+            // The "+" under 0 is a long press, so it only shows where long presses work.
+            if (!compact) {
+                val letters =
+                    key.letters?.takeUnless { key.keyCode == KeyEvent.KEYCODE_0 && !longPressKeys }
+                        ?: if (key.keyCode == KeyEvent.KEYCODE_1) " " else null
+                if (letters != null) {
+                    Text(
+                        text = letters,
+                        style = LettersStyle,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                key.secondaryLetters?.let {
+                    Text(
+                        text = it,
+                        style = LettersStyle,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
             }
         }
     }
