@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  A keypad of ten dots, three rows of three and one under the middle, sized to the Tabler Icons grid.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:pathData="M5.5 3.5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"
+        android:fillColor="#FFFFFF"/>
+    <path
+        android:pathData="M12 3.5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"
+        android:fillColor="#FFFFFF"/>
+    <path
+        android:pathData="M18.5 3.5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"
+        android:fillColor="#FFFFFF"/>
+    <path
+        android:pathData="M5.5 9.5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"
+        android:fillColor="#FFFFFF"/>
+    <path
+        android:pathData="M12 9.5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"
+        android:fillColor="#FFFFFF"/>
+    <path
+        android:pathData="M18.5 9.5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"
+        android:fillColor="#FFFFFF"/>
+    <path
+        android:pathData="M5.5 15.5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"
+        android:fillColor="#FFFFFF"/>
+    <path
+        android:pathData="M12 15.5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"
+        android:fillColor="#FFFFFF"/>
+    <path
+        android:pathData="M18.5 15.5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"
+        android:fillColor="#FFFFFF"/>
+    <path
+        android:pathData="M12 21m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"
+        android:fillColor="#FFFFFF"/>
+</vector>

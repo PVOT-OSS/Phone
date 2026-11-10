@@ -196,7 +196,7 @@ private fun tabItem(@TabIndex tab: Int, badgeCount: Int): PvotTabItem =
     when (tab) {
         TabIndex.DIALPAD ->
             PvotTabItem(
-                iconRes = R.drawable.ic_dialpad,
+                iconRes = R.drawable.ic_nav_keypad,
                 labelRes = R.string.tab_title_dialpad,
                 contentDescriptionRes = R.string.tab_title_dialpad,
                 expandedIconRes = R.drawable.ic_phone,
@@ -204,7 +204,7 @@ private fun tabItem(@TabIndex tab: Int, badgeCount: Int): PvotTabItem =
             )
         TabIndex.CALL_LOG ->
             PvotTabItem(
-                iconRes = R.drawable.ic_history,
+                iconRes = R.drawable.ic_nav_recents,
                 labelRes = R.string.tab_title_call_history,
                 contentDescriptionRes = R.string.tab_title_call_history,
                 expandedIconRes = R.drawable.ic_search,
@@ -213,10 +213,10 @@ private fun tabItem(@TabIndex tab: Int, badgeCount: Int): PvotTabItem =
             )
         TabIndex.CONTACTS ->
             PvotTabItem(
-                iconRes = R.drawable.ic_users,
+                iconRes = R.drawable.ic_nav_contacts,
                 labelRes = R.string.tab_all_contacts,
                 contentDescriptionRes = R.string.tab_all_contacts,
-                expandedIconRes = R.drawable.ic_user_plus,
+                expandedIconRes = R.drawable.ic_plus,
                 expandedLabelRes = R.string.nav_bar_action_add,
             )
         else ->
