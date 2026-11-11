@@ -17,14 +17,10 @@
 
 package org.prauga.phone.dialer.postcall
 
-import android.Manifest.permission
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
-import android.telephony.SmsManager
 import androidx.activity.ComponentActivity
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -44,7 +40,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.core.net.toUri
 import com.prauga.pvot.designsystem.components.PvotBottomSheet
 import com.prauga.pvot.designsystem.components.button.PvotButton
 import com.prauga.pvot.designsystem.components.textfield.PvotTextField
@@ -55,30 +50,19 @@ import org.prauga.phone.calls.R
 import org.prauga.phone.dialer.common.Assert
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
-import org.prauga.phone.dialer.util.PermissionsUtil
+import org.prauga.phone.dialer.util.DialerUtils
+import org.prauga.phone.dialer.util.IntentUtil
 
 /** Activity used to send post call messages after a phone call. */
 class PostCallActivity : ComponentActivity() {
 
-    private val smsPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-            PermissionsUtil.permissionRequested(this, permission.SEND_SMS)
-            // A refusal leaves the sheet up, so the user can try again or let it go.
-            val message = pendingMessage
-            if (granted && message != null) sendMessage(message)
-        }
-
     private var useRcs = false
-
-    /** The message waiting on the SMS permission, kept across a recreation. */
-    private var pendingMessage: String? = null
 
     override fun onCreate(bundle: Bundle?) {
         enablePvotEdgeToEdge()
         super.onCreate(bundle)
 
         useRcs = intent.getBooleanExtra(KEY_RCS_POST_CALL, false)
-        pendingMessage = bundle?.getString(KEY_MESSAGE)
         LogUtil.i("PostCallActivity.onCreate", "useRcs: %b", useRcs)
 
         val postCallCharLimit =
@@ -101,53 +85,28 @@ class PostCallActivity : ComponentActivity() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(KEY_MESSAGE, pendingMessage)
-    }
-
+    /**
+     * Sends [message] to the caller over RCS when the call offered it. Otherwise opens the
+     * messaging app with the text filled in, so the user sends it there and this app needs no SMS
+     * permission of its own; it then doesn't claim the message was sent.
+     */
     private fun sendMessage(message: String) {
         val number = Assert.isNotNull(intent.getStringExtra(KEY_PHONE_NUMBER))
-        pendingMessage = message
-
         if (useRcs) {
             LogUtil.i("PostCallActivity.onMessageFragmentSendMessage", "sending post call Rcs.")
             PostCall.onMessageSent(this, number)
-            finish()
-        } else if (PermissionsUtil.hasPermission(this, permission.SEND_SMS)) {
-            LogUtil.i("PostCallActivity.sendMessage", "Sending post call SMS.")
-            val smsManager = getSystemService(SmsManager::class.java)
-            smsManager.sendMultipartTextMessage(
-                number,
-                null,
-                smsManager.divideMessage(message),
-                null,
-                null,
-            )
-            PostCall.onMessageSent(this, number)
-            finish()
-        } else if (
-            PermissionsUtil.isFirstRequest(this, permission.SEND_SMS) ||
-                shouldShowRequestPermissionRationale(permission.SEND_SMS)
-        ) {
-            LogUtil.i("PostCallActivity.sendMessage", "Requesting SMS_SEND permission.")
-            smsPermissionLauncher.launch(permission.SEND_SMS)
         } else {
-            LogUtil.i(
-                "PostCallActivity.sendMessage",
-                "Permission permanently denied, sending to settings.",
+            LogUtil.i("PostCallActivity.sendMessage", "Opening the messaging app.")
+            DialerUtils.startActivityWithErrorToast(
+                this,
+                IntentUtil.getSendSmsIntent(number).putExtra("sms_body", message),
             )
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            intent.data = "package:$packageName".toUri()
-            startActivity(intent)
         }
+        finish()
     }
 
     companion object {
         const val KEY_PHONE_NUMBER = "phone_number"
-        const val KEY_MESSAGE = "message"
         const val KEY_RCS_POST_CALL = "rcs_post_call"
 
         @JvmStatic
