@@ -1,0 +1,41 @@
+Phone is a clean, private dialer and call screen for Android. It places and answers your calls, keeps your call history and plays your visual voicemail, with no account, no ads and no tracking.
+
+<b>Calls</b>
+• A clear incoming call screen: swipe or tap to answer, with a guard against answering in your pocket
+• Hold, swap, merge and conference calls; add a call or transfer one
+• Speaker, Bluetooth and wired headsets, keypad tones and mute
+• Video calls, RTT (real-time text) and calls before you first unlock your phone
+• Send an urgent call, a note or a picture before the call, where your carrier supports it
+• Flip to silence, caller name read aloud, and quick text replies when you can't talk
+• Dual SIM: pick a SIM per call or remember one for each contact
+
+<b>Recents</b>
+• Today, Yesterday and Older, with missed calls and voicemail filters
+• HD, Wi-Fi and video call badges, and the place a number comes from
+• Call details with every call, copy or edit the number, block, add a contact, remind you to call back, or call with a note
+• Calls from other calling apps next to your phone calls (Android 16 QPR2 and later, for the apps you allow)
+• Call statistics
+
+<b>Keypad and contacts</b>
+• Quick dial for your favourites, and a home screen widget
+• Smart dialing: type a name on the keypad and pick the match
+• Assisted dialing adds the right country code when you travel
+• Search your contacts from anywhere in the app
+
+<b>Unknown callers</b>
+• Choose what happens to private numbers, possibly faked numbers, first-time callers and callers not in your contacts: ring, ring silently or decline
+• Block numbers with Android's own block list
+• Optional caller name lookup and nearby places search (OpenStreetMap), off until you turn them on
+
+<b>Voicemail</b>
+• Visual voicemail from your carrier, with the transcripts it sends
+• Play, share and save messages
+
+<b>Made for any screen</b>
+Light and dark themes with your phone's colours, and on tablets and foldables a navigation rail with call details side by side.
+
+<b>Private by design</b>
+Your calls, contacts and voicemail stay in Android's own storage on your phone. There are no analytics. The app goes online only for your carrier's visual voicemail and for the number lookups, which are off until you turn them on.
+
+Phone is free and open source software (Apache-2.0), based on the LineageOS Dialer. It needs Android 14 or later and must be set as your default phone app.
+Source code: https://github.com/PVOT-OSS/Phone

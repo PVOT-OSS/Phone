@@ -1,0 +1,37 @@
+# SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+# SPDX-License-Identifier: Apache-2.0
+
+PackageName: org.prauga.phone
+Name: Phone
+Summary: Calls, contacts and voicemail in a private dialer, with no ads or tracking
+License: Apache-2.0
+AuthorName: Saalim Quadri
+SourceCode: https://github.com/PVOT-OSS/Phone
+IssueTracker: https://github.com/PVOT-OSS/Phone/issues
+WebSite: ""
+Categories:
+  - Phone & SMS
+CurrentVersion: "1.0.0"
+CurrentVersionCode: 10000
+AntiFeatures:
+  NonFreeNet:
+    en-US: The optional reverse lookup asks YellowPages, ZabaSearch or Das Telefonbuch for a caller's name.
+Description: |
+  Phone places and answers your calls, keeps your call history and plays
+  your carrier's visual voicemail, with no account, no ads and no tracking.
+  It has hold, merge and conference calls, video and RTT calls, call composer,
+  dual SIM, assisted dialing, smart dialing on the keypad, quick dial and a
+  widget, call details with reminders, screening of private, faked, first-time
+  and unknown callers, and a navigation rail with side-by-side details on
+  tablets. Based on the LineageOS Dialer.
+
+RepoType: git
+Repo: https://github.com/PVOT-OSS/Phone.git
+
+Builds:
+  - versionName: 1.0.0
+    versionCode: 10000
+    commit: v1.0.0
+    subdir: app
+    gradle:
+      - user
