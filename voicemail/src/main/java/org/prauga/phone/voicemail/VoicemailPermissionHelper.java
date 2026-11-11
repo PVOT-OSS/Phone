@@ -37,7 +37,6 @@ public class VoicemailPermissionHelper {
     permission.WRITE_VOICEMAIL,
     permission.READ_VOICEMAIL,
     permission.READ_PHONE_STATE,
-    permission.RECEIVE_SMS,
     permission.SEND_SMS
   };
 
