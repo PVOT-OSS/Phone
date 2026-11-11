@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.booleanResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
@@ -85,10 +86,12 @@ fun OptionsButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
 
 /**
  * Bottom padding for a main tab's list: the nav bar floats over the tabs, so the end of the list
- * scrolls up clear of it, the space round it and the navigation bar.
+ * scrolls up clear of it, the space round it and the navigation bar. With the rail of a wide window
+ * at the side, only the navigation bar is left to clear.
  */
 @Composable
-fun navBarClearance(): Dp =
-    LocalPvotNavBarSizes.current.barHeight +
-        PvotSpacing.M * 2 +
-        WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+fun navBarClearance(): Dp {
+    val system = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+    if (booleanResource(R.bool.main_nav_rail)) return system + PvotSpacing.M
+    return LocalPvotNavBarSizes.current.barHeight + PvotSpacing.M * 2 + system
+}
