@@ -21,6 +21,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.os.Bundle
 import android.telecom.CallAudioState
 import android.telephony.TelephonyManager
@@ -490,27 +491,63 @@ object InCallScreenHost {
                     }
                 }
             }
+        val location = FrameLayout(context).apply { id = R.id.incall_location_holder }
+        // Landscape has no room for the caller above the controls: they sit side by side.
+        val sideBySide =
+            context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
         val column =
-            LinearLayout(context).apply {
-                orientation = LinearLayout.VERTICAL
-                addView(
-                    compose(content = top),
-                    LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f),
-                )
-                addView(
-                    FrameLayout(context).apply { id = R.id.incall_location_holder },
-                    LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ),
-                )
-                addView(
-                    compose(content = bottom),
-                    LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ),
-                )
+            if (sideBySide) {
+                LinearLayout(context).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    addView(
+                        LinearLayout(context).apply {
+                            orientation = LinearLayout.VERTICAL
+                            addView(
+                                compose(content = top),
+                                LinearLayout.LayoutParams(
+                                    ViewGroup.LayoutParams.MATCH_PARENT,
+                                    0,
+                                    1f,
+                                ),
+                            )
+                            addView(
+                                location,
+                                LinearLayout.LayoutParams(
+                                    ViewGroup.LayoutParams.MATCH_PARENT,
+                                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                                ),
+                            )
+                        },
+                        LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1f),
+                    )
+                    addView(
+                        compose(content = bottom),
+                        LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
+                            .apply { gravity = Gravity.CENTER_VERTICAL },
+                    )
+                }
+            } else {
+                LinearLayout(context).apply {
+                    orientation = LinearLayout.VERTICAL
+                    addView(
+                        compose(content = top),
+                        LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f),
+                    )
+                    addView(
+                        location,
+                        LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ),
+                    )
+                    addView(
+                        compose(content = bottom),
+                        LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ),
+                    )
+                }
             }
         return FrameLayout(context).apply {
             addView(
