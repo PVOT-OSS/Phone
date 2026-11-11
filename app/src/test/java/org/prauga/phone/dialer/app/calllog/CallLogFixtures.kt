@@ -7,6 +7,7 @@ package org.prauga.phone.dialer.app.calllog
 
 import android.database.MatrixCursor
 import android.provider.CallLog.Calls
+import android.telecom.PhoneAccountHandle
 import org.prauga.phone.dialer.calldetails.CallDetailsEntries
 import org.prauga.phone.dialer.calllogutils.CallbackActionHelper.CallbackAction
 import org.prauga.phone.dialer.phonenumbercache.CallLogQuery
@@ -56,6 +57,7 @@ internal fun callLogGroup(
     voicemailUri: String? = null,
     presentation: Int = Calls.PRESENTATION_ALLOWED,
     cachedInfo: ContactInfo = ContactInfo.EMPTY,
+    account: PhoneAccountHandle? = null,
 ) =
     CallLogGroup(
         rowId = rowId,
@@ -70,8 +72,8 @@ internal fun callLogGroup(
         duration = 30,
         features = 0,
         geocode = null,
-        accountComponentName = null,
-        accountId = null,
+        accountComponentName = account?.componentName?.flattenToString(),
+        accountId = account?.id,
         voicemailUri = voicemailUri,
         isRead = isRead,
         dataUsage = null,

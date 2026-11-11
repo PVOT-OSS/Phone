@@ -33,6 +33,9 @@ enum class PrimaryAction {
     VIDEO_CALL,
     CALL_VOICEMAIL,
     PLAY_VOICEMAIL,
+
+    /** Calls back through the app that made the call, such as a messaging app. */
+    CALL_IN_APP,
 }
 
 /** Actions shown when a call history row is opened. */
@@ -70,6 +73,8 @@ data class CallLogRowUi(
     val isEmergency: Boolean,
     val primaryAction: PrimaryAction,
     val actions: List<RowAction>,
+    /** The app the call was made in, such as a messaging app, or null for the phone's own calls. */
+    val otherApp: String? = null,
 ) {
     val hasContact: Boolean
         get() = !info.name.isNullOrEmpty()
@@ -87,6 +92,7 @@ class CallLogRowResolver(
     private val displayOrder: () -> DisplayOrder = {
         ContactsComponent.get(context).contactDisplayPreferences().displayOrder
     },
+    private val otherApps: OtherAppsCalls = OtherAppsCalls(context),
 ) {
 
     private val resources: Resources = context.resources
@@ -107,6 +113,9 @@ class CallLogRowResolver(
     fun resolve(group: CallLogGroup, info: ContactInfo, isBlocked: Boolean): CallLogRowUi {
         val accountHandle =
             TelecomUtil.composePhoneAccountHandle(group.accountComponentName, group.accountId)
+        otherApps.appOf(accountHandle)?.let { app ->
+            return resolveInApp(group, info, app)
+        }
         val isVoicemailNumber = callLogCache.isVoicemailNumber(accountHandle, group.number)
         val details =
             PhoneCallDetails(group.number, group.presentation, group.postDialDigits).apply {
@@ -184,6 +193,41 @@ class CallLogRowResolver(
                     isBlocked,
                     isEmergencyNumber,
                 ),
+        )
+    }
+
+    /**
+     * A call made in another app: it is called back through that app, which also blocks and
+     * messages, so only the call and delete are offered here.
+     */
+    private fun resolveInApp(group: CallLogGroup, info: ContactInfo, app: String): CallLogRowUi {
+        val name = info.name?.takeIf { it.isNotEmpty() } ?: group.cachedInfo.name
+        val title = name?.takeIf { it.isNotEmpty() } ?: group.number
+        val details =
+            PhoneCallDetails(group.number, group.presentation, group.postDialDigits).apply {
+                callTypes = group.callTypes.toIntArray()
+                date = group.date
+                duration = group.duration
+                features = group.features
+                isRead = group.isRead
+            }
+        return CallLogRowUi(
+            group = group,
+            info = info,
+            title = title,
+            titleIsNumber = name.isNullOrEmpty(),
+            details = detailText(group, details),
+            accountLabel = app,
+            accountColor = null,
+            displayNumber = group.number,
+            numberType = "",
+            accountHandle =
+                TelecomUtil.composePhoneAccountHandle(group.accountComponentName, group.accountId),
+            isBlocked = false,
+            isEmergency = false,
+            primaryAction = PrimaryAction.CALL_IN_APP,
+            actions = listOf(RowAction.DELETE),
+            otherApp = app,
         )
     }
 

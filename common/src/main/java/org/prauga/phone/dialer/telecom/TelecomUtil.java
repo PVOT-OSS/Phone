@@ -17,6 +17,7 @@
 
 package org.prauga.phone.dialer.telecom;
 
+import android.os.Build;
 import android.Manifest.permission;
 import android.app.role.RoleManager;
 import android.content.ComponentName;
@@ -291,6 +292,38 @@ public abstract class TelecomUtil {
     }
     return false;
   }
+
+  /**
+   * Whether the call log can include other apps' calls, which Telecom logs for calling apps (for
+   * example messaging apps) from Android 16 QPR2.
+   */
+  public static boolean canListOtherAppsCalls() {
+    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA
+        && Build.VERSION.SDK_INT_FULL >= Build.VERSION_CODES_FULL.BAKLAVA_1;
+  }
+
+  /** [uri] asking for other apps' calls too, where the call log has them. */
+  public static Uri withOtherAppsCalls(Uri uri) {
+    return canListOtherAppsCalls()
+        ? uri.buildUpon().appendQueryParameter(INCLUDE_OTHER_APPS_CALLS, "true").build()
+        : uri;
+  }
+
+  /**
+   * The call log entry [callId] as a call address: Telecom places a call to it through the app that
+   * logged it.
+   */
+  public static Uri callLogEntryAddress(long callId) {
+    return Calls.CONTENT_URI
+        .buildUpon()
+        .appendPath(Long.toString(callId))
+        .appendQueryParameter(Calls.LIMIT_PARAM_KEY, "1")
+        .appendQueryParameter(INCLUDE_OTHER_APPS_CALLS, "true")
+        .build();
+  }
+
+  /** {@code Calls.INCLUDE_VOIP_CALLS_PARAM_KEY}, written out so older builds can read it. */
+  private static final String INCLUDE_OTHER_APPS_CALLS = "include_voip_calls";
 
   public static Uri getCallLogUri(Context context) {
     return hasReadWriteVoicemailPermissions(context)
