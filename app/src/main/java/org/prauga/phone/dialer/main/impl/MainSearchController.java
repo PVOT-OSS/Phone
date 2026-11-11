@@ -138,10 +138,14 @@ public class MainSearchController implements SearchBarListener {
   }
 
   /**
-   * Pads the bottom of [searchContainer] by as much as the open keypad in [dialpadContainer]
-   * overlaps it, so the dialpad's matches fit in the space above the keypad.
+   * Tells the search results how far the open keypad in [dialpadContainer] overlaps
+   * [searchContainer], so the dialpad's matches fit in the space above the keypad. Their background
+   * still fills the container, covering the quick dial under the keypad's transparent top edge.
    */
-  private static void insetSearchAboveKeypad(View searchContainer, View dialpadContainer) {
+  private void insetSearchAboveKeypad(View searchContainer, View dialpadContainer) {
+    if (searchFragment == null) {
+      return;
+    }
     int inset = 0;
     View keypad =
         dialpadContainer instanceof ViewGroup && ((ViewGroup) dialpadContainer).getChildCount() > 0
@@ -154,11 +158,7 @@ public class MainSearchController implements SearchBarListener {
       dialpadContainer.getLocationInWindow(dialpad);
       inset = Math.max(0, search[1] + searchContainer.getHeight() - dialpad[1]);
     }
-    if (searchContainer.getPaddingBottom() != inset) {
-      // Posted: padding requests a layout, which can't happen inside this layout pass.
-      int finalInset = inset;
-      searchContainer.post(() -> searchContainer.setPadding(0, 0, 0, finalInset));
-    }
+    searchFragment.setBottomInset(inset);
   }
 
   /** Should be called if we're showing the dialpad because of a new ACTION_DIAL intent. */

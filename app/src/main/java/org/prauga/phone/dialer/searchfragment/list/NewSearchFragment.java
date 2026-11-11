@@ -186,6 +186,16 @@ public final class NewSearchFragment extends Fragment
   }
 
   /**
+   * Ends the list {@code inset} pixels above the bottom, where the open keypad covers it. The
+   * results' background still reaches the bottom, so nothing behind them shows past the keypad.
+   */
+  public void setBottomInset(int inset) {
+    if (adapter != null) {
+      adapter.setBottomInset(inset);
+    }
+  }
+
+  /**
    * On the dialpad the results show only once a digit is typed; until then the dialpad tab's quick
    * dial shows through, and takes the touches, from under the empty results.
    */

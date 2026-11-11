@@ -32,11 +32,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.prauga.pvot.coreui.PvotEmptyContent
 import com.prauga.pvot.coreui.PvotSectionHeader
@@ -89,6 +91,7 @@ fun SearchScreen(
     needsPermission: Boolean,
     actions: SearchActions,
     modifier: Modifier = Modifier,
+    bottomInset: Dp = 0.dp,
 ) {
     val listState = rememberLazyListState()
     // New results, as when the permission is granted or the query changes, start from the first
@@ -96,18 +99,20 @@ fun SearchScreen(
     LaunchedEffect(needsPermission, rows.firstOrNull()?.key) { listState.scrollToItem(0) }
     Box(
         modifier =
-            modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).pointerInput(
-                actions,
-                needsPermission,
-            ) {
-                // Tapping the permission prompt is not the list being touched: it keeps the keypad.
-                if (needsPermission) return@pointerInput
-                // Watches the first touch without taking it from the rows.
-                awaitEachGesture {
-                    awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
-                    actions.listTouched()
+            modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .pointerInput(actions, needsPermission) {
+                    // Tapping the permission prompt is not the list being touched: it keeps the
+                    // keypad.
+                    if (needsPermission) return@pointerInput
+                    // Watches the first touch without taking it from the rows.
+                    awaitEachGesture {
+                        awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
+                        actions.listTouched()
+                    }
                 }
-            }
+                .padding(bottom = bottomInset)
     ) {
         PvotScreen(
             modifier = Modifier.fillMaxSize().testTag(TestTags.SEARCH_LIST),
@@ -299,7 +304,14 @@ object SearchScreenHost {
     fun attach(view: ComposeView, results: SearchResults, actions: SearchActions) {
         view.setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         view.setContent {
-            PhoneScreenTheme { SearchScreen(results.rows, results.needsPermission, actions) }
+            PhoneScreenTheme {
+                SearchScreen(
+                    results.rows,
+                    results.needsPermission,
+                    actions,
+                    bottomInset = with(LocalDensity.current) { results.bottomInset.toDp() },
+                )
+            }
         }
     }
 }

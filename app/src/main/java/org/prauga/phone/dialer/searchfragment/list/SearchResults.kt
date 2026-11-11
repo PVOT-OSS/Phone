@@ -11,6 +11,7 @@ import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.text.Spanned
 import android.text.style.StyleSpan
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.AnnotatedString
@@ -86,6 +87,12 @@ class SearchResults(private val context: Context) {
 
     /** Whether contacts cannot be read, so the results ask for the permission instead. */
     var needsPermission by mutableStateOf(false)
+
+    /**
+     * How far the open keypad reaches up over the results, in pixels: the list ends above it while
+     * the background goes on under it, so the quick dial doesn't show through the keypad's edge.
+     */
+    var bottomInset by mutableIntStateOf(0)
 
     fun setContactsCursor(cursor: SearchCursor?) {
         if (manager.setContactsCursor(cursor)) {
