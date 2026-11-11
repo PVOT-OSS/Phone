@@ -31,6 +31,9 @@ object TestTags {
     const val CONTACTS_ADD = "contacts_add"
     const val SPEED_DIAL_GRID = "speed_dial_grid"
     const val CALL_HISTORY_LIST = "call_history_list"
+
+    /** The open voicemail beside the list on a wide window. */
+    const val VOICEMAIL_PANE = "voicemail_pane"
     const val CALL_HISTORY_TABS = "call_history_tabs"
     const val RECENTS_FILTER = "recents_filter"
     const val CALL_HISTORY_SELECTION = "call_history_selection"
