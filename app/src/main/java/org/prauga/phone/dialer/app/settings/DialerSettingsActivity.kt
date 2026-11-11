@@ -70,6 +70,7 @@ import org.prauga.phone.dialer.app.settings.ui.SettingsList
 import org.prauga.phone.dialer.app.settings.ui.SettingsScaffold
 import org.prauga.phone.dialer.app.settings.ui.SettingsTheme
 import org.prauga.phone.dialer.app.settings.ui.settingsIcon
+import org.prauga.phone.dialer.assisteddialing.ui.AssistedDialingSettingFragment
 import org.prauga.phone.dialer.common.LogUtil
 import org.prauga.phone.dialer.compat.telephony.TelephonyManagerCompat
 import org.prauga.phone.dialer.lookup.LookupSettingsFragment
@@ -317,6 +318,12 @@ class DialerSettingsActivity :
         const val KEY_SOUNDS = "sounds_and_vibration"
         const val KEY_QUICK_RESPONSES = "quick_responses"
         const val KEY_LOOKUP = "lookup"
+        const val KEY_ASSISTED_DIALING = "assisted_dialing"
+        const val KEY_CONTACT_RINGTONES = "contact_ringtones"
+
+        /** Opens the contacts app's list of contacts with their own ringtones. */
+        const val ACTION_MANAGE_RINGTONES =
+            "com.google.android.apps.contacts.action.MANAGE_RINGTONE"
         const val KEY_SCREENING = "screening"
         const val KEY_INCOMING_CALLS = "incoming_calls"
         const val KEY_CALL_SETTINGS = "call_settings"
@@ -380,9 +387,32 @@ class DialerSettingsActivity :
                     KEY_LOOKUP,
                     R.string.lookup_settings_label,
                     Target.Screen(LookupSettingsFragment::class.java.name),
-                    R.drawable.ic_world,
+                    R.drawable.ic_search,
                 )
             )
+            // Adds the country code when calling home from abroad; only a phone that makes calls.
+            if (context.getSystemService(TelephonyManager::class.java)?.isVoiceCapable == true) {
+                add(
+                    Entry(
+                        KEY_ASSISTED_DIALING,
+                        R.string.assisted_dialing_setting_title,
+                        Target.Screen(AssistedDialingSettingFragment::class.java.name),
+                        R.drawable.ic_world,
+                    )
+                )
+            }
+            // Ringtones are set per contact in the contacts app; offered when it has that screen.
+            val ringtones = Intent(ACTION_MANAGE_RINGTONES)
+            if (ringtones.resolveActivity(context.packageManager) != null) {
+                add(
+                    Entry(
+                        KEY_CONTACT_RINGTONES,
+                        R.string.contact_ringtones_title,
+                        Target.Activity(ringtones),
+                        R.drawable.ic_music,
+                    )
+                )
+            }
             add(
                 Entry(
                     KEY_SCREENING,

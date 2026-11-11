@@ -76,6 +76,13 @@
     <!-- Required when the "Enable Do Not Disturb during call" setting is enabled -->
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
 
+    <queries>
+        <!-- The contacts app's list of contacts with their own ringtones, for Settings. -->
+        <intent>
+            <action android:name="com.google.android.apps.contacts.action.MANAGE_RINGTONE" />
+        </intent>
+    </queries>
+
     <application
         android:name="org.prauga.phone.dialer.binary.aosp.AospDialerApplication"
         android:allowBackup="true"
