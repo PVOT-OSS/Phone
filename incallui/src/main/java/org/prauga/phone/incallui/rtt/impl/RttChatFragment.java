@@ -57,6 +57,8 @@ import org.prauga.phone.dialer.rtt.RttTranscript;
 import org.prauga.phone.dialer.rtt.RttTranscriptMessage;
 import org.prauga.phone.dialer.util.DrawableConverter;
 import org.prauga.phone.incallui.audioroute.AudioRouteSelectorDialogFragment.AudioRouteSelectorPresenter;
+import org.prauga.phone.incallui.call.CallList;
+import org.prauga.phone.incallui.call.DialerCall;
 import org.prauga.phone.incallui.call.state.DialerCallState;
 import org.prauga.phone.incallui.incall.protocol.ContactPhotoType;
 import org.prauga.phone.incallui.incall.protocol.InCallButtonIds;
@@ -227,6 +229,18 @@ public class RttChatFragment extends Fragment
   }
 
   @Override
+  public void onEmergencyMessage(@NonNull String message) {
+    // Anything half typed goes first, as its own message.
+    if (!TextUtils.isEmpty(editText.getText())) {
+      onSubmit();
+    }
+    messages.addLocalMessage(message);
+    rttCallScreenDelegate.onLocalMessage(message);
+    messages.submitLocalMessage();
+    rttCallScreenDelegate.onLocalMessage(Constants.BUBBLE_BREAKER);
+  }
+
+  @Override
   public void onEndCall() {
     LogUtil.i("RttChatFragment.onEndCall", "end call button clicked");
     inCallButtonUiDelegate.onEndCallClicked();
@@ -381,6 +395,8 @@ public class RttChatFragment extends Fragment
   public void setCallState(@NonNull PrimaryCallState primaryCallState) {
     LogUtil.i("RttChatFragment.setCallState", primaryCallState.toString());
     this.primaryCallState = primaryCallState;
+    DialerCall call = CallList.getInstance().getCallById(getCallId());
+    uiState.setEmergency(call != null && call.isEmergencyCall());
     if (!isTimerStarted && primaryCallState.state() == DialerCallState.ACTIVE) {
       LogUtil.i("RttChatFragment.setCallState", "starting timer");
       uiState.setConnectTimeMillis(primaryCallState.connectTimeMillis());

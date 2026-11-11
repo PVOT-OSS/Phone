@@ -145,6 +145,10 @@ object TestTags {
     const val RTT_CHAT = "rtt_chat"
     const val RTT_INPUT = "rtt_input"
     const val RTT_SUBMIT = "rtt_submit"
+
+    /** An emergency RTT call's ready-message button, by its label resource. */
+    fun rttEmergency(label: Int) = "rtt_emergency_$label"
+
     const val RTT_MENU = "rtt_menu"
     const val RTT_END_CALL = "rtt_end_call"
     const val RTT_STATUS_BANNER = "rtt_status_banner"

@@ -31,4 +31,12 @@
   <!-- Text for RTT transcript advisory. [CHAR LIMIT=NONE] -->
   <string name="rtt_transcript_advisory">The other party can see you typing. Transcripts are stored on your device in the call history.</string>
 
+  <!-- Buttons on an emergency RTT call that each send a ready message. [CHAR LIMIT=12] -->
+  <string name="rtt_emergency_fire">Fire</string>
+  <string name="rtt_emergency_medical">Medical</string>
+  <string name="rtt_emergency_police">Police</string>
+  <!-- The messages those buttons send to the emergency service. -->
+  <string name="rtt_emergency_fire_message">I require the fire department.</string>
+  <string name="rtt_emergency_medical_message">I require medical assistance.</string>
+  <string name="rtt_emergency_police_message">I require police assistance.</string>
 </resources>

@@ -145,4 +145,9 @@ class RttChatUiState {
     var audioState by mutableStateOf<CallAudioState?>(null)
     var swapEnabled by mutableStateOf(false)
     var switchToSecondaryEnabled by mutableStateOf(false)
+
+    /**
+     * An emergency call, which offers ready messages for the fire department, ambulance and police.
+     */
+    var emergency by mutableStateOf(false)
 }
