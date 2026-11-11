@@ -15,8 +15,20 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -25,6 +37,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -60,6 +74,20 @@ object MainChrome {
         navBarView.setViewCompositionStrategy(
             ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
         )
+        // A wide window has the rail at the start, and the snackbars in their own view beside it.
+        if (navBarView.resources.getBoolean(org.prauga.phone.ui.R.bool.main_nav_rail)) {
+            navBarView.setChromeContent { MainNavRail(navBar, actions) }
+            val snackbarView = navBarView.rootView.findViewById<ComposeView>(R.id.main_snackbars)
+            snackbarView?.setViewCompositionStrategy(
+                ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
+            )
+            snackbarView?.setChromeContent {
+                Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomCenter) {
+                    PhoneSnackbarHost(snackbars, Modifier.navigationBarsPadding())
+                }
+            }
+            return
+        }
         navBarView.setChromeContent {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 PhoneSnackbarHost(snackbars, Modifier.padding(bottom = PvotSpacing.S))
@@ -171,6 +199,56 @@ fun MainNavBar(state: MainNavBarState, actions: MainNavBarActions, modifier: Mod
             expandedContentDescriptionRes = tabs.getOrNull(selected)?.let(::actionLabel),
             compact = state.isCompact,
         )
+    }
+}
+
+/**
+ * The main screen's tabs as a rail at the start of a wide window: the selected tab's action (Dial,
+ * Search or Add) as a button at the top, then the tabs with their unread badges.
+ */
+@Composable
+fun MainNavRail(state: MainNavBarState, actions: MainNavBarActions, modifier: Modifier = Modifier) {
+    val tabs = state.tabs
+    NavigationRail(
+        modifier = modifier.fillMaxHeight().testTag(TestTags.MAIN_NAV_BAR),
+        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+        header = {
+            val action = state.selectedTab.takeIf { it != TabIndex.VOICEMAIL }
+            if (action != null) {
+                val item = tabItem(action, 0)
+                FloatingActionButton(
+                    onClick = { runAction(action, actions) },
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.padding(vertical = PvotSpacing.M),
+                ) {
+                    Icon(
+                        painterResource(checkNotNull(item.expandedIconRes)),
+                        contentDescription = stringResource(actionLabel(action)),
+                    )
+                }
+            }
+        },
+    ) {
+        Spacer(Modifier.weight(1f))
+        for (tab in tabs) {
+            val item = tabItem(tab, state.notificationCount(tab))
+            NavigationRailItem(
+                selected = tab == state.selectedTab,
+                onClick = { if (tab != state.selectedTab) state.selectTab(tab) },
+                icon = {
+                    BadgedBox(
+                        badge = {
+                            if (item.badgeCount > 0) Badge { Text(item.badgeCount.toString()) }
+                        }
+                    ) {
+                        Icon(painterResource(item.iconRes), contentDescription = null)
+                    }
+                },
+                label = { Text(stringResource(item.labelRes)) },
+            )
+        }
+        Spacer(Modifier.weight(1f))
     }
 }
 

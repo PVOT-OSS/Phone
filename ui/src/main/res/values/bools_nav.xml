@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+  -->
+<resources>
+  <!-- Whether the main tabs' navigation is a rail at the start instead of a bar at the bottom. -->
+  <bool name="main_nav_rail">false</bool>
+</resources>
