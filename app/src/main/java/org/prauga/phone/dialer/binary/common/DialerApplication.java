@@ -36,6 +36,7 @@ public abstract class DialerApplication extends Application implements HasRootCo
     super.onCreate();
     DisplayOptions.applyTheme(this);
     NotificationChannelManager.initChannels(this);
+    WideWindowSplits.apply(this);
     Trace.endSection();
   }
 

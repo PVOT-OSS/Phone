@@ -197,6 +197,7 @@ dependencies {
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.window)
     implementation(libs.androidx.collection)
     implementation(libs.androidx.coordinatorlayout)
     implementation(libs.androidx.fragment)

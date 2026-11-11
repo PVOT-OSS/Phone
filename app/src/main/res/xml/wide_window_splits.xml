@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: Saalim Quadri <danascape@gmail.com>
+  SPDX-License-Identifier: Apache-2.0
+  -->
+<!-- On a wide window, call details and call statistics open beside the main screen. -->
+<resources xmlns:window="http://schemas.android.com/apk/res-auto">
+  <SplitPairRule
+      window:clearTop="true"
+      window:finishPrimaryWithSecondary="never"
+      window:finishSecondaryWithPrimary="always"
+      window:splitMinWidthDp="840"
+      window:splitRatio="0.5">
+    <SplitPairFilter
+        window:primaryActivityName="org.prauga.phone.dialer.main.impl.MainActivity"
+        window:secondaryActivityName="org.prauga.phone.dialer.calldetails.OldCallDetailsActivity" />
+    <SplitPairFilter
+        window:primaryActivityName="org.prauga.phone.dialer.main.impl.MainActivity"
+        window:secondaryActivityName="org.prauga.phone.dialer.app.calllog.CallLogActivity" />
+  </SplitPairRule>
+</resources>
