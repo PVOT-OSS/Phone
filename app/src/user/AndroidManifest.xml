@@ -4,9 +4,20 @@
   SPDX-License-Identifier: Apache-2.0
   -->
 <!-- Only in the user build, which people install themselves and must make their phone app. -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- The microphone foreground type is only for call recording, which this build doesn't have:
+         the call's audio is the modem's, not the app's. -->
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE"
+        tools:node="remove" />
 
     <application>
+        <service
+            android:name="org.prauga.phone.incallui.InCallServiceImpl"
+            android:foregroundServiceType="phoneCall"
+            tools:replace="android:foregroundServiceType" />
         <activity
             android:name="org.prauga.phone.dialer.onboarding.OnboardingActivity"
             android:exported="false"

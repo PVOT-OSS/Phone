@@ -180,8 +180,9 @@ public class TelecomAdapter implements InCallServiceListener {
   public void startForegroundNotification(int id, Notification notification) {
     Assert.isNotNull(
         inCallService, "No inCallService available for starting foreground notification");
-    inCallService.startForeground(id, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL
-        | ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE);
+    // The types the manifest declares: phone call, plus microphone in the build that records calls.
+    inCallService.startForeground(
+        id, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MANIFEST);
   }
 
   /**
