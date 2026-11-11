@@ -384,10 +384,11 @@ class AnswerFragment :
         if (view == null) return
         contactGrid?.setPrimary(primaryInfo)
         ui.incomingWillDisconnectText = incomingWillDisconnectText()
-        // A video upgrade request is not a new call; what a spam caller sent isn't shown.
+        // A video upgrade request is not a new call; what a spam caller sent isn't shown. An urgent
+        // call shows its badge even with nothing else sent.
         callerData =
             primaryInfo.multimediaData()?.takeIf {
-                !isVideoUpgradeRequest && !primaryInfo.isSpam && it.hasData()
+                !isVideoUpgradeRequest && !primaryInfo.isSpam && (it.hasData() || it.isImportant)
             }
     }
 
