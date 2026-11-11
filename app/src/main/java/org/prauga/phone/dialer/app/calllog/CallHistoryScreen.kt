@@ -555,6 +555,7 @@ private fun DayHeader(dayGroup: Int, modifier: Modifier = Modifier) {
 private val CallLogRowUi.canCallBack: Boolean
     get() =
         primaryAction == PrimaryAction.CALL ||
+            primaryAction == PrimaryAction.CALL_IN_APP ||
             primaryAction == PrimaryAction.VIDEO_CALL ||
             primaryAction == PrimaryAction.CALL_VOICEMAIL
 

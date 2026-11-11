@@ -45,6 +45,7 @@ import org.prauga.phone.dialer.dialercontact.DialerContact
 import org.prauga.phone.dialer.dialercontact.SimDetails
 import org.prauga.phone.dialer.lettertile.LetterTileDrawable
 import org.prauga.phone.dialer.reminder.CallbackReminderActivity
+import org.prauga.phone.dialer.telecom.TelecomUtil
 import org.prauga.phone.dialer.util.DialerUtils
 import org.prauga.phone.dialer.util.PermissionsUtil
 import org.prauga.phone.dialer.util.UriUtils
@@ -179,6 +180,17 @@ private class CallHistoryIntents(
                 PrimaryAction.CALL_VOICEMAIL ->
                     IntentProvider.getReturnVoicemailCallIntentProvider()
                 PrimaryAction.CALL -> callProvider(row, row.group.number + row.group.postDialDigits)
+                PrimaryAction.CALL_IN_APP -> {
+                    // Telecom routes a call to a call log entry through the app that made it.
+                    TelecomUtil.placeCall(
+                        context,
+                        Intent(
+                            Intent.ACTION_CALL,
+                            TelecomUtil.callLogEntryAddress(row.group.callIds.first()),
+                        ),
+                    )
+                    return
+                }
                 PrimaryAction.PLAY_VOICEMAIL,
                 PrimaryAction.NONE -> return
             }

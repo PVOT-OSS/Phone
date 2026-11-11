@@ -243,8 +243,9 @@ public class CallLogQueryHandler extends NoNullCursorAsyncQueryHandler {
     }
 
     final int limit = (logLimit == -1) ? NUM_LOGS_TO_DISPLAY : logLimit;
+    // Other apps' calls too, such as messaging apps' voice calls, where the call log keeps them.
     Uri uri =
-        TelecomUtil.getCallLogUri(context)
+        TelecomUtil.withOtherAppsCalls(TelecomUtil.getCallLogUri(context))
             .buildUpon()
             .appendQueryParameter(Calls.LIMIT_PARAM_KEY, Integer.toString(limit))
             .build();
