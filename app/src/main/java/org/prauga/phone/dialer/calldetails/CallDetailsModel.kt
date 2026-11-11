@@ -65,10 +65,14 @@ internal data class CallDetailsUi(
      * voicemail number.
      */
     val canMessage: Boolean = false,
+    /** Whether to offer looking the number up on the web: a number without a name. */
+    val canLookUp: Boolean = false,
 )
 
 /** Builds [CallDetailsUi] from the call log data the call history passes in. */
 internal object CallDetailsMapper {
+    /** What a number written out may hold besides digits. */
+    private const val NUMBER_PUNCTUATION = " .();+-"
 
     fun map(
         contact: DialerContact,
@@ -135,6 +139,11 @@ internal object CallDetailsMapper {
                     callbackAction != CallbackAction.NONE &&
                     !isEmergencyNumber &&
                     contact.contactType != LetterTileDrawable.TYPE_VOICEMAIL,
+            // No name to go by: the title is the number itself, or nothing.
+            canLookUp =
+                contact.number.isNotEmpty() &&
+                    !isEmergencyNumber &&
+                    contact.nameOrNumber.all { it.isDigit() || it in NUMBER_PUNCTUATION },
         )
     }
 

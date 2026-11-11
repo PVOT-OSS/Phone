@@ -17,6 +17,7 @@
 
 package org.prauga.phone.dialer.calldetails
 
+import android.app.SearchManager
 import android.content.ActivityNotFoundException
 import android.content.ContentUris
 import android.content.Context
@@ -51,6 +52,7 @@ import com.prauga.pvot.designsystem.theme.PvotSpacing
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlinx.coroutines.launch
 import org.prauga.phone.contacts.common.dialog.CallSubjectDialog
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.AccountSelectionActivity
@@ -251,6 +253,20 @@ class OldCallDetailsActivity : ComponentActivity() {
                         )
                         .getClickIntent(this@OldCallDetailsActivity)
                 DialerUtils.startActivityWithErrorToast(this@OldCallDetailsActivity, intent)
+            }
+
+            override fun lookUp() {
+                val search =
+                    Intent(Intent.ACTION_WEB_SEARCH)
+                        .putExtra(SearchManager.QUERY, "\"${contact.number}\"")
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                try {
+                    startActivity(search)
+                } catch (e: ActivityNotFoundException) {
+                    lifecycleScope.launch {
+                        snackbars.showSnackbar(getString(R.string.call_details_look_up_no_app))
+                    }
+                }
             }
 
             override fun callWithNote() =

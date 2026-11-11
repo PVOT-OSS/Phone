@@ -125,6 +125,9 @@ internal interface CallDetailsActions {
     /** Asks for a note, and whether it's urgent, before calling back. */
     fun callWithNote() = Unit
 
+    /** Searches the web for the number. */
+    fun lookUp() = Unit
+
     /** Deletes one call; the screen asks first. */
     fun deleteCall(entry: CallDetailsEntryUi)
 
@@ -258,6 +261,22 @@ internal fun CallDetailsScreen(
                                 icon = {
                                     Icon(
                                         painterResource(R.drawable.ic_pencil),
+                                        contentDescription = null,
+                                    )
+                                },
+                                iconStyle = PvotRowIconStyle.Plain,
+                                showChevron = false,
+                            )
+                        }
+                    }
+                    if (ui.canLookUp) {
+                        item {
+                            PvotPreferenceRow(
+                                title = stringResource(R.string.call_details_look_up),
+                                onClick = actions::lookUp,
+                                icon = {
+                                    Icon(
+                                        painterResource(R.drawable.ic_search),
                                         contentDescription = null,
                                     )
                                 },

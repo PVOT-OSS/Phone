@@ -48,4 +48,8 @@
 
   <!-- String shown when RTT transcript is available. [CHAR LIMIT=NONE] -->
   <string name="rtt_transcript_link">See transcript</string>
+  <!-- Call details action that searches the web for a number without a name. [CHAR LIMIT=30] -->
+  <string name="call_details_look_up">Look up</string>
+  <!-- Shown when no app can search the web for the number. [CHAR LIMIT=NONE] -->
+  <string name="call_details_look_up_no_app">Can\'t look up the number: no app on this phone can search the web</string>
 </resources>
