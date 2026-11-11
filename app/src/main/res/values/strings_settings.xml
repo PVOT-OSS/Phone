@@ -14,4 +14,6 @@
     <string name="settings_default_phone_app_summary">Show the call screen, answer and block calls, and play voicemail</string>
     <!-- Summary under the row that asks to make Phone the default phone app, after the user turned down Android's dialog; the row then opens Android's Default apps settings. -->
     <string name="settings_default_phone_app_denied">If Android doesn\'t ask, choose Phone in Default apps</string>
+  <!-- Settings row that opens the contacts app's list of contacts with their own ringtones. [CHAR LIMIT=40] -->
+  <string name="contact_ringtones_title">Contact ringtones</string>
 </resources>

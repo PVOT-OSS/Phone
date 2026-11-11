@@ -6,7 +6,10 @@
 package org.prauga.phone.dialer.app.settings
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.ActivityInfo
+import android.content.pm.ResolveInfo
 import androidx.compose.material3.Text
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.test.assertIsDisplayed
@@ -37,6 +40,7 @@ import org.prauga.phone.dialer.screening.ScreeningSettings
 import org.prauga.phone.dialer.screening.ScreeningSettingsList
 import org.prauga.phone.dialer.ui.TestTags
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
 
 /**
  * The Compose settings screens read and write the same preference keys and values as the
@@ -221,6 +225,31 @@ class SettingsScreensTest {
     fun topLevelListHasIncomingCalls() {
         assertThat(DialerSettingsActivity.settingsEntries(context).map { it.key })
             .contains(DialerSettingsActivity.KEY_INCOMING_CALLS)
+    }
+
+    @Test
+    fun topLevelListHasAssistedDialingOnAPhone() {
+        assertThat(DialerSettingsActivity.settingsEntries(context).map { it.key })
+            .contains(DialerSettingsActivity.KEY_ASSISTED_DIALING)
+    }
+
+    @Test
+    fun contactRingtonesShowOnlyWhenTheContactsAppHasTheScreen() {
+        val keys = { DialerSettingsActivity.settingsEntries(context).map { it.key } }
+        assertThat(keys()).doesNotContain(DialerSettingsActivity.KEY_CONTACT_RINGTONES)
+        val ringtones = Intent(DialerSettingsActivity.ACTION_MANAGE_RINGTONES)
+        shadowOf(context.packageManager)
+            .addResolveInfoForIntent(
+                ringtones,
+                ResolveInfo().apply {
+                    activityInfo =
+                        ActivityInfo().apply {
+                            packageName = "com.example.contacts"
+                            name = "RingtoneActivity"
+                        }
+                },
+            )
+        assertThat(keys()).contains(DialerSettingsActivity.KEY_CONTACT_RINGTONES)
     }
 
     private fun showScreening() {
