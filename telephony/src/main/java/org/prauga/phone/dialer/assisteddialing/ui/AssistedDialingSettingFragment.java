@@ -61,10 +61,10 @@ public class AssistedDialingSettingFragment extends PreferenceFragmentCompat {
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
+    // super.onCreate builds the preferences, which read these; set them up first.
     assistedDialingMediator = ConcreteCreator.createNewAssistedDialingMediator(requireContext());
     countryCodeProvider = ConcreteCreator.getCountryCodeProvider();
+    super.onCreate(savedInstanceState);
   }
 
   @Override
