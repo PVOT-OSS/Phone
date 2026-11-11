@@ -63,19 +63,18 @@ class CallLogActionsTest {
     }
 
     @Test
-    fun deletingARowAsksFirst() {
+    fun swipingARowAwayCanBeUndone() {
         val number = addCalls(2)
         openRecents()
 
-        rowDelete(number)
-        val title = context.getString(R.string.call_log_delete_entry_title)
-        findDialogTitle(title)
-        clickDialogButton(title, NEGATIVE)
-        check(callCount(number) == 2) { "calls deleted after cancelling" }
+        row(number).swipe(Direction.LEFT, SWIPE_PERCENT)
+        findText(context.getString(R.string.snackbar_undo)).click()
+        row(number)
+        check(callCount(number) == 2) { "calls deleted after Undo" }
 
-        rowDelete(number)
-        clickDialogButton(title, POSITIVE)
-        CallTests.waitFor { if (callCount(number) == 0) true else null }
+        row(number).swipe(Direction.LEFT, SWIPE_PERCENT)
+        // The delete commits once its snackbar is gone.
+        CallTests.waitFor(DELETE_COMMIT_MILLIS) { if (callCount(number) == 0) true else null }
     }
 
     @Test
@@ -154,18 +153,29 @@ class CallLogActionsTest {
     }
 
     /** Opens the row's actions and taps its Delete button, which asks first. */
-    private fun rowDelete(number: String) {
-        val delete = context.getString(R.string.voicemailMultiSelectDeleteConfirm)
-        // The row stays open after a cancelled delete; tapping it again would close it.
-        if (device.findObject(By.text(delete)) == null) findText(number.takeLast(4)).click()
-        scrollTo(delete).click()
-    }
+    /** The Recent row for [number], once it is on screen. */
+    private fun row(number: String): UiObject2 =
+        checkNotNull(
+            device.wait(
+                Until.findObject(
+                    By.res(Pattern.compile(ROW_TAG))
+                        .hasDescendant(By.textContains(number.takeLast(4)))
+                ),
+                CallTests.TIMEOUT_MILLIS,
+            )
+        ) {
+            "no row for $number"
+        }
 
     private fun openDetails(number: String) {
         openRecents()
-        findText(number.takeLast(4)).click()
-        // The expanded row's actions can run below the bottom navigation; scroll to Call details.
-        scrollTo(context.getString(R.string.call_log_action_details)).click()
+        // A tap on the row calls back; its info button opens the details.
+        checkNotNull(
+                row(number).findObject(By.desc(context.getString(R.string.call_log_action_details)))
+            ) {
+                "no details button"
+            }
+            .click()
         checkNotNull(
             device.wait(
                 Until.findObject(By.res(Pattern.compile(ENTRY_TAG))),
@@ -173,15 +183,6 @@ class CallLogActionsTest {
             )
         ) {
             "call details not shown"
-        }
-    }
-
-    /** Scrolls the call history until [label] is on screen; returns it. */
-    private fun scrollTo(label: String): UiObject2 {
-        val target = By.text(label)
-        device.findObject(By.res(LIST_TAG))?.scrollUntil(Direction.DOWN, Until.findObject(target))
-        return checkNotNull(device.wait(Until.findObject(target), CallTests.TIMEOUT_MILLIS)) {
-            "\"$label\" not shown"
         }
     }
 
@@ -241,13 +242,8 @@ class CallLogActionsTest {
                     .targetContext
                     .getString(R.string.delete)
 
-        val NEGATIVE: String
-            get() =
-                InstrumentationRegistry.getInstrumentation()
-                    .targetContext
-                    .getString(android.R.string.cancel)
-
-        const val LIST_TAG = "call_history_list"
+        const val ROW_TAG = "call_history_row_\\d+"
+        const val DELETE_COMMIT_MILLIS = 15_000L
         const val ENTRY_TAG = "call_details_entry_.*"
         const val SWIPE_PERCENT = 0.9f
         const val NOTE = "Running late"

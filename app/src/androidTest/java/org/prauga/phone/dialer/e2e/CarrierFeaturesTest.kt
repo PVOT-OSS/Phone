@@ -16,6 +16,7 @@ import android.telecom.Call
 import android.telecom.Connection
 import android.telecom.DisconnectCause
 import android.telephony.TelephonyManager
+import android.widget.EditText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
@@ -36,6 +37,7 @@ import org.prauga.phone.dialer.testing.FakeCallSpec
 import org.prauga.phone.dialer.testing.FakeCarrier
 import org.prauga.phone.dialer.testing.FakeConference
 import org.prauga.phone.dialer.testing.FakeConnection
+import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.incallui.EmergencySatellite
 import org.prauga.phone.incallui.InCallPresenter
 import org.prauga.phone.incallui.NumberPromptDialogFragment
@@ -227,7 +229,14 @@ class CarrierFeaturesTest {
     fun callMovedToAnotherDeviceSaysSo() {
         val far = connectedCall(FakeCallSpec(CallTests.freshNumber()))
         InCall.onMain { InCallPresenter.getInstance().showInCall(false, false) }
-        showsText(context.getString(R.string.incall_label_mute))
+        checkNotNull(
+            deviceRule.device.wait(
+                Until.findObject(By.res(TestTags.INCALL_END_CALL)),
+                CallTests.TIMEOUT_MILLIS,
+            )
+        ) {
+            "no call screen"
+        }
 
         far.hangUpFromFarEnd(DisconnectCause.CALL_PULLED)
 
@@ -292,13 +301,14 @@ class CarrierFeaturesTest {
         val field =
             checkNotNull(
                 deviceRule.device.wait(
-                    Until.findObject(By.res(context.packageName, "number_prompt_field")),
+                    Until.findObject(By.res(TestTags.NUMBER_PROMPT_FIELD)),
                     CallTests.TIMEOUT_MILLIS,
                 )
             ) {
                 "no number field"
             }
-        field.text = number
+        // The tag is on the field's frame; the text goes into the editable box inside it.
+        (field.findObject(By.clazz(EditText::class.java)) ?: field).text = number
         button(confirm).click()
     }
 
@@ -316,9 +326,7 @@ class CarrierFeaturesTest {
         }
 
     private fun showsText(text: String): UiObject2 =
-        checkNotNull(
-            deviceRule.device.wait(Until.findObject(By.text(text)), CallTests.TIMEOUT_MILLIS)
-        ) {
+        checkNotNull(CallTests.findLabel(deviceRule.device, text)) {
             val shown =
                 deviceRule.device
                     .findObjects(By.pkg(context.packageName))

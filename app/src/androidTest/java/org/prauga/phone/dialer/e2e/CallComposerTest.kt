@@ -9,6 +9,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.telecom.Call
 import android.telecom.TelecomManager
+import android.widget.EditText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
@@ -68,7 +69,7 @@ class CallComposerTest {
 
         checkNotNull(
             deviceRule.device.wait(
-                Until.findObject(By.res(context.packageName, "incall_important_call_badge")),
+                Until.findObject(By.res(TestTags.IMPORTANT_CALL_BADGE)),
                 CallTests.TIMEOUT_MILLIS,
             )
         ) {
@@ -97,9 +98,10 @@ class CallComposerTest {
         context.startActivity(intent)
 
         showsText(context.getString(R.string.call_composer_urgent)).click()
+        // The note's editable box, inside the field the dialog tags.
         checkNotNull(
                 deviceRule.device.wait(
-                    Until.findObject(By.res(context.packageName, TestTags.CALL_SUBJECT_FIELD)),
+                    Until.findObject(By.clazz(EditText::class.java)),
                     CallTests.TIMEOUT_MILLIS,
                 )
             )
