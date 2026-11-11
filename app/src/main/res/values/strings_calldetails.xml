@@ -52,4 +52,8 @@
   <string name="call_details_look_up">Look up</string>
   <!-- Shown when no app can search the web for the number. [CHAR LIMIT=NONE] -->
   <string name="call_details_look_up_no_app">Can\'t look up the number: no app on this phone can search the web</string>
+  <!-- Call details row for the SIM a saved contact is always called with. [CHAR LIMIT=30] -->
+  <string name="call_details_sim_for_calls">SIM for calls</string>
+  <!-- That row when no SIM is saved, and the choice that forgets it. [CHAR LIMIT=30] -->
+  <string name="call_details_sim_ask_every_time">Ask every time</string>
 </resources>

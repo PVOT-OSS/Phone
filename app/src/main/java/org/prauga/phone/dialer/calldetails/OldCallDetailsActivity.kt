@@ -26,6 +26,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.CallLog.Calls
 import android.provider.MediaStore
+import android.telecom.PhoneAccountHandle
 import android.text.format.DateFormat
 import android.webkit.MimeTypeMap
 import android.widget.Toast
@@ -37,6 +38,9 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -52,7 +56,9 @@ import com.prauga.pvot.designsystem.theme.PvotSpacing
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.prauga.phone.contacts.common.dialog.CallSubjectDialog
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.AccountSelectionActivity
@@ -70,9 +76,11 @@ import org.prauga.phone.dialer.lettertile.LetterTileDrawable
 import org.prauga.phone.dialer.main.impl.SnackbarPrompt
 import org.prauga.phone.dialer.postcall.PostCall
 import org.prauga.phone.dialer.precall.PreCall
+import org.prauga.phone.dialer.preferredsim.ContactSim
 import org.prauga.phone.dialer.protos.ProtoParsers
 import org.prauga.phone.dialer.reminder.CallbackReminderActivity
 import org.prauga.phone.dialer.rtt.RttTranscriptActivity
+import org.prauga.phone.dialer.telecom.TelecomUtil
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.PhoneSnackbarHost
 import org.prauga.phone.dialer.ui.QuickContactAvatar
@@ -100,6 +108,10 @@ class OldCallDetailsActivity : ComponentActivity() {
 
     private val snackbars = SnackbarHostState()
 
+    /** The SIM row of a saved contact on a phone with more than one SIM; null hides it. */
+    private var simForCalls by mutableStateOf<SimForCallsUi?>(null)
+    private var simDataIds: List<String> = emptyList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         enablePvotEdgeToEdge()
         super.onCreate(savedInstanceState)
@@ -109,6 +121,7 @@ class OldCallDetailsActivity : ComponentActivity() {
             finish()
             return
         }
+        loadSimForCalls()
         setPvotContent {
             PhoneScreenTheme {
                 val finished = viewModel.finished
@@ -128,6 +141,7 @@ class OldCallDetailsActivity : ComponentActivity() {
                         blocked = viewModel.blocked,
                         canAddContact = ui.hasNumber && !isSavedContact(),
                         canRemind = canRemind(ui),
+                        simForCalls = simForCalls,
                         // As the dialpad offers it: when an account can send a note with a call.
                         canCallWithNote =
                             ui.hasNumber &&
@@ -166,6 +180,41 @@ class OldCallDetailsActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         PostCall.promptUserForMessageIfNecessary(this, SnackbarPrompt(lifecycleScope, snackbars))
+    }
+
+    /** Reads the SIM saved for a contact's number, when the phone has more than one to choose. */
+    private fun loadSimForCalls() {
+        if (!isSavedContact() || contact.number.isEmpty()) return
+        val accounts = TelecomUtil.getCallCapablePhoneAccounts(this)
+        if (accounts.size < 2) return
+        val lookupKey = lookupKey(contact.contactUri) ?: return
+        val number = contact.number
+        lifecycleScope.launch {
+            val (ids, current) =
+                withContext(Dispatchers.IO) {
+                    val ids = ContactSim.dataIds(this@OldCallDetailsActivity, lookupKey, number)
+                    ids to ContactSim.get(this@OldCallDetailsActivity, ids)
+                }
+            if (ids.isEmpty()) return@launch
+            simDataIds = ids
+            simForCalls = simUi(accounts, current)
+        }
+    }
+
+    private fun simUi(accounts: List<PhoneAccountHandle>, current: PhoneAccountHandle?) =
+        SimForCallsUi(
+            current = current?.let(::accountLabel),
+            options = accounts.map { SimOption(accountLabel(it) ?: it.id, it) },
+        )
+
+    private fun accountLabel(account: PhoneAccountHandle): String? =
+        TelecomUtil.getPhoneAccount(this, account)?.label?.toString()
+
+    /** The lookup key in a contact lookup URI (…/contacts/lookup/<key>/<id>). */
+    private fun lookupKey(contactUri: String): String? {
+        val segments = Uri.parse(contactUri).pathSegments
+        val at = segments.indexOf("lookup")
+        return segments.getOrNull(at + 1).takeIf { at >= 0 }
     }
 
     /**
@@ -266,6 +315,15 @@ class OldCallDetailsActivity : ComponentActivity() {
                     lifecycleScope.launch {
                         snackbars.showSnackbar(getString(R.string.call_details_look_up_no_app))
                     }
+                }
+            }
+
+            override fun setSimForCalls(account: PhoneAccountHandle?) {
+                val ids = simDataIds
+                val accounts = simForCalls?.options?.map { it.account } ?: return
+                simForCalls = simUi(accounts, account)
+                lifecycleScope.launch(Dispatchers.IO) {
+                    ContactSim.set(this@OldCallDetailsActivity, ids, account)
                 }
             }
 

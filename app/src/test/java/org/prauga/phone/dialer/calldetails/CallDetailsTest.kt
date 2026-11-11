@@ -5,14 +5,18 @@
 
 package org.prauga.phone.dialer.calldetails
 
+import android.content.ComponentName
 import android.content.Intent
 import android.provider.CallLog.Calls
 import android.telecom.PhoneAccount
+import android.telecom.PhoneAccountHandle
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.isDialog
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onLast
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
@@ -225,6 +229,30 @@ class CallDetailsTest {
         assertThat(actions.calls).containsExactly("message")
     }
 
+    private val sims =
+        listOf("SIM 1", "SIM 2").map { label ->
+            SimOption(label, PhoneAccountHandle(ComponentName("com.android.phone", "Sim"), label))
+        }
+
+    @Test
+    fun aContactsSavedSimShowsAndCanBeChanged() {
+        val actions = RecordingActions()
+        show(map(), actions, simForCalls = SimForCallsUi(current = "SIM 1", options = sims))
+        compose.onNodeWithText("SIM 1").assertExists()
+        compose.onNodeWithTag(TestTags.CALL_DETAILS_SIM).performScrollTo().performClick()
+        compose.onNodeWithText("SIM 2").performClick()
+        assertThat(actions.calls).containsExactly("sim SIM 2")
+    }
+
+    @Test
+    fun withoutASavedSimCallsAskEveryTime() {
+        val actions = RecordingActions()
+        show(map(), actions, simForCalls = SimForCallsUi(current = null, options = sims))
+        compose.onNodeWithTag(TestTags.CALL_DETAILS_SIM).performScrollTo().performClick()
+        compose.onAllNodesWithText("Ask every time").onLast().performClick()
+        assertThat(actions.calls).containsExactly("sim null")
+    }
+
     @Test
     fun lookUpIsOfferedForANumberWithoutAName() {
         assertThat(map().canLookUp).isFalse()
@@ -287,6 +315,7 @@ class CallDetailsTest {
         actions: CallDetailsActions = RecordingActions(),
         callWith: Intent? = null,
         canCallWithNote: Boolean = false,
+        simForCalls: SimForCallsUi? = null,
     ) {
         compose.setContent {
             SolidGlassTheme {
@@ -297,6 +326,7 @@ class CallDetailsTest {
                     actions = actions,
                     avatar = { PvotAvatar(name = "Alex Doe", size = it) },
                     canCallWithNote = canCallWithNote,
+                    simForCalls = simForCalls,
                 )
             }
         }
@@ -336,6 +366,10 @@ class CallDetailsTest {
 
         override fun lookUp() {
             calls += "lookUp"
+        }
+
+        override fun setSimForCalls(account: PhoneAccountHandle?) {
+            calls += "sim ${account?.id}"
         }
 
         override fun deleteCall(entry: CallDetailsEntryUi) {

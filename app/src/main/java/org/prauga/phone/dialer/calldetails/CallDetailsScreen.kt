@@ -7,6 +7,7 @@ package org.prauga.phone.dialer.calldetails
 
 import android.content.Intent
 import android.provider.CallLog.Calls
+import android.telecom.PhoneAccountHandle
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
@@ -128,6 +129,9 @@ internal interface CallDetailsActions {
     /** Searches the web for the number. */
     fun lookUp() = Unit
 
+    /** Always calls the contact with [account], or with null asks for a SIM every time. */
+    fun setSimForCalls(account: PhoneAccountHandle?) = Unit
+
     /** Deletes one call; the screen asks first. */
     fun deleteCall(entry: CallDetailsEntryUi)
 
@@ -157,7 +161,9 @@ internal fun CallDetailsScreen(
     canAddContact: Boolean = false,
     canRemind: Boolean = false,
     canCallWithNote: Boolean = false,
+    simForCalls: SimForCallsUi? = null,
 ) {
+    var pickSim by remember { mutableStateOf(false) }
     var recordingsToPick by remember { mutableStateOf<List<CallRecording>?>(null) }
     var askBlock by remember { mutableStateOf(false) }
     var askDeleteCall by remember { mutableStateOf<CallDetailsEntryUi?>(null) }
@@ -266,6 +272,26 @@ internal fun CallDetailsScreen(
                                 },
                                 iconStyle = PvotRowIconStyle.Plain,
                                 showChevron = false,
+                            )
+                        }
+                    }
+                    if (simForCalls != null) {
+                        item {
+                            PvotPreferenceRow(
+                                title = stringResource(R.string.call_details_sim_for_calls),
+                                onClick = { pickSim = true },
+                                summary =
+                                    simForCalls.current
+                                        ?: stringResource(R.string.call_details_sim_ask_every_time),
+                                icon = {
+                                    Icon(
+                                        painterResource(R.drawable.ic_sim_card),
+                                        contentDescription = null,
+                                    )
+                                },
+                                iconStyle = PvotRowIconStyle.Plain,
+                                showChevron = false,
+                                modifier = Modifier.testTag(TestTags.CALL_DETAILS_SIM),
                             )
                         }
                     }
@@ -436,6 +462,30 @@ internal fun CallDetailsScreen(
             PvotDialogAction(
                 label = stringResource(android.R.string.cancel),
                 onClick = { askBlock = false },
+            )
+        }
+    }
+    if (pickSim && simForCalls != null) {
+        PvotBottomSheet(
+            visible = true,
+            onDismissRequest = { pickSim = false },
+            title = stringResource(R.string.call_details_sim_for_calls),
+        ) {
+            for (option in simForCalls.options) {
+                PvotSheetItem(
+                    title = option.label,
+                    onClick = {
+                        pickSim = false
+                        actions.setSimForCalls(option.account)
+                    },
+                )
+            }
+            PvotSheetItem(
+                title = stringResource(R.string.call_details_sim_ask_every_time),
+                onClick = {
+                    pickSim = false
+                    actions.setSimForCalls(null)
+                },
             )
         }
     }
