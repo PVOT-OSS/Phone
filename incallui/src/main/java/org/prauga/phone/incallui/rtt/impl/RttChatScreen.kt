@@ -52,6 +52,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.prauga.pvot.designsystem.components.PvotBottomSheet
 import com.prauga.pvot.designsystem.components.PvotSheetItem
+import com.prauga.pvot.designsystem.components.button.PvotButton
+import com.prauga.pvot.designsystem.components.button.PvotButtonStyle
 import com.prauga.pvot.designsystem.components.list.PvotLetterTileDefaults
 import com.prauga.pvot.designsystem.components.list.PvotListRow
 import com.prauga.pvot.designsystem.components.list.PvotSwitchRow
@@ -92,6 +94,9 @@ interface RttChatActions {
 
     /** The user scrolled back through the chat, which hides the keyboard. */
     fun onScrollBack()
+
+    /** Sends one of the emergency call's ready messages, such as asking for the police. */
+    fun onEmergencyMessage(message: String) = Unit
 }
 
 /**
@@ -170,6 +175,7 @@ fun RttChatScreen(
                 Bubble(bubble, sameGroup, state)
             }
         }
+        if (state.inputVisible && state.emergency) EmergencyButtons(actions)
         if (state.inputVisible) InputBar(state, input, actions)
     }
     if (state.menuOpen) OverflowMenu(state, actions)
@@ -270,6 +276,30 @@ private fun Bubble(bubble: RttBubble, sameGroup: Boolean, state: RttChatUiState)
                     )
                     .padding(horizontal = PvotSpacing.M, vertical = PvotSpacing.S),
         )
+    }
+}
+
+/** On an emergency call, a tap sends who is needed: the fire department, an ambulance or police. */
+@Composable
+private fun EmergencyButtons(actions: RttChatActions) {
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = PvotSpacing.L),
+        horizontalArrangement = Arrangement.spacedBy(PvotSpacing.S),
+    ) {
+        for ((label, message) in
+            listOf(
+                R.string.rtt_emergency_fire to R.string.rtt_emergency_fire_message,
+                R.string.rtt_emergency_medical to R.string.rtt_emergency_medical_message,
+                R.string.rtt_emergency_police to R.string.rtt_emergency_police_message,
+            )) {
+            val text = stringResource(message)
+            PvotButton(
+                text = stringResource(label),
+                onClick = { actions.onEmergencyMessage(text) },
+                style = PvotButtonStyle.Tonal,
+                modifier = Modifier.weight(1f).testTag(TestTags.rttEmergency(label)),
+            )
+        }
     }
 }
 

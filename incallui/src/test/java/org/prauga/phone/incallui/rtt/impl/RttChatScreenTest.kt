@@ -22,6 +22,7 @@ import org.prauga.phone.dialer.rtt.RttTranscript
 import org.prauga.phone.dialer.rtt.RttTranscriptMessage
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.TestTags
+import org.prauga.phone.incallui.R
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
@@ -78,6 +79,10 @@ class RttChatScreenTest {
             }
 
             override fun onScrollBack() = Unit
+
+            override fun onEmergencyMessage(message: String) {
+                events += "emergency $message"
+            }
         }
 
     @Test
@@ -148,6 +153,20 @@ class RttChatScreenTest {
         compose.onNodeWithTag(TestTags.RTT_END_CALL).performClick()
         compose.onNodeWithTag(TestTags.RTT_MENU).performClick()
         assertThat(events).containsExactly("end", "menu").inOrder()
+    }
+
+    @Test
+    fun anEmergencyCallOffersReadyMessages() {
+        val state = RttChatUiState().apply { inputVisible = true }
+        show(state)
+        compose
+            .onNodeWithTag(TestTags.rttEmergency(R.string.rtt_emergency_police))
+            .assertDoesNotExist()
+        state.emergency = true
+        compose.onNodeWithTag(TestTags.rttEmergency(R.string.rtt_emergency_fire)).assertExists()
+        compose.onNodeWithTag(TestTags.rttEmergency(R.string.rtt_emergency_medical)).assertExists()
+        compose.onNodeWithTag(TestTags.rttEmergency(R.string.rtt_emergency_police)).performClick()
+        assertThat(events).containsExactly("emergency I require police assistance.")
     }
 
     @Test
