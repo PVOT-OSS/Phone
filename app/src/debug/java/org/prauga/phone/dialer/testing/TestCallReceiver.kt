@@ -46,7 +46,11 @@ class TestCallReceiver : BroadcastReceiver() {
                     )
                 ScreeningSettings.from(context).setAction(category, action)
             }
-            ACTION_REGISTER_CARRIER -> FakeCarrier.register(context)
+            ACTION_REGISTER_CARRIER ->
+                FakeCarrier.register(
+                    context,
+                    label = intent.getStringExtra(EXTRA_LABEL) ?: "Fake carrier",
+                )
             ACTION_UNREGISTER_CARRIER -> FakeCarrier.unregister(context)
             ACTION_RING ->
                 FakeCarrier.ring(
@@ -105,5 +109,6 @@ class TestCallReceiver : BroadcastReceiver() {
         const val EXTRA_PRESENTATION = "presentation"
         const val EXTRA_CATEGORY = "category"
         const val EXTRA_ACTION = "action"
+        const val EXTRA_LABEL = "label"
     }
 }

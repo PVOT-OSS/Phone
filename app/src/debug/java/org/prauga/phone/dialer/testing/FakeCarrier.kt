@@ -39,11 +39,11 @@ object FakeCarrier {
     /**
      * Registers the account; it still has to be enabled, for example with the telecom shell
      * command. With [callComposer] the account supports call composer: urgent calls, notes and
-     * pictures.
+     * pictures. [label] names the account where the app shows which one a call is on.
      */
-    fun register(context: Context, callComposer: Boolean = false) {
+    fun register(context: Context, callComposer: Boolean = false, label: String = "Fake carrier") {
         val account =
-            PhoneAccount.builder(accountHandle(context), "Fake carrier")
+            PhoneAccount.builder(accountHandle(context), label)
                 .setCapabilities(
                     PhoneAccount.CAPABILITY_CALL_PROVIDER or
                         PhoneAccount.CAPABILITY_VIDEO_CALLING or
