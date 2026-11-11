@@ -20,6 +20,7 @@ object TestTags {
     const val CALL_DETAILS_CALL_BACK = "call_details_call_back"
     const val CALL_DETAILS_DELETE = "call_details_delete"
     const val CALL_DETAILS_MESSAGE = "call_details_message"
+    const val CALL_DETAILS_SIM = "call_details_sim"
     const val CALL_DETAILS_AVATAR = "call_details_avatar"
     const val CALL_SUBJECT_FIELD = "call_subject_field"
     const val NUMBER_PROMPT_FIELD = "number_prompt_field"

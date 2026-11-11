@@ -7,6 +7,7 @@ package org.prauga.phone.dialer.calldetails
 
 import android.provider.CallLog.Calls
 import android.telecom.PhoneAccount
+import android.telecom.PhoneAccountHandle
 import org.prauga.phone.dialer.calllogutils.CallTypeHelper
 import org.prauga.phone.dialer.calllogutils.CallbackActionHelper.CallbackAction
 import org.prauga.phone.dialer.callrecord.CallRecording
@@ -149,3 +150,9 @@ internal object CallDetailsMapper {
 
     private infix fun Int.has(flag: Int) = this and flag == flag
 }
+
+/** A SIM the contact can always be called with, as its name and account. */
+internal data class SimOption(val label: String, val account: PhoneAccountHandle)
+
+/** The SIM a saved contact is always called with: [current] is its name, null to ask every time. */
+internal data class SimForCallsUi(val current: String?, val options: List<SimOption>)
