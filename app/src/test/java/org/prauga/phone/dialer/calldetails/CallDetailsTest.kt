@@ -226,6 +226,27 @@ class CallDetailsTest {
     }
 
     @Test
+    fun lookUpIsOfferedForANumberWithoutAName() {
+        assertThat(map().canLookUp).isFalse()
+        val unknown = contact.toBuilder().setNameOrNumber("+1 555-123-4567").build()
+        assertThat(map(contact = unknown).canLookUp).isTrue()
+        assertThat(map(contact = unknown, emergency = true).canLookUp).isFalse()
+        val noNumber = unknown.toBuilder().setNumber("").build()
+        assertThat(map(contact = noNumber).canLookUp).isFalse()
+    }
+
+    @Test
+    fun lookUpReachesTheActivity() {
+        val actions = RecordingActions()
+        show(map(contact = contact.toBuilder().setNameOrNumber("+1 555-123-4567").build()), actions)
+        compose
+            .onNodeWithText(context.getString(R.string.call_details_look_up))
+            .performScrollTo()
+            .performClick()
+        assertThat(actions.calls).containsExactly("lookUp")
+    }
+
+    @Test
     fun callWithANoteIsHiddenWhenNoAccountTakesNotes() {
         show(map())
         compose.onNodeWithText(context.getString(R.string.call_with_a_note)).assertDoesNotExist()
@@ -311,6 +332,10 @@ class CallDetailsTest {
 
         override fun callWithNote() {
             calls += "callWithNote"
+        }
+
+        override fun lookUp() {
+            calls += "lookUp"
         }
 
         override fun deleteCall(entry: CallDetailsEntryUi) {
