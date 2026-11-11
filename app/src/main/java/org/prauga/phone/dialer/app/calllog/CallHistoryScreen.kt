@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -27,7 +28,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -35,6 +38,7 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,11 +49,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -273,6 +279,48 @@ private fun HistoryList(
         }
     }
 
+    // On a wide window a voicemail opens in a pane beside the list instead of inside it.
+    val twoPane =
+        voicemailPlayback != null &&
+            LocalConfiguration.current.screenWidthDp >= TwoPaneMinWidthDp &&
+            groups.isNotEmpty() &&
+            groups.all { it.voicemailUri != null }
+    val voicemailCard: @Composable (CallLogRowUi, Boolean) -> Unit = { row, expanded ->
+        val group = row.group
+        VoicemailCard(
+            row = row,
+            playback = checkNotNull(voicemailPlayback),
+            expanded = expanded,
+            isSelected = group.rowId in selection,
+            onClick = { if (selecting) select(selection.toggled(group.rowId)) else toggle(row) },
+            onLongClick =
+                if (selectable) {
+                    { select(selection + group.rowId) }
+                } else null,
+            onPlay = {
+                expandedRowId = group.rowId
+                actions.opened(row, playNow = true)
+            },
+            onDelete = {
+                if (expandedRowId == group.rowId) {
+                    expandedRowId = null
+                    actions.closed(row)
+                }
+                onDeleted(group)
+            },
+            actions = actions,
+            // The Delete button removes every call in the row, so it asks first.
+            onRowAction = { action: RowAction ->
+                when (action) {
+                    RowAction.BLOCK -> confirmBlockId = group.rowId
+                    RowAction.UNBLOCK -> confirmUnblockId = group.rowId
+                    RowAction.DELETE -> confirmDeleteId = group.rowId
+                    else -> actions.rowAction(row, action)
+                }
+            },
+        )
+    }
+
     Column(Modifier.fillMaxSize()) {
         if (selecting) {
             Spacer(Modifier.height(topPadding))
@@ -285,117 +333,103 @@ private fun HistoryList(
                 onDelete = { confirmDeleteSelected = true },
             )
         }
-        PvotScreen(
-            modifier = Modifier.weight(1f).fillMaxWidth().testTag(TestTags.CALL_HISTORY_LIST),
-            state = listState,
-            contentPadding =
-                PaddingValues(
-                    top = (if (selecting) 0.dp else topPadding) + PvotSpacing.S,
-                    bottom = bottomPadding,
-                ),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start,
-        ) {
-            if (header != null) item(key = "header") { header() }
-            // How many headers each day has had so far: calls out of date order can bring a day
-            // back, and its second header needs a key of its own.
-            val dayHeaders = mutableMapOf<Int, Int>()
-            groups.forEachIndexed { index, group ->
-                val previousDay = groups.getOrNull(index - 1)?.dayGroup
-                // An item of its own: when the row under it goes, it stays where it is instead of
-                // moving into the next row and pushing it down.
-                if (group.dayGroup != previousDay) {
-                    val repeat = dayHeaders.merge(group.dayGroup, 1, Int::plus)!! - 1
-                    val key =
-                        if (repeat == 0) "day_${group.dayGroup}"
-                        else "day_${group.dayGroup}_$repeat"
-                    item(key = key, contentType = "day") {
-                        DayHeader(group.dayGroup, Modifier.animateItem())
+        Row(Modifier.weight(1f).fillMaxWidth()) {
+            PvotScreen(
+                modifier = Modifier.weight(1f).fillMaxHeight().testTag(TestTags.CALL_HISTORY_LIST),
+                state = listState,
+                contentPadding =
+                    PaddingValues(
+                        top = (if (selecting) 0.dp else topPadding) + PvotSpacing.S,
+                        bottom = bottomPadding,
+                    ),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start,
+            ) {
+                if (header != null) item(key = "header") { header() }
+                // How many headers each day has had so far: calls out of date order can bring a day
+                // back, and its second header needs a key of its own.
+                val dayHeaders = mutableMapOf<Int, Int>()
+                groups.forEachIndexed { index, group ->
+                    val previousDay = groups.getOrNull(index - 1)?.dayGroup
+                    // An item of its own: when the row under it goes, it stays where it is instead
+                    // of
+                    // moving into the next row and pushing it down.
+                    if (group.dayGroup != previousDay) {
+                        val repeat = dayHeaders.merge(group.dayGroup, 1, Int::plus)!! - 1
+                        val key =
+                            if (repeat == 0) "day_${group.dayGroup}"
+                            else "day_${group.dayGroup}_$repeat"
+                        item(key = key, contentType = "day") {
+                            DayHeader(group.dayGroup, Modifier.animateItem())
+                        }
                     }
-                }
-                // A row that is not resolved yet (the list moved on) shows with the next state.
-                val row = rows[group.rowId] ?: return@forEachIndexed
-                item(key = group.rowId, contentType = "row") {
-                    Column(Modifier.animateItem()) {
-                        val expanded = expandedRowId == group.rowId && !selecting
-                        val onClick: () -> Unit = {
-                            if (selecting) select(selection.toggled(group.rowId)) else toggle(row)
-                        }
-                        val onLongClick: (() -> Unit)? =
-                            if (selectable) {
-                                { select(selection + group.rowId) }
-                            } else null
-                        val onPlay: () -> Unit = {
-                            expandedRowId = group.rowId
-                            actions.opened(row, playNow = true)
-                        }
-                        val onDelete: () -> Unit = {
-                            if (expandedRowId == group.rowId) {
-                                expandedRowId = null
-                                actions.closed(row)
+                    // A row that is not resolved yet (the list moved on) shows with the next state.
+                    val row = rows[group.rowId] ?: return@forEachIndexed
+                    item(key = group.rowId, contentType = "row") {
+                        Column(Modifier.animateItem()) {
+                            val expanded = expandedRowId == group.rowId && !selecting
+                            val onLongClick: (() -> Unit)? =
+                                if (selectable) {
+                                    { select(selection + group.rowId) }
+                                } else null
+                            val onDelete: () -> Unit = {
+                                if (expandedRowId == group.rowId) {
+                                    expandedRowId = null
+                                    actions.closed(row)
+                                }
+                                onDeleted(group)
                             }
-                            onDeleted(group)
-                        }
-                        // The Delete button removes every call in the row, so it asks first.
-                        val onRowAction = { action: RowAction ->
-                            when (action) {
-                                RowAction.BLOCK -> confirmBlockId = group.rowId
-                                RowAction.UNBLOCK -> confirmUnblockId = group.rowId
-                                RowAction.DELETE -> confirmDeleteId = group.rowId
-                                else -> actions.rowAction(row, action)
-                            }
-                        }
-                        if (voicemailPlayback != null && group.voicemailUri != null) {
-                            VoicemailCard(
-                                row = row,
-                                playback = voicemailPlayback,
-                                expanded = expanded,
-                                isSelected = group.rowId in selection,
-                                onClick = onClick,
-                                onLongClick = onLongClick,
-                                onPlay = onPlay,
-                                onDelete = onDelete,
-                                actions = actions,
-                                onRowAction = onRowAction,
-                            )
-                        } else {
-                            HistoryRow(
-                                row = row,
-                                isSelected = group.rowId in selection,
-                                // Calling back or opening the details reads a missed call, so
-                                // the tab's badge drops; an emergency number only calls from
-                                // its swipe, never from a stray tap.
-                                onClick = {
-                                    when {
-                                        selecting -> select(selection.toggled(group.rowId))
-                                        row.canCallBack && !row.isEmergency -> {
-                                            actions.opened(row)
-                                            actions.primaryAction(row)
+                            if (voicemailPlayback != null && group.voicemailUri != null) {
+                                voicemailCard(row, expanded && !twoPane)
+                            } else {
+                                HistoryRow(
+                                    row = row,
+                                    isSelected = group.rowId in selection,
+                                    // Calling back or opening the details reads a missed call, so
+                                    // the tab's badge drops; an emergency number only calls from
+                                    // its swipe, never from a stray tap.
+                                    onClick = {
+                                        when {
+                                            selecting -> select(selection.toggled(group.rowId))
+                                            row.canCallBack && !row.isEmergency -> {
+                                                actions.opened(row)
+                                                actions.primaryAction(row)
+                                            }
+                                            RowAction.DETAILS in row.actions -> {
+                                                actions.opened(row)
+                                                actions.rowAction(row, RowAction.DETAILS)
+                                            }
                                         }
-                                        RowAction.DETAILS in row.actions -> {
+                                    },
+                                    onLongClick = onLongClick,
+                                    onDetails = {
+                                        if (selecting) {
+                                            select(selection.toggled(group.rowId))
+                                        } else {
                                             actions.opened(row)
                                             actions.rowAction(row, RowAction.DETAILS)
                                         }
-                                    }
-                                },
-                                onLongClick = onLongClick,
-                                onDetails = {
-                                    if (selecting) {
-                                        select(selection.toggled(group.rowId))
-                                    } else {
+                                    },
+                                    onCall = {
                                         actions.opened(row)
-                                        actions.rowAction(row, RowAction.DETAILS)
-                                    }
-                                },
-                                onCall = {
-                                    actions.opened(row)
-                                    actions.primaryAction(row)
-                                },
-                                onDelete = onDelete,
-                            )
+                                        actions.primaryAction(row)
+                                    },
+                                    onDelete = onDelete,
+                                )
+                            }
                         }
                     }
                 }
+            }
+            if (twoPane) {
+                VerticalDivider()
+                VoicemailPane(
+                    row = expandedRowId?.let(rows::get)?.takeIf { !selecting },
+                    topPadding = topPadding,
+                    bottomPadding = bottomPadding,
+                    card = voicemailCard,
+                    modifier = Modifier.weight(1f).fillMaxHeight(),
+                )
             }
         }
     }
@@ -504,6 +538,39 @@ private fun HistoryList(
 }
 
 private fun Set<Long>.toggled(id: Long) = if (id in this) this - id else this + id
+
+/** The open voicemail beside the list on a wide window, or a word on what to do. */
+@Composable
+private fun VoicemailPane(
+    row: CallLogRowUi?,
+    topPadding: Dp,
+    bottomPadding: Dp,
+    card: @Composable (CallLogRowUi, Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    if (row == null) {
+        Box(modifier.padding(PvotSpacing.L), contentAlignment = Alignment.Center) {
+            Text(
+                stringResource(R.string.voicemail_select_to_listen),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+            )
+        }
+        return
+    }
+    Column(
+        modifier
+            .verticalScroll(rememberScrollState())
+            .padding(top = topPadding + PvotSpacing.S, bottom = bottomPadding)
+            .testTag(TestTags.VOICEMAIL_PANE)
+    ) {
+        card(row, true)
+    }
+}
+
+/** How wide a window must be for voicemails to open in a pane beside the list. */
+private const val TwoPaneMinWidthDp = 600
 
 @Composable
 private fun SelectionBar(

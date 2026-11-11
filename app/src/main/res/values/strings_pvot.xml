@@ -35,4 +35,6 @@
         <item quantity="one">Delete this call from your history?</item>
         <item quantity="other">Delete these %d calls from your history?</item>
     </plurals>
+    <!-- Beside the voicemail list on a wide screen, before one is opened. [CHAR LIMIT=NONE] -->
+    <string name="voicemail_select_to_listen">Select a voicemail to listen</string>
 </resources>

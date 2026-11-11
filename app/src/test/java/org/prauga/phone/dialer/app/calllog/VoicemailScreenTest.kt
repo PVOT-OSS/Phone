@@ -243,6 +243,29 @@ class VoicemailScreenTest {
     }
 
     @Test
+    @Config(qualifiers = "en-rUS-w891dp-h411dp-night-xxhdpi")
+    fun onAWideWindowTheOpenVoicemailIsBesideTheList() {
+        show()
+        compose.onNodeWithText("Select a voicemail to listen").assertExists()
+        compose.onNodeWithTag(TestTags.callHistoryPrimary(1)).performClick()
+        compose.onNodeWithTag(TestTags.VOICEMAIL_PANE).assertExists()
+        compose.onNodeWithTag(TestTags.VOICEMAIL_PLAYBACK, useUnmergedTree = true).assertExists()
+        assertThat(actions.events).containsExactly("opened 1 play")
+    }
+
+    @Test
+    @Config(qualifiers = "en-rUS-w891dp-h411dp-night-xxhdpi")
+    fun screenshotWideDark() {
+        show()
+        compose.onNodeWithTag(TestTags.callHistoryRow(1)).performClick()
+        compose.waitForIdle()
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/voicemail/voicemail_wide_dark.png")
+    }
+
+    @Test
     fun screenshotOpenDark() {
         show()
         compose.onNodeWithTag(TestTags.callHistoryRow(1)).performClick()
