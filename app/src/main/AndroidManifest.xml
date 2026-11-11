@@ -243,6 +243,11 @@
             android:exported="false"
             tools:replace="android:authorities" />
 
+        <!-- Call details and statistics open beside the main screen on a wide window. -->
+        <property
+            android:name="android.window.PROPERTY_ACTIVITY_EMBEDDING_SPLITS_ENABLED"
+            android:value="true" />
+
         <meta-data
             android:name="supports_per_number_preferred_account"
             android:value="true" />
