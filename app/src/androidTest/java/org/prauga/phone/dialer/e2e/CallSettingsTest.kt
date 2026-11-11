@@ -124,7 +124,7 @@ class CallSettingsTest {
         assertNotNull(
             "answer button not shown",
             deviceRule.device.wait(
-                Until.findObject(By.res(context.packageName, TestTags.ANSWER_ACCEPT)),
+                Until.findObject(By.res(TestTags.ANSWER_ACCEPT)),
                 CallTests.TIMEOUT_MILLIS,
             ),
         )

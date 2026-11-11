@@ -137,8 +137,7 @@ class TwoCallsTest {
             val (held, active) = twoCalls()
             InCall.onMain { InCallPresenter.getInstance().showInCall(false, false) }
 
-            openMore()
-            showsText(context.getString(R.string.incall_label_transfer)).click()
+            control(context.getString(R.string.incall_label_transfer)).click()
             showsText(context.getString(R.string.incall_transfer_dialog_title))
             showsText(context.getString(R.string.incall_transfer_dialog_confirm)).click()
 
@@ -157,14 +156,24 @@ class TwoCallsTest {
         try {
             twoCalls()
             InCall.onMain { InCallPresenter.getInstance().showInCall(false, false) }
+            val transfer = context.getString(R.string.incall_label_transfer)
+            waitForCallScreen()
+            check(!isShown(transfer)) {
+                "transfer on the panel although the carrier doesn't allow it"
+            }
             openMore()
-            showsText(context.getString(R.string.incall_label_hold))
-            check(
-                deviceRule.device.findObject(
-                    By.text(context.getString(R.string.incall_label_transfer))
-                ) == null
-            ) {
-                "transfer shown although the carrier doesn't allow it"
+            // Which controls sit under More depends on the screen; wait for any of them.
+            val sheet =
+                listOf(
+                        R.string.incall_label_hold,
+                        R.string.incall_label_merge,
+                        R.string.incall_label_swap,
+                        R.string.incall_label_videocall,
+                    )
+                    .map(context::getString)
+            CallTests.waitFor { sheet.firstOrNull(::isShown) }
+            check(!isShown(transfer)) {
+                "transfer under More although the carrier doesn't allow it"
             }
         } finally {
             Shell.run("cmd phone cc clear-values")
@@ -193,12 +202,36 @@ class TwoCallsTest {
             .click()
     }
 
-    private fun showsText(text: String): UiObject2 =
+    private fun waitForCallScreen() {
         checkNotNull(
-            deviceRule.device.wait(Until.findObject(By.text(text)), CallTests.TIMEOUT_MILLIS)
+            deviceRule.device.wait(
+                Until.findObject(By.res(TestTags.INCALL_END_CALL)),
+                CallTests.TIMEOUT_MILLIS,
+            )
         ) {
-            "\"$text\" not shown"
+            "no call screen"
         }
+    }
+
+    private fun isShown(label: String) =
+        deviceRule.device.findObject(By.text(label)) != null ||
+            deviceRule.device.findObject(By.desc(label)) != null
+
+    /** The call screen's control named [label]: on the panel, or else under More. */
+    private fun control(label: String): UiObject2 {
+        waitForCallScreen()
+        deviceRule.device.findObject(By.text(label))?.let {
+            return it
+        }
+        deviceRule.device.findObject(By.desc(label))?.let {
+            return it
+        }
+        openMore()
+        return showsText(label)
+    }
+
+    private fun showsText(text: String): UiObject2 =
+        checkNotNull(CallTests.findLabel(deviceRule.device, text)) { "\"$text\" not shown" }
 
     private fun twoCalls(): Pair<FakeConnection, FakeConnection> {
         InCall.place(context, CallTests.freshNumber())

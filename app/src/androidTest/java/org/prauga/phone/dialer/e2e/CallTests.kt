@@ -9,6 +9,9 @@ import android.content.ContentValues
 import android.content.Context
 import android.provider.CallLog
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.UiObject2
 import org.prauga.phone.dialer.testing.FakeCarrier
 import org.prauga.phone.dialer.testing.FakeConnection
 import org.prauga.phone.incallui.InCallPresenter
@@ -24,6 +27,16 @@ object CallTests {
     private const val POLL_MILLIS = 200L
 
     /** Polls [block] until it returns a value or [timeoutMillis] passes. */
+    /**
+     * Waits for something showing [label]: as its text or, for the call screen's icon buttons,
+     * which name themselves to TalkBack, as its description. Null if it never shows.
+     */
+    fun findLabel(device: UiDevice, label: String): UiObject2? =
+        runCatching {
+                waitFor { device.findObject(By.text(label)) ?: device.findObject(By.desc(label)) }
+            }
+            .getOrNull()
+
     fun <T : Any> waitFor(timeoutMillis: Long = TIMEOUT_MILLIS, block: () -> T?): T {
         val deadline = System.currentTimeMillis() + timeoutMillis
         while (System.currentTimeMillis() < deadline) {
