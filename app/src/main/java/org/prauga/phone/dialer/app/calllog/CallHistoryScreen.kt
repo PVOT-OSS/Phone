@@ -66,6 +66,7 @@ import com.prauga.pvot.coreui.PvotSectionHeader
 import com.prauga.pvot.designsystem.components.PvotDialog
 import com.prauga.pvot.designsystem.components.PvotDialogAction
 import com.prauga.pvot.designsystem.components.PvotDialogActionStyle
+import com.prauga.pvot.designsystem.components.PvotMenuItem
 import com.prauga.pvot.designsystem.components.PvotScreen
 import com.prauga.pvot.designsystem.components.button.PvotButton
 import com.prauga.pvot.designsystem.components.button.PvotButtonStyle
@@ -80,10 +81,14 @@ import kotlinx.coroutines.launch
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.app.voicemail.VoicemailPlaybackState
 import org.prauga.phone.dialer.compat.telephony.TelephonyManagerCompat
+import org.prauga.phone.dialer.reminder.ReminderDelay
+import org.prauga.phone.dialer.reminder.ReminderTimeDialog
+import org.prauga.phone.dialer.reminder.reminderAt
 import org.prauga.phone.dialer.ui.ContactAvatar
 import org.prauga.phone.dialer.ui.PhoneSnackbarHost
 import org.prauga.phone.dialer.ui.TestTags
 import org.prauga.phone.dialer.ui.fullWidthRow
+import org.prauga.phone.dialer.ui.rememberVividColors
 
 /** What a call history list does when the user acts. */
 interface CallHistoryActions {
@@ -116,6 +121,9 @@ interface CallHistoryActions {
 
     /** The empty list's action: open the dialpad. */
     fun emptyAction()
+
+    /** Sets a reminder to call [row] back at [atMillis]. */
+    fun remind(row: CallLogRowUi, atMillis: Long) = Unit
 }
 
 /**
@@ -251,6 +259,7 @@ private fun HistoryList(
     var selected by rememberSaveable { mutableStateOf(emptySet<Long>()) }
     // The dialogs name a row by id, so they come back after a rotation with the row's new state.
     var confirmBlockId by rememberSaveable { mutableStateOf<Long?>(null) }
+    var remindLaterId by rememberSaveable { mutableStateOf<Long?>(null) }
     var confirmDeleteId by rememberSaveable { mutableStateOf<Long?>(null) }
     var confirmUnblockId by rememberSaveable { mutableStateOf<Long?>(null) }
     var confirmDeleteSelected by rememberSaveable { mutableStateOf(false) }
@@ -414,6 +423,10 @@ private fun HistoryList(
                                         actions.opened(row)
                                         actions.primaryAction(row)
                                     },
+                                    onRemind = { delay ->
+                                        actions.remind(row, delay.dueAt(System.currentTimeMillis()))
+                                    },
+                                    onRemindLater = { remindLaterId = group.rowId },
                                     onDelete = onDelete,
                                 )
                             }
@@ -458,6 +471,16 @@ private fun HistoryList(
                 onClick = { confirmDeleteId = null },
             )
         }
+    }
+    remindLaterId?.let(rows::get)?.let { row ->
+        ReminderTimeDialog(
+            name = row.title,
+            onPick = { time ->
+                remindLaterId = null
+                actions.remind(row, reminderAt(time, System.currentTimeMillis()))
+            },
+            onDismiss = { remindLaterId = null },
+        )
     }
     confirmBlockId?.let(rows::get)?.let { row ->
         PvotDialog(
@@ -628,7 +651,8 @@ private val CallLogRowUi.canCallBack: Boolean
 
 /**
  * A call: tapping or swiping toward the end calls back, the info button opens the call details, and
- * swiping toward the start deletes it, with Undo.
+ * swiping toward the start stands the row open on a callback reminder menu and Delete, as on iOS;
+ * swiping all the way deletes it, with Undo.
  */
 @Composable
 private fun HistoryRow(
@@ -638,8 +662,11 @@ private fun HistoryRow(
     onLongClick: (() -> Unit)?,
     onDetails: () -> Unit,
     onCall: () -> Unit,
+    onRemind: (ReminderDelay) -> Unit,
+    onRemindLater: () -> Unit,
     onDelete: () -> Unit,
 ) {
+    val vivid = rememberVividColors()
     PvotSwipeRow(
         modifier = Modifier.fullWidthRow(),
         containerColor = MaterialTheme.colorScheme.background,
@@ -653,11 +680,43 @@ private fun HistoryRow(
                     onSwipe = onCall,
                 )
             } else null,
-        endAction =
-            PvotSwipeRowDefaults.destructiveAction(
-                label = stringResource(R.string.call_history_delete),
-                icon = painterResource(R.drawable.ic_trash),
-                onSwipe = onDelete,
+        endButtons =
+            listOfNotNull(
+                if (row.canCallBack && !row.isEmergency) {
+                    PvotSwipeRowDefaults.action(
+                        label = stringResource(R.string.callback_reminder_menu_title),
+                        icon = painterResource(R.drawable.ic_clock),
+                        onSwipe = {},
+                        containerColor = vivid.primary,
+                        contentColor = vivid.onPrimary,
+                        menu =
+                            listOf(
+                                PvotMenuItem(
+                                    stringResource(R.string.callback_reminder_menu_in_an_hour),
+                                    { onRemind(ReminderDelay.IN_AN_HOUR) },
+                                ),
+                                PvotMenuItem(
+                                    stringResource(R.string.callback_reminder_menu_tonight),
+                                    { onRemind(ReminderDelay.THIS_EVENING) },
+                                ),
+                                PvotMenuItem(
+                                    stringResource(R.string.callback_reminder_menu_tomorrow),
+                                    { onRemind(ReminderDelay.TOMORROW_MORNING) },
+                                ),
+                                PvotMenuItem(
+                                    stringResource(R.string.callback_reminder_menu_later),
+                                    onRemindLater,
+                                ),
+                            ),
+                    )
+                } else null,
+                PvotSwipeRowDefaults.destructiveAction(
+                    label = stringResource(R.string.call_history_delete),
+                    icon = painterResource(R.drawable.ic_trash),
+                    onSwipe = onDelete,
+                    containerColor = vivid.error,
+                    contentColor = vivid.onError,
+                ),
             ),
     ) {
         PvotListRow(
