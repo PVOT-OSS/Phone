@@ -20,6 +20,10 @@
   <string name="callback_reminder_text">You asked to be reminded.</string>
   <!-- Notification action that moves the reminder an hour later. [CHAR LIMIT=20] -->
   <string name="callback_reminder_snooze">In an hour</string>
+  <!-- Title of the dialog asking what time to be reminded to call someone back. -->
+  <string name="callback_reminder_time_title">Remind me to call <xliff:g id="name" example="Ada Lovelace">%1$s</xliff:g> at</string>
+  <!-- Button that sets the reminder for the time picked. [CHAR LIMIT=20] -->
+  <string name="callback_reminder_time_set">Set reminder</string>
   <!-- Settings switch for the "Remind me" action on missed calls. [CHAR LIMIT=40] -->
   <string name="callback_reminders_title">Call-back reminders</string>
   <string name="callback_reminders_summary">Offer to remind you later about calls you missed</string>
