@@ -17,13 +17,16 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.longClick
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onLast
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
 import androidx.compose.ui.test.swipeRight
+import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureRoboImage
+import com.github.takahirom.roborazzi.captureScreenRoboImage
 import com.google.common.truth.Truth.assertThat
 import org.junit.Rule
 import org.junit.Test
@@ -126,6 +129,10 @@ class CallHistoryScreenTest {
         override fun emptyAction() {
             events += "dialpad"
         }
+
+        override fun remind(row: CallLogRowUi, atMillis: Long) {
+            events += "remind ${row.group.rowId}"
+        }
     }
 
     private val actions = RecordingActions()
@@ -222,12 +229,124 @@ class CallHistoryScreenTest {
         compose.onNodeWithTag(TestTags.callHistoryRow(10)).assertExists()
     }
 
+    private fun swipeOpen(rowId: Long) {
+        compose.onNodeWithTag(TestTags.callHistoryRow(rowId)).performTouchInput {
+            swipeLeft(startX = right - 1f, endX = right - width * 0.4f)
+        }
+        compose.waitForIdle()
+    }
+
     @Test
-    fun swipingTowardTheEndCallsBack() {
+    fun aShortSwipeTowardTheStartStandsTheRowOpenOnAReminderAndDelete() {
+        show()
+        swipeOpen(10)
+        compose.onNodeWithContentDescription("Callback reminder").assertExists()
+        compose.onNodeWithContentDescription("Delete").assertExists()
+        assertThat(actions.events).isEmpty()
+    }
+
+    @Test
+    fun theReminderButtonOffersWhenToBeReminded() {
+        show()
+        swipeOpen(10)
+        compose.onNodeWithContentDescription("Callback reminder").performClick()
+        compose.waitForIdle()
+        compose.onNodeWithText("Remind me tonight").assertExists()
+        compose.onNodeWithText("Remind me tomorrow").assertExists()
+        compose.onNodeWithText("Remind me in 1 hour").performClick()
+        compose.waitForIdle()
+        assertThat(actions.events).containsExactly("remind 10")
+        compose.onNodeWithContentDescription("Callback reminder").assertDoesNotExist()
+    }
+
+    @Test
+    fun remindMeLaterAsksForATime() {
+        show()
+        swipeOpen(10)
+        compose.onNodeWithContentDescription("Callback reminder").performClick()
+        compose.waitForIdle()
+        compose.onNodeWithText("Remind me later…").performClick()
+        compose.waitForIdle()
+        compose
+            .onNodeWithTag(TestTags.CALLBACK_REMINDER_TIME, useUnmergedTree = true)
+            .assertExists()
+        compose.onNodeWithText("Set reminder").performClick()
+        compose.waitForIdle()
+        assertThat(actions.events).containsExactly("remind 10")
+    }
+
+    @Test
+    fun anEmergencyNumberOffersNoReminder() {
+        val emergency = rows.getValue(10L).copy(isEmergency = true)
+        state =
+            CallHistoryUiState.Loaded(
+                listOf(missed, incoming, older),
+                emptySet(),
+                rows = rows + (10L to emergency),
+            )
+        show()
+        swipeOpen(10)
+        compose.onNodeWithContentDescription("Callback reminder").assertDoesNotExist()
+        compose.onNodeWithContentDescription("Delete").assertExists()
+    }
+
+    @Test
+    fun theDeleteButtonDeletesWithUndo() {
+        show()
+        swipeOpen(10)
+        compose.onNodeWithContentDescription("Delete").performClick()
+        compose.waitForIdle()
+        assertThat(actions.events).contains("delete 10")
+        compose.onNodeWithTag(TestTags.callHistoryRow(10)).assertDoesNotExist()
+    }
+
+    @Test
+    fun tappingAnOpenRowShutsItWithoutCalling() {
+        show()
+        swipeOpen(10)
+        compose.onNodeWithTag(TestTags.callHistoryRow(10)).performClick()
+        compose.waitForIdle()
+        assertThat(actions.events).isEmpty()
+        compose.onNodeWithContentDescription("Callback reminder").assertDoesNotExist()
+    }
+
+    @Test
+    fun screenshotDarkSwipedOpen() {
+        show()
+        swipeOpen(10)
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/calllog/history_dark_swiped.png")
+    }
+
+    @Test
+    @Config(qualifiers = "en-rUS-w411dp-h891dp-notnight-xxhdpi")
+    fun screenshotLightSwipedOpen() {
+        show()
+        swipeOpen(10)
+        compose
+            .onAllNodes(isRoot())
+            .onFirst()
+            .captureRoboImage("src/test/screenshots/calllog/history_light_swiped.png")
+    }
+
+    @OptIn(ExperimentalRoborazziApi::class)
+    @Test
+    fun screenshotDarkReminderMenu() {
+        show()
+        swipeOpen(10)
+        compose.onNodeWithContentDescription("Callback reminder").performClick()
+        compose.waitForIdle()
+        captureScreenRoboImage("src/test/screenshots/calllog/history_dark_reminder_menu.png")
+    }
+
+    @Test
+    fun swipingTowardTheEndDoesNotCall() {
         show()
         compose.onNodeWithTag(TestTags.callHistoryRow(20)).performTouchInput { swipeRight() }
         compose.waitForIdle()
-        assertThat(actions.events).contains("call 20")
+        assertThat(actions.events).isEmpty()
     }
 
     @Test

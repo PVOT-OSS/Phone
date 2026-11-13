@@ -83,6 +83,16 @@ enum class ReminderDelay {
     }
 }
 
+/**
+ * When a reminder for [time] of day is due, from [nowMillis] in [zone]: today, or tomorrow once it
+ * has passed.
+ */
+fun reminderAt(time: LocalTime, nowMillis: Long, zone: ZoneId = ZoneId.systemDefault()): Long {
+    val now = Instant.ofEpochMilli(nowMillis).atZone(zone)
+    val today = now.with(time).withSecond(0).withNano(0)
+    return (if (today.isAfter(now)) today else today.plusDays(1)).toInstant().toEpochMilli()
+}
+
 /** Keeps call-back reminders and sets an alarm for each; [CallbackReminderReceiver] shows them. */
 object CallbackReminders {
 

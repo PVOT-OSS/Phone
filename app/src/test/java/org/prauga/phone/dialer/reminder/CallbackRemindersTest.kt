@@ -13,6 +13,7 @@ import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
 import java.time.Instant
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.ZoneId
 import org.junit.Before
 import org.junit.Test
@@ -133,6 +134,19 @@ class CallbackRemindersTest {
             .isEqualTo(LocalDateTime.of(2026, 11, 4, 18, 0))
         assertThat(local(ReminderDelay.TOMORROW_MORNING.dueAt(night, zone), zone))
             .isEqualTo(LocalDateTime.of(2026, 11, 4, 9, 0))
+    }
+
+    @Test
+    fun aPickedTimeIsTodayUntilItHasPassed() {
+        val zone = ZoneId.of("Asia/Kolkata")
+        val noon = LocalDateTime.of(2026, 11, 3, 12, 0).atZone(zone).toInstant().toEpochMilli()
+
+        assertThat(local(reminderAt(LocalTime.of(15, 30), noon, zone), zone))
+            .isEqualTo(LocalDateTime.of(2026, 11, 3, 15, 30))
+        assertThat(local(reminderAt(LocalTime.of(9, 0), noon, zone), zone))
+            .isEqualTo(LocalDateTime.of(2026, 11, 4, 9, 0))
+        assertThat(local(reminderAt(LocalTime.of(12, 0), noon, zone), zone))
+            .isEqualTo(LocalDateTime.of(2026, 11, 4, 12, 0))
     }
 
     private fun local(millis: Long, zone: ZoneId): LocalDateTime =

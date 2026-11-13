@@ -121,6 +121,7 @@ object TestTags {
 
     /** The list of delays in the call-back reminder dialog. */
     const val CALLBACK_REMINDER_DELAYS = "callback_reminder_delays"
+    const val CALLBACK_REMINDER_TIME = "callback_reminder_time"
 
     fun callbackReminderDelay(name: String) = "callback_reminder_delay_$name"
 

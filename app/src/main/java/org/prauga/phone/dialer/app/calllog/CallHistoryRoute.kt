@@ -11,6 +11,8 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.provider.CallLog.Calls
 import android.telephony.TelephonyManager
+import android.text.format.DateUtils
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.WindowInsets
@@ -45,6 +47,7 @@ import org.prauga.phone.dialer.dialercontact.DialerContact
 import org.prauga.phone.dialer.dialercontact.SimDetails
 import org.prauga.phone.dialer.lettertile.LetterTileDrawable
 import org.prauga.phone.dialer.reminder.CallbackReminderActivity
+import org.prauga.phone.dialer.reminder.CallbackReminders
 import org.prauga.phone.dialer.telecom.TelecomUtil
 import org.prauga.phone.dialer.util.DialerUtils
 import org.prauga.phone.dialer.util.PermissionsUtil
@@ -308,6 +311,23 @@ private class CallHistoryIntents(
     }
 
     override fun emptyAction() = showDialpad()
+
+    override fun remind(row: CallLogRowUi, atMillis: Long) {
+        val reminder =
+            CallbackReminders.schedule(
+                context,
+                row.group.number,
+                row.title.takeIf { !row.titleIsNumber },
+                atMillis,
+            )
+        val at = DateUtils.formatDateTime(context, reminder.atMillis, DateUtils.FORMAT_SHOW_TIME)
+        Toast.makeText(
+                context,
+                context.getString(R.string.callback_reminder_set, at),
+                Toast.LENGTH_SHORT,
+            )
+            .show()
+    }
 
     private fun callProvider(row: CallLogRowUi, number: String): IntentProvider =
         if (row.info.lookupKey != null) {
