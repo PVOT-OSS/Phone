@@ -395,8 +395,8 @@ private fun HistoryList(
                                     row = row,
                                     isSelected = group.rowId in selection,
                                     // Calling back or opening the details reads a missed call, so
-                                    // the tab's badge drops; an emergency number only calls from
-                                    // its swipe, never from a stray tap.
+                                    // the tab's badge drops; an emergency number never calls from
+                                    // a stray tap, it opens its details.
                                     onClick = {
                                         when {
                                             selecting -> select(selection.toggled(group.rowId))
@@ -418,10 +418,6 @@ private fun HistoryList(
                                             actions.opened(row)
                                             actions.rowAction(row, RowAction.DETAILS)
                                         }
-                                    },
-                                    onCall = {
-                                        actions.opened(row)
-                                        actions.primaryAction(row)
                                     },
                                     onRemind = { delay ->
                                         actions.remind(row, delay.dueAt(System.currentTimeMillis()))
@@ -650,9 +646,9 @@ private val CallLogRowUi.canCallBack: Boolean
             primaryAction == PrimaryAction.CALL_VOICEMAIL
 
 /**
- * A call: tapping or swiping toward the end calls back, the info button opens the call details, and
- * swiping toward the start stands the row open on a callback reminder menu and Delete, as on iOS;
- * swiping all the way deletes it, with Undo.
+ * A call: tapping calls back, the info button opens the call details, and swiping toward the start
+ * stands the row open on a callback reminder menu and Delete, as on iOS; swiping all the way
+ * deletes it, with Undo. Swiping toward the end does nothing.
  */
 @Composable
 private fun HistoryRow(
@@ -661,7 +657,6 @@ private fun HistoryRow(
     onClick: () -> Unit,
     onLongClick: (() -> Unit)?,
     onDetails: () -> Unit,
-    onCall: () -> Unit,
     onRemind: (ReminderDelay) -> Unit,
     onRemindLater: () -> Unit,
     onDelete: () -> Unit,
@@ -672,14 +667,6 @@ private fun HistoryRow(
         containerColor = MaterialTheme.colorScheme.background,
         thresholdFraction = SwipeThresholdFraction,
         dragResistance = SwipeDragResistance,
-        startAction =
-            if (row.canCallBack) {
-                PvotSwipeRowDefaults.action(
-                    label = stringResource(R.string.call),
-                    icon = painterResource(R.drawable.ic_phone),
-                    onSwipe = onCall,
-                )
-            } else null,
         endButtons =
             listOfNotNull(
                 if (row.canCallBack && !row.isEmergency) {

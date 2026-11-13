@@ -342,11 +342,11 @@ class CallHistoryScreenTest {
     }
 
     @Test
-    fun swipingTowardTheEndCallsBack() {
+    fun swipingTowardTheEndDoesNotCall() {
         show()
         compose.onNodeWithTag(TestTags.callHistoryRow(20)).performTouchInput { swipeRight() }
         compose.waitForIdle()
-        assertThat(actions.events).contains("call 20")
+        assertThat(actions.events).isEmpty()
     }
 
     @Test
