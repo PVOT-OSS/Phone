@@ -23,5 +23,15 @@
             android:exported="false"
             android:launchMode="singleTop"
             android:theme="@style/Dialer.ThemeBase.NoActionBar" />
+
+        <service
+            android:name="org.prauga.phone.dialer.car.PhoneCarAppService"
+            tools:node="remove" />
+        <meta-data
+            android:name="com.google.android.gms.car.application"
+            tools:node="remove" />
+        <meta-data
+            android:name="androidx.car.app.minCarApiLevel"
+            tools:node="remove" />
     </application>
 </manifest>

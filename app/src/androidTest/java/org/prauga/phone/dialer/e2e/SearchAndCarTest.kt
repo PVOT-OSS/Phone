@@ -21,6 +21,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
+import org.prauga.phone.dialer.BuildConfig
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.car.CarCallLists
 
@@ -71,7 +72,7 @@ class SearchAndCarTest {
     }
 
     @Test
-    fun appIsACarCallingApp() {
+    fun appIsACarCallingAppOnlyInTheSystemBuild() {
         val intent =
             Intent("androidx.car.app.CarAppService")
                 .addCategory("androidx.car.app.category.CALLING")
@@ -81,7 +82,8 @@ class SearchAndCarTest {
                 intent,
                 PackageManager.ResolveInfoFlags.of(0),
             )
-        assertEquals(1, services.size)
+        val expected = if (BuildConfig.FLAVOR == "system") 1 else 0
+        assertEquals(expected, services.size)
     }
 
     /** Adds a call from a fresh number with no contact, a second ago; returns the number. */
