@@ -13,6 +13,10 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -20,8 +24,10 @@ import androidx.compose.ui.res.stringResource
 import com.prauga.pvot.designsystem.components.PvotDialog
 import com.prauga.pvot.designsystem.components.PvotDialogAction
 import com.prauga.pvot.designsystem.components.list.PvotListRow
+import com.prauga.pvot.designsystem.components.picker.PvotClockPicker
 import com.prauga.pvot.designsystem.platform.enablePvotEdgeToEdge
 import com.prauga.pvot.designsystem.platform.setPvotContent
+import java.time.LocalTime
 import org.prauga.phone.dialer.R
 import org.prauga.phone.dialer.ui.PhoneScreenTheme
 import org.prauga.phone.dialer.ui.TestTags
@@ -113,6 +119,33 @@ internal fun ReminderDelayDialog(
             }
         },
         actions = {
+            PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = onDismiss)
+        },
+    )
+}
+
+/** Asks what time of day to be reminded to call [name] back, on a clock wheel. */
+@Composable
+internal fun ReminderTimeDialog(name: String, onPick: (LocalTime) -> Unit, onDismiss: () -> Unit) {
+    var time by rememberSaveable {
+        mutableStateOf(LocalTime.now().plusHours(2).withMinute(0).withSecond(0).withNano(0))
+    }
+    PvotDialog(
+        visible = true,
+        onDismissRequest = onDismiss,
+        title = stringResource(R.string.callback_reminder_time_title, name),
+        content = {
+            PvotClockPicker(
+                time = time,
+                onTimeChange = { time = it },
+                modifier = Modifier.testTag(TestTags.CALLBACK_REMINDER_TIME),
+            )
+        },
+        actions = {
+            PvotDialogAction(
+                label = stringResource(R.string.callback_reminder_time_set),
+                onClick = { onPick(time) },
+            )
             PvotDialogAction(label = stringResource(android.R.string.cancel), onClick = onDismiss)
         },
     )

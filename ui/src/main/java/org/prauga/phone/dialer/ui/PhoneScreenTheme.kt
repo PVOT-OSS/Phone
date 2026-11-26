@@ -94,6 +94,19 @@ fun PhoneTheme(content: @Composable () -> Unit) {
 }
 
 /**
+ * The light scheme of the user's colors, for buttons that stay vivid in the dark too, as iOS keeps
+ * a swiped call's buttons.
+ */
+@Composable
+fun rememberVividColors(): ColorScheme {
+    val appearance by AppearanceSettings.rememberAppearance()
+    val context = LocalContext.current
+    return remember(context, appearance.dynamicColor) {
+        PhoneColors.scheme(context, appearance.dynamicColor, dark = false)
+    }
+}
+
+/**
  * Phone's color schemes outside Compose, for what views still draw (window backgrounds, the call
  * screen's background), so they match the Compose screens in either choice of colors.
  */
