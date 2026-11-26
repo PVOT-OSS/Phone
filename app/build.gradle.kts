@@ -33,7 +33,7 @@ val releaseSigning: Map<String, String>? = run {
 
 val versionMajor = 1
 val versionMinor = 0
-val versionPatch = 0
+val versionPatch = 2
 
 android {
     namespace = "org.prauga.phone.dialer"
